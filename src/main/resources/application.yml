@@ -1,11 +1,11 @@
-# ??? ??? ?? ??
+# 서블릿 인코딩 강제 설정
 server:
-  port: 8081
+  port: 8082
   servlet:
     encoding:
       force: true
 
-# Spring Devtools ??? H2 ? ?? ??? ??
+# Spring Devtools 설정과 H2 웹 콘솔 활성화 통합
 spring:
   devtools:
     livereload:
@@ -16,15 +16,17 @@ spring:
     console:
       enabled: true
 
-  # Thymeleaf ??
+
+  # Thymeleaf 설정
   thymeleaf:
     cache: false
-    prefix: classpath:templates/ # ??? ?? ?? ?? ??? ?. ???
+    prefix: classpath:templates/ # 여기에 경로쓰면 기본 경로로 됨. ㅎㅅㅎ
     check-template-location: true
     suffix: .html
     mode: HTML
 
-  # Hibernate ??
+
+  # Hibernate 설정
   jpa:
     hibernate:
       ddl-auto: create
@@ -40,7 +42,7 @@ spring:
                 BasicBinder: TRACE
     defer-datasource-initialization: true
 
-  # ?????? ??
+  # 데이터베이스 설정
   datasource:
     generate-unique-name: false
     url: jdbc:h2:mem:testdb
