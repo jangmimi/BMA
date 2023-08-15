@@ -9,7 +9,6 @@ import org.springframework.web.client.RestTemplate;
 @Controller
 public class HomeController {
 
-	private WebClient
 
 	@RequestMapping("/")
 	public String test(){
