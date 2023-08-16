@@ -1,4 +1,4 @@
-package com.ap4j.bma.csy_aptTest.model.entity.busan;
+package com.ap4j.bma.model.entity.busan;
 
 import lombok.*;
 import org.springframework.stereotype.Component;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class CSY_BusanDTO {
+public class BusanDTO {
     private String MAIN_TITLE;                  // 식당 이름
     private double LNG;                         // 위도
     private double LAT;                         // 경도
