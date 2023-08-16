@@ -21,14 +21,14 @@ public class CSY_BusanController {
     @GetMapping("test")
     public String test(Model model) {
         StringBuffer result = new StringBuffer();
-        int pageNo = 2;
+        int pageNo = 1;
         String jsonPrintString = null;
 
         ArrayList<CSY_BusanDTO> busanList = null;
         try {
             String apiUrl = "http://apis.data.go.kr/6260000/FoodService/getFoodKr?"
                     + "serviceKey=5C%2FnyAagqz6%2F%2BnYRGcZyRNpteaEeTlrNaMf1KtU0CWaSMRID13wEXSHVJ0J7WMvTl864DTzD3rwHM5GPX1aWtA%3D%3D"
-                    + "&numOfRows=10"
+                    + "&numOfRows=300"
                     + "&pageNo=" + pageNo;
 
             URL url = new URL(apiUrl);

@@ -6,12 +6,11 @@
 
   var map = new kakao.maps.Map(container, options);
 
-  var busanListElement = document.getElementById('busanList');
-  var busanListData = JSON.parse(busanListElement.getAttribute('data-busan-list-th'));
+  console.log(busanList);
 
-  for (var i = 0; i < busanListData.length; i++) {
+  for (var i = 0; i < busanList.length; i++) {
       var marker = new kakao.maps.Marker({
           map: map,
-          position: new kakao.maps.LatLng(busanListData[i].LAT, busanListData[i].LNG)
+          position: new kakao.maps.LatLng(busanList[i].lat, busanList[i].lng)
       });
   }
