@@ -19,4 +19,25 @@
           map: map,
           position: new kakao.maps.LatLng(convertedData.LAT, convertedData.LNG)
       });
+
+      var infowindow = new kakao.maps.InfoWindow({
+              content: convertedData.MAIN_TITLE // 인포윈도우에 표시할 내용
+          });
+
+      kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+      kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+
+      // 인포윈도우를 표시하는 클로저를 만드는 함수입니다
+      function makeOverListener(map, marker, infowindow) {
+          return function() {
+              infowindow.open(map, marker);
+          };
+      }
+
+      // 인포윈도우를 닫는 클로저를 만드는 함수입니다
+      function makeOutListener(infowindow) {
+          return function() {
+              infowindow.close();
+          };
+      }
   }
