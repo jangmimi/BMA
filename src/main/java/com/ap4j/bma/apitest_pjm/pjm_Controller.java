@@ -11,7 +11,7 @@ import java.util.List;
 @Slf4j
 @Controller
 public class pjm_Controller {
-    
+
     @RequestMapping("/kakaoMap1")
     String kakaoMap1(Model model) {
         log.info("pjm컨트롤러 - kakaoMap1() 실행");

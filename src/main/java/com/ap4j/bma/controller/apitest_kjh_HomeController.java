@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class apitest_kjh_HomeController {
 
 
-	@RequestMapping("/")
+	/*@RequestMapping("/")
 	public String test(){
 		log.info("HomeController.payments.execute");
 		return "payments/payments";
-	}
+	}*/
 
 
 }
