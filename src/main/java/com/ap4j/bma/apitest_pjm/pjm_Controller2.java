@@ -21,14 +21,14 @@ public class pjm_Controller2 {
     pjm_kakaoAPI kakaoApi = new pjm_kakaoAPI();
 
     /* 로그인 페이지 매핑 */
-    @RequestMapping(value="/loginForm")
+    @RequestMapping(value="/loginForm2")
     public ModelAndView loginForm() {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("/apitest_pjm/pjm_home");
         return mav;
     }
     
-    @RequestMapping(value="/login")
+    @RequestMapping(value="/login2")
     public ModelAndView login(@RequestParam("code") String code, HttpSession session) {
         log.info("pjm컨트롤러 - login() 실행");
         ModelAndView mav = new ModelAndView();
@@ -50,7 +50,7 @@ public class pjm_Controller2 {
         return mav;
     }
 
-    @RequestMapping(value="/logout")
+    @RequestMapping(value="/logout2")
     public ModelAndView logout(HttpSession session) {
         log.info("pjm컨트롤러 - logout() 실행");
         ModelAndView mav = new ModelAndView();
@@ -69,7 +69,7 @@ public class pjm_Controller2 {
 
 
     // 네이버 로그인 테스트
-    @RequestMapping(value="/naverlogin")
+    @RequestMapping(value="/naverlogin2")
     public ModelAndView naverlogin() {
         log.info("pjm컨트롤러 - naverlogin() 실행");
         ModelAndView mav = new ModelAndView();
@@ -78,7 +78,7 @@ public class pjm_Controller2 {
         return mav;
     }
 
-    @RequestMapping(value="/navercallback")
+    @RequestMapping(value="/navercallback2")
     public ModelAndView navercallback() {
         log.info("pjm컨트롤러 - navercallback() 실행");
         ModelAndView mav = new ModelAndView();
