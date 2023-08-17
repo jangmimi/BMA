@@ -1,9 +1,7 @@
-package com.ap4j.bma.apitest_kjh;
+package com.ap4j.bma.api.cluster;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.json.JSONObject;
 import org.json.XML;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,7 +12,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 @RestController
-public class Apitest_kjh_RestController {
+public class Cluster {
 
     @PostMapping("/map")
     public String mapPage(){

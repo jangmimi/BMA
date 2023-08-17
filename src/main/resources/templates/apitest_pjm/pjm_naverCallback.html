@@ -6,7 +6,7 @@
 </head>
 <body>
 <script type="text/javascript">
-    var naver_id_login = new naver_id_login("KxGhFHZ7Xp74X_5IZ23h", "http://localhost:8082/naverCallback");
+    var naver_id_login = new naver_id_login("AjkHs22eU99SBpBCMMDt", "http://localhost:8081/naverCallback");
     // 접근 토큰 값 출력
     alert(naver_id_login.oauthParams.access_token);
     // 네이버 사용자 프로필 조회
@@ -15,7 +15,7 @@
     function naverSignInCallback() {
       alert(naver_id_login.getProfileData('email'));
       alert(naver_id_login.getProfileData('nickname'));
-      alert(naver_id_login.getProfileData('age'));
+<!--      alert(naver_id_login.getProfileData('age'));-->
 
     }
 </script>
