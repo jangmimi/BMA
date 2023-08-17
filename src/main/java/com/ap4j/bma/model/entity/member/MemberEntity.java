@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
+
 // 이건 JPA 에서 쓰는 자바 테이블 이라고 생각 하시면 됩니다 :) 아래가 예시에요.
 @Entity
 @Table(name="member") // 명시적으로 테이블 이름 지정.

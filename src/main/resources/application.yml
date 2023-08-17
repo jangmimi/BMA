@@ -1,6 +1,6 @@
 # 서블릿 인코딩 강제 설정
 server:
-  port: 8081
+  port: 8081  # pjm - h2 DB 사용 충돌 때문에 (프로젝트 RUN 자체가 안됨) 임시로 8081로
   servlet:
     encoding:
       force: true
