@@ -1,5 +1,4 @@
-
-  // [지도 불러오기]
+// [지도 불러오기]
   var container = document.getElementById('map');
   var options = {
       center: new kakao.maps.LatLng(35.099903, 129.02715),
@@ -47,8 +46,4 @@
               infowindow.close();
           };
       }
-
-
-      // [검색 기능]
-
   }

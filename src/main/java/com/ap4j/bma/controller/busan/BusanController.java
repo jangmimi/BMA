@@ -18,8 +18,8 @@ import java.util.ArrayList;
 @Controller
 public class BusanController {
 
-    @GetMapping("csy")
-    public String test(Model model) {
+    @GetMapping("busan")
+    public String busan(Model model) {
         StringBuffer result = new StringBuffer();
         int pageNo = 1;
 
@@ -77,6 +77,6 @@ public class BusanController {
 
         model.addAttribute("busanList", busanList);
 
-        return "/busan/busan";
+        return "kakaoMap/busan";
     }
 }
