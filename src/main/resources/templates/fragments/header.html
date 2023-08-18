@@ -4,10 +4,6 @@
 <header th:fragment="headerFragment" class="header nav-bar-toggle-icon">
 <!--  <div if:유저가 로그인 했을 경우 보여주는 거>-->
 
-<!--  </div>-->
-<!--  <div if: 유저가 로그인 안 했을 때 >-->
-<!--    -->
-<!--  </div>-->
   <div class="n-header">
     <div class="n-header-left">
       <img src="sc/003.png" alt="">
@@ -29,7 +25,7 @@
         </li>
       </ul>
     </div>
-    <div class="n-header-right" th:with="member=null">
+    <div class="n-header-right" th:with="member='김재환'">
       <ul th:if="${member==null}" class="n-header-list">
         <li>
           <a href="#">로그인</a>
@@ -54,5 +50,6 @@
       </ul>
     </div>
   </div>
+
 </header>
 </html>

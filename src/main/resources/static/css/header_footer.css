@@ -86,6 +86,7 @@ a태그 기본값인 색,밑줄 설정제거, 폰트, 사이즈조정
     background-color: white;
     font-family: 'Noto Sans KR', sans-serif;
     font-weight: 700;
+    background-color:white;
 }
 
 .r-footer-wrap {
