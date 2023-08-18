@@ -2,6 +2,12 @@
 
 <!--headerFragment 선언-->
 <header th:fragment="headerFragment" class="header nav-bar-toggle-icon">
+<!--  <div if:유저가 로그인 했을 경우 보여주는 거>-->
+
+<!--  </div>-->
+<!--  <div if: 유저가 로그인 안 했을 때 >-->
+<!--    -->
+<!--  </div>-->
   <div class="n-header">
     <div class="n-header-left">
       <img src="sc/003.png" alt="">
@@ -23,13 +29,24 @@
         </li>
       </ul>
     </div>
-    <div class="n-header-right">
-      <ul class="n-header-list">
+    <div class="n-header-right" th:with="member=null">
+      <ul th:if="${member==null}" class="n-header-list">
         <li>
           <a href="#">로그인</a>
         </li>
         <li>
           <a href="#">회원가입</a>
+        </li>
+        <li>
+          <a href="#">고객센터</a>
+        </li>
+      </ul>
+      <ul th:if="${member!=null}" class="n-header-list">
+        <li>
+          <a href="#">로그아웃</a>
+        </li>
+        <li>
+          <a href="#">마이페이지</a>
         </li>
         <li>
           <a href="#">고객센터</a>

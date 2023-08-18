@@ -48,7 +48,7 @@ li 기본값이 하단으로 추가되는걸 가로정렬로 변경
 .n-header-list li{
     float: left;
     margin-right: 30px;
-    margin-top: 3px;
+    margin-top: 15px;
 }
 
 /*
@@ -77,12 +77,13 @@ a태그 기본값인 색,밑줄 설정제거, 폰트, 사이즈조정
 
 /*푸터부분*/
 .r-footer {
-    position: fixed;
+    position: relative;
+    bottom: 0;
     width: 100%;
-    height: 200px;
+    height: 160px;
     display: flex;
     justify-content: center;
-    background-color: aliceblue;
+    background-color: white;
     font-family: 'Noto Sans KR', sans-serif;
     font-weight: 700;
 }

@@ -82,13 +82,15 @@ input::-webkit-input-placeholder {
     font-family: 'Noto Sans KR', sans-serif;   
     font-weight: 700;
     font-size:100px;
-    margin-top: 50px;
+    margin: 50px ;
     color: aliceblue;
     box-shadow: 0 0 10px;
 }
 
 .r-button-menu {
     display: flex;
+    margin-bottom: 300px;
+
 }
 
 .r-button-menu a {
@@ -187,3 +189,4 @@ input::-webkit-input-placeholder {
     background-repeat: no-repeat;
     background-position: center;
 }
+
