@@ -1,9 +1,12 @@
 package com.ap4j.bma.service.member;
 
+import com.ap4j.bma.model.entity.member.MemberEntity;
+import com.ap4j.bma.model.repository.MemberRepository;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +21,9 @@ import java.util.HashMap;
 @Slf4j
 @Service
 public class MemberServiceImpl implements MemberService {
+
+	@Autowired
+	private MemberRepository memberRepository;
 
 	public String getAccessToken(String code) {
 		String accessToken = "";
@@ -135,6 +141,21 @@ public class MemberServiceImpl implements MemberService {
 //			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public Long joinBasic(MemberEntity pMember) {
+//		validateDuplicateMember(pMember);    // 중복 회원 검증
+
+		memberRepository.save(pMember);
+		return pMember.getId();
+	}
+
+//	public void validateDuplicateMember(MemberEntity pMember) {
+//		memberRepository.findByName(pMember.getName())
+//			.ifPresent(m -> {
+//				throw new IllegalStateException("이미 존재하는 회원입니다.");
+//		});
+//	}
 
 
 	// 아래는 예시 코드입니다.
