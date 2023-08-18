@@ -12,6 +12,6 @@ public class SearchController {
 	@RequestMapping("kakao")
 	public String search(){
 		log.info("SearchController.search.execute");
-		return "kakaoMap/searchTest";
+		return "kakaoMap/search";
 	}
 }
