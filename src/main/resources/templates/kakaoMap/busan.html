@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layouts/default_layout}">
+
+<body layout:fragment="content">
+
+<div id="map" style="width:1000px;height:500px;"></div>
+
+<!-- 지도 api 불러오기 -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=40e606b0d3b62e8dc1753ec322a8c92d&libraries=services"></script>
+
+<!-- controller에서 넘겨준 model(busanList)를 thymeleaf로 가져온다. -->
+<script th:inline="javascript"> /*<![CDATA[*/ var busanList = /*[[ ${busanList} ]]*/ []; /*]]>*/ </script>
+
+<!-- thymeleaf로 불러온 js파일에서는 위에 정의해준 busanList 객체를 js파일에서 사용할 수 있다. -->
+<script th:src="@{/js/busan/busan.js}" type="text/javascript"></script>
+
+</body>
+</html>
