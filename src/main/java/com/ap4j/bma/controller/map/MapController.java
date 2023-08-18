@@ -13,6 +13,6 @@ public class MapController {
     public String main(){
 
         log.info("MapController.main.execute");
-        return "map/mapMain";
+        return "kakaoMap/markerCluster";
     }
 }
