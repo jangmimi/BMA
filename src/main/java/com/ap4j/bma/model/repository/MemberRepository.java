@@ -12,6 +12,4 @@ import java.util.Optional;
 @Repository
 public interface MemberRepository extends JpaRepository<MemberEntity, Long> {   // ..JpaRepository<관리 대상, 대상의 PK 타입>
 
-//    Optional<MemberEntity> save(MemberEntity pMember);
-//    Optional<MemberEntity> findByName(String name);
 }

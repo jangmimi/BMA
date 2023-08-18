@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml" lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layouts/default_layout}">
 <head>
     <meta charset="UTF-8">
     <title>로그인</title>
@@ -11,7 +14,7 @@
     <!-- 부트스트랩 CSS -->
 <!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">-->
 </head>
-<body>
+<body layout:fragment="content">
     <!-- BODY 전체 감싸는 div (푸터 맨 밑에 고정 시키기 위해 생성) -->
     <div class="wrap" style="min-height:100%; position:relative;">
         <!-- 임시 헤더 -->
@@ -19,6 +22,10 @@
 
         <div class="container" align="center">
             <h1>아파트 사조 Login Test</h1>
+<!--            <h1 th:each="meberList : ${members}"></h1>-->
+<!--            <h1 th:text="${members.name}"></h1>-->
+<!--            <h1 th:text="${members.email}"></h1>-->
+
 
             <span th:if="${userId == null}">    <!-- 로그인 안한 상태 -->
                 <form action="/qLoginBasic" method="POST">
@@ -45,16 +52,20 @@
                         </tr>
                     </table>
                 </form>
-
-                <!-- 카카오 로그인 -->
-                <a href="https://kauth.kakao.com/oauth/authorize?client_id=fae91fecfb7dbda2a80ae22881709a28&redirect_uri=http://localhost:8081/qLogin&response_type=code">
-                    <img src="/images/kakao_login_medium_narrow.png" alt="kakaoLogin" />
-                </a>
-                <!-- 네이버 로그인 -->
-                <a href="/qLoginNaver">
-                    <img src="/images/btnG_완성형.png" alt="naverLogin" height="45"/>  <!-- 카카오 로그인과 height만 맞춤 (된다면 추후 이미지 사이즈 자체를 맞추기) -->
-                </a>
-
+                <table>
+                    <tr>
+                        <td colspan="2">
+                            <!-- 카카오 로그인 -->
+                            <a href="https://kauth.kakao.com/oauth/authorize?client_id=fae91fecfb7dbda2a80ae22881709a28&redirect_uri=http://localhost:8081/qLogin&response_type=code">
+                                <img src="/images/kakao_login_medium_narrow.png" alt="kakaoLogin" />
+                            </a>
+                            <!-- 네이버 로그인 -->
+                            <a href="/qLoginNaver">
+                                <img src="/images/btnG_완성형.png" alt="naverLogin" height="45"/>  <!-- 카카오 로그인과 height만 맞춤 (된다면 추후 이미지 사이즈 자체를 맞추기) -->
+                            </a>
+                        </td>
+                    </tr>
+                </table>
             </span>
             <span th:if="${userId != null}">                                  <!-- 로그인 성공 시 -->
                 <form name="logout" action="http://localhost:8081/qLogout">
@@ -64,6 +75,7 @@
                 </form>
             </span>
         </div>
+
 
     <!-- 임시 푸터 -->
     <div name="oTmpFooter" style="background-color:skyblue; width:100%; height:100px; position:absolute; bottom:0;">임시 푸터 공간입니다.</div>

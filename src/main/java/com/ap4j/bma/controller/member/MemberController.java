@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -89,7 +90,7 @@ public class MemberController {
         return "redirect:/qLoginForm";
     }
 
-    /** 기본 회원가입 페이지 매핑 */
+    /** 기본 회원가입 폼 */
     @RequestMapping(value="/qJoinForm")
     public String qJoinForm() {
         log.info("MemberController - qJoinForm() 실행");
@@ -100,20 +101,26 @@ public class MemberController {
     @PostMapping(value="/qJoinBasic")
     public String qJoinBasic(MemberDTO memberDTO, Model model) {
         log.info("MemberController - qJoinBasic() 실행");
-        log.info("memberDTO : " + memberDTO.toString());
+        log.info("memberDTO : " + memberDTO);
 
         MemberEntity member = new MemberEntity();
         member.setName(memberDTO.getName());  // 아이디
         member.setEmail(memberDTO.getEmail());  // 비밀번호
 
-        log.info("member name : " + member.getName());
-        log.info("member email : " + member.getEmail());
-        model.addAttribute("member",member);
+//        log.info("member name : " + member.getName());
+//        log.info("member email : " + member.getEmail());
+//        model.addAttribute("member",member);
 
         MemberEntity entity = memberDTO.toEntity();
         log.info("entity : " + entity.toString());
-
+        
         qMemberService.joinBasic(member);
+        log.info("qMemberService.joinBasic(member) 실행 한 후");
+        
+        // DB save 안돼서 회원전체조회 테스트
+        List<MemberEntity> members = qMemberService.findMembers();
+        log.info("members 값 : {}", members);
+        model.addAttribute("members",members);
         return "redirect:/qLoginForm";
     }
 

@@ -17,6 +17,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -149,6 +150,20 @@ public class MemberServiceImpl implements MemberService {
 		memberRepository.save(pMember);
 		return pMember.getId();
 	}
+//	public Long joinBasic(MemberEntity pMember) {
+////		validateDuplicateMember(pMember);    // 중복 회원 검증
+//
+//		memberRepository.save(pMember);
+//		return pMember.getId();
+//	}
+
+	@Override
+	public List<MemberEntity> findMembers() {
+		log.info("서비스 findMember() 실행중");
+		return memberRepository.findAll();
+	}
+
+
 
 //	public void validateDuplicateMember(MemberEntity pMember) {
 //		memberRepository.findByName(pMember.getName())
