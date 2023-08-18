@@ -1,55 +1,55 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en"-->
-<!--      xmlns:th="http://www.thymeleaf.org"-->
-<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
-<!--      layout:decorate="~{fragments/layouts/default_layout}">-->
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layouts/include_footer_layout}">
 
-<!--<body layout:fragment="content">-->
-<!--<div id="map" style="width:100%;height:1000px;"></div>-->
+<body layout:fragment="content">
+<div id="map" style="width:100%;height:1000px;"></div>
 
-<!--&lt;!&ndash;<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3e12c3fe0b0b1f4ecca69b72bc0d4f40&libraries=clusterer"></script>&ndash;&gt;-->
+<!--<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3e12c3fe0b0b1f4ecca69b72bc0d4f40&libraries=clusterer"></script>-->
 
-<!--<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3e12c3fe0b0b1f4ecca69b72bc0d4f40&libraries=services"></script>-->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3e12c3fe0b0b1f4ecca69b72bc0d4f40&libraries=services"></script>
 
-<!--<script th:inline="javascript">-->
-<!--    var mapContainer = document.getElementById('map');-->
-<!--    var mapOption = {-->
-<!--        center: new kakao.maps.LatLng(37.566826, 126.9786567),-->
-<!--        level: 3-->
-<!--    };-->
+<script th:inline="javascript">
+    var mapContainer = document.getElementById('map');
+    var mapOption = {
+        center: new kakao.maps.LatLng(37.566826, 126.9786567),
+        level: 3
+    };
 
-<!--    var map = new kakao.maps.Map(mapContainer, mapOption);-->
-<!--    var geocoder = new kakao.maps.services.Geocoder();-->
+    var map = new kakao.maps.Map(mapContainer, mapOption);
+    var geocoder = new kakao.maps.services.Geocoder();
 
-<!--    var positionsArray = /*[[${positions}]]*/;-->
+    var positionsArray = /*[[${positions}]]*/;
 
-<!--    if (positionsArray != null) {-->
-<!--        for (var i = 0; i < positionsArray.length; i++) {-->
-<!--            (function(position) {-->
-<!--                var fullAddress = position;-->
-<!--                geocoder.addressSearch(fullAddress, function(result, status) {-->
-<!--                    if (status === kakao.maps.services.Status.OK) {-->
-<!--                        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);-->
-<!--                        var marker = new kakao.maps.Marker({-->
-<!--                            map: map,-->
-<!--                            position: coords-->
-<!--                        });-->
+    if (positionsArray != null) {
+        for (var i = 0; i < positionsArray.length; i++) {
+            (function(position) {
+                var fullAddress = position;
+                geocoder.addressSearch(fullAddress, function(result, status) {
+                    if (status === kakao.maps.services.Status.OK) {
+                        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                        var marker = new kakao.maps.Marker({
+                            map: map,
+                            position: coords
+                        });
 
-<!--                        var infowindow = new kakao.maps.InfoWindow({-->
-<!--                            content: '<div style="width:150px;text-align:center;padding:6px 0;">' + position + '</div>'-->
-<!--                        });-->
+                        var infowindow = new kakao.maps.InfoWindow({
+                            content: '<div style="width:150px;text-align:center;padding:6px 0;">' + position + '</div>'
+                        });
 
-<!--                        kakao.maps.event.addListener(marker, 'click', function() {-->
-<!--                            infowindow.open(map, marker);-->
-<!--                        });-->
-<!--                    }-->
-<!--                });-->
-<!--            })(positionsArray[i]);-->
-<!--        }-->
-<!--    }-->
-<!--</script>-->
-<!--</body>-->
-<!--</html>-->
+                        kakao.maps.event.addListener(marker, 'click', function() {
+                            infowindow.open(map, marker);
+                        });
+                    }
+                });
+            })(positionsArray[i]);
+        }
+    }
+</script>
+</body>
+</html>
 
 
 <!--<!DOCTYPE html>-->
