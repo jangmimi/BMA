@@ -16,5 +16,4 @@ public class HomeController {
 		return "payments/payments";
 	}
 
-
 }
