@@ -4,6 +4,7 @@ package com.ap4j.bma.controller.member;
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
 import com.ap4j.bma.service.member.MemberService;
+import com.ap4j.bma.service.member.MemberServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,7 @@ import java.util.List;
 public class MemberController {
 
     @Autowired
-    private MemberService qMemberService;
+    private MemberServiceImpl qMemberServiceImpl;
 
     /** 로그인 페이지 매핑 */
     @RequestMapping(value="/qLoginForm")
@@ -37,12 +38,17 @@ public class MemberController {
         log.info("####code : " + code);
 
         // 1번 인증코드 요청 전달
-        String accessToken = qMemberService.getAccessToken(code);     // code로 토큰 받음
+        String accessToken = qMemberServiceImpl.getAccessToken(code);     // code로 토큰 받음
         log.info("accessToken : " + accessToken);
 
         // 2번 인증코드로 토큰 전달
-        HashMap<String, Object> userInfo = qMemberService.getUserInfo(accessToken);   // 사용자 정보 받음
+//        MemberDTO userInfo = qMemberServiceImpl.getUserInfo2(accessToken);   // 사용자 정보 받음
+        HashMap<String, Object> userInfo = qMemberServiceImpl.getUserInfo(accessToken);   // 사용자 정보 받음
         log.info("login info : " + userInfo.toString());
+        // https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#req-user-info
+        log.info("login userUniqueId : " + userInfo.get("id"));
+        log.info("login userId(email) : " + userInfo.get("email"));
+        log.info("login userName : " + userInfo.get("nickname"));
 
         if(userInfo.get("email") != null) {
             session.setAttribute("userId", userInfo.get("email"));
@@ -51,6 +57,21 @@ public class MemberController {
         }
         model.addAttribute("userId", userInfo.get("email"));
         model.addAttribute("userName", userInfo.get("nickname"));
+//        if(userInfo.getEmail() != null) {
+//            session.setAttribute("userId", userInfo.getEmail());
+//            session.setAttribute("userName", userInfo.getName());
+//            session.setAttribute("accessToken", accessToken);
+//        }
+//        model.addAttribute("userId", userInfo.getEmail());
+//        model.addAttribute("userName", userInfo.getName());
+
+        MemberEntity member = new MemberEntity();
+        member.setName((String) userInfo.get("nickname"));  // 아이디
+        member.setEmail((String) userInfo.get("email"));  // 비밀번호
+        log.info(member.toString());
+
+        qMemberServiceImpl.joinBasic(member);   // 카카오정보로 회원가입 실행
+
         return "/userView/oLoginForm";
     }
 
@@ -59,7 +80,7 @@ public class MemberController {
     public String qLogout(HttpSession session) {
         log.info("MemberController - qLogout() 실행");
 
-        qMemberService.kakaoLogout((String)session.getAttribute("accessToken"));
+        qMemberServiceImpl.kakaoLogout((String)session.getAttribute("accessToken"));
         session.removeAttribute("accessToken");
         session.removeAttribute("userId");
         session.removeAttribute("userName");
@@ -86,7 +107,7 @@ public class MemberController {
         MemberEntity entity = memberDTO.toEntity();
         log.info("entity : " + entity.toString());
 
-        qMemberService.joinBasic(member);
+        qMemberServiceImpl.joinBasic(member);
         return "redirect:/qLoginForm";
     }
 
@@ -113,12 +134,12 @@ public class MemberController {
 
         MemberEntity entity = memberDTO.toEntity();
         log.info("entity : " + entity.toString());
-        
-        qMemberService.joinBasic(member);
+
+        qMemberServiceImpl.joinBasic(member);
         log.info("qMemberService.joinBasic(member) 실행 한 후");
         
         // DB save 안돼서 회원전체조회 테스트
-        List<MemberEntity> members = qMemberService.findMembers();
+        List<MemberEntity> members = qMemberServiceImpl.findMembers();
         log.info("members 값 : {}", members);
         model.addAttribute("members",members);
         return "redirect:/qLoginForm";

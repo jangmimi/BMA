@@ -1,5 +1,6 @@
 package com.ap4j.bma.service.member;
 
+import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
 import com.ap4j.bma.model.repository.MemberRepository;
 import com.google.gson.JsonElement;
@@ -18,6 +19,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -76,6 +78,56 @@ public class MemberServiceImpl implements MemberService {
 		}
 		return accessToken;
 	}
+//	public MemberDTO getUserInfo2(String accessToken) {
+//		MemberDTO dto = new MemberDTO();
+//		String reqUrl = "https://kapi.kakao.com/v2/user/me";
+//		try {
+//			URL url = new URL(reqUrl);
+//			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//			conn.setRequestMethod("POST");
+//			conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+//			int responseCode = conn.getResponseCode();
+//			log.info("responseCode = " + responseCode);
+//
+//			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+//
+//			String line = "";
+//			String result = "";
+//
+//			while((line = br.readLine()) != null) {
+//				result += line;
+//			}
+//			log.info("response body = " + result);  // 필요한 것만 뽑아 낼 수 있는지 확인하기
+//
+//			JsonParser parser = new JsonParser();
+//			JsonElement element =  parser.parse(result);
+//
+//			JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
+//			JsonObject kakaoAccount = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
+//
+//			String nickname = properties.getAsJsonObject().get("nickname").getAsString();
+//			String email = kakaoAccount.getAsJsonObject().get("email").getAsString();
+//
+//			dto.setName("nickname");
+//			dto.setEmail("email");
+//
+//			MemberEntity tmp = memberRepository.findByEmail(email);
+//
+//			log.info("test tmp (email기준 회원정보있나~?) : " + tmp);
+//
+////			@Override
+////			public Long joinBasic(MemberEntity pMember) {
+////				memberRepository.save(pMember);
+////				return pMember.getId();
+////			}
+//
+//		} catch (Exception e) {
+//			log.info(e.toString());
+////			e.printStackTrace();
+//		}
+//
+//		return dto;
+//	}
 
 	public HashMap<String, Object> getUserInfo(String accessToken) {
 		HashMap<String, Object> userInfo = new HashMap<String, Object>();
@@ -110,10 +162,22 @@ public class MemberServiceImpl implements MemberService {
 			userInfo.put("nickname", nickname);
 			userInfo.put("email", email);
 
+			MemberEntity tmp = memberRepository.findByEmail(email);
+			log.info("test tmp (email기준 회원정보있나~?) : " + tmp);
+			tmp.setEmail(email);
+			tmp.setName(email);
+
+//			@Override
+//			public Long joinBasic(MemberEntity pMember) {
+//				memberRepository.save(pMember);
+//				return pMember.getId();
+//			}
+
 		} catch (Exception e) {
 			log.info(e.toString());
 //			e.printStackTrace();
 		}
+
 		return userInfo;
 	}
 

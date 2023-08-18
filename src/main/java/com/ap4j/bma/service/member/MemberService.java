@@ -1,7 +1,9 @@
 package com.ap4j.bma.service.member;
 
+import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
 
+import java.lang.reflect.Member;
 import java.util.HashMap;
 import java.util.List;
 
@@ -12,6 +14,8 @@ public interface MemberService {	// pjm Member 기 능 작 업 중
 
 	/** 카카오 유저 정보 얻기 */
 	public HashMap<String, Object> getUserInfo(String accessToken);	// HashMap -> MemberDTO로 변경 예정
+
+//	public MemberDTO getUserInfo2(String accessToken);
 
 	/** 카카오 로그아웃 */
 	public void kakaoLogout(String accessToken);

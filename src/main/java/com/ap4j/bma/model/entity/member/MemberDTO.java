@@ -7,7 +7,8 @@ import org.springframework.stereotype.Component;
 
 @Setter
 @Getter
-public class MemberDTO {
+public class
+MemberDTO {
 
 //	private Long id;
 	private String name;
