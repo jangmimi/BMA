@@ -14,6 +14,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 @Controller
 public class ApiAptController {
@@ -25,11 +29,12 @@ public class ApiAptController {
         int pageNo = 1;
 
         ArrayList<AptDTO> aptList = null;
+
         try {
             String apiUrl = "http://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyFullDown?"
                         + "serviceKey=5C%2FnyAagqz6%2F%2BnYRGcZyRNpteaEeTlrNaMf1KtU0CWaSMRID13wEXSHVJ0J7WMvTl864DTzD3rwHM5GPX1aWtA%3D%3D&"
                         + "pageNo=1&"
-                        + "numOfRows=5000";
+                        + "numOfRows=10000";
 
             URL url = new URL(apiUrl);
 
@@ -69,7 +74,7 @@ public class ApiAptController {
 
                 aptList.add(apt);
             }
-            
+
 
         } catch (Exception e) {
             e.printStackTrace();
