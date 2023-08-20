@@ -165,7 +165,8 @@ public class MemberServiceImpl implements MemberService {
 			MemberEntity tmp = memberRepository.findByEmail(email);
 			log.info("test tmp (email기준 회원정보있나~?) : " + tmp);
 			tmp.setEmail(email);
-			tmp.setName(email);
+			tmp.setName(nickname);
+			log.info("tmp : " + tmp.toString());
 
 //			@Override
 //			public Long joinBasic(MemberEntity pMember) {
@@ -209,10 +210,11 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public Long joinBasic(MemberEntity pMember) {
+		log.info("서비스 joinBasic() 실행");
 //		validateDuplicateMember(pMember);    // 중복 회원 검증
 
 		memberRepository.save(pMember);
-		return pMember.getId();
+		return pMember.getIdx();
 	}
 //	public Long joinBasic(MemberEntity pMember) {
 ////		validateDuplicateMember(pMember);    // 중복 회원 검증
@@ -223,10 +225,15 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public List<MemberEntity> findMembers() {
-		log.info("서비스 findMember() 실행중");
+		log.info("서비스 findMember() 실행");
 		return memberRepository.findAll();
 	}
 
+	@Override
+	public MemberEntity loginByEmail(String loginEmail) {
+		log.info("서비스 loginByEmail() 실행");
+        return memberRepository.findByEmail(loginEmail);
+    }
 
 
 //	public void validateDuplicateMember(MemberEntity pMember) {

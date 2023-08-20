@@ -7,19 +7,18 @@ import org.springframework.stereotype.Component;
 
 @Setter
 @Getter
-public class
-MemberDTO {
-
-//	private Long id;
-	private String name;
+public class MemberDTO {
 	private String email;
+	private String name;
+	private String pwd;
 
 	// 빌더 패턴으로 객체 생성
 	public MemberEntity toEntity() {
 		return MemberEntity.builder()
-				.id(null)
-				.name(name)
+				.idx(null)
 				.email(email)
+				.name(name)
+				.pwd(pwd)
 				.build();
 	}
 }

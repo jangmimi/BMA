@@ -13,4 +13,5 @@ import java.util.Optional;
 public interface MemberRepository extends JpaRepository<MemberEntity, Long> {   // ..JpaRepository<관리 대상, 대상의 PK 타입>
 
     MemberEntity findByEmail(String email);
+
 }

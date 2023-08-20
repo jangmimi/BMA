@@ -29,6 +29,11 @@ public interface MemberService {	// pjm Member 기 능 작 업 중
 	/** 회원전체 조회 */
 	public List<MemberEntity> findMembers();
 
+	/** 로그인 */
+	public MemberEntity loginByEmail(String loginEmail);
+
+
+
 
 	void addSomething(String something);
 

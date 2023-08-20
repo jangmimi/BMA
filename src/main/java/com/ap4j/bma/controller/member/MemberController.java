@@ -9,9 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -22,7 +20,7 @@ import java.util.List;
 public class MemberController {
 
     @Autowired
-    private MemberServiceImpl qMemberServiceImpl;
+    private MemberService qMemberServiceImpl;
 
     /** 로그인 페이지 매핑 */
     @RequestMapping(value="/qLoginForm")
@@ -92,22 +90,27 @@ public class MemberController {
 
     /** 기본 로그인 */
     @PostMapping(value="/qLoginBasic")
-    public String qBasicLogin(MemberDTO memberDTO, Model model) {
+    public String qBasicLogin(@ModelAttribute MemberDTO memberDTO, Model model, HttpSession session) {
         log.info("MemberController - qBasicLogin() 실행");
         log.info("memberDTO : " + memberDTO);
 
         MemberEntity member = new MemberEntity();
-        member.setName(memberDTO.getName());  // 아이디
-        member.setEmail(memberDTO.getEmail());  // 비밀번호
+        member.setEmail(memberDTO.getEmail());
+        member.setPwd(memberDTO.getPwd());
+        log.info(member.toString());
 
-        log.info("member name : " + member.getName());
-        log.info("member email : " + member.getEmail());
-        model.addAttribute("member",member);
+        MemberEntity result = qMemberServiceImpl.loginByEmail(member.getEmail());
 
-        MemberEntity entity = memberDTO.toEntity();
-        log.info("entity : " + entity.toString());
-
-        qMemberServiceImpl.joinBasic(member);
+//        if(qMemberServiceImpl.loginByEmail(member.getEmail())) {
+        if(result != null) {
+            log.info("로그인 성공!");
+            log.info("result : " + result);
+            log.info("result.email : " + result.getEmail());
+            model.addAttribute("userId", result.getEmail());
+            model.addAttribute("userName", result.getName());
+            session.setAttribute("userId", result.getEmail());
+            return "/userView/oLoginForm";
+        }
         return "redirect:/qLoginForm";
     }
 
@@ -125,12 +128,13 @@ public class MemberController {
         log.info("memberDTO : " + memberDTO);
 
         MemberEntity member = new MemberEntity();
-        member.setName(memberDTO.getName());  // 아이디
-        member.setEmail(memberDTO.getEmail());  // 비밀번호
+        member.setEmail(memberDTO.getEmail());  // 이메일
+        member.setName(memberDTO.getName());  // 이름
+        member.setPwd(memberDTO.getPwd());  // 비밀번호
 
 //        log.info("member name : " + member.getName());
 //        log.info("member email : " + member.getEmail());
-//        model.addAttribute("member",member);
+        model.addAttribute("member",member);
 
         MemberEntity entity = memberDTO.toEntity();
         log.info("entity : " + entity.toString());
@@ -142,6 +146,7 @@ public class MemberController {
         List<MemberEntity> members = qMemberServiceImpl.findMembers();
         log.info("members 값 : {}", members);
         model.addAttribute("members",members);
+
         return "redirect:/qLoginForm";
     }
 
@@ -159,6 +164,18 @@ public class MemberController {
         log.info("MemberController - qLoginNaverCallback() 실행");
 
         return "redirect:/qLoginForm";
+    }
+
+    /** 마이페이지 매핑 */
+    @GetMapping(value="/qMyPage")
+    public String qMyPage() {
+        return "/userView/oMyPage";
+    }
+
+    /** 내정보수정 페이지 매핑 */
+    @GetMapping(value="/qMyInfoUpdate")
+    public String qMyInfoUpdate() {
+        return "/userView/oMyInfoUpdate";
     }
 }
 

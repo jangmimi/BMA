@@ -13,18 +13,21 @@ import javax.persistence.*;
 @ToString
 public class MemberEntity {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)	// Id 자동 증가
-	private Long id;	// 기본 키(DB PK)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)	// Idx 자동 증가
+	private Long idx;	// 기본 키(DB PK)
 	@Column
 	private String email;
 	@Column
 	private String name;
+	@Column
+	private String pwd;
 
 	@Builder	// 빌더 패턴 적용
-	public MemberEntity(Long id, String email, String name) {
-		this.id = id;
+	public MemberEntity(Long idx, String email, String name, String pwd) {
+		this.idx = idx;
 		this.email = email;
 		this.name =  name;
+		this.pwd = pwd;
 	}
 }
 
