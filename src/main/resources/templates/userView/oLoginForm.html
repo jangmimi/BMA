@@ -20,6 +20,11 @@
             justify-content: right;
             2줄은 부트스트랩때문에 적용안돼서 인라인 태그로 적용-->
         }
+        <!-- a태그와 img 사이즈를 맞추기 위한 css 추가 -->
+        .oLoginSnsBtn-container {
+<!--            display: inline-block;-->
+        }
+
     </style>
     <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -64,24 +69,26 @@
                     </div>
                 </form>
 
-                <div id="oLoginSns" style="mt-5 mb-5">
+                <div class="container" id="oLoginSns" style="mt-5 mb-5">
                     <hr style="width: 400px;"/>
                     <p style="margin-bottom: 20px;">login with SNS</p>
-                    <div>
+                    <div class="oLoginSnsBtn-container">
                         <!-- 카카오 로그인 -->
                         <a href="https://kauth.kakao.com/oauth/authorize?client_id=fae91fecfb7dbda2a80ae22881709a28&redirect_uri=http://localhost:8081/qLogin&response_type=code">
                             <img src="/images/kakao_login_medium_narrow.png" alt="kakaoLogin" />
                         </a>
-
+                    <!--</div>
+                    <div class="oLoginSnsBtn-container">-->
                         <!-- 네이버 로그인 -->
                         <a href="/qLoginNaver">
-                            <img src="/images/btnG_완성형.png" alt="naverLogin" height="45"/>  <!-- 카카오 로그인과 height만 맞춤 (된다면 추후 이미지 사이즈 자체를 맞추기) -->
+                            <img src="/images/btnG_완성형.png" alt="naverLogin" height="45" />  <!-- 카카오 로그인과 height만 맞춤 (된다면 추후 이미지 사이즈 자체를 맞추기) -->
                         </a>
                     </div>
                 </div>
             </span>
 
-            <span th:if="${userId != null}">                                  <!-- 로그인 성공 시 -->
+            <!-- 로그인 성공 시 -->
+            <span th:if="${userId != null}">
                 <form name="logout" action="http://localhost:8081/qLogout">
                     <span th:text="${userName}"></span>님 환영합니다.<br/>    <!-- nickname + 인사말 출력 -->
                     (<span th:text="${userId}"></span>)<br/>                    <!-- email -->

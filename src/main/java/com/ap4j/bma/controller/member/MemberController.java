@@ -78,8 +78,9 @@ public class MemberController {
     public String qLogout(HttpSession session) {
         log.info("MemberController - qLogout() 실행");
 
-        qMemberServiceImpl.kakaoLogout((String)session.getAttribute("accessToken"));
-        session.removeAttribute("accessToken");
+        /* token 재사용으로 콘솔에 400에러가 확인되어 주석 처리중(정확한 원인 파악 필요) */
+//        qMemberServiceImpl.kakaoLogout((String)session.getAttribute("accessToken"));
+//        session.removeAttribute("accessToken");
         session.removeAttribute("userId");
         session.removeAttribute("userName");
 
@@ -99,7 +100,7 @@ public class MemberController {
         member.setPwd(memberDTO.getPwd());
         log.info(member.toString());
 
-        MemberEntity result = qMemberServiceImpl.loginByEmail(member.getEmail());
+        MemberEntity result = qMemberServiceImpl.login(member.getEmail());
 
 //        if(qMemberServiceImpl.loginByEmail(member.getEmail())) {
         if(result != null) {
@@ -152,9 +153,37 @@ public class MemberController {
 
     /** 네이버 로그인 */
     @RequestMapping(value="/qLoginNaver")
-    public String qLoginNaver() {
+    public String qLoginNaver(@RequestParam(value = "code", required = false) String code,
+                              @RequestParam(value="state") String state, Model model, HttpSession session) {
         log.info("MemberController - qLoginNaver() 실행");
+        log.info("####code : " + code);
 
+        // 1번 인증코드 요청 전달
+        String accessToken = qMemberServiceImpl.getAccessTokenNaver(code);     // code로 토큰 받음
+        log.info("accessToken : " + accessToken);
+
+//        // 2번 인증코드로 토큰 전달
+//        HashMap<String, Object> userInfo = qMemberServiceImpl.getUserInfo(accessToken);   // 사용자 정보 받음
+//        log.info("login info : " + userInfo.toString());
+//        // https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#req-user-info
+//        log.info("login userUniqueId : " + userInfo.get("id"));
+//        log.info("login userId(email) : " + userInfo.get("email"));
+//        log.info("login userName : " + userInfo.get("nickname"));
+//
+//        if(userInfo.get("email") != null) {
+//            session.setAttribute("userId", userInfo.get("email"));
+//            session.setAttribute("userName", userInfo.get("nickname"));
+//            session.setAttribute("accessToken", accessToken);
+//        }
+//        model.addAttribute("userId", userInfo.get("email"));
+//        model.addAttribute("userName", userInfo.get("nickname"));
+//
+//        MemberEntity member = new MemberEntity();
+//        member.setName((String) userInfo.get("nickname"));  // 아이디
+//        member.setEmail((String) userInfo.get("email"));  // 비밀번호
+//        log.info(member.toString());
+//
+//        qMemberServiceImpl.joinBasic(member);   // 네이버정보로 회원가입 실행
 
         return "redirect:/qLoginForm";
     }
@@ -178,23 +207,3 @@ public class MemberController {
         return "/userView/oMyInfoUpdate";
     }
 }
-
-
-//    // 네이버 로그인 테스트
-//    @RequestMapping(value="/naverlogin2")
-//    public ModelAndView naverlogin() {
-//        log.info("pjm컨트롤러 - naverlogin() 실행");
-//        ModelAndView mav = new ModelAndView();
-//
-//        mav.setViewName("apitest_pjm/pjm_naverLogin");
-//        return mav;
-//    }
-//
-//    @RequestMapping(value="/navercallback2")
-//    public ModelAndView navercallback() {
-//        log.info("pjm컨트롤러 - navercallback() 실행");
-//        ModelAndView mav = new ModelAndView();
-//
-//        mav.setViewName("apitest_pjm/pjm_naverCallback");
-//        return mav;
-//    }

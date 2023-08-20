@@ -7,18 +7,22 @@ import java.lang.reflect.Member;
 import java.util.HashMap;
 import java.util.List;
 
-public interface MemberService {	// pjm Member 기 능 작 업 중
+public interface MemberService {
 
-	/** 토큰 얻기 */
+	/** 카카오 토큰 얻기 */
 	public String getAccessToken(String code);
 
 	/** 카카오 유저 정보 얻기 */
 	public HashMap<String, Object> getUserInfo(String accessToken);	// HashMap -> MemberDTO로 변경 예정
-
 //	public MemberDTO getUserInfo2(String accessToken);
 
 	/** 카카오 로그아웃 */
 	public void kakaoLogout(String accessToken);
+
+	/** 네이버 토큰 얻기 */
+	public String getAccessTokenNaver(String code);
+
+	/** 네이버 로그인 */
 
 	/** 기본 회원가입 */
 	public Long joinBasic(MemberEntity pMember);
@@ -29,12 +33,7 @@ public interface MemberService {	// pjm Member 기 능 작 업 중
 	/** 회원전체 조회 */
 	public List<MemberEntity> findMembers();
 
-	/** 로그인 */
-	public MemberEntity loginByEmail(String loginEmail);
-
-
-
-
-	void addSomething(String something);
+	/** 기본 로그인 */
+	public MemberEntity login(String loginEmail);
 
 }

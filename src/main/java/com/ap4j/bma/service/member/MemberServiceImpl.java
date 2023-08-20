@@ -15,8 +15,10 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -184,7 +186,6 @@ public class MemberServiceImpl implements MemberService {
 
 	public void kakaoLogout(String accessToken) {
 		String reqURL = "https://kauth.kakao.com/oauth/logout";
-//        String reqURL = "https://kauth.kakao.com/oauth/logout";
 		try {
 			URL url = new URL(reqURL);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -199,13 +200,64 @@ public class MemberServiceImpl implements MemberService {
 			String line = "";
 
 			while((line = br.readLine()) != null) {
-				result+=line;
+				result += line;
 			}
 			log.info(result);
 		} catch (Exception e) {
 			log.info(e.toString());
+		}
+	}
+
+	@Override
+	public String getAccessTokenNaver(String code) {
+		String accessToken = "";
+		String refreshToken = "";
+		String reqURL = "https://nid.naver.com/oauth2.0/authorize";
+		SecureRandom random = new SecureRandom();
+		String state = new BigInteger(130, random).toString(32);
+
+		try {
+			URL url = new URL(reqURL);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("POST");
+			conn.setDoOutput(true);
+
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+
+			StringBuilder sb = new StringBuilder();
+			sb.append("response_type=code");
+			sb.append("&client_id=KxGhFHZ7Xp74X_5IZ23h");
+			sb.append("&redirect_uri=http://localhost:8081/qLoginNaverCallback");
+			sb.append("&state="+state);
+
+			bw.write(sb.toString());
+			bw.flush();
+
+			int responseCode = conn.getResponseCode();
+			log.info("response code = " + responseCode);
+
+			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+			String line = "";
+			String result = "";
+			while((line = br.readLine())!=null) {
+				result += line;
+			}
+			log.info("response body = "+result);
+
+			JsonParser parser = new JsonParser();
+			JsonElement element = parser.parse(result);
+
+			accessToken = element.getAsJsonObject().get("access_token").getAsString();
+			refreshToken = element.getAsJsonObject().get("refresh_token").getAsString();
+
+			br.close();
+			bw.close();
+		} catch (Exception e) {
+			log.info(e.toString());
 //			e.printStackTrace();
 		}
+		return accessToken;
 	}
 
 	@Override
@@ -230,31 +282,23 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public MemberEntity loginByEmail(String loginEmail) {
+	public MemberEntity login(String loginEmail) {
 		log.info("서비스 loginByEmail() 실행");
+		MemberEntity findMember = memberRepository.findByEmail(loginEmail);
+
+
         return memberRepository.findByEmail(loginEmail);
     }
 
 
-//	public void validateDuplicateMember(MemberEntity pMember) {
-//		memberRepository.findByName(pMember.getName())
-//			.ifPresent(m -> {
-//				throw new IllegalStateException("이미 존재하는 회원입니다.");
-//		});
-//	}
-
-
 	// 아래는 예시 코드입니다.
-	@Override
-	@Transactional // 트랜잭션 처리하기
-	public void addSomething(String something) {
-
-	}
+//	@Override
+//	@Transactional // 트랜잭션 처리하기
+//	public void addSomething(String something) {
+//	}
 }
 
-// 로그아웃 작업중...
-// 카카오 계정에서 로그아웃 하는 URL
-// https://kauth.kakao.com/oauth/logout?client_id=fae91fecfb7dbda2a80ae22881709a28&logout_redirect_uri=http://localhost:8082/logout
+// 카카오 로그아웃 작업중 (작업 완료 8/20)
 
 // response body ={"id":2959937821,"connected_at":"2023-08-11T13:03:35Z",
 // "properties":{"nickname":"박장미"},"kakao_account":{"profile_nickname_needs_agreement":false,"profile":{"nickname":"박장미"},
