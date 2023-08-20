@@ -14,6 +14,9 @@ body{
 
 
 
+
+
+
 .nav-link{
   font-size: 15px;
   text-align: center;
@@ -31,11 +34,13 @@ body{
 *::after {
   box-sizing: unset;
 }
+/* .nav-link:hover{
+  color:#26abed;
+} */
 
 
 
 
-/*마커 클러스터러 */
 .overlay_info {
   border-radius: 6px;
   margin-bottom: 12px;
@@ -72,10 +77,6 @@ body{
 
 
 
-
-
-
-/*버튼관련*/
 .list-group{
   width:400px;
 }
@@ -84,6 +85,12 @@ body{
   width:30px;
   border: none;
 }
+
+
+
+
+
+/*버튼들세부조정*/
 .btn-close{
   padding-top: 30px;
 }
@@ -113,9 +120,7 @@ body{
 
 
 
-
-
-/*사이드바 내부관련*/
+/*사이드바 속 세부 조정들*/
 .sideBarAll{
   position: absolute;
   top: 70px;
@@ -130,10 +135,12 @@ body{
   width:335px;
   height: 467px;
   font-size: 14px;
+  /* border: 3px solid blue; */
 }
 .input-group{
   justify-content: space-between;
 }
+/*위치,위치세부,뒤로가기,끄기,공유*/
 .titlearea,.left ,.right{
   display: flex;
 }
@@ -153,22 +160,14 @@ body{
     line-height: 22px;
     letter-spacing: -1px;
 }
+
+
+/*미니맵*/
 .map-area{
   z-index: 3;
   position: absolute;
   width: 360px;
   height: 180px;
-}
-#navbar-example2{
-  --bs-navbar-padding-x:none;
-  height: 10px;
-}
-
-#scrollspyHeading6{
-  height: 420px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }
 .aed-mini-map{
   position: relative;
@@ -190,6 +189,21 @@ body{
   border-top: 1px solid #f2f2f2;
   align-items: center;
 }
+#navbar-example2{
+  --bs-navbar-padding-x:none;
+  height: 10px;
+}
+#scrollspyHeading6{
+  height: 420px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+
+
+
+
 #mes-utils{
   width: 90px;
   text-align: center;
@@ -231,8 +245,15 @@ a:active, a:focus, a:hover, a:link, a:visited {
 
 
 
-/*지도우측 기능 구현예정(상권,학교 등)*/
+/*맵 우측 도구(상권,학교 등)만들예정*/
 .map_util{
   position: absolute;
   right:10px;
 }
+
+
+
+
+
+
+
