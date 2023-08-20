@@ -24,13 +24,6 @@ document.addEventListener("DOMContentLoaded", function () {
         modal.style.display = "none";
     });
 
-//    // 모달 바깥 클릭 시 닫기
-//    window.addEventListener("click", function (event) {
-//        if (event.target === modal) {
-//            modal.style.display = "none";
-//        }
-//    });
-
     /** 계산기 상환방법 버튼 */
     const button1 = document.getElementById("e-button1");
     const button2 = document.getElementById("e-button2");
@@ -74,9 +67,17 @@ document.addEventListener("DOMContentLoaded", function () {
     const buttonSubmit = document.getElementById("e-buttonSubmit"); // 계산하기 버튼
     const buttonReset = document.getElementById("e-buttonReset"); // 초기화 버튼
 
+    // 대출금액 입력시 숫자3자리 단위로 , 붙여주기
+    inputAmount.addEventListener("input", function () {
+        const inputValue = inputAmount.value.replace(/,/g, ''); // 이미 있는 쉼표 제거
+        const formattedValue = formatNumberWithCommas(inputValue);
+        inputAmount.value = formattedValue;
+    });
+
+
     buttonSubmit.addEventListener("click", function () {
         // 사용자 입력 값은 문자열 형태로 받아오기 때문에, parseFloat 함수를 사용하여 숫자로 변환하여 계산에 사용한다.
-        const principal = parseFloat(inputAmount.value);
+        const principal = parseFloat(inputAmount.value.replace(/,/g, '')); // 쉼표 제거
         const interestRate = parseFloat(inputRate.value);
         const loanPeriod = parseFloat(inputPeriod.value);
 
@@ -84,7 +85,6 @@ document.addEventListener("DOMContentLoaded", function () {
             alert("유효한 숫자를 입력하세요.");
             return;
         }
-
         const monthlyInterestRate = (interestRate / 100) / 12;
         const numberOfPayments = loanPeriod * 12;
 
@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", function () {
             totalInterest = (monthlyPayment * numberOfPayments) * monthlyInterestRate;
             document.querySelector(".e-result4 th").textContent = "1회차 월 상환금액";
         } else if (repaymentMethod.id === "e-button3") { // 만기일시
-            totalInterest = principal / interestRate * loanPeriod;
+            totalInterest = principal *  loanPeriod * (interestRate / 100);
             monthlyPayment = principal + totalInterest;
             document.querySelector(".e-result4 th").textContent = "총 상환금액";
         }
