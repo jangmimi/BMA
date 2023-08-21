@@ -10,10 +10,15 @@ import org.springframework.web.client.RestTemplate;
 public class HomeController {
 
 
+//	@RequestMapping("/")
+//	public String test(){
+//		log.info("HomeController.payments.execute");
+//		return "payments/payments";
+//	}
+
 	@RequestMapping("/")
-	public String test(){
-		log.info("HomeController.payments.execute");
-		return "payments/payments";
+	public String mainPage(){
+		return "mainPage/mainPage";
 	}
 
 }
