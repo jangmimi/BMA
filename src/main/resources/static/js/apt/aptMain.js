@@ -1,110 +1,77 @@
-// [지도 불러오기]
 var container = document.getElementById('map');
 var options = {
-    center: new kakao.maps.LatLng(35.099903, 129.02715),
+    center: new kakao.maps.LatLng(37.55437, 126.974063),
     level: 3
 };
 var map = new kakao.maps.Map(container, options);
 
-// [지도에 확대 축소 컨트롤 생성]
 var zoomControl = new kakao.maps.ZoomControl();
-// [지도의 우측에 확대 축소 컨트롤 추가]
 map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 map.setMaxLevel(8);
 
-// [마커 및 클러스터 생성]
-var markers = []; // 마커들을 담을 배열
+var markers = [];
+var infowindows = {};
 
-// 인포윈도우를 표시하는 클로저를 만드는 함수
-function makeOverListener(map, marker, infowindow) {
+function makeOverListener(marker, infowindow) {
     return function() {
         infowindow.open(map, marker);
     };
 }
 
-// 인포윈도우를 닫는 클로저를 만드는 함수
 function makeOutListener(infowindow) {
     return function() {
         infowindow.close();
     };
 }
 
-/** 마커 삭제하는 함수 */
-function removeMarker() {
-    var cnt = markers.length;
-    for (var i = 0; i < cnt; i++) {
-        markers[i].setMap(null);
-    }
-    markers = [];
-}
+var clusterer = new kakao.maps.MarkerClusterer({
+    map: map,
+    averageCenter: false,
+    minLevel: 6
+});
 
-/** 마커 생성 함수 */
-function viewMarker() {
-    removeMarker();
-
+kakao.maps.event.addListener(map, 'idle', function() {
     var bounds = map.getBounds();
     var southWest = bounds.getSouthWest();
     var northEast = bounds.getNorthEast();
 
-    var lat1 = southWest.getLat();  // 수정
-    var lng1 = southWest.getLng();  // 수정
-    var lat2 = northEast.getLat();  // 수정
-    var lng2 = northEast.getLng();  // 수정
-
-    console.log(lat1);
-    console.log(lng1);
-    console.log(lat1);
-    console.log(lng1);
-
-    for (var i = 0; i < aptList.length; i++) {
-
-        var aptLat = aptList[i].aptLat;
-        var aptLng = aptList[i].aptLng;
-
-        if (aptLat >= lat1 && aptLat <= lat2 && aptLng >= lng1 && aptLng <= lng2) {
-            // [받아온 데이터에 마커 표시]
-            var marker = new kakao.maps.Marker({
-                map: map,
-                position: new kakao.maps.LatLng(aptLat, aptLng)
-            });
-
-            // 마커를 배열에 추가
-            markers.push(marker);
-
-            // [마커에 인포윈도우 표시]
-            var infowindow = new kakao.maps.InfoWindow({
-                content: aptList[i].aptName // 인포윈도우에 표시할 내용
-            });
-
-            // [마커에 이벤트 등록]
-            kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
-            kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
-        }
-    }
-
-    var clusterer = new kakao.maps.MarkerClusterer({
-        map: map,
-        averageCenter: true,
-        minLevel: 6,
-        markers: markers
+    var visibleAptList = aptList.filter(function(apt) {
+        return (
+            apt.aptLat >= southWest.getLat() &&
+            apt.aptLat <= northEast.getLat() &&
+            apt.aptLng >= southWest.getLng() &&
+            apt.aptLng <= northEast.getLng()
+        );
     });
-}
 
-// 확대축소
-kakao.maps.event.addListener(map, 'zoom_changed', function() {
-    chkArea();
-});
-// 화면이동
-kakao.maps.event.addListener(map, 'dragend', function() {
-    chkArea();
+    updateMarkers(visibleAptList);
 });
 
-function chkArea() {
-    removeMarker();
-    viewMarker();
+function updateMarkers(visibleAptList) {
+    markers.forEach(function(marker) {
+        marker.setMap(null);
+    });
+    markers = [];
+
+    visibleAptList.forEach(function(apt) {
+        var marker = new kakao.maps.Marker({
+            map: map,
+            position: new kakao.maps.LatLng(apt.aptLat, apt.aptLng)
+        });
+
+        markers.push(marker);
+
+        var infowindow = new kakao.maps.InfoWindow({
+            content: apt.aptName
+        });
+
+        kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(marker, infowindow));
+        kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+
+        infowindows[apt.aptName] = infowindow;
+    });
+
+    clusterer.clear();
+    clusterer.addMarkers(markers);
+    clusterer.redraw();
 }
-
-// 초기화
-viewMarker();
-
-
