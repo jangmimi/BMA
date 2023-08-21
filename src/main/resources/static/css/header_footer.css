@@ -6,6 +6,12 @@ margin:0;
 }
 
 /*헤더 컨테이너*/
+
+body{
+margin:0;
+padding:0;
+}
+
 .n-header{
     height: 60px;
     display: flex;
