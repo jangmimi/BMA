@@ -9,12 +9,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -125,9 +127,19 @@ public class MemberController {
 
     /** 기본 회원가입 */
     @PostMapping(value="/qJoinBasic")
-    public String qJoinBasic(MemberDTO memberDTO, Model model) {
+    public String qJoinBasic(@Valid MemberDTO memberDTO, Errors errors, Model model) {  // @Valid : UserDTO 유효성 검사 애노테이션(통과X -> errors)
         log.info("MemberController - qJoinBasic() 실행");
         log.info("memberDTO : " + memberDTO);
+
+        // post 요청 시 넘어온 memberDTO 입력 값에서 validation에 걸리는 경우
+//        if(errors.hasErrors()) {
+//            model.addAttribute("memberDTO", memberDTO); // 회원가입 실패 시 입력 데이터 유지
+//            Map<String, String> validatorResult = qMemberServiceImpl.validateHandler(errors);
+//            for(String key : validatorResult.keySet()) {
+//                model.addAttribute(key,validatorResult.get(key));
+//            }
+//            return "/userView/oJoinForm";
+//        }
 
         MemberEntity member = new MemberEntity();
         member.setEmail(memberDTO.getEmail());  // 이메일

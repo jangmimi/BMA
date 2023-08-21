@@ -6,36 +6,44 @@
 <head>
     <meta charset="UTF-8">
     <title>회원가입</title>
+    <!-- 부트스트랩 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+          crossorigin="anonymous">
     <style>
         .form-floating {
-            width: 400px;
+            width: 350px;
         }
         #oJoinBtn-container {
             display: flex;
-            justify-content: center;
+            justify-content: space-evenly;
         }
-        <!--#oInner-container-join {
+        #oInner-container-join {
             width: 400px;
             height: 800px;
-        }-->
+        }
+        #oJoinTitle {
+            padding: 20px 50px;
+            margin: 0px;
+        }
     </style>
-    <!-- 부트스트랩 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
 <body layout:fragment="content">
     <!-- BODY 전체 감싸는 div (푸터 맨 밑에 고정 시키기 위해 생성) -->
     <div class="wrap" style="min-height:100%; position:relative;">
-        <!-- 헤더 임시 구분선-->
-        <hr/>
 
-        <div class="container" id="oInner-container-join">
-            <img src="/images/qLogoForm.png" alt="logoImage" style="margin-bottom: 10px;">
-            <h1>회원가입</h1>
+        <div class="container mt-5" id="oInner-container-join" align="center">
+<!--            <img src="/images/qLogoForm.png" alt="logoImage" style="margin-bottom: 10px;">-->
+            <div id="oJoinTitle">
+                <h2 class="h2 fw-bold">회원가입</h2>
+            </div>
             <form action="/qJoinBasic" method="POST">
                 <div class="form-floating mb-3 mr-3" style="display:flex;">
-                    <input type="email" class="form-control" id="email" name="email" placeholder="myemail@email.com" autofocus="autofocus">
+                    <input type="email" class="form-control" id="email" name="email"
+                           placeholder="myemail@email.com" autofocus="autofocus">
                     <label for="email">이메일 주소</label>
-                    <input type="button" class="btn btn-outline-primary" style="width:100px;" onclick="location.href='/qEmailCheck'" value="중복검사"/>
+                    <input type="button" class="btn btn-outline-primary" style="width:100px;"
+                           onclick="location.href='/qEmailCheck'" value="중복검사"/>
 <!--                    <button class="btn btn-outline-primary" style="width:100px;">중복검사</button>-->
                 </div>
                 <div class="form-floating mb-3">
@@ -53,14 +61,16 @@
 
                 <br/>
                 <div id="oJoinBtn-container">
-                    <input type="submit" class="btn btn-dark mb-3" value="회원가입" />
-                    <input type="button" class="btn btn-dark mb-3"
-                           onclick="location.href='/qLoginForm'" value="취소" />
+                    <input type="button" class="btn btn-dark"
+                           onclick="location.href='/qLoginForm'" value="취소" style="width:46%" />
+                    <input type="submit" class="btn btn-dark" value="회원가입" style="width:46%" />
                 </div>
             </form>
         </div>
     </div>
     <!-- 부트스트랩 script -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+            crossorigin="anonymous"></script>
 </body>
 </html>

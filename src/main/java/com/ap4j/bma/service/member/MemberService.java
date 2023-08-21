@@ -2,11 +2,13 @@ package com.ap4j.bma.service.member;
 
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
+import org.springframework.validation.Errors;
 
 import javax.transaction.Transactional;
 import java.lang.reflect.Member;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface MemberService {
 
@@ -38,4 +40,6 @@ public interface MemberService {
 	/** 기본 로그인 */
 	public MemberEntity login(String loginEmail);
 
+	/** 회원가입 유효성 검사 */
+    Map<String, String> validateHandler(Errors errors);
 }
