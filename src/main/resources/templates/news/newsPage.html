@@ -1,25 +1,51 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en"-->
+<!--      xmlns:th="http://www.thymeleaf.org"-->
+<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
+<!--      layout:decorate="~{fragments/layouts/include_footer_layout}">-->
+
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title></title>-->
+<!--    &lt;!&ndash;여기에 적용하실 css 나 js 작성하시면 됩니다. 아래는 예시들 입니다. &ndash;&gt;-->
+
+<!--    &lt;!&ndash; <link rel="stylesheet" th:href="@{/css/파일이름.css}"> &ndash;&gt;-->
+
+<!--    &lt;!&ndash; <script type="text/javascript" th:src="@{/js/search/search.js}"></script>&ndash;&gt;-->
+<!--     <script type="text/javascript" th:src="@{/js/news/newsPage.js}"></script>-->
+<!--</head>-->
+<!--<body layout:fragment="content">-->
+<!--<div>-->
+<!--    <h1>부동산 뉴스</h1>-->
+<!--    <input type="text" id="searchInput" placeholder="검색어 입력">-->
+<!--    <button id="searchButton">검색</button>-->
+<!--    <div id="results"></div>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/layouts/include_footer_layout}">
 
 <head>
     <meta charset="UTF-8">
     <title></title>
-    <!--여기에 적용하실 css 나 js 작성하시면 됩니다. 아래는 예시들 입니다. -->
+    <!-- 여기에 적용하실 css 나 js 작성하시면 됩니다. 아래는 예시들 입니다. -->
 
     <!-- <link rel="stylesheet" th:href="@{/css/파일이름.css}"> -->
 
-    <!-- <script type="text/javascript" th:src="@{/js/search/search.js}"></script>-->
-     <script type="text/javascript" th:src="@{/js/news/newsPage.js}"></script>
+<!--    <script type="text/javascript" th:src="@{/js/news/newsPage.js}"></script>-->
 </head>
 <body layout:fragment="content">
 <div>
     <h1>부동산 뉴스</h1>
-    <input type="text" id="searchInput" placeholder="검색어 입력">
-    <button id="searchButton">검색</button>
-    <div id="results"></div>
+    <form action="/news" method="get">
+        <input type="text" name="query" placeholder="검색어 입력">
+        <button type="submit">검색</button>
+    </form>
+    <div th:utext="${searchResult}"></div>
 </div>
 </body>
 </html>
