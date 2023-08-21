@@ -209,13 +209,17 @@ public class MemberController {
     }
 
     /** 마이페이지 매핑 */
-    @GetMapping(value="/qMyPage")
-    public String qMyPage() {
+    @RequestMapping(value="/qMyPage")
+    public String qMyPage(HttpSession session, Model model) {
+        String userId = (String) session.getAttribute("userId");
+        String userName = (String) session.getAttribute("userName");
+        model.addAttribute("userId",userId);
+        model.addAttribute("userName",userName);
         return "/userView/oMyPage";
     }
 
     /** 내정보수정 페이지 매핑 */
-    @GetMapping(value="/qMyInfoUpdate")
+    @RequestMapping(value="/qMyInfoUpdate")
     public String qMyInfoUpdate() {
         return "/userView/oMyInfoUpdate";
     }

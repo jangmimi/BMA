@@ -26,6 +26,10 @@
             padding: 20px 50px;
             margin: 0px;
         }
+        #btnEmailCheck {
+            width: 90px;
+            margin-left: 6px;
+        }
     </style>
 </head>
 <body layout:fragment="content">
@@ -42,7 +46,7 @@
                     <input type="email" class="form-control" id="email" name="email"
                            placeholder="myemail@email.com" autofocus="autofocus">
                     <label for="email">이메일 주소</label>
-                    <input type="button" class="btn btn-outline-primary" style="width:100px;"
+                    <input type="button" class="btn btn-outline-primary" id="btnEmailCheck" style="width:100px;"
                            onclick="location.href='/qEmailCheck'" value="중복검사"/>
 <!--                    <button class="btn btn-outline-primary" style="width:100px;">중복검사</button>-->
                 </div>
@@ -62,10 +66,29 @@
                 <br/>
                 <div id="oJoinBtn-container">
                     <input type="button" class="btn btn-dark"
-                           onclick="location.href='/qLoginForm'" value="취소" style="width:46%" />
-                    <input type="submit" class="btn btn-dark" value="회원가입" style="width:46%" />
+                           onclick="location.href='/qLoginForm'" value="취소" style="width:47%" />
+                    <input type="submit" class="btn btn-dark" value="회원가입" style="width:47%" />
                 </div>
             </form>
+
+            <div class="container" id="oJoinSns" style="mt-5 mb-5">
+                <hr style="width: 380px;"/>
+                <p style="font-weight: bold; margin-bottom: 20px;">Join with SNS</p>
+                <div class="oJoinSnsBtn-container"
+                     style="display: flex; justify-content: space-between;">
+                    <!-- 카카오 회원가입 -->
+                    <a href="https://kauth.kakao.com/oauth/authorize?client_id=fae91fecfb7dbda2a80ae22881709a28&redirect_uri=http://localhost:8081/qLogin&response_type=code">
+                        <img src="/images/kakao_join_medium_narrow.png" alt="kakaoJoin" height="44" />
+                    </a>
+                    <!--</div>
+                    <div class="oLoginSnsBtn-container">-->
+                    <!-- 네이버 회원가입 -->
+                    <a href="/qLoginNaver">
+                        <img src="/images/btnG_완성형.png" alt="naverJoin" height="44" />
+                    </a>
+                </div>
+            </div>
+
         </div>
     </div>
     <!-- 부트스트랩 script -->
