@@ -140,17 +140,17 @@ input::-webkit-input-placeholder {
     background-position: center; /* 이미지를 중앙에 위치시킴 */
 }
 
-.r-button-menu a .r-button-menu-icon4 {
+.r-button-menu a .r-button-menu-icon5 {
     width: 54px;
     height: 54px;
     margin-bottom: 12px;
-    background-image: url("/sc/calendar_738865.png");
+    background-image: url("/sc/notification_738876.png");
     background-size: contain; /* 이미지를 div 내부에 맞게 조절 */
     background-repeat: no-repeat;
     background-position: center; /* 이미지를 중앙에 위치시킴 */
 }
 
-.r-button-menu a .r-button-menu-icon5 {
+.r-button-menu a .r-button-menu-icon4 {
     width: 54px;
     height: 54px;
     margin-bottom: 12px;
