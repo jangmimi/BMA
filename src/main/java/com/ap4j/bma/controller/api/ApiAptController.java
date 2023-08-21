@@ -27,13 +27,13 @@ public class ApiAptController {
         ArrayList<AptDTO> aptList = null;
 
         try {
-            String apiUrl = "http://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyFullDown?"
-                        + "serviceKey=5C%2FnyAagqz6%2F%2BnYRGcZyRNpteaEeTlrNaMf1KtU0CWaSMRID13wEXSHVJ0J7WMvTl864DTzD3rwHM5GPX1aWtA%3D%3D&"
-                        + "pageNo=1&"
-                        + "numOfRows=10000";
+            String apiUrl = "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev?"
+                        + "serviceKey=hAiRtZlGRJEkgTG1oYFctUoiFjG785z0otfrJknzsP7CfC3evcfU%2FUzWT2gq54UUPegUJpmrMccLTodwZcSFMQ%3D%3D&"
+                        + "LAWD_CD=11110&"
+                        + "DEAL_YMD=202307";
 
             URL url = new URL(apiUrl);
-
+            
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection(); // 연결
 
             urlConnection.connect();
@@ -50,23 +50,23 @@ public class ApiAptController {
 
             JSONObject jsonObject = XML.toJSONObject(result.toString());
 
+            System.out.println("jsonObject = " + jsonObject);
+
             // 필요한 데이터에 접근
             JSONObject aptJson = jsonObject.getJSONObject("response").getJSONObject("body").getJSONObject("items");
 
             JSONArray jsonArray = aptJson.getJSONArray("item");
-
+            
             aptList = new ArrayList<AptDTO>();
 
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject obj = jsonArray.getJSONObject(i);
 
-                String aptName = obj.getString("dutyName");
-                String aptAddress = obj.getString("dutyAddr");
-                String aptLat = obj.optString("wgs84Lat");
-                String aptLng = obj.optString("wgs84Lon");
+                String aptName = obj.getString("아파트");
+                String aptAddress = obj.getString("도로명");
+                String aptDealAmount = obj.getString("거래금액");
 
-
-                AptDTO apt = new AptDTO(aptName, aptAddress, aptLng, aptLat);
+                AptDTO apt = new AptDTO(aptName, aptAddress, aptDealAmount);
 
                 aptList.add(apt);
             }
