@@ -1,4 +1,4 @@
-package com.ap4j.bma.service.apt;
+package com.ap4j.bma.service.apartment;
 
 import com.ap4j.bma.model.entity.apt.AptDTO;
 import org.json.JSONArray;
@@ -14,7 +14,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 @Service
-public class AptServiceImpl implements AptService {
+public class ApartmentServiceImpl implements ApartmentService {
 
 
 	@Override
