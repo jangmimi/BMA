@@ -16,11 +16,49 @@ var geocoder = new kakao.maps.services.Geocoder();
 
 /** 주소로 좌표 검색 해서 마커 찍기 */
 // 주소로 좌표 검색 및 마커 생성 함수
-function searchAddressAndAddMarker(address, name, amount) { // 주소값, 아파트이름, 아파트실거래가
-    // 주소로 좌표 변환 요청
-    geocoder.addressSearch(address, function(result, status) {
+//function searchAddressAndAddMarker(address, name, amount) { // 주소값, 아파트이름, 아파트실거래가
+//    // 주소로 좌표 변환 요청
+//    geocoder.addressSearch(address, function(result, status) {
+//        if (status === kakao.maps.services.Status.OK) {
+//            var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+//
+//            // 마커 생성
+//            var marker = new kakao.maps.Marker({
+//                map: map,
+//                position: coords,
+//                title: name
+//            });
+//
+//            // 마커 클릭 시 인포윈도우 생성
+//            kakao.maps.event.addListener(marker, 'click', function() {
+//                var infowindow = new kakao.maps.InfoWindow({
+//                    content: '<div style="padding:10px;">' + name + '</div>'
+//                            + '<div style="padding:10px; ">' + address + '</div>'
+//                            + '<div style="padding:10px;">' + amount + '만원</div>'
+//
+//                });
+//                infowindow.open(map, marker);
+//            });
+//        }
+//    });
+//}
+//
+//// aptList에 저장된 아파트 정보를 순회하며 주소 검색 및 마커 생성
+//for (var i = 0; i < aptList.length; i++) {
+//    var apt = aptList[i];
+//    searchAddressAndAddMarker(apt.aptCityAddress + apt.aptAddress1 + apt.aptAddress2, apt.aptName, apt.aptDealAmount);
+//    console.log(apt.aptCityAddress + apt.aptAddress1 + apt.aptAddress2);
+//}
+
+// Places 서비스를 생성
+var places = new kakao.maps.services.Places();
+
+function searchKeywordAndAddMarker(keyword, name, amount) {
+    // 키워드로 장소 검색 요청
+    places.keywordSearch(keyword, function(result, status) {
         if (status === kakao.maps.services.Status.OK) {
-            var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+            var place = result[0];
+            var coords = new kakao.maps.LatLng(place.y, place.x);
 
             // 마커 생성
             var marker = new kakao.maps.Marker({
@@ -33,8 +71,8 @@ function searchAddressAndAddMarker(address, name, amount) { // 주소값, 아파
             kakao.maps.event.addListener(marker, 'click', function() {
                 var infowindow = new kakao.maps.InfoWindow({
                     content: '<div style="padding:10px;">' + name + '</div>'
+                            + '<div style="padding:10px; ">' + keyword + '</div>'
                             + '<div style="padding:10px;">' + amount + '만원</div>'
-
                 });
                 infowindow.open(map, marker);
             });
@@ -42,8 +80,14 @@ function searchAddressAndAddMarker(address, name, amount) { // 주소값, 아파
     });
 }
 
-// aptList에 저장된 아파트 정보를 순회하며 주소 검색 및 마커 생성
+// aptList에 저장된 아파트 정보를 순회하며 키워드 검색 및 마커 생성
 for (var i = 0; i < aptList.length; i++) {
     var apt = aptList[i];
-    searchAddressAndAddMarker(apt.aptAddress, apt.aptName, apt.aptDealAmount);
+
+    // 주소를 세분화하여 키워드로 사용
+    var keyword = apt.aptCityAddress + " " + apt.aptAddress1 + " " + apt.aptAddress2;
+
+    searchKeywordAndAddMarker(keyword, apt.aptName, apt.aptDealAmount);
+
+    console.log(keyword);
 }
