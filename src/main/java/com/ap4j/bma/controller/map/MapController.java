@@ -15,4 +15,10 @@ public class MapController {
         log.info("MapController.main.execute");
         return "kakaoMap/markerCluster";
     }
+
+    @RequestMapping("map")
+    public String map(){
+        log.info("MapController.map.execute");
+        return "map/map";
+    }
 }
