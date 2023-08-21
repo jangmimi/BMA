@@ -1,10 +1,181 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layouts/no_footer_layout}">
+
 <head>
   <meta charset="UTF-8">
-  <title>$Title$</title>
+  <title></title>
+  <!--여기에 적용하실 css 나 js 작성하시면 됩니다. 아래는 예시들 입니다. -->
+
+  <!-- <link rel="stylesheet" th:href="@{/css/파일이름.css}"> -->
+  <link rel="stylesheet" th:href="@{/css/map.css}">
+
+  <!-- <script type="text/javascript" th:src="@{/js/search/search.js}"></script>-->
+
 </head>
-<body>
-$END$
+<body layout:fragment="content">
+<div class="y-top-container">
+  여기는 필터 같은 거 나중에 추가할 거예요
+</div>
+<div class="y-main-container">
+
+  <div class="y-side-container">
+
+    <!-- 지도 내 조건에 맞는 매물 시작 -->
+    <div class="y-fixed-container">
+      <div class="y-nav-container">
+
+        <div class="y-left">
+          <div class="y-nav-text">
+            지도 내 조건에 맞는 매물 {121}
+          </div>
+        </div>
+
+        <div class="y-right">
+          <div class="y-nav-text">
+            경기도 내 중개사무소 {25,317}
+          </div>
+        </div>
+
+      </div>
+      <!-- 지도 내 조건에 맞는 매물 끝 -->
+
+      <!-- 최신순, 가격순, 면적순, 사진 많은 순 시작 -->
+      <div class="y-filter-container">
+        <div class="y-filter-list">
+          <div class="text">
+            <a href="#">최신순</a>
+          </div>
+          <div class="text">
+            <a href="#">가격순</a>
+          </div>
+          <div class="text">
+            <a href="#">면적순</a>
+          </div>
+          <div class="text">
+            <a href="#">사진많은순</a>
+          </div>
+
+        </div>
+        <div class="y-likes">
+          <div class="y-likes-img"></div>
+          <div class="y-likes-counts">
+            0
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 최신순, 가격순, 면적순, 사진 많은 순 끝 -->
+
+    <!-- 매물 리스트 시작 -->
+    <div class="y-mamul-list-container">
+
+      <a href="#" class="y-list-container">
+        <div class="y-img-container">
+          <div class="y-img">
+            <img src="/img/thumbs.jpg" alt="d">
+          </div>
+          <div class="y-camera">
+            <div class="y-camera-img"></div>
+            <div class="y-camera-text">1</div>
+            <div class="y-camera-bgc"></div>
+          </div>
+        </div>
+        <!-- 사진 오른쪽 텍스트들 시작 -->
+        <div class="y-text-container">
+          <!-- 매매 100억 or 월세 1,000/75만 -->
+          <div class="y-price">
+            매매 8억 5,000만
+          </div>
+
+          <div class="y-category">
+            <!-- 아파트 / 빌라 / 단독주택 / 사무실 / 건물 등등 들어감. -->
+            <div class="y-c-text">
+              <div class="y-c-color">
+                다세대(빌라/연립)
+              </div>
+              <span class="y-loc"></span>
+              번동 다세대(빌라/연립)
+            </div>
+          </div>
+          <div class="y-ft">
+            44.47/26.46㎡
+            <span class="y-loc"></span>
+            지하-/지상6층
+          </div>
+          <div class="y-station-area-check">
+            강남역역세권 빌라 투룸매매
+          </div>
+
+          <div class="y-hash-tags-container">
+                            <span class="y-hash-tag">
+                                #반려동물
+                            </span>
+          </div>
+
+        </div>
+        <!-- 사진 오른쪽 텍스트들 끝 -->
+      </a>
+
+      <a href="#" class="y-list-container">
+        <div class="y-img-container">
+          <div class="y-img">
+            <img src="/img/thumbs.jpg" alt="d">
+          </div>
+          <div class="y-camera">
+            <div class="y-camera-img"></div>
+            <div class="y-camera-text">1</div>
+            <div class="y-camera-bgc"></div>
+          </div>
+        </div>
+        <!-- 사진 오른쪽 텍스트들 시작 -->
+        <div class="y-text-container">
+          <!-- 매매 100억 or 월세 1,000/75만 -->
+          <div class="y-price">
+            매매 8억 5,000만
+          </div>
+
+          <div class="y-category">
+            <!-- 아파트 / 빌라 / 단독주택 / 사무실 / 건물 등등 들어감. -->
+            <div class="y-c-text">
+              <div class="y-c-color">
+                다세대(빌라/연립)
+              </div>
+              <span class="y-loc"></span>
+              번동 다세대(빌라/연립)
+            </div>
+          </div>
+          <div class="y-ft">
+            44.47/26.46㎡
+            <span class="y-loc"></span>
+            지하-/지상6층
+          </div>
+          <div class="y-station-area-check">
+            강남역역세권 빌라 투룸매매
+          </div>
+
+          <div class="y-hash-tags-container">
+                            <span class="y-hash-tag">
+                                #반려동물
+                            </span>
+          </div>
+
+        </div>
+        <!-- 사진 오른쪽 텍스트들 끝 -->
+      </a>
+
+    </div>
+    <!-- 매물 리스트 끝 -->
+
+  </div>
+
+  <div class="y-map-container">
+    여기는 지도 뿌린다.
+  </div>
+
+</div>
+
 </body>
 </html>
