@@ -1,75 +1,94 @@
 package com.ap4j.bma.controller.board;
 
-import com.ap4j.bma.model.entity.board.BoardDTO;
-import com.ap4j.bma.model.entity.board.BoardEntity;
-import com.ap4j.bma.service.board.BoardServiceImpl;
-import lombok.extern.slf4j.Slf4j;
+import com.ap4j.bma.model.entity.board.Board;
+import com.ap4j.bma.service.board.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import org.springframework.data.domain.Pageable;
 
-@Slf4j
 @Controller
 public class BoardController {
 
-	@Autowired
-	BoardServiceImpl boardServiceImpl;
+    @Autowired
+    private BoardService boardService;
 
-	@GetMapping("board")
-	public String board(Model model){
-		log.info("BoardController.board() execute");
+    @GetMapping("/board/write")
+    public  String boardWriteForm(){
 
-		List<BoardEntity> list = boardServiceImpl.findAll();
-		model.addAttribute("board", list);
-		return "board/board";
-	}
+        return "board/freeBoard/boardWrite";
+    }
+    @PostMapping("/board/writepro")
+    public String boardWritePro(Board board, Model model , MultipartFile file) throws Exception{
 
-	@GetMapping("board/write")
-	public String boardWrite(Model model){
-		log.info("BoardController.boardWrite() execute");
+        boardService.boardWrite(board, file);
+        model.addAttribute("message","글 작성이 완료되었습니다.");
+        model.addAttribute("searchUrl", "list");
+
+        return "board/freeBoard/message";
+    }
+
+    @GetMapping("/board/list")
+    public  String boardList(Model model , @PageableDefault(page = 0, size =10, sort ="id", direction = Sort.Direction.DESC) Pageable pageable){
+
+        Page<Board> list = boardService.boardList(pageable);
+
+        int nowPage = list.getPageable().getPageNumber();
+        int startPage = nowPage - 4;
+        int endPage = nowPage + 5;
+        model.addAttribute("List", boardService.boardList(pageable));
+
+        return "board/freeBoard/boardList";
+    }
+
+    @GetMapping("/board/view") //localhost:8082/board/view?id=1...
+    public String boardView(Model model , Integer id){
+
+        model.addAttribute("board" , boardService.boardView(id));
+        return "board/freeBoard/boardView";
+    }
+
+    @GetMapping("/board/delete")
+    public String boardDelete(Integer id){
+
+        boardService.boardDelete(id);
+
+        return "redirect:/board/list";
+    }
+
+    @GetMapping("/board/modify/{id}")
+    public String boardModify(@PathVariable("id") Integer id,
+                              Model model){
+
+        model.addAttribute("board", boardService.boardView(id));
+        return "board/freeBoard/boardModify";
+    }
+
+    @PostMapping("/board/update/{id}")
+    public String boardUpdate(@PathVariable("id") Integer id,Board board, Model model , MultipartFile file) throws Exception{
+
+        Board boardTemp = boardService.boardView(id);
+        boardTemp.setTitle(board.getTitle());
+        boardTemp.setContent(board.getContent());
+
+        model.addAttribute("message","글 수정이 완료되었습니다.");
+        model.addAttribute("searchUrl", "/board/list");
+
+        boardService.boardWrite(boardTemp, file);
+
+        return "board/freeBoard/message";
+
+    }
+}
 
 
-		return "board/board_write";
-	}
 
-	// 글쓰기 저장 눌렀을 경우 데이터 저장.
-	@PostMapping("board/write/save")
-	public String boardSave(@ModelAttribute BoardDTO dto, @RequestHeader("Content-Type") String contentType){
-
-		if(dto.getTitle().equals(null) || dto.getTitle().equals("")){
-			return "redirect:failed";
-		}
-		log.info("dto.getTitle() 의 값 : {} ", dto.getTitle());
-		log.error("Content-Type : {}", contentType);
-		log.info("dto 의 값 : '{}'", dto );
-		return boardServiceImpl.saveBoard(dto); // 위의 메서드들을 boardService 안에 집어넣음.
-	}
-
-	@GetMapping("/board_view/{id}")
-		public String viewBoard(@PathVariable("id") Long boardId, Model model){
-			BoardEntity board = boardServiceImpl.findOne(boardId);
-			log.info(board.toString());
-			model.addAttribute("board", board);
-
-			return "board/board_view";
-		}
-
-
-
-/*
-* todo
-*  1. 글 삭제 기능.
-*  2. 파일 업로드 기능.
-*
-*
-* */
-
-
-
-
-
-	}
 
