@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -154,7 +155,7 @@ public class MemberController {
     /** 네이버 로그인 */
     @RequestMapping(value="/qLoginNaver")
     public String qLoginNaver(@RequestParam(value = "code", required = false) String code,
-                              @RequestParam(value="state") String state, Model model, HttpSession session) {
+                              @RequestParam(value = "state") String state, Model model, HttpSession session) {
         log.info("MemberController - qLoginNaver() 실행");
         log.info("####code : " + code);
 
@@ -206,4 +207,16 @@ public class MemberController {
     public String qMyInfoUpdate() {
         return "/userView/oMyInfoUpdate";
     }
+
+    @RequestMapping("/qEmailCheck/")
+    public String qEmailCheck(@RequestParam(value="email") String email) {
+        log.info("email : " + email);
+        if(qMemberServiceImpl.existsByEmail(email) == true) {
+            log.info("중복 아이디에요.");
+        } else {
+            log.info("사용 가능하다.");
+        }
+        return "redirect:/qLoginForm";
+    }
+
 }

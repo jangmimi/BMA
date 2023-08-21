@@ -1,13 +1,12 @@
 package com.ap4j.bma.model.entity.member;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.stereotype.Component;
+import lombok.*;
 
-@Setter
-@Getter
-public class MemberDTO {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class MemberDTO {	// 회원가입 폼에 입력한 정보들을 담는 DTO
+	
 	private String email;
 	private String name;
 	private String pwd;

@@ -3,6 +3,7 @@ package com.ap4j.bma.service.member;
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
 
+import javax.transaction.Transactional;
 import java.lang.reflect.Member;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +29,7 @@ public interface MemberService {
 	public Long joinBasic(MemberEntity pMember);
 
 	/** 중복회원 검증 */
+	public boolean existsByEmail(String email);
 //	public void validateDuplicateMember(MemberEntity pMember);
 
 	/** 회원전체 조회 */

@@ -268,6 +268,13 @@ public class MemberServiceImpl implements MemberService {
 		memberRepository.save(pMember);
 		return pMember.getIdx();
 	}
+
+	@Override
+	public boolean existsByEmail(String email) {
+		log.info("서비스 existsByEmail() 실행");
+		return memberRepository.existsByEmail(email);
+	}
+
 //	public Long joinBasic(MemberEntity pMember) {
 ////		validateDuplicateMember(pMember);    // 중복 회원 검증
 //
