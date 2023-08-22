@@ -8,12 +8,7 @@
 	<meta name="viewport" content="width=device-width, maximum-scale=1.0, minimum-scale=1, user-scalable=yes,initial-scale=1.0" />
 	<!-- content script -->
 	<th:block th:replace="~{fragments/config::configFragment}"> </th:block>
-	<style>
-		body {
-			margin: 0px auto;
-			max-width: 800px; /* 화면 중앙에 보이는 최대 너비를 지정 */
-		}
-	</style>
+
 </head>
 <!--	<th:block layout:fragment="css"></th:block>-->
 	<!-- content script -->
@@ -21,6 +16,5 @@
 <body>
 	<th:block th:replace="~{fragments/header :: headerFragment}"></th:block>
     <th:block layout:fragment="content"></th:block>
-	<th:block th:replace="~{fragments/footer :: tFooter}"></th:block>
 </body>
 </html>
