@@ -30,6 +30,11 @@
             width: 90px;
             margin-left: 6px;
         }
+        <!-- 회원가입 유효성검사 -->
+        .fieldError {
+            border-color: red;
+            color: red;
+        }
     </style>
 </head>
 <body layout:fragment="content">
@@ -41,18 +46,21 @@
             <div id="oJoinTitle">
                 <h2 class="h2 fw-bold">회원가입</h2>
             </div>
-            <form th:action="@{/member/qJoinBasic}" method="POST">
+            <form th:action="@{/member/qJoinBasic}" th:object="${memberDTO}" method="POST">
                 <div class="form-floating mb-3 mr-3" style="display:flex;">
-                    <input type="email" class="form-control" id="email" name="email"
+                    <input type="text" class="form-control" id="email" name="email"
                            placeholder="myemail@email.com" autofocus="autofocus">
                     <label for="email">이메일 주소</label>
                     <input type="button" class="btn btn-outline-primary" id="btnEmailCheck" style="width:100px;"
                            onclick="location.href='/member/qEmailCheck'" value="중복검사"/>
+<!--                           onclick="location.href='/member/qEmailCheck'" value="중복검사"/>-->
 <!--                    <button class="btn btn-outline-primary" style="width:100px;">중복검사</button>-->
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="name" name="name" placeholder="박미미">
-                    <label for="name">이름(실명)</label>
+                    <label th:for="name">이름(실명)</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="홍길동"
+                           th:field="*{name}" th:class="${#fields.hasErrors('name')} ? 'form-control fieldError' : 'form-control'">
+                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Incorrect data</p>
                 </div>
                 <div class="form-floating mb-3">
                     <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Password">

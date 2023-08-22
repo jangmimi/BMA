@@ -4,11 +4,12 @@ package com.ap4j.bma.controller.member;
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
 import com.ap4j.bma.service.member.MemberService;
-import com.ap4j.bma.service.member.MemberServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
@@ -123,12 +124,13 @@ public class MemberController {
     @RequestMapping(value="/qJoinForm")
     public String qJoinForm() {
         log.info("MemberController - qJoinForm() 실행");
+
         return "/userView/oJoinForm";
     }
 
     /** 기본 회원가입 */
-    @PostMapping(value="/qJoinBasic")
-    public String qJoinBasic(@Valid MemberDTO memberDTO, Errors errors, Model model) {  // @Valid : UserDTO 유효성 검사 애노테이션(통과X -> errors)
+    @PostMapping(value="/qJoinBasic") /* @ModelAttribute(value="memberT") */
+    public String qJoinBasic(@Valid @ModelAttribute(value="memberDTO") MemberDTO memberDTO, BindingResult result, Errors errors, Model model) {  // @Valid : UserDTO 유효성 검사 애노테이션(통과X -> errors)
         log.info("MemberController - qJoinBasic() 실행");
         log.info("memberDTO : " + memberDTO);
 
@@ -142,6 +144,21 @@ public class MemberController {
 //            }
 //            return "/userView/oJoinForm";
 //        }
+
+        if(result.hasErrors()) {
+            log.info("에러 발생");
+            model.addAttribute("memberDTO", memberDTO); // 회원가입 실패 시 입력 데이터 유지
+
+            return "/member/qJoinForm";
+        }
+
+        boolean emailCheck = qMemberService.existsByEmail(memberDTO.getEmail());
+        if(emailCheck) {
+            log.info("이메일 중복입니다.");
+            model.addAttribute("emailCheck", true);
+
+            return "redirect:/member/qJoinForm";
+        }
 
         MemberEntity member = new MemberEntity();
         member.setEmail(memberDTO.getEmail());  // 이메일
@@ -160,9 +177,9 @@ public class MemberController {
         log.info("qMemberService.joinBasic(member) 실행 한 후");
         
         // DB save 안돼서 회원전체조회 테스트
-        List<MemberEntity> members = qMemberService.findMembers();
-        log.info("members 값 : {}", members);
-        model.addAttribute("members",members);
+//        List<MemberEntity> members = qMemberService.findMembers();
+//        log.info("members 값 : {}", members);
+//        model.addAttribute("members",members);
 
         return "redirect:/member/qLoginForm";
     }
@@ -227,16 +244,24 @@ public class MemberController {
         return "/userView/oMyInfoUpdate";
     }
 
-    @RequestMapping("/qEmailCheck")
-    public String qEmailCheck(@RequestParam(value="email") String email, Model model) {
-        log.info("email : " + email);
-
-        boolean emailCheck = qMemberService.existsByEmail(email);
-        if(emailCheck) {
-            log.info("이메일 중복입니다.");
-            model.addAttribute("emailCheck", true);
-
-        }
-        return "redirect:/qLoginForm";
-    }
+//    @GetMapping(value = "/qEmailCheck")
+//    public ResponseEntity<Boolean> qEmailCheck(@RequestBody String email) {
+//        log.info("email : " + email);
+//        qMemberService.existsByEmail(email);
+//        log.info(ResponseEntity.ok(qMemberService.existsByEmail(email)).toString());
+//
+//        return res;
+//    }
+//    @RequestMapping("/qEmailCheck")
+//    public String qEmailCheck(@RequestParam(value="email") String email, Model model) {
+//        log.info("email : " + email);
+//
+//        boolean emailCheck = qMemberService.existsByEmail(email);
+//        if(emailCheck) {
+//            log.info("이메일 중복입니다.");
+//            model.addAttribute("emailCheck", true);
+//
+//        }
+//        return "redirect:/qLoginForm";
+//    }
 }

@@ -262,15 +262,22 @@ public class MemberServiceImpl implements MemberService {
 		}
 		return accessToken;
 	}
-
+	@Transactional
 	@Override
 	public Long joinBasic(MemberEntity pMember) {
 		log.info("서비스 joinBasic() 실행");
 //		validateDuplicateMember(pMember);    // 중복 회원 검증
-
 		memberRepository.save(pMember);
-		return pMember.getIdx();
+		return pMember.getIdx();			// @GeneratedValue 로 id는 자동으로 값 저장
 	}
+	//			   validateDuplicateMember
+	/*private void validateDuplicateMember(Member member) {
+		List<Member> findMembers = memberRepository.findByName(member.getName());
+		//EXCEPTION
+		if(!findMembers.isEmpty()) {
+			throw new IllegalStateException("이미 존재하는 회원입니다.");
+		}
+	}*/
 
 	@Override
 	public boolean existsByEmail(String email) {
