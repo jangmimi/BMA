@@ -38,7 +38,8 @@ public interface MemberService {
 	public List<MemberEntity> findMembers();
 
 	/** 기본 로그인 */
-	public MemberEntity login(String loginEmail);
+//	public MemberEntity login(String loginEmail);
+	public MemberDTO login(MemberDTO memberDTO);
 
 	/** 회원가입 유효성 검사 */
     Map<String, String> validateHandler(Errors errors);

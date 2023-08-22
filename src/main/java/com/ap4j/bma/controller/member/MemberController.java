@@ -6,7 +6,6 @@ import com.ap4j.bma.model.entity.member.MemberEntity;
 import com.ap4j.bma.service.member.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,8 +28,9 @@ public class MemberController {
 
     /** 로그인 페이지 매핑 */
     @RequestMapping(value="/qLoginForm")
-    public String qLoginForm() {
+    public String qLoginForm(Model model) {
         log.info("MemberController - qLoginForm() 실행");
+        model.addAttribute("memberDTO", new MemberDTO());
         return "/userView/oLoginForm";
     }
 
@@ -94,16 +94,45 @@ public class MemberController {
         return "redirect:/";
     }
 
-    /** 기본 로그인 */
+    /** 기본 로그인 */   //insert into member(email,name,pwd) values('a@a.a','미미','1111');
     @PostMapping(value="/qLoginBasic")
-    public String qBasicLogin(@ModelAttribute MemberDTO memberDTO, Model model, HttpSession session) {
+    public String qBasicLogin(@ModelAttribute MemberDTO memberDTO, Model model, HttpSession session, BindingResult bindingResult) {
         log.info("MemberController - qBasicLogin() 실행");
         log.info("memberDTO : " + memberDTO);
 
-        MemberEntity member = new MemberEntity();
+//        if(bindingResult.hasErrors()) {
+//            log.info("유효성 체크 에러 발생");
+//            model.addAttribute("memberDTO", memberDTO); // 로그인 실패 시 입력 데이터 유지
+//            Map<String, String> validatorResult = qMemberService.validateHandler(bindingResult);
+//            for(String key : validatorResult.keySet()) {
+//                model.addAttribute(key, validatorResult.get(key));
+//            }
+//            return "/member/qJoinForm";
+//        }
+        MemberDTO loginMember = qMemberService.login(memberDTO);
+        if(loginMember != null) {
+            log.info(loginMember.toString());
+            log.info("로그인 성공했어요.");
+            model.addAttribute("userId", loginMember.getEmail());
+            model.addAttribute("userName", loginMember.getName());
+            session.setAttribute("userId", loginMember.getEmail());
+
+//            return "/userView/oLoginForm";
+        } else {
+            log.info("로그인 실패헀어요.");
+            model.addAttribute("msg","로그인 실패");
+//            msg = "<script>alert('아이디 또는 패스워드를 다시 확인해주세요.');location.href='history.back();';</script>";
+//            return msg;
+        }
+/*        MemberEntity member = new MemberEntity();
         member.setEmail(memberDTO.getEmail());
         member.setPwd(memberDTO.getPwd());
         log.info(member.toString());
+        
+        if(bindingResult.hasErrors()) {
+            log.info("유효성 검사 에러 발생");
+            return "/userView/oLoginForm";
+        }
 
         MemberEntity result = qMemberService.login(member.getEmail());
 
@@ -116,21 +145,23 @@ public class MemberController {
             model.addAttribute("userName", result.getName());
             session.setAttribute("userId", result.getEmail());
             return "/userView/oLoginForm";
-        }
-        return "redirect:/qLoginForm";
+        }*/
+
+        return "/userView/oLoginForm";
+//        return "redirect:/member/qLoginForm";
     }
 
     /** 기본 회원가입 폼 */
     @RequestMapping(value="/qJoinForm")
-    public String qJoinForm() {
+    public String qJoinForm(Model model) {
         log.info("MemberController - qJoinForm() 실행");
-
+        model.addAttribute("memberDTO", new MemberDTO());
         return "/userView/oJoinForm";
     }
 
     /** 기본 회원가입 */
     @PostMapping(value="/qJoinBasic") /* @ModelAttribute(value="memberT") */
-    public String qJoinBasic(@Valid @ModelAttribute(value="memberDTO") MemberDTO memberDTO, BindingResult result, Errors errors, Model model) {  // @Valid : UserDTO 유효성 검사 애노테이션(통과X -> errors)
+    public String qJoinBasic(@Valid MemberDTO memberDTO, BindingResult result, Errors errors, Model model) {  // @Valid : UserDTO 유효성 검사 애노테이션(통과X -> errors)
         log.info("MemberController - qJoinBasic() 실행");
         log.info("memberDTO : " + memberDTO);
 

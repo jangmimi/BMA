@@ -12,7 +12,7 @@ import javax.validation.constraints.Pattern;
 public class MemberDTO {	// 회원가입 폼에 입력한 정보들을 담는 DTO
 
 	@NotBlank(message = "이메일은 필수 입력사항입니다.")
-	@Email(message = "이메일 형식에 맞지 않습니다.")
+//	@Email(message = "이메일 형식에 맞지 않습니다.")
 	private String email;
 
 	@NotBlank(message = "이름은 필수 입력사항입니다.")

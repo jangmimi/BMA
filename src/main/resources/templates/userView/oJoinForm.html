@@ -57,9 +57,9 @@
 <!--                    <button class="btn btn-outline-primary" style="width:100px;">중복검사</button>-->
                 </div>
                 <div class="form-floating mb-3">
-                    <label th:for="name">이름(실명)</label>
                     <input type="text" class="form-control" id="name" name="name" placeholder="홍길동"
                            th:field="*{name}" th:class="${#fields.hasErrors('name')} ? 'form-control fieldError' : 'form-control'">
+                    <label th:for="name">이름(실명)</label>
                     <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Incorrect data</p>
                 </div>
                 <div class="form-floating mb-3">
@@ -80,8 +80,9 @@
                 <br/>
                 <div id="oJoinBtn-container">
                     <input type="button" class="btn btn-dark"
-                           onclick="location.href='/member/qLoginForm'" value="취소" style="width:47%" />
+                           onclick="history.back(-1);" value="취소" style="width:47%" />
                     <input type="submit" class="btn btn-dark" value="회원가입" style="width:47%" />
+                    <!-- th:onclick="|location.href='@{/member/qLoginForm}'|"-->
                 </div>
             </form>
 

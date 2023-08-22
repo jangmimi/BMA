@@ -167,10 +167,10 @@ public class MemberServiceImpl implements MemberService {
 			userInfo.put("nickname", nickname);
 			userInfo.put("email", email);
 
-			MemberEntity tmp = memberRepository.findByEmail(email);
+			Optional<MemberEntity> tmp = memberRepository.findByEmail(email);
 			log.info("test tmp (email기준 회원정보있나~?) : " + tmp);
-			tmp.setEmail(email);
-			tmp.setName(nickname);
+//			tmp.setEmail(email);
+//			tmp.setName(nickname);
 			log.info("tmp : " + tmp.toString());
 
 //			@Override
@@ -186,6 +186,7 @@ public class MemberServiceImpl implements MemberService {
 
 		return userInfo;
 	}
+
 
 	public void kakaoLogout(String accessToken) {
 		String reqURL = "https://kauth.kakao.com/oauth/logout";
@@ -299,13 +300,36 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public MemberEntity login(String loginEmail) {
-		log.info("서비스 loginByEmail() 실행");
-		MemberEntity findMember = memberRepository.findByEmail(loginEmail);
+	public MemberDTO login(MemberDTO memberDTO) {
+		log.info("서비스 login() 실행");
+		Optional<MemberEntity> findMember = memberRepository.findByEmail(memberDTO.getEmail());
+		if (findMember.isPresent()) {
+			log.info("로그인 시도하는 email DB에 존재!");
+			MemberEntity memberEntity = findMember.get();
+			if(memberEntity.getPwd().equals(memberDTO.getPwd())) {
+				log.info("id pw 모두 일치! 로그인 성공!");
+				// entity->dto로 변환
+				MemberDTO dto = new MemberDTO();
+				dto.setEmail(memberEntity.getEmail());
+				dto.setName(memberEntity.getName());
+				dto.setPwd(memberEntity.getPwd());
+				return dto;
 
-
-        return memberRepository.findByEmail(loginEmail);
+			} else { log.info("id일치, pw 불일치합니다."); }
+		} else {
+			log.info("존재하지 않는 회원입니다.");
+		}
+        return null;
+//        return memberRepository.findByEmail(memberDTO);
     }
+//	@Override
+//	public MemberEntity login(String loginEmail) {
+//		log.info("서비스 loginByEmail() 실행");
+//		MemberEntity findMember = memberRepository.findByEmail(loginEmail);
+//
+//
+//        return memberRepository.findByEmail(loginEmail);
+//    }
 
 	@Override
 	public Map<String, String> validateHandler(Errors errors) {
