@@ -1,7 +1,7 @@
 package com.ap4j.bma.controller.introduce;
 
 
-import com.ap4j.bma.model.entity.aptTest.AptEntity;
+import com.ap4j.bma.model.entity.apt.AptEntity;
 import com.ap4j.bma.model.repository.AptRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

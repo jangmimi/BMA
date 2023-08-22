@@ -1,4 +1,4 @@
-package com.ap4j.bma.model.entity.aptTest;
+package com.ap4j.bma.model.entity.apt;
 
 import lombok.*;
 
