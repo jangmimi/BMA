@@ -1,11 +1,19 @@
 package com.ap4j.bma.controller.news;
 
 import com.ap4j.bma.service.news.NewsApiService;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 //@Controller
 //@CrossOrigin("*")
@@ -33,10 +41,41 @@ public class newsController {
         return "news/newsPage";
     }
 
+//    @RequestMapping("/news/newsPage")
+//    public String search(@RequestParam("query") String searchQuery, Model model) {
+//        String searchResult = newsApiService.searchBlog(searchQuery);
+//        model.addAttribute("searchResult", searchResult);
+//        log.info(searchResult);
+//        return "news/newsPage";
+//    }
+
     @RequestMapping("/news/newsPage")
     public String search(@RequestParam("query") String searchQuery, Model model) {
         String searchResult = newsApiService.searchBlog(searchQuery);
-        model.addAttribute("searchResult", searchResult);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            JsonNode jsonNode = objectMapper.readTree(searchResult);
+            JsonNode items = jsonNode.get("items");
+
+            List<Map<String, String>> newsList = new ArrayList<>();
+            for (JsonNode item : items) {
+                String title = item.get("title").asText();
+                String link = item.get("link").asText();
+
+                Map<String, String> newsItem = new HashMap<>();
+                newsItem.put("title", title);
+                newsItem.put("link", link);
+
+                newsList.add(newsItem);
+            }
+
+            model.addAttribute("newsList", newsList);
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle exception if necessary
+        }
+
         log.info(searchResult);
         return "news/newsPage";
     }
