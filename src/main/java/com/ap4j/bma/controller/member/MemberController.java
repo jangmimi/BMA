@@ -20,6 +20,7 @@ import java.util.Map;
 
 @Slf4j
 @Controller
+@RequestMapping("/member")
 public class MemberController {
 
     @Autowired

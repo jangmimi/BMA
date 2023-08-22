@@ -51,7 +51,7 @@ public class MemberServiceImpl implements MemberService {
 			StringBuilder sb = new StringBuilder();
 			sb.append("grant_type=authorization_code");
 			sb.append("&client_id=fae91fecfb7dbda2a80ae22881709a28");
-			sb.append("&redirect_uri=http://localhost:8081/qLogin");
+			sb.append("&redirect_uri=http://localhost:8081/member/qLogin");
 			sb.append("&code="+code);
 
 			bw.write(sb.toString());

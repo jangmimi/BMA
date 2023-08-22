@@ -13,8 +13,6 @@ import java.util.Optional;
 public interface MemberRepository extends JpaRepository<MemberEntity, Long> {   // ..JpaRepository<관리 대상, 대상의 PK 타입>
 
     MemberEntity findByEmail(String email);
-
-    boolean existsByEmail(String email);
-    boolean existsByName(String name);
+    boolean existsByEmail(String email);    // exists : 해당 데이터가 DB에 존재하는지 확인하기 위해 사용
 
 }

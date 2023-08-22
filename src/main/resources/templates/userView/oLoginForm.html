@@ -56,7 +56,7 @@
                 </div>
                 <div id="oLoginBtn-container">
                     <input type="submit" class="btn btn-dark mb-3 mt-3" value="로그인" style="width:46%;"/>
-                    <button type="button" class="btn btn-dark mb-3 mt-3" onclick="location.href='/qJoinForm'" style="width:46%;">회원가입</button>
+                    <button type="button" class="btn btn-dark mb-3 mt-3" onclick="location.href='/member/qJoinForm'" style="width:46%;">회원가입</button>
                 </div>
                 <!-- 아이디 저장 체크박스 -->
                 <div class="form-check" style="display: flex; justify-content:space-between; font-size:13px;">
@@ -77,7 +77,7 @@
                 <div class="oLoginSnsBtn-container"
                      style="display: flex; justify-content: space-between;">
                     <!-- 카카오 로그인 (공백 넣으면 로그인 안돼서 한줄로)-->
-                    <a href="https://kauth.kakao.com/oauth/authorize?client_id=fae91fecfb7dbda2a80ae22881709a28&redirect_uri=http://localhost:8081/qLogin&response_type=code">
+                    <a href="https://kauth.kakao.com/oauth/authorize?client_id=fae91fecfb7dbda2a80ae22881709a28&redirect_uri=http://localhost:8081/member/qLogin&response_type=code">
                         <img src="/images/kakao_login_medium_narrow.png" alt="kakaoLogin" height="44" />
                     </a>
                 <!--</div>
@@ -93,7 +93,7 @@
         <!-- 로그인 성공 시 -->
         <span th:if="${userId != null}">
             <form name="logout" action="http://localhost:8081/qLogout">
-                <span>확인용 >.<</span><br/>
+                <span>로그인 확인용 영역<</span><br/>
                 <a href="/qMyPage">마이페이지 훔쳐보기</a><br/>
                 <span th:text="${userName}"></span>님 환영합니다.<br/>    <!-- nickname + 인사말 출력 -->
                 (<span th:text="${userId}"></span>)<br/>                 <!-- email -->
