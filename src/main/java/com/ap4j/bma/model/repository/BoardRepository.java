@@ -1,7 +1,9 @@
 package com.ap4j.bma.model.repository;
 
-import com.ap4j.bma.model.entity.board.BoardEntity;
+import com.ap4j.bma.model.entity.board.Board;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
+@Repository
+public interface BoardRepository extends JpaRepository<Board, Integer> {
 }

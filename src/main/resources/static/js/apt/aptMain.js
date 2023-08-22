@@ -1,3 +1,4 @@
+/** 맵 생성 */
 var container = document.getElementById('map');
 var options = {
     center: new kakao.maps.LatLng(37.55437, 126.974063),
@@ -5,73 +6,44 @@ var options = {
 };
 var map = new kakao.maps.Map(container, options);
 
+/** 확대축소 컨트롤러 생성 */
 var zoomControl = new kakao.maps.ZoomControl();
 map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 map.setMaxLevel(8);
 
-var markers = [];
-var infowindows = {};
+/** 주소 -> 좌표 변환 객체 생성 */
+var geocoder = new kakao.maps.services.Geocoder();
 
-function makeOverListener(marker, infowindow) {
-    return function() {
-        infowindow.open(map, marker);
-    };
+/** 주소로 좌표 검색 해서 마커 찍기 */
+// 주소로 좌표 검색 및 마커 생성 함수
+function searchAddressAndAddMarker(address, name, amount) { // 주소값, 아파트이름, 아파트실거래가
+    // 주소로 좌표 변환 요청
+    geocoder.addressSearch(address, function(result, status) {
+        if (status === kakao.maps.services.Status.OK) {
+            var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+            // 마커 생성
+            var marker = new kakao.maps.Marker({
+                map: map,
+                position: coords,
+                title: name
+            });
+
+            // 마커 클릭 시 인포윈도우 생성
+            kakao.maps.event.addListener(marker, 'click', function() {
+                var infowindow = new kakao.maps.InfoWindow({
+                    content: '<div style="padding:10px;">' + name + '</div>'
+                            + '<div style="padding:10px;">' + amount + '만원</div>'
+
+                });
+                infowindow.open(map, marker);
+            });
+        }
+    });
 }
 
-function makeOutListener(infowindow) {
-    return function() {
-        infowindow.close();
-    };
-}
-
-var clusterer = new kakao.maps.MarkerClusterer({
-    map: map,
-    averageCenter: false,
-    minLevel: 6
-});
-
-kakao.maps.event.addListener(map, 'idle', function() {
-    var bounds = map.getBounds();
-    var southWest = bounds.getSouthWest();
-    var northEast = bounds.getNorthEast();
-
-    var visibleAptList = aptList.filter(function(apt) {
-        return (
-            apt.aptLat >= southWest.getLat() &&
-            apt.aptLat <= northEast.getLat() &&
-            apt.aptLng >= southWest.getLng() &&
-            apt.aptLng <= northEast.getLng()
-        );
-    });
-
-    updateMarkers(visibleAptList);
-});
-
-function updateMarkers(visibleAptList) {
-    markers.forEach(function(marker) {
-        marker.setMap(null);
-    });
-    markers = [];
-
-    visibleAptList.forEach(function(apt) {
-        var marker = new kakao.maps.Marker({
-            map: map,
-            position: new kakao.maps.LatLng(apt.aptLat, apt.aptLng)
-        });
-
-        markers.push(marker);
-
-        var infowindow = new kakao.maps.InfoWindow({
-            content: apt.aptName
-        });
-
-        kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(marker, infowindow));
-        kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
-
-        infowindows[apt.aptName] = infowindow;
-    });
-
-    clusterer.clear();
-    clusterer.addMarkers(markers);
-    clusterer.redraw();
+// aptList에 저장된 아파트 정보를 순회하며 주소 검색 및 마커 생성
+for (var i = 0; i < aptList.length; i++) {
+    var apt = aptList[i];
+    searchAddressAndAddMarker(apt.aptAddress, apt.aptName, apt.aptDealAmount);
 }
