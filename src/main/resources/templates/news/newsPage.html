@@ -1,28 +1,3 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en"-->
-<!--      xmlns:th="http://www.thymeleaf.org"-->
-<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
-<!--      layout:decorate="~{fragments/layouts/include_footer_layout}">-->
-
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title></title>-->
-<!--    &lt;!&ndash;여기에 적용하실 css 나 js 작성하시면 됩니다. 아래는 예시들 입니다. &ndash;&gt;-->
-
-<!--    &lt;!&ndash; <link rel="stylesheet" th:href="@{/css/파일이름.css}"> &ndash;&gt;-->
-
-<!--    &lt;!&ndash; <script type="text/javascript" th:src="@{/js/search/search.js}"></script>&ndash;&gt;-->
-<!--     <script type="text/javascript" th:src="@{/js/news/newsPage.js}"></script>-->
-<!--</head>-->
-<!--<body layout:fragment="content">-->
-<!--<div>-->
-<!--    <h1>부동산 뉴스</h1>-->
-<!--    <input type="text" id="searchInput" placeholder="검색어 입력">-->
-<!--    <button id="searchButton">검색</button>-->
-<!--    <div id="results"></div>-->
-<!--</div>-->
-<!--</body>-->
-<!--</html>-->
 
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
@@ -32,36 +7,47 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
-    <!-- 여기에 적용하실 css 나 js 작성하시면 됩니다. 아래는 예시들 입니다. -->
+    <style>
+        .news-header{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .news-header h1{
+            text-align: center;
+        }
+        .news-result{
+            padding: 13px 20px 18px;
+            border-top: 1px solid #f1f4f6;
+        }
+        .check{
+            border: 1px solid #e8ebee;
+            border-radius: 6px;
+            box-shadow: 0 1px 1px 0 rgba(0,0,0,.03);
+            background-color: #fff;
+        }
+        .news-result a{
+            font-size: 25px;
+        }
+        .news-search{
+            padding-bottom: 30px;
+            padding-top: 30px;
+            text-align: center;
+        }
+        .result-range{
+            display: flex;
+            justify-items: center;
+            margin-left: 20%;
+            margin-right: 20%;
+            flex-direction: column;
+            min-height: 1050px;
+            background-color: lightgray;
+        }
 
-    <!-- <link rel="stylesheet" th:href="@{/css/파일이름.css}"> -->
-
-<!--    <script type="text/javascript" th:src="@{/js/news/newsPage.js}"></script>-->
-<!--    <style>-->
-<!--        .news-search {-->
-<!--            width: 100%;-->
-<!--            height: 80px;-->
-<!--            padding: 0 50px;-->
-<!--            border-radius: 42px;-->
-<!--            display: flex;-->
-<!--            justify-content: center;-->
-<!--            align-items: center;-->
-<!--            background-color: #696D71;-->
-<!--            box-shadow: 0 0 10px;-->
-<!--        }-->
-<!--        .news-search input {-->
-<!--            font-family: 'Noto Sans KR', sans-serif;-->
-<!--            font-weight: 700;-->
-<!--            font-size: 28px;-->
-<!--            border: none;-->
-<!--            width: 100%;-->
-<!--            color: white;-->
-<!--            background-color: transparent;-->
-<!--        }-->
-<!--    </style>-->
+    </style>
 </head>
 <body layout:fragment="content">
-<div>
+<div class="news-header">
     <h1>부동산 뉴스</h1>
     <form action="/news/newsPage" method="get">
         <div class="news-search">
@@ -69,31 +55,38 @@
             <button type="submit">검색</button>
         </div>
     </form>
-    <div>
-        <div>
+    <div class="check">
+        <div class="result-range">
             <div th:each="newsItem : ${newsList}">
-                <div style="width: 150px;">
+                <div class="news-result">
                 <a th:href="${newsItem.link}" th:text="${newsItem.title}" target="_blank"></a>
+                    <p th:text="${newsItem.description}"></p>
                 </div>
+<!--                <div class="pagination">-->
+<!--                    <ul>-->
+<!--                        <li th:if="${currentPage > 1}">-->
+<!--                            <a th:href="@{/news/newsPage(query=${#request.getParameter('query')}, page=1)}">&laquo;</a>-->
+<!--                        </li>-->
+<!--                        <li th:if="${currentPage > 1}">-->
+<!--                            <a th:href="@{/news/newsPage(query=${#request.getParameter('query')}, page=${currentPage - 1})}">&lt;</a>-->
+<!--                        </li>-->
+<!--                        <li th:each="pageNumber : ${#numbers.sequence(1, totalPages)}">-->
+<!--                            <a th:href="@{/news/newsPage(query=${#request.getParameter('query')}, page=${pageNumber})}"-->
+<!--                               th:class="${pageNumber == currentPage ? 'active' : ''}">-->
+<!--                                <span th:text="${pageNumber}"></span>-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                        <li th:if="${currentPage < totalPages}">-->
+<!--                            <a th:href="@{/news/newsPage(query=${#request.getParameter('query')}, page=${currentPage + 1})}">&gt;</a>-->
+<!--                        </li>-->
+<!--                        <li th:if="${currentPage < totalPages}">-->
+<!--                            <a th:href="@{/news/newsPage(query=${#request.getParameter('query')}, page=${totalPages})}">&raquo;</a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </div>-->
             </div>
         </div>
     </div>
 </div>
-<!--<div>-->
-<!--    <h1>부동산 뉴스</h1>-->
-<!--    <form action="/news/newsPage" method="get">-->
-<!--        <div class="news-search">-->
-<!--            <input type="text" name="query" placeholder="검색어 입력">-->
-<!--            <button type="submit">검색</button>-->
-<!--        </div>-->
-<!--    </form>-->
-<!--    <div>-->
-<!--        <ul>-->
-<!--            <li th:each="newsItem : ${searchResult}">-->
-<!--                <a th:href="@{/news/detail(newsId=${newsItem.id})}" th:text="${newsItem.title}"></a>-->
-<!--            </li>-->
-<!--        </ul>-->
-<!--    </div>-->
-<!--</div>-->
 </body>
 </html>

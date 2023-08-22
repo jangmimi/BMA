@@ -7,26 +7,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-//@Controller
-//@CrossOrigin("*")
-//public class newsController {
-//
-//@RequestMapping("news")
-//public String newsPage(){
-//
-//    return "news/newsPage";
-//}
-//}
+
+
 @Slf4j
 @Controller
 public class newsController {
@@ -42,18 +31,61 @@ public class newsController {
 
         return "news/newsPage";
     }
-
-//    @RequestMapping("/news/newsPage")
-//    public String search(@RequestParam("query") String searchQuery, Model model) {
-//        String searchResult = newsApiService.searchBlog(searchQuery);
-//        model.addAttribute("searchResult", searchResult);
+//
+//// 페이지네이션 작업중
+//    @RequestMapping("news/newsPage")
+//    public String search(
+//            @RequestParam("query") String searchQuery,
+//            @RequestParam(value = "page", defaultValue = "1") int page,
+//            Model model
+//    ) {
+//        int resultsPerPage = 10; // 원하는 페이지당 결과 수
+//
+//        String searchResult = newsApiService.searchNews(searchQuery);
+//
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        try {
+//            JsonNode jsonNode = objectMapper.readTree(searchResult);
+//            JsonNode items = jsonNode.get("items");
+//
+//            List<Map<String, String>> newsList = new ArrayList<>();
+//            for (JsonNode item : items) {
+//                String title = item.get("title").asText();
+//                String link = item.get("link").asText();
+//                String description = item.get("description").asText();
+//
+//                Map<String, String> newsItem = new HashMap<>();
+//                newsItem.put("title", removeHTMLTags(title));
+//                newsItem.put("link", link);
+//                newsItem.put("description", removeHTMLTags(description));
+//                newsList.add(newsItem);
+//            }
+//
+//            int totalResults = newsList.size();
+//            int totalPages = (int) Math.ceil((double) totalResults / resultsPerPage);
+//
+//            int startIndex = (page - 1) * resultsPerPage;
+//            int endIndex = Math.min(startIndex + resultsPerPage, totalResults);
+//
+//            List<Map<String, String>> paginatedNewsList = newsList.subList(startIndex, endIndex);
+//
+//            model.addAttribute("newsList", paginatedNewsList);
+//            model.addAttribute("currentPage", page);
+//            model.addAttribute("totalPages", totalPages);
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            // Handle exception if necessary
+//        }
+//
 //        log.info(searchResult);
 //        return "news/newsPage";
 //    }
 
+
     @RequestMapping("/news/newsPage")
     public String search(@RequestParam("query") String searchQuery, Model model) {
-        String searchResult = newsApiService.searchBlog(searchQuery);
+        String searchResult = newsApiService.searchNews(searchQuery);
 
         ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -64,11 +96,12 @@ public class newsController {
             for (JsonNode item : items) {
                 String title = item.get("title").asText();
                 String link = item.get("link").asText();
+                String description = item.get("description").asText();
 
                 Map<String, String> newsItem = new HashMap<>();
                 newsItem.put("title", removeHTMLTags(title));
                 newsItem.put("link", link);
-
+                newsItem.put("description", removeHTMLTags(description));
                 newsList.add(newsItem);
             }
 
@@ -82,9 +115,15 @@ public class newsController {
         return "news/newsPage";
     }
     public static String removeHTMLTags(String input) {
-        String regex = "/(<([^>]+)>)|&quot;/ig";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(input);
-        return matcher.replaceAll("");
+
+        String cleanText = input
+                .replace("&lt;", "<")
+                .replace("&gt;", ">")
+                .replace("&quot;", "\"")
+                .replace("&apos;", "'")
+                .replace("&amp;", "&")
+                .replaceAll("<b>", "")
+                .replaceAll("</b>", "");
+        return cleanText;
     }
 }
