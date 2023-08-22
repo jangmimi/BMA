@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Slf4j
 @Repository
-public class MemberDAOImpl{
+public class MemberDAOImpl {
 
 	// MyBatis 용 DAO
 	MemberRepository memberRepository;
