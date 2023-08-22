@@ -41,13 +41,13 @@
             <div id="oJoinTitle">
                 <h2 class="h2 fw-bold">회원가입</h2>
             </div>
-            <form action="/qJoinBasic" method="POST">
+            <form th:action="@{/member/qJoinBasic}" method="POST">
                 <div class="form-floating mb-3 mr-3" style="display:flex;">
                     <input type="email" class="form-control" id="email" name="email"
                            placeholder="myemail@email.com" autofocus="autofocus">
                     <label for="email">이메일 주소</label>
                     <input type="button" class="btn btn-outline-primary" id="btnEmailCheck" style="width:100px;"
-                           onclick="location.href='/qEmailCheck'" value="중복검사"/>
+                           onclick="location.href='/member/qEmailCheck'" value="중복검사"/>
 <!--                    <button class="btn btn-outline-primary" style="width:100px;">중복검사</button>-->
                 </div>
                 <div class="form-floating mb-3">
@@ -63,10 +63,16 @@
                     <label for="pwdCheck">비밀번호 확인</label>
                 </div>
 
+                <!-- 가입 실패 시 -->
+                <div th:if="${emailCheck == true}">
+                    <h1>회원가입 결과</h1>
+                    <h1>이메일 중복으로 인한 가입 실패!!!!</h1>
+                </div>
+
                 <br/>
                 <div id="oJoinBtn-container">
                     <input type="button" class="btn btn-dark"
-                           onclick="location.href='/qLoginForm'" value="취소" style="width:47%" />
+                           onclick="location.href='/member/qLoginForm'" value="취소" style="width:47%" />
                     <input type="submit" class="btn btn-dark" value="회원가입" style="width:47%" />
                 </div>
             </form>
@@ -77,19 +83,22 @@
                 <div class="oJoinSnsBtn-container"
                      style="display: flex; justify-content: space-between;">
                     <!-- 카카오 회원가입 -->
-                    <a href="https://kauth.kakao.com/oauth/authorize?client_id=fae91fecfb7dbda2a80ae22881709a28&redirect_uri=http://localhost:8081/qLogin&response_type=code">
+                    <a th:href="@{https://kauth.kakao.com/oauth/authorize?client_id=fae91fecfb7dbda2a80ae22881709a28&redirect_uri=http://localhost:8081/member/qLogin&response_type=code}">
                         <img src="/images/kakao_join_medium_narrow.png" alt="kakaoJoin" height="44" />
                     </a>
                     <!--</div>
                     <div class="oLoginSnsBtn-container">-->
                     <!-- 네이버 회원가입 -->
-                    <a href="/qLoginNaver">
+                    <a th:href="@{/member/qLoginNaver}">
                         <img src="/images/btnG_완성형.png" alt="naverJoin" height="44" />
                     </a>
                 </div>
             </div>
 
         </div>
+
+
+
     </div>
     <!-- 부트스트랩 script -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"

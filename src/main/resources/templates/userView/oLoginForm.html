@@ -24,7 +24,7 @@
         }
         #oInner-container {
             width: 400px;
-            height: 800px;
+            height: 700px;
         }
         #oLoginTitle {
             padding: 20px 50px;
@@ -45,7 +45,7 @@
             <h2 class="h2 fw-bold">로그인</h2>
         </div>
         <span th:if="${userId == null}">    <!-- 로그인 안한 상태 -->
-            <form action="/qLoginBasic" method="POST">
+            <form th:action="@{/member/qLoginBasic}" method="POST">
                 <div class="form-floating mb-3">
                     <input type="email" class="form-control" id="email" name="email" placeholder="youemail@email.com" autofocus="autofocus" />
                     <label for="email">이메일 주소</label>
@@ -67,7 +67,7 @@
                         아이디 저장
                       </label>
                     </div>
-                    <div><a href="#" style="color:#212529;">이메일/비밀번호 찾기</a></div>
+                    <div><a th:href="@{#}" style="color:#212529;">이메일/비밀번호 찾기</a></div>
                 </div>
             </form>
 
@@ -77,13 +77,13 @@
                 <div class="oLoginSnsBtn-container"
                      style="display: flex; justify-content: space-between;">
                     <!-- 카카오 로그인 (공백 넣으면 로그인 안돼서 한줄로)-->
-                    <a href="https://kauth.kakao.com/oauth/authorize?client_id=fae91fecfb7dbda2a80ae22881709a28&redirect_uri=http://localhost:8081/member/qLogin&response_type=code">
+                    <a th:href="@{https://kauth.kakao.com/oauth/authorize?client_id=fae91fecfb7dbda2a80ae22881709a28&redirect_uri=http://localhost:8081/member/qLogin&response_type=code}">
                         <img src="/images/kakao_login_medium_narrow.png" alt="kakaoLogin" height="44" />
                     </a>
                 <!--</div>
                 <div class="oLoginSnsBtn-container">-->
                     <!-- 네이버 로그인 -->
-                    <a href="/qLoginNaver">
+                    <a th:href="@{/member/qLoginNaver}">
                         <img src="/images/btnG_완성형.png" alt="naverLogin" height="44" />  <!-- 카카오 로그인과 height만 맞춤 -->
                     </a>
                 </div>
@@ -92,9 +92,9 @@
 
         <!-- 로그인 성공 시 -->
         <span th:if="${userId != null}">
-            <form name="logout" action="http://localhost:8081/qLogout">
+            <form name="logout" th:action="@{/member/qLogout}">
                 <span>로그인 확인용 영역<</span><br/>
-                <a href="/qMyPage">마이페이지 훔쳐보기</a><br/>
+                <a th:href="@{/member/qMyPage}">마이페이지 훔쳐보기</a><br/>
                 <span th:text="${userName}"></span>님 환영합니다.<br/>    <!-- nickname + 인사말 출력 -->
                 (<span th:text="${userId}"></span>)<br/>                 <!-- email -->
                 <input type="submit" value="로그아웃" />                  <!-- 로그아웃 버튼으로 전환 -->

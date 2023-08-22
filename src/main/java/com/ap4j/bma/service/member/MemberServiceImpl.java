@@ -230,7 +230,7 @@ public class MemberServiceImpl implements MemberService {
 			StringBuilder sb = new StringBuilder();
 			sb.append("response_type=code");
 			sb.append("&client_id=KxGhFHZ7Xp74X_5IZ23h");
-			sb.append("&redirect_uri=http://localhost:8081/qLoginNaverCallback");
+			sb.append("&redirect_uri=http://localhost:8081/memeber/qLoginNaverCallback");
 			sb.append("&state="+state);
 
 			bw.write(sb.toString());

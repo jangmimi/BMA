@@ -24,7 +24,7 @@ import java.util.Map;
 public class MemberController {
 
     @Autowired
-    private MemberService qMemberServiceImpl;
+    private MemberService qMemberService;
 
     /** 로그인 페이지 매핑 */
     @RequestMapping(value="/qLoginForm")
@@ -40,12 +40,12 @@ public class MemberController {
         log.info("####code : " + code);
 
         // 1번 인증코드 요청 전달
-        String accessToken = qMemberServiceImpl.getAccessToken(code);     // code로 토큰 받음
+        String accessToken = qMemberService.getAccessToken(code);     // code로 토큰 받음
         log.info("accessToken : " + accessToken);
 
         // 2번 인증코드로 토큰 전달
 //        MemberDTO userInfo = qMemberServiceImpl.getUserInfo2(accessToken);   // 사용자 정보 받음
-        HashMap<String, Object> userInfo = qMemberServiceImpl.getUserInfo(accessToken);   // 사용자 정보 받음
+        HashMap<String, Object> userInfo = qMemberService.getUserInfo(accessToken);   // 사용자 정보 받음
         log.info("login info : " + userInfo.toString());
         // https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#req-user-info
         log.info("login userUniqueId : " + userInfo.get("id"));
@@ -72,7 +72,7 @@ public class MemberController {
         member.setEmail((String) userInfo.get("email"));  // 비밀번호
         log.info(member.toString());
 
-        qMemberServiceImpl.joinBasic(member);   // 카카오정보로 회원가입 실행
+        qMemberService.joinBasic(member);   // 카카오정보로 회원가입 실행
 
         return "/userView/oLoginForm";
     }
@@ -82,15 +82,15 @@ public class MemberController {
     public String qLogout(HttpSession session) {
         log.info("MemberController - qLogout() 실행");
 
-        /* token 재사용으로 콘솔에 400에러가 확인되어 주석 처리중(정확한 원인 파악 필요) */
+        /* token 재사용으로 콘솔에 400에러가 확인되어 주석 처리(정확한 원인 파악 필요) */
 //        qMemberServiceImpl.kakaoLogout((String)session.getAttribute("accessToken"));
 //        session.removeAttribute("accessToken");
         session.removeAttribute("userId");
         session.removeAttribute("userName");
 
-        log.info("로그아웃 완료되었습니다.");
+        log.info("로그아웃 완료되었습니다.");  // 로그아웃 후 메인화면 리다이렉트
 
-        return "redirect:/qLoginForm";
+        return "redirect:/";
     }
 
     /** 기본 로그인 */
@@ -104,7 +104,7 @@ public class MemberController {
         member.setPwd(memberDTO.getPwd());
         log.info(member.toString());
 
-        MemberEntity result = qMemberServiceImpl.login(member.getEmail());
+        MemberEntity result = qMemberService.login(member.getEmail());
 
 //        if(qMemberServiceImpl.loginByEmail(member.getEmail())) {
         if(result != null) {
@@ -135,7 +135,8 @@ public class MemberController {
         // post 요청 시 넘어온 memberDTO 입력 값에서 validation에 걸리는 경우
 //        if(errors.hasErrors()) {
 //            model.addAttribute("memberDTO", memberDTO); // 회원가입 실패 시 입력 데이터 유지
-//            Map<String, String> validatorResult = qMemberServiceImpl.validateHandler(errors);
+//            // 유효성 통과 못한 필드 및 메세지 핸들링
+//            Map<String, String> validatorResult = qMemberService.validateHandler(errors);
 //            for(String key : validatorResult.keySet()) {
 //                model.addAttribute(key,validatorResult.get(key));
 //            }
@@ -147,6 +148,7 @@ public class MemberController {
         member.setName(memberDTO.getName());  // 이름
         member.setPwd(memberDTO.getPwd());  // 비밀번호
 
+
 //        log.info("member name : " + member.getName());
 //        log.info("member email : " + member.getEmail());
         model.addAttribute("member",member);
@@ -154,15 +156,15 @@ public class MemberController {
         MemberEntity entity = memberDTO.toEntity();
         log.info("entity : " + entity.toString());
 
-        qMemberServiceImpl.joinBasic(member);
+        qMemberService.joinBasic(member);
         log.info("qMemberService.joinBasic(member) 실행 한 후");
         
         // DB save 안돼서 회원전체조회 테스트
-        List<MemberEntity> members = qMemberServiceImpl.findMembers();
+        List<MemberEntity> members = qMemberService.findMembers();
         log.info("members 값 : {}", members);
         model.addAttribute("members",members);
 
-        return "redirect:/qLoginForm";
+        return "redirect:/member/qLoginForm";
     }
 
     /** 네이버 로그인 */
@@ -173,7 +175,7 @@ public class MemberController {
         log.info("####code : " + code);
 
         // 1번 인증코드 요청 전달
-        String accessToken = qMemberServiceImpl.getAccessTokenNaver(code);     // code로 토큰 받음
+        String accessToken = qMemberService.getAccessTokenNaver(code);     // code로 토큰 받음
         log.info("accessToken : " + accessToken);
 
 //        // 2번 인증코드로 토큰 전달
@@ -225,15 +227,16 @@ public class MemberController {
         return "/userView/oMyInfoUpdate";
     }
 
-    @RequestMapping("/qEmailCheck/")
-    public String qEmailCheck(@RequestParam(value="email") String email) {
+    @RequestMapping("/qEmailCheck")
+    public String qEmailCheck(@RequestParam(value="email") String email, Model model) {
         log.info("email : " + email);
-        if(qMemberServiceImpl.existsByEmail(email) == true) {
-            log.info("중복 아이디에요.");
-        } else {
-            log.info("사용 가능하다.");
+
+        boolean emailCheck = qMemberService.existsByEmail(email);
+        if(emailCheck) {
+            log.info("이메일 중복입니다.");
+            model.addAttribute("emailCheck", true);
+
         }
         return "redirect:/qLoginForm";
     }
-
 }
