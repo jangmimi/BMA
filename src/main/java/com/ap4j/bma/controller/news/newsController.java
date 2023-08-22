@@ -28,10 +28,10 @@ public class newsController {
     }
 
     @RequestMapping("news")
-public String newsPage(){
+    public String newsPage(){
 
-    return "news/newsPage";
-}
+        return "news/newsPage";
+    }
 
     @RequestMapping("/news/newsPage")
     public String search(@RequestParam("query") String searchQuery, Model model) {
