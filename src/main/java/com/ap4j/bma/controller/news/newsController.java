@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 //@Controller
 //@CrossOrigin("*")
@@ -64,7 +66,7 @@ public class newsController {
                 String link = item.get("link").asText();
 
                 Map<String, String> newsItem = new HashMap<>();
-                newsItem.put("title", title);
+                newsItem.put("title", removeHTMLTags(title));
                 newsItem.put("link", link);
 
                 newsList.add(newsItem);
@@ -78,5 +80,11 @@ public class newsController {
 
         log.info(searchResult);
         return "news/newsPage";
+    }
+    public static String removeHTMLTags(String input) {
+        String regex = "/(<([^>]+)>)|&quot;/ig";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(input);
+        return matcher.replaceAll("");
     }
 }

@@ -70,11 +70,13 @@
         </div>
     </form>
     <div>
-        <ul>
-            <li th:each="newsItem : ${newsList}">
+        <div>
+            <div th:each="newsItem : ${newsList}">
+                <div style="width: 150px;">
                 <a th:href="${newsItem.link}" th:text="${newsItem.title}" target="_blank"></a>
-            </li>
-        </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <!--<div>-->
