@@ -25,10 +25,10 @@
         </li>
       </ul>
     </div>
-    <div class="n-header-right" th:with="member='김재환'">
+    <div class="n-header-right" th:with="member=null">
       <ul th:if="${member==null}" class="n-header-list">
         <li>
-          <a href="#">로그인</a>
+          <a href="/member/qLoginForm">로그인</a>
         </li>
         <li>
           <a href="#">회원가입</a>
