@@ -11,7 +11,6 @@ public class MapController {
 
     @RequestMapping("main")
     public String main(){
-
         log.info("MapController.main.execute");
         return "kakaoMap/markerCluster";
     }

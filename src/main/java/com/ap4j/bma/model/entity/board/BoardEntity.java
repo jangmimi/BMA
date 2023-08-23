@@ -32,7 +32,7 @@ public class BoardEntity {
 	private String writer;
 
 	@Temporal(TemporalType.DATE)
-	@Column(columnDefinition = "DATE DEFAULT CURRENT_DATE")
+	@Column
 	private Date writtenDate;
 
 
