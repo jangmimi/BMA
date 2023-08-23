@@ -75,7 +75,8 @@ public class MemberController {
 
         qMemberService.joinBasic(member);   // 카카오정보로 회원가입 실행
 
-        return "/userView/oLoginForm";
+        return "/userView/oMyPage";
+//        return "/userView/oLoginForm";
     }
 
     /** 카카오 로그아웃 */
@@ -96,10 +97,14 @@ public class MemberController {
 
     /** 기본 로그인 */   //insert into member(email,name,pwd) values('a@a.a','미미','1111');
     @PostMapping(value="/qLoginBasic")
-    public String qBasicLogin(@ModelAttribute MemberDTO memberDTO, Model model, HttpSession session, BindingResult bindingResult) {
+    public String qBasicLogin(@Valid @ModelAttribute MemberDTO memberDTO, BindingResult bindingResult, Model model, HttpSession session) {
         log.info("MemberController - qBasicLogin() 실행");
         log.info("memberDTO : " + memberDTO);
 
+        if(bindingResult.hasErrors()) {
+            log.info("유효성 검사 에러 발생");
+            return "/userView/oLoginForm";
+        }
 //        if(bindingResult.hasErrors()) {
 //            log.info("유효성 체크 에러 발생");
 //            model.addAttribute("memberDTO", memberDTO); // 로그인 실패 시 입력 데이터 유지
@@ -113,6 +118,7 @@ public class MemberController {
         if(loginMember != null) {
             log.info(loginMember.toString());
             log.info("로그인 성공했어요.");
+            model.addAttribute("msg","로그인 성공");
             model.addAttribute("userId", loginMember.getEmail());
             model.addAttribute("userName", loginMember.getName());
             session.setAttribute("userId", loginMember.getEmail());
@@ -121,6 +127,7 @@ public class MemberController {
         } else {
             log.info("로그인 실패헀어요.");
             model.addAttribute("msg","로그인 실패");
+            model.addAttribute("goURL","/member/qLoginBasic");
 //            msg = "<script>alert('아이디 또는 패스워드를 다시 확인해주세요.');location.href='history.back();';</script>";
 //            return msg;
         }
@@ -147,7 +154,8 @@ public class MemberController {
             return "/userView/oLoginForm";
         }*/
 
-        return "/userView/oLoginForm";
+        return "redirect:/";
+//        return "/userView/oLoginForm";    // 원래 사용 코드
 //        return "redirect:/member/qLoginForm";
     }
 
@@ -161,7 +169,7 @@ public class MemberController {
 
     /** 기본 회원가입 */
     @PostMapping(value="/qJoinBasic") /* @ModelAttribute(value="memberT") */
-    public String qJoinBasic(@Valid MemberDTO memberDTO, BindingResult result, Errors errors, Model model) {  // @Valid : UserDTO 유효성 검사 애노테이션(통과X -> errors)
+    public String qJoinBasic(@Valid @ModelAttribute MemberDTO memberDTO, BindingResult bindingResult, Model model) {  // @Valid : UserDTO 유효성 검사 애노테이션(통과X -> errors)
         log.info("MemberController - qJoinBasic() 실행");
         log.info("memberDTO : " + memberDTO);
 
@@ -176,17 +184,17 @@ public class MemberController {
 //            return "/userView/oJoinForm";
 //        }
 
-        if(result.hasErrors()) {
-            log.info("에러 발생");
-            model.addAttribute("memberDTO", memberDTO); // 회원가입 실패 시 입력 데이터 유지
-
-            return "/member/qJoinForm";
+        if(bindingResult.hasErrors()) {
+            log.info("유효성 검사 에러 발생");
+//            model.addAttribute("memberDTO", memberDTO); // 회원가입 실패 시 입력 데이터 유지
+            return "/userView/oJoinForm";
+//            return "/member/qJoinForm";
         }
 
         boolean emailCheck = qMemberService.existsByEmail(memberDTO.getEmail());
         if(emailCheck) {
             log.info("이메일 중복입니다.");
-            model.addAttribute("emailCheck", true);
+            model.addAttribute("emailCheck", emailCheck);
 
             return "redirect:/member/qJoinForm";
         }
@@ -219,6 +227,7 @@ public class MemberController {
     @RequestMapping(value="/qLoginNaver")
     public String qLoginNaver(@RequestParam(value = "code", required = false) String code,
                               @RequestParam(value = "state") String state, Model model, HttpSession session) {
+
         log.info("MemberController - qLoginNaver() 실행");
         log.info("####code : " + code);
 
