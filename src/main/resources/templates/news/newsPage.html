@@ -19,6 +19,7 @@
         .news-result{
             padding: 13px 20px 18px;
             border-top: 1px solid #f1f4f6;
+            background-color: lightgray;
         }
         .check{
             border: 1px solid #e8ebee;
@@ -41,9 +42,10 @@
             margin-right: 20%;
             flex-direction: column;
             min-height: 1050px;
-            background-color: lightgray;
         }
-
+        .pagination{
+            text-align: center;
+        }
     </style>
 </head>
 <body layout:fragment="content">
@@ -65,9 +67,8 @@
             </div>
         </div>
         <div class="pagination">
-            <span>페이지 <span th:text="${currentPage}"></span> / <span th:text="${totalPages}"></span></span>
             <a th:if="${currentPage > 1}" th:href="@{/news/newsPage(query=${searchQuery}, page=${currentPage - 1}, start=${start - 10})}">&lt; 이전</a>
-
+            <span>페이지 <span th:text="${currentPage}"></span> / <span th:text="${totalPages}"></span></span>
             <a th:if="${currentPage < totalPages}" th:href="@{/news/newsPage(query=${searchQuery}, page=${currentPage + 1}, start=${start + 10})}">다음 &gt;</a>
         </div>
     </div>

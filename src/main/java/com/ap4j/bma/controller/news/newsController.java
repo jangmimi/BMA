@@ -27,66 +27,13 @@ public class newsController {
     }
 
     @RequestMapping("news")
-    public String newsPage(){
+    public String newsPage(Model model) {
+        String defaultSearchQuery = "아파트"; // 기본 검색어 설정
 
-        return "news/newsPage";
+        return search(defaultSearchQuery, 1, 1, model); // 기본 검색어와 함께 search 메서드 호출
     }
 
-//    @RequestMapping("news/newsPage")
-//    public String search(
-//            @RequestParam("query") String searchQuery,
-//            @RequestParam(value = "page", defaultValue = "1") int page,
-//            Model model) {
-//        String searchResult = newsApiService.searchNews(searchQuery);
-//
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        try {
-//            JsonNode jsonNode = objectMapper.readTree(searchResult);
-//            JsonNode items = jsonNode.get("items");
-//
-//            List<Map<String, String>> newsList = new ArrayList<>();
-//            for (JsonNode item : items) {
-//                String title = item.get("title").asText();
-//                String link = item.get("link").asText();
-//                String description = item.get("description").asText();
-//
-//                Map<String, String> newsItem = new HashMap<>();
-//                newsItem.put("title", removeHTMLTags(title));
-//                newsItem.put("link", link);
-//                newsItem.put("description", removeHTMLTags(description));
-//                newsList.add(newsItem);
-//
-//            }
-//
-//            int totalResults = jsonNode.get("total").asInt(); // 뉴스의 전체 개수
-//
-//            int itemsPerPage = 10; // 페이지당 뉴스 항목 수
-//            int startIndex = (page - 1) * itemsPerPage;
-//
-//
-//            int endIndex = Math.min(startIndex + itemsPerPage, newsList.size());
-//            log.info(String.valueOf(endIndex)); // 10
-//
-//            List<Map<String, String>> paginatedNewsList = newsList.subList(startIndex, endIndex);
-//
-//            model.addAttribute("newsList", paginatedNewsList);
-//
-//
-//            int totalPages = (int) Math.ceil((double) totalResults / itemsPerPage);
-//
-//            log.info(String.valueOf(totalPages)); // 뉴스의 전체 개수 / 페이지당 보여줄 뉴스 항목 수
-//            model.addAttribute("currentPage", page);
-//            model.addAttribute("totalPages", totalPages);
-//            model.addAttribute("searchQuery", searchQuery);
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            // 예외 처리를 필요에 따라 추가하세요.
-//        }
-//
-//        log.info(searchResult);
-//        return "news/newsPage";
-//    }
+
 @RequestMapping("news/newsPage")
 public String search(
         @RequestParam("query") String searchQuery,
@@ -113,7 +60,6 @@ public String search(
             newsList.add(newsItem);
 
         }
-
         int totalResults = jsonNode.get("total").asInt(); // 뉴스의 전체 개수
 
         int itemsPerPage = 10; // 페이지당 뉴스 항목 수
@@ -121,11 +67,20 @@ public String search(
 
         int newStartIndex = startIndex + 1; // start 값을 조정
 
-        List<Map<String, String>> paginatedNewsList = newsList.subList(0, 10);
+        int totalPages = (int) Math.ceil((double) totalResults / itemsPerPage);
+
+        int endIndex = Math.min(startIndex + itemsPerPage, newsList.size());
+
+// 마지막 페이지에서의 endIndex 조정
+        if (page == totalPages) {
+            endIndex = newsList.size() ;
+        }
+
+        List<Map<String, String>> paginatedNewsList = newsList.subList(0, endIndex);
 
         model.addAttribute("newsList", paginatedNewsList);
 
-        int totalPages = (int) Math.ceil((double) totalResults / itemsPerPage);
+
 
         log.info(String.valueOf(totalPages));
         model.addAttribute("currentPage", page);
