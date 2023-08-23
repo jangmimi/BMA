@@ -8,7 +8,21 @@
 <script src="/webjars/stomp-websocket/2.3.3/stomp.min.js"></script>
 <script th:src="@{/js/chat/chat.js}"></script>
 <body>
+<!-- controller에서 넘겨준 model(busanList)를 thymeleaf로 가져온다. -->
+<script th:inline="javascript"> /<![CDATA[/
+
+var userId = /[[ ${userId} ]]/ [];
+
+/]]>/ </script>
+
+  <button class="s-chat-connect-button" id="s-chat-connect-button">
+    <img class="s-modalImg" src="/sc/chat.png">
+  </button>
+
+
+
 <div class="s-chatbox">
+
 
   <div class="s-chatTitleText">
     <span>실시간 채팅방</span>
@@ -29,8 +43,9 @@
   </div>
 
   <div class="s-sendBox">
+
     <input type="hidden" id="s-sender" value="">
-    <textarea id="s-sendText" ></textarea>
+    <textarea id="s-sendText"></textarea>
     <button id="s-submitBtn">전송</button>
   </div>
 

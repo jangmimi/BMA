@@ -1,30 +1,24 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-       /** 모달 기능 */
-        const modalButton = document.getElementById("e-modalButton");
-        const modal = document.querySelector(".e-modalContent");
-        const closeButton = document.getElementById("e-close");
-        let isClicked = false; // 버튼 클릭 여부
+    /** 모달 기능 */
+     const modalButton = document.getElementById("s-chat-connect-button");
+     const modal = document.querySelector(".s-chatbox");
+     let isClicked = false; // 버튼 클릭 여부
 
-        // 처음에 모달 컨텐츠를 숨김
-        modal.style.display = "none";
 
-        // 모달 버튼 클릭 시 모달 창 토글
-        modalButton.addEventListener("click", function () {
-            modal.style.display = modal.style.display === "block" ? "none" : "block"; //
-            isClicked = !isClicked;
-            if (isClicked) {
-                modalButton.style.transform = "scale(1.0)";
-            } else {
-                modalButton.style.transform = "scale(0.9)";
-            }
-        });
+     // 처음에 모달 컨텐츠를 숨김
+     modal.style.display = "none";
 
-        // x 버튼 클릭시 모달 닫기
-        closeButton.addEventListener("click", function () {
-            modal.style.display = "none";
-        });
-
+     // 모달 버튼 클릭 시 모달 창 토글
+     modalButton.addEventListener("click", function () {
+         modal.style.display = modal.style.display === "flex" ? "none" : "flex"; //
+         isClicked = !isClicked;
+         if (isClicked) {
+             modalButton.style.transform = "scale(0.9)";
+         } else {
+             modalButton.style.transform = "scale(1.0)";
+         }
+     });
 
     let stompClient = null;
     const clientId = Math.random().toString(36).substr(2, 9); // 랜덤한 고유 식별자 생성
