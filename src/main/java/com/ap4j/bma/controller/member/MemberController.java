@@ -102,15 +102,7 @@ public class MemberController {
 //            log.info("유효성 검사 에러 발생");
 //            return "/userView/oLoginForm";
 //        }
-//        if(bindingResult.hasErrors()) {
-//            log.info("유효성 체크 에러 발생");
-//            model.addAttribute("memberDTO", memberDTO); // 로그인 실패 시 입력 데이터 유지
-//            Map<String, String> validatorResult = qMemberService.validateHandler(bindingResult);
-//            for(String key : validatorResult.keySet()) {
-//                model.addAttribute(key, validatorResult.get(key));
-//            }
-//            return "/member/qJoinForm";
-//        }
+
         MemberDTO loginMember = qMemberService.login(memberDTO);
         if(loginMember != null) {
             log.info(loginMember.toString());
@@ -288,16 +280,16 @@ public class MemberController {
 //
 //        return res;
 //    }
-//    @RequestMapping("/qEmailCheck")
-//    public String qEmailCheck(@RequestParam(value="email") String email, Model model) {
-//        log.info("email : " + email);
-//
-//        boolean emailCheck = qMemberService.existsByEmail(email);
-//        if(emailCheck) {
-//            log.info("이메일 중복입니다.");
-//            model.addAttribute("emailCheck", true);
-//
-//        }
-//        return "redirect:/qLoginForm";
-//    }
+    @RequestMapping("/qEmailCheck")
+    public String qEmailCheck(@RequestParam(value="email") String email, Model model) {
+        log.info("email : " + email);
+
+        boolean emailCheck = qMemberService.existsByEmail(email);
+        if(emailCheck) {
+            log.info("이메일 중복입니다.");
+            model.addAttribute("emailCheck", emailCheck);
+
+        }
+        return "redirect:/qLoginForm";
+    }
 }

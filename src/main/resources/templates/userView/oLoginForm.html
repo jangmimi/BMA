@@ -67,9 +67,9 @@
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="email" name="email" placeholder="youemail@email.com" autofocus="autofocus"
                            th:field="*{email}" th:class="${#fields.hasErrors('email')} ? 'form-control fieldError' : 'form-control'" />
-                    <label th:for="email">이메일 주소</label>
-                    <div id="check" style="display:none; text-align:left; color:red;">123</div>
                     <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="font-size:12px; text-align: left; color: red;">Incorrect data</p>
+                    <label th:for="email">이메일 주소</label>
+<!--                    <div id="check" style="display:none; text-align:left; color:red;">123</div>-->
                 </div>
                 <div class="form-floating mb-3">
                     <input type="password" class="form-control" id="password" name="pwd" placeholder="Password" autocomplete="off"

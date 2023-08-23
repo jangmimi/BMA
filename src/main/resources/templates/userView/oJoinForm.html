@@ -38,9 +38,9 @@
     </style>
     <script>
         $(document).ready(function(){
-            $(".form-control").keyup(function(){
-                var pwdValue = $(this).val();
-                var pwdCheckValue = $(this).val();
+            $("#pwd, #pwdCheck").keyup(function(){
+                let pwdValue = $('#pwd').val();
+                let pwdCheckValue = $('#pwdCheck').val();
                 if (pwdValue !== pwdCheckValue) {
                     $("#check").css("display","block");
                 } else {
@@ -84,8 +84,8 @@
                 </div>
                 <div class="form-floating mb-3">
                     <input type="password" class="form-control" id="pwdCheck" name="pwdCheck" placeholder="Password">
-                    <label for="pwdCheck">비밀번호 확인</label>
                     <div id="check" style="display:none; text-align:left; color:red; font-size:12px;">비밀번호가 일치하지 않습니다.</div>
+                    <label for="pwdCheck">비밀번호 확인</label>
                 </div>
 
                 <br/>
