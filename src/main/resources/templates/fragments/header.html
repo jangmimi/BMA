@@ -25,24 +25,25 @@
         </li>
       </ul>
     </div>
-    <div class="n-header-right" th:with="member=null">
-      <ul th:if="${member==null}" class="n-header-list">
+    <div class="n-header-right">
+<!--    <div class="n-header-right" th:with="member=null">-->
+      <ul th:if="${userId==null}" class="n-header-list">
         <li>
           <a href="/member/qLoginForm">로그인</a>
         </li>
         <li>
-          <a href="#">회원가입</a>
+          <a href="/member/qJoinForm">회원가입</a>
         </li>
         <li>
           <a href="#">고객센터</a>
         </li>
       </ul>
-      <ul th:if="${member!=null}" class="n-header-list">
+      <ul th:if="${userId!=null}" class="n-header-list">
         <li>
-          <a href="#">로그아웃</a>
+          <a href="/member/qLogout">로그아웃</a>
         </li>
         <li>
-          <a href="#">마이페이지</a>
+          <a href="/member/qMyPage">마이페이지</a>
         </li>
         <li>
           <a href="#">고객센터</a>
