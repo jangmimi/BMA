@@ -9,13 +9,13 @@ import javax.persistence.Id;
 
 @Entity
 @Data
-public class Board {
+public class BoardVO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id; //게시글 번호
     private String title; //게시글 제목
-    private String date; //작성일
     private String content; //게시글 내용
-    private String filename; //파일 이름
-    private String filepath; //파일 경로
+    private String writer; //작성자
+    //작성일 추가
+    private Integer viewnum; //조회수
 }

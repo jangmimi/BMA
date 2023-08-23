@@ -1,6 +1,6 @@
-package com.ap4j.bma.controller.board;
+package com.ap4j.bma.controller.community;
 
-import com.ap4j.bma.model.entity.board.Board;
+import com.ap4j.bma.model.entity.board.BoardVO;
 import com.ap4j.bma.service.board.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.data.domain.Pageable;
 
 @Controller
-public class BoardController {
+public class CommunityController {
 
     @Autowired
     private BoardService boardService;
@@ -27,7 +27,7 @@ public class BoardController {
         return "board/freeBoard/boardWrite";
     }
     @PostMapping("/board/writepro")
-    public String boardWritePro(Board board, Model model , MultipartFile file) throws Exception{
+    public String boardWritePro(BoardVO board, Model model , MultipartFile file) throws Exception{
 
         boardService.boardWrite(board, file);
         model.addAttribute("message","글 작성이 완료되었습니다.");
@@ -39,7 +39,7 @@ public class BoardController {
     @GetMapping("/board/list")
     public  String boardList(Model model , @PageableDefault(page = 0, size =10, sort ="id", direction = Sort.Direction.DESC) Pageable pageable){
 
-        Page<Board> list = boardService.boardList(pageable);
+        Page<BoardVO> list = boardService.boardList(pageable);
 
         int nowPage = list.getPageable().getPageNumber();
         int startPage = nowPage - 4;
@@ -73,9 +73,9 @@ public class BoardController {
     }
 
     @PostMapping("/board/update/{id}")
-    public String boardUpdate(@PathVariable("id") Integer id,Board board, Model model , MultipartFile file) throws Exception{
+    public String boardUpdate(@PathVariable("id") Integer id, BoardVO board, Model model , MultipartFile file) throws Exception{
 
-        Board boardTemp = boardService.boardView(id);
+        BoardVO boardTemp = boardService.boardView(id);
         boardTemp.setTitle(board.getTitle());
         boardTemp.setContent(board.getContent());
 

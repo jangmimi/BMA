@@ -8,9 +8,9 @@ import javax.persistence.*;
 @Table(name = "apttest")
 @NoArgsConstructor
 @AllArgsConstructor
-@Setter
 @Getter
 @ToString
+@Builder
 public class AptEntity {
 
     @Id
@@ -18,10 +18,16 @@ public class AptEntity {
     private Long id;
 
     @Column
-    private String district;
-
+    private String aptName;         // 아파트 이름
     @Column
-    private String address;
-
+    private String aptAddress;      // 아파트 주소
+    @Column
+    private String kaptCode;        // 아파트 코드
+    @Column
+    private String bjdCode;         // 법정동 코드
+    @Column
+    private String latitude;        // 위도
+    @Column
+    private String longitude;       // 경도
 
 }

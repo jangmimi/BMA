@@ -1,5 +1,6 @@
 package com.ap4j.bma.model.repository;
 
+import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -12,7 +13,9 @@ import java.util.Optional;
 @Repository
 public interface MemberRepository extends JpaRepository<MemberEntity, Long> {   // ..JpaRepository<관리 대상, 대상의 PK 타입>
 
-    MemberEntity findByEmail(String email);
+    Optional<MemberEntity> findByEmail(String email);
+//    MemberDTO findByEmail(MemberDTO memberDTO);
+//    MemberEntisty findByEmail(String email);
     boolean existsByEmail(String email);    // exists : 해당 데이터가 DB에 존재하는지 확인하기 위해 사용
 
 }

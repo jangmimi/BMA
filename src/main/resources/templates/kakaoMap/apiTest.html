@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layouts/include_footer_layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+
+</head>
+<body layout:fragment="content">
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var aptList = /*[[ ${aptList} ]]*/ [];
+        console.log(aptList);
+
+        /*]]>*/
+    </script>
+
+
+</body>
+</html>
