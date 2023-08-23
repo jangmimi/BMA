@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layouts/no_footer_layout}">
 <head>
     <meta charset="UTF-8">
     <title>매물 정보</title>
@@ -10,48 +13,57 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+    <style>
+
+
+        .btn-group button {
+        border: 1px solid #26A9E0;
+        padding: 10px 100px;
+        cursor: pointer;
+        float: left;
+    }
+
+        .btn-group:after {
+        content: "";
+        clear: both;
+        display: table;
+        }
+
+        .btn-group button:not(:last-child) {
+        border-right: none;
+        }
+
+        .btn-group button:hover {
+         background-color: #26A9E0;
+        }
+
+        .prenext{
+        margin-top:10%;
+        }
+
+        .prev{
+         float: left;
+        }
+
+        .next{
+        float: right;
+        }
+
+        .number{
+        color: #26A9E0
+        }
+
+
+
+    </style>
+
 </head>
 
-<style>
 
-
-    .btn-group button {
-    border: 1px solid #26A9E0;
-    padding: 10px 100px;
-    cursor: pointer;
-    float: left;
-}
-
-    /* Clear floats (clearfix hack) */
-    .btn-group:after {
-    content: "";
-    clear: both;
-    display: table;
-    }
-
-    .btn-group button:not(:last-child) {
-    border-right: none;
-    }
-
-    .btn-group button:hover {
-     background-color: #26A9E0;
-    }
-
-    .prenext{
-    margin-top:10%;
-    }
-
-    .number{
-    color: #26A9E0
-    }
-
-
-
-</style>
-
-<body>
+<body layout:fragment="content">
 <div style="text-align : center;">
-    <img src="image/매물정보입력.jpg" style="width:100%; height:100%;" >
+    <img src="/img/maemulReg/maemulinfo.jpg" style="width:100%; height:100%;">
 </div>
 
 <div class="k-layout">
@@ -63,6 +75,7 @@
     <button>분양</button>
 </div>
 <br>
+<hr/>
 
 <h3 class="category"><b class="number">02 </b>주소 정보</h3><br>
 <b>주소</b><br>
@@ -71,7 +84,7 @@
 <b>단지명</b><br>
 <input type="text">
 <br>
-<b>상세주소</b><br>
+<b>상세 주소</b><br>
 <input type="text" placeholder="상세주소를 입력하세요">
 <br>
 <b>해당 동</b><br>
@@ -79,6 +92,8 @@
 <br>
 <b>호수</b><br>
 <input type="text" placeholder="원"><br>
+
+<hr/>
 
 <h3 class="category"><b class="number">03 </b>건물 정보</h3><br>
 <b>면적</b>
@@ -94,10 +109,10 @@
     <button>업무용</button>
     <button>거주/업무용</button>
 </div>
-
 <br>
 <b>방수</b><br>
 <input type="text" placeholder="개"><br>
+<hr/>
 
 <h3 class="category"><b class="number">04 </b>가격정보</h3><br>
 <b>희망 보증금</b>

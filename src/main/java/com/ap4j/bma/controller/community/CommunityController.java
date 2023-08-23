@@ -1,4 +1,4 @@
-package com.ap4j.bma.controller.board;
+package com.ap4j.bma.controller.community;
 
 import com.ap4j.bma.model.entity.board.BoardVO;
 import com.ap4j.bma.service.board.BoardService;
@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.data.domain.Pageable;
 
 @Controller
-public class BoardController {
+public class CommunityController {
 
     @Autowired
     private BoardService boardService;

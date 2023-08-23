@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layouts/no_footer_layout}">
 <head>
     <meta charset="UTF-8">
     <title>매물 등록</title>
@@ -11,41 +14,47 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
+    <style>
+        textarea {
+        width : 100%;
+        height : 280px;
+        margin: 0 auto;
+        margin-top : 20px;
+        margin-bottom : 10px;
+        box-sizing : border-box;
+        }
 
+        .prenext{
+        margin-top:10%;
+        }
+
+        .prev{
+         float: left;
+        }
+
+        .next{
+        float: right;
+        }
+        .agreement{
+        margin-bottom:10%;
+        float:right;
+        }
+
+         .agreementall{
+        float:right;
+        }
+
+        .number{
+        color: #26A9E0
+        }
+
+    </style>
 </head>
 
-<style>
-    textarea {
-    width : 100%;
-    height : 280px;
-    margin: 0 auto;
-    margin-top : 20px;
-    margin-bottom : 10px;
-    box-sizing : border-box;
-    }
-
-    .prenext{
-    margin-top:10%;
-    }
-
-    .agreement{
-    margin-bottom:10%;
-    float:right;
-    }
-
-     .agreementall{
-    float:right;
-    }
-
-    .number{
-    color: #26A9E0
-    }
-
-</style>
-<body>
+<body layout:fragment="content">
 
 <div style="text-align : center;">
-    <img src="image/약관동의.jpg" style="width:100%; height:100%;" >
+    <img src="/img/maemulReg/agree.jpg" style="width:100%; height:100%;">
 </div>
 
 <h3><b class="number">01 </b>총칙</h3>
