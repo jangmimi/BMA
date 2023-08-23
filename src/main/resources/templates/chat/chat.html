@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>WebSocket Chat Example</title>
+</head>
+<link rel="stylesheet" th:href="@{/css/chat.css}">
+<script src="/webjars/sockjs-client/1.0.2/sockjs.min.js"></script>
+<script src="/webjars/stomp-websocket/2.3.3/stomp.min.js"></script>
+<script th:src="@{/js/chat/chat.js}"></script>
+<body>
+<div class="s-chatbox">
+
+  <div class="s-chatTitleText">
+    <span>실시간 채팅방</span>
+    <span>참여 <span id="s-connectedClients"></span></span>
+  </div>
+  <div class="s-chatTextBox">
+
+    <div class="s-others-profile">
+      <img src="sc/chattinglogo.png" alt="">
+      <div class="s-nicknameAndText">
+        <span id="s-nickname">운영자(이우진)</span>
+        <div class="s-others-text">
+          여기는 아파트사조 실시간 톡방입니다 정보공유 목적으로만 사용해주세요
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="s-sendBox">
+    <input type="hidden" id="s-sender" value="">
+    <textarea id="s-sendText" ></textarea>
+    <button id="s-submitBtn">전송</button>
+  </div>
+
+</div>
+</body>
+</html>
