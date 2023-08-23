@@ -28,7 +28,7 @@ public class newsController {
 
     @RequestMapping("news")
     public String newsPage(Model model) {
-        String defaultSearchQuery = "아파트"; // 기본 검색어 설정
+        String defaultSearchQuery = "부동산"; // 기본 검색어 설정
 
         return search(defaultSearchQuery, 1, 1, model); // 기본 검색어와 함께 search 메서드 호출
     }
@@ -46,7 +46,7 @@ public String search(
     try {
         JsonNode jsonNode = objectMapper.readTree(searchResult);
         JsonNode items = jsonNode.get("items");
-
+        log.info(String.valueOf(items));
         List<Map<String, String>> newsList = new ArrayList<>();
         for (JsonNode item : items) {
             String title = item.get("title").asText();
