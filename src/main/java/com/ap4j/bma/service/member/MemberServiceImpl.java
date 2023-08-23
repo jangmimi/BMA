@@ -311,7 +311,7 @@ public class MemberServiceImpl implements MemberService {
 				// entity->dto로 변환
 				MemberDTO dto = new MemberDTO();
 				dto.setEmail(memberEntity.getEmail());
-				dto.setName(memberEntity.getName());
+//				dto.setName(memberEntity.getName());
 				dto.setPwd(memberEntity.getPwd());
 				return dto;
 

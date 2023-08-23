@@ -9,14 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @Controller
@@ -101,10 +98,10 @@ public class MemberController {
         log.info("MemberController - qBasicLogin() 실행");
         log.info("memberDTO : " + memberDTO);
 
-        if(bindingResult.hasErrors()) {
-            log.info("유효성 검사 에러 발생");
-            return "/userView/oLoginForm";
-        }
+//        if(bindingResult.hasErrors()) {
+//            log.info("유효성 검사 에러 발생");
+//            return "/userView/oLoginForm";
+//        }
 //        if(bindingResult.hasErrors()) {
 //            log.info("유효성 체크 에러 발생");
 //            model.addAttribute("memberDTO", memberDTO); // 로그인 실패 시 입력 데이터 유지
@@ -120,7 +117,6 @@ public class MemberController {
             log.info("로그인 성공했어요.");
             model.addAttribute("msg","로그인 성공");
             model.addAttribute("userId", loginMember.getEmail());
-            model.addAttribute("userName", loginMember.getName());
             session.setAttribute("userId", loginMember.getEmail());
 
 //            return "/userView/oLoginForm";
