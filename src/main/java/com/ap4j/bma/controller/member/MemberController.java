@@ -107,17 +107,17 @@ public class MemberController {
         if(loginMember != null) {
             log.info(loginMember.toString());
             log.info("로그인 성공했어요.");
-            model.addAttribute("msg","로그인 성공");
-            model.addAttribute("userId", loginMember.getEmail());
-            session.setAttribute("userId", loginMember.getEmail());
+            String userId = loginMember.getEmail();
+            String userName = loginMember.getName();
+            model.addAttribute("userId", userId);
+            model.addAttribute("userName",userName);
+            session.setAttribute("userId", userId);
 
-//            return "/userView/oLoginForm";
+            return "/userView/oMyPage";
         } else {
             log.info("로그인 실패헀어요.");
             model.addAttribute("msg","로그인 실패");
             model.addAttribute("goURL","/member/qLoginBasic");
-//            msg = "<script>alert('아이디 또는 패스워드를 다시 확인해주세요.');location.href='history.back();';</script>";
-//            return msg;
         }
 /*        MemberEntity member = new MemberEntity();
         member.setEmail(memberDTO.getEmail());
@@ -141,8 +141,7 @@ public class MemberController {
             session.setAttribute("userId", result.getEmail());
             return "/userView/oLoginForm";
         }*/
-
-        return "redirect:/";
+        return "/userView/oMyPage";
 //        return "/userView/oLoginForm";    // 원래 사용 코드
 //        return "redirect:/member/qLoginForm";
     }
@@ -160,17 +159,6 @@ public class MemberController {
     public String qJoinBasic(@Valid @ModelAttribute MemberDTO memberDTO, BindingResult bindingResult, Model model) {  // @Valid : UserDTO 유효성 검사 애노테이션(통과X -> errors)
         log.info("MemberController - qJoinBasic() 실행");
         log.info("memberDTO : " + memberDTO);
-
-        // post 요청 시 넘어온 memberDTO 입력 값에서 validation에 걸리는 경우
-//        if(errors.hasErrors()) {
-//            model.addAttribute("memberDTO", memberDTO); // 회원가입 실패 시 입력 데이터 유지
-//            // 유효성 통과 못한 필드 및 메세지 핸들링
-//            Map<String, String> validatorResult = qMemberService.validateHandler(errors);
-//            for(String key : validatorResult.keySet()) {
-//                model.addAttribute(key,validatorResult.get(key));
-//            }
-//            return "/userView/oJoinForm";
-//        }
 
         if(bindingResult.hasErrors()) {
             log.info("유효성 검사 에러 발생");
@@ -272,6 +260,12 @@ public class MemberController {
         return "/userView/oMyInfoUpdate";
     }
 
+    /** 이메일/비밀번호 찾기 페이지 매핑 */
+    @RequestMapping(value="/qFindMemberInfo")
+    public String qFindMemberInfo() {
+        return "/userView/oFindMemberInfo";
+    }
+
 //    @GetMapping(value = "/qEmailCheck")
 //    public ResponseEntity<Boolean> qEmailCheck(@RequestBody String email) {
 //        log.info("email : " + email);
@@ -280,16 +274,27 @@ public class MemberController {
 //
 //        return res;
 //    }
-    @RequestMapping("/qEmailCheck")
-    public String qEmailCheck(@RequestParam(value="email") String email, Model model) {
-        log.info("email : " + email);
 
+//    @RequestMapping("/qEmailCheck")
+//    public String qEmailCheck(@RequestParam(value="email") String email, Model model) {
+//        log.info("email : " + email);
+//
+//        boolean emailCheck = qMemberService.existsByEmail(email);
+//        if(emailCheck) {
+//            log.info("이메일 중복입니다.");
+//            model.addAttribute("emailCheck", emailCheck);
+//
+//        }
+//        return "redirect:/qLoginForm";
+//    }
+
+    // 이메일 중복 체크 (js ajax 활용)
+    @PostMapping("/qEmailCheck")
+    @ResponseBody
+    public int qEmailCheck(@RequestParam("email") String email) {
+        int cnt = 0;
         boolean emailCheck = qMemberService.existsByEmail(email);
-        if(emailCheck) {
-            log.info("이메일 중복입니다.");
-            model.addAttribute("emailCheck", emailCheck);
-
-        }
-        return "redirect:/qLoginForm";
+        cnt = emailCheck ? 1 : 0;
+        return cnt;
     }
 }

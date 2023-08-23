@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <style>
-        <!-- * 부트스트랩으로 인한 충돌 / 헤더 위치 조정중..^^하.. * -->
+        <!-- * 부트스트랩으로 인한 충돌 / 헤더 위치 조정중 -->
         .n-header-list {
             margin: 16px 0px;
             padding: 0px 0px 0px 40px;
@@ -60,7 +60,7 @@
 
 
         <div id="oLoginTitle">
-            <h2 class="h2 fw-bold">로그인</h2>
+            <h3 class="h3 fw-bold">간편 로그인</h3>
         </div>
         <span th:if="${userId == null}">    <!-- 로그인 안한 상태 -->
             <form th:action="@{/member/qLoginBasic}" method="POST" th:object="${memberDTO}">
@@ -77,20 +77,20 @@
                     <label th:for="password">비밀번호</label>
                     <p th:if="${#fields.hasErrors('pwd')}" th:errors="*{pwd}" style="font-size:12px; text-align: left; color: red;">Incorrect data</p>
                 </div>
-                <div id="oLoginBtn-container">
-                    <input type="submit" class="btn btn-dark mb-3 mt-3" value="로그인" style="width:46%;"/>
-                    <button type="button" class="btn btn-dark mb-3 mt-3" onclick="location.href='/member/qJoinForm'" style="width:46%;">회원가입</button>
-                </div>
                 <!-- 아이디 저장 체크박스 -->
                 <div class="form-check" style="display: flex; justify-content:space-between; font-size:13px;">
                     <div>
                       <input class="form-check-input" type="checkbox"
                              value="" id="oSaveId" name="oSaveId" style="margin-right:5px;">
                       <label class="form-check-label ml-3" for="oSaveId">
-                        아이디 저장
+                        이메일 저장
                       </label>
                     </div>
-                    <div><a th:href="@{#}" style="color:#212529;">이메일/비밀번호 찾기</a></div>
+                    <div><a th:href="@{/member/qFindMemberInfo}" style="color:#212529;">이메일/비밀번호 찾기</a></div>
+                </div>
+                <div class="form-floating">
+                    <input type="submit" class="btn btn-dark mt-2 mb-2 w-100" style="height: 48px;" value="로그인" />
+<!--                    <button type="button" class="btn btn-dark mb-3 mt-3" onclick="location.href='/member/qJoinForm'" style="width:46%;">회원가입</button>-->
                 </div>
             </form>
 
@@ -114,15 +114,15 @@
         </span>
 
         <!-- 로그인 성공 시 -->
-        <span th:if="${userId != null}">
-            <form name="logout" th:action="@{/member/qLogout}">
-                <span>로그인 확인용 영역<</span><br/>
-                <a th:href="@{/member/qMyPage}">마이페이지 훔쳐보기</a><br/>
-                <span th:text="${userName}"></span>님 환영합니다.<br/>    <!-- nickname + 인사말 출력 -->
-                (<span th:text="${userId}"></span>)<br/>                 <!-- email -->
-                <input type="submit" value="로그아웃" />                  <!-- 로그아웃 버튼으로 전환 -->
-            </form>
-        </span>
+<!--        <span th:if="${userId != null}">-->
+<!--            <form name="logout" th:action="@{/member/qLogout}">-->
+<!--                <span>로그인 확인용 영역<</span><br/>-->
+<!--                <a th:href="@{/member/qMyPage}">마이페이지 훔쳐보기</a><br/>-->
+<!--                <span th:text="${userName}"></span>님 환영합니다.<br/>    &lt;!&ndash; nickname + 인사말 출력 &ndash;&gt;-->
+<!--                (<span th:text="${userId}"></span>)<br/>                 &lt;!&ndash; email &ndash;&gt;-->
+<!--                <input type="submit" value="로그아웃" />                  &lt;!&ndash; 로그아웃 버튼으로 전환 &ndash;&gt;-->
+<!--            </form>-->
+<!--        </span>-->
     </div>
 
    <!-- <script type="text/javascript">
@@ -135,19 +135,10 @@
         naver_id_login.init_naver_id_login();
     </script>-->
 
-    <!-- alert창 script -->
-<!--    <th:block th:if="${msg != null}">-->
-<!--    <th:block th:if="${msg != null}">-->
-<!--    <script>-->
-<!--        var message = [[${msg}]];-->
-<!--        alert(message);-->
-<!--    </script>-->
-<!--    </th:block>-->
     <!-- 부트스트랩 script -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </body>
 </html>
-
 
 <!--
     - kakao REST API 키
