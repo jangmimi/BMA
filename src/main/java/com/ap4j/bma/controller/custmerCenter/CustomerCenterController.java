@@ -33,16 +33,10 @@ public class CustomerCenterController {
     }
 
     //guide
-    @GetMapping("/guide/list")
-    public  String guideListForm(){
+    @GetMapping("/guide")
+    public  String guideListForm() {
 
-        return "customerCenter/guideBoard/guideList";
-    }
-
-    @GetMapping("/guide/view")
-    public  String guideViewForm(){
-
-        return "customerCenter/guideBoard/guideView";
+        return "customerCenter/guidePage";
     }
 
 

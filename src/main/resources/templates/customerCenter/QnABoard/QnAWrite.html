@@ -5,92 +5,23 @@
       layout:decorate="~{fragments/layouts/include_footer_layout}">
 <head>
     <meta charset="UTF-8">
-    <title>1:1 문의 게시판</title>
-    <style>
+    <title>고객센터</title>
+    <link rel="stylesheet" href="/resources/static/css/CC/CCBar.css">
+    <link rel="stylesheet" href="/resources/static/css/CC/qna.css">
 
-        .layout{
-        height : 100%;
-        width:80%;
-        margin : auto;
-        }
-
-        #notice-box{
-        height : 100px;
-        background : #f8f8f8;
-        width : 90%;
-        margin: auto;
-        margin-top: 30px;
-        border: 1px solid #ddd;
-        }
-
-
-        table{
-        border-top: solid 3px #26A9E0;
-        }
-
-        table th{
-        width : 200px;
-        border-left:solid #f8f8f8;
-        background : #f8f8f8;
-        }
-
-        table tr{
-        height: 50px;
-        }
-
-        table td{
-        border-right:solid #fff;
-        }
-
-        .qna-tb{
-        border-collapse: collapse;
-        width:90%;
-        margin:auto;
-        margin-top: 30px;
-        }
-
-        .submit-btn{
-        margin-top: 60px;
-        width: 100px;
-        height: 50px;
-        border-radius: 10px;
-        color : #fff;
-        border: #26A9E0;
-        background : #26A9E0;
-        }
-
-        #title{
-        height: 30px;
-        width : 90%;
-        }
-
-        select{
-        height: 40px;
-        width : 20%;
-        }
-        textarea{
-        height: 200px;
-        width : 95%;
-        }
-
-        .boldtext{
-        color :#26A9E0;
-        }
-
-        .right-text{
-        float:right;
-        }
-
-        .submit-btn-outer{
-        text-align : center;
-        width : 70%;
-        }
-    </style>
 </head>
+
 <body layout:fragment="content">
 <div class="layout">
-    <h1>1:1 문의</h1>
-    <hr />
+    <h1>고객센터</h1>
+
+    <div class="menubar">
+        <button type="button" class="menu" id="faq" onclick="location.href = '/faq/list'" >자주 묻는 질문</button>
+        <button type="button" class="menu-c" id="qna" onclick="location.href = '/qna'" >1:1 문의</button>
+        <button type="button" class="menu" id="notice" onclick="location.href = '/notice/list'" >공지사항</button>
+        <button type="button" class="menu" id="guide" onclick="location.href = '/guide'" >서비스 이용안내</button>
+    </div>
+
     <div id = "notice-box">
         <p>
         ＊ 아파트사조 서비스를 이용 중 문의사항(불편/개선사항 등)이 있으시면 언제든 말씀해 주세요.<br>
@@ -98,7 +29,7 @@
         ＊ 문의하신 내역은 <b class="boldtext">[내정보 > 1:1 문의내역]</b>에서 확인하실 수 있습니다.<br>
         </p>
     </div>
-
+    <hr/>
     <form>
     <div id = "tb-box">
         <table border="1" class="qna-tb">
