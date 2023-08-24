@@ -1,11 +1,13 @@
 package com.ap4j.bma.service.member;
 
+import com.ap4j.bma.model.entity.board.Board;
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
 import com.ap4j.bma.model.repository.MemberRepository;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import groovy.transform.Undefined;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Member;
 import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -161,11 +164,13 @@ public class MemberServiceImpl implements MemberService {
 			JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
 			JsonObject kakaoAccount = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
 
-			String nickname = properties.getAsJsonObject().get("nickname").getAsString();
 			String email = kakaoAccount.getAsJsonObject().get("email").getAsString();
+			String nickname = properties.getAsJsonObject().get("nickname").getAsString();
+//			String profile_image_url = properties.getAsJsonObject().get("thumbnail_image_url").getAsString();
 
 			userInfo.put("nickname", nickname);
 			userInfo.put("email", email);
+//			userInfo.put("thumbnail_image_url", profile_image_url);
 
 			Optional<MemberEntity> tmp = memberRepository.findByEmail(email);
 			log.info("test tmp (email기준 회원정보있나~?) : " + tmp);
@@ -263,6 +268,7 @@ public class MemberServiceImpl implements MemberService {
 		}
 		return accessToken;
 	}
+
 	@Transactional
 	@Override
 	public Long joinBasic(MemberEntity pMember) {
@@ -341,6 +347,15 @@ public class MemberServiceImpl implements MemberService {
 		}
 		return validatorResult;
 	}
+
+//	@Override
+//	public MemberDTO updateMember(String userId) {
+//		log.info("서비스 updateMember() 실행");
+//		Optional<MemberEntity> optionalMemberEntity = memberRepository.findByEmail(idx).orElseThrow(Undefined.EXCEPTION::new);
+//		entity.update(memberDTO.getName());
+//		return idx;
+//
+//	}
 
 
 	// 아래는 예시 코드입니다.
