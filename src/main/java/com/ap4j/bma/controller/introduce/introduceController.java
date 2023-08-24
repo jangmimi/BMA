@@ -43,22 +43,22 @@ public class introduceController {
     }
 
     /* 해당 부분 마커클러스터링 확인중 */
-    @GetMapping("/tt")
-    public String index(Model model) {
-        List<AptEntity> allPositions = aptRepository.findAll();
-
-        // 중복 주소 제거를 위해 Set 사용
-        Set<String> uniqueCombinedPositions = new HashSet<>();
-
-        for (AptEntity position : allPositions) {
-            String combinedPosition = position.getDistrict() + " " + position.getAddress();
-            uniqueCombinedPositions.add(combinedPosition);
-        }
-
-        model.addAttribute("positions", uniqueCombinedPositions);
-        log.info(uniqueCombinedPositions.toString());
-        return "kakaoMap/ttt";
-    }
+//    @GetMapping("/tt")
+//    public String index(Model model) {
+//        List<AptEntity> allPositions = aptRepository.findAll();
+//
+//        // 중복 주소 제거를 위해 Set 사용
+//        Set<String> uniqueCombinedPositions = new HashSet<>();
+//
+//        for (AptEntity position : allPositions) {
+//            String combinedPosition = position.getDistrict() + " " + position.getAddress();
+//            uniqueCombinedPositions.add(combinedPosition);
+//        }
+//
+//        model.addAttribute("positions", uniqueCombinedPositions);
+//        log.info(uniqueCombinedPositions.toString());
+//        return "kakaoMap/ttt";
+//    }
 
     /* ******************* */
 }

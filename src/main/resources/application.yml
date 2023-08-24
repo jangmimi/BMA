@@ -18,6 +18,7 @@ spring:
 
   # Thymeleaf 설정
   thymeleaf:
+    encoding: UTF-8
     cache: false
     prefix: classpath:templates/ # 여기에 경로쓰면 기본 경로로 됨. ㅎㅅㅎ
     check-template-location: true
@@ -47,10 +48,12 @@ spring:
 
   # 데이터베이스 설정
 
-#    url: jdbc:mysql://localhost:3306/pos
-#    username: root
-#    password: 1234
-#    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/pos
+    username: root
+    password: 45723922
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
 
   # 테스트 데이터 사용을 위해 data.sql(리소스 바로 아래 경로) 및
   # yml 내용 임시 추가 - pjm

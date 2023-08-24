@@ -1,6 +1,6 @@
-package com.ap4j.bma.controller.board;
+package com.ap4j.bma.controller.community;
 
-import com.ap4j.bma.model.entity.board.Board;
+import com.ap4j.bma.model.entity.board.BoardVO;
 import com.ap4j.bma.service.board.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,75 +16,75 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.data.domain.Pageable;
 
 @Controller
-public class BoardController {
+public class CommunityController {
 
     @Autowired
     private BoardService boardService;
 
-    @GetMapping("/board/write")
+    @GetMapping("/community/write")
     public  String boardWriteForm(){
 
-        return "board/freeBoard/boardWrite";
+        return "community/communityWrite";
     }
-    @PostMapping("/board/writepro")
-    public String boardWritePro(Board board, Model model , MultipartFile file) throws Exception{
+    @PostMapping("/community/writepro")
+    public String boardWritePro(BoardVO board, Model model , MultipartFile file) throws Exception{
 
         boardService.boardWrite(board, file);
         model.addAttribute("message","글 작성이 완료되었습니다.");
         model.addAttribute("searchUrl", "list");
 
-        return "board/freeBoard/message";
+        return "community/message";
     }
 
-    @GetMapping("/board/list")
+    @GetMapping("/community/list")
     public  String boardList(Model model , @PageableDefault(page = 0, size =10, sort ="id", direction = Sort.Direction.DESC) Pageable pageable){
 
-        Page<Board> list = boardService.boardList(pageable);
+        Page<BoardVO> list = boardService.boardList(pageable);
 
         int nowPage = list.getPageable().getPageNumber();
         int startPage = nowPage - 4;
         int endPage = nowPage + 5;
         model.addAttribute("List", boardService.boardList(pageable));
 
-        return "board/freeBoard/boardList";
+        return "community/communityList";
     }
 
-    @GetMapping("/board/view") //localhost:8082/board/view?id=1...
+    @GetMapping("/community/view") //localhost:8082/board/view?id=1...
     public String boardView(Model model , Integer id){
 
         model.addAttribute("board" , boardService.boardView(id));
-        return "board/freeBoard/boardView";
+        return "community/communityView";
     }
 
-    @GetMapping("/board/delete")
+    @GetMapping("/community/delete")
     public String boardDelete(Integer id){
 
         boardService.boardDelete(id);
 
-        return "redirect:/board/list";
+        return "redirect:/community/list";
     }
 
-    @GetMapping("/board/modify/{id}")
+    @GetMapping("/community/modify/{id}")
     public String boardModify(@PathVariable("id") Integer id,
                               Model model){
 
         model.addAttribute("board", boardService.boardView(id));
-        return "board/freeBoard/boardModify";
+        return "community/communityModify";
     }
 
-    @PostMapping("/board/update/{id}")
-    public String boardUpdate(@PathVariable("id") Integer id,Board board, Model model , MultipartFile file) throws Exception{
+    @PostMapping("/community/update/{id}")
+    public String boardUpdate(@PathVariable("id") Integer id, BoardVO board, Model model , MultipartFile file) throws Exception{
 
-        Board boardTemp = boardService.boardView(id);
+        BoardVO boardTemp = boardService.boardView(id);
         boardTemp.setTitle(board.getTitle());
         boardTemp.setContent(board.getContent());
 
         model.addAttribute("message","글 수정이 완료되었습니다.");
-        model.addAttribute("searchUrl", "/board/list");
+        model.addAttribute("searchUrl", "/community/list");
 
         boardService.boardWrite(boardTemp, file);
 
-        return "board/freeBoard/message";
+        return "community/message";
 
     }
 }

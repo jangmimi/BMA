@@ -1,6 +1,6 @@
 package com.ap4j.bma.service.board;
 
-import com.ap4j.bma.model.entity.board.Board;
+import com.ap4j.bma.model.entity.board.BoardVO;
 import com.ap4j.bma.model.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,7 +19,7 @@ public class BoardService {
 	private BoardRepository boardRepository;
 
 	//게시글 작성 처리
-	public void boardWrite(Board board , MultipartFile file) throws Exception{
+	public void boardWrite(BoardVO board , MultipartFile file) throws Exception{
 
 		//파일 저장 처리
 		String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
@@ -29,20 +29,20 @@ public class BoardService {
 		file.transferTo(savaFile);
 
 		//파일을 DB에 저장
-		board.setFilename(fileName);
-		board.setFilepath("/files/" + fileName);
+		//board.setFilename(fileName);
+		//board.setFilepath("/files/" + fileName);
 
 		boardRepository.save(board);
 	}
 
 	//게시글 리스트 처리
-	public Page<Board> boardList(Pageable pageable){
+	public Page<BoardVO> boardList(Pageable pageable){
 
 		return boardRepository.findAll(pageable);
 	}
 
 	//특정 게시글 불러오기
-	public Board boardView(Integer id){
+	public BoardVO boardView(Integer id){
 
 		return boardRepository.findById(id).get();
 	}
