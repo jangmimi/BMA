@@ -3,6 +3,7 @@
 body{
 padding:0;
 margin:0;
+min-width:1800px;
 }
 
 /*헤더 컨테이너*/
