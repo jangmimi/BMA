@@ -17,6 +17,6 @@ public class AptDTO {
     private String aptAddress;      // 아파트 주소
     private String kaptCode;        // 아파트 코드
     private String bjdCode;         // 법정동 코드
-    private String latitude;        // 위도
-    private String longitude;       // 경도
+    private Double latitude;        // 위도
+    private Double longitude;       // 경도
 }
