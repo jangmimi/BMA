@@ -21,22 +21,22 @@ public class CommunityController {
     @Autowired
     private BoardService boardService;
 
-    @GetMapping("/board/write")
+    @GetMapping("/community/write")
     public  String boardWriteForm(){
 
-        return "board/freeBoard/boardWrite";
+        return "community/communityWrite";
     }
-    @PostMapping("/board/writepro")
+    @PostMapping("/community/writepro")
     public String boardWritePro(BoardVO board, Model model , MultipartFile file) throws Exception{
 
         boardService.boardWrite(board, file);
         model.addAttribute("message","글 작성이 완료되었습니다.");
         model.addAttribute("searchUrl", "list");
 
-        return "board/freeBoard/message";
+        return "community/message";
     }
 
-    @GetMapping("/board/list")
+    @GetMapping("/community/list")
     public  String boardList(Model model , @PageableDefault(page = 0, size =10, sort ="id", direction = Sort.Direction.DESC) Pageable pageable){
 
         Page<BoardVO> list = boardService.boardList(pageable);
@@ -46,33 +46,33 @@ public class CommunityController {
         int endPage = nowPage + 5;
         model.addAttribute("List", boardService.boardList(pageable));
 
-        return "board/freeBoard/boardList";
+        return "community/communityList";
     }
 
-    @GetMapping("/board/view") //localhost:8082/board/view?id=1...
+    @GetMapping("/community/view") //localhost:8082/board/view?id=1...
     public String boardView(Model model , Integer id){
 
         model.addAttribute("board" , boardService.boardView(id));
-        return "board/freeBoard/boardView";
+        return "community/communityView";
     }
 
-    @GetMapping("/board/delete")
+    @GetMapping("/community/delete")
     public String boardDelete(Integer id){
 
         boardService.boardDelete(id);
 
-        return "redirect:/board/list";
+        return "redirect:/community/list";
     }
 
-    @GetMapping("/board/modify/{id}")
+    @GetMapping("/community/modify/{id}")
     public String boardModify(@PathVariable("id") Integer id,
                               Model model){
 
         model.addAttribute("board", boardService.boardView(id));
-        return "board/freeBoard/boardModify";
+        return "community/communityModify";
     }
 
-    @PostMapping("/board/update/{id}")
+    @PostMapping("/community/update/{id}")
     public String boardUpdate(@PathVariable("id") Integer id, BoardVO board, Model model , MultipartFile file) throws Exception{
 
         BoardVO boardTemp = boardService.boardView(id);
@@ -80,11 +80,11 @@ public class CommunityController {
         boardTemp.setContent(board.getContent());
 
         model.addAttribute("message","글 수정이 완료되었습니다.");
-        model.addAttribute("searchUrl", "/board/list");
+        model.addAttribute("searchUrl", "/community/list");
 
         boardService.boardWrite(boardTemp, file);
 
-        return "board/freeBoard/message";
+        return "community/message";
 
     }
 }

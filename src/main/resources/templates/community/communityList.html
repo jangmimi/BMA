@@ -6,118 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>게시글 리스트 페이지</title>
-    <style>
-
-        h1{
-        text-align:center;
-        }
-
-        .atext{
-          text-decoration: none;
-          color: white;
-          }
-
-        .layout {
-            width : 80%;
-            margin: 0 auto;
-            margin-top : 40px;
-        }
-
-         table{
-         width : 95%;
-         margin-top:70px;
-         border-collapse: collapse;
-        }
-
-        table, td, th {
-          border-collapse : collapse;
-        }
-
-       table th {
-        padding: 20px;
-        background: #ececec;
-        color: #666;
-        font-size: 15px;
-        border: 1px solid #ddd;
-        border-top: 3px solid #26A9E0;
-        border-bottom: 2px solid #26A9E0;
-        }
-
-        table td {
-        padding: 14px 21px;
-        color: #666;
-        border-bottom: 1px solid #ddd;
-        text-align: center;
-         }
-
-        table tr:hover {
-        background: #eee;
-        cursor: pointer;
-        }
-
-        .b-n {
-        width :10%;
-        }
-        .b-t{
-        width : 50%;
-        }
-
-        .headrow{
-        height : 100px;
-        width: 50%;
-        background : #f8f8f8;
-        margin: auto;
-        border: 1px solid #ddd;
-
-        }
-
-        .headrowL{
-        height : 40px;
-        width: 60%;
-        border: 2px solid #26A9E0;
-        background : #ffffff;
-        display:flex;
-        justify-content:space-between;
-        margin: auto;
-        margin-top:25px
-        }
-
-        .headrowR{
-        height : 40px;
-        width :12%;
-        background : #ffffff;
-        float: right;
-        }
-
-
-        .searchbox{
-        padding: 10px;
-        border: 0px;
-        outline: none;
-        float: left;
-        }
-
-        .searchbtn{
-        width: 100px;
-        height:100%;
-        border: 0px;
-        background: #26A9E0;
-        outline: none;
-        float: left;
-        color: #ffffff;
-        }
-
-        .writebtn{
-        width: 100px;
-        height:120%;
-        border: 0px;
-        margin-top:5px;
-        background: #26A9E0;s
-        outline: none;
-        color: #ffffff;
-        }
-
-    </style>
+    <link rel="stylesheet" href="/resources/static/css/boardList.css">
 </head>
 
 <body layout:fragment="content">
@@ -135,12 +24,10 @@
     <hr/>
 
     <div class = "headrowR">
-        <button class="writebtn">
-            <a href="/board/write" class="atext">글쓰기</a>
-        </button>
+        <button type="button" class="writebtn" onclick="location.href = '/community/write'" >글쓰기</button>
     </div>
 
-    <table id = "freeboardtb">
+    <table id = "freeboard-tb">
         <thead>
         <tr>
             <th class="b-n">번호</th>

@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+
+.sticky-chat-modal {
+  position: sticky;
+  bottom: 50px;
+  display: flex;
+  justify-content: end;
+  margin-right:30px;
+  margin-bottom:15px;
+  z-index: 1000;
+}
+
+/*모달*/
+.s-chat-connect-button {
+    border: none;
+    background-color: transparent;
+}
+.s-chat-connect-button img {
+    width: 70px;
+}
+
+/*채팅창 전체 div*/
+.s-chatbox {
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: aliceblue;
+  width: 400px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #222;
+}
+
+/*상단 타이틀*/
+.s-chatTitleText {
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #70BCFF;
+  color: white;
+}
+
+.s-chatTitleText span:first-child{
+  font-size: large;
+  font-weight: bold;
+}
+
+.s-chatTitleText span:nth-child(2){
+  font-size: small;
+}
+
+.s-chatTitleText span:nth-child(2) span{
+  font-size: small;
+}
+
+.s-chatTextBox {
+  height: 400px;
+  margin: 10px;
+  overflow: auto;
+}
+
+/*메세지 보내는 div*/
+.s-sendBox {
+  display: flex;
+  height: 60px;
+  border-top: 1px solid #222;
+}
+.s-sendBox textarea {
+  width: 85%;
+  resize: none;
+  border: none;
+}
+.s-sendBox textarea:focus {
+  outline: none;
+}
+
+.s-sendBox button {
+  width: 15%;
+  background-color: #70BCFF;
+  border: none;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: large;
+  font-weight: bold;
+  color: white;
+}
+
+.s-others-profile {
+  display: flex;
+}
+
+.s-others-profile img{
+  width: 32px;
+  height: 32px;
+}
+
+.s-nicknameAndText {
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+}
+
+.s-nicknameAndText span {
+  margin-left: 15px;
+}
+
+/*말풍선*/
+.s-others-text {
+  font-size: 14px;
+  position: relative;
+  margin-left: 15px;
+  margin-top: 0px;
+  background: white;
+  padding: 5px; /* Add some padding for better text spacing */
+  color: #333333; /* Set text color to white */
+  display: inline-block; /* Allow the balloon to fit its content */
+  border: 1px solid #333333;
+}
+
+.s-others-text::before {
+  border-top: 15px solid #333333;
+  border-left: 15px solid transparent;
+  border-right: 0px solid transparent;
+  border-bottom: 0px solid transparent;
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: -15px;
+}
+
+.s-others-text::after {
+  border-top: 13px solid white;
+  border-left: 13px solid transparent;
+  border-right: 0px solid transparent;
+  border-bottom: 0px solid transparent;
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: -13px;
+  z-index: 0;
+}
+
+/* 내가 보낸 메시지 */
+
+.s-my-profile {
+  display: flex;
+  justify-content: end;
+}
+
+.s-my-text {
+  font-size: 14px;
+  position: relative;
+  margin-right: 15px; /* Adjust margin to create spacing */
+  margin-top: 7px;
+  background: #007BFF; /* Change background color */
+  padding: 5px;
+  color: white; /* Set text color to white */
+  display: inline-block;
+  border: 1px solid #007BFF; /* Change border color */
+}
+
+.s-my-text::before {
+  border-top: 15px solid #007BFF;
+  border-left: 0px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 0px solid transparent;
+  content: "";
+  position: absolute;
+  top: 5px;
+  right: -15px; /* Adjust position to the right */
+}
+
+.s-my-text::after {
+  border-top: 13px solid #007BFF;
+  border-left: 0px solid transparent;
+  border-right: 13px solid transparent;
+  border-bottom: 0px solid transparent;
+  content: "";
+  position: absolute;
+  top: 6px;
+  right: -13px; /* Adjust position to the right */
+  z-index: 0;
+}
