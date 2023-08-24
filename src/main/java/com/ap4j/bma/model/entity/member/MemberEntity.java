@@ -21,13 +21,21 @@ public class MemberEntity {
 	private String name;
 	@Column
 	private String pwd;
+	@Column
+	private String root;	// 가입 경로
 
 	@Builder	// 빌더 패턴 적용
-	public MemberEntity(Long idx, String email, String name, String pwd) {
+	public MemberEntity(Long idx, String email, String name, String pwd, String root) {
 		this.idx = idx;
 		this.email = email;
 		this.name =  name;
 		this.pwd = pwd;
+		this.root = root;
+	}
+
+	/** 회원정보 수정 */
+	public void update(String name) {
+		this.name = name;
 	}
 }
 

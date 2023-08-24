@@ -2,6 +2,7 @@ package com.ap4j.bma.service.member;
 
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 
 import java.util.HashMap;
@@ -41,4 +42,8 @@ public interface MemberService {
 
 	/** 회원가입 유효성 검사 */
     Map<String, String> validateHandler(Errors errors);
+
+	/** 회원정보 수정 */
+//	@Transactional
+//	public Long updateMember(final Long idx, final MemberDTO memberDTO);
 }

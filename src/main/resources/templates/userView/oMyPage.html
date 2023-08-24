@@ -61,7 +61,7 @@
                 <div class="o-wrapper">
                     <ul class="o-lnb-list">
                         <li class="o-lnb-item"><a href="#">내정보</a></li>
-                        <li class="o-lnb-item"><a href="#">내정보수정</a></li>
+                        <li class="o-lnb-item"><a href="/member/qMyInfoUpdate">내정보수정</a></li>
                         <li class="o-lnb-item"><a href="#">비밀번호변경</a></li>
                         <li class="o-lnb-item"><a href="#">관심매물</a></li>
                         <li class="o-lnb-item"><a href="#">매물관리</a></li>    <!-- 지현이 게시판 양식 받아서 적용(일관성) -->
@@ -84,8 +84,11 @@
                 <div class="oInfo-top-wrapper">
                     <div class="oInfo">
                          <form name="logout" th:action="@{/member/qLogout}">
-                            <span th:text="${userName}" style="font-weight:bold; font-size:15px"></span>님<br/>
-                            <span th:text="${userId}" style="font-weight:bold; font-size:13px;"></span><br/>
+                            <span th:text="${userEmail}" style="font-weight:bold; font-size:15px"></span>님<br/>
+                            <span th:text="${userName}" style="font-weight:bold; font-size:13px;"></span><br/>
+<!--                            <div>-->
+<!--                                <img src="${thumbnail_image_url}" width="150"/>-->
+<!--                            </div>-->
                             <input type="submit" class="btn btn-dark" value="로그아웃" />
                          </form>
                     </div>
