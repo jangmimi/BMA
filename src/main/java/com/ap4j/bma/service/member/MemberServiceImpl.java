@@ -1,6 +1,5 @@
 package com.ap4j.bma.service.member;
 
-import com.ap4j.bma.model.entity.board.Board;
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
 import com.ap4j.bma.model.repository.MemberRepository;
