@@ -1,13 +1,12 @@
 package com.ap4j.bma.service.member;
 
-import com.ap4j.bma.model.entity.board.Board;
+import com.ap4j.bma.config.PasswordEncoderConfig;
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
 import com.ap4j.bma.model.repository.MemberRepository;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import groovy.transform.Undefined;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,6 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.lang.reflect.Member;
 import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -35,6 +33,9 @@ public class MemberServiceImpl implements MemberService {
 
 	@Autowired
 	private MemberRepository memberRepository;
+
+	@Autowired
+	private PasswordEncoderConfig pwdConfig;
 
 	public String getAccessToken(String code) {
 		String accessToken = "";
@@ -273,11 +274,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public Long joinBasic(MemberEntity pMember) {
 		log.info("서비스 joinBasic() 실행");
-//		validateDuplicateMember(pMember);    // 중복 회원 검증
 		memberRepository.save(pMember);
 		return pMember.getIdx();			// @GeneratedValue 로 id는 자동으로 값 저장
 	}
-	//			   validateDuplicateMember
+
+//		validateDuplicateMember(pMember);    // 중복 회원 검증
 	/*private void validateDuplicateMember(Member member) {
 		List<Member> findMembers = memberRepository.findByName(member.getName());
 		//EXCEPTION
@@ -312,12 +313,13 @@ public class MemberServiceImpl implements MemberService {
 		if (findMember.isPresent()) {
 			log.info("로그인 시도하는 email DB에 존재!");
 			MemberEntity memberEntity = findMember.get();
-			if(memberEntity.getPwd().equals(memberDTO.getPwd())) {
+			if(pwdConfig.passwordEncoder().matches(memberDTO.getPwd(),memberEntity.getPwd())) {
+//			if(memberEntity.getPwd().equals(memberDTO.getPwd())) {
 				log.info("id pw 모두 일치! 로그인 성공!");
 				// entity->dto로 변환
 				MemberDTO dto = new MemberDTO();
 				dto.setEmail(memberEntity.getEmail());
-//				dto.setName(memberEntity.getName());
+				dto.setName(memberEntity.getName());
 				dto.setPwd(memberEntity.getPwd());
 				return dto;
 

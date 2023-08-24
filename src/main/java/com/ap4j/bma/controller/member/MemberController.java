@@ -1,6 +1,7 @@
 package com.ap4j.bma.controller.member;
 // pjm - use m o p q
 // controller -q | model -m | html -o | etc.. -p
+import com.ap4j.bma.config.PasswordEncoderConfig;
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
 import com.ap4j.bma.service.member.MemberService;
@@ -22,6 +23,9 @@ public class MemberController {
 
     @Autowired
     private MemberService qMemberService;
+
+    @Autowired
+    private PasswordEncoderConfig pwdConfig;
 
     /** 로그인 페이지 매핑 */
     @RequestMapping(value="/qLoginForm")
@@ -185,7 +189,8 @@ public class MemberController {
         MemberEntity member = new MemberEntity();
         member.setEmail(memberDTO.getEmail());
         member.setName(memberDTO.getName());
-        member.setPwd(memberDTO.getPwd());
+        member.setPwd(pwdConfig.passwordEncoder().encode(memberDTO.getPwd()));  // 암호화 비밀번호로 set
+//        member.setPwd(memberDTO.getPwd());
         member.setRoot("기본회원");
 
         model.addAttribute("member",member);

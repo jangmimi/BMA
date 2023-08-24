@@ -46,4 +46,7 @@ public interface MemberService {
 	/** 회원정보 수정 */
 //	@Transactional
 //	public Long updateMember(final Long idx, final MemberDTO memberDTO);
+
+	/** 비밀번호 암호화 */
+
 }
