@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -66,8 +67,6 @@ public class ApartmentServiceImpl implements ApartmentService {
         JSONObject aptJson = jsonObject.getJSONObject("response").getJSONObject("body").getJSONObject("items");
         JSONArray jsonArray = aptJson.getJSONArray("item");
 
-
-
         // 루프 돌려서 JSON데이터를 DB에 저장
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject obj = jsonArray.getJSONObject(i);
@@ -110,7 +109,8 @@ public class ApartmentServiceImpl implements ApartmentService {
     }
 
     /** 가져온 좌표값 DB에 저장하기 */
-    public void updateCoordinatesByAptName(String aptName, String latitude, String longitude) {
+    @Transactional
+    public void updateCoordinatesByAptName(String aptName, Double latitude, Double longitude) {
         AptEntity aptEntity = aptRepository.findByAptName(aptName);
         if (aptEntity != null) {
             AptEntity updateAptEntity = AptEntity.builder()
@@ -124,6 +124,26 @@ public class ApartmentServiceImpl implements ApartmentService {
                     .build();
             aptRepository.save(updateAptEntity);
         }
+    }
+
+    public List<AptDTO> findMarkersInBounds(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng) {
+
+        List<AptDTO> aptDTOList = new ArrayList<>();
+        List<AptEntity> aptEntityList = aptRepository.findMarkersInBounds(southWestLat, southWestLng, northEastLat, northEastLng);
+
+        for (AptEntity aptEntity : aptEntityList) {
+            AptDTO aptDTO = AptDTO.builder().
+                    aptName(aptEntity.getAptName()).
+                    aptAddress(aptEntity.getAptAddress()).
+                    kaptCode(aptEntity.getKaptCode()).
+                    bjdCode(aptEntity.getBjdCode()).
+                    latitude(aptEntity.getLatitude()).
+                    longitude(aptEntity.getLongitude()).
+                    build();
+            aptDTOList.add(aptDTO);
+        }
+        return aptDTOList;
+
     }
 
 

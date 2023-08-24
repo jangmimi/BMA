@@ -26,8 +26,8 @@ public class AptEntity {
     @Column
     private String bjdCode;         // 법정동 코드
     @Column
-    private String latitude;        // 위도
+    private Double latitude;        // 위도
     @Column
-    private String longitude;       // 경도
+    private Double longitude;       // 경도
 
 }

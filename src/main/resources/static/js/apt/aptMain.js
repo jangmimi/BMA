@@ -13,11 +13,39 @@ map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
 var ps = new kakao.maps.services.Places();
 
-for (var i = 0; i < aptList.length; i++) {
-    var apt = aptList[i];
-    var aptFullAddress = apt.aptAddress + " " + apt.aptName;
-    searchKeyword(aptFullAddress, apt.aptName);
+var pageSize = 100; // 한 페이지당 처리할 데이터의 개수
+var totalPages = Math.ceil(aptList.length / pageSize); // 전체 페이지 수 계산
+
+
+// 페이지별로 처리하는 함수
+function processPage(page) {
+    var startIndex = (page - 1) * pageSize;
+    var endIndex = Math.min(startIndex + pageSize, aptList.length);
+
+    for (var i = startIndex; i < endIndex; i++) {
+        var apt = aptList[i];
+        var aptFullAddress = apt.aptAddress + " " + apt.aptName;
+        searchKeyword(aptFullAddress, apt.aptName);
+    }
 }
+
+// 페이지별로 데이터 처리
+function processPagesSequentially(page) {
+    if (page > totalPages) {
+        console.log("All pages processed successfully.");
+        return;
+    }
+
+    processPage(page);
+
+    // 다음 페이지로 이동
+    setTimeout(function() {
+        processPagesSequentially(page + 1);
+    }, 2000); // 2초 동안 대기
+}
+
+// 첫 번째 페이지부터 시작
+processPagesSequentially(1);
 
 function searchKeyword(aptFullAddress, aptName) {
     // 키워드로 좌표 변환 요청
@@ -27,27 +55,68 @@ function searchKeyword(aptFullAddress, aptName) {
             var longitude = result[0].x; // 경도
 
             // AJAX 요청을 통해 데이터 서버로 전송
-            console.log(aptName + " " + latitude + " " + longitude)
             $.ajax({
-                url: "/saveCoordinates", // Spring Boot 서버의 URL
-                method: "POST", // 전송 방식 (POST)
+                url: "/saveCoordinates",
+                method: "POST",
                 data: {
                     latitude: latitude,
                     longitude: longitude,
                     aptName: aptName
-                    },
+                },
                 success: function(response) {
-                    // 성공적으로 전송되었을 때 실행되는 코드
-                    console.log("Data sent successfully:", response);
+                    // 성공 시 처리
                 },
                 error: function(error) {
-                    // 전송 중 에러 발생 시 실행되는 코드
-                    console.error("Error sending data:", error);
+                    // 에러 시 처리
                 }
             });
         }
     });
 }
+
+
+
+
+
+
+
+
+
+
+
+//var latitude = null;
+//function searchKeyword(aptFullAddress, aptName) {
+//    // 키워드로 좌표 변환 요청
+//    ps.keywordSearch(aptFullAddress, function(result, status) {
+//        if (status === kakao.maps.services.Status.OK) {
+//            latitude = result[0].y; // 위도
+//            var longitude = result[0].x; // 경도
+////            if(aptFullAddress == "경상남도 창원마산회원구 내서읍 삼계리 마산삼계2")
+//              if(aptFullAddress == "경상남도 거제시 문동동 삼오르네상스")
+//                {
+//                    console.log(aptFullAddress + aptName + " " + latitude + " " + longitude);
+//                }
+//            // AJAX 요청을 통해 데이터 서버로 전송
+////            console.log(aptName + " " + latitude + " " + longitude)
+//            $.ajax({
+//                url: "/saveCoordinates", // Spring Boot 서버의 URL
+//                method: "POST", // 전송 방식 (POST)
+//                data: {
+//                    latitude: latitude,
+//                    longitude: longitude,
+//                    aptName: aptName
+//                    },
+//                success: function(response) {
+//                    resolve(response); // 요청 완료 시 resolve 호출
+//                },
+//                error: function(error) {
+//                    reject(error); // 에러 발생 시 reject 호출
+//                }
+//
+//            });
+//        }
+//    });
+//}
 
 
 
