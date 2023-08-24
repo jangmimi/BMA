@@ -1,5 +1,5 @@
 body{
-  position: absolute;
+    position: absolute;
     top: 0px;
     left: 0px;
     width: 100%;
@@ -108,20 +108,24 @@ body{
 
 
 /*사이드바 속 세부 조정들*/
-.sideBarAll{
+.asideBarAll{
   position: absolute;
-  top: 70px;
+  top: 60px;
   width: 400px;
   z-index: 1100;
+  height: calc(100% - 60px);
   line-height: 1;
 }
 .sideContents{
-  overflow: auto;
+  overflow-y: auto;
   overflow-x: hidden;
   width:335px;
-  height: 467px;
+  height: 500px;
   font-size: 14px;
   /* border: 3px solid blue; */
+}
+.asideMenu{
+  height: 100%;
 }
 .input-group{
   justify-content: space-between;
@@ -146,15 +150,30 @@ body{
     line-height: 22px;
     letter-spacing: -1px;
 }
-#staticBackdrop2.modal.fade.show{
+.towriteBtn{
+  background-color: transparent;
+  border: none;
+}
+#staticBackdrop2.modal.fade.show {
   width: 300px;
   height: 1000px;
   left: 399px;
-  top:41px;
+  top: 31px;
 }
-#exampleModalToggle2{
+#exampleModalToggle2 {
   width: 300px;
   left: 399px;
+  top: 31px;
+}
+.aPostcontent{
+  border: 2px solid #26abed62;
+  width: 93%;
+  height: 150px;
+
+  font-size: 13px;
+  padding: 9px;
+
+  margin-bottom: 15px;
 }
 .css-2stcwj.eke1oq31{
   background-color: #26abed33;
@@ -173,15 +192,101 @@ body{
   border: none;
   width: 160px;
 }
-.content{
+.id,.arepNickname{
+  font-size: 13px;
+}
+.arepUserInfo{
+  display: flex;
+  justify-content: space-between;
+}
+.uploadDate{
+  -webkit-font-smoothing: antialiased;
+}
+.acontent{
   margin-top: 10px;
   padding: 10px;
-  width: 250px;
-  height: 200px;
+  height: 137px;
   border: 1px solid #26abed33;
+  border-radius: 10px;
   resize: none;
-  font-size: 14px;
+  font-size: 15px;
   line-height:20px;
+}
+.areplyOnresitell{
+  margin-top: 10px;
+}
+.css-mkzt4e {
+  display: inline-block;
+  margin-left: 2px;
+}
+.col-md-3.ms-auto{
+  width: 100%;
+}
+.storyList{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  align-items: center;
+}
+#ResidentReviewCheckbox{
+  accent-color: #26abed;
+}
+.residentsTell{
+  font-size: 14px;
+}
+.apostAndReply{
+  margin-top: 20px;
+}
+.dropdown.option{
+  background-color: #26abed;
+}
+.arepContentAlign,.areplyOnPostAlign{
+  display: flex;
+  justify-content: center;
+}
+.arepId{
+  font-size: 10px;
+}
+.arepContent{
+  background: #26abed39;
+  width: 204px;
+  height: 40px;
+  border-radius: 10px;
+
+  font-size: 13px;
+  padding: 10px;
+}
+.areplyOnReply{
+  font-size: 13px;
+  padding-left: 23px;
+}
+.areplyOnPostAlign{
+    margin-top: 10px;
+
+    width: 100%;
+    border: 1px solid rgba(38, 171, 237, 0.2);
+    border-radius: 10px;
+
+    display: flex;
+    align-items: center;
+}
+.areplyOnPost{
+    width: 80%;
+    height: 25px;
+    border: none;
+    padding: 6px;
+    font-size: 15px;
+}
+.btn.btn-primary.aSummitReply{
+  background-color: #fff;
+
+  border-left: 1px solid rgba(38, 171, 237, 0.2);
+
+  height: 25px;
+  width: 35px;
+  font-size: 14px;
+  color:#26abed;
+  justify-content: normal;
 }
 
 .sellInfoTr{
@@ -227,7 +332,7 @@ body{
   align-items: center;
   text-align: center;
 }
-.btn.btn-primary.spriceAlert,.btn-write{
+.btn.btn-primary.spriceAlert{
   margin-top: 20px;
 
   background-color: #26abed;
@@ -240,12 +345,23 @@ body{
   height: 23px;
   padding-left: 15px;
 }
+.btn.btn-primary.dropdown-toggle.tellOption{
+  height: 14px;
+  font-size: 14px;
+
+}
 .writeBfr{
   background-color: transparent;
   border: none;
 }
 .btn-write{
-  width: 300px;
+  width: 100%;
+  height: 35px;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #26abed;
+  border-radius: 10px;
 }
 
 
@@ -356,7 +472,7 @@ body{
 
 
 
-.tac-ul {
+.tac-ul{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 4px;
@@ -364,6 +480,22 @@ body{
 }
 .titleModal{
   margin: 0 0 15px;
+}
+.modal-body{
+  overflow-x: hidden;
+}
+.rowWrite{
+  width: 250px;
+}
+.col-md-4{
+  width: 250px;
+}
+.css-14yaugs{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.span.css-0{
+  width: 10px;
 }
 
 
