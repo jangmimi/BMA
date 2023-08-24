@@ -282,6 +282,12 @@ public class MemberController {
     @GetMapping(value="/qMyInfoUpdate")
     public String qMyInfoUpdate(HttpSession session, Model model) {
         String userEmail = (String) session.getAttribute("userEmail");
+        String userName = (String) session.getAttribute("userName");
+
+//        MemberDTO findmember = qMemberService.findMemberOne();
+
+        model.addAttribute("userEmail",userEmail);
+        model.addAttribute("userName",userName);
 //        MemberDTO memberDTO = qMemberService.updateMember(userId);
 //        model.addAttribute("memberDTO", memberDTO);
         return "/userView/oMyInfoUpdate";
