@@ -13,12 +13,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.httpBasic()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/**").permitAll() // 허용된 권환 외 접근 막기 때문에 모두 허용으로 변경
+                .antMatchers("/**").permitAll() // 허용된 권한 외 접근 불가돼서 모두 허용으로 변경
                 .and().csrf().disable();    // POST 요청에서 403 에러를 막기 위해 추가
     }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/h2-console/**");   // h2-console 사용하기 위해
+        web.ignoring().antMatchers("/h2-console/**");   // h2-console 사용 위해 추가
     }
 }
