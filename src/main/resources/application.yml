@@ -7,6 +7,13 @@ server:
 
 # Spring Devtools 설정과 H2 웹 콘솔 활성화 통합
 spring:
+  batch:
+    job:
+      names: testJob1 # 실행할 배치 잡의 이름 설정
+      enabled: true # false = 배치 작업 비활성화되고 특정 조건을 충족하지 않는 경우 실행을 막고자 할 때 유용.
+    jdbc:
+      initialize-schema: embedded # 배치 메타데이터 스키마 초기화 설정 (embedded 또는 none)
+    #  initialize-schema: always # 배치 메타데이터 스키마를 항상 초기화 하도록 한다. 테스트 할 때 유용함.
   devtools:
     livereload:
       enabled: true
@@ -15,6 +22,9 @@ spring:
   h2:
     console:
       enabled: true
+
+
+
 
   # Thymeleaf 설정
   thymeleaf:
@@ -39,7 +49,7 @@ spring:
               descriptor:
                 sql:
                   BasicBinder: TRACE
-        show_sql: true
+        show_sql: false
     defer-datasource-initialization: true
 
   # 데이터베이스 설정
@@ -50,7 +60,7 @@ spring:
 
     url: jdbc:mysql://localhost:3306/pos
     username: root
-    password: 45723922
+    password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 

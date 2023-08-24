@@ -1,25 +1,20 @@
 package com.ap4j.bma.service.apartment;
 
 import com.ap4j.bma.model.entity.apt.AptDTO;
-import com.ap4j.bma.model.entity.aptTest.AptEntity;
-import com.ap4j.bma.model.repository.AptRepository;
+import com.ap4j.bma.model.entity.apt.AptEntity;
+import com.ap4j.bma.model.repository.apartment.AptRepository;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,10 +93,10 @@ public class ApartmentServiceImpl implements ApartmentService {
 
         for (AptEntity aptEntity : aptEntityList) {
             AptDTO aptDTO = AptDTO.builder().
-                            aptName(aptEntity.getAptName()).
-                            aptAddress(aptEntity.getAptAddress()).
-                            kaptCode(aptEntity.getKaptCode()).
-                            bjdCode(aptEntity.getBjdCode()).
+//                            aptName(aptEntity.getAptName()).
+//                            aptAddress(aptEntity.getAptAddress()).
+//                            kaptCode(aptEntity.getKaptCode()).
+//                            bjdCode(aptEntity.getBjdCode()).
                             build();
             aptDTOList.add(aptDTO);
         }
@@ -133,12 +128,12 @@ public class ApartmentServiceImpl implements ApartmentService {
 
         for (AptEntity aptEntity : aptEntityList) {
             AptDTO aptDTO = AptDTO.builder().
-                    aptName(aptEntity.getAptName()).
-                    aptAddress(aptEntity.getAptAddress()).
-                    kaptCode(aptEntity.getKaptCode()).
-                    bjdCode(aptEntity.getBjdCode()).
-                    latitude(aptEntity.getLatitude()).
-                    longitude(aptEntity.getLongitude()).
+//                    aptName(aptEntity.getAptName()).
+//                    aptAddress(aptEntity.getAptAddress()).
+//                    kaptCode(aptEntity.getKaptCode()).
+//                    bjdCode(aptEntity.getBjdCode()).
+//                    latitude(aptEntity.getLatitude()).
+//                    longitude(aptEntity.getLongitude()).
                     build();
             aptDTOList.add(aptDTO);
         }

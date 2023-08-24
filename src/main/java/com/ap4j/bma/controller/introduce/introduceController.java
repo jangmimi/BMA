@@ -1,18 +1,11 @@
 package com.ap4j.bma.controller.introduce;
 
 
-import com.ap4j.bma.model.entity.apt.AptEntity;
-import com.ap4j.bma.model.repository.AptRepository;
+import com.ap4j.bma.model.repository.apartment.AptRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 //@RestController
 @Controller
