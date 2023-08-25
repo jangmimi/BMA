@@ -13,7 +13,6 @@
             crossorigin="anonymous"
     />
     <link rel="stylesheet" href="/css/mapMain.css">
-    <link rel="stylesheet" th:href="@{/css/mainpage_header_footer.css}">
     <script type="text/javascript" th:src="@{/js/cluster/map.js}" defer></script>
 </head>
 <body layout:fragment="content">
@@ -25,8 +24,8 @@
 ></script>
 
 <div class="asideBarAll">
-    <div class="asideMenu">
-        <div>
+    <div class="asideMenu" style="height:100%;">
+        <div style="height:100%;">
             <ul class="list-group">
                 <li class="list-group-item">
                     <div class="input-group">
@@ -44,14 +43,14 @@
                             </div>
                             <div class="right" style="align-items: center;">
                                 <button class="shareBtn"><img style="width:19px;"
-                                                              src="https://cdn.icon-icons.com/icons2/2368/PNG/512/share_icon_143700.png">
+                                                              src="https://cdn.icon-icons.com/icons2/2368/PNG/512/share_icon_143700.png"></button>
                                     <button type="button" class="btn-close" aria-label="Close"></button>
                             </div>
                         </div>
                     </div>
                 </li>
 
-                <li class="list-group-item">
+                <li class="list-group-item 2" style="height:100%;">
                     <nav id="navbar-example2" class="navbar bg-body-tertiary mb-3">
                         <ul id="nav-pills" class="nav nav-pills">
                             <li class="nav-item">
@@ -390,7 +389,7 @@
                                                                                     <div class="areplyOnPostAlign">
                                                                                         <input class="areplyOnPost"
                                                                                                placeholder="kjh로 댓글 남기기"
-                                                                                               >
+                                                                                        >
 
                                                                                         <button type="button"
                                                                                                 class="btn btn-primary aSummitReply">
@@ -460,7 +459,7 @@
                                                                                     <div class="areplyOnPostAlign">
                                                                                         <input class="areplyOnPost"
                                                                                                placeholder="kjh로 댓글 남기기"
-                                                                                               >
+                                                                                        >
 
                                                                                         <button type="button"
                                                                                                 class="btn btn-primary aSummitReply">
@@ -485,7 +484,7 @@
                             </li>
                     </nav>
 
-                    <div>
+                    <div style="height:78%;">
                         <div
                                 data-bs-spy="scroll"
                                 data-bs-target="#navbar-example2"
@@ -614,21 +613,21 @@
                                                 <span class="tx">저장</span>
                                             </a>
                                             <a href="#" id="mes-utils" class="alarm btnRpAlarm">
-                                                <button class="etcBtn"><img style="width: 25px;"
-                                                                            src="https://e7.pngegg.com/pngimages/522/320/png-clipart-bookmark-computer-icons-bookmark-miscellaneous-ribbon-thumbnail.png">
+                                                <button class="etcBtn"><img style="opacity: 83%;width: 26px;"
+                                                                            src="https://w7.pngwing.com/pngs/555/826/png-transparent-bell-notification-notification-icon-essential-icon.png">
                                                 </button>
                                                 <span class="tx">알림</span>
                                             </a>
                                             <a href="#" id="mes-utils" class="way btnRpWay">
-                                                <button class="etcBtn"><img style="width: 25px;"
-                                                                            src="https://e7.pngegg.com/pngimages/522/320/png-clipart-bookmark-computer-icons-bookmark-miscellaneous-ribbon-thumbnail.png">
+                                                <button class="etcBtn"><img style="opacity: 38%;width: 19px;"
+                                                                            src="https://e7.pngegg.com/pngimages/580/370/png-clipart-location-computer-icons-icon-geographical-position-location-geolocation-thumbnail.png">
                                                 </button>
                                                 <span class="tx">길찾기</span>
                                             </a>
                                             <a href="#" id="mes-utils"
                                                class="share aed-share-minibox-switch btnRpShare">
-                                                <button class="etcBtn"><img style="width: 25px;"
-                                                                            src="https://e7.pngegg.com/pngimages/522/320/png-clipart-bookmark-computer-icons-bookmark-miscellaneous-ribbon-thumbnail.png">
+                                                <button class="etcBtn"><img style="opacity: 38%;width: 23px;"
+                                                                            src="https://cdn.icon-icons.com/icons2/2368/PNG/512/share_icon_143700.png">
                                                 </button>
                                                 <span class="tx">공유</span>
                                             </a>

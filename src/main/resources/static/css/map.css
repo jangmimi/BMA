@@ -10,13 +10,15 @@ html,body{
     background-color: #fff;
 }
 
-
+.n-header-list{
+    margin-bottom:0px;
+}
 
 
 
 .afilter{
     position: absolute;
-    z-index: 2;
+    z-index: 1100;
     top: 0px;
     left: 0px;
     width: 100%;
@@ -54,10 +56,10 @@ html,body{
 } */
 
 .aSearch_area{
-   border: 1px solid rgba(0, 0, 0, 0.126);
-    border-radius: 7px;
-    width: 180px;
-    height: 30px;
+    width: 185px;
+        height: 29px;
+        border: 1px solid lightgray;
+        border-radius: 8px;
 }
 .aSearchInput{
     border: none;
@@ -97,10 +99,14 @@ html,body{
 }
 .nav{
   --bs-nav-link-hover-color: #1d80b2;
+  --bs-nav-link-color: #6c6c6c;
 }
 .nav-pills {
   --bs-nav-pills-link-active-color: #fff;
   --bs-nav-pills-link-active-bg: #26abed;
+}
+.nav-tabs{
+--bs-nav-tabs-link-active-color: #26abed;
 }
 #navbar-example2{
   --bs-navbar-padding-x:none;
@@ -383,8 +389,9 @@ html,body{
   --bs-btn-hover-border-color: #ffffff;
 }
 .btn-outline-primary {
-  --bs-btn-border-color: rgba(0, 0, 0, 0.168);
-  --bs-btn-active-bg: #26abed;
+    --bs-btn-color: #5d5d5d;
+    --bs-btn-border-color: rgba(0, 0, 0, 0.168);
+    --bs-btn-active-bg: #26abed;
     --bs-btn-active-border-color: #26abed;
     --bs-btn-hover-bg: #26abed;
     --bs-btn-hover-border-color: #26abed;
