@@ -26,7 +26,6 @@
     flex-direction: column;
     border: 1px solid #d8d8d8;
     border-radius: 5px;
-    box-shadow: 1px 1px 10px 1px #b6b6b6;
     background-color: #fff;
 }
 
@@ -67,6 +66,7 @@
 
 .s-chat-textbox {
     height: 425px;
+    width:100%
     margin: 5px;
     overflow-y: auto;
 }
@@ -76,6 +76,7 @@
     font-family: 'Noto Sans KR', sans-serif;
     background-color: #fff;
     border-bottom: 1px solid #d8d8d8;
+    flex-wrap : wrap;
 }
 
 .s-chat-nickname {
@@ -101,16 +102,11 @@
     position: relative;
 }
 
-.s-chat-sendbox img{
+.s-chat-sendbox #s-chat-input-img{
     position: absolute;
     right: 12px;
     bottom: 4px;
     height: 20px;
-    filter: invert(92%) sepia(33%) saturate(171%) hue-rotate(185deg) brightness(97%) contrast(85%);
-}
-
-.s-chat-sendbox textarea:focus + img{
-    filter: invert(100%) sepia(96%) saturate(5772%) hue-rotate(75deg) brightness(81%) contrast(86%);
 }
 
 .s-chat-sendbox textarea {
@@ -121,7 +117,7 @@
     box-shadow: .5px 1px 5px .5px #d8d8d8;
     outline: none;
     resize: none;
-    height: 24px;
+    height: 62px;
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 14px;
 }

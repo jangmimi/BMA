@@ -1,30 +1,41 @@
 document.addEventListener("DOMContentLoaded", function () {
 
+    let stompClient = null;
+    const clientId = Math.random().toString(36).substr(2, 9); // 랜덤한 고유 식별자 생성
+    const sender = document.getElementById("s-chat-sender").value;
+    const textarea = document.querySelector("#s-chat-input");
+    const image = document.querySelector("#s-chat-input-img");
+    image.src = "/sc/free-icon-sent-mail-71746.png";
+
     /** 모달 기능 */
      const modalButton = document.getElementById("s-chat-connect-button");
      const modal = document.querySelector(".s-chatbox");
+     const closeButton = document.querySelector(".s-chat-close");
      let isClicked = false; // 버튼 클릭 여부
-
 
      // 처음에 모달 컨텐츠를 숨김
      modal.style.display = "none";
 
      // 모달 버튼 클릭 시 모달 창 토글
      modalButton.addEventListener("click", function () {
-         modal.style.display = modal.style.display === "flex" ? "none" : "flex"; //
-         isClicked = !isClicked;
-         if (isClicked) {
-             modalButton.style.transform = "scale(0.9)";
-         } else {
-             modalButton.style.transform = "scale(1.0)";
+         if(sender === ''){
+         alert("채팅기능은 로그인하셔야 이용 하실 수 있습니다");
+         window.location.href='/member/qLoginForm';
+         }else{
+         modal.style.display =  "flex";
+         modalButton.style.transform = "scale(0)";
+         //버튼을 누르면 웹통신 시작
+         connect();
          }
      });
 
-    let stompClient = null;
-    const clientId = Math.random().toString(36).substr(2, 9); // 랜덤한 고유 식별자 생성
+     // x 버튼 클릭시 모달 닫기
+     closeButton.addEventListener("click", function () {
+         modal.style.display = "none";
+         modalButton.style.transform = "scale(1)";
+     });
 
-    connect();
-
+    //웹소켓 연결 (통신 코드)
     function connect() {
         const socket = new SockJS('/chat');
         stompClient = Stomp.over(socket);
@@ -36,13 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
             stompClient.subscribe('/topic/messages', function (messages) {
                 const message = JSON.parse(messages.body);
-
-                //if문으로 내메세지인지 상대방메세지인지 가려낸다(clientId값으로)
-                if (message.clientId === clientId) {
-                    showMessages(message);
-                } else {
-                    showOtherMessages(message)
-                }
+                showMessages(message);
             });
         });
     }
@@ -50,28 +55,30 @@ document.addEventListener("DOMContentLoaded", function () {
     //메세지 서버로 보내기
     function sendMessage() {
         stompClient.send("/app/chatting", {}, JSON.stringify({
-            'sender': document.querySelector("#s-sender").value,
-            'content': document.querySelector("#s-sendText").value,
+            'sender': sender,
+            'content': document.querySelector("#s-chat-input").value,
             'clientId': clientId
         }));
     }
 
     //전송 버튼을 누르면 메세지가 보내지는 기능
-    document.querySelector("#s-submitBtn").addEventListener("click", function () {
+    document.querySelector("#s-chat-input-img").addEventListener("click", function () {
         if (stompClient) {
             sendMessage();
-            document.querySelector("#s-sendText").value = '';
+            document.querySelector("#s-chat-input").value = '';
+            textarea.style.height = '62px';
         } else {
             console.log("Stomp client not initialized yet.");
         }
     });
 
     //textarea에서 엔터키를 쳤을때 메세지가 보내지는 기능
-    document.querySelector('#s-sendText').addEventListener('keyup', (e) => {
+    document.querySelector('#s-chat-input').addEventListener('keyup', (e) => {
         if (e.keyCode === 13) {
             if (stompClient) {
                 sendMessage();
-                document.querySelector("#s-sendText").value = '';
+                document.querySelector("#s-chat-input").value = '';
+                textarea.style.height = '62px';
             } else {
                 console.log("Stomp client not initialized yet.");
             }
@@ -81,59 +88,71 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //내 메세지 보기 (HTML에 태그랑 클래스이름 넣어주고 내용 넣어주는 코드)
     function showMessages(message) {
-        const chatTextBox = document.querySelector(".s-chatTextBox");
+        const chatTextBox = document.querySelector(".s-chat-textbox");
 
         const messageBlock = document.createElement("div");
-        messageBlock.className = "s-my-profile";
+        messageBlock.className = "s-chat-message";
 
-        const nicknameAndText = document.createElement("div");
-        nicknameAndText.className = "s-nicknameAndText s-my-message";
+        const messageInfo = document.createElement("p");
+        messageInfo.className = "s-chat-info";
 
-        const myText = document.createElement("div");
-        myText.className = "s-my-text";
-        myText.textContent = message.content;
+        const messageNickname = document.createElement("span");
 
-        nicknameAndText.appendChild(myText);
-        messageBlock.appendChild(nicknameAndText);
+        //이메일에서 아이디값만 추출
+        messageNickname.textContent = sender.split("@")[0];
+        const messageTime = document.createElement("span");
+
+        messageNickname.className = "s-chat-nickname";
+
+        messageTime.className = "s-chat-time";
+        messageTime.textContent = sendMessageCurrentTime();
+
+        const messageText = document.createElement("p");
+        messageText.className = "s-chat-text";
+        messageText.textContent = message.content;
+
+        messageInfo.appendChild(messageNickname);
+        messageInfo.appendChild(messageTime);
+
+        messageBlock.appendChild(messageInfo);
+        messageBlock.appendChild(messageText);
 
         chatTextBox.appendChild(messageBlock);
     }
 
-    //상대방 메세지 보기 (HTML에 태그랑 클래스이름 넣어주고 내용 넣어주는 코드)
-    function showOtherMessages(message) {
-        const chatTextBox = document.querySelector(".s-chatTextBox");
+//    //현재 접속자 몇명인지 HTML에 작성해주는 코드
+//    function updateConnectedClientsUI(count) {
+//            const connectedClientsElement = document.getElementById("s-connectedClients");
+//            connectedClientsElement.textContent = count;
+//    }
 
-        const messageBlock = document.createElement("div");
-        messageBlock.className = "s-others-profile";
+    //시간출력 코드
+    function sendMessageCurrentTime() {
+      let now = new Date();
+      let hours = now.getHours();
+      let minutes = now.getMinutes();
+      let ampm = hours >= 12 ? "PM" : "AM";
 
-        const profileImage = document.createElement("img");
-        profileImage.src = "sc/chattinglogo.png";
-        profileImage.alt = "";
+      hours = hours % 12;
+      hours = hours ? hours : 12; // 0시일 경우 12시로 변경
 
-        const nicknameAndText = document.createElement("div");
-        nicknameAndText.className = "s-nicknameAndText";
+      minutes = minutes < 10 ? "0" + minutes : minutes; // 분이 10 미만일 경우 앞에 0 추가
 
-        const nicknameSpan = document.createElement("span");
-        nicknameSpan.id = "s-nickname";
-        nicknameSpan.textContent = message.sender;
-
-        const othersText = document.createElement("div");
-        othersText.className = "s-others-text";
-        othersText.textContent = message.content;
-
-        nicknameAndText.appendChild(nicknameSpan);
-        nicknameAndText.appendChild(othersText);
-
-        messageBlock.appendChild(profileImage);
-        messageBlock.appendChild(nicknameAndText);
-
-        chatTextBox.appendChild(messageBlock);
+      let currentTime = hours + ":" + minutes + " " + ampm;
+      return currentTime;
     }
 
-    //현재 접속자 몇명인지 HTML에 작성해주는 코드
-    function updateConnectedClientsUI(count) {
-            const connectedClientsElement = document.getElementById("s-connectedClients");
-            connectedClientsElement.textContent = count;
-    }
+
+//메세지보낼때 길이 반응형
+//send 아이콘 이미지 교체
+textarea.addEventListener("input", function () {
+ this.style.height = `${this.scrollHeight}px`;
+ image.src = "/sc/free-icon-sent-blue-mail-71746.png";
+
+});
+
+textarea.addEventListener("blur", function () {
+ image.src = "/sc/free-icon-sent-mail-71746.png";
+});
 
 });

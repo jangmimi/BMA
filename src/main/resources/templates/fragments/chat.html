@@ -15,33 +15,21 @@
         </div>
 
         <div class="s-chat-textbox">
-            <div class="s-chat-message">
-                <p class="s-chat-nfo">
-                    <span class="s-chat-nickname">김기무</span>
-                    <span class="s-chat-time">11:47 PM</span>
-                </p>
-                <p class="s-chat-text">
-                    안녕하세요 반갑습니다 저 오늘 이거 처음하는데 이렇게 하는거 맞나요??
-                </p>
-            </div>
-        </div>
 
+        </div>
 
         <div class="s-chat-sendbox">
             <textarea name="" id="s-chat-input" cols="24"></textarea>
-            <img src="sc/free-icon-sent-mail-71746.png" alt="">
+            <input id="s-chat-sender" type="hidden" th:value="${userEmail}">
+            <img id="s-chat-input-img" src="" alt="">
             <script>
-                const textarea = document.querySelector("#s-chat-input");
 
-                textarea.addEventListener("input", function () {
-                    this.style.height = "24px";
-                    this.style.height = `${this.scrollHeight}px`;
-                });
+
+
             </script>
         </div>
 
     </div>
-
 
 </div>
 
