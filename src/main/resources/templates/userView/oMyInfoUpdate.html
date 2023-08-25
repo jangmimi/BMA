@@ -118,9 +118,16 @@
             selectAll(selectAllCheckbox);
           });
         });
-        function updateCancel() {
-            alert('내정보 수정을 취소하시겠습니까?' 내정보 화면으로 이동합니다.);
-        }
+
+        $(document).ready(function() {
+            $("#oCancelBtn").click(function() { // 마이페이지 취소 버튼
+                let cancelA = confirm('내정보 수정을 취소하시겠습니까? 내정보 화면으로 이동합니다.');
+                if(cancelA) {
+                    location.href = '/member/qMyPage';
+                    return true;
+                } else { return false; }
+            });
+        });
     </script>
 
 </head>
@@ -201,7 +208,7 @@
 
                     <div id="oJoinBtn-container">
                         <input type="button" class="btn btn-dark"
-                               th:onclick="updateCancel()" value="취소" style="width:47%" />
+                               id="oCancelBtn" value="취소" style="width:47%" />
                         <input type="submit" class="btn btn-dark" value="수정" style="width:47%" />
                         <!-- th:onclick="|location.href='@{/member/qLoginForm}'|"-->
                     </div>
@@ -209,7 +216,7 @@
 
                 <div class="container" id="oJoinSns" style="mt-5 mb-5">
                     <hr style="width: 380px;"/>
-                    <button type="button" class="btn btn-outline-dark" onclick="location.href='#">회원탈퇴</button>
+                    <button type="button" class="btn btn-outline-dark" onclick="location.href='/qDeleteMember/idx=${idx}">회원탈퇴</button>
                 </div>
 
             </div>

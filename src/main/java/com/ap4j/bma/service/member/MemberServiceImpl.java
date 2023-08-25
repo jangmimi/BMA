@@ -351,6 +351,13 @@ public class MemberServiceImpl implements MemberService {
 		return validatorResult;
 	}
 
+	/** 회원 탈퇴 */
+	@Override
+	public boolean deleteByIdx(Long idx) {
+		return memberRepository.deleteByIdx(idx);
+	}
+
+
 	/** 회원정보 수정 */
 //	@Override
 //	public MemberDTO updateMember(String userId) {

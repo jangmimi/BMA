@@ -32,6 +32,8 @@ public interface MemberService {
 
     Map<String, String> validateHandler(Errors errors);
 
+	public boolean deleteByIdx(Long idx);
+
 //	public Long updateMember(final Long idx, final MemberDTO memberDTO);
 
 }
