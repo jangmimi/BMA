@@ -474,6 +474,17 @@ body{
   margin-top: 22px;
 }
 
+/*공유하기 모달*/
+.modal-header.shareBtn{
+    justify-content:center;
+}
+.modal-content.shareBtn{
+    width:230px;
+}
+
+
+
+
 
 
 .tac-ul{
@@ -552,7 +563,7 @@ a:active, a:focus, a:hover, a:link, a:visited {
 /*맵 우측 도구*/
 .map_util{
   position: absolute;
-  top: 40%;
+  top: 33%;
   right:30px;
   z-index: 1200;
   line-height: 1;
