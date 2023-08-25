@@ -6,15 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>회원가입</title>
-    <!-- favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-    <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="theme-color" content="#ffffff">
-    <!-- favicon -->
+
     <!-- 부트스트랩 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
@@ -132,6 +124,42 @@
                 }
             });
         };
+
+        function checkSelectAll() {
+            const checkBoxes = $(input[name="agree"]);
+            const checked = $(input[name="agree"].checked);
+            const selectAllCheckBox = $(input[name="selectAll"]);
+
+            if(checkBoxes.length === checked.length) {
+                selectAllCheckBox.checked = true;
+            } else {
+                selectAllCheckBox.checked = false;
+            }
+        }
+        function selectAll(selectAllCheckbox) {
+          const checkboxes = document.getElementsByName('agree');
+          checkboxes.forEach((checkbox) => {
+            checkbox.checked = selectAllCheckbox.checked;
+          });
+          updateCheckAll(); // 체크박스 상태 갱신
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+          const selectAllCheckbox = document.querySelector('input[name="selectAll"]');
+          selectAllCheckbox.addEventListener('click', () => {
+            selectAll(selectAllCheckbox);
+          });
+        });
+
+        $(document).ready(function() {
+            $("#oCancelBtn").click(function() { // 마이페이지 취소 버튼
+                let cancelA = confirm('내정보 수정을 취소하시겠습니까? 내정보 화면으로 이동합니다.');
+                if(cancelA) {
+                    location.href = '/member/qMyPage';
+                    return true;
+                } else { return false; }
+            });
+        });
     </script>
 </head>
 <body layout:fragment="content">
@@ -181,32 +209,32 @@
                                 <h3 class="h3"></h3>
                             </div>
                             <div>
-                                <input type="checkbox" class="oAgree"><b>전체 동의하기</b>
+                                <input type="checkbox" class="oAgree" name="selectAll" onclick="checkSelectAll()"><b>전체 동의하기</b>
                             </div>
                         </li>
                         <li class="oAgree-li">
                             <div>
-                                <input type="checkbox" class="oAgree"><span class="mustch">[필수] </span>만14세 이상입니다.
+                                <input type="checkbox" class="oAgree" name="agree"><span class="mustch">[필수] </span>만14세 이상입니다.
                             </div>
                         </li>
                         <li class="oAgree-li">
                             <div>
-                                <input type="checkbox" class="oAgree"><span class="mustch">[필수] </span>이용약관 동의
+                                <input type="checkbox" class="oAgree" name="agree"><span class="mustch">[필수] </span>이용약관 동의
                             </div>
                         </li>
                         <li class="oAgree-li">
                             <div>
-                                <input type="checkbox" class="oAgree"><span class="mustch">[필수] </span>개인정보 수집·이용 동의
+                                <input type="checkbox" class="oAgree" name="agree"><span class="mustch">[필수] </span>개인정보 수집·이용 동의
                             </div>
                         </li>
                         <li class="oAgree-li">
                             <div>
-                                <input type="checkbox" class="oAgree"><span class="mustch">[필수] </span>위치 기반 서비스약관 동의
+                                <input type="checkbox" class="oAgree" name="agree"><span class="mustch">[필수] </span>위치 기반 서비스약관 동의
                             </div>
                         </li>
                         <li class="oAgree-li">
                             <div>
-                                <input type="checkbox" class="oAgree"><span class="mustch">[필수] </span>매물 관리 정책 동의
+                                <input type="checkbox" class="oAgree" name="agree"><span class="mustch">[필수] </span>매물 관리 정책 동의
                             </div>
                         </li>
                     </ul>

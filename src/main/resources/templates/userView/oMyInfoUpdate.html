@@ -119,15 +119,6 @@
           });
         });
 
-        $(document).ready(function() {
-            $("#oCancelBtn").click(function() { // 마이페이지 취소 버튼
-                let cancelA = confirm('내정보 수정을 취소하시겠습니까? 내정보 화면으로 이동합니다.');
-                if(cancelA) {
-                    location.href = '/member/qMyPage';
-                    return true;
-                } else { return false; }
-            });
-        });
     </script>
 
 </head>
@@ -157,7 +148,7 @@
                     <h3 class="h3 fw-bold">내 정보 수정</h3>
                 </div>
                 <form th:action="@{/member/qUpdateMember}" method="POST">
-                    <input type="hidden" id="idx" value="${memberDTO.idx}" />
+                    <input type="hidden" id="idx" name="idx" value="${memberDTO.idx}" />
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="name" name="name" th:value="${userName}" autofocus="autofocus" />
                         <label th:for="name">이름(실명)</label>
@@ -214,10 +205,12 @@
                     </div>
                 </form>
 
-                <div class="container" id="oJoinSns" style="mt-5 mb-5">
-                    <hr style="width: 380px;"/>
-                    <button type="button" class="btn btn-outline-dark" onclick="location.href='/qDeleteMember/idx=${idx}">회원탈퇴</button>
-                </div>
+                <form th:action="@{/member/qDeleteMember}" method="POST">
+                    <div class="container" id="oJoinSns" style="mt-5 mb-5">
+                        <hr style="width: 380px;"/>
+                        <button type="button" class="btn btn-outline-dark" onclick="location.href='/qDeleteMember/idx=${idx}">회원탈퇴</button>
+                    </div>
+                </form>
 
             </div>
         </div>

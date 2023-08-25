@@ -357,6 +357,12 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepository.deleteByIdx(idx);
 	}
 
+	/** 회원 탈퇴 테스트 */
+	@Override
+	public void deleteMember(MemberEntity memberEntity) {
+		memberRepository.delete(memberEntity);
+	}
+
 
 	/** 회원정보 수정 */
 //	@Override
