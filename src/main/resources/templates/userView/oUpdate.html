@@ -43,47 +43,50 @@
         }
     </style>
     <!-- 부트스트랩 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
 <body layout:fragment="content">
-<!-- 마이페이지 네비게이션 -->
-<div id="oContainer">
-    <div id="content">
-        <div class="o-lnb">
-            <div class="o-wrapper">
-                <ul class="o-lnb-list">
-                    <li class="o-lnb-item"><a href="#">내정보</a></li>
-                    <li class="o-lnb-item"><a href="#">내정보수정</a></li>
-                    <li class="o-lnb-item"><a href="#">비밀번호변경</a></li>
-                    <li class="o-lnb-item"><a href="#">관심매물</a></li>
-                    <li class="o-lnb-item"><a href="#">매물관리</a></li>
-                    <li class="o-lnb-item"><a href="#">최근본매물</a></li>
-                    <li class="o-lnb-item"><a href="#">1:1문의내역</a></li>
-                </ul>
+    <!-- 마이페이지 네비게이션 -->
+    <div id="oContainer">
+        <div id="content">
+            <div class="o-lnb">
+                <div class="o-wrapper">
+                    <ul class="o-lnb-list">
+                        <li class="o-lnb-item"><a href="#">내정보</a></li>
+                        <li class="o-lnb-item"><a href="#">내정보수정</a></li>
+                        <li class="o-lnb-item"><a href="#">비밀번호변경</a></li>
+                        <li class="o-lnb-item"><a href="#">관심매물</a></li>
+                        <li class="o-lnb-item"><a href="#">매물관리</a></li>
+                        <li class="o-lnb-item"><a href="#">최근본매물</a></li>
+                        <li class="o-lnb-item"><a href="#">1:1문의내역</a></li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        <!-- 마이페이지 콘텐츠 세부 -->
-        <div style="width: 600px; height: 600px;">
+            <!-- 마이페이지 콘텐츠 세부 -->
+            <div style="width: 600px; height: 600px;">
                  <span th:if="${userId != null}">
                     <span th:text="${userName}"></span>님 환영합니다.<br/>
                     (<span th:text="${userId}"></span>)<br/>
                 </span>
-        </div>
-
-
-        <div>
-            <div id="oJoinBtn-container">
-
-                <input type="button" class="btn btn-dark"
-                       onclick="history.back();" value="취소" style="width:47%" />
-                <input type="submit" class="btn btn-dark" value="수정" style="width:47%" />
             </div>
-            <input type="button" class="btn btn-dark"
-                   onclick="location.href='#'" value="회원탈퇴" style="width:47%" />
-        </div>
+            <div>
+                <div id="oJoinBtn-container">
+                    <input type="button" class="btn btn-dark"
+                           onclick="history.back();" value="취소" style="width:47%" />
+                    <input type="submit" class="btn btn-dark" value="수정" style="width:47%" />
+                </div>
+                <input type="button" class="btn btn-dark"
+                       onclick="location.href='#'" value="회원탈퇴" style="width:47%" />
+            </div>
 
+        </div>
     </div>
-</div>
+
+    <!-- 부트스트랩 script -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+            crossorigin="anonymous"></script>
 </body>
 </html>
 

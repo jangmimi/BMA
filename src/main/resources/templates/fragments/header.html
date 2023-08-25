@@ -23,11 +23,14 @@
         <li>
           <a href="#">커뮤니티</a>
         </li>
+        <li>
+          <a href="#">전문가소개</a>
+        </li>
       </ul>
     </div>
     <div class="n-header-right">
 <!--    <div class="n-header-right" th:with="member=null">-->
-      <ul th:if="${userId==null}" class="n-header-list">
+      <ul th:if="${userEmail==null}" class="n-header-list">
         <li>
           <a href="/member/qLoginForm">로그인</a>
         </li>
@@ -38,7 +41,7 @@
           <a href="#">고객센터</a>
         </li>
       </ul>
-      <ul th:if="${userId!=null}" class="n-header-list">
+      <ul th:if="${userEmail!=null}" class="n-header-list">
         <li>
           <a href="/member/qLogout">로그아웃</a>
         </li>
