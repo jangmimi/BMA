@@ -56,31 +56,47 @@
         }
 
         .pagination {
-            text-align: center;
-            padding-top: 5px;
-            padding-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            font-family: Arial, sans-serif;
+        }
 
-        }
-        .pagination button{
-            width: 110px;
-            height: 50px;
-            background-color: aqua;
-            border-radius: 10px;
-            cursor:pointer;
-        }
-        .pagination a{
+        .pagination a {
+            border: 1px solid #ccc;
+            background-color: white;
+            color: #333;
+            padding: 5px 10px;
+            margin: 0 3px;
             text-decoration: none;
+            cursor: pointer;
+            border-radius: 3px;
         }
-        /*.news-result > div:nth-child(1) {*/
-        /*    flex: 3;*/
-        /*}*/
 
-        /*.news-result > div:nth-child(2) {*/
-        /*    flex: 7;*/
-        /*    padding-left: 10px;*/
-        /*}*/
-        .news-result > div > p{
+        .pagination button {
+            background-color: white;
+            color: #333;
+            margin: 0 3px;
+            text-decoration: none;
+            cursor: pointer;
+            border-radius: 3px;
+            border: none;
+            font-weight: bold;
+        }
+
+        .pagination a:hover,
+        .pagination a:hover > button {
+            background-color: #f1f1f1;
+        }
+
+        .news-result > div > p {
             margin-top: 10px;
+        }
+        .nowPage {
+            text-decoration-line: underline;
         }
     </style>
 </head>
@@ -107,19 +123,72 @@
             </div>
         </div>
         <div class="pagination">
+            <!-- 처음페이지, 이전 버튼 -->
             <a th:if="${currentPage != 1}" th:href="@{/news/newsPage(query=${searchQuery}, page=${1}, start=${1})}">
                 <button type="button">&lt; 처음페이지 </button>
             </a>
-            <a th:if="${currentPage > 1}" th:href="@{/news/newsPage(query=${searchQuery}, page=${currentPage - 1}, start=${start - 10})}">
+            <a th:if="${currentPage > 1}" th:href="@{/news/newsPage(query=${searchQuery}, page=${currentPage - 1}, start=${(currentPage - 1) * 10 - 9})}">
                 <button type="button">&lt; 이전</button>
             </a>
-            <span>페이지 <span th:text="${currentPage}"></span> / <span th:text="${totalPages}"></span></span>
-            <a th:if="${currentPage < totalPages}" th:href="@{/news/newsPage(query=${searchQuery}, page=${currentPage + 1}, start=${start + 10})}">
+            <!-- ******* -->
+
+            <!-- 페이지 번호 -->
+            <span th:if="${currentPage - 4 > 1}">
+                <a th:href="@{/news/newsPage(query=${searchQuery}, page=${1}, start=${1})}">1</a>&nbsp;&hellip;&nbsp;
+            </span>
+            <span th:if="${currentPage - 4 > 0}">
+                <a th:href="@{/news/newsPage(query=${searchQuery}, page=${currentPage - 4}, start=${(currentPage - 4) * 10 - 9})}"
+                    th:text="${currentPage - 4}"></a>&nbsp;
+            </span>
+            <span th:if="${currentPage - 3 > 0}">
+                <a th:href="@{/news/newsPage(query=${searchQuery}, page=${currentPage - 3}, start=${(currentPage - 3) * 10 - 9})}"
+                    th:text="${currentPage - 3}"></a>&nbsp;
+            </span>
+            <span th:if="${currentPage - 2 > 0}">
+                <a th:href="@{/news/newsPage(query=${searchQuery}, page=${currentPage - 2}, start=${(currentPage - 2) * 10 - 9})}"
+                    th:text="${currentPage - 2}"></a>&nbsp;
+            </span>
+            <span th:if="${currentPage - 1 > 0}">
+                <a th:href="@{/news/newsPage(query=${searchQuery}, page=${currentPage - 1}, start=${(currentPage - 1) * 10 - 9})}"
+                    th:text="${currentPage - 1}"></a>&nbsp;
+            </span>
+            <!-- ********* -->
+
+            <!--현재 페이지 -->
+            <span th:text="${currentPage}" class="nowPage"></span>&nbsp;
+            <!-- ********* -->
+
+            <!-- 페이지 번호 -->
+            <span th:if="${currentPage + 1 <= totalPages}">
+                <a th:href="@{/news/newsPage(query=${searchQuery}, page=${currentPage + 1}, start=${currentPage * 10 + 1})}"
+                    th:text="${currentPage + 1}"></a>&nbsp;
+            </span>
+            <span th:if="${currentPage + 2 <= totalPages}">
+                <a th:href="@{/news/newsPage(query=${searchQuery}, page=${currentPage + 2}, start=${currentPage * 10 + 11})}"
+                    th:text="${currentPage + 2}"></a>&nbsp;
+            </span>
+            <span th:if="${currentPage + 3 <= totalPages}">
+                <a th:href="@{/news/newsPage(query=${searchQuery}, page=${currentPage + 3}, start=${currentPage * 10 + 21})}"
+                    th:text="${currentPage + 3}"></a>&nbsp;
+            </span>
+            <span th:if="${currentPage + 4 <= totalPages}">
+                <a th:href="@{/news/newsPage(query=${searchQuery}, page=${currentPage + 4}, start=${currentPage * 10 + 31})}"
+                    th:text="${currentPage + 4}"></a>&nbsp;&hellip;&nbsp;
+            </span>
+            <span th:if="${currentPage + 4 <= totalPages}">
+                <a th:href="@{/news/newsPage(query=${searchQuery}, page=${totalPages}, start=${(totalPages - 1) * 10 + 1})}"
+                    th:text="${totalPages}"></a>
+            </span>
+            <!-- ********* -->
+            
+            <!-- 마지막페이지, 다음 버튼 -->
+            <a th:if="${currentPage < totalPages}" th:href="@{/news/newsPage(query=${searchQuery}, page=${currentPage + 1}, start=${currentPage * 10 + 1})}">
                 <button type="button">다음 &gt;</button>
             </a>
             <a th:if="${currentPage < totalPages}" th:href="@{/news/newsPage(query=${searchQuery}, page=${totalPages}, start=${(totalPages - 1) * itemsPerPage + 1})}">
                 <button type="button">마지막페이지 &gt;</button>
             </a>
+            <!-- ****** -->
         </div>
     </div>
 </div>
