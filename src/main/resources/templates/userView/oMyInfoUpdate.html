@@ -93,6 +93,15 @@
        }
     </style>
     <script>
+        $(document).ready(function() {
+            $('#oCancelBtn').click(function() {
+                let result = confirm('내정보를 수정을 취소하시겠습니까?\n내정보화면으로 이동합니다.');
+                if(result) {
+                    location.href = '/member/qMyPage';
+                    return true;
+                } else { return false; }
+            });
+        });
         function checkSelectAll() {
             const checkBoxes = $(input[name="agree"]);
             const checked = $(input[name="agree"].checked);
@@ -166,32 +175,38 @@
                                     <h3 class="h3"></h3>
                                 </div>
                                 <div>
-                                    <input type="checkbox" class="oAgree" name="selectAll" onclick="checkSelectAll()"><b>전체 동의하기</b>
+                                    <input type="checkbox" class="oAgree" name="selectAll" onclick="checkSelectAll()">
+                                    <b>전체 동의하기</b>
                                 </div>
                             </li>
                             <li class="oAgree-li">
                                 <div>
-                                    <input type="checkbox" class="oAgree" name="agree"><span class="mustch">[필수] </span>만14세 이상입니다.
+                                    <input type="checkbox" class="oAgree" name="agree">
+                                    <span class="mustch">[필수] </span>만14세 이상입니다.
                                 </div>
                             </li>
                             <li class="oAgree-li">
                                 <div>
-                                    <input type="checkbox" class="oAgree" name="agree"><span class="mustch">[필수] </span>이용약관 동의
+                                    <input type="checkbox" class="oAgree" name="agree">
+                                    <span class="mustch">[필수] </span>이용약관 동의
                                 </div>
                             </li>
                             <li class="oAgree-li">
                                 <div>
-                                    <input type="checkbox" class="oAgree" name="agree"><span class="mustch">[필수] </span>개인정보 수집·이용 동의
+                                    <input type="checkbox" class="oAgree" name="agree">
+                                    <span class="mustch">[필수] </span>개인정보 수집·이용 동의
                                 </div>
                             </li>
                             <li class="oAgree-li">
                                 <div>
-                                    <input type="checkbox" class="oAgree" name="agree"><span class="mustch">[필수] </span>위치 기반 서비스약관 동의
+                                    <input type="checkbox" class="oAgree" name="agree">
+                                    <span class="mustch">[필수] </span>위치 기반 서비스약관 동의
                                 </div>
                             </li>
                             <li class="oAgree-li">
                                 <div>
-                                    <input type="checkbox" class="oAgree" name="agree"><span class="mustch">[필수] </span>매물 관리 정책 동의
+                                    <input type="checkbox" class="oAgree" name="agree">
+                                    <span class="mustch">[필수] </span>매물 관리 정책 동의
                                 </div>
                             </li>
                         </ul>
@@ -201,14 +216,13 @@
                         <input type="button" class="btn btn-dark"
                                id="oCancelBtn" value="취소" style="width:47%" />
                         <input type="submit" class="btn btn-dark" value="수정" style="width:47%" />
-                        <!-- th:onclick="|location.href='@{/member/qLoginForm}'|"-->
                     </div>
                 </form>
 
                 <form th:action="@{/member/qDeleteMember}" method="POST">
                     <div class="container" id="oJoinSns" style="mt-5 mb-5">
                         <hr style="width: 380px;"/>
-                        <button type="button" class="btn btn-outline-dark" onclick="location.href='/qDeleteMember/idx=${idx}">회원탈퇴</button>
+                        <button type="button" class="btn btn-outline-dark" onclick="location.href='/qDeleteMember">회원탈퇴</button>
                     </div>
                 </form>
 

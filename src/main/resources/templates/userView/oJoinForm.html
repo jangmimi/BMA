@@ -101,22 +101,17 @@
                 type: 'post',
                 data: {email:email},
                 success:function(cnt) {
-                    if(email.length == 0) {
-                        alert('이메일은 필수 입력사항 입니다.');
-                    }
-                    if(cnt == 0) {
+                    if(cnt == 0 && email.length != 0) {
                         $('#btnEmailCheck').attr('class','btn btn-primary');
                         $('#btnEmailCheck').val("사용 가능");
-                   //     alert('이메일 사용이 가능합니다.');
+                        alert('이메일 사용이 가능합니다.');
                     } else if(cnt != 0) {
                         $('#btnEmailCheck').attr('class','btn btn-danger');
                         $('#btnEmailCheck').val("사용 불가");
-                   //     alert('이메일을 다시 입력해주세요.');
+                        alert('이미 존재하는 이메일입니다.\n이메일을 다시 입력해주세요.');
                     //    $('#email').val('');
                     } else if(email.length == 0) {
                         alert('이메일은 필수 입력사항 입니다.');
-                        $('#btnEmailCheck').attr('class','btn btn-danger');
-                        $('#btnEmailCheck').val("사용 불가");
                     }
                 },
                 error:function() {
@@ -152,10 +147,10 @@
         });
 
         $(document).ready(function() {
-            $("#oCancelBtn").click(function() { // 마이페이지 취소 버튼
-                let cancelA = confirm('내정보 수정을 취소하시겠습니까? 내정보 화면으로 이동합니다.');
+            $("#oJoinCancelBtn").click(function() { // 회원가입 취소 버튼
+                let cancelA = confirm('회원가입을 취소하시겠습니까? 메인화면으로 이동합니다.');
                 if(cancelA) {
-                    location.href = '/member/qMyPage';
+                    location.href = '/';
                     return true;
                 } else { return false; }
             });
@@ -209,40 +204,46 @@
                                 <h3 class="h3"></h3>
                             </div>
                             <div>
-                                <input type="checkbox" class="oAgree" name="selectAll" onclick="checkSelectAll()"><b>전체 동의하기</b>
+                                <input type="checkbox" class="oAgree" name="selectAll" onclick="checkSelectAll()">
+                                <b>전체 동의하기</b>
                             </div>
                         </li>
                         <li class="oAgree-li">
                             <div>
-                                <input type="checkbox" class="oAgree" name="agree"><span class="mustch">[필수] </span>만14세 이상입니다.
+                                <input type="checkbox" class="oAgree" name="agree">
+                                <span class="mustch">[필수] </span>만14세 이상입니다.
                             </div>
                         </li>
                         <li class="oAgree-li">
                             <div>
-                                <input type="checkbox" class="oAgree" name="agree"><span class="mustch">[필수] </span>이용약관 동의
+                                <input type="checkbox" class="oAgree" name="agree">
+                                <span class="mustch">[필수] </span>이용약관 동의
                             </div>
                         </li>
                         <li class="oAgree-li">
                             <div>
-                                <input type="checkbox" class="oAgree" name="agree"><span class="mustch">[필수] </span>개인정보 수집·이용 동의
+                                <input type="checkbox" class="oAgree" name="agree">
+                                <span class="mustch">[필수] </span>개인정보 수집·이용 동의
                             </div>
                         </li>
                         <li class="oAgree-li">
                             <div>
-                                <input type="checkbox" class="oAgree" name="agree"><span class="mustch">[필수] </span>위치 기반 서비스약관 동의
+                                <input type="checkbox" class="oAgree" name="agree">
+                                <span class="mustch">[필수] </span>위치 기반 서비스약관 동의
                             </div>
                         </li>
                         <li class="oAgree-li">
                             <div>
-                                <input type="checkbox" class="oAgree" name="agree"><span class="mustch">[필수] </span>매물 관리 정책 동의
+                                <input type="checkbox" class="oAgree" name="agree">
+                                <span class="mustch">[필수] </span>매물 관리 정책 동의
                             </div>
                         </li>
                     </ul>
                 </div>
 
                 <div id="oJoinBtn-container">
-                    <input type="button" class="btn btn-dark"
-                           th:onclick="|location.href='@{/}'|" value="취소" style="width:47%" />
+                    <input type="button" class="btn btn-dark" id="oJoinCancelBtn"
+                           th:onclick="" value="취소" style="width:47%" />
                     <input type="submit" class="btn btn-dark" value="회원가입" style="width:47%" />
                     <!-- th:onclick="|location.href='@{/member/qLoginForm}'|"-->
                 </div>

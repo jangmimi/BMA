@@ -192,7 +192,6 @@ public class MemberController {
     public String qJoinBasic(@Valid @ModelAttribute MemberDTO memberDTO, BindingResult bindingResult, Model model) {  // @Valid : UserDTO 유효성 검사 애노테이션(통과X -> errors)
         log.info("MemberController - qJoinBasic() 실행");
         log.info("memberDTO : " + memberDTO);
-
 //        if(bindingResult.hasErrors()) {
 //            log.info("유효성 검사 에러 발생");
 ////            model.addAttribute("memberDTO", memberDTO); // 회원가입 실패 시 입력 데이터 유지
