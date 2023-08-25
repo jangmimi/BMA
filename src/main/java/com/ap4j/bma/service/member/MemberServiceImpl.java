@@ -1,9 +1,6 @@
 package com.ap4j.bma.service.member;
 
-<<<<<<< HEAD
-=======
 import com.ap4j.bma.config.PasswordEncoderConfig;
->>>>>>> d0e7fac4452d7c81530b2201e99ba80582b9db7c
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
 import com.ap4j.bma.model.repository.MemberRepository;
@@ -358,6 +355,12 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public boolean deleteByIdx(Long idx) {
 		return memberRepository.deleteByIdx(idx);
+	}
+
+	/** 회원 탈퇴 테스트 */
+	@Override
+	public void deleteMember(MemberEntity memberEntity) {
+		memberRepository.delete(memberEntity);
 	}
 
 

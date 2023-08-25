@@ -34,6 +34,8 @@ public interface MemberService {
 
 	public boolean deleteByIdx(Long idx);
 
+	public void deleteMember(MemberEntity memberEntity);
+
 //	public Long updateMember(final Long idx, final MemberDTO memberDTO);
 
 }

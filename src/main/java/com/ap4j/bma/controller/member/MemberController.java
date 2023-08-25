@@ -192,7 +192,6 @@ public class MemberController {
     public String qJoinBasic(@Valid @ModelAttribute MemberDTO memberDTO, BindingResult bindingResult, Model model) {  // @Valid : UserDTO 유효성 검사 애노테이션(통과X -> errors)
         log.info("MemberController - qJoinBasic() 실행");
         log.info("memberDTO : " + memberDTO);
-
 //        if(bindingResult.hasErrors()) {
 //            log.info("유효성 검사 에러 발생");
 ////            model.addAttribute("memberDTO", memberDTO); // 회원가입 실패 시 입력 데이터 유지
@@ -325,13 +324,21 @@ public class MemberController {
 //        return qMemberService.updateMember(idx, memberDTO);
 //    }
     /** 회원 탈퇴 */
-    @DeleteMapping(value="/qDeleteMember/{idx}")
-    public String qDeleteMember(@PathVariable Long idx) {
-        log.info("MemberController - qDeleteMember() 실행");
-        boolean result = qMemberService.deleteByIdx(idx);
-        log.info("회원탈퇴 결과 : " +  result);
-        return "redirect:/";
-    }
+//    @DeleteMapping(value="/qDeleteMember/{idx}")
+//    public String qDeleteMember(@PathVariable Long idx) {
+//        log.info("MemberController - qDeleteMember() 실행");
+//        boolean result = qMemberService.deleteByIdx(idx);
+//        log.info("회원탈퇴 결과 : " +  result);
+//        return "redirect:/member/qLoginForm";
+//    }
+//    @PostMapping(value="/qDeleteMember")
+//    public String qDeleteMember(HttpSession session) {
+//        String findbyEmail = (String) session.getAttribute("userEmail");
+//
+//        MemberEntity deleteEntity = memberDTO.toEntity();
+//
+//        return "redirect:/member/qLoginForm";
+//    }
 
     /** 이메일/비밀번호 찾기 페이지 매핑 */
     @RequestMapping(value="/qFindMemberInfo")
@@ -339,27 +346,6 @@ public class MemberController {
         return "/userView/oFindMemberInfo";
     }
 
-//    @GetMapping(value = "/qEmailCheck")
-//    public ResponseEntity<Boolean> qEmailCheck(@RequestBody String email) {
-//        log.info("email : " + email);
-//        qMemberService.existsByEmail(email);
-//        log.info(ResponseEntity.ok(qMemberService.existsByEmail(email)).toString());
-//
-//        return res;
-//    }
-
-//    @RequestMapping("/qEmailCheck")
-//    public String qEmailCheck(@RequestParam(value="email") String email, Model model) {
-//        log.info("email : " + email);
-//
-//        boolean emailCheck = qMemberService.existsByEmail(email);
-//        if(emailCheck) {
-//            log.info("이메일 중복입니다.");
-//            model.addAttribute("emailCheck", emailCheck);
-//
-//        }
-//        return "redirect:/qLoginForm";
-//    }
 
     // 이메일 중복 체크 (js ajax 활용)
     @PostMapping("/qEmailCheck")
