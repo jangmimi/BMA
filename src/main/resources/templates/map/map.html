@@ -13,7 +13,7 @@
 
     <!-- <link rel="stylesheet" th:href="@{/css/파일이름.css}"> -->
     <link rel="stylesheet" th:href="@{/css/map.css}">
-     <script type="text/javascript" th:src="@{/js/search/search.js}"></script>
+    <script type="text/javascript" th:src="@{/js/search/search.js}"></script>
 </head>
 <body layout:fragment="content">
 <script
@@ -780,8 +780,8 @@
         <div class="afilterLeft">
 
             <div class="alOrB">
-                <button class="btn btn-primary living on"><span>주거용</span></a>
-                    <button class="btn btn-primary commercial"><span>상업용</span></a>
+                <button class="btn btn-primary living on"><span>주거용</span></button>
+                    <button class="btn btn-primary commercial"><span>상업용</span></button>
             </div>
 
 
@@ -790,7 +790,11 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;">
-                <div class="aSearch_area">
+                <div class="aSearch_area" style="width: 185px;
+                                            height: 29px;
+                                            border: 1px solid lightgray;
+                                            border-radius: 8px;"
+                >
                     <img style="margin-left:8px; width:20px; background-color: transparent;"
                          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvcGRzbD6HIXhyARcDnuzWTfGVeLEZHVLS9A&usqp=CAU">
                     <input type="text" name="asearch_keyword" placeholder="" class="aSearchInput" autocomplete="off">
@@ -1210,7 +1214,7 @@
                                     <div style="display: flex;">
                                         <div>
                                             <input type="checkbox" class="btn-check" id="btncheck37" autocomplete="off"
-                                                   value="10" m2="33" py="10" order="9" status="under" >
+                                                   value="10" m2="33" py="10" order="9" status="under">
                                             <label class="btn btn-outline-primary aTtangSize" for="btncheck37">
                                                 ~10평
                                             </label>
@@ -1218,7 +1222,7 @@
                                         <div>
                                             <input type="checkbox" class="btn-check" id="btncheck38" autocomplete="off"
                                                    value="10" m2="33" py="10" order="10" style="width: 90.7px;"
-                                                   >
+                                            >
                                             <label class="btn btn-outline-primary aTtangSize" for="btncheck38">
                                                 10평
                                             </label>
@@ -1226,7 +1230,7 @@
                                         <div>
                                             <input type="checkbox" class="btn-check" id="btncheck39" autocomplete="off"
                                                    value="20" m2="66" py="20" order="20" style="width: 90.7px;"
-                                                   >
+                                            >
                                             <label class="btn btn-outline-primary aTtangSize" for="btncheck39">
                                                 20평
                                             </label>
@@ -1234,7 +1238,7 @@
                                         <div>
                                             <input type="checkbox" class="btn-check" id="btncheck40" autocomplete="off"
                                                    value="30" m2="99" py="30" order="30" style="width: 90.7px;"
-                                                   >
+                                            >
                                             <label class="btn btn-outline-primary aTtangSize" for="btncheck40">
                                                 30평
                                             </label>
@@ -1244,7 +1248,7 @@
                                         <div>
                                             <input type="checkbox" class="btn-check" id="btncheck41" autocomplete="off"
                                                    value="40" m2="132" py="40" order="40" style="width: 90.7px;"
-                                                   >
+                                            >
                                             <label class="btn btn-outline-primary aTtangSize" for="btncheck41">
                                                 40평
                                             </label>
@@ -1252,7 +1256,7 @@
                                         <div>
                                             <input type="checkbox" class="btn-check" id="btncheck42" autocomplete="off"
                                                    value="50" m2="165" py="50" order="50" style="width: 90.7px;"
-                                                  >
+                                            >
                                             <label class="btn btn-outline-primary aTtangSize" for="btncheck42">
                                                 50평
                                             </label>
@@ -1260,7 +1264,7 @@
                                         <div>
                                             <input type="checkbox" class="btn-check" id="btncheck43" autocomplete="off"
                                                    value="60" m2="198" py="60" order="60" style="width: 90.7px;"
-                                                  >
+                                            >
                                             <label class="btn btn-outline-primary aTtangSize" for="btncheck43">
                                                 60평
                                             </label>
@@ -1268,7 +1272,7 @@
                                         <div>
                                             <input type="checkbox" class="btn-check" id="btncheck44" autocomplete="off"
                                                    value="70" m2="231" py="70" order="70" style="width: 90.7px;"
-                                                   >
+                                            >
                                             <label class="btn btn-outline-primary aTtangSize" for="btncheck44">
                                                 70평
                                             </label>
@@ -1278,7 +1282,7 @@
                                         <div>
                                             <input type="checkbox" class="btn-check" id="btncheck45" autocomplete="off"
                                                    value="80" m2="264" py="80" order="80" style="width: 90.7px;"
-                                                  >
+                                            >
                                             <label class="btn btn-outline-primary aTtangSize" for="btncheck45">
                                                 80평
                                             </label>
@@ -1286,7 +1290,7 @@
                                         <div>
                                             <input type="checkbox" class="btn-check" id="btncheck46" autocomplete="off"
                                                    value="90" m2="297" py="90" order="90" style="width: 90.7px;"
-                                                   >
+                                            >
                                             <label class="btn btn-outline-primary aTtangSize" for="btncheck46">
                                                 90평
                                             </label>
@@ -1294,7 +1298,7 @@
                                         <div>
                                             <input type="checkbox" class="btn-check" id="btncheck47" autocomplete="off"
                                                    value="100" m2="330" py="100" order="100" style="width: 90.7px;"
-                                                   >
+                                            >
                                             <label class="btn btn-outline-primary aTtangSize" for="btncheck47">
                                                 100평
                                             </label>
@@ -1302,7 +1306,7 @@
                                         <div>
                                             <input type="checkbox" class="btn-check" id="btncheck48" autocomplete="off"
                                                    value="100" m2="330" py="100" order="101" status="over"
-                                                   style="width: 90.7px;" >
+                                                   style="width: 90.7px;">
                                             <label class="btn btn-outline-primary aTtangSize" for="btncheck48">
                                                 100평~
                                             </label>
@@ -1325,9 +1329,9 @@
 
 
                 <!-- 옵션 -->
-                <div class="map_tac category_tac option_tac">
+                <div class="dropdown-center">
                     <button class="btn btn-outline-primary filter" type="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
+                            aria-expanded="false" >
                         옵션
                     </button>
 
