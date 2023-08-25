@@ -92,6 +92,36 @@
            color: blue;
        }
     </style>
+    <script>
+        function checkSelectAll() {
+            const checkBoxes = $(input[name="agree"]);
+            const checked = $(input[name="agree"].checked);
+            const selectAllCheckBox = $(input[name="selectAll"]);
+
+            if(checkBoxes.length === checked.length) {
+                selectAllCheckBox.checked = true;
+            } else {
+                selectAllCheckBox.checked = false;
+            }
+        }
+        function selectAll(selectAllCheckbox) {
+          const checkboxes = document.getElementsByName('agree');
+          checkboxes.forEach((checkbox) => {
+            checkbox.checked = selectAllCheckbox.checked;
+          });
+          updateCheckAll(); // 체크박스 상태 갱신
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+          const selectAllCheckbox = document.querySelector('input[name="selectAll"]');
+          selectAllCheckbox.addEventListener('click', () => {
+            selectAll(selectAllCheckbox);
+          });
+        });
+        function updateCancel() {
+            alert('내정보 수정을 취소하시겠습니까?' 내정보 화면으로 이동합니다.);
+        }
+    </script>
 
 </head>
 <body layout:fragment="content">
@@ -122,7 +152,7 @@
                 <form th:action="@{/member/qUpdateMember}" method="POST">
                     <input type="hidden" id="idx" value="${memberDTO.idx}" />
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="name" name="name" th:value="${name}" autofocus="autofocus" />
+                        <input type="text" class="form-control" id="name" name="name" th:value="${userName}" autofocus="autofocus" />
                         <label th:for="name">이름(실명)</label>
                     </div>
                     <div class="form-floating mb-3 mr-3" style="display:flex; flex-wrap:wrap">
@@ -138,32 +168,32 @@
                                     <h3 class="h3"></h3>
                                 </div>
                                 <div>
-                                    <input type="checkbox" class="oAgree"><b>전체 동의하기</b>
+                                    <input type="checkbox" class="oAgree" name="selectAll" onclick="checkSelectAll()"><b>전체 동의하기</b>
                                 </div>
                             </li>
                             <li class="oAgree-li">
                                 <div>
-                                    <input type="checkbox" class="oAgree"><span class="mustch">[필수] </span>만14세 이상입니다.
+                                    <input type="checkbox" class="oAgree" name="agree"><span class="mustch">[필수] </span>만14세 이상입니다.
                                 </div>
                             </li>
                             <li class="oAgree-li">
                                 <div>
-                                    <input type="checkbox" class="oAgree"><span class="mustch">[필수] </span>이용약관 동의
+                                    <input type="checkbox" class="oAgree" name="agree"><span class="mustch">[필수] </span>이용약관 동의
                                 </div>
                             </li>
                             <li class="oAgree-li">
                                 <div>
-                                    <input type="checkbox" class="oAgree"><span class="mustch">[필수] </span>개인정보 수집·이용 동의
+                                    <input type="checkbox" class="oAgree" name="agree"><span class="mustch">[필수] </span>개인정보 수집·이용 동의
                                 </div>
                             </li>
                             <li class="oAgree-li">
                                 <div>
-                                    <input type="checkbox" class="oAgree"><span class="mustch">[필수] </span>위치 기반 서비스약관 동의
+                                    <input type="checkbox" class="oAgree" name="agree"><span class="mustch">[필수] </span>위치 기반 서비스약관 동의
                                 </div>
                             </li>
                             <li class="oAgree-li">
                                 <div>
-                                    <input type="checkbox" class="oAgree"><span class="mustch">[필수] </span>매물 관리 정책 동의
+                                    <input type="checkbox" class="oAgree" name="agree"><span class="mustch">[필수] </span>매물 관리 정책 동의
                                 </div>
                             </li>
                         </ul>
@@ -171,7 +201,7 @@
 
                     <div id="oJoinBtn-container">
                         <input type="button" class="btn btn-dark"
-                               th:onclick="|location.href='@{/}'|" value="취소" style="width:47%" />
+                               th:onclick="updateCancel()" value="취소" style="width:47%" />
                         <input type="submit" class="btn btn-dark" value="수정" style="width:47%" />
                         <!-- th:onclick="|location.href='@{/member/qLoginForm}'|"-->
                     </div>

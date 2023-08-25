@@ -116,15 +116,20 @@ public class MemberController {
         if(loginMember != null) {
             log.info(loginMember.toString());
             log.info("로그인 성공");
+
+            // 쿠키 설정
+            Cookie idCookie = new Cookie("userEmail",  String.valueOf(loginMember.getEmail()));
+            response.addCookie(idCookie);
+
+            loginMember.toEntity();
+
             String userEmail = loginMember.getEmail();
             String userName = loginMember.getName();
             model.addAttribute("userEmail", userEmail);
             model.addAttribute("userName",userName);
             session.setAttribute("loginMember", loginMember);
+            log.info("loginMember : " + loginMember.toString());
 
-            // 쿠키 설정
-            Cookie idCookie = new Cookie("userEmail",  String.valueOf(loginMember.getEmail()));
-            response.addCookie(idCookie);
             return "/userView/oMyPage";
         } else {
             log.info("로그인 실패헀어요.");
