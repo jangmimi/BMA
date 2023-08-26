@@ -16,4 +16,8 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {   
 //    MemberEntisty findByEmail(String email);
     boolean existsByEmail(String email);    // exists : 해당 데이터가 DB에 존재하는지 확인하기 위해 사용
 
+    boolean deleteByIdx(Long idx);  // 회원 탈퇴
+
+    @Override
+    void delete(MemberEntity entity);
 }

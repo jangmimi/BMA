@@ -1,5 +1,6 @@
 package com.ap4j.bma.service.member;
 
+import com.ap4j.bma.config.PasswordEncoderConfig;
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
 import com.ap4j.bma.model.repository.MemberRepository;
@@ -33,6 +34,10 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private MemberRepository memberRepository;
 
+	@Autowired
+	private PasswordEncoderConfig pwdConfig;
+
+	/** 카카오 토큰 얻기 */
 	public String getAccessToken(String code) {
 		String accessToken = "";
 		String refreshToken = "";
@@ -134,6 +139,7 @@ public class MemberServiceImpl implements MemberService {
 //		return dto;
 //	}
 
+	/** 카카오 유저 정보 얻기 */
 	public HashMap<String, Object> getUserInfo(String accessToken) {
 		HashMap<String, Object> userInfo = new HashMap<String, Object>();
 		String reqUrl = "https://kapi.kakao.com/v2/user/me";
@@ -161,11 +167,13 @@ public class MemberServiceImpl implements MemberService {
 			JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
 			JsonObject kakaoAccount = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
 
-			String nickname = properties.getAsJsonObject().get("nickname").getAsString();
 			String email = kakaoAccount.getAsJsonObject().get("email").getAsString();
+			String nickname = properties.getAsJsonObject().get("nickname").getAsString();
+//			String profile_image_url = properties.getAsJsonObject().get("thumbnail_image_url").getAsString();
 
 			userInfo.put("nickname", nickname);
 			userInfo.put("email", email);
+//			userInfo.put("thumbnail_image_url", profile_image_url);
 
 			Optional<MemberEntity> tmp = memberRepository.findByEmail(email);
 			log.info("test tmp (email기준 회원정보있나~?) : " + tmp);
@@ -187,7 +195,7 @@ public class MemberServiceImpl implements MemberService {
 		return userInfo;
 	}
 
-
+	/** 카카오 로그아웃 */
 	public void kakaoLogout(String accessToken) {
 		String reqURL = "https://kauth.kakao.com/oauth/logout";
 		try {
@@ -212,6 +220,7 @@ public class MemberServiceImpl implements MemberService {
 		}
 	}
 
+	/** 네이버 토큰 얻기 */
 	@Override
 	public String getAccessTokenNaver(String code) {
 		String accessToken = "";
@@ -263,15 +272,17 @@ public class MemberServiceImpl implements MemberService {
 		}
 		return accessToken;
 	}
+
+	/** 기본 회원가입 */
 	@Transactional
 	@Override
 	public Long joinBasic(MemberEntity pMember) {
 		log.info("서비스 joinBasic() 실행");
-//		validateDuplicateMember(pMember);    // 중복 회원 검증
 		memberRepository.save(pMember);
-		return pMember.getIdx();			// @GeneratedValue 로 id는 자동으로 값 저장
+		return pMember.getIdx();			// @GeneratedValue 로 idx는 자동으로 값 저장
 	}
-	//			   validateDuplicateMember
+
+//		validateDuplicateMember(pMember);    // 중복 회원 검증
 	/*private void validateDuplicateMember(Member member) {
 		List<Member> findMembers = memberRepository.findByName(member.getName());
 		//EXCEPTION
@@ -280,25 +291,21 @@ public class MemberServiceImpl implements MemberService {
 		}
 	}*/
 
+	/** 중복회원 검증 */
 	@Override
 	public boolean existsByEmail(String email) {
 		log.info("서비스 existsByEmail() 실행");
 		return memberRepository.existsByEmail(email);
 	}
 
-//	public Long joinBasic(MemberEntity pMember) {
-////		validateDuplicateMember(pMember);    // 중복 회원 검증
-//
-//		memberRepository.save(pMember);
-//		return pMember.getId();
-//	}
-
+	/** 회원전체 조회 */
 	@Override
 	public List<MemberEntity> findMembers() {
 		log.info("서비스 findMember() 실행");
 		return memberRepository.findAll();
 	}
 
+	/** 기본 로그인 */
 	@Override
 	public MemberDTO login(MemberDTO memberDTO) {
 		log.info("서비스 login() 실행");
@@ -306,12 +313,13 @@ public class MemberServiceImpl implements MemberService {
 		if (findMember.isPresent()) {
 			log.info("로그인 시도하는 email DB에 존재!");
 			MemberEntity memberEntity = findMember.get();
-			if(memberEntity.getPwd().equals(memberDTO.getPwd())) {
+			if(pwdConfig.passwordEncoder().matches(memberDTO.getPwd(),memberEntity.getPwd())) {
+//			if(memberEntity.getPwd().equals(memberDTO.getPwd())) {
 				log.info("id pw 모두 일치! 로그인 성공!");
 				// entity->dto로 변환
 				MemberDTO dto = new MemberDTO();
 				dto.setEmail(memberEntity.getEmail());
-//				dto.setName(memberEntity.getName());
+				dto.setName(memberEntity.getName());
 				dto.setPwd(memberEntity.getPwd());
 				return dto;
 
@@ -331,6 +339,7 @@ public class MemberServiceImpl implements MemberService {
 //        return memberRepository.findByEmail(loginEmail);
 //    }
 
+	/** 회원가입 유효성 검사 */
 	@Override
 	public Map<String, String> validateHandler(Errors errors) {
 		Map<String, String> validatorResult = new HashMap<>();
@@ -342,6 +351,29 @@ public class MemberServiceImpl implements MemberService {
 		return validatorResult;
 	}
 
+	/** 회원 탈퇴 */
+	@Override
+	public boolean deleteByIdx(Long idx) {
+		return memberRepository.deleteByIdx(idx);
+	}
+
+	/** 회원 탈퇴 테스트 */
+	@Override
+	public void deleteMember(MemberEntity memberEntity) {
+		memberRepository.delete(memberEntity);
+	}
+
+
+	/** 회원정보 수정 */
+//	@Override
+//	public MemberDTO updateMember(String userId) {
+//		log.info("서비스 updateMember() 실행");
+//		Optional<MemberEntity> optionalMemberEntity = memberRepository.findByEmail(idx).orElseThrow(Undefined.EXCEPTION::new);
+//		entity.update(memberDTO.getName());
+//		return idx;
+//
+//	}
+
 
 	// 아래는 예시 코드입니다.
 //	@Override
@@ -349,9 +381,3 @@ public class MemberServiceImpl implements MemberService {
 //	public void addSomething(String something) {
 //	}
 }
-
-// 카카오 로그아웃 작업중 (작업 완료 8/20)
-
-// response body ={"id":2959937821,"connected_at":"2023-08-11T13:03:35Z",
-// "properties":{"nickname":"박장미"},"kakao_account":{"profile_nickname_needs_agreement":false,"profile":{"nickname":"박장미"},
-// "has_email":true,"email_needs_agreement":false,"is_email_valid":true,"is_email_verified":true,"email":"rose6012@hanmail.net"}}
