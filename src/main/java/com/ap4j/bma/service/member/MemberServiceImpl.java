@@ -7,6 +7,7 @@ import com.ap4j.bma.model.repository.MemberRepository;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import groovy.transform.Undefined;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -366,20 +367,30 @@ public class MemberServiceImpl implements MemberService {
 
 	/** 회원 한명 찾기 */
 	public MemberEntity getMemberOne(String email) {
+		log.info("서비스 getMemberOne() 실행");
 		Optional<MemberEntity> findMember = memberRepository.findByEmail(email);
 		return findMember.orElse(null);
 	}
 
 
 	/** 회원정보 수정 */
-//	@Override
-//	public MemberDTO updateMember(String userId) {
-//		log.info("서비스 updateMember() 실행");
+	@Transactional
+	@Override
+	public MemberEntity updateMember(Long idx, MemberEntity updatedMember) {
+		log.info("서비스 updateMember() 실행");
+		MemberEntity member = memberRepository.findByEmail(updatedMember.getEmail()).orElse(null);
+
+		if(member != null) {
+			member.setName(updatedMember.getName());
+			return memberRepository.save(member);
+		}
+		return null;
+
 //		Optional<MemberEntity> optionalMemberEntity = memberRepository.findByEmail(idx).orElseThrow(Undefined.EXCEPTION::new);
 //		entity.update(memberDTO.getName());
 //		return idx;
-//
-//	}
+
+	}
 
 
 	// 아래는 예시 코드입니다.

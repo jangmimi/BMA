@@ -7,10 +7,12 @@ import com.ap4j.bma.model.entity.member.MemberEntity;
 import com.ap4j.bma.service.member.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.*;
 import javax.validation.Valid;
@@ -328,10 +330,12 @@ public class MemberController {
     }
 
     /** 내정보 수정하기 */
-//    @PatchMapping(value="/qUpdate/{idx}")
-//    public Long qUpdate(@PathVariable final Long idx, @RequestBody final MemberDTO memberDTO) {
-//        return qMemberService.updateMember(idx, memberDTO);
-//    }
+    @PostMapping(value="/qUpdateMember/{idx}")
+    public String qUpdate(@PathVariable Long idx, @ModelAttribute MemberEntity updatedMember, RedirectAttributes redirectAttributes) {
+        updatedMember.setIdx(idx);
+        qMemberService.updateMember(idx, updatedMember);
+        return "redirect:/member/qMyPage";
+    }
 
     /** 기본 회원탈퇴 */   // sns는 별도 처리 해줘야 함
     @PostMapping("/qDeleteMember/{idx}")
@@ -348,7 +352,7 @@ public class MemberController {
         return "/userView/oFindMemberInfo";
     }
 
-    // 이메일 중복 체크 (js ajax 활용)
+    /** 이메일 중복 체크 (js ajax 활용) */
     @PostMapping("/qEmailCheck")
     @ResponseBody
     public int qEmailCheck(@RequestParam("email") String email) {

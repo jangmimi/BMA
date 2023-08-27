@@ -40,7 +40,6 @@ public interface MemberService {
 
 	public MemberEntity getMemberOne(String email);
 
-
-//	public Long updateMember(final Long idx, final MemberDTO memberDTO);
+	public MemberEntity updateMember(Long idx, MemberEntity updatedMember);
 
 }

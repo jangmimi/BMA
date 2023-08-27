@@ -10,35 +10,7 @@
     <!-- 부트스트랩 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    <style>
-        <!-- * 부트스트랩으로 인한 충돌 / 헤더 위치 조정중 -->
-        .n-header-list {
-            margin-bottom: 0px;
-            padding: 0px 0px 0px 40px;
-        }
-        .form-floating { width: 350px; }
-        .form-check {
-            width: 350px;
-           <!-- display: flex; justify-content: right;
-            부트스트랩 충돌-인라인 태그로-->
-        }
-        #oInner-container {
-            width: 400px;
-            height: 700px;
-        }
-        #oLoginTitle {
-            padding: 20px 50px;
-            margin: 0px;
-        }
-        .oLabelColor {
-            color: gray;
-            font-size: 14px;
-        }
-        .fieldError {
-            font-size: 10px;
-            color: red;
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/member/login.css}">
 
     <!-- 네이버 로그인 script -->
     <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
