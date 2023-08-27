@@ -7,6 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
+    <script src="https://kit.fontawesome.com/5b1091f816.js" crossorigin="anonymous"></script>
     <style>
         .news-header {
             display: flex;
@@ -42,11 +43,11 @@
             font-size: 20px;
         }
 
-        .news-search {
-            padding-bottom: 30px;
-            padding-top: 30px;
-            text-align: center;
-        }
+        /*.news-search {*/
+        /*    padding-bottom: 30px;*/
+        /*    padding-top: 30px;*/
+        /*    text-align: center;*/
+        /*}*/
 
         .result-range {
             display: flex;
@@ -98,6 +99,48 @@
         .nowPage {
             text-decoration-line: underline;
         }
+        /******* */
+        .news-search{
+            height: 80px;
+            padding: 0 50px;
+            border-radius: 42px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #696D71;
+            box-shadow: 0 0 10px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .news-search input{
+            font-family: 'Noto Sans KR', sans-serif;
+            font-weight: 700;
+            font-size: 28px;
+            border: none;
+            width: 100%;
+            color: white;
+            background-color: transparent;
+        }
+        .news-search i{
+            position: relative;
+            right: 2px;
+            color: #696D71;
+            font-size: 42px;
+        }
+        .r-icon-circle {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            left: 49px;
+            bottom: 0px;
+            background-color: white;
+            border-radius: 50px;
+            width: 150px;
+            height: 78px;
+            box-shadow: 0 0 10px;
+            transition: 0.5s;
+        }
     </style>
 </head>
 <body layout:fragment="content">
@@ -105,9 +148,15 @@
     <h1>부동산 뉴스</h1>
     <form action="/news/newsPage" method="get">
         <div class="news-search">
-            <input type="text" name="query" placeholder="검색어 입력">
-            <button type="submit">검색</button>
+            <input type="text" name="query" placeholder="부동산">
+            <div class="r-icon-circle">
+                <i id="icon" class="fa-solid fa-magnifying-glass"></i>
+            </div>
         </div>
+<!--        <div class="news-search">-->
+<!--            <input type="text" name="query" placeholder="검색어 입력">-->
+<!--            <button type="submit">검색</button>-->
+<!--        </div>-->
     </form>
     <div class="check">
         <div class="result-range">
