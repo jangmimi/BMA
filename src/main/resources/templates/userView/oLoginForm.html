@@ -30,30 +30,16 @@
             padding: 20px 50px;
             margin: 0px;
         }
+        .oLabelColor {
+            color: gray;
+            font-size: 14px;
+        }
         .fieldError {
             font-size: 10px;
             color: red;
         }
     </style>
-    <script>
-        $(document).ready(function(){
-            $(".form-control").keyup(function(){
-                var emailValue = $(this).val();
-                if (emailValue == null || emailValue === '' || emailValue.length < 5) {
-                    $("#check").css("display","block");
-                } else {
-                    $("#check").css("display","none");
-                }
-            });
-            $('#oLoginBtn2').click(function() {
-                let emailValue = $('#email').val().trim();
-                let pwdValue = $('#pwd').val().trim();
-                if(emailValue === ''null'' || pwdValue === '') {
-                    alert("이메일 또는 비밀번호를 입력하세요.);
-                }
-            });
-        });
-    </script>
+
     <!-- 네이버 로그인 script -->
     <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -64,19 +50,21 @@
             <div id="oLoginTitle">
                 <h3 class="h3 fw-bold">로그인</h3>
             </div>
-            <form th:action="@{/member/qLoginBasic}" method="POST" th:object="${memberDTO}">
+            <form th:action="@{/member/qLoginBasic}" method="POST" th:object="${memberDTO}" onsubmit="return oLoginCheck()">
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="email" name="email" placeholder="${session.memberDTO.email}" autofocus="autofocus"
-                           th:field="*{email}" th:class="${#fields.hasErrors('email')} ? 'form-control fieldError' : 'form-control'" />
-                    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="font-size:12px; text-align: left; color: red;">Incorrect data</p>
-                    <label th:for="email">이메일 주소</label>
+                    <input type="text" class="form-control" id="email" name="email" placeholder="${session.memberDTO.email}" autofocus="autofocus">
+<!--                           th:field="*{email}" th:class="${#fields.hasErrors('email')} ? 'form-control fieldError' : 'form-control'" />-->
+<!--                    <div th:each="msg : ${#fields.errors('email')}">-->
+<!--                        <p th:text="${msg}"></p>-->
+<!--                    </div>-->
+                    <label th:for="email" class="oLabelColor">이메일 주소</label>
                     <div id="check" style="display:none; text-align:left; color:red;"></div>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="password" class="form-control" id="password" name="pwd" placeholder="Password" autocomplete="off"
-                        th:field="*{pwd}" th:class="${#fields.hasErrors('pwd')} ? 'form-control fieldError' : 'form-control'" />
-                    <label th:for="password">비밀번호</label>
-                    <p th:if="${#fields.hasErrors('pwd')}" th:errors="*{pwd}" style="font-size:12px; text-align: left; color: red;">Incorrect data</p>
+                    <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Password" autocomplete="off">
+<!--                        th:field="*{pwd}" th:class="${#fields.hasErrors('pwd')} ? 'form-control fieldError' : 'form-control'" />-->
+                    <label th:for="password" class="oLabelColor">비밀번호</label>
+<!--                    <p th:if="${#fields.hasErrors('pwd')}" th:errors="*{pwd}" style="font-size:12px; text-align: left; color: red;">Incorrect data</p>-->
                 </div>
                 <!-- 아이디 저장 체크박스 -->
                 <div class="form-check" style="display: flex; justify-content:space-between; font-size:13px;">
@@ -90,6 +78,7 @@
                     <div><a th:href="@{/member/qFindMemberInfo}" style="color:#212529;">이메일/비밀번호 찾기</a></div>
                 </div>
                 <div class="form-floating">
+<!--                    <input type="button" class="btn btn-dark mt-2 mb-2 w-100" id="oLoginBtn" style="height: 48px;" value="로그인" onclick="oLogin()"/>-->
                     <input type="submit" class="btn btn-dark mt-2 mb-2 w-100" id="oLoginBtn" style="height: 48px;" value="로그인" />
                     <input type="button" class="btn btn-outline-primary mt-2 mb-2 w-100" id="oJoinBtn"
                            style="height: 48px;" th:onclick="|location.href='@{/member/qJoinForm}'|" value="회원가입" />
@@ -126,6 +115,21 @@
         naver_id_login.setState(state);
         naver_id_login.setPopup();
         naver_id_login.init_naver_id_login();
+    </script>
+    <script>
+        // 로그인 및 유효성(공백) 체크 (form 태그 내 onsubmit에서 return oLoginCheck()을 통해 submit 하기 전 체크!)
+        function oLoginCheck() {
+            let email = $('#email').val();
+            let pwd = $('#pwd').val();
+            if(email === '') {
+                alert('이메일을 입력해주세요.');
+                return false;
+            }
+            if(pwd === '') {
+                alert('비밀번호를 입력해주세요.');
+                return false;
+            }
+        };
     </script>
     <script type="text/javascript">
 <!--        $(function() {-->

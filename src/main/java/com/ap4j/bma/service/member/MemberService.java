@@ -32,9 +32,14 @@ public interface MemberService {
 
     Map<String, String> validateHandler(Errors errors);
 
-	public boolean deleteByIdx(Long idx);
+//	public boolean deleteByIdx(Long idx);
 
 	public void deleteMember(MemberEntity memberEntity);
+
+	public void deleteMemberByIdx(Long idx);
+
+	public MemberEntity getMemberOne(String email);
+
 
 //	public Long updateMember(final Long idx, final MemberDTO memberDTO);
 

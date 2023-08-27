@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 
+import javax.persistence.EntityNotFoundException;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
@@ -351,16 +352,22 @@ public class MemberServiceImpl implements MemberService {
 		return validatorResult;
 	}
 
-	/** 회원 탈퇴 */
-	@Override
-	public boolean deleteByIdx(Long idx) {
-		return memberRepository.deleteByIdx(idx);
-	}
-
 	/** 회원 탈퇴 테스트 */
 	@Override
 	public void deleteMember(MemberEntity memberEntity) {
 		memberRepository.delete(memberEntity);
+	}
+
+	/** 회원 탈퇴 */
+	public void deleteMemberByIdx(Long idx) {
+		memberRepository.deleteById(idx);
+//		memberRepository.delete(findMember);
+	}
+
+	/** 회원 한명 찾기 */
+	public MemberEntity getMemberOne(String email) {
+		Optional<MemberEntity> findMember = memberRepository.findByEmail(email);
+		return findMember.orElse(null);
 	}
 
 

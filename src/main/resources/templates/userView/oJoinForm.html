@@ -31,33 +31,28 @@
             width: 90px;
             margin-left: 6px;
         }
-        <!-- 회원가입 유효성검사 -->
-        .fieldError {
-            border-color: red;
-            color: red;
-        }
         .oAgree {
             margin-right: 5px;
         }
         .oAgree-li {
             margin: 10px;
         }
-        .oAgree span {
-            color: blue;
-        }
-        <!-- 이메일 중복 체크 css -->
-        <!--.oIdOk {
-            color: #008000;
-            display: none;
-        }
-        .oIdExist {
-            color: red;
-            display: none;
-        }-->
         .mustch {
-            font-weight: bold;
-            color: blue;
+            font-weight: 500;
+            color: #129DED;
         }
+        .userch {
+            font-weight: 500;
+            color: gray;
+        }
+        .oLabelColor {
+            color: gray;
+            font-size: 14px;
+        }
+<!--        .fieldError {-->
+<!--            font-size: 10px;-->
+<!--            color: red;-->
+<!--        }-->
     </style>
     <script>
         $(document).ready(function(){
@@ -90,9 +85,9 @@
                     $("#emailErr").text("");
                 }
             });
-            <!-- 이메일 중복 체크-->
 
         });
+        <!-- 이메일 중복 체크-->
         function checkEmail() {
             let email = $('#email').val();
 
@@ -119,31 +114,51 @@
                 }
             });
         };
+        // 회원가입 및 체크
+        function checkJoinInfo() {
+            let email = $('#email').val();
+            let name = $('#name').val();
+            let pwd = $('#pwd').val();
+            let pwdCheck = $('#pwdCheck').val();
 
-        function checkSelectAll() {
-            const checkBoxes = $(input[name="agree"]);
-            const checked = $(input[name="agree"].checked);
-            const selectAllCheckBox = $(input[name="selectAll"]);
+            $.ajax({
+                url: '/member/qEmailCheck',
+                type: 'post',
+                data: {email:email},
+                success:function(cnt) {
+                    if(email === '') alert('이메일을 입력해주세요.');
+                    if(name === '') alert('이름을 입력해주세요');
+                    if(pwd === '') alert('비밀번호를 입력해주세요.');
+                    if(pwdCheck === '') alert('비밀번호를 확인해주세요.');
 
-            if(checkBoxes.length === checked.length) {
-                selectAllCheckBox.checked = true;
-            } else {
-                selectAllCheckBox.checked = false;
+                },
+                error:function() {
+                    alert("에러입니다.");
+                }
+            });
+        };
+
+        $(document).ready(function () {
+            // 전체 선택 체크박스
+            const selectAllCheckbox = $("input[name='selectAll']");
+            // 개별 체크박스들
+            const checkboxes = $("input[name='agree']");
+
+            // 개별 체크박스가 변경될 때
+            checkboxes.on("change", function () {
+                updateSelectAllCheckbox();
+            });
+
+            // 전체 선택 체크박스가 변경될 때
+            selectAllCheckbox.on("change", function () {
+                checkboxes.prop("checked", selectAllCheckbox.prop("checked"));
+            });
+
+            // 개별 체크박스의 상태에 따라 전체 선택 체크박스 상태 갱신
+            function updateSelectAllCheckbox() {
+                const allChecked = checkboxes.filter(":checked").length === checkboxes.length;
+                selectAllCheckbox.prop("checked", allChecked);
             }
-        }
-        function selectAll(selectAllCheckbox) {
-          const checkboxes = document.getElementsByName('agree');
-          checkboxes.forEach((checkbox) => {
-            checkbox.checked = selectAllCheckbox.checked;
-          });
-          updateCheckAll(); // 체크박스 상태 갱신
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-          const selectAllCheckbox = document.querySelector('input[name="selectAll"]');
-          selectAllCheckbox.addEventListener('click', () => {
-            selectAll(selectAllCheckbox);
-          });
         });
 
         $(document).ready(function() {
@@ -155,21 +170,47 @@
                 } else { return false; }
             });
         });
+
+        function oJoinCheck() {
+            let email = $('#email').val();
+            let name = $('#name').val();
+            let pwd = $('#pwd').val();
+            let pwdCheck = $('#pwdCheck').val();
+
+            if(email === '') {
+                alert('이메일을 입력해주세요.');
+                return false;
+            }
+            if(name === '') {
+                alert('이름을 입력해주세요.');
+                return false;
+            }
+            if(pwd === '') {
+                alert('비밀번호를 입력해주세요.');
+                return false;
+            }
+            if(pwdCheck === '') {
+                alert('비밀번호를 확인해주세요.');
+                return false;
+            }
+        }
     </script>
 </head>
 <body layout:fragment="content">
     <div class="oContainer-wrap">
         <div class="container mt-5" id="oInner-container-join" style="background-color:white" align="center">
-    <!--            <img src="/images/qLogoForm.png" alt="logoImage" style="margin-bottom: 10px;">-->
             <div id="oJoinTitle">
                 <h3 class="h3 fw-bold">회원가입</h3>
             </div>
-            <form th:action="@{/member/qJoinBasic}" th:object="${memberDTO}" method="POST">
+            <form th:action="@{/member/qJoinBasic}" th:object="${memberDTO}" method="POST" onsubmit="return oJoinCheck()">
                 <div class="form-floating mb-3 mr-3" style="display:flex; flex-wrap:wrap">
-                    <input type="text" class="form-control" id="email" name="email" placeholder="myemail@email.com" autofocus="autofocus" style="width:254px;"
-                        th:field="*{email}" th:class="${#fields.hasErrors('email')} ? 'form-control fieldError' : 'form-control'" />
-                    <label th:for="email">이메일 주소</label>
-                    <input type="button" class="btn btn-outline-dark" id="btnEmailCheck" style="width:90px;" value="중복검사" onclick="checkEmail()" />
+                    <input type="text" class="form-control" id="email" name="email"
+                           placeholder="myemail@email.com" autofocus="autofocus" style="width:254px;">
+<!--                        th:field="*{email}" th:class="${#fields.hasErrors('email')} ? 'form-control fieldError' : 'form-control'" />-->
+<!--                    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="font-size:12px; text-align: left; color: red;">Incorrect data</p>-->
+                    <label th:for="email" class="oLabelColor">이메일 주소</label>
+                    <input type="button" class="btn btn-outline-dark" id="btnEmailCheck" style="width:90px;"
+                           value="중복검사" onclick="checkEmail()" />
                     <!-- email ajax 중복체크 onclick="checkEmail()" -->
 <!--                    <span class="oIdOk" style="display:none;">사용 가능한 이메일입니다.</span>
                     <span class="oIdExist" style="display:none;">이미 존재하는 이메일입니다.</span>-->
@@ -179,22 +220,23 @@
                     <div class="form-floating" id="emailErr" style="text-align:left; color:red; font-size:12px;"></div>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="name" name="name" placeholder="홍길동"
-                           th:field="*{name}" th:class="${#fields.hasErrors('name')} ? 'form-control fieldError' : 'form-control'">
-                    <label th:for="name">이름(실명)</label>
-                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="font-size:12px; text-align: left; color: red;">>Incorrect data</p>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="홍길동">
+<!--                           th:field="*{name}" th:class="${#fields.hasErrors('name')} ? 'form-control fieldError' : 'form-control'">-->
+                    <label th:for="name" class="oLabelColor">이름(실명)</label>
+<!--                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="font-size:12px; text-align: left; color: red;">Incorrect data</p>-->
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Password"
-                           th:field="*{pwd}" th:class="${#fields.hasErrors('pwd')} ? 'form-control fieldError' : 'form-control'">
-                    <label for="pwd">비밀번호(영문, 숫자 조합 8~20자 이내)</label>
+                    <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Password">
+<!--                           th:field="*{pwd}" th:class="${#fields.hasErrors('pwd')} ? 'form-control fieldError' : 'form-control'">-->
+                    <label for="pwd" class="oLabelColor">비밀번호(영문, 숫자 조합 8~20자 이내)</label>
                     <div id="opwdCheck2" style="display:none; text-align:left; color:red; font-size:12px;">영문, 숫자를 조합하여 8~20자 이내로 입력해주세요.</div>
-<!--                    <p th:if="${#fields.hasErrors('pwd')}" th:errors="*{pwd}" style="font-size:12px; text-align: left; color: red;">>Incorrect data</p>-->
+<!--                    <p th:if="${#fields.hasErrors('pwd')}" th:errors="*{pwd}" style="font-size:12px; text-align: left; color: red;">Incorrect data</p>-->
                 </div>
                 <div class="form-floating mb-3">
                     <input type="password" class="form-control" id="pwdCheck" name="pwdCheck" placeholder="Password">
                     <div id="opwdCheck1" style="display:none; text-align:left; color:red; font-size:12px;">비밀번호가 일치하지 않습니다.</div>
-                    <label for="pwdCheck">비밀번호 확인</label>
+                    <label for="pwdCheck" class="oLabelColor">비밀번호 확인</label>
+
                 </div>
 
                 <div class="form-floating" align="left" style="font-size: 12px;";>
@@ -238,13 +280,24 @@
                                 <span class="mustch">[필수] </span>매물 관리 정책 동의
                             </div>
                         </li>
+                        <li class="oAgree-li">
+                            <div>
+                                <input type="checkbox" class="oAgree" name="agree">
+                                <span class="userch">[선택] </span>부동산정보 및 혜택 알리미
+                            </div>
+                        </li>
+                        <li class="oAgree-li">
+                            <div>
+                                <input type="checkbox" class="oAgree" name="agree">
+                                <span class="userch">[선택] </span>이메일 수신 동의(광고, 이벤트 등)
+                            </div>
+                        </li>
                     </ul>
                 </div>
 
                 <div id="oJoinBtn-container">
-                    <input type="button" class="btn btn-dark" id="oJoinCancelBtn"
-                           th:onclick="" value="취소" style="width:47%" />
-                    <input type="submit" class="btn btn-dark" value="회원가입" style="width:47%" />
+                    <input type="button" class="btn btn-dark" id="oJoinCancelBtn" value="취소" style="width:47%" />
+                    <input type="submit" class="btn btn-dark" id="oJoinBtn" value="회원가입" style="width:47%" />
                     <!-- th:onclick="|location.href='@{/member/qLoginForm}'|"-->
                 </div>
             </form>
