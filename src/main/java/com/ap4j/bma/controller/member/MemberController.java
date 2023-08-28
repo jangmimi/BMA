@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Slf4j
-//@SessionAttributes("loginMember")
+//@SessionAttributes("userEmail")
 @RequestMapping("/member")
 @Controller
 public class MemberController {
@@ -130,7 +130,7 @@ public class MemberController {
     /** 기본 로그인 */
     @PostMapping(value="/qLoginBasic")
     public String qBasicLogin(@ModelAttribute MemberDTO memberDTO, @RequestParam(required = false) boolean oSaveId,
-                              Model model, HttpSession session, HttpServletResponse response) { //BindingResult bindingResult
+                              Model model, HttpSession session, HttpServletResponse response) {
         log.info("MemberController - qBasicLogin() 실행");
         log.info("memberDTO : " + memberDTO);
 
@@ -145,11 +145,10 @@ public class MemberController {
 
             // 쿠키 설정
             if(oSaveId) {
-//                Cookie idCookie = new Cookie("userEmail",  String.valueOf(loginMember.getEmail()));
                 log.info("쿠키 생성중");
                 Cookie cookie = new Cookie("rememberedEmail", loginMember.getEmail());
                 cookie.setMaxAge(30 * 24 * 60 * 60);    // 30일 동안 유지
-                cookie.setPath("/");
+                cookie.setPath("/");                    // 모든 경로에 쿠키 설정
                 response.addCookie(cookie);
                 log.info("cookie : " + cookie);
             } else {
@@ -157,13 +156,10 @@ public class MemberController {
                 cookie.setMaxAge(0);
                 response.addCookie(cookie);
             }
-
             session.setAttribute("userEmail", userEmail);
-            session.setAttribute("userName", userName);
-            session.setAttribute("loginMember", loginMember);
 
             model.addAttribute("userEmail", userEmail);
-            model.addAttribute("userName",userName);
+            model.addAttribute("userName",loginMember.getName());
             model.addAttribute("loginMember",loginMember);
 
             log.info("loginMember : " + loginMember.toString());
@@ -173,7 +169,6 @@ public class MemberController {
             log.info("로그인 실패헀어요.");
             model.addAttribute("msg","로그인 실패");
             return "redirect:/member/qLoginForm";
-//            model.addAttribute("goURL","redirect:/member/qLoginForm");
         }
 /*        MemberEntity member = new MemberEntity();
         member.setEmail(memberDTO.getEmail());
@@ -322,12 +317,11 @@ public class MemberController {
     public String qMyInfoUpdate(HttpSession session, Model model) {
         log.info("MemberController - qMyInfoUpdate() 실행");
         String userEmail = (String) session.getAttribute("userEmail");
-        String userName = (String) session.getAttribute("userName");
-        model.addAttribute("userEmail",userEmail);
-        model.addAttribute("userName",userName);
 
         log.info("로그인중인 userEmail : " + userEmail);
         MemberEntity findmem = qMemberService.getMemberOne(userEmail);
+        model.addAttribute("userEmail",userEmail);
+        model.addAttribute("userName",findmem.getName());
         model.addAttribute("idx",findmem.getIdx());
         model.addAttribute("userNickname", findmem.getNickname());
         model.addAttribute("userTel", findmem.getTel());
