@@ -68,7 +68,7 @@ public class MemberController {
             kloginMember.setName((String) userInfo.get("nickname"));
 
             kloginMember = qMemberService.login(kloginMember);
-            return "redirect:/";
+            return "redirect:/member/qMyPage";
 
         } else {
             MemberEntity member = new MemberEntity();
@@ -331,16 +331,20 @@ public class MemberController {
 
     /** 내정보 수정하기 */
     @PostMapping(value="/qUpdateMember/{idx}")
-    public String qUpdate(@PathVariable Long idx, @ModelAttribute MemberEntity updatedMember, RedirectAttributes redirectAttributes) {
-//        updatedMember.setIdx(idx);
+    public String qUpdate(@PathVariable(required = false) Long idx, @ModelAttribute MemberEntity updatedMember, Model model) {
+        log.info("MemberController - qUpdate() 실행");
+        //        updatedMember.setIdx(idx);
 //        qMemberService.getMemberOne(idx);
         qMemberService.updateMember(idx, updatedMember);
         log.info("회원정보 수정 완료 (수정 후) : " + updatedMember);
+        model.addAttribute("member", updatedMember);
+        model.addAttribute("userName", updatedMember.getName());
+        model.addAttribute("userEmail", updatedMember.getEmail());
         return "redirect:/member/qMyPage";
     }
 
     /** 기본 회원탈퇴 */   // sns는 별도 처리 해줘야 함
-    @PutMapping("/qDeleteMember/{idx}")
+    @PostMapping("/qDeleteMember/{idx}")
     public String deleteMember(@PathVariable(required = false) Long idx, HttpSession session) {
         log.info("MemberController - deleteMember() 실행");
         qMemberService.deleteMemberByIdx(idx);  // idx 기준으로 회원탈퇴 처리

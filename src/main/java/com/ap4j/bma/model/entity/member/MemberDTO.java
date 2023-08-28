@@ -35,6 +35,12 @@ public class MemberDTO {	// 회원가입 폼 입력 정보 담는 DTO
 				.root(root)
 				.build();
 	}
+
+	@Builder
+	public MemberDTO(String name, String pwd) {
+		this.name = name;
+		this.pwd = pwd;
+	}
 }
 
 
