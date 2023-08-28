@@ -331,12 +331,14 @@ public class MemberController {
 
     /** 내정보 수정하기 */
     @PostMapping(value="/qUpdateMember/{idx}")
-    public String qUpdate(@PathVariable(required = false) Long idx, @ModelAttribute MemberEntity updatedMember, Model model) {
+    public String qUpdate(@PathVariable(required = false) Long idx, @ModelAttribute MemberEntity updatedMember, Model model, HttpSession session) {
         log.info("MemberController - qUpdate() 실행");
         //        updatedMember.setIdx(idx);
 //        qMemberService.getMemberOne(idx);
         qMemberService.updateMember(idx, updatedMember);
         log.info("회원정보 수정 완료 (수정 후) : " + updatedMember);
+        session.setAttribute("userName", updatedMember.getName());
+
         model.addAttribute("member", updatedMember);
         model.addAttribute("userName", updatedMember.getName());
         model.addAttribute("userEmail", updatedMember.getEmail());
