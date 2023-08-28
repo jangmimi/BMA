@@ -23,16 +23,16 @@
                     <ul class="o-lnb-list">
                         <li class="o-lnb-item"><a href="/member/qMyPage" style="color:#129DED;">내정보</a></li>
                         <li class="o-lnb-item"><a href="/member/qMyInfoUpdate">내정보수정</a></li>
-                        <li class="o-lnb-item"><a href="#">관심매물</a></li>
                         <li class="o-lnb-item"><a href="#">매물관리</a></li>
+                        <li class="o-lnb-item"><a href="#">관심매물</a></li>
                         <li class="o-lnb-item"><a href="#">최근본매물</a></li>
                         <li class="o-lnb-item"><a href="#">1:1문의내역</a></li>
                     </ul>
                 </div>
             </div>
             <div class="layout">
-                <div class="oInfo-top">
-                    <div class="oInfo-top-wrapper">
+                <div class="oInfo-top" style="display:inline-block;">
+                    <div class="oInfo-top-wrapper" style="display:flex;">
                         <div class="oInfo-left" style="display: flex;">
                             <input type="hidden" id="idx" name="idx" th:value="${idx}" />
                             <span th:text="${userName}" style="font-weight:bold; font-size:20px;"></span>님<br/>
@@ -44,15 +44,17 @@
                                 <a href="#"></a>
                             </div>
                             <div>
-                                <div class="oMaemulCnt">
+                                <div class="oMaemulCnt" style="float:right; width:200px;">
                                     <a href="#">1건</a>
                                     <span>관심매물</span>
                                 </div>
-                                <div class="oMaemulCnt">
+                                <div class="oMaemulCnt" style="float:right; width:200px;">
                                     <a href="#">2건</a>
                                     <span>최근 본 매물</span>
                                 </div>
-                                <a th:href="@{/member/qMyInfoUpdate}">내 정보 수정</a>
+                                <div style="float:right; width:20%;">
+                                    <a th:href="@{/member/qMyInfoUpdate}">내 정보 수정</a>
+                                </div>
                             </div>
                         </div>
                     </div>

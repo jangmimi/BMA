@@ -332,13 +332,15 @@ public class MemberController {
     /** 내정보 수정하기 */
     @PostMapping(value="/qUpdateMember/{idx}")
     public String qUpdate(@PathVariable Long idx, @ModelAttribute MemberEntity updatedMember, RedirectAttributes redirectAttributes) {
-        updatedMember.setIdx(idx);
+//        updatedMember.setIdx(idx);
+//        qMemberService.getMemberOne(idx);
         qMemberService.updateMember(idx, updatedMember);
+        log.info("회원정보 수정 완료 (수정 후) : " + updatedMember);
         return "redirect:/member/qMyPage";
     }
 
     /** 기본 회원탈퇴 */   // sns는 별도 처리 해줘야 함
-    @PostMapping("/qDeleteMember/{idx}")
+    @PutMapping("/qDeleteMember/{idx}")
     public String deleteMember(@PathVariable(required = false) Long idx, HttpSession session) {
         log.info("MemberController - deleteMember() 실행");
         qMemberService.deleteMemberByIdx(idx);  // idx 기준으로 회원탈퇴 처리

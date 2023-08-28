@@ -341,24 +341,6 @@ public class MemberServiceImpl implements MemberService {
 //        return memberRepository.findByEmail(loginEmail);
 //    }
 
-	/** 회원가입 유효성 검사 */
-	@Override
-	public Map<String, String> validateHandler(Errors errors) {
-		Map<String, String> validatorResult = new HashMap<>();
-
-		for(FieldError error : errors.getFieldErrors()) {
-			String validKeyName = String .format("valid_%s", error.getField());
-			validatorResult.put(validKeyName, error.getDefaultMessage());
-		}
-		return validatorResult;
-	}
-
-	/** 회원 탈퇴 테스트 */
-	@Override
-	public void deleteMember(MemberEntity memberEntity) {
-		memberRepository.delete(memberEntity);
-	}
-
 	/** 회원 탈퇴 */
 	public void deleteMemberByIdx(Long idx) {
 		memberRepository.deleteById(idx);
@@ -374,12 +356,14 @@ public class MemberServiceImpl implements MemberService {
 
 
 	/** 회원정보 수정 */
-	@Transactional
+//	@Transactional
 	@Override
 	public MemberEntity updateMember(Long idx, MemberEntity updatedMember) {
 		log.info("서비스 updateMember() 실행");
-		MemberEntity member = memberRepository.findByEmail(updatedMember.getEmail()).orElse(null);
+		log.info("updatedMember : " + updatedMember);
 
+		MemberEntity member = memberRepository.findByEmail(updatedMember.getEmail()).orElse(null);
+		log.info("조회된 member : " + member);
 		if(member != null) {
 			member.setName(updatedMember.getName());
 			return memberRepository.save(member);
@@ -392,6 +376,18 @@ public class MemberServiceImpl implements MemberService {
 
 	}
 
+
+	/** 회원가입 유효성 검사 */
+//	@Override
+//	public Map<String, String> validateHandler(Errors errors) {
+//		Map<String, String> validatorResult = new HashMap<>();
+//
+//		for(FieldError error : errors.getFieldErrors()) {
+//			String validKeyName = String .format("valid_%s", error.getField());
+//			validatorResult.put(validKeyName, error.getDefaultMessage());
+//		}
+//		return validatorResult;
+//	}
 
 	// 아래는 예시 코드입니다.
 //	@Override

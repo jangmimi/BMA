@@ -30,11 +30,9 @@ public interface MemberService {
 	public MemberDTO login(MemberDTO memberDTO);
 //	public MemberEntity login(String loginEmail);
 
-    Map<String, String> validateHandler(Errors errors);
+//    Map<String, String> validateHandler(Errors errors);
 
 //	public boolean deleteByIdx(Long idx);
-
-	public void deleteMember(MemberEntity memberEntity);
 
 	public void deleteMemberByIdx(Long idx);
 
