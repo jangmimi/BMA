@@ -1,7 +1,11 @@
 package com.ap4j.bma.controller.chat;
 
 import com.ap4j.bma.model.entity.chat.ChatMessage;
+import com.ap4j.bma.service.chat.ChatService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
@@ -16,14 +20,15 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
+
+@RequiredArgsConstructor
 @Controller
 public class ChatController {
 
-    private final SimpMessagingTemplate messagingTemplate;
-
-    public ChatController(SimpMessagingTemplate messagingTemplate) {
-        this.messagingTemplate = messagingTemplate;
-    }
+    private final ChatService chatService;
 
     private int connectedClients = 0; // 연결된 클라이언트 수
 
@@ -32,25 +37,23 @@ public class ChatController {
         return "/chat/chat";
     }
 
-    @MessageMapping("/chatting")
+    //클라이언트단에서 MessageMapping 주소로 컨트롤러로 보냄
+    //controller메서드로 message다듬고
+    //SendTo 주소로 클라이언트로 보낸다
+    @MessageMapping("/sendMessage")
     @SendTo("/topic/messages")
     public ChatMessage sendMessage(ChatMessage chatMessage) {
-        System.out.println(chatMessage);
-        chatMessage.setClientId(chatMessage.getClientId());
-        messagingTemplate.convertAndSend("/topic/connectedClients", connectedClients);
+        System.out.println("controller테스트"+chatMessage);
+        chatMessage.setChatClientId(chatMessage.getChatClientId());
+        chatService.saveMessage(chatMessage);
         return chatMessage;
     }
 
-    @EventListener
-    public void handleWebSocketConnectListener(SessionConnectedEvent event) {
-        connectedClients++;
-        messagingTemplate.convertAndSend("/topic/connectedClients", connectedClients);
+    @MessageMapping("/dbMessages")
+    @SendTo("/topic/dbMessages")
+    public List showMessages(ChatMessage chatMessage){
+        return chatService.showMessages(chatMessage);
     }
 
-    @EventListener
-    public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
-        connectedClients--;
-        messagingTemplate.convertAndSend("/topic/connectedClients", connectedClients);
-    }
 
 }
