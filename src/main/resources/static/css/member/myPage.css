@@ -1,0 +1,83 @@
+.n-header-list {
+    margin: 16px 0px;
+    padding: 0px 0px 0px 40px;
+}
+.o-lnb {
+    min-width: 1000px;
+    height: 50px;
+    background-color: #ededed;
+}
+#o-container { height: auto; }
+.o-wrapper {
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    width: 1000px;
+}
+.o-lnb-list {
+    font-family: 'Noto Sans KR', sans-serif;
+    height: 50px;
+    float: left;
+    display: flex;
+    padding-left: 20px;
+    line-height: 1;
+    list-style: none;
+    margin: 0;
+/*    padding: 0;*/
+}
+.o-lnb-item {
+    position: relative;
+    display: inline-flex;
+    margin-right: 15px;
+    align-items: center;
+}
+.o-lnb-item a {
+    font-weight: bold;
+    color: #7790ad;
+    font-size: 13px;
+    text-decoration-line: none;
+}
+.oInfo-top {
+    padding: 30px 0;
+}
+.oMaemulCnt {
+    background-color: red;
+    width: 150px;
+    height: 100px;
+    border: 1px solid gray;
+}
+
+/*oMyInfoUpdate css*/
+.form-floating {
+   width: 350px;
+}
+#oJoinBtn-container {
+   display: flex;
+   justify-content: space-evenly;
+}
+#oInner-container-join {
+   width: 400px;
+   height: auto;
+}
+#oJoinTitle {
+   padding: 20px 50px;
+   margin: 0px;
+}
+#btnEmailCheck {
+   width: 90px;
+   margin-left: 6px;
+}
+.oAgree {
+   margin-right: 5px;
+}
+.oAgree-li {
+   margin: 10px;
+}
+.mustch {
+   font-weight: 500;
+   color: #129DED;
+}
+.userch {
+   font-weight: 500;
+   color: gray;
+}

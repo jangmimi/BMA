@@ -23,19 +23,19 @@ public interface MemberService {
 	public Long joinBasic(MemberEntity pMember);
 
 	public boolean existsByEmail(String email);
-//	public void validateDuplicateMember(MemberEntity pMember);
 
 	public List<MemberEntity> findMembers();
 
 	public MemberDTO login(MemberDTO memberDTO);
 //	public MemberEntity login(String loginEmail);
 
-    Map<String, String> validateHandler(Errors errors);
+	public void deleteMemberByIdx(Long idx);
 
-	public boolean deleteByIdx(Long idx);
+	public MemberEntity getMemberOne(String email);
 
-	public void deleteMember(MemberEntity memberEntity);
-
-//	public Long updateMember(final Long idx, final MemberDTO memberDTO);
+	public MemberEntity updateMember(Long idx, MemberEntity updatedMember);
 
 }
+
+//    Map<String, String> validateHandler(Errors errors);
+//	public void validateDuplicateMember(MemberEntity pMember);

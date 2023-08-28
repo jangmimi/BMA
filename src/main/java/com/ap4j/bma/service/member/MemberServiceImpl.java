@@ -7,6 +7,7 @@ import com.ap4j.bma.model.repository.MemberRepository;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import groovy.transform.Undefined;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 
+import javax.persistence.EntityNotFoundException;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
@@ -88,6 +90,7 @@ public class MemberServiceImpl implements MemberService {
 		}
 		return accessToken;
 	}
+
 //	public MemberDTO getUserInfo2(String accessToken) {
 //		MemberDTO dto = new MemberDTO();
 //		String reqUrl = "https://kapi.kakao.com/v2/user/me";
@@ -314,13 +317,13 @@ public class MemberServiceImpl implements MemberService {
 			log.info("로그인 시도하는 email DB에 존재!");
 			MemberEntity memberEntity = findMember.get();
 			if(pwdConfig.passwordEncoder().matches(memberDTO.getPwd(),memberEntity.getPwd())) {
-//			if(memberEntity.getPwd().equals(memberDTO.getPwd())) {
 				log.info("id pw 모두 일치! 로그인 성공!");
 				// entity->dto로 변환
 				MemberDTO dto = new MemberDTO();
 				dto.setEmail(memberEntity.getEmail());
 				dto.setName(memberEntity.getName());
 				dto.setPwd(memberEntity.getPwd());
+
 				return dto;
 
 			} else { log.info("id일치, pw 불일치합니다."); }
@@ -339,41 +342,59 @@ public class MemberServiceImpl implements MemberService {
 //        return memberRepository.findByEmail(loginEmail);
 //    }
 
-	/** 회원가입 유효성 검사 */
-	@Override
-	public Map<String, String> validateHandler(Errors errors) {
-		Map<String, String> validatorResult = new HashMap<>();
-
-		for(FieldError error : errors.getFieldErrors()) {
-			String validKeyName = String .format("valid_%s", error.getField());
-			validatorResult.put(validKeyName, error.getDefaultMessage());
-		}
-		return validatorResult;
-	}
-
 	/** 회원 탈퇴 */
-	@Override
-	public boolean deleteByIdx(Long idx) {
-		return memberRepository.deleteByIdx(idx);
+	public void deleteMemberByIdx(Long idx) {
+		memberRepository.deleteById(idx);
+//		memberRepository.delete(findMember);
 	}
 
-	/** 회원 탈퇴 테스트 */
-	@Override
-	public void deleteMember(MemberEntity memberEntity) {
-		memberRepository.delete(memberEntity);
+	/** 회원 한명 찾기 */
+	public MemberEntity getMemberOne(String email) {
+		log.info("서비스 getMemberOne() 실행");
+		Optional<MemberEntity> findMember = memberRepository.findByEmail(email);
+		return findMember.orElse(null);
 	}
 
 
 	/** 회원정보 수정 */
-//	@Override
-//	public MemberDTO updateMember(String userId) {
-//		log.info("서비스 updateMember() 실행");
+	@Transactional
+	@Override
+	public MemberEntity updateMember(Long idx, MemberEntity updatedMember) {
+		log.info("서비스 updateMember() 실행");
+		log.info("updatedMember : " + updatedMember);
+
+		Optional<MemberEntity> member = memberRepository.findById(updatedMember.getIdx());
+		log.info("조회된 member : " + member);
+
+		if(member.isPresent()) {
+			MemberEntity memberEntity = member.get();
+			memberEntity.setName(updatedMember.getName());
+			memberEntity.setNickname(updatedMember.getNickname());
+//			memberEntity.setPwd(pwdConfig.passwordEncoder().encode(updatedMember.getPwd()));
+
+			log.info("수정된 정보 : " + memberEntity);
+			return memberRepository.save(memberEntity);
+		} else {
+			return null;
+		}
 //		Optional<MemberEntity> optionalMemberEntity = memberRepository.findByEmail(idx).orElseThrow(Undefined.EXCEPTION::new);
 //		entity.update(memberDTO.getName());
 //		return idx;
-//
-//	}
 
+	}
+
+
+	/** 회원가입 유효성 검사 */
+//	@Override
+//	public Map<String, String> validateHandler(Errors errors) {
+//		Map<String, String> validatorResult = new HashMap<>();
+//
+//		for(FieldError error : errors.getFieldErrors()) {
+//			String validKeyName = String .format("valid_%s", error.getField());
+//			validatorResult.put(validKeyName, error.getDefaultMessage());
+//		}
+//		return validatorResult;
+//	}
 
 	// 아래는 예시 코드입니다.
 //	@Override

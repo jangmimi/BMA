@@ -51,23 +51,33 @@
 
                 <div class="tab-content" id="myTabContent" style="height: 100%;">
                     <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab"
-                         tabindex="0" style="height: 100%;">
+                         tabindex="0" style="height: 93%;">
                         <!-- 최신순, 가격순, 면적순, 사진 많은 순 시작 -->
-                        <ul class="nav">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">최신순</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">가격순</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">면적순</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">사진많은순</a>
-                            </li>
+                        <ul class="nav aAPTListTab">
+                            <div style="display:flex;">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#">최신순</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">가격순</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">면적순</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">사진많은순</a>
+                                </li>
+                            </div>
+                            <div class="aHeartBtnInTab">
+                                <button class="aHeartBtn">
+                                    <img style="width:15px;margin-bottom:2px;"src="/img/mapDetailAndAPTList/aHeartBtn.png">
+                                </button>
+                                <a href="javascript:goMyFavority();"><span class="txt" id="rFavorityCount">0</span></a>
+                            </div>
                         </ul>
+
                         <!-- 최신순, 가격순, 면적순, 사진 많은 순 끝 -->
+
                         <div style="height: 100%;">
                             <div
                                     data-bs-spy="scroll"
@@ -115,13 +125,11 @@
                                                     </div>
                                                 </div>
                                             </a>
-                                            <a href="javascript:void(0);"
-                                               onclick="javascript:fnFavorityCheck(this ,'RAD_20230822163743000003');"
-                                               class="fav ui_heart ">
-                                                        <span>
-
-                                                        </span>
-                                            </a>
+                                            <div class="aHeartBtnInList">
+                                                <button class="aHeartBtn">
+                                                    <img style="width:15px;margin-bottom:2px;"src="/img/mapDetailAndAPTList/aHeartBtn.png">
+                                                </button>
+                                            </div>
                                         </li>
                                         <li class="list-group-item a" style="">
                                             <a href="" class="abox" target="">
@@ -158,13 +166,11 @@
                                                     </div>
                                                 </div>
                                             </a>
-                                            <a href="javascript:void(0);"
-                                               onclick="javascript:fnFavorityCheck(this ,'RAD_20230822163743000003');"
-                                               class="fav ui_heart ">
-                                                        <span>
-
-                                                        </span>
-                                            </a>
+                                            <div class="aHeartBtnInList">
+                                                <button class="aHeartBtn">
+                                                    <img style="width:15px;margin-bottom:2px;"src="/img/mapDetailAndAPTList/aHeartBtn.png">
+                                                </button>
+                                            </div>
                                         </li>
                                         <li class="list-group-item a" style="">
                                             <a href="" class="abox" target="">
@@ -201,13 +207,11 @@
                                                     </div>
                                                 </div>
                                             </a>
-                                            <a href="javascript:void(0);"
-                                               onclick="javascript:fnFavorityCheck(this ,'RAD_20230822163743000003');"
-                                               class="fav ui_heart ">
-                                                        <span>
-
-                                                        </span>
-                                            </a>
+                                            <div class="aHeartBtnInList">
+                                                <button class="aHeartBtn">
+                                                    <img style="width:15px;margin-bottom:2px;"src="/img/mapDetailAndAPTList/aHeartBtn.png">
+                                                </button>
+                                            </div>
                                         </li>
                                         <li class="list-group-item a" style="">
                                             <a href="" class="abox" target="">
@@ -244,13 +248,11 @@
                                                     </div>
                                                 </div>
                                             </a>
-                                            <a href="javascript:void(0);"
-                                               onclick="javascript:fnFavorityCheck(this ,'RAD_20230822163743000003');"
-                                               class="fav ui_heart ">
-                                                        <span>
-
-                                                        </span>
-                                            </a>
+                                            <div class="aHeartBtnInList">
+                                                <button class="aHeartBtn">
+                                                    <img style="width:15px;margin-bottom:2px;"src="/img/mapDetailAndAPTList/aHeartBtn.png">
+                                                </button>
+                                            </div>
                                         </li>
                                         <li class="list-group-item a" style="">
                                             <a href="" class="abox" target="">
@@ -287,13 +289,11 @@
                                                     </div>
                                                 </div>
                                             </a>
-                                            <a href="javascript:void(0);"
-                                               onclick="javascript:fnFavorityCheck(this ,'RAD_20230822163743000003');"
-                                               class="fav ui_heart ">
-                                                        <span>
-
-                                                        </span>
-                                            </a>
+                                            <div class="aHeartBtnInList">
+                                                <button class="aHeartBtn">
+                                                    <img style="width:15px;margin-bottom:2px;"src="/img/mapDetailAndAPTList/aHeartBtn.png">
+                                                </button>
+                                            </div>
                                         </li>
                                         <li class="list-group-item a" style="">
                                             <a href="" class="abox" target="">
@@ -330,13 +330,11 @@
                                                     </div>
                                                 </div>
                                             </a>
-                                            <a href="javascript:void(0);"
-                                               onclick="javascript:fnFavorityCheck(this ,'RAD_20230822163743000003');"
-                                               class="fav ui_heart ">
-                                                        <span>
-
-                                                        </span>
-                                            </a>
+                                            <div class="aHeartBtnInList">
+                                                <button class="aHeartBtn">
+                                                    <img style="width:15px;margin-bottom:2px;"src="/img/mapDetailAndAPTList/aHeartBtn.png">
+                                                </button>
+                                            </div>
                                         </li>
                                         <li class="list-group-item a" style="">
                                             <a href="" class="abox" target="">
@@ -373,13 +371,11 @@
                                                     </div>
                                                 </div>
                                             </a>
-                                            <a href="javascript:void(0);"
-                                               onclick="javascript:fnFavorityCheck(this ,'RAD_20230822163743000003');"
-                                               class="fav ui_heart ">
-                                                        <span>
-
-                                                        </span>
-                                            </a>
+                                            <div class="aHeartBtnInList">
+                                                <button class="aHeartBtn">
+                                                    <img style="width:15px;margin-bottom:2px;"src="/img/mapDetailAndAPTList/aHeartBtn.png">
+                                                </button>
+                                            </div>
                                         </li>
                                         <li class="list-group-item a" style="">
                                             <a href="" class="abox" target="">
@@ -416,14 +412,300 @@
                                                     </div>
                                                 </div>
                                             </a>
-                                            <a href="javascript:void(0);"
-                                               onclick="javascript:fnFavorityCheck(this ,'RAD_20230822163743000003');"
-                                               class="fav ui_heart ">
-                                                        <span>
+                                            <div class="aHeartBtnInList">
+                                                <button class="aHeartBtn">
+                                                    <img style="width:15px;margin-bottom:2px;"src="/img/mapDetailAndAPTList/aHeartBtn.png">
+                                                </button>
+                                            </div>
+                                        </li><li class="list-group-item a" style="">
+                                        <a href="" class="abox" target="">
+                                            <div class="aimg_area">
+                                                <div class="athumb">
+                                                    <img src="https://www.bdsplanet.com/common/thumbs.ytp?filepath=/COMP_20190619150536000003/upload/realty/RCODE_20230822163534000002/&amp;filename=1692689858337_106.jpg"
+                                                         alt="">
+                                                </div>
 
-                                                        </span>
+                                            </div>
+                                            <div class="ainfo_area">
+                                                <div class="in">
+                                                    <h5 class="ii loc_title">
+                                                        <span class="pay f_num_b">전세 1억 4,000만</span>
+                                                    </h5>
+                                                    <div class="ii loc_ii01">
+                                                        <span class="type">아파트</span>
+                                                        <span class="loc">백천동 부영초록마을 110동</span>
+                                                    </div>
+                                                    <div class="ii etc_txt">
+                                                        <span class="txt01">106.39/84.98㎡</span>
+                                                        <span class="txt01">15/15층</span>
+                                                        <span class="txt01">방3/욕실2
+
+                                                                    </span>
+                                                    </div>
+                                                    <div class="ii etc_info">
+                                                        <span class="txt01">이사바로 ㅣ 탑층 ㅣ 층간소음 뚝</span>
+                                                    </div>
+                                                </div>
+                                                <div class="bd_hashtag">
+                                                    <span class="ht">#관리비 저렴</span>
+                                                    <span class="ht">#주차시설 좋음</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <div class="aHeartBtnInList">
+                                            <button class="aHeartBtn">
+                                                <img style="width:15px;margin-bottom:2px;"src="/img/mapDetailAndAPTList/aHeartBtn.png">
+                                            </button>
+                                        </div>
+                                    </li>
+                                        <li class="list-group-item a" style="">
+                                            <a href="" class="abox" target="">
+                                                <div class="aimg_area">
+                                                    <div class="athumb">
+                                                        <img src="https://www.bdsplanet.com/common/thumbs.ytp?filepath=/COMP_20190619150536000003/upload/realty/RCODE_20230822163534000002/&amp;filename=1692689858337_106.jpg"
+                                                             alt="">
+                                                    </div>
+
+                                                </div>
+                                                <div class="ainfo_area">
+                                                    <div class="in">
+                                                        <h5 class="ii loc_title">
+                                                            <span class="pay f_num_b">전세 1억 4,000만</span>
+                                                        </h5>
+                                                        <div class="ii loc_ii01">
+                                                            <span class="type">아파트</span>
+                                                            <span class="loc">백천동 부영초록마을 110동</span>
+                                                        </div>
+                                                        <div class="ii etc_txt">
+                                                            <span class="txt01">106.39/84.98㎡</span>
+                                                            <span class="txt01">15/15층</span>
+                                                            <span class="txt01">방3/욕실2
+
+                                                                    </span>
+                                                        </div>
+                                                        <div class="ii etc_info">
+                                                            <span class="txt01">이사바로 ㅣ 탑층 ㅣ 층간소음 뚝</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="bd_hashtag">
+                                                        <span class="ht">#관리비 저렴</span>
+                                                        <span class="ht">#주차시설 좋음</span>
+                                                    </div>
+                                                </div>
                                             </a>
+                                            <div class="aHeartBtnInList">
+                                                <button class="aHeartBtn">
+                                                    <img style="width:15px;margin-bottom:2px;"src="/img/mapDetailAndAPTList/aHeartBtn.png">
+                                                </button>
+                                            </div>
                                         </li>
+                                        <li class="list-group-item a" style="">
+                                            <a href="" class="abox" target="">
+                                                <div class="aimg_area">
+                                                    <div class="athumb">
+                                                        <img src="https://www.bdsplanet.com/common/thumbs.ytp?filepath=/COMP_20190619150536000003/upload/realty/RCODE_20230822163534000002/&amp;filename=1692689858337_106.jpg"
+                                                             alt="">
+                                                    </div>
+
+                                                </div>
+                                                <div class="ainfo_area">
+                                                    <div class="in">
+                                                        <h5 class="ii loc_title">
+                                                            <span class="pay f_num_b">전세 1억 4,000만</span>
+                                                        </h5>
+                                                        <div class="ii loc_ii01">
+                                                            <span class="type">아파트</span>
+                                                            <span class="loc">백천동 부영초록마을 110동</span>
+                                                        </div>
+                                                        <div class="ii etc_txt">
+                                                            <span class="txt01">106.39/84.98㎡</span>
+                                                            <span class="txt01">15/15층</span>
+                                                            <span class="txt01">방3/욕실2
+
+                                                                    </span>
+                                                        </div>
+                                                        <div class="ii etc_info">
+                                                            <span class="txt01">이사바로 ㅣ 탑층 ㅣ 층간소음 뚝</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="bd_hashtag">
+                                                        <span class="ht">#관리비 저렴</span>
+                                                        <span class="ht">#주차시설 좋음</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <div class="aHeartBtnInList">
+                                                <button class="aHeartBtn">
+                                                    <img style="width:15px;margin-bottom:2px;"src="/img/mapDetailAndAPTList/aHeartBtn.png">
+                                                </button>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item a" style="">
+                                            <a href="" class="abox" target="">
+                                                <div class="aimg_area">
+                                                    <div class="athumb">
+                                                        <img src="https://www.bdsplanet.com/common/thumbs.ytp?filepath=/COMP_20190619150536000003/upload/realty/RCODE_20230822163534000002/&amp;filename=1692689858337_106.jpg"
+                                                             alt="">
+                                                    </div>
+
+                                                </div>
+                                                <div class="ainfo_area">
+                                                    <div class="in">
+                                                        <h5 class="ii loc_title">
+                                                            <span class="pay f_num_b">전세 1억 4,000만</span>
+                                                        </h5>
+                                                        <div class="ii loc_ii01">
+                                                            <span class="type">아파트</span>
+                                                            <span class="loc">백천동 부영초록마을 110동</span>
+                                                        </div>
+                                                        <div class="ii etc_txt">
+                                                            <span class="txt01">106.39/84.98㎡</span>
+                                                            <span class="txt01">15/15층</span>
+                                                            <span class="txt01">방3/욕실2
+
+                                                                    </span>
+                                                        </div>
+                                                        <div class="ii etc_info">
+                                                            <span class="txt01">이사바로 ㅣ 탑층 ㅣ 층간소음 뚝</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="bd_hashtag">
+                                                        <span class="ht">#관리비 저렴</span>
+                                                        <span class="ht">#주차시설 좋음</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <div class="aHeartBtnInList">
+                                                <button class="aHeartBtn">
+                                                    <img style="width:15px;margin-bottom:2px;"src="/img/mapDetailAndAPTList/aHeartBtn.png">
+                                                </button>
+                                            </div>
+                                        </li><li class="list-group-item a" style="">
+                                        <a href="" class="abox" target="">
+                                            <div class="aimg_area">
+                                                <div class="athumb">
+                                                    <img src="https://www.bdsplanet.com/common/thumbs.ytp?filepath=/COMP_20190619150536000003/upload/realty/RCODE_20230822163534000002/&amp;filename=1692689858337_106.jpg"
+                                                         alt="">
+                                                </div>
+
+                                            </div>
+                                            <div class="ainfo_area">
+                                                <div class="in">
+                                                    <h5 class="ii loc_title">
+                                                        <span class="pay f_num_b">전세 1억 4,000만</span>
+                                                    </h5>
+                                                    <div class="ii loc_ii01">
+                                                        <span class="type">아파트</span>
+                                                        <span class="loc">백천동 부영초록마을 110동</span>
+                                                    </div>
+                                                    <div class="ii etc_txt">
+                                                        <span class="txt01">106.39/84.98㎡</span>
+                                                        <span class="txt01">15/15층</span>
+                                                        <span class="txt01">방3/욕실2
+
+                                                                    </span>
+                                                    </div>
+                                                    <div class="ii etc_info">
+                                                        <span class="txt01">이사바로 ㅣ 탑층 ㅣ 층간소음 뚝</span>
+                                                    </div>
+                                                </div>
+                                                <div class="bd_hashtag">
+                                                    <span class="ht">#관리비 저렴</span>
+                                                    <span class="ht">#주차시설 좋음</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <div class="aHeartBtnInList">
+                                            <button class="aHeartBtn">
+                                                <img style="width:15px;margin-bottom:2px;"src="/img/mapDetailAndAPTList/aHeartBtn.png">
+                                            </button>
+                                        </div>
+                                    </li><li class="list-group-item a" style="">
+                                        <a href="" class="abox" target="">
+                                            <div class="aimg_area">
+                                                <div class="athumb">
+                                                    <img src="https://www.bdsplanet.com/common/thumbs.ytp?filepath=/COMP_20190619150536000003/upload/realty/RCODE_20230822163534000002/&amp;filename=1692689858337_106.jpg"
+                                                         alt="">
+                                                </div>
+
+                                            </div>
+                                            <div class="ainfo_area">
+                                                <div class="in">
+                                                    <h5 class="ii loc_title">
+                                                        <span class="pay f_num_b">전세 1억 4,000만</span>
+                                                    </h5>
+                                                    <div class="ii loc_ii01">
+                                                        <span class="type">아파트</span>
+                                                        <span class="loc">백천동 부영초록마을 110동</span>
+                                                    </div>
+                                                    <div class="ii etc_txt">
+                                                        <span class="txt01">106.39/84.98㎡</span>
+                                                        <span class="txt01">15/15층</span>
+                                                        <span class="txt01">방3/욕실2
+
+                                                                    </span>
+                                                    </div>
+                                                    <div class="ii etc_info">
+                                                        <span class="txt01">이사바로 ㅣ 탑층 ㅣ 층간소음 뚝</span>
+                                                    </div>
+                                                </div>
+                                                <div class="bd_hashtag">
+                                                    <span class="ht">#관리비 저렴</span>
+                                                    <span class="ht">#주차시설 좋음</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <div class="aHeartBtnInList">
+                                            <button class="aHeartBtn">
+                                                <img style="width:15px;margin-bottom:2px;"src="/img/mapDetailAndAPTList/aHeartBtn.png">
+                                            </button>
+                                        </div>
+                                    </li><li class="list-group-item a" style="">
+                                        <a href="" class="abox" target="">
+                                            <div class="aimg_area">
+                                                <div class="athumb">
+                                                    <img src="https://www.bdsplanet.com/common/thumbs.ytp?filepath=/COMP_20190619150536000003/upload/realty/RCODE_20230822163534000002/&amp;filename=1692689858337_106.jpg"
+                                                         alt="">
+                                                </div>
+
+                                            </div>
+                                            <div class="ainfo_area">
+                                                <div class="in">
+                                                    <h5 class="ii loc_title">
+                                                        <span class="pay f_num_b">전세 1억 4,000만</span>
+                                                    </h5>
+                                                    <div class="ii loc_ii01">
+                                                        <span class="type">아파트</span>
+                                                        <span class="loc">백천동 부영초록마을 110동</span>
+                                                    </div>
+                                                    <div class="ii etc_txt">
+                                                        <span class="txt01">106.39/84.98㎡</span>
+                                                        <span class="txt01">15/15층</span>
+                                                        <span class="txt01">방3/욕실2
+
+                                                                    </span>
+                                                    </div>
+                                                    <div class="ii etc_info">
+                                                        <span class="txt01">이사바로 ㅣ 탑층 ㅣ 층간소음 뚝</span>
+                                                    </div>
+                                                </div>
+                                                <div class="bd_hashtag">
+                                                    <span class="ht">#관리비 저렴</span>
+                                                    <span class="ht">#주차시설 좋음</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <div class="aHeartBtnInList">
+                                            <button class="aHeartBtn">
+                                                <img style="width:15px;margin-bottom:2px;"src="/img/mapDetailAndAPTList/aHeartBtn.png">
+                                            </button>
+                                        </div>
+                                    </li>
+
+
+
+
+
 
                                     </ul>
 
@@ -781,7 +1063,7 @@
 
             <div class="alOrB">
                 <button class="btn btn-primary living on"><span>주거용</span></button>
-                    <button class="btn btn-primary commercial"><span>상업용</span></button>
+                <button class="btn btn-primary commercial"><span>상업용</span></button>
             </div>
 
 
@@ -1331,7 +1613,7 @@
                 <!-- 옵션 -->
                 <div class="dropdown-center">
                     <button class="btn btn-outline-primary filter" type="button" data-bs-toggle="dropdown"
-                            aria-expanded="false" >
+                            aria-expanded="false">
                         옵션
                     </button>
 
@@ -1436,100 +1718,119 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="tcon pl ch">
-                                    <div class="top">
-                                        <strong class="tit">층수</strong>
-                                    </div>
-                                    <div class="tbody">
-                                        <ul class="aFloorList" id="floorCountUL" style="padding-left: 0px;">
-                                            <div>
-                                                <li>
-                                                    <div class="dg_checkbox blue"><input type="checkbox"
-                                                                                         id="searchFloorCountAll"
-                                                                                         name="searchFloorCountAll"
-                                                                                         value=""> <label
-                                                            for="searchFloorCountAll"><span class="check"></span><span
-                                                            class="txt">전체</span></label></div>
-                                                </li>
-                                                <li>
-                                                    <div class="dg_checkbox blue"><input type="checkbox"
-                                                                                         id="maesearchFloorCount_C00W21"
-                                                                                         value="C00W21"
-                                                                                         name="searchFloorCount"> <label
-                                                            for="maesearchFloorCount_C00W21"> <span
-                                                            class="check"></span><span class="txt">지하층</span> </label>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="dg_checkbox blue"><input type="checkbox"
-                                                                                         id="maesearchFloorCount_C00W22"
-                                                                                         value="C00W22"
-                                                                                         name="searchFloorCount"> <label
-                                                            for="maesearchFloorCount_C00W22"> <span
-                                                            class="check"></span><span class="txt">지하1층</span> </label>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="dg_checkbox blue"><input type="checkbox"
-                                                                                         id="maesearchFloorCount_C00W23"
-                                                                                         value="C00W23"
-                                                                                         name="searchFloorCount"> <label
-                                                            for="maesearchFloorCount_C00W23"> <span
-                                                            class="check"></span><span class="txt">1층</span> </label>
-                                                    </div>
-                                                </li>
-                                                <li class="full">
-                                                    <div class="dg_checkbox blue"><input type="checkbox"
-                                                                                         id="maesearchFloorCount_C00W24"
-                                                                                         value="C00W24"
-                                                                                         name="searchFloorCount"> <label
-                                                            for="maesearchFloorCount_C00W24"> <span
-                                                            class="check"></span><span class="txt">2~5층</span> </label>
-                                                    </div>
-                                                </li>
-                                            </div>
-                                            <div>
-                                                <li class="full">
-                                                    <div class="dg_checkbox blue"><input type="checkbox"
-                                                                                         id="maesearchFloorCount_C00W25"
-                                                                                         value="C00W25"
-                                                                                         name="searchFloorCount"> <label
-                                                            for="maesearchFloorCount_C00W25"> <span
-                                                            class="check"></span><span class="txt">6~10층</span> </label>
-                                                    </div>
-                                                </li>
-                                                <li class="full">
-                                                    <div class="dg_checkbox blue"><input type="checkbox"
-                                                                                         id="maesearchFloorCount_C00W26"
-                                                                                         value="C00W26"
-                                                                                         name="searchFloorCount"> <label
-                                                            for="maesearchFloorCount_C00W26"> <span
-                                                            class="check"></span><span class="txt">10층이상</span> </label>
-                                                    </div>
-                                                </li>
-                                                <li class="full">
-                                                    <div class="dg_checkbox blue"><input type="checkbox"
-                                                                                         id="maesearchFloorCount_C00W27"
-                                                                                         value="C00W27"
-                                                                                         name="searchFloorCount"> <label
-                                                            for="maesearchFloorCount_C00W27"> <span
-                                                            class="check"></span><span class="txt">20층이상</span> </label>
-                                                    </div>
-                                                </li>
-                                                <li class="full">
-                                                    <div class="dg_checkbox blue"><input type="checkbox"
-                                                                                         id="maesearchFloorCount_C00W28"
-                                                                                         value="C00W28"
-                                                                                         name="searchFloorCount"> <label
-                                                            for="maesearchFloorCount_C00W28"> <span
-                                                            class="check"></span><span class="txt">옥탑방</span> </label>
-                                                    </div>
-                                                </li>
-                                            </div>
-                                        </ul>
+                                <div class="aFloorCountListAll">
+                                    <div style="padding: 0px 10px 0px 10px;">
+                                        <div class="top">
+                                            <strong class="tit">층수</strong>
+                                        </div>
+                                        <div class="tbody">
+                                            <ul class="aFloorList" id="floorCountUL" style="padding-left: 0px;">
+                                                <div>
+                                                    <li>
+                                                        <div class="dg_checkbox blue"><input type="checkbox"
+                                                                                             id="searchFloorCountAll"
+                                                                                             name="searchFloorCountAll"
+                                                                                             value=""> <label
+                                                                for="searchFloorCountAll"><span
+                                                                class="check"></span><span
+                                                                class="txt">전체</span></label></div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="dg_checkbox blue"><input type="checkbox"
+                                                                                             id="maesearchFloorCount_C00W21"
+                                                                                             value="C00W21"
+                                                                                             name="searchFloorCount">
+                                                            <label
+                                                                    for="maesearchFloorCount_C00W21"> <span
+                                                                    class="check"></span><span class="txt">지하층</span>
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="dg_checkbox blue"><input type="checkbox"
+                                                                                             id="maesearchFloorCount_C00W22"
+                                                                                             value="C00W22"
+                                                                                             name="searchFloorCount">
+                                                            <label
+                                                                    for="maesearchFloorCount_C00W22"> <span
+                                                                    class="check"></span><span class="txt">지하1층</span>
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="dg_checkbox blue"><input type="checkbox"
+                                                                                             id="maesearchFloorCount_C00W23"
+                                                                                             value="C00W23"
+                                                                                             name="searchFloorCount">
+                                                            <label
+                                                                    for="maesearchFloorCount_C00W23"> <span
+                                                                    class="check"></span><span class="txt">1층</span>
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                    <li class="full">
+                                                        <div class="dg_checkbox blue"><input type="checkbox"
+                                                                                             id="maesearchFloorCount_C00W24"
+                                                                                             value="C00W24"
+                                                                                             name="searchFloorCount">
+                                                            <label
+                                                                    for="maesearchFloorCount_C00W24"> <span
+                                                                    class="check"></span><span class="txt">2~5층</span>
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                    <li class="full">
+                                                        <div class="dg_checkbox blue"><input type="checkbox"
+                                                                                             id="maesearchFloorCount_C00W25"
+                                                                                             value="C00W25"
+                                                                                             name="searchFloorCount">
+                                                            <label
+                                                                    for="maesearchFloorCount_C00W25"> <span
+                                                                    class="check"></span><span class="txt">6~10층</span>
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                    <li class="full">
+                                                        <div class="dg_checkbox blue"><input type="checkbox"
+                                                                                             id="maesearchFloorCount_C00W26"
+                                                                                             value="C00W26"
+                                                                                             name="searchFloorCount">
+                                                            <label
+                                                                    for="maesearchFloorCount_C00W26"> <span
+                                                                    class="check"></span><span class="txt">10층이상</span>
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                </div>
+                                                <div>
+                                                    <li class="full">
+                                                        <div class="dg_checkbox blue"><input type="checkbox"
+                                                                                             id="maesearchFloorCount_C00W27"
+                                                                                             value="C00W27"
+                                                                                             name="searchFloorCount">
+                                                            <label
+                                                                    for="maesearchFloorCount_C00W27"> <span
+                                                                    class="check"></span><span class="txt">20층이상</span>
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                    <li class="full">
+                                                        <div class="dg_checkbox blue"><input type="checkbox"
+                                                                                             id="maesearchFloorCount_C00W28"
+                                                                                             value="C00W28"
+                                                                                             name="searchFloorCount">
+                                                            <label
+                                                                    for="maesearchFloorCount_C00W28"> <span
+                                                                    class="check"></span><span class="txt">옥탑방</span>
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                </div>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="tcon pl adc">
+                                <div class="aMainTenanceAll">
                                     <div class="top">
                                         <strong class="tit">관리비</strong>
                                     </div>
@@ -1721,97 +2022,116 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="tcon pl dir">
-                                    <div class="top">
-                                        <strong class="tit">방향</strong>
-                                    </div>
-                                    <div class="tbody">
-                                        <ul class="aDir" id="directionUL" style="padding-left: 0px;">
-                                            <div>
-                                                <li>
-                                                    <div class="dg_checkbox blue"><input type="checkbox"
-                                                                                         id="searchDirectionAll"
-                                                                                         name="searchDirectionAll"
-                                                                                         value="">
-                                                        <label for="searchDirectionAll"><span class="check"></span><span
-                                                                class="txt">전체</span></label></div>
-                                                </li>
-                                                <li>
-                                                    <div class="dg_checkbox blue"><input type="checkbox"
-                                                                                         id="maesearchDirection_C00702"
-                                                                                         value="C00702"
-                                                                                         name="searchDirection"> <label
-                                                            for="maesearchDirection_C00702"> <span
-                                                            class="check"></span><span class="txt">동</span> </label>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="dg_checkbox blue"><input type="checkbox"
-                                                                                         id="maesearchDirection_C00703"
-                                                                                         value="C00703"
-                                                                                         name="searchDirection"> <label
-                                                            for="maesearchDirection_C00703"> <span
-                                                            class="check"></span><span class="txt">서</span> </label>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="dg_checkbox blue"><input type="checkbox"
-                                                                                         id="maesearchDirection_C00704"
-                                                                                         value="C00704"
-                                                                                         name="searchDirection"> <label
-                                                            for="maesearchDirection_C00704"> <span
-                                                            class="check"></span><span class="txt">남</span> </label>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="dg_checkbox blue"><input type="checkbox"
-                                                                                         id="maesearchDirection_C00705"
-                                                                                         value="C00705"
-                                                                                         name="searchDirection"> <label
-                                                            for="maesearchDirection_C00705"> <span
-                                                            class="check"></span><span class="txt">북</span> </label>
-                                                    </div>
-                                                </li>
-                                            </div>
-                                            <div>
-                                                <li>
-                                                    <div class="dg_checkbox blue"><input type="checkbox"
-                                                                                         id="maesearchDirection_C00706"
-                                                                                         value="C00706"
-                                                                                         name="searchDirection"> <label
-                                                            for="maesearchDirection_C00706"> <span
-                                                            class="check"></span><span class="txt">남동</span> </label>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="dg_checkbox blue"><input type="checkbox"
-                                                                                         id="maesearchDirection_C00707"
-                                                                                         value="C00707"
-                                                                                         name="searchDirection"> <label
-                                                            for="maesearchDirection_C00707"> <span
-                                                            class="check"></span><span class="txt">남서</span> </label>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="dg_checkbox blue"><input type="checkbox"
-                                                                                         id="maesearchDirection_C00708"
-                                                                                         value="C00708"
-                                                                                         name="searchDirection"> <label
-                                                            for="maesearchDirection_C00708"> <span
-                                                            class="check"></span><span class="txt">북동</span> </label>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="dg_checkbox blue"><input type="checkbox"
-                                                                                         id="maesearchDirection_C00709"
-                                                                                         value="C00709"
-                                                                                         name="searchDirection"> <label
-                                                            for="maesearchDirection_C00709"> <span
-                                                            class="check"></span><span class="txt">북서</span> </label>
-                                                    </div>
-                                                </li>
-                                            </div>
-                                        </ul>
+                                <div class="aDirListAll">
+                                    <div style="padding: 0px 10px 0px 10px;">
+                                        <div class="top">
+                                            <strong class="tit">방향</strong>
+                                        </div>
+                                        <div class="tbody">
+                                            <ul class="aDir" id="directionUL" style="padding-left: 0px;">
+                                                <div>
+                                                    <li>
+                                                        <div class="dg_checkbox blue"><input type="checkbox"
+                                                                                             id="searchDirectionAll"
+                                                                                             name="searchDirectionAll"
+                                                                                             value="">
+                                                            <label for="searchDirectionAll"><span
+                                                                    class="check"></span><span
+                                                                    class="txt">전체</span></label></div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="dg_checkbox blue"><input type="checkbox"
+                                                                                             id="maesearchDirection_C00702"
+                                                                                             value="C00702"
+                                                                                             name="searchDirection">
+                                                            <label
+                                                                    for="maesearchDirection_C00702"> <span
+                                                                    class="check"></span><span class="txt">동</span>
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="dg_checkbox blue"><input type="checkbox"
+                                                                                             id="maesearchDirection_C00703"
+                                                                                             value="C00703"
+                                                                                             name="searchDirection">
+                                                            <label
+                                                                    for="maesearchDirection_C00703"> <span
+                                                                    class="check"></span><span class="txt">서</span>
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="dg_checkbox blue"><input type="checkbox"
+                                                                                             id="maesearchDirection_C00704"
+                                                                                             value="C00704"
+                                                                                             name="searchDirection">
+                                                            <label
+                                                                    for="maesearchDirection_C00704"> <span
+                                                                    class="check"></span><span class="txt">남</span>
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="dg_checkbox blue"><input type="checkbox"
+                                                                                             id="maesearchDirection_C00705"
+                                                                                             value="C00705"
+                                                                                             name="searchDirection">
+                                                            <label
+                                                                    for="maesearchDirection_C00705"> <span
+                                                                    class="check"></span><span class="txt">북</span>
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                </div>
+                                                <div>
+                                                    <li>
+                                                        <div class="dg_checkbox blue"><input type="checkbox"
+                                                                                             id="maesearchDirection_C00706"
+                                                                                             value="C00706"
+                                                                                             name="searchDirection">
+                                                            <label
+                                                                    for="maesearchDirection_C00706"> <span
+                                                                    class="check"></span><span class="txt">남동</span>
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="dg_checkbox blue"><input type="checkbox"
+                                                                                             id="maesearchDirection_C00707"
+                                                                                             value="C00707"
+                                                                                             name="searchDirection">
+                                                            <label
+                                                                    for="maesearchDirection_C00707"> <span
+                                                                    class="check"></span><span class="txt">남서</span>
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="dg_checkbox blue"><input type="checkbox"
+                                                                                             id="maesearchDirection_C00708"
+                                                                                             value="C00708"
+                                                                                             name="searchDirection">
+                                                            <label
+                                                                    for="maesearchDirection_C00708"> <span
+                                                                    class="check"></span><span class="txt">북동</span>
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="dg_checkbox blue"><input type="checkbox"
+                                                                                             id="maesearchDirection_C00709"
+                                                                                             value="C00709"
+                                                                                             name="searchDirection">
+                                                            <label
+                                                                    for="maesearchDirection_C00709"> <span
+                                                                    class="check"></span><span class="txt">북서</span>
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                </div>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -2012,7 +2332,6 @@
                             </div>
                             <a href="#" class="ui_img_btn_close01 closebtn"></a>
                         </div>
-                        <div class="dimm"></div>
                 </div>
                 <!--//옵션-->
                 </ul>
@@ -2039,14 +2358,15 @@
                         class="btn btn-primary dropdown-toggle"
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
+                        data-bs-auto-close="false"
                 >
                     학군
                 </button>
                 <ul class="dropdown">
                     <div class="dropdown-menu school">
                         <div class="edu">
-                            <button class="map-utilSBtn">
-                                <img
+                            <button class="btn btn-primary map-utilSBtn nurs" data-bs-toggle="button">
+                                <img class="aschImg"
                                         style="width: 50px; height: 30px"
                                         src="https://e7.pngegg.com/pngimages/836/224/png-clipart-pictogram-and-icon-collection-from-public-signage-to-web-icons-roseola-child-child-child-baby.png"
                                 />
@@ -2054,8 +2374,8 @@
                             <span class="edukind">어린이집</span>
                         </div>
                         <div class="edu">
-                            <button class="map-utilSBtn">
-                                <img
+                            <button class="btn btn-primary map-utilSBtn pres" data-bs-toggle="button">
+                                <img class="aschImg"
                                         style="width: 50px; height: 30px"
                                         src="https://e7.pngegg.com/pngimages/989/150/png-clipart-pictogram-microsoft-dynamics-nav-computer-icons-child-alcorcon-others-child-text.png"
                                 />
@@ -2063,8 +2383,8 @@
                             <span class="edukind">유치원</span>
                         </div>
                         <div class="edu">
-                            <button class="map-utilSBtn">
-                                <img
+                            <button class="btn btn-primary map-utilSBtn pris" data-bs-toggle="button">
+                                <img class="aschImg"
                                         style="width: 50px; height: 30px"
                                         src="https://w7.pngwing.com/pngs/261/891/png-transparent-pictogram-others-english-text-photography.png"
                                 />
@@ -2072,7 +2392,7 @@
                             <span class="edukind">초등학교</span>
                         </div>
                         <div class="edu">
-                            <button class="map-utilSBtn">
+                            <button class="btn btn-primary map-utilSBtn secons" data-bs-toggle="button">
                                 <img
                                         style="width: 35px; height: 30px"
                                         src="https://thumb.silhouette-ac.com/t/a3/a33e87822359f0a3e65fa924844c06b5_t.jpeg"
@@ -2081,7 +2401,7 @@
                             <span class="edukind">중학교</span>
                         </div>
                         <div class="edu">
-                            <button class="map-utilSBtn">
+                            <button class="btn btn-primary map-utilSBtn highs" data-bs-toggle="button">
                                 <img
                                         style="width: 40px; height: 30px"
                                         src="https://thumb.silhouette-ac.com/t/f2/f2c0df7db0d36e322d8ec497a94a6a92_t.jpeg"
@@ -2090,11 +2410,13 @@
                             <span class="edukind">고등학교</span>
                         </div>
                         <div class="edu">
-                            <button class="map-utilSBtn">
-                                <img
-                                        style="width: 20px; height: 30px"
-                                        src="https://cdn.pixabay.com/photo/2013/07/13/13/21/book-160871_1280.png"
-                                />
+                            <button class="btn btn-primary map-utilSBtn unis" data-bs-toggle="button">
+                                <div style="background-color: white;width: 43px;">
+                                    <img
+                                            style="width: 20px; height: 30px"
+                                            src="https://cdn.pixabay.com/photo/2013/07/13/13/21/book-160871_1280.png"
+                                    />
+                                </div>
                             </button>
                             <span class="edukind">대학교</span>
                         </div>
@@ -2113,20 +2435,20 @@
             </div>
         </div>
 
-        <button
-                style="width: 61px; height: 25px; text-align: center"
-                type="button"
-                id="hsBtn"
-                class="btn btn-primary position-relative"
-        >
-            집 내놓기
-            <span
-                    class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger"
+        <div>
+            <button
+                    style="width: 61px; height: 25px; text-align: center"
+                    type="button"
+                    id="hsBtn"
+                    class="btn btn-primary position-absolute"
             >
-              10초만에 쉽고 빠르게!
-              <span class="visually-hidden">unread messages</span>
-            </span>
-        </button>
+                집 내놓기
+                <span class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger">
+                  10초만에 쉽고 빠르게!
+                    <span class="visually-hidden">unread messages</span>
+                </span>
+            </button>
+        </div>
     </div>
 </div>
 <script
