@@ -56,7 +56,9 @@
         .b-t{
         width : 50%;
         }
-
+        .b-w{
+         width : 15%;
+        }
         .headrow{
         height : 100px;
         width: 50%;
@@ -112,3 +114,7 @@
         color: #ffffff;
         }
 
+    a{
+       text-decoration: none;
+       color :black;
+    }

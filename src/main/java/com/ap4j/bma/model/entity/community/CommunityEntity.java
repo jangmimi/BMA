@@ -25,7 +25,9 @@ public class CommunityEntity {
 
     private String author;
 
-    private Integer view;
+    @Column(columnDefinition = "integer default 0", nullable = false)
+    private Long view;
+
     // Getters and setters
     // Getter and Setter methods
     public Integer getId() {
@@ -76,11 +78,9 @@ public class CommunityEntity {
         this.author = author;
     }
 
-    public Integer getView() {
+    public Long getView() {
         return view;
     }
 
-    public void setView(Integer view) {
-        this.id = view;
-    }
+    public void setView(Long view) { this.view = view; }
 }

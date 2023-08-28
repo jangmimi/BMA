@@ -3,9 +3,11 @@ package com.ap4j.bma.service.community;
 import com.ap4j.bma.model.entity.community.CommunityEntity;
 import com.ap4j.bma.model.repository.CommunityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class CommunityService {
@@ -14,13 +16,26 @@ public class CommunityService {
 
     //글작성처리
     public CommunityEntity saveCommunity(CommunityEntity communityEntity) {
-        return communityRepository.save(communityEntity);
+        CommunityEntity savedEntity = communityRepository.save(communityEntity);
+        updateTotalCommunityCount(); // 총 게시글 개수 업데이트
+        return savedEntity;
     }
 
-    //게시글 리스트 처리
-    public List<CommunityEntity> getAllCommunity() {
-        return communityRepository.findAll();
+    public Long updateTotalCommunityCount() {
+        Long totalCount = communityRepository.count(); // 총 게시글 개수 조회
+        // totalCount를 원하는 변수에 저장하거나 활용
 
+        return totalCount;
+    }
+    //게시글 리스트 처리
+//    public Page<CommunityEntity> getAllCommunity(int pageNum, int pageSize) {
+//        Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
+//        return communityRepository.findAll(pageable);
+//    }
+
+    //게시글 페이징
+    public Page<CommunityEntity> getCommunityPage(Pageable pageable) {
+        return communityRepository.findAll(pageable);
     }
 
     //상세페이지 보기
@@ -30,7 +45,15 @@ public class CommunityService {
 
 
     public void communityDelete(Integer id) {
-
         communityRepository.deleteById(id);
+        updateTotalCommunityCount(); //총 게시글 개수 업데이트
     }
+
+    //검색 기능
+    // 제목으로 검색
+    public Page<CommunityEntity> searchByTitle(String keyword, int pageNum, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNum - 1, pageSize, Sort.by("id").descending());
+        return communityRepository.findByTitleContaining(keyword, pageable);
+    }
+
 }
