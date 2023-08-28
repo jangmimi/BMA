@@ -356,20 +356,22 @@ public class MemberServiceImpl implements MemberService {
 
 
 	/** 회원정보 수정 */
-//	@Transactional
+	@Transactional
 	@Override
 	public MemberEntity updateMember(Long idx, MemberEntity updatedMember) {
 		log.info("서비스 updateMember() 실행");
 		log.info("updatedMember : " + updatedMember);
 
-		MemberEntity member = memberRepository.findByEmail(updatedMember.getEmail()).orElse(null);
+		Optional<MemberEntity> member = memberRepository.findById(updatedMember.getIdx());
 		log.info("조회된 member : " + member);
-		if(member != null) {
-			member.setName(updatedMember.getName());
-			return memberRepository.save(member);
-		}
-		return null;
 
+		if(member.isPresent()) {
+			MemberEntity memberEntity = member.get();
+			memberEntity.setName(updatedMember.getName());
+			return memberRepository.save(memberEntity);
+		} else {
+			return null;
+		}
 //		Optional<MemberEntity> optionalMemberEntity = memberRepository.findByEmail(idx).orElseThrow(Undefined.EXCEPTION::new);
 //		entity.update(memberDTO.getName());
 //		return idx;
