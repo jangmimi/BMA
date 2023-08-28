@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     otherButton.style.color = "black";
                 }
             });
-            toggleButtonStyle(button, "#FD6F71"); // 선택한 버튼 스타일 토글
+            toggleButtonStyle(button, "#26abed"); // 선택한 버튼 스타일 토글
         });
     });
 
