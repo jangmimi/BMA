@@ -13,7 +13,9 @@ import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
 
+import javax.sql.DataSource;
 import java.util.List;
 
 @Configuration
@@ -25,10 +27,16 @@ public class ChunkJobConfig {
 	private final JobBuilderFactory jobBuilderFactory;
 	private final StepBuilderFactory stepBuilderFactory;
 	private final ApartmentApiService apartmentApiService;
+	private final DataSource dataSource;
+
+	@Bean
+	public JdbcTemplate jdbcTemplate(){
+		return new JdbcTemplate(dataSource);
+	}
 
 	@Bean
 	public Job job(){
-		return jobBuilderFactory.get("chunkJob")
+		return jobBuilderFactory.get("chunkJob2")
 				.start(step())
 				.build();
 	}
@@ -39,6 +47,7 @@ public class ChunkJobConfig {
 				.<List<AptDTO>, List<AptDTO>>chunk(1)
 				.reader(aptApiReader())
 				.writer(aptApiWriter())
+				.allowStartIfComplete(true)
 				.build();
 	}
 
@@ -51,7 +60,7 @@ public class ChunkJobConfig {
 	@Bean
 	@StepScope
 	public ItemWriter<List<AptDTO>> aptApiWriter(){
-		return new ApartmentApiWriter(apartmentApiService);
+		return new ApartmentApiWriter(apartmentApiService, jdbcTemplate());
 	}
 
 }

@@ -223,7 +223,6 @@ public class MemberController {
     @RequestMapping(value="/qLoginNaver")
     public String qLoginNaver(@RequestParam(value = "code", required = false) String code,
                               @RequestParam(value = "state") String state, Model model, HttpSession session) {
-
         log.info("MemberController - qLoginNaver() 실행");
         log.info("####code : " + code);
 

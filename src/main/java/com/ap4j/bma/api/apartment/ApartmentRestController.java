@@ -57,41 +57,47 @@ public class ApartmentRestController {
 		int endMonth = 8;     // 종료 월
 
 		int LAWD_CD = 11110;
+		int year = 2006; // 200601 ~ 202308까지 있음
+		int month = 01;
 		List<AptDTO> allApartments = new ArrayList<>();
 
-		for (int year = startYear; year <= endYear; year++) {
-			for (int month = startMonth; month <= 12; month++) {
-				// URL 생성
-				String apiUrl = "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev?serviceKey=yCNsY08RNGte7rDDtjdpN8LRA4FXNGAd1mcw2cy59VfwpAA4cffShZy3neeemWjVJ1LMwHQAWaRk%2FuiX%2Fescrw%3D%3D" + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&LAWD_CD=" + LAWD_CD + "&DEAL_YMD=" + year + String.format("%02d", month);
-				URL url = new URL(apiUrl);
+		while (true) {
+			// URL 생성
+			String apiUrl = "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev?serviceKey=yCNsY08RNGte7rDDtjdpN8LRA4FXNGAd1mcw2cy59VfwpAA4cffShZy3neeemWjVJ1LMwHQAWaRk%2FuiX%2Fescrw%3D%3D" + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&LAWD_CD=" + LAWD_CD + "&DEAL_YMD=" + year + String.format("%02d", month);
+			URL url = new URL(apiUrl);
 
-				// HttpURLConnection을 사용하여 GET 요청 생성
-				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-				conn.setRequestMethod("GET");
+			// HttpURLConnection을 사용하여 GET 요청 생성
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
 
-				// 응답 데이터를 읽을 BufferedReader 생성
-				BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-				StringBuilder response = new StringBuilder();
-				String line;
+			// 응답 데이터를 읽을 BufferedReader 생성
+			BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			StringBuilder response = new StringBuilder();
+			String line;
 
-				while ((line = reader.readLine()) != null) {
-					response.append(line);
+			while ((line = reader.readLine()) != null) {
+				response.append(line);
+			}
+
+
+			// XML 파싱
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			Document document = builder.parse(new InputSource(new StringReader(response.toString())));
+
+			NodeList itemList = document.getElementsByTagName("item");
+			List<AptDTO> aptList = new ArrayList<>();
+			int i = 0;
+			for (year = 2006; year < 2022; i++) {
+				if(i > 9) {
+					i = 0;
 				}
 
-				// XML 파싱
-				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-				DocumentBuilder builder = factory.newDocumentBuilder();
-				Document document = builder.parse(new InputSource(new StringReader(response.toString())));
+				Node itemNode = itemList.item(i);
 
-				NodeList itemList = document.getElementsByTagName("item");
-				List<AptDTO> aptList = new ArrayList<>();
-
-				for (int i = 0; i < itemList.getLength(); i++) {
-					Node itemNode = itemList.item(i);
-
-					if (itemNode.getNodeType() == Node.ELEMENT_NODE) {
-						Element element = (Element) itemNode;
-						AptDTO aptDTO = new AptDTO();
+				if (itemNode.getNodeType() == Node.ELEMENT_NODE) {
+					Element element = (Element) itemNode;
+					AptDTO aptDTO = new AptDTO();
 
 					// 거래금액 (Deal Amount)
 					aptDTO.setDealAmount(element.getElementsByTagName("거래금액").item(0).getTextContent());
@@ -180,8 +186,7 @@ public class ApartmentRestController {
 					// 해제여부 (Release Status)
 					aptDTO.setReleaseStatus(element.getElementsByTagName("해제여부").item(0).getTextContent());
 
-						aptList.add(aptDTO);
-					}
+					aptList.add(aptDTO);
 				}
 
 				allApartments.addAll(aptList);
@@ -192,22 +197,22 @@ public class ApartmentRestController {
 				if (month < 12) {
 					month++;
 				} else {
-					if (year < endYear) {
+					if (year < 2022) {
 						year++;
 					}
 					month = 1;
 				}
 
 				// 더 이상 데이터가 없을 때 while 루프 종료
-				// if (aptList.isEmpty()) {
-				//     break;
-				// }
+				//				if (aptList.isEmpty()) {
+				//					break;
+				//				}
 
-				reader.close();
-				conn.disconnect();
 			}
+			reader.close();
+			conn.disconnect();
+			return allApartments;
 		}
 
-		return allApartments;
 	}
 }

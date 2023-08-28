@@ -56,7 +56,18 @@ dependencies {
 
     // 스프링 부트 테스트 의존성
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    implementation group: 'org.springframework.batch', name: 'spring-batch-integration', version: '4.3.3.RELEASE'
+
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.12.3' // 최신 버전 사용 가능
+
+
+    // Batch WebClient 의존성 추가
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    // https://mvnrepository.com/artifact/io.netty/netty-resolver-dns-native-macos
+    implementation("io.netty:netty-resolver-dns-native-macos:4.1.79.Final:osx-aarch_64")
+
+    // 라이브 서버용.
+    implementation 'org.springframework.boot:spring-boot-devtools'
 
 }
 
