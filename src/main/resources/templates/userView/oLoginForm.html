@@ -17,14 +17,15 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 </head>
 <body layout:fragment="content">
-    <span th:if="${userEmail == null}">    <!-- 로그인 안한 상태 -->
+    <span th:if="${userEmail == null}">
         <div class="container mt-5" id="oInner-container" align="center">
             <div id="oLoginTitle">
                 <h3 class="h3 fw-bold">로그인</h3>
             </div>
             <form th:action="@{/member/qLoginBasic}" method="POST" th:object="${memberDTO}" onsubmit="return oLoginCheck()">
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="email" name="email" placeholder="${session.memberDTO.email}" autofocus="autofocus">
+                    <input type="text" class="form-control" id="email" name="email"
+                           th:value="${rememberedEmail}" placeholder="${session.memberDTO.email}" autofocus="autofocus">
 <!--                           th:field="*{email}" th:class="${#fields.hasErrors('email')} ? 'form-control fieldError' : 'form-control'" />-->
 <!--                    <div th:each="msg : ${#fields.errors('email')}">-->
 <!--                        <p th:text="${msg}"></p>-->
@@ -42,7 +43,7 @@
                 <div class="form-check" style="display: flex; justify-content:space-between; font-size:13px;">
                     <div>
                       <input class="form-check-input" type="checkbox"
-                             id="oSaveId" name="oSaveId" style="margin-right:5px;">
+                             id="oSaveId" name="oSaveId" style="margin-right:5px;" th:checked="${rememberedEmail != null}">
                       <label class="form-check-label ml-3" for="oSaveId">
                         이메일 저장
                       </label>

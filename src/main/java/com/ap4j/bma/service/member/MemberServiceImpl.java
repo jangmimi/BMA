@@ -90,6 +90,7 @@ public class MemberServiceImpl implements MemberService {
 		}
 		return accessToken;
 	}
+
 //	public MemberDTO getUserInfo2(String accessToken) {
 //		MemberDTO dto = new MemberDTO();
 //		String reqUrl = "https://kapi.kakao.com/v2/user/me";
@@ -316,13 +317,13 @@ public class MemberServiceImpl implements MemberService {
 			log.info("로그인 시도하는 email DB에 존재!");
 			MemberEntity memberEntity = findMember.get();
 			if(pwdConfig.passwordEncoder().matches(memberDTO.getPwd(),memberEntity.getPwd())) {
-//			if(memberEntity.getPwd().equals(memberDTO.getPwd())) {
 				log.info("id pw 모두 일치! 로그인 성공!");
 				// entity->dto로 변환
 				MemberDTO dto = new MemberDTO();
 				dto.setEmail(memberEntity.getEmail());
 				dto.setName(memberEntity.getName());
 				dto.setPwd(memberEntity.getPwd());
+
 				return dto;
 
 			} else { log.info("id일치, pw 불일치합니다."); }
