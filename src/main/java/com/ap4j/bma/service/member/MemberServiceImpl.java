@@ -369,6 +369,10 @@ public class MemberServiceImpl implements MemberService {
 		if(member.isPresent()) {
 			MemberEntity memberEntity = member.get();
 			memberEntity.setName(updatedMember.getName());
+			memberEntity.setNickname(updatedMember.getNickname());
+//			memberEntity.setPwd(pwdConfig.passwordEncoder().encode(updatedMember.getPwd()));
+
+			log.info("수정된 정보 : " + memberEntity);
 			return memberRepository.save(memberEntity);
 		} else {
 			return null;

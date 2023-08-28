@@ -329,6 +329,8 @@ public class MemberController {
         log.info("로그인중인 userEmail : " + userEmail);
         MemberEntity findmem = qMemberService.getMemberOne(userEmail);
         model.addAttribute("idx",findmem.getIdx());
+        model.addAttribute("userNickname", findmem.getNickname());
+        model.addAttribute("userTel", findmem.getTel());
         log.info("로그인중인 findmem : " + findmem);
         return "/userView/oMyInfoUpdate";
     }
