@@ -12,9 +12,14 @@ $(document).ready(function() {
         return true;
     });
 
-    var itemsEmpty = $("#news-result").val()/* Get the value of "itemsEmpty" from your model */;
-    if (itemsEmpty) {
-        // items가 비어있는 경우, 팝업을 띄움
+    // 검색 결과 없을때 팝업
+    var Empty = $("#noResult").val();
+
+    if (Empty === "") {
+        showEmptyResultsPopup();
+    }
+
+    function showEmptyResultsPopup() {
         alert("검색 결과가 없습니다.");
     }
 
