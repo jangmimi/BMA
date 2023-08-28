@@ -11,6 +11,6 @@ import java.util.Date;
 import java.util.List;
 
 public interface ChatRepository extends JpaRepository <ChatMessage,Long> {
-    @Query("SELECT c FROM ChatMessage c WHERE c.chatDate BETWEEN :start AND CURRENT_TIMESTAMP")
-    List findByDateMessages(@Param("start") ChatMessage chatMessage);
+    @Query("SELECT c FROM ChatMessage c WHERE c.chatDate BETWEEN :entityStartTime AND CURRENT_TIMESTAMP")
+    List findByDateMessages(@Param("entityStartTime") LocalDateTime entityStartTime);
 }

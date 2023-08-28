@@ -22,12 +22,13 @@ public class ChatServiceImp implements ChatService{
 
     @Override
     public void saveMessage(ChatMessage chatMessage) {
+        chatMessage.setChatDate(LocalDateTime.now()); // 현재 시간으로 설정
         chatRepository.save(chatMessage);
     }
 
     @Override
-    public List showMessages(ChatMessage chatMessage) {
-        return chatRepository.findByDateMessages(chatMessage);
+    public List showMessages(LocalDateTime startTime) {
+        return chatRepository.findByDateMessages(startTime);
     }
 
 }

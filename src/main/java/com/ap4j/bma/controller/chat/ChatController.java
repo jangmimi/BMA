@@ -23,6 +23,7 @@ import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -47,15 +48,32 @@ public class ChatController {
     @SendTo("/topic/messages")
     public ChatMessage sendMessage(ChatMessage chatMessage) {
         System.out.println("controller테스트"+chatMessage);
-        chatMessage.setChatClientId(chatMessage.getChatClientId());
         chatService.saveMessage(chatMessage);
         return chatMessage;
     }
 
+    @MessageMapping("/openingComment")
+    @SendTo("/topic/openingComment")
+    public String openingComment(String sender){
+        System.out.println(sender);
+        return sender+"님이 입장하셨습니다.";
+    }
+
     @MessageMapping("/dbMessages")
     @SendTo("/topic/dbMessages")
-    public List showMessages(ChatMessage chatMessage){
-        return chatService.showMessages(chatMessage);
+    public List dbMessages(String startTime){
+        System.out.println(startTime);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
+        LocalDateTime entityChatDate = LocalDateTime.parse(startTime, formatter);
+        List<ChatMessage> messages = chatService.showMessages(entityChatDate);
+        System.out.println(messages);
+        return messages;
+    }
+
+    @MessageMapping("/getservertime")
+    @SendTo("/topic/serverTime")
+    public LocalDateTime getServerTime() {
+        return LocalDateTime.now();
     }
 
 

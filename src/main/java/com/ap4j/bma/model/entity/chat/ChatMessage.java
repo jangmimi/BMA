@@ -21,11 +21,10 @@ import java.util.Date;
 @ToString
 @Entity
 public class ChatMessage {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long chatId;
-    @Column
-    private String chatClientId;
     @Column
     private String chatContent;
     @Column
@@ -33,9 +32,4 @@ public class ChatMessage {
     @Column
     private LocalDateTime chatDate;
 
-    @JsonCreator
-    public ChatMessage(@JsonProperty("messageText") String chatContent, @JsonProperty("chatDate") String chatDate) {
-        this.chatContent = chatContent;
-        this.chatDate = LocalDateTime.parse(chatDate);
-    }
 }
