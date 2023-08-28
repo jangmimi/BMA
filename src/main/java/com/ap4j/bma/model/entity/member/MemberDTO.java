@@ -23,7 +23,13 @@ public class MemberDTO {	// 회원가입 폼 입력 정보 담는 DTO
 //			message = "영문, 숫자를 조합하여 8~20자 이내로 입력해주세요.")
 	private String pwd;
 
+	private String nickname;
+
+	private String tel;
+
 	private String root;
+	
+	// 약관동의여부 값 추가예정
 
 	// 빌더 패턴으로 객체 생성
 	public MemberEntity toEntity() {
@@ -32,14 +38,18 @@ public class MemberDTO {	// 회원가입 폼 입력 정보 담는 DTO
 				.email(email)
 				.name(name)
 				.pwd(pwd)
+				.nickname(nickname)
+				.tel(tel)
 				.root(root)
 				.build();
 	}
 
 	@Builder
-	public MemberDTO(String name, String pwd) {
+	public MemberDTO(String name, String pwd, String nickname, String tel) {
 		this.name = name;
 		this.pwd = pwd;
+		this.nickname = nickname;
+		this.tel = tel;
 	}
 }
 
