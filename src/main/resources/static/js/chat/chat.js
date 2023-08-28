@@ -26,10 +26,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 모달 버튼 클릭 시 모달 창 토글
     modalButton.addEventListener("click", function () {
-        //         if(sender === ''){
-        //         alert("채팅기능은 로그인하셔야 이용 하실 수 있습니다");
-        //         window.location.href='/member/qLoginForm';
-        //         }else{
+//                 if(sender === ''){
+//                 alert("채팅기능은 로그인하셔야 이용 하실 수 있습니다");
+//                 window.location.href='/member/qLoginForm';
+//                 }else{
         modal.style.display = "flex";
         modalButton.style.transform = "scale(0)";
 
@@ -37,10 +37,10 @@ document.addEventListener("DOMContentLoaded", function () {
             //커넥트 한 시간을 기준으로 DB에서 정보를 불러올것이다
             sessionStorage.setItem("startTime", startTime);
             sessionStorage.setItem("clientId", clientId);
-        }
+//        }
         //버튼을 누르면 웹통신 시작
         connect();
-        //         }
+                 }
     });
 
     // x 버튼 클릭시 모달 닫기
@@ -58,6 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if(sessionStorage.getItem("startTime")){
                 //서버로 처음 접속시간을 보낸다
                 stompClient.send("/app/dbMessages", {}, JSON.stringify(startTime));
+//                console.log(JSON.stringify(startTime));
                 stompClient.subscribe('/topic/dbMessages', function (messages) {
                     const messageAll = JSON.parse(messages.body);
                     for(const message of messageAll){
