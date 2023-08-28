@@ -1,92 +1,85 @@
 package com.ap4j.bma.controller.community;
 
-import com.ap4j.bma.model.entity.board.BoardVO;
-import com.ap4j.bma.service.board.BoardService;
+import com.ap4j.bma.model.entity.community.CommunityEntity;
+import com.ap4j.bma.service.community.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.multipart.MultipartFile;
 
-import org.springframework.data.domain.Pageable;
+import java.util.List;
 
 @Controller
 public class CommunityController {
-
     @Autowired
-    private BoardService boardService;
+    private CommunityService communityService;
 
+    //커뮤니티 리스트 출력
+    @GetMapping("/community/list")
+    public  String communityList(Model model){
+        List<CommunityEntity> communityEntities = communityService.getAllCommunity();
+        model.addAttribute("list", communityEntities);
+        return "community/communityList";
+   }
+
+   //글작성
     @GetMapping("/community/write")
-    public  String boardWriteForm(){
+    public  String communityWriteForm(){
 
         return "community/communityWrite";
     }
-    @PostMapping("/community/writepro")
-    public String boardWritePro(BoardVO board, Model model , MultipartFile file) throws Exception{
 
-        boardService.boardWrite(board, file);
-        model.addAttribute("message","글 작성이 완료되었습니다.");
-        model.addAttribute("searchUrl", "list");
-
-        return "community/message";
+    //글 작성 DB저장
+    @PostMapping("/community/write")
+    public String communityWrite(@ModelAttribute CommunityEntity communityEntity){
+        communityService.saveCommunity(communityEntity);
+        return "redirect:/community/list";
     }
 
-    @GetMapping("/community/list")
-    public  String boardList(Model model , @PageableDefault(page = 0, size =10, sort ="id", direction = Sort.Direction.DESC) Pageable pageable){
 
-        Page<BoardVO> list = boardService.boardList(pageable);
+    //글 상세 보기
+    @GetMapping("/community/view")
+    public String communityView(Model model , Integer id){
 
-        int nowPage = list.getPageable().getPageNumber();
-        int startPage = nowPage - 4;
-        int endPage = nowPage + 5;
-        model.addAttribute("List", boardService.boardList(pageable));
-
-        return "community/communityList";
-    }
-
-    @GetMapping("/community/view") //localhost:8082/board/view?id=1...
-    public String boardView(Model model , Integer id){
-
-        model.addAttribute("board" , boardService.boardView(id));
+        model.addAttribute("article",communityService.communityView(id));
         return "community/communityView";
     }
 
     @GetMapping("/community/delete")
-    public String boardDelete(Integer id){
+    public String communityDelete(Integer id){
 
-        boardService.boardDelete(id);
+        communityService.communityDelete(id);
 
         return "redirect:/community/list";
     }
 
-    @GetMapping("/community/modify/{id}")
-    public String boardModify(@PathVariable("id") Integer id,
-                              Model model){
 
-        model.addAttribute("board", boardService.boardView(id));
-        return "community/communityModify";
-    }
+//    @GetMapping("/community/modify/{id}")
+//    public String communityModify(@PathVariable("id") Integer id,
+//                              Model model){
+//
+//        model.addAttribute("board", boardService.boardView(id));
+//        return "community/communityModify";
+//    }
 
-    @PostMapping("/community/update/{id}")
-    public String boardUpdate(@PathVariable("id") Integer id, BoardVO board, Model model , MultipartFile file) throws Exception{
+//    @PostMapping("/community/update/{id}")
+//    public String communityUpdate(@PathVariable("id") Integer id, communityVO board, Model model , MultipartFile file) throws Exception{
+//
+//        communityVO boardTemp = boardService.boardView(id);
+//        boardTemp.setTitle(board.getTitle());
+//        boardTemp.setContent(board.getContent());
+//
+//        model.addAttribute("message","글 수정이 완료되었습니다.");
+//        model.addAttribute("searchUrl", "/community/list");
+//
+//        boardService.boardWrite(boardTemp, file);
+//
+//        return "community/message";
 
-        BoardVO boardTemp = boardService.boardView(id);
-        boardTemp.setTitle(board.getTitle());
-        boardTemp.setContent(board.getContent());
-
-        model.addAttribute("message","글 수정이 완료되었습니다.");
-        model.addAttribute("searchUrl", "/community/list");
-
-        boardService.boardWrite(boardTemp, file);
-
-        return "community/message";
-
-    }
+   // }
 }
 
 

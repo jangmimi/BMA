@@ -6,8 +6,8 @@
 <head>
     <meta charset="UTF-8">
     <title>고객센터</title>
-    <link rel="stylesheet" href="/resources/static/css/CC/CCBar.css">
-    <link rel="stylesheet" href="/resources/static/css/CC/guide.css">
+    <link rel="stylesheet" th:href="@{/css/CC/guide.css}">
+    <link rel="stylesheet" th:href="@{/css/CC/CCBar.css}">
 
 </head>
 <body layout:fragment="content">
@@ -35,7 +35,7 @@
                 장점입니다<br>
                 기술스택입니다<br>
 
-            <button type="button" class="gohome" onclick="location.href = '메인주소넣어'" >메인</button>
+            <button type="button" class="gohome" onclick="location.href = '/'" >메인</button>
             <div>
       </div>
 </body>

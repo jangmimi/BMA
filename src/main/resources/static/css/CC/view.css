@@ -1,0 +1,67 @@
+
+    .layout{
+    width : 80%;
+    margin : auto;
+    margin-top: 40px;
+    }
+
+
+
+         table{
+         width : 95%;
+         margin-top:105px;
+         margin : auto;
+         border-collapse: collapse;
+        }
+
+        table, td, th {
+          border-collapse : collapse;
+        }
+
+        table th {
+        padding: 20px;
+        background: #ececec;
+        color: #666;
+        font-size: 15px;
+        border: 1px solid #ddd;
+        }
+
+        table td {
+        padding: 14px 21px;
+        color: #666;
+        border-bottom: 1px solid #ddd;
+        text-align: center;
+         }
+
+        .b-n { //테이블 번호
+        width :10%;
+        }
+        .b-t{ //테이블 제목
+        width : 50%;
+        }
+
+.content{
+height : 500px;
+}
+
+.list-btn{
+    margin-auto;
+    margin-top: 40px;
+    width: 120px;
+    height: 50px;
+    border-radius: 10px;
+    color : #fff;
+    border: #26A9E0;
+    background : #26A9E0;
+
+}
+
+.list-btn-outer{
+    display: flex;
+    justify-content: center;
+
+    }
+
+    .bold{
+    text-weight : bold;
+    }

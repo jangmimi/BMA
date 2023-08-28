@@ -21,10 +21,6 @@
          border-collapse: collapse;
         }
 
-        table, td, th {
-          border-collapse : collapse;
-        }
-
         table th {
         padding: 20px;
         background: #ececec;
@@ -112,3 +108,17 @@
         color: #ffffff;
         }
 
+        a{
+        text-decoration:none;
+        color: black;
+        }
+
+        #category{
+        color : #26A9E0;
+        font-weight: bold;
+
+        }
+
+        #Q{
+        font-weight: bold;
+        }

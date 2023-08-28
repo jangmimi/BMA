@@ -19,165 +19,105 @@
     width: 70px;
 }
 
-/*채팅창 전체 div*/
 .s-chatbox {
-  font-family: 'Noto Sans KR', sans-serif;
-  background-color: aliceblue;
-  width: 400px;
-  height: 500px;
-  display: flex;
-  flex-direction: column;
-  border: 1px solid #222;
+    width: 350px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #d8d8d8;
+    border-radius: 5px;
+    background-color: #fff;
 }
 
-/*상단 타이틀*/
-.s-chatTitleText {
-  height: 50px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #70BCFF;
-  color: white;
+
+.s-chat-closebox {
+    background: #E2E2E2;
+    border-bottom: 1px solid #d8d8d8;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    font-family: 'Noto Sans KR', sans-serif;
 }
 
-.s-chatTitleText span:first-child{
-  font-size: large;
-  font-weight: bold;
+.s-chat-closebox span {
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 10px;
+    position: relative;
+    bottom: 3px;
+    color: #222;
 }
 
-.s-chatTitleText span:nth-child(2){
-  font-size: small;
+
+.s-chat-close {
+    background: url("/sc/free-icon-close-6276642.png") no-repeat;
+    background-size: contain;
+    width: 30px;
+    height: 30px;
+    border: none;
+    position: relative;
+    top:1px;
+    left: 190px;
+    cursor: pointer;
 }
 
-.s-chatTitleText span:nth-child(2) span{
-  font-size: small;
+.s-chat-close:active {
+    filter: brightness(0.9);
 }
 
-.s-chatTextBox {
-  height: 400px;
-  margin: 10px;
-  overflow: auto;
+.s-chat-textbox {
+    height: 425px;
+    width:100%
+    margin: 5px;
+    overflow-y: auto;
 }
 
-/*메세지 보내는 div*/
-.s-sendBox {
-  display: flex;
-  height: 60px;
-  border-top: 1px solid #222;
-}
-.s-sendBox textarea {
-  width: 85%;
-  resize: none;
-  border: none;
-}
-.s-sendBox textarea:focus {
-  outline: none;
+.s-chat-message {
+    padding: 5px;
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #fff;
+    border-bottom: 1px solid #d8d8d8;
+    flex-wrap : wrap;
 }
 
-.s-sendBox button {
-  width: 15%;
-  background-color: #70BCFF;
-  border: none;
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: large;
-  font-weight: bold;
-  color: white;
+.s-chat-nickname {
+    font-weight: bold;
+    font-size: 15px;
+}
+.s-chat-time {
+    font-size: x-small;
 }
 
-.s-others-profile {
-  display: flex;
+.s-chat-text {
+    font-size: 14px;
 }
 
-.s-others-profile img{
-  width: 32px;
-  height: 32px;
+.s-chat-message p {
+    margin: 0;
 }
 
-.s-nicknameAndText {
-  font-size: 14px;
-  font-weight: bold;
-  display: flex;
-  flex-direction: column;
+.s-chat-sendbox {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+    position: relative;
 }
 
-.s-nicknameAndText span {
-  margin-left: 15px;
+.s-chat-sendbox #s-chat-input-img{
+    position: absolute;
+    right: 12px;
+    bottom: 4px;
+    height: 20px;
 }
 
-/*말풍선*/
-.s-others-text {
-  font-size: 14px;
-  position: relative;
-  margin-left: 15px;
-  margin-top: 0px;
-  background: white;
-  padding: 5px; /* Add some padding for better text spacing */
-  color: #333333; /* Set text color to white */
-  display: inline-block; /* Allow the balloon to fit its content */
-  border: 1px solid #333333;
-}
-
-.s-others-text::before {
-  border-top: 15px solid #333333;
-  border-left: 15px solid transparent;
-  border-right: 0px solid transparent;
-  border-bottom: 0px solid transparent;
-  content: "";
-  position: absolute;
-  top: 5px;
-  left: -15px;
-}
-
-.s-others-text::after {
-  border-top: 13px solid white;
-  border-left: 13px solid transparent;
-  border-right: 0px solid transparent;
-  border-bottom: 0px solid transparent;
-  content: "";
-  position: absolute;
-  top: 6px;
-  left: -13px;
-  z-index: 0;
-}
-
-/* 내가 보낸 메시지 */
-
-.s-my-profile {
-  display: flex;
-  justify-content: end;
-}
-
-.s-my-text {
-  font-size: 14px;
-  position: relative;
-  margin-right: 15px; /* Adjust margin to create spacing */
-  margin-top: 7px;
-  background: #007BFF; /* Change background color */
-  padding: 5px;
-  color: white; /* Set text color to white */
-  display: inline-block;
-  border: 1px solid #007BFF; /* Change border color */
-}
-
-.s-my-text::before {
-  border-top: 15px solid #007BFF;
-  border-left: 0px solid transparent;
-  border-right: 15px solid transparent;
-  border-bottom: 0px solid transparent;
-  content: "";
-  position: absolute;
-  top: 5px;
-  right: -15px; /* Adjust position to the right */
-}
-
-.s-my-text::after {
-  border-top: 13px solid #007BFF;
-  border-left: 0px solid transparent;
-  border-right: 13px solid transparent;
-  border-bottom: 0px solid transparent;
-  content: "";
-  position: absolute;
-  top: 6px;
-  right: -13px; /* Adjust position to the right */
-  z-index: 0;
+.s-chat-sendbox textarea {
+    width: 338px;
+    padding: 0;
+    border: 1px solid #d8d8d8;
+    border-radius: 5px;
+    box-shadow: .5px 1px 5px .5px #d8d8d8;
+    outline: none;
+    resize: none;
+    height: 62px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
 }

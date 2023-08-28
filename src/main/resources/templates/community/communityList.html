@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>게시글 리스트 페이지</title>
-    <link rel="stylesheet" href="/resources/static/css/boardList.css">
+    <link rel="stylesheet" th:href="@{/css/community/boardList.css}">
 </head>
 
 <body layout:fragment="content">
@@ -38,13 +38,13 @@
         </thead>
 
         <tbody>
-        <tr th:each="board : ${List}">
-            <td th:text = "${board.id}">1</td>
+        <tr th:each="community : ${list}">
+            <td th:text = "${community.id}">1</td>
             <td>
-                <a th:text = "${board.title}" th:href="@{/board/view(id=${board.id})}">제목</a>
+                <a th:text = "${community.title}" th:href="@{/community/view(id=${community.id})}">제목</a>
             </td>
-            <td th:text = "${board.write}">작성자</td>
-            <td th:text = "${board.regdata}">yyyy-mm-dd</td>
+            <td th:text = "${community.author}">작성자</td>
+            <td th:text = "${community.createdAt}">yyyy-mm-dd</td>
         </tr>
         </tbody>
     </table>
