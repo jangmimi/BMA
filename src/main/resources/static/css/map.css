@@ -457,11 +457,40 @@ html,body{
 }
 
 
-.shareBtn,.map-utilSBtn,.etcBtn{
+.shareBtn,.etcBtn{
   border: none;
   background-color: transparent;
 }
-
+.btn.btn-primary.map-utilSBtn{
+    width:26px;
+    --bs-btn-hover-bg: none;
+    --bs-btn-bg:none;
+    border:4px solid white;
+    border-radius:25px;
+    display:flex;
+    justify-content:center;
+}
+.aschImg{
+    border-radius:74%;
+}
+.btn.btn-primary.map-utilSBtn.nurs.active{
+    border:4px solid #41dbbe;
+}
+.btn.btn-primary.map-utilSBtn.pres.active{
+    border:4px solid #ffff6b
+}
+.btn.btn-primary.map-utilSBtn.pris.active{
+    border:4px solid orange;
+}
+.btn.btn-primary.map-utilSBtn.secons.active{
+    border:4px solid deepskyblue;
+}
+.btn.btn-primary.map-utilSBtn.highs.active{
+    border:4px solid #3275ff;
+}
+.btn.btn-primary.map-utilSBtn.unis.active{
+    border:4px solid #f166ff;
+}
 .dropdown-menu.aTtang.show{
   padding: 20px;
   width: 429px;
@@ -472,23 +501,23 @@ html,body{
   transform: translate3d(571px, 55.5px, 0px);
 }
 .dropdown-menu.aOption{
-  width: 789px;
+  width: 872px;
   height: 415px;
-    padding: 18px;
+  padding: 18px;
+  font-size:14px;
 }
-.aDir{
+.aDir,.aFloorList{
   display: flex;
+  justify-content:space-between;
 }
 .aOptionsUp{
   display: flex;
   justify-content: space-around;
 }
 .aOptionsDown{
+    margin-top:18px;
     display: flex;
     justify-content: space-around;
-}
-.aFloorList{
-  display: flex;
 }
 .btn.btn-primary.aTheme{
   display: initial;
@@ -554,11 +583,20 @@ html,body{
 .btn.btn-outline-primary.aTtangSize{
   width: 82px;
 }
-.first.room.one{
+.first.room.one,.first.sadae.one{
   width: 89px;
+}
+.aFloorCountListAll{
+    width:164px;
+}
+.aDirListAll{
+    width:147px;
 }
 .aBathListAll{
   width: 80px;
+}
+.aMainTenanceAll{
+    width:115px;
 }
 .aEleListAll{
   width: 282px;
@@ -652,6 +690,15 @@ html,body{
 
 
 
+.nav.aAPTListTab{
+    justify-content:space-between;
+    align-items:center;
+}
+
+.aHeartBtn{
+    border:none;
+    background-color:white;
+}
 .tac-ul{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -705,13 +752,19 @@ a:active, a:focus, a:hover, a:link, a:visited {
   display: flex;
   justify-content: space-around;
 }
+.aHeartBtnInTab{
+    margin-right:2px;
+}
 .list-group-item.a{
     display: flex;
-    align-items: center;
+    align-items: flex-start;
 
     position: relative;
     height: 131px;
     border-bottom: 1px solid #eee;
+}
+.aHeartBtnInList{
+    opacity:16%;
 }
 .abox{
     display: flex;
