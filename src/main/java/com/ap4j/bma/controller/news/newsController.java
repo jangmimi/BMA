@@ -62,7 +62,7 @@ public String search(
                 newsList.add(newsItem);
             }
         } else {
-            log.error("No items found in the API response");
+            model.addAttribute("itemsEmpty", true);
         }
         int totalResults = jsonNode.get("total").asInt(); // 뉴스의 전체 개수
 

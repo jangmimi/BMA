@@ -1,44 +1,23 @@
 
 $(document).ready(function() {
-    $("#searchButton").click(function() {
-        var searchQuery = $("#searchInput").val();
-        if (searchQuery.trim() !== "") {
-            var apiUrl = 'https://openapi.naver.com/v1/search/news?query=' + encodeURIComponent(searchQuery);
 
-            $.ajax({
-                url: apiUrl,
-                headers: {
-                    'X-Naver-Client-Id': 'JeoZb70w2v35nvvPqzLN',
-                    'X-Naver-Client-Secret': 'e6EN3rbnqs'
-                },
-                method: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    displayResults(data);
-                },
-                error: function(xhr, status, error) {
-                    console.log('Error:', status);
-                }
-            });
+    $("#search-button").click(function validateForm(){
+        let searchInput = $("#search-input").val().trim();
+
+        if (searchInput === "" || searchInput === null) {
+            alert("입력 필수입니다.");
+            return false;
         }
+
+        return true;
     });
 
-    function displayResults(data) {
-        var resultsDiv = $("#searchResults");
-        resultsDiv.empty();
-
-        if (data.items && data.items.length > 0) {
-            data.items.forEach(function(item) {
-                var title = item.title;
-                var link = item.link;
-
-                var resultHtml = '<div><h3><a href="' + link + '">' + title + '</a></h3></div>';
-                resultsDiv.append(resultHtml);
-            });
-        } else {
-            resultsDiv.append('<p>No results found.</p>');
-        }
+    var itemsEmpty = $("#news-result").val()/* Get the value of "itemsEmpty" from your model */;
+    if (itemsEmpty) {
+        // items가 비어있는 경우, 팝업을 띄움
+        alert("검색 결과가 없습니다.");
     }
+
 });
 
 

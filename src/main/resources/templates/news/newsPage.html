@@ -6,159 +6,24 @@
 
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>부동산뉴스</title>
+    <link rel="stylesheet" th:href="@{/css/newsPage.css}">
     <script src="https://kit.fontawesome.com/5b1091f816.js" crossorigin="anonymous"></script>
-    <style>
-        .news-header {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
+    <script type="text/javascript" th:src="@{/js/news/newsPage.js}" defer ></script>
 
-        .news-header h1 {
-            text-align: center;
-        }
-
-        /*아이템*/
-        .news-result {
-            background-color: white;
-            /*display: flex;*/
-            text-align: left;
-            margin: 30px;
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 30px;
-            margin-bottom: 0px;
-        }
-
-        .check {
-            border: 1px solid #e8ebee;
-            border-radius: 6px;
-            box-shadow: 0 1px 30px 0 rgba(0, 0, 0, .03);
-            background-color: #fff;
-            width: 1000px;
-        }
-
-        .news-result a {
-            font-size: 20px;
-        }
-
-        /*.news-search {*/
-        /*    padding-bottom: 30px;*/
-        /*    padding-top: 30px;*/
-        /*    text-align: center;*/
-        /*}*/
-
-        .result-range {
-            display: flex;
-            flex-direction: column;
-            align-items: baseline;
-            min-height: 1050px;
-        }
-
-        .pagination {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            margin-top: 20px;
-            margin-bottom: 20px;
-            font-family: Arial, sans-serif;
-        }
-
-        .pagination a {
-            border: 1px solid #ccc;
-            background-color: white;
-            color: #333;
-            padding: 5px 10px;
-            margin: 0 3px;
-            text-decoration: none;
-            cursor: pointer;
-            border-radius: 3px;
-        }
-
-        .pagination button {
-            background-color: white;
-            color: #333;
-            margin: 0 3px;
-            text-decoration: none;
-            cursor: pointer;
-            border-radius: 3px;
-            border: none;
-            font-weight: bold;
-        }
-
-        .pagination a:hover,
-        .pagination a:hover > button {
-            background-color: #f1f1f1;
-        }
-
-        .news-result > div > p {
-            margin-top: 10px;
-        }
-        .nowPage {
-            text-decoration-line: underline;
-        }
-        /******* */
-        .news-search{
-            height: 80px;
-            padding: 0 50px;
-            border-radius: 42px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 0 10px;
-            margin-top: 30px;
-            margin-bottom: 30px;
-        }
-        .news-search:hover .r-icon-circle {
-            width: 100px;
-        }
-        .news-search input{
-            font-family: 'Noto Sans KR', sans-serif;
-            font-weight: 700;
-            font-size: 28px;
-            border: none;
-            width: 100%;
-            color: white;
-            background-color: transparent;
-        }
-        .news-search i{
-            position: relative;
-            right: 2px;
-            color: #696D71;
-            font-size: 42px;
-        }
-        .r-icon-circle {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            left: 49px;
-            bottom: 0px;
-            background-color: white;
-            border-radius: 50px;
-            width: 150px;
-            height: 78px;
-            box-shadow: 0 0 10px;
-            transition: 0.5s;
-        }
-    </style>
 </head>
 <body layout:fragment="content">
 <div class="news-header">
     <h1>부동산 뉴스</h1>
     <form action="/news/newsPage" method="get">
         <div class="news-search">
-            <input type="text" name="query" placeholder="부동산">
+            <input type="text" id="search-input" name="query" placeholder="부동산">
             <div class="r-icon-circle">
-                <i id="icon" class="fa-solid fa-magnifying-glass"></i>
+                <button id="search-button" type="submit">
+                    <i id="icon" class="fa-solid fa-magnifying-glass"></i>
+                </button>
             </div>
         </div>
-<!--        <div class="news-search">-->
-<!--            <input type="text" name="query" placeholder="검색어 입력">-->
-<!--            <button type="submit">검색</button>-->
-<!--        </div>-->
     </form>
     <div class="check">
         <div class="result-range">
@@ -231,7 +96,7 @@
                     th:text="${totalPages}"></a>
             </span>
             <!-- ********* -->
-            
+
             <!-- 마지막페이지, 다음 버튼 -->
             <a th:if="${currentPage < totalPages}" th:href="@{/news/newsPage(query=${searchQuery}, page=${currentPage + 1}, start=${currentPage * 10 + 1})}">
                 <button type="button">다음 &gt;</button>
