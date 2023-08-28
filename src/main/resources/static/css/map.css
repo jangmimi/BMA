@@ -12,6 +12,7 @@ html,body{
 
 .n-header-list{
     margin-bottom:0px;
+    padding-left:40px;
 }
 
 
@@ -846,20 +847,19 @@ a:active, a:focus, a:hover, a:link, a:visited {
 
 /*맵 우측 도구*/
 .map_util{
-  position: absolute;
-  top: 33%;
-  right:30px;
-  z-index: 1200;
-  line-height: 1;
-
-  width:91px;
-  height: 400px;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+    top: 40%;
+    height: 479px;
+    position: absolute;
+    right: 30px;
+    z-index: 1200;
+    line-height: 1;
+    width: 91px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .btn-group-vertical{/*학군상권버튼그룹*/
+
   width: 20px;
   padding-left: 18px;
 }
