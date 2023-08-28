@@ -7,13 +7,16 @@ import com.ap4j.bma.model.entity.member.MemberEntity;
 import com.ap4j.bma.service.member.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.*;
 import javax.validation.Valid;
+import java.lang.reflect.Member;
 import java.util.HashMap;
 import java.util.List;
 
@@ -140,8 +143,13 @@ public class MemberController {
             loginMember.toEntity();
             String userEmail = loginMember.getEmail();
             String userName = loginMember.getName();
+            session.setAttribute("userEmail", userEmail);
+            session.setAttribute("userName", userName);
+            session.setAttribute("loginMember", loginMember);
+
             model.addAttribute("userEmail", userEmail);
             model.addAttribute("userName",userName);
+            model.addAttribute("loginMember",loginMember);
 
             log.info("loginMember : " + loginMember.toString());
 
@@ -188,15 +196,16 @@ public class MemberController {
     }
 
     /** 기본 회원가입 */
-    @PostMapping(value="/qJoinBasic") /* @ModelAttribute(value="memberT") */
-    public String qJoinBasic(@Valid @ModelAttribute MemberDTO memberDTO, BindingResult bindingResult, Model model) {  // @Valid : UserDTO 유효성 검사 애노테이션(통과X -> errors)
+    @PostMapping(value="/qJoinBasic")
+    public String qJoinBasic(@Valid @ModelAttribute MemberDTO memberDTO, BindingResult bindingResult, Model model) {
         log.info("MemberController - qJoinBasic() 실행");
         log.info("memberDTO : " + memberDTO);
-//        if(bindingResult.hasErrors()) {
-//            log.info("유효성 검사 에러 발생");
-////            model.addAttribute("memberDTO", memberDTO); // 회원가입 실패 시 입력 데이터 유지
-//            return "/userView/oJoinForm";
-//        }
+
+        if(bindingResult.hasErrors()) {
+            log.info("유효성 검사 에러 발생");
+//            model.addAttribute("memberDTO", memberDTO); // 회원가입 실패 시 입력 데이터 유지
+            return "/userView/oJoinForm";
+        }
             // 이메일 중복체크는 html 내 ajax로 별도로 호출
 //        boolean emailCheck = qMemberService.existsByEmail(memberDTO.getEmail());
 //        if(emailCheck) {
@@ -296,6 +305,7 @@ public class MemberController {
     /** 마이페이지 매핑 */
     @RequestMapping(value="/qMyPage")
     public String qMyPage(HttpSession session, Model model) {
+        log.info("MemberController - qMyPage() 실행");
         String userEmail = (String) session.getAttribute("userEmail");
         String userName = (String) session.getAttribute("userName");
         model.addAttribute("userEmail",userEmail);
@@ -306,39 +316,37 @@ public class MemberController {
     /** 내정보 수정페이지 매핑 */
     @GetMapping(value="/qMyInfoUpdate")
     public String qMyInfoUpdate(HttpSession session, Model model) {
+        log.info("MemberController - qMyInfoUpdate() 실행");
         String userEmail = (String) session.getAttribute("userEmail");
         String userName = (String) session.getAttribute("userName");
-
-//        MemberDTO findmember = qMemberService.findMemberOne();
-
         model.addAttribute("userEmail",userEmail);
         model.addAttribute("userName",userName);
-//        MemberDTO memberDTO = qMemberService.updateMember(userId);
-//        model.addAttribute("memberDTO", memberDTO);
+
+        log.info("로그인중인 userEmail : " + userEmail);
+        MemberEntity findmem = qMemberService.getMemberOne(userEmail);
+        model.addAttribute("idx",findmem.getIdx());
+        log.info("로그인중인 findmem : " + findmem);
         return "/userView/oMyInfoUpdate";
     }
 
     /** 내정보 수정하기 */
-//    @PatchMapping(value="/qUpdate/{idx}")
-//    public Long qUpdate(@PathVariable final Long idx, @RequestBody final MemberDTO memberDTO) {
-//        return qMemberService.updateMember(idx, memberDTO);
-//    }
-    /** 회원 탈퇴 */
-//    @DeleteMapping(value="/qDeleteMember/{idx}")
-//    public String qDeleteMember(@PathVariable Long idx) {
-//        log.info("MemberController - qDeleteMember() 실행");
-//        boolean result = qMemberService.deleteByIdx(idx);
-//        log.info("회원탈퇴 결과 : " +  result);
-//        return "redirect:/member/qLoginForm";
-//    }
-//    @PostMapping(value="/qDeleteMember")
-//    public String qDeleteMember(HttpSession session) {
-//        String findbyEmail = (String) session.getAttribute("userEmail");
-//
-//        MemberEntity deleteEntity = memberDTO.toEntity();
-//
-//        return "redirect:/member/qLoginForm";
-//    }
+    @PostMapping(value="/qUpdateMember/{idx}")
+    public String qUpdate(@PathVariable Long idx, @ModelAttribute MemberEntity updatedMember, RedirectAttributes redirectAttributes) {
+//        updatedMember.setIdx(idx);
+//        qMemberService.getMemberOne(idx);
+        qMemberService.updateMember(idx, updatedMember);
+        log.info("회원정보 수정 완료 (수정 후) : " + updatedMember);
+        return "redirect:/member/qMyPage";
+    }
+
+    /** 기본 회원탈퇴 */   // sns는 별도 처리 해줘야 함
+    @PutMapping("/qDeleteMember/{idx}")
+    public String deleteMember(@PathVariable(required = false) Long idx, HttpSession session) {
+        log.info("MemberController - deleteMember() 실행");
+        qMemberService.deleteMemberByIdx(idx);  // idx 기준으로 회원탈퇴 처리
+        session.invalidate();                   // 회원탈퇴 후 세션 전체 삭제
+        return "redirect:/";
+    }
 
     /** 이메일/비밀번호 찾기 페이지 매핑 */
     @RequestMapping(value="/qFindMemberInfo")
@@ -346,8 +354,7 @@ public class MemberController {
         return "/userView/oFindMemberInfo";
     }
 
-
-    // 이메일 중복 체크 (js ajax 활용)
+    /** 이메일 중복 체크 (js ajax 활용) */
     @PostMapping("/qEmailCheck")
     @ResponseBody
     public int qEmailCheck(@RequestParam("email") String email) {
