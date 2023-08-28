@@ -77,20 +77,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
     buttonSubmit.addEventListener("click", function () {
         // 사용자 입력 값은 문자열 형태로 받아오기 때문에, parseFloat 함수를 사용하여 숫자로 변환하여 계산에 사용한다.
+
+        // 원금
         const principal = parseFloat(inputAmount.value.replace(/,/g, '')); // 쉼표 제거
+        // 이자율
         const interestRate = parseFloat(inputRate.value);
+        // 상환기간
         const loanPeriod = parseFloat(inputPeriod.value);
 
         if (isNaN(principal) || isNaN(interestRate) || isNaN(loanPeriod)) {
             alert("유효한 숫자를 입력하세요.");
             return;
         }
-        const monthlyInterestRate = (interestRate / 100) / 12;
-        const numberOfPayments = loanPeriod * 12;
+        const monthlyInterestRate = (interestRate / 100) / 12; // 월 이자율
+        const numberOfPayments = loanPeriod * 12; // 상환기간(월 단위)
 
         const repaymentMethod = document.querySelector(".e-button.clicked");
-        let totalInterest = 0;
-        let monthlyPayment = 0;
+        let totalInterest = 0;  // 총 상환금액
+        let monthlyPayment = 0; // 1회차 월 상환금액
 
         if (repaymentMethod.id === "e-button1") { // 원리금균등
             monthlyPayment = (principal * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfPayments)) /
@@ -98,8 +102,28 @@ document.addEventListener("DOMContentLoaded", function () {
             totalInterest = (monthlyPayment * numberOfPayments) - principal;
             document.querySelector(".e-result4 th").textContent = "1회차 월 상환금액";
         } else if (repaymentMethod.id === "e-button2") { // 원금균등 (제대로 계산안됨)
-            monthlyPayment = principal / numberOfPayments;
-            totalInterest = (monthlyPayment * numberOfPayments) * monthlyInterestRate;
+
+            let test = parseFloat(inputAmount.value.replace(/,/g, ''));
+
+            let totaliza = 0;
+            for(let i = 0; i < numberOfPayments; i++){
+                let iza = Math.round(test * monthlyInterestRate); // 월 이자
+                console.log(iza);
+                let wolmoney = Math.ceil( principal / numberOfPayments); // 월 상환액
+                console.log(wolmoney);
+                console.log("************");
+                test = test - wolmoney;
+                totaliza += iza;
+            }
+            totalInterest = totaliza;
+            // console.log(principal / numberOfPayments);
+            // console.log(Math.round(principal * monthlyInterestRate));
+
+            monthlyPayment = principal / numberOfPayments + Math.ceil(principal * monthlyInterestRate);
+            // totalInterest = (monthlyPayment * numberOfPayments) * monthlyInterestRate;
+
+
+
             document.querySelector(".e-result4 th").textContent = "1회차 월 상환금액";
         } else if (repaymentMethod.id === "e-button3") { // 만기일시
             totalInterest = principal *  loanPeriod * (interestRate / 100);
