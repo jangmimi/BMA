@@ -1,5 +1,6 @@
 package com.ap4j.bma.controller.chat;
 
+import com.ap4j.bma.model.entity.chat.ChatConnectRequest;
 import com.ap4j.bma.model.entity.chat.ChatMessage;
 import com.ap4j.bma.service.chat.ChatService;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
@@ -33,8 +35,7 @@ import java.util.List;
 public class ChatController {
 
     private final ChatService chatService;
-
-    private int connectedClients = 0; // 연결된 클라이언트 수
+    private final SimpMessagingTemplate messagingTemplate;
 
     @GetMapping("/chat") // 추가: /chat 경로로 접근할 때 chat. html을 보여줌
     public String chat(Model model) {
@@ -52,29 +53,24 @@ public class ChatController {
         return chatMessage;
     }
 
-    @MessageMapping("/openingComment")
+    @MessageMapping("/connect")
     @SendTo("/topic/openingComment")
-    public String openingComment(String sender){
-        System.out.println(sender);
-        return sender+"님이 입장하셨습니다.";
+    public String openingComment(ChatConnectRequest request){
+        System.out.println("openingComment = " + request);
+        chatService.saveMessage(request.toChatMessage());
+        String userId = request.getUserId();
+        return userId+"님이 입장하셨습니다.";
     }
 
-    @MessageMapping("/dbMessages")
-    @SendTo("/topic/dbMessages")
-    public List dbMessages(String startTime){
-        System.out.println(startTime);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
-        LocalDateTime entityChatDate = LocalDateTime.parse(startTime, formatter);
-        List<ChatMessage> messages = chatService.showMessages(entityChatDate);
-        System.out.println(messages);
-        return messages;
+    @MessageMapping("/loadMessages")
+    public void loadMessages(ChatConnectRequest request){
+        String connectedTimeStr = request.getConnectedTimeAsString();
+        LocalDateTime connectedTime = LocalDateTime.parse(connectedTimeStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        List<ChatMessage> messages = chatService.showMessages(connectedTime);
+        String clientTopic = "/user/" + request.getUserId() + "/topic/chat";
+        messages.forEach(message -> messagingTemplate.convertAndSend(clientTopic, message));
     }
 
-    @MessageMapping("/getservertime")
-    @SendTo("/topic/serverTime")
-    public LocalDateTime getServerTime() {
-        return LocalDateTime.now();
-    }
 
 
 }

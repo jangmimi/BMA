@@ -5,10 +5,13 @@ document.addEventListener("DOMContentLoaded", function () {
     //알림메세지 개수
     let notificationCount = 0;
 
-    //서버시간
-    let serverTime;
+    //연결한시간
+    let connectedTime;
 
-    const sender = document.getElementById("s-chat-sender").value;
+    //고유한 주제
+    let clientTopic;
+
+    let sender = document.getElementById("s-chat-sender").value;
     const textarea = document.querySelector("#s-chat-input");
     const image = document.querySelector("#s-chat-input-img");
     image.src = "/sc/free-icon-sent-mail-71746.png";
@@ -25,15 +28,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 모달 버튼 클릭 시 모달 창 토글
     modalButton.addEventListener("click", function () {
+        //sender, 아이디값이 있어야만 모달을 열수 있다
         if (sender === '') {
             alert("채팅기능은 로그인하셔야 이용 하실 수 있습니다");
             window.location.href = '/member/qLoginForm';
         } else {
             modal.style.display = "flex";
             modalButton.style.transform = "scale(0)";
-            //버튼을 누르면 웹통신 시작
+            //웹통신 시작
             connect();
-            resetNotificationCount(); // 알림 메시지 개수 초기화
+            loadMessages();
+            //알림 메시지 개수 초기화
+            resetNotificationCount();
         }
     });
 
@@ -43,59 +49,63 @@ document.addEventListener("DOMContentLoaded", function () {
         modalButton.style.transform = "scale(1)";
     });
 
-    //웹소켓 연결 (통신 코드)
-function connect() {
-    const socket = new SockJS('/chat');
-    stompClient = Stomp.over(socket);
-    stompClient.connect({}, function (frame) {
-        console.log('Connected: ' + frame);
+    //웹소켓 연결
+    function connect() {
+        const socket = new SockJS('/chat');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            console.log('Connected: ' + frame);
+            //처음 연결 시간 저장
+            connectedTime = new Date();
+            //유저 아이디와 연결시간을 보내준다
+            stompClient.send("/app/connect", {}, JSON.stringify({ userId: sender, connectedTime: connectedTime.toISOString() }));
+            //입장멘트
+            stompClient.subscribe('/topic/openingComment', function (messages) {
+                //입장멘트를 HTML로 출력해주는 함수를 실행
+                openingComment(messages);
+            });
+        });
+    };
 
-        if(!sessionStorage.getItem('startTime')){
-
-                stompClient.send("/app/openingComment", {}, JSON.stringify(sender));
-                stompClient.subscribe('/topic/openingComment', function (messages) {
-                    openingComment(messages);
-                });
-
-                stompClient.subscribe("/topic/serverTime", function (data) {
-                serverTime = JSON.parse(data.body); // 서버에서 받은 JSON 데이터 파싱
-                sessionStorage.setItem('startTime', serverTime.toString().slice(0, -1));
+        function loadMessages() {
+            clientTopic = "/user/" + sender + "/topic/chat"; // 고유한 주제 생성
+            stompClient.send("/app/loadMessages", {}, JSON.stringify({ userId: sender}));
+            stompClient.subscribe(clientTopic, function (messages) {
+//                        const messageAll = JSON.parse(messages.body);
+//                        for (const message of messageAll) {
+                            showMessages(message);
+//                        }
             });
         }
-        const startTime = sessionStorage.getItem('startTime');
 
-        console.log(startTime);
-
-        // 서버 시간을 받아온 후에 dbMessages로 요청 보내기
-        stompClient.send("/app/dbMessages", {}, startTime);
-
-        stompClient.subscribe('/topic/dbMessages', function (messages) {
-            const messageAll = JSON.parse(messages.body);
-            for (const message of messageAll) {
-                showMessages(message);
-            }
-        });
-
-        stompClient.subscribe('/topic/messages', function (messages) {
-            const message = JSON.parse(messages.body);
-            showMessages(message);
-        });
-
-        // 서버 시간을 요청
-        stompClient.send("/app/getservertime", {}, JSON.stringify());
-    });
-};
+//        // 서버 시간을 받아온 후에 dbMessages로 요청 보내기
+//        stompClient.send("/app/dbMessages", {}, startTime);
+//
+//        stompClient.subscribe('/topic/dbMessages', function (messages) {
+//            const messageAll = JSON.parse(messages.body);
+//            for (const message of messageAll) {
+//                showMessages(message);
+//            }
+//        });
+//
+//        stompClient.subscribe('/topic/messages', function (messages) {
+//            const message = JSON.parse(messages.body);
+//            showMessages(message);
+//        });
+//
+//        // 서버 시간을 요청
+//        stompClient.send("/app/getservertime", {}, JSON.stringify());
 
     function openingComment(messages) {
-                const chatTextBox = document.querySelector(".s-chat-textbox");
-                chatTextBox.scrollTo(0, chatTextBox.scrollHeight);
-                const messageBlock = document.createElement("div");
-                messageBlock.className = "s-chat-message";
-                const messageInfo = document.createElement("p");
-                messageInfo.className = "s-chat-info";
-                messageInfo.textContent = messages.body;
-                messageBlock.appendChild(messageInfo);
-                chatTextBox.appendChild(messageBlock);
+        const chatTextBox = document.querySelector(".s-chat-textbox");
+        chatTextBox.scrollTo(0, chatTextBox.scrollHeight);
+        const messageBlock = document.createElement("div");
+        messageBlock.className = "s-chat-message";
+        const messageInfo = document.createElement("p");
+        messageInfo.className = "s-chat-info";
+        messageInfo.textContent = messages.body;
+        messageBlock.appendChild(messageInfo);
+        chatTextBox.appendChild(messageBlock);
     }
 
     //클라이언트가 작성한 메세지를 controller로 보낸다
@@ -179,7 +189,7 @@ function connect() {
 
         chatTextBox.appendChild(messageBlock);
 
-        if(message.chatSender !== sender){
+        if (message.chatSender !== sender) {
             notificationCount++;
             updateNotificationCount();
         }
