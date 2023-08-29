@@ -11,6 +11,8 @@ import javax.validation.constraints.Pattern;
 @NoArgsConstructor
 public class MemberDTO {	// 회원가입 폼 입력 정보 담는 DTO
 
+	private Long idx;
+
 	@NotBlank(message = "이메일을 입력해주세요.")
 	@Email(message = "이메일 형식으로 입력해주세요.")
 	private String email;
@@ -28,7 +30,7 @@ public class MemberDTO {	// 회원가입 폼 입력 정보 담는 DTO
 	private String tel;
 
 	private String root;
-	
+
 	// 약관동의여부 값 추가예정
 
 	// 빌더 패턴으로 객체 생성
@@ -45,11 +47,13 @@ public class MemberDTO {	// 회원가입 폼 입력 정보 담는 DTO
 	}
 
 	@Builder
-	public MemberDTO(String name, String pwd, String nickname, String tel) {
+	public MemberDTO(String email, String name, String nickname, String pwd, String tel, String root) {
+		this.email = email;
 		this.name = name;
-		this.pwd = pwd;
 		this.nickname = nickname;
+		this.pwd = pwd;
 		this.tel = tel;
+		this.root = root;
 	}
 }
 

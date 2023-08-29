@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
-//@SessionAttributes("loginMember")
+@SessionAttributes("loginMember")
 @RequestMapping("/member")
 @Controller
 public class MemberController {
@@ -63,7 +63,6 @@ public class MemberController {
 //        MemberDTO userInfo = qMemberServiceImpl.getUserInfo2(accessToken);   // 사용자 정보 받음
         HashMap<String, Object> userInfo = qMemberService.getUserInfo(accessToken);   // 사용자 정보 받음
         log.info("login info : " + userInfo.toString());
-        // https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#req-user-info
         log.info("login userEmail : " + userInfo.get("email"));
         log.info("login userName : " + userInfo.get("name"));
         log.info("login userNickname : " + userInfo.get("nickname"));
@@ -79,21 +78,29 @@ public class MemberController {
             kloginMember.setName((String) userInfo.get("name"));
             kloginMember.setNickname((String) userInfo.get("nickname"));
             kloginMember.setTel((String) userInfo.get("phone_number"));
-
+            kloginMember.setRoot("카카오");
             kloginMember = qMemberService.login(kloginMember);
-            return "redirect:/member/qMyPage";
+
+            kloginMember.toEntity();
+            session.setAttribute("userEmail",  kloginMember.getEmail());
+            session.setAttribute("userName",  kloginMember.getName());
+            model.addAttribute("userEmail", kloginMember.getEmail());
+            model.addAttribute("userName",kloginMember.getName());
+            model.addAttribute("loginMember",kloginMember);
+            log.info("loginMember : " + kloginMember.toString());
+
+            return "userView/oMyPage";
 
         } else {
-            MemberEntity member = new MemberEntity();
-            member.setEmail((String) userInfo.get("email"));
-            member.setName((String) userInfo.get("name"));
-            member.setNickname((String) userInfo.get("nickname"));
-            member.setTel((String) userInfo.get("phone_number"));
-            member.setRoot("카카오");
-
-            //member.setPwd(pwdConfig.passwordEncoder().encode((String) userInfo.get("email")));   // 암호화는 이메일 암호화로
-            log.info(member.toString());
-            qMemberService.joinBasic(member);   // 카카오정보로 회원가입 실행
+            MemberDTO memberDTO = new MemberDTO();
+            memberDTO.setEmail((String) userInfo.get("email"));
+            memberDTO.setName((String) userInfo.get("name"));
+            memberDTO.setNickname((String) userInfo.get("nickname"));
+            memberDTO.setTel((String) userInfo.get("phone_number"));
+            memberDTO.setRoot("카카오");
+            MemberEntity memberEntity = memberDTO.toEntity();
+            //memberDTO.setPwd(pwdConfig.passwordEncoder().encode((String) userInfo.get("email")));   // 암호화는 이메일 암호화로
+            qMemberService.joinBasic(memberEntity);   // 카카오정보로 회원가입 실행
 
             if(userInfo.get("email") != null) {
                 session.setAttribute("userEmail", userInfo.get("email"));
@@ -103,16 +110,6 @@ public class MemberController {
             model.addAttribute("userEmail", userInfo.get("email"));
             model.addAttribute("userName", userInfo.get("nickname"));
         }
-
-//        model.addAttribute("thumbnail_image_url", userInfo.get("thumbnail_image_url"));
-//        if(userInfo.getEmail() != null) {
-//            session.setAttribute("userId", userInfo.getEmail());
-//            session.setAttribute("userName", userInfo.getName());
-//            session.setAttribute("accessToken", accessToken);
-//        }
-//        model.addAttribute("userId", userInfo.getEmail());
-//        model.addAttribute("userName", userInfo.getName());
-
         return "userView/oMyPage";
     }
 
@@ -180,7 +177,7 @@ public class MemberController {
         member.setEmail(memberDTO.getEmail());
         member.setPwd(memberDTO.getPwd());
         log.info(member.toString());
-        
+
         if(bindingResult.hasErrors()) {
             log.info("유효성 검사 에러 발생");
             return "/userView/oLoginForm";
@@ -232,7 +229,7 @@ public class MemberController {
 
         qMemberService.joinBasic(member);
         log.info("qMemberService.joinBasic(member) 실행 한 후");
-        
+
         // 회원전체조회 테스트
         List<MemberEntity> members = qMemberService.findMembers();
         log.info("members 값 : {}", members);
@@ -392,6 +389,14 @@ public class MemberController {
         }
         return "userView/oFindMemberInfo";
 //        return "redirect:/member/qFindMemberInfo";
+    }
+    // ajax로 변경
+    @PostMapping("/qFindEmailCheck")
+    @ResponseBody
+    public String qFindEmailCheck(@RequestParam String name, @RequestParam String tel) {
+        Optional<MemberEntity> find = qMemberService.findByNameAndTel(name, tel);
+        String findEmail = find.get().getEmail();
+        return findEmail;
     }
 
     /** 비밀번혼 찾기 */
