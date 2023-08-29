@@ -5,7 +5,7 @@
       layout:decorate="~{fragments/layouts/include_footer_layout}">
 <head>
     <meta charset="UTF-8">
-    <title>게시글 리스트 페이지</title>
+    <title>게시글 검색</title>
     <link rel="stylesheet" th:href="@{/css/community/boardList.css}">
 </head>
 
@@ -16,12 +16,12 @@
     <hr/>
 
     <div class = "headrow">
-    <form action="/community/list/search" method="get">
-    <div class = "headrowL">
-        <input type="text" class = "searchbox" name="keyword" placeholder="검색어 입력" th:value="${searchKeyword}">
-        <button class = "searchbtn"  type="submit">검색</button>
-    </div>
-    </form>
+        <form action="/community/list/search" method="get">
+            <div class = "headrowL">
+                <input type="text" class = "searchbox" name="keyword" placeholder="검색어 입력" th:value="${searchKeyword}">
+                <button class = "searchbtn"  type="submit">검색</button>
+            </div>
+        </form>
     </div>
     <hr/>
 
@@ -42,29 +42,28 @@
 
         <tbody>
         <tr th:each="community : ${list}">
-            <td th:text = "${community.id}">1</td>
+            <td th:text="${community.id}">1</td>
             <td>
-                <a th:text = "${community.title}" th:href="@{/community/view(id=${community.id})}">제목</a>
+                <a th:text="${community.title}" th:href="@{/community/view(id=${community.id})}">제목</a>
             </td>
-            <td th:text = "${community.author}">작성자</td>
-            <td th:text="${#temporals.format(community.createdAt, 'yyyy-MM-dd')}">yyyy-mm-dd</td>
+            <td th:text="${community.author}">작성자</td>
+            <td th:text="${#temporals.format(community.createdAt, 'yyyy-MM-dd')}">yyyy-MM-dd</td>
             <td th:text = "${community.view}">0</td>
         </tr>
         </tbody>
     </table>
     <div class="pagination">
     <span th:if="${currentPage > 1}">
-        <a th:href="@{/community/list(page=${currentPage - 1})}" class="prev">&lt; 이전</a>
+        <a th:href="@{/community/list/search(page=${currentPage - 1}, keyword=${searchKeyword})}" class="prev">&lt; 이전</a>
     </span>
         <span th:each="pageNum : ${#numbers.sequence(1, totalPages)}">
-        <a th:href="@{/community/list(page=${pageNum})}" th:classappend="${pageNum == currentPage} ? 'active' : ''">
+        <a th:href="@{/community/list/search(page=${pageNum}, keyword=${searchKeyword})}" th:classappend="${pageNum == currentPage} ? 'active' : ''">
             <span th:text="${pageNum}"></span>
         </a>
      </span>
         <span th:if="${currentPage < totalPages}">
-        <a th:href="@{/community/list(page=${currentPage + 1})}" class="next">다음 &gt;</a>
+        <a th:href="@{/community/list/search(page=${currentPage + 1}, keyword=${searchKeyword})}" class="next">다음 &gt;</a>
     </span>
-        <h2>전체 게시글 개수: <span th:text="${totalCommunityCount}"></span></h2> <!-- 수정 수정-->
     </div>
 </div>
 </body>

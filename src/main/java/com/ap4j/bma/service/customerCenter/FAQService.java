@@ -5,6 +5,7 @@ import com.ap4j.bma.model.repository.FAQRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -20,4 +21,5 @@ public class FAQService {
     public FAQEntity faqView(Integer id) {
         return faqRepository.findById(id).get();
     }
+
 }

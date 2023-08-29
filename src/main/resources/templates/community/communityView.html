@@ -9,7 +9,7 @@
     <link rel="stylesheet" th:href="@{/css/community/communityView.css}">
 </head>
 
-<body layout:fragment="content"><p th:text = "${article.title}">제목</p>
+<body layout:fragment="content">
 
 <div class="layout">
     <div class="viewtable-outer">
@@ -20,7 +20,7 @@
                 <th>작성자</th>
                 <td class= "k-center" th:text="${article.author}">작성자</td>
                 <th>작성일</th>
-                <td class= "k-center" th:text= "${article.createdAt}">yyyy-mm-dd</td>
+                <td class= "k-center" th:text="${#temporals.format(article.createdAt, 'yyyy-MM-dd')}">yyyy-mm-dd</td>
                 <th>조회수</th>
                 <td class= "k-center" th:text= "${article.view}" >조회수</td>
             </tr>

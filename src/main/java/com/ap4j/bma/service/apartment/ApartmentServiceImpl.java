@@ -50,12 +50,6 @@ public class ApartmentServiceImpl implements ApartmentService {
                             district(aptEntity.getDistrict()).
                             address(aptEntity.getAddress()).
                             complexName(aptEntity.getComplexName()).
-                            area(aptEntity.getArea()).
-                            contractYearMonth(aptEntity.getContractYearMonth()).
-                            constructionYear(aptEntity.getConstructionYear()).
-                            contractDate(aptEntity.getContractDate()).
-                            transactionAmount(aptEntity.getTransactionAmount()).
-                            floor(aptEntity.getFloor()).
                             roadName(aptEntity.getRoadName()).
                             latitude(latitude).
                             longitude(longitude).
@@ -78,9 +72,6 @@ public class ApartmentServiceImpl implements ApartmentService {
                     district(aptEntity.getDistrict()).
                     address(aptEntity.getAddress()).
                     roadName(aptEntity.getRoadName()).
-                    area(aptEntity.getArea()).
-                    contractYearMonth(aptEntity.getContractYearMonth()).
-                    transactionAmount(aptEntity.getTransactionAmount()).
                     longitude(aptEntity.getLongitude()).
                     latitude(aptEntity.getLatitude()).
                     build();
