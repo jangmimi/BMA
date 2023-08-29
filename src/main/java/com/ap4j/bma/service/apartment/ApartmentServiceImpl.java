@@ -21,8 +21,13 @@ import java.util.List;
 @Service
 public class ApartmentServiceImpl implements ApartmentService {
 
-    @Autowired
     private AptRepository aptRepository;
+
+    @Autowired // 필드 주입으로 수정.
+    public ApartmentServiceImpl(AptRepository aptRepository) {
+        this.aptRepository = aptRepository;
+    }
+
 
     /** 전국 아파트 리스트 API 호출 메서드 */
     public String callApi() {
