@@ -23,45 +23,77 @@
             <div>
                 <p class="findSubtitle">이메일 찾기</p>
             </div>
-            <form th:action="@{/member/qFindEmail}" method="POST">
+            <form th:action="@{/member/qFindEmail}" method="POST" onsubmit="return oFindEmailCheck()">
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="nameEmail" name="nameEmail" placeholder="이름을 입력해주세요." autofocus="autofocus" />
-                    <label th:for="email" class="oLabelColor">이름</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="이름을 입력해주세요." autofocus="autofocus" />
+                    <label th:for="name" class="oLabelColor">이름</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="telEmail" name="telEmail" placeholder="01012345678(하이픈 '-' 제외 숫자만)" /><
-                    <label th:for="name" class="oLabelColor">연락처</label>
+                    <input type="text" class="form-control" id="tel" name="tel" placeholder="01012345678(하이픈 '-' 제외 숫자만)" />
+                    <label th:for="tel" class="oLabelColor">연락처</label>
                 </div>
-<!--                <span th:if="${userEmail != null}">-->
-<!--                    <div id="findEmailResult" style="display:none; text-align:left; color:red; font-size:12px;">-->
-<!--                        <p th:value="${userEmail}"></p>-->
-<!--                    </div>-->
-<!--                </span>-->
+                <span>
+                    <div class="ofindResult">
+                        <p th:if="${findEmail != null}" th:text="${findEmail}"></p>
+                        <p th:if="${findEmailFailed != null}" th:text="${findEmailFailed}"></p>
+                    </div>
+                </span>
                 <div class="oFindBtn-container">
-                    <input type="submit" class="btn btn-dark mb-5 mt-3" value="이메일 찾기" style="width:46%;" />
+                    <input type="submit" class="btn btn-outline-dark mb-5 mt-3" value="이메일 찾기" style="width:46%;" />
                 </div>
             </form>
 
             <div>
                 <p class="findSubtitle">비밀번호 찾기</p>
             </div>
-            <form th:action="@{/member/qFindPwd}" method="POST">
+            <form th:action="@{/member/qFindPwd}" method="POST" onsubmit="return oFindPwdCheck()">
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="email" name="email" placeholder="이메일을 입력해주세요." />
-                    <label th:for="email" class="oLabelColor">이메일 주소</label>
+                    <input type="text" class="form-control" id="emailpwd" name="emailpwd" placeholder="이메일을 입력해주세요." />
+                    <label th:for="emailpwd" class="oLabelColor">이메일 주소</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="tel" name="tel" placeholder="연락처를 입력해주세요." />
-                    <label th:for="tel" class="oLabelColor">연락처</label>
+                    <input type="text" class="form-control" id="telpwd" name="telpwd" placeholder="연락처를 입력해주세요." />
+                    <label th:for="telpwd" class="oLabelColor">연락처</label>
                 </div>
+                <span>
+                    <div class="ofindResult">
+                        <p th:if="${findPwd != null}" th:text="${findPwd}"></p>
+                        <p th:if="${findPwdFailed != null}" th:text="${findPwdFailed}"></p>
+                    </div>
+                </span>
                 <div class="oFindBtn-container">
-                    <input type="submit" class="btn btn-dark mb-3 mt-3" value="비밀번호 찾기" style="width:46%;" />
+                    <input type="submit" class="btn btn-outline-dark mb-3 mt-3" value="비밀번호 찾기" style="width:46%;" />
                 </div>
             </form>
         </div>
     </div>
-    <script>
 
+    <script>
+        function findEmail() {
+            let name = $('#name').value;
+            let tel = $('#tel').value;
+
+            fetch('/qFindEmail', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'name=' + encodeURIComponent(name) + '&tel=' + encodeURIComponent(tel),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.cnt === 1) {
+                    alert('이메일: ' + data.findEmail);
+                } else {
+                    alert('일치하는 회원이 없습니다.');
+                }
+            })
+            .catch(error => {
+                console.error('에러 발생:', error);
+            });
+
+            return false; // 폼 제출 방지
+        }
     </script>
 
     <script th:src="@{/js/member/myPage.js}"></script>

@@ -2,12 +2,10 @@ package com.ap4j.bma.service.member;
 
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Errors;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 public interface MemberService {
 
@@ -35,7 +33,9 @@ public interface MemberService {
 
 	public MemberEntity updateMember(Long idx, MemberEntity updatedMember);
 
-//	public MemberEntity findByNameAndPhone(String name, String phone);
+	public Optional<MemberEntity> findByNameAndTel(String name, String tel);
+
+	public Optional<MemberEntity> findByEmailAndTel(String email, String tel);
 }
 
 //    Map<String, String> validateHandler(Errors errors);

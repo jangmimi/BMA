@@ -7,15 +7,11 @@ import com.ap4j.bma.model.repository.MemberRepository;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import groovy.transform.Undefined;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Errors;
-import org.springframework.validation.FieldError;
 
-import javax.persistence.EntityNotFoundException;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
@@ -26,7 +22,6 @@ import java.net.URL;
 import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
@@ -171,11 +166,15 @@ public class MemberServiceImpl implements MemberService {
 			JsonObject kakaoAccount = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
 
 			String email = kakaoAccount.getAsJsonObject().get("email").getAsString();
+			String name = kakaoAccount.getAsJsonObject().get("name").getAsString();
 			String nickname = properties.getAsJsonObject().get("nickname").getAsString();
+			String phone_number = kakaoAccount.getAsJsonObject().get("phone_number").getAsString();
 //			String profile_image_url = properties.getAsJsonObject().get("thumbnail_image_url").getAsString();
 
-			userInfo.put("nickname", nickname);
 			userInfo.put("email", email);
+			userInfo.put("name", name);
+			userInfo.put("nickname", nickname);
+			userInfo.put("phone_number", phone_number);
 //			userInfo.put("thumbnail_image_url", profile_image_url);
 
 			Optional<MemberEntity> tmp = memberRepository.findByEmail(email);
@@ -377,18 +376,19 @@ public class MemberServiceImpl implements MemberService {
 		} else {
 			return null;
 		}
-//		Optional<MemberEntity> optionalMemberEntity = memberRepository.findByEmail(idx).orElseThrow(Undefined.EXCEPTION::new);
-//		entity.update(memberDTO.getName());
-//		return idx;
-
 	}
 
-	/** 회원정보 조회(이름 연락처로) */
-//	@Override
-//	public MemberEntity findByNameAndPhone(String name, String phone) {
-//		return memberRepository.findByNameAndPhone(name, phone);
-//	}
-
+	/** email 찾기(이름 연락처로) */
+	@Override
+	public Optional<MemberEntity> findByNameAndTel(String name, String tel) {
+		return memberRepository.findByNameAndTel(name, tel);
+	}
+	
+	/** pwd 찾기(이메일 연락처로) */
+	@Override
+	public Optional<MemberEntity> findByEmailAndTel(String email, String tel) {
+		return memberRepository.findByEmailAndTel(email, tel);
+	}
 
 	/** 회원가입 유효성 검사 */
 //	@Override

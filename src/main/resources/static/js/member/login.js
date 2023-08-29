@@ -26,6 +26,35 @@ function oLoginCheck() {
     }
 };
 
+<!-- 로그인 체크 -->
+//function checkLogin() {
+//    let email = $('#email').val();
+//    let pwd = $('#pwd').val();
+//
+//    $.ajax({
+//        url: '/member/qLoginCheck',
+//        type: 'post',
+//        data: {email:email},
+//        success:function(cnt) {
+//            if(cnt == 0 && email.length != 0) {
+//                $('#btnEmailCheck').attr('class','btn btn-primary');
+//                $('#btnEmailCheck').val("사용 가능");
+//                alert('이메일 사용이 가능합니다.');
+//            } else if(cnt != 0) {
+//                $('#btnEmailCheck').attr('class','btn btn-danger');
+//                $('#btnEmailCheck').val("사용 불가");
+//                alert('이미 존재하는 이메일입니다.\n이메일을 다시 입력해주세요.');
+//            //    $('#email').val('');
+//            } else if(email.length == 0) {
+//                alert('이메일을 입력해주세요.');
+//            }
+//        },
+//        error:function() {
+//            alert("에러입니다.");
+//        }
+//    });
+//};
+
 <!--        $(function() {-->
 <!--               fnInit();-->
 <!--         });-->
