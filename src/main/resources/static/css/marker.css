@@ -1,0 +1,37 @@
+/** 지도 마커 css입니다. */
+
+.e-marker {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 5px;
+    height: 60px;
+    width: 100%;
+    padding: 0px 10px;
+}
+
+.e-markerTitle {
+    height: 50%;
+    background-color: #26abed;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.e-markerTitle h3 {
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.e-markerContent p {
+    margin-top: 5px;
+}
+
+.e-markerContent {
+    font-size: 12px;
+    height: 50%;
+    background-color: white;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border: 1px solid lightgray;
+}

@@ -77,6 +77,14 @@
                         <input type="text" class="form-control" id="name" name="name" th:value="${userName}" autofocus="autofocus" />
                         <label th:for="name">이름(실명)</label>
                     </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="nickname" name="nickname" th:value="${userNickname}" autofocus="autofocus" />
+                        <label th:for="nickname">닉네임</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="tel" name="tel" th:value="${userTel}" autofocus="autofocus" />
+                        <label th:for="tel">연락처</label>
+                    </div>
                     <div class="form-floating mb-3 mr-3" style="display:flex; flex-wrap:wrap">
                         <input type="text" class="form-control" id="email" th:value="${userEmail}" name="email" disabled="disabled" />
                         <label th:for="email">이메일 주소</label>
@@ -92,6 +100,7 @@
                         <label th:for="email">변경할 비밀번호 확인</label>
                         <div class="form-floating" id="emailErr2" style="text-align:left; color:red; font-size:12px;"></div>
                     </div>
+
 
                     <div class="form-floating" align="left" style="font-size: 12px;";>
                         <ul style="list-style: none; padding: 0px; margin: 20px 0px 20px 0px; border-radius: 7px; border: 1px solid #dee2e6;">
