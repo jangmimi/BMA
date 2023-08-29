@@ -16,12 +16,14 @@
 <div class="news-header">
     <h1>부동산 뉴스</h1>
     <form action="/news/newsPage" method="get">
-        <div class="news-search">
-            <input type="text" id="search-input" name="query" placeholder="부동산">
-            <div class="r-icon-circle">
-                <button id="search-button" type="submit">
-                    <i id="icon" class="fa-solid fa-magnifying-glass"></i>
-                </button>
+        <div class="search-range">
+            <div class="news-search">
+                <input type="text" id="search-input" name="query" placeholder="부동산">
+                <div class="r-icon-circle">
+                    <button id="search-button" type="submit">
+                        <i id="icon" class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </form>
@@ -34,10 +36,12 @@
                     </div>
                     <div>
                         <p th:text="${newsItem.description}"></p>
+                        <p th:text="${newsItem.pubDate}"></p>
                     </div>
                 </div>
             </div>
             <div th:if="${total} == 0" id="noResult">
+                검색결과가 없습니다.
             </div>
         </div>
         <div class="pagination">

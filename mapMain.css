@@ -120,11 +120,11 @@ border: none;
 /*사이드바 속 세부 조정들*/
 .asideBarAll{
 position: absolute;
-top: 60px;
-width: 400px;
-z-index: 1100;
-height: calc(100% - 60px);
-line-height: 1;
+    top: 111px;
+    width: 400px;
+    z-index: 1100;
+    height: calc(100% - 60px);
+    line-height: 1;
 }
 .sideContents{
 overflow-y: auto;
@@ -353,9 +353,12 @@ color: white;
 border-radius: 15px;
 }
 .btn.btn-primary.review{
-width: 29px;
-height: 23px;
-padding-left: 15px;
+display: flex;
+    width: 29px;
+    height: 23px;
+    padding-left: 15px;
+    justify-content: center;
+    align-items: center;
 }
 .btn.btn-primary.dropdown-toggle.tellOption{
 height: 14px;
@@ -483,16 +486,98 @@ margin-top: 22px;
 }
 
 /*공유하기 모달*/
-.modal-header.shareBtn{
+.modal-content.aShare{
+  width:384px;
+}
+.modal-header.aShare{
   justify-content:center;
 }
-.modal-content.shareBtn{
-  width:230px;
+.modal-body.aShare{
+    display: flex;
+        justify-content: space-evenly;
+}
+.aShareBtns{
+    background-color: transparent;
+    width: 39px;
+    border: none;
+}
+.aShareBtnsImg{
+    width:100%;
 }
 
 
 
+.modal-header.aSaveToMine{
+    justify-content: center;
+}
+.modal-body.LogInNeed{
+    display: flex;
+        flex-direction: column;
+        align-items: center;
+}
+.LogInNeedContents{
+    width:88%;
+}
+.aFindSaveEmail{
+margin-top: 22px;
+    width: 100%;
+        display: flex;
+        justify-content: center;
+}
+.aFindSaveEmailContents{
+    width: 275px;
+        display: flex;
+        justify-content: space-between;
+}
+.aLogInBtn{
+    height: 35px;
+        width: 257px;
+        border: none;
+        background-color: #26abed;
+        color: white;
+        border-radius: 7px;
+}
+.aJoinBtnsList{
+    margin-top: 7px;
+    margin-bottom:32px;
+}
+.aJoinBtns{
+height: 24px;
+    width: 116px;
+    border: none;
+    color: #26abed;
+    border-radius: 7px;
+}
 
+.aListOfEasyLogIn{
+    display: flex;
+        justify-content: center;
+        align-items:center;
+        margin-bottom:40px;
+}
+.aEasyLogInBtn{
+width: 179px;
+    border: none;
+    background-color: white;}
+.emailLogInPartTitle{
+    font-size: 18px;
+        color: #26abed;
+}
+.aEasyLogInImg{
+    width: 129px;
+        height: 33px;
+}
+.emailLogInPartInput{
+    display: flex;
+        flex-direction: column;
+        align-items: center;
+}
+.LogInInputs{
+width: 269px;
+    height: 36px;
+    border: 1px solid lightgray;
+    border-radius: 7px;
+}
 
 
 .tac-ul{
@@ -539,7 +624,7 @@ width: 10px;
 
 
 
-#mes-utils{
+.mes-utils{
 width: 90px;
 text-align: center;
 display: flex;
@@ -578,14 +663,35 @@ color: #323232;
 
 
 
-
+/*상세사이드바 위에 작은 검색창*/
+.afilter {
+    border-radius: 5px;
+        position: absolute;
+        z-index: 1100;
+        top: 0px;
+        left: 0px;
+        width: 348px;
+        height: 25px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 30px 12px 20px;
+        background-color: white;
+        border: 1px solid #dfdfdf;
+}
+.aSearchInput{
+    border: none;
+    background-color: none;
+    width: 100%s;
+    outline: none;
+}
 
 
 
 /*맵 우측 도구*/
 .btn-group-vertical{/*학군상권버튼그룹*/
 top: 40%;
-        position: absolute;
+        position: fixed;
         right: 83px;
         z-index: 1200;
         line-height: 1;
@@ -631,8 +737,8 @@ top: 40%;
 }
 
 .btn.btn-primary.aSellMyHBtn{
-    bottom: 9%;
-        position: absolute;
+    bottom: 3%;
+        position: fixed;
         right: 37px;
         z-index: 1200;
         line-height: 1;
@@ -641,3 +747,11 @@ top: 40%;
         text-align: center;
 }
 
+.modal-body.aSearchAPTAll{
+    display:flex;
+    justify-content:center;
+    height:400px;
+}
+.aSearchInput.aOnSellMyH{
+    width:100%;
+}

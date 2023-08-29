@@ -101,28 +101,22 @@ document.addEventListener("DOMContentLoaded", function () {
                 (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
             totalInterest = (monthlyPayment * numberOfPayments) - principal;
             document.querySelector(".e-result4 th").textContent = "1회차 월 상환금액";
-        } else if (repaymentMethod.id === "e-button2") { // 원금균등 (제대로 계산안됨)
+        } else if (repaymentMethod.id === "e-button2") { // 원금균등
 
             let test = parseFloat(inputAmount.value.replace(/,/g, ''));
-
             let totaliza = 0;
+
             for(let i = 0; i < numberOfPayments; i++){
                 let iza = Math.round(test * monthlyInterestRate); // 월 이자
-                console.log(iza);
                 let wolmoney = Math.ceil( principal / numberOfPayments); // 월 상환액
-                console.log(wolmoney);
-                console.log("************");
+
                 test = test - wolmoney;
                 totaliza += iza;
             }
+
             totalInterest = totaliza;
-            // console.log(principal / numberOfPayments);
-            // console.log(Math.round(principal * monthlyInterestRate));
-
+            
             monthlyPayment = principal / numberOfPayments + Math.ceil(principal * monthlyInterestRate);
-            // totalInterest = (monthlyPayment * numberOfPayments) * monthlyInterestRate;
-
-
 
             document.querySelector(".e-result4 th").textContent = "1회차 월 상환금액";
         } else if (repaymentMethod.id === "e-button3") { // 만기일시

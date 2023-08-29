@@ -9,11 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 
 @Slf4j
@@ -42,6 +40,8 @@ public String search(
         Model model) {
     String searchResult = newsApiService.searchNews(searchQuery, start);
 
+    DateTimeFormatter dateformat = DateTimeFormatter.ofPattern("yyyy.MM.dd a hh:mm");
+
     ObjectMapper objectMapper = new ObjectMapper();
     try {
         JsonNode jsonNode = objectMapper.readTree(searchResult);
@@ -54,11 +54,17 @@ public String search(
                 String title = item.get("title").asText();
                 String link = item.get("link").asText();
                 String description = item.get("description").asText();
+                String pubDate = item.get("pubDate").asText();
+
+                LocalDateTime dateTime = LocalDateTime.parse(pubDate, DateTimeFormatter.RFC_1123_DATE_TIME);
+                String formattedPubDate = dateTime.format(dateformat);
+
 
                 Map<String, String> newsItem = new HashMap<>();
                 newsItem.put("title", removeHTMLTags(title));
                 newsItem.put("link", link);
                 newsItem.put("description", removeHTMLTags(description));
+                newsItem.put("pubDate", formattedPubDate);
                 newsList.add(newsItem);
             }
         } else {

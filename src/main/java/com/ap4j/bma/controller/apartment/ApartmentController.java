@@ -32,15 +32,15 @@ public class ApartmentController {
         return "redirect:/getCoordinates";
     }
 
-    /** 화면 좌표 범위의 DB값 데이터 보내주기 (클라이언트가 사용할 페이지)*/
-    @PostMapping("/markers")
-    public ResponseEntity<List<AptDTO>> getMarker(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng) {
-        List<AptDTO> aptList = aptServiceImpl.findAptListBounds(southWestLat, southWestLng, northEastLat, northEastLng);
-        return ResponseEntity.ok(aptList);
-    }
-    @GetMapping("/markers")
-    public String getMarker() {
-        return "kakaoMap/aptMain";
-
-    }
+//    /** 화면 좌표 범위의 DB값 데이터 보내주기 (클라이언트가 사용할 페이지)*/
+//    @PostMapping("/markers")
+//    public ResponseEntity<List<AptDTO>> getMarker(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng) {
+//        List<AptDTO> aptList = aptServiceImpl.findAptListBounds(southWestLat, southWestLng, northEastLat, northEastLng);
+//        return ResponseEntity.ok(aptList);
+//    }
+//    @GetMapping("/markers")
+//    public String getMarker() {
+//        return "kakaoMap/aptMain";
+//
+//    }
 }
