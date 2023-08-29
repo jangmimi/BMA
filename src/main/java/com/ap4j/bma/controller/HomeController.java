@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.annotation.SessionScope;
 
+import javax.servlet.http.HttpSession;
+
 @SessionAttributes("userEmail")
 @Slf4j
 @Controller
@@ -21,7 +23,9 @@ public class HomeController {
 //	}
 
 	@RequestMapping("/")
-	public String mainPage(){
+	public String mainPage(HttpSession session){
+		log.info("session userEmail : " + session.getAttribute("userEmail"));
+
 		return "mainPage/mainPage";
 	}
 
