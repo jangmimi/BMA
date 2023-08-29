@@ -29,7 +29,7 @@ public class MapController {
         // 도로명에 따른 실거래가 리스트
         List<AptRealTradeDTO> aptDetailDTOList = aptServiceImpl.findByRoadName(roadName);
         // 도로명, 구주소, 아파트명으로 검색시 해당 아파트 정보
-        AptDTO aptKeywordc = aptServiceImpl.
+
 
         Map<String, Object> responseData = new HashMap<>();
         responseData.put("aptList", aptList);
@@ -43,6 +43,7 @@ public class MapController {
     }
 
     @RequestMapping("map")
+
     public String map(){
         log.info("MapController.map.execute");
         return "map/map";
