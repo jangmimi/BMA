@@ -1,0 +1,149 @@
+.news-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.news-header h1 {
+    text-align: center;
+}
+
+/*아이템*/
+.news-result {
+    background-color: white;
+    /*display: flex;*/
+    text-align: left;
+    margin: 30px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 15px;
+    margin-bottom: 0px;
+}
+
+.check {
+    border: 1px solid #e8ebee;
+    border-radius: 6px;
+    box-shadow: 0 1px 30px 0 rgba(0, 0, 0, .03);
+    background-color: #fff;
+    width: 1000px;
+}
+
+.news-result a {
+    font-size: 20px;
+}
+
+.result-range {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    min-height: 1050px;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.pagination a {
+    border: 1px solid #ccc;
+    background-color: white;
+    color: #333;
+    padding: 5px 10px;
+    margin: 0 3px;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.pagination button {
+    background-color: white;
+    color: #333;
+    margin: 0 3px;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 3px;
+    border: none;
+    font-weight: bold;
+}
+
+.pagination a:hover,
+.pagination a:hover > button {
+    background-color: #f1f1f1;
+}
+
+.news-result > div > p {
+    margin-top: 10px;
+}
+.nowPage {
+    text-decoration-line: underline;
+}
+/******* */
+.news-search{
+    height: 80px;
+    padding: 0 50px;
+    border-radius: 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 10px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 100%;
+}
+.news-search:hover .r-icon-circle {
+    width: 100px;
+    cursor: pointer;
+}
+.news-search input{
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    border: none;
+    width: 100%;
+    background-color: transparent;
+    outline: none;
+}
+
+.news-search i{
+    position: relative;
+    right: 2px;
+    color: #696D71;
+    font-size: 42px;
+}
+.r-icon-circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    left: 49px;
+    bottom: 0px;
+    background-color: white;
+    border-radius: 50px;
+    width: 150px;
+    height: 78px;
+    box-shadow: 0 0 10px;
+    transition: 0.5s;
+}
+.r-icon-circle button{
+    background-color: white;
+    border: 0;
+}
+
+div p:nth-child(2) {
+    font-weight: bold;
+    color: darkgray;
+    margin: 0;
+}
+#search-button{
+    cursor: pointer;
+}
+.search-range{
+    display: flex;
+    width: 750px;
+    flex-direction: column;
+}

@@ -9,31 +9,179 @@
     <link rel="stylesheet" th:href="@{/css/community/boardList.css}">
 </head>
 
+<style>
+
+    h1{
+    text-align:center;
+    }
+
+    .atext{
+      text-decoration: none;
+      color: white;
+      }
+
+    .layout {
+        width : 80%;
+        margin: 0 auto;
+        margin-top : 40px;
+    }
+
+     table{
+     width : 100%;
+     margin : auto;
+     border-collapse: collapse;
+     margin-bottom : 10px;
+    }
+
+    table, td, th {
+      border-collapse : collapse;
+    }
+
+    table th {
+    padding: 20px;
+    background: #ececec;
+    color: #666;
+    font-size: 15px;
+    border: 1px solid #ddd;
+    border-top: 3px solid #26A9E0;
+    }
+
+    table td {
+    padding: 14px 21px;
+    color: #666;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+     }
+
+    table tr:hover {
+     background: #f8f8f8;
+     cursor: pointer;
+    }
+
+    .b-q{
+    width:5%;
+    }
+
+    .b-n {
+    width :10%;
+    }
+    .b-t{
+    width : 50%;
+    }
+    .b-w{
+     width : 15%;
+    }
+    .top{
+    height : 100px;
+    width: 50%;
+    background : #f8f8f8;
+    margin: auto;
+    border: 1px solid #ddd;
+
+    }
+
+    .top-inner{
+    height : 40px;
+    width: 60%;
+    border: 2px solid #26A9E0;
+    background : #ffffff;
+    display:flex;
+    justify-content:space-between;
+    margin: auto;
+    margin-top:25px
+    }
+
+
+    .searchbox{
+    padding: 10px;
+    border: 0px;
+    outline: none;
+    float: left;
+    }
+
+    .searchbtn{
+    width: 100px;
+    height:100%;
+    border: 0px;
+    background: #26A9E0;
+    outline: none;
+    float: left;
+    color: #ffffff;
+    }
+
+    .writebtn{
+    width: 100px;
+    height:120%;
+    border: 0px;
+    border-radius: 10px;
+    margin-top:5px;
+    background: #26A9E0;
+    outline: none;
+    color: #ffffff;
+    }
+
+    a{
+       text-decoration: none;
+       color :black;
+    }
+
+
+    .count{
+    float : right;
+    margin-bottom:10px;
+    }
+
+    #count-color{
+    color : #26A9E0;
+    }
+
+    .middle{
+     margin-top:60px;
+    }
+
+    .bottom{
+    text-align : center;
+    margin-top: 40px;
+    }
+
+    span{
+    margin-right:5px;
+    margin-left:5px;
+    }
+
+    .bottomR{
+    height : 40px;
+    background : #ffffff;
+    float: right;
+    }
+
+</style>
 <body layout:fragment="content">
 
 <div class="layout">
     <h1>커뮤니티</h1>
     <hr/>
 
-    <div class = "headrow">
-    <div class = "headrowL">
-        <input type="text" class = "searchbox" placeholder="검색어 입력">
-        <button class = "searchbtn">검색</button>
+    <div class = "top">
+    <form action="/community/list/search" method="get">
+    <div class = "top-inner">
+        <input type="text" class = "searchbox" name="keyword" placeholder="검색어 입력" th:value="${searchKeyword}">
+        <button class = "searchbtn"  type="submit">검색</button>
     </div>
+    </form>
     </div>
     <hr/>
 
-    <div class = "headrowR">
-        <button type="button" class="writebtn" onclick="location.href = '/community/write'" >글쓰기</button>
-    </div>
-
+    <div class="middle">
+        <b class="count"><span id ="count-color" th:text="${totalCommunityCount}"></span> 건</b> <!--게시글 개수-->
     <table id = "freeboard-tb">
         <thead>
         <tr>
-            <th class="b-n">번호</th>
+            <th class="b-n">No.</th>
             <th class="b-t">제목</th>
             <th class="b-w">작성자</th>
             <th class="b-d">작성일</th>
+            <th class="b-n">조회수</th>
         </tr>
         </thead>
 
@@ -44,11 +192,31 @@
                 <a th:text = "${community.title}" th:href="@{/community/view(id=${community.id})}">제목</a>
             </td>
             <td th:text = "${community.author}">작성자</td>
-            <td th:text = "${community.createdAt}">yyyy-mm-dd</td>
+            <td th:text="${#temporals.format(community.createdAt, 'yyyy-MM-dd')}">yyyy-mm-dd</td>
+            <td th:text = "${community.view}">0</td>
         </tr>
         </tbody>
     </table>
-</div>
 
+        <div class = "bottomR">
+            <button type="button" class="writebtn" onclick="location.href = '/community/write'" >글쓰기</button>
+        </div>
+
+    <div class="bottom">
+    <span th:if="${currentPage > 1}">
+        <a th:href="@{/community/list(page=${currentPage - 1})}" class="prev">이전</a>
+    </span>
+        <span th:each="pageNum : ${#numbers.sequence(1, totalPages)}">
+        <a th:href="@{/community/list(page=${pageNum})}" th:classappend="${pageNum == currentPage} ? 'active' : ''">
+            <span th:text="${pageNum}"></span>
+        </a>
+     </span>
+        <span th:if="${currentPage < totalPages}">
+        <a th:href="@{/community/list(page=${currentPage + 1})}" class="next">다음</a>
+    </span>
+    </div>
+    </div>
+</div>
 </body>
+
 </html>

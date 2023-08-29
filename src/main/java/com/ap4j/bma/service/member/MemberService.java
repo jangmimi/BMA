@@ -2,12 +2,10 @@ package com.ap4j.bma.service.member;
 
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Errors;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 public interface MemberService {
 
@@ -23,19 +21,22 @@ public interface MemberService {
 	public Long joinBasic(MemberEntity pMember);
 
 	public boolean existsByEmail(String email);
-//	public void validateDuplicateMember(MemberEntity pMember);
 
 	public List<MemberEntity> findMembers();
 
 	public MemberDTO login(MemberDTO memberDTO);
 //	public MemberEntity login(String loginEmail);
 
-    Map<String, String> validateHandler(Errors errors);
+	public void deleteMemberByIdx(Long idx);
 
-	public boolean deleteByIdx(Long idx);
+	public MemberEntity getMemberOne(String email);
 
-	public void deleteMember(MemberEntity memberEntity);
+	public MemberEntity updateMember(Long idx, MemberEntity updatedMember);
 
-//	public Long updateMember(final Long idx, final MemberDTO memberDTO);
+	public Optional<MemberEntity> findByNameAndTel(String name, String tel);
 
+	public Optional<MemberEntity> findByEmailAndTel(String email, String tel);
 }
+
+//    Map<String, String> validateHandler(Errors errors);
+//	public void validateDuplicateMember(MemberEntity pMember);

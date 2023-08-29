@@ -47,11 +47,11 @@
 
                 </ul>
             </li>
-            <li class="list-group-item" style="height: 100%;">
+            <li class="list-group-item" style="height: 94%;">
 
                 <div class="tab-content" id="myTabContent" style="height: 100%;">
                     <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab"
-                         tabindex="0" style="height: 93%;">
+                         tabindex="0" style="height: 100%;">
                         <!-- 최신순, 가격순, 면적순, 사진 많은 순 시작 -->
                         <ul class="nav aAPTListTab">
                             <div style="display:flex;">
@@ -69,9 +69,64 @@
                                 </li>
                             </div>
                             <div class="aHeartBtnInTab">
-                                <button class="aHeartBtn">
+                                <button class="aHeartBtn"
+                                        type="button" data-bs-toggle="modal"
+                                        data-bs-target="#aSaveToMine"
+                                        id="aSaveBtn">
                                     <img style="width:15px;margin-bottom:2px;"src="/img/mapDetailAndAPTList/aHeartBtn.png">
                                 </button>
+                                <!-- Modal -->
+                                <div th:if="${userEmail==null}"class="modal fade aSaveToMine" id="aSaveToMine"
+                                     tabindex="-1" aria-labelledby="exampleModalLabel"
+                                     aria-hidden="true">
+
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header aSaveToMine">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">로그인이
+                                                    필요한 서비스 입니다</h1>
+
+                                            </div>
+                                            <div class="modal-body LogInNeed">
+                                                <div class="aListOfEasyLogIn">
+                                                    <div style="display: flex;
+    width: 281px;">
+                                                        <button class="aEasyLogInBtn">
+                                                            <img class="aEasyLogInImg" src="/images/kakao_login_medium_narrow.png" alt="kakaoLogin" height="44" />
+                                                        </button>
+                                                        <button class="aEasyLogInBtn">
+                                                            <img class="aEasyLogInImg" src="/images/btnG_완성형.png" alt="naverLogin" height="44" width="176px"/>  <!-- 카카오 로그인과 높이만 맞춤 -->
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="LogInNeedContents">
+                                                    <p class="emailLogInPartTitle">이메일 직접 로그인</p>
+                                                    <hr>
+                                                    <div class="emailLogInPartInput">
+                                                        <input class="LogInInputs"type="text" placeholder="이메일 주소">
+                                                        <input class="LogInInputs" type="text" placeholder="비밀번호(8자리 이상)">
+                                                    </div>
+                                                    <div class="aFindSaveEmail">
+                                                        <div class="aFindSaveEmailContents">
+                                                            <div>
+                                                                <input type="checkbox">
+                                                                <label>이메일저장</label>
+                                                            </div>
+                                                            <p>이메일/비밀번호찾기</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <button class="aLogInBtn">로그인</button>
+                                                <div class="aJoinBtnsList">
+                                                    <button class="aJoinBtns">개인회원 가입</button>
+                                                    <button class="aJoinBtns">중개회원 가입</button>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
                                 <a href="javascript:goMyFavority();"><span class="txt" id="rFavorityCount">0</span></a>
                             </div>
                         </ul>
@@ -2435,20 +2490,19 @@
             </div>
         </div>
 
-        <div>
-            <button
-                    style="width: 61px; height: 25px; text-align: center"
-                    type="button"
-                    id="hsBtn"
-                    class="btn btn-primary position-absolute"
+        <button
+                type="button"
+                id="hsBtn"
+                class="btn btn-primary aSellMyHBtn"
+        >
+            집 내놓기
+            <span
+                    class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger"
             >
-                집 내놓기
-                <span class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger">
-                  10초만에 쉽고 빠르게!
-                    <span class="visually-hidden">unread messages</span>
-                </span>
-            </button>
-        </div>
+              10초만에 쉽고 빠르게!
+              <span class="visually-hidden">unread messages</span>
+            </span>
+        </button>
     </div>
 </div>
 <script

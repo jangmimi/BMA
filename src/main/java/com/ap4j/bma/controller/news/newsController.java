@@ -9,11 +9,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 @Slf4j
@@ -41,6 +41,9 @@ public String search(
         @RequestParam(value = "start", defaultValue = "1") int start,
         Model model) {
     String searchResult = newsApiService.searchNews(searchQuery, start);
+    log.info(searchQuery);
+
+    DateTimeFormatter dateformat = DateTimeFormatter.ofPattern("yyyy.MM.dd a hh:mm");
 
     ObjectMapper objectMapper = new ObjectMapper();
     try {
@@ -49,20 +52,37 @@ public String search(
 
         log.info(String.valueOf(items));
         List<Map<String, String>> newsList = new ArrayList<>();
+        String searchKeyword = null;
         if (items != null) {
             for (JsonNode item : items) {
                 String title = item.get("title").asText();
                 String link = item.get("link").asText();
                 String description = item.get("description").asText();
+                String pubDate = item.get("pubDate").asText();
+
+                LocalDateTime dateTime = LocalDateTime.parse(pubDate, DateTimeFormatter.RFC_1123_DATE_TIME);
+                String formattedPubDate = dateTime.format(dateformat);
+
+                Pattern searchPattern = Pattern.compile("<b>(.*?)</b>");
+                Matcher matcher = searchPattern.matcher(description);
+
+                searchKeyword = null;
+                if (matcher.find()) {
+                    searchKeyword = matcher.group(1); // 정규식 그룹에서 추출
+                }
+
 
                 Map<String, String> newsItem = new HashMap<>();
                 newsItem.put("title", removeHTMLTags(title));
                 newsItem.put("link", link);
                 newsItem.put("description", removeHTMLTags(description));
+                newsItem.put("pubDate", formattedPubDate);
+                newsItem.put("searchKeyword", searchKeyword);
+
                 newsList.add(newsItem);
             }
         } else {
-            log.error("No items found in the API response");
+            model.addAttribute("itemsEmpty", true);
         }
         int totalResults = jsonNode.get("total").asInt(); // 뉴스의 전체 개수
 
@@ -75,7 +95,7 @@ public String search(
         int totalPages = (int) Math.ceil((double) totalResults / itemsPerPage);
 
         // 네이버 검색 api는 start 파라미터를 최대 1000까지 받을 수 있기 때문에 전체 개수와 max 페이지 설정
-        if(totalResults >1000){
+        if (totalResults > 1000) {
             totalResults = 1000;
             totalPages = 100;
         }
@@ -84,7 +104,7 @@ public String search(
 
         // 마지막 페이지에서의 endIndex 조정
         if (page == totalPages) {
-            endIndex = newsList.size() ;
+            endIndex = newsList.size();
         }
 
         List<Map<String, String>> paginatedNewsList = newsList.subList(0, endIndex);
@@ -99,9 +119,10 @@ public String search(
 
         model.addAttribute("total", totalResults);
 
-
         model.addAttribute("itemsPerPage", itemsPerPage);
+        model.addAttribute("searchKeyword", searchKeyword); // 정확도가 높은 검색어
 
+        log.info(searchKeyword);
     } catch (IOException e) {
         e.printStackTrace();
     }

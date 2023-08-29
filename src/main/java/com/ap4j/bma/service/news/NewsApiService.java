@@ -22,7 +22,7 @@ public class NewsApiService {
 public String searchNews(String query, int start) {
     try {
         String encodedQuery = URLEncoder.encode(query, StandardCharsets.UTF_8.toString());
-        String apiUrl = "https://openapi.naver.com/v1/search/news?query=" + encodedQuery + "&start=" + start;
+        String apiUrl = "https://openapi.naver.com/v1/search/news?query=" + encodedQuery + "&start=" + start + "&sort=sim";
         Map<String, String> requestHeaders = new HashMap<>();
         requestHeaders.put("X-Naver-Client-Id", clientId);
         requestHeaders.put("X-Naver-Client-Secret", clientSecret);
