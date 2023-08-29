@@ -6,87 +6,98 @@
 <head>
     <meta charset="UTF-8">
     <title>로그인</title>
+    <link rel="stylesheet" th:href="@{/css/member/myPage.css}">
     <!-- 부트스트랩 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    <style>
-        <!-- * 부트스트랩으로 인한 충돌 / 헤더 위치 조정중 * -->
-        .n-header-list {
-            margin: 16px 0px;
-            padding: 0px 0px 0px 40px;
-        }
-        .form-floating {
-            width: 350px;
-        }
-        .form-check {
-            width: 350px;
-           <!-- display: flex; justify-content: right;
-            부트스트랩 충돌-인라인 태그로-->
-        }
-        #oInner-container {
-            width: 400px;
-            height: 700px;
-        }
-        .oFindTitle {
-            padding: 20px 50px;
-            margin: 0px;
-        }
-        .fieldError {
-            font-size: 10px;
-            color: red;
-        }
-    </style>
-    <script>
-        $(document).ready(function(){
-            $(".form-control").keyup(function(){
-                var emailValue = $(this).val();
-                if (emailValue == null || emailValue === '' || emailValue.length < 5) {
-                    $("#check").css("display","block");
-                } else {
-                    $("#check").css("display","none"); // Reset the color if the value is not empty
-                }
-            });
-        });
-    </script>
 </head>
 <body layout:fragment="content">
-<div class="container mt-5" id="oInner-container" align="center">
-    <div class="oFindTitle">
-        <h3 class="h3 fw-bold">이메일 찾기</h3>
-    </div>
-    <form th:action="@{/member/qLoginBasic}" method="POST">
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="nameEmail" name="nameEmail" placeholder="이름을 입력해주세요." autofocus="autofocus" />
-            <label th:for="email">이름</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="telEmail" name="telEmail" placeholder="01012345678(하이픈 '-' 제외 숫자만)" />
-            <label th:for="name">연락처</label>
-        </div>
-        <div class="oFindBtn-container">
-            <input type="submit" class="btn btn-dark mb-3 mt-3" value="이메일 찾기" style="width:46%;" />
-        </div>
-    </form>
+    <div class="container mt-5" id="oInner-container" align="center">
+        <div>
+            <div class="oFindTitle">
+                <h4 class="h4 fw-bold mb-3">
+                    <img src="https://cdn-icons-png.flaticon.com/128/11027/11027704.png" width="35px">
+                        이메일/비밀번호 찾기
+                    <img src="https://cdn-icons-png.flaticon.com/128/11027/11027704.png" width="35px"></h4>
+            </div>
+            <div>
+                <p class="findSubtitle">이메일 찾기</p>
+            </div>
+            <form th:action="@{/member/qFindEmail}" method="POST" onsubmit="return oFindEmailCheck()">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="이름을 입력해주세요." autofocus="autofocus" />
+                    <label th:for="name" class="oLabelColor">이름</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="tel" name="tel" placeholder="01012345678(하이픈 '-' 제외 숫자만)" />
+                    <label th:for="tel" class="oLabelColor">연락처</label>
+                </div>
+                <span>
+                    <div class="ofindResult">
+                        <p th:if="${findEmail != null}" th:text="${findEmail}"></p>
+                        <p th:if="${findEmailFailed != null}" th:text="${findEmailFailed}"></p>
+                    </div>
+                </span>
+                <div class="oFindBtn-container">
+                    <input type="submit" class="btn btn-outline-dark mb-5 mt-3" value="이메일 찾기" style="width:46%;" />
+                </div>
+            </form>
 
-    <div class="oFindTitle">
-        <h3 class="h3 fw-bold">비밀번호 찾기</h3>
+            <div>
+                <p class="findSubtitle">비밀번호 찾기</p>
+            </div>
+            <form th:action="@{/member/qFindPwd}" method="POST" onsubmit="return oFindPwdCheck()">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="emailpwd" name="emailpwd" placeholder="이메일을 입력해주세요." />
+                    <label th:for="emailpwd" class="oLabelColor">이메일 주소</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="telpwd" name="telpwd" placeholder="연락처를 입력해주세요." />
+                    <label th:for="telpwd" class="oLabelColor">연락처</label>
+                </div>
+                <span>
+                    <div class="ofindResult">
+                        <p th:if="${findPwd != null}" th:text="${findPwd}"></p>
+                        <p th:if="${findPwdFailed != null}" th:text="${findPwdFailed}"></p>
+                    </div>
+                </span>
+                <div class="oFindBtn-container">
+                    <input type="submit" class="btn btn-outline-dark mb-3 mt-3" value="비밀번호 찾기" style="width:46%;" />
+                </div>
+            </form>
+        </div>
     </div>
-    <form th:action="@{/member/qLoginBasic}" method="POST">
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="email" name="email" placeholder="youemail@email.com" autofocus="autofocus" />
-            <label th:for="email">이메일 주소</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="name" name="name" placeholder="홍길동" />
-            <label th:for="name">이름(실명)</label>
-        </div>
-        <div class="oFindBtn-container">
-            <input type="submit" class="btn btn-dark mb-3 mt-3" value="비밀번호 찾기" style="width:46%;" />
-        </div>
-    </form>
-</div>
 
-<!-- 부트스트랩 script -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <script>
+        function findEmail() {
+            let name = $('#name').value;
+            let tel = $('#tel').value;
+
+            fetch('/qFindEmail', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'name=' + encodeURIComponent(name) + '&tel=' + encodeURIComponent(tel),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.cnt === 1) {
+                    alert('이메일: ' + data.findEmail);
+                } else {
+                    alert('일치하는 회원이 없습니다.');
+                }
+            })
+            .catch(error => {
+                console.error('에러 발생:', error);
+            });
+
+            return false; // 폼 제출 방지
+        }
+    </script>
+
+    <script th:src="@{/js/member/myPage.js}"></script>
+    <!-- 부트스트랩 script -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </body>
 </html>

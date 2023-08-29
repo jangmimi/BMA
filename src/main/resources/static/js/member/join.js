@@ -58,28 +58,28 @@ function checkEmail() {
     });
 };
 // 회원가입 및 체크
-function checkJoinInfo() {
-    let email = $('#email').val();
-    let name = $('#name').val();
-    let pwd = $('#pwd').val();
-    let pwdCheck = $('#pwdCheck').val();
-
-    $.ajax({
-        url: '/member/qEmailCheck',
-        type: 'post',
-        data: {email:email},
-        success:function(cnt) {
-            if(email === '') alert('이메일을 입력해주세요.');
-            if(name === '') alert('이름을 입력해주세요');
-            if(pwd === '') alert('비밀번호를 입력해주세요.');
-            if(pwdCheck === '') alert('비밀번호를 확인해주세요.');
-
-        },
-        error:function() {
-            alert("에러입니다.");
-        }
-    });
-};
+//function checkJoinInfo() {
+//    let email = $('#email').val();
+//    let name = $('#name').val();
+//    let pwd = $('#pwd').val();
+//    let pwdCheck = $('#pwdCheck').val();
+//
+//    $.ajax({
+//        url: '/member/qEmailCheck',
+//        type: 'post',
+//        data: {email:email},
+//        success:function(cnt) {
+//            if(email === '') alert('이메일을 입력해주세요.');
+//            if(name === '') alert('이름을 입력해주세요');
+//            if(pwd === '') alert('비밀번호를 입력해주세요.');
+//            if(pwdCheck === '') alert('비밀번호를 확인해주세요.');
+//
+//        },
+//        error:function() {
+//            alert("에러입니다.");
+//        }
+//    });
+//};
 
 $(document).ready(function () {
     // 전체 선택 체크박스
