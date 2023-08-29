@@ -323,11 +323,12 @@ public class MemberController {
     public String qMyInfoUpdate(HttpSession session, Model model) {
         log.info("MemberController - qMyInfoUpdate() 실행");
         String userEmail = (String) session.getAttribute("userEmail");
+        String userName = (String) session.getAttribute("userName");
 
         log.info("로그인중인 userEmail : " + userEmail);
         MemberEntity findmember = qMemberService.getMemberOne(userEmail);
         model.addAttribute("userEmail",userEmail);
-        model.addAttribute("userN   ame",findmember.getName());
+        model.addAttribute("userName", findmember.getName());
         model.addAttribute("idx",findmember.getIdx());
         model.addAttribute("nickname", findmember.getNickname());
         model.addAttribute("tel", findmember.getTel());
