@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -29,7 +30,7 @@ public class ChatMessage {
     private String chatContent;
     @Column
     private String chatSender;
-    @Column
+    @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime chatDate;
 
 }

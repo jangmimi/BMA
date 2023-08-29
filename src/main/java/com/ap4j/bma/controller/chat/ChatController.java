@@ -14,17 +14,18 @@ import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import javax.servlet.http.HttpSession;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
@@ -57,19 +58,20 @@ public class ChatController {
     @SendTo("/topic/openingComment")
     public String openingComment(ChatConnectRequest request){
         System.out.println("openingComment = " + request);
-        chatService.saveMessage(request.toChatMessage());
         String userId = request.getUserId();
         return userId+"님이 입장하셨습니다.";
     }
 
     @MessageMapping("/loadMessages")
-    public void loadMessages(ChatConnectRequest request){
-        String connectedTimeStr = request.getConnectedTimeAsString();
-        LocalDateTime connectedTime = LocalDateTime.parse(connectedTimeStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-        List<ChatMessage> messages = chatService.showMessages(connectedTime);
-        String clientTopic = "/user/" + request.getUserId() + "/topic/chat";
-        messages.forEach(message -> messagingTemplate.convertAndSend(clientTopic, message));
+    public void loadMessages(ChatConnectRequest request) {
+        String userId = request.getUserId();
+        System.out.println("loadMessages 컨트롤러 시간출력 = "+request.getConnectedTime());
+        List<ChatMessage> messages = chatService.showMessages(request.getConnectedTime());
+        String clientTopic = "/topic/" + userId;
+        // Send messages to the client's specified topic
+        messagingTemplate.convertAndSend(clientTopic, messages);
     }
+
 
 
 

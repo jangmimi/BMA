@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+    let sender = document.getElementById("s-chat-sender").value;
 
     let stompClient = null;
 
@@ -9,9 +10,9 @@ document.addEventListener("DOMContentLoaded", function () {
     let connectedTime;
 
     //고유한 주제
-    let clientTopic;
+    let clientTopic = "/topic/" + sender;
 
-    let sender = document.getElementById("s-chat-sender").value;
+
     const textarea = document.querySelector("#s-chat-input");
     const image = document.querySelector("#s-chat-input-img");
     image.src = "/sc/free-icon-sent-mail-71746.png";
@@ -33,11 +34,20 @@ document.addEventListener("DOMContentLoaded", function () {
             alert("채팅기능은 로그인하셔야 이용 하실 수 있습니다");
             window.location.href = '/member/qLoginForm';
         } else {
+            const chatTextBox = document.querySelector(".s-chat-textbox");
+            // test@test.com
+            // 12121212
+            chatTextBox.innerHTML = ""; // 이 부분을 추가하여 기존 내용을 삭제합니다.
+
             modal.style.display = "flex";
             modalButton.style.transform = "scale(0)";
             //웹통신 시작
-            connect();
-            loadMessages();
+            if (stompClient === null) {
+                connect();
+            } else {
+                stompClient.send("/app/loadMessages", {}, JSON.stringify({ userId: sender, connectedTime: connectedTime }));
+                loadMessages();
+            }
             //알림 메시지 개수 초기화
             resetNotificationCount();
         }
@@ -56,45 +66,40 @@ document.addEventListener("DOMContentLoaded", function () {
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
             //처음 연결 시간 저장
-            connectedTime = new Date();
+            const now = new Date();
+            connectedTime = new Date(now.getTime() + (9 * 60 * 60 * 1000)).toISOString();
             //유저 아이디와 연결시간을 보내준다
-            stompClient.send("/app/connect", {}, JSON.stringify({ userId: sender, connectedTime: connectedTime.toISOString() }));
+            stompClient.send("/app/connect", {}, JSON.stringify({ userId: sender, connectedTime: connectedTime }));
             //입장멘트
             stompClient.subscribe('/topic/openingComment', function (messages) {
                 //입장멘트를 HTML로 출력해주는 함수를 실행
                 openingComment(messages);
             });
+            stompClient.subscribe('/topic/messages', function (messages) {
+                const message = JSON.parse(messages.body);
+                showMessages(message);
+            });
         });
     };
 
-        function loadMessages() {
-            clientTopic = "/user/" + sender + "/topic/chat"; // 고유한 주제 생성
-            stompClient.send("/app/loadMessages", {}, JSON.stringify({ userId: sender}));
-            stompClient.subscribe(clientTopic, function (messages) {
-//                        const messageAll = JSON.parse(messages.body);
-//                        for (const message of messageAll) {
-                            showMessages(message);
-//                        }
-            });
-        }
+    function loadMessages() {
+        stompClient.subscribe(clientTopic, function (messages) {
+            const loadMessages = JSON.parse(messages.body);
+            for (const loadMessage of loadMessages) {
+                message = {
+                    chatContent: loadMessage[1],
+                    chatDate: loadMessage[2],
+                    chatSender: loadMessage[3]
+                }
+                showMessages(message);
+            }
+            console.log(messages);
+            console.log(loadMessages);
+        });
+    }
 
-//        // 서버 시간을 받아온 후에 dbMessages로 요청 보내기
-//        stompClient.send("/app/dbMessages", {}, startTime);
-//
-//        stompClient.subscribe('/topic/dbMessages', function (messages) {
-//            const messageAll = JSON.parse(messages.body);
-//            for (const message of messageAll) {
-//                showMessages(message);
-//            }
-//        });
-//
-//        stompClient.subscribe('/topic/messages', function (messages) {
-//            const message = JSON.parse(messages.body);
-//            showMessages(message);
-//        });
-//
-//        // 서버 시간을 요청
-//        stompClient.send("/app/getservertime", {}, JSON.stringify());
+
+
 
     function openingComment(messages) {
         const chatTextBox = document.querySelector(".s-chat-textbox");

@@ -20,7 +20,6 @@ public class ChatConnectRequest {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
         return connectedTime.format(formatter);
     }
-
     public ChatMessage toChatMessage(){
         return new ChatMessage(null,null,this.userId,this.connectedTime);
     }
