@@ -12,16 +12,17 @@ import java.util.Optional;
 public interface MemberRepository extends JpaRepository<MemberEntity, Long> {   // ..JpaRepository<관리 대상, 대상의 PK 타입>
 
     Optional<MemberEntity> findByEmail(String email);   // email로 회원 정보 조회
+    @Override
+    Optional<MemberEntity> findById(Long idx);          // idx로 회원 정보 조회
 
-//    MemberDTO findByEmail(MemberDTO memberDTO);
-//    MemberEntisty findByEmail(String email);
     boolean existsByEmail(String email);    // exists : 해당 데이터가 DB에 존재하는지 확인하기 위해 사용
-
-//    boolean deleteByIdx(Long idx);
 
     @Override
     void delete(MemberEntity entity);   // 회원 탈퇴
 
     @Override
     void deleteById(Long idx);
+
+
+
 }
