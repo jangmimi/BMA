@@ -2,8 +2,11 @@ package com.ap4j.bma.service.apartment;
 
 import com.ap4j.bma.model.entity.apt.AptDTO;
 
+import com.ap4j.bma.model.entity.apt.AptRealTradeDTO;
 import com.ap4j.bma.model.entity.apt.AptEntity;
 
+import com.ap4j.bma.model.entity.apt.AptRealTradeEntity;
+import com.ap4j.bma.model.repository.AptRealTradeRepository;
 import com.ap4j.bma.model.repository.AptRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,9 @@ public class ApartmentServiceImpl implements ApartmentService {
 
     @Autowired
     private AptRepository aptRepository;
+
+    @Autowired
+    private AptRealTradeRepository aptRealTradeRepository;
 
     /**
      * DB값 가져와서 js에 넘겨주기 (경도 위도 검색해서 값 가져오기 위해서)
@@ -79,4 +85,39 @@ public class ApartmentServiceImpl implements ApartmentService {
         }
         return aptDTOList;
     }
+
+    /**
+     * 도로명에 맞는 실거래가 데이터 가져오는 메서드
+     */
+    public List<AptRealTradeDTO> findByRoadName(String roadName) {
+        List<AptRealTradeDTO> aptRealTradeDTOList = new ArrayList<>();
+        List<AptRealTradeEntity> aptRealTradeEntityList = aptRealTradeRepository.findByRoadName(roadName);
+
+        for (AptRealTradeEntity aptRealTradeEntity : aptRealTradeEntityList) {
+            AptRealTradeDTO aptRealTradeDTO = AptRealTradeDTO.builder().
+                    complexName(aptRealTradeEntity.getComplexName()).
+                    district(aptRealTradeEntity.getDistrict()).
+                    address(aptRealTradeEntity.getAddress()).
+                    roadName(aptRealTradeEntity.getRoadName()).
+                    area(aptRealTradeEntity.getArea()).
+                    transactionAmount(aptRealTradeEntity.getTransactionAmount()).
+                    contractYearMonth(aptRealTradeEntity.getContractYearMonth()).
+                    contractDate(aptRealTradeEntity.getContractDate()).
+                    floor(aptRealTradeEntity.getFloor()).
+                    constructionYear(aptRealTradeEntity.getConstructionYear()).
+                    build();
+            aptRealTradeDTOList.add(aptRealTradeDTO);
+        }
+        return aptRealTradeDTOList;
+    }
+
+    /**
+     * 아파트명 또는 도로명으로 검색시 아파트 정보 가져오기
+     */
+//    public AptDTO findByKeyword(String keyword) {
+//        AptEntity aptEntity = aptRepository.findByKeyword(keyword);
+//        AptDTO aptKeyword = AptDTO.builder().
+//
+//                build()
+//    }
 }
