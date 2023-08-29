@@ -1,0 +1,75 @@
+        h1{
+        text-align:center;
+        }
+
+        .layout {
+        width : 80%;
+        margin: auto;
+        margin-top : 40px;
+        }
+
+        input {
+        width : 98%;
+        height: 40px;
+        padding-left: 10px;
+        border: 1px solid #ddd;
+        margin: auto;
+
+
+        }
+
+        table{
+         width : 100%;
+         margin-top:60px;
+         border-collapse: collapse;
+         border: 1px solid #ddd;
+         border-top: 3px solid #26A9E0;
+        }
+
+        table th{
+        width : 10%;
+        padding: 20px;
+        background: #ececec;
+        color: #666;
+        font-size: 15px;
+        border: 1px solid #ddd;
+        }
+
+
+        textarea {
+        width : 99%;
+        margin-top : 10px;
+        min-height :350px;
+        border: 1px solid #ddd;
+        }
+
+        .write-box{
+        width : 95%;
+        margin : auto;
+        }
+
+        .three-btn{
+        width : 100px;
+        height: 40px;
+        background-color:#26A9E0;
+        border: #26A9E0;
+        border-radius : 10px;
+        margin-bottom: 100px;
+        color:white;
+        }
+
+        .buttonL{
+        float: left;
+        }
+
+        .buttonR{
+        float: right;
+        }
+
+        .buttonL, .buttonR{
+        margin-top : 30px;
+        }
+
+        .read{
+        backgroud: #ddd;
+        }
