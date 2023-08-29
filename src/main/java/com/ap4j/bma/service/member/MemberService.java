@@ -25,7 +25,6 @@ public interface MemberService {
 	public List<MemberEntity> findMembers();
 
 	public MemberDTO login(MemberDTO memberDTO);
-//	public MemberEntity login(String loginEmail);
 
 	public void deleteMemberByIdx(Long idx);
 

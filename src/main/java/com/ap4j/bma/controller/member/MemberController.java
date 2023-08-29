@@ -75,12 +75,13 @@ public class MemberController {
             kloginMember.setTel((String) userInfo.get("phone_number"));
             kloginMember.setRoot("카카오");
             kloginMember = qMemberService.login(kloginMember);
+
             kloginMember.toEntity();
 
             session.setAttribute("userEmail",  kloginMember.getEmail());
             session.setAttribute("userName",  kloginMember.getName());
-//            model.addAttribute("userEmail", kloginMember.getEmail());
-//            model.addAttribute("userName",kloginMember.getName());
+            model.addAttribute("userEmail", kloginMember.getEmail());
+            model.addAttribute("userName",kloginMember.getName());
             model.addAttribute("loginMember",kloginMember);
             log.info("loginMember : " + kloginMember.toString());
 
@@ -161,9 +162,11 @@ public class MemberController {
 
             log.info("loginMember : " + loginMember.toString());
 
-            return "userView/oMyPage";
+            return "redirect:/member/qMyPage";
+//            return "userView/oMyPage";
         } else {
             log.info("로그인 실패"); // 로그인 실패 시 어떻게 보여줄지? alert?
+            model.addAttribute("msg","이메일 또는 패스워드를 다시 확인해주세요.");
             return "redirect:/member/qLoginForm";
         }
 
@@ -305,7 +308,6 @@ public class MemberController {
     public String qMyInfoUpdate(HttpSession session, Model model) {
         log.info("MemberController - qMyInfoUpdate() 실행");
         String userEmail = (String) session.getAttribute("userEmail");
-        String userName = (String) session.getAttribute("userName");
 
         log.info("로그인중인 userEmail : " + userEmail);
         MemberEntity findmember = qMemberService.getMemberOne(userEmail);
@@ -322,8 +324,6 @@ public class MemberController {
     @PostMapping("/qUpdateMember/{idx}")
     public String qUpdate(@PathVariable(required = false) Long idx, @ModelAttribute MemberEntity updatedMember, Model model, HttpSession session) {
         log.info("MemberController - qUpdate() 실행");
-        //        updatedMember.setIdx(idx);
-//        qMemberService.getMemberOne(idx);
         qMemberService.updateMember(idx, updatedMember);
         log.info("회원정보 수정 완료 (수정 후) : " + updatedMember);
         session.setAttribute("userName", updatedMember.getName());

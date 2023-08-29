@@ -95,14 +95,14 @@
                     </li>
                     <li class="oAgree-li">
                         <div>
-                            <input type="checkbox" class="oAgreeSel" name="agree">
-                            <span class="userch">[선택] </span>부동산정보 및 혜택 알리미
+                            <input type="checkbox" class="oAgree" name="agree">
+                            <span class="selch">[선택] </span>부동산정보 및 혜택 알리미
                         </div>
                     </li>
                     <li class="oAgree-li">
                         <div>
-                            <input type="checkbox" class="oAgreeSel" name="agree">
-                            <span class="userch">[선택] </span>이메일 수신 동의(광고, 이벤트 등)
+                            <input type="checkbox" class="oAgree" name="agree">
+                            <span class="selch">[선택] </span>이메일 수신 동의(광고, 이벤트 등)
                         </div>
                     </li>
                 </ul>
@@ -115,20 +115,19 @@
             </div>
         </form>
 
-        <div class="container" id="oJoinSns" style="mt-5 mb-5">
-            <hr style="width: 380px;"/>
+        <div class="container mt-5 mb-5" id="oJoinSns">
             <p style="font-weight: bold; margin-bottom: 20px;">Join with SNS</p>
             <div class="oJoinSnsBtn-container"
                  style="display: flex; justify-content: space-between;">
                 <!-- 카카오 회원가입 -->
                 <a th:href="@{https://kauth.kakao.com/oauth/authorize?client_id=fae91fecfb7dbda2a80ae22881709a28&redirect_uri=http://localhost:8081/member/qLogin&response_type=code}">
-                    <img src="/images/kakao_join_medium_narrow.png" alt="kakaoJoin" height="44" />
+                    <img th:src="@{/img/member/kakao_join_medium_narrow.png}" alt="kakaoJoinImg" height="44" />
                 </a>
                 <!--</div>
                 <div class="oLoginSnsBtn-container">-->
                 <!-- 네이버 회원가입 -->
                 <a th:href="@{/member/qLoginNaver}">
-                    <img src="/images/btnG_완성형.png" alt="naverJoin" height="44" />
+                    <img src="/img/member/btnG_완성형.png" alt="naverJoinImg" height="44" />
                 </a>
             </div>
         </div>

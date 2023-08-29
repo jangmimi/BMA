@@ -12,6 +12,12 @@
     <link rel="stylesheet" th:href="@{/css/member/login.css}">
 </head>
 <body layout:fragment="content">
+<!--    <th:block th:if="${session.userEmail != null}">-->
+<!--        <script th:inline="javascript">-->
+<!--            alert("이미 로그인하셨습니다.");-->
+<!--            window.location.href='redirect:/member/qMyPage'; // 로그인 한 상태로 접근 시 페이지 표시 X-->
+<!--        </script>-->
+<!--    </th:block>-->
     <span th:if="${userEmail == null}">
         <div class="container mt-5" id="oInner-container" align="center">
             <div id="oLoginTitle">
@@ -47,8 +53,7 @@
                     </div>
                 </form>
 
-                <div class="container" id="oLoginSns" style="mt-5 mb-5">
-                    <hr style="width: 380px;"/>
+                <div class="container mt-5 mb-5" id="oLoginSns">
                     <!-- 네이버 로그인 버튼 노출 영역 -->
                     <div id="naver_id_login"></div>
                     <!-- 네이버 로그인 버튼 노출 영역 -->
