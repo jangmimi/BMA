@@ -44,7 +44,7 @@ public class MemberController {
             model.addAttribute("rememberedEmail", null);
         }
         model.addAttribute("memberDTO", new MemberDTO());
-        return "/userView/oLoginForm";
+        return "userView/oLoginForm";
     }
 
     /** 카카오 로그인 실행 */
@@ -106,7 +106,7 @@ public class MemberController {
 //        model.addAttribute("userId", userInfo.getEmail());
 //        model.addAttribute("userName", userInfo.getName());
 
-        return "/userView/oMyPage";
+        return "userView/oMyPage";
     }
 
     /** 카카오 로그아웃 */
@@ -164,7 +164,7 @@ public class MemberController {
 
             log.info("loginMember : " + loginMember.toString());
 
-            return "/userView/oMyPage";
+            return "userView/oMyPage";
         } else {
             log.info("로그인 실패헀어요.");
             model.addAttribute("msg","로그인 실패");
@@ -202,7 +202,7 @@ public class MemberController {
     public String qJoinForm(Model model) {
         log.info("MemberController - qJoinForm() 실행");
         model.addAttribute("memberDTO", new MemberDTO());
-        return "/userView/oJoinForm";
+        return "userView/oJoinForm";
     }
 
     /** 기본 회원가입 */
@@ -309,7 +309,7 @@ public class MemberController {
         String userName = (String) session.getAttribute("userName");
         model.addAttribute("userEmail",userEmail);
         model.addAttribute("userName",userName);
-        return "/userView/oMyPage";
+        return "userView/oMyPage";
     }
 
     /** 내정보 수정페이지 매핑 */
@@ -326,7 +326,7 @@ public class MemberController {
         model.addAttribute("userNickname", findmem.getNickname());
         model.addAttribute("userTel", findmem.getTel());
         log.info("로그인중인 findmem : " + findmem);
-        return "/userView/oMyInfoUpdate";
+        return "userView/oMyInfoUpdate";
     }
 
     /** 내정보 수정하기 */
@@ -370,4 +370,17 @@ public class MemberController {
         return cnt;
     }
 
+    @PostMapping("/qFindEmail")
+    public String qFindEmail(@RequestParam String name, @RequestParam String phone, Model model) {
+//        log.info("MemberController - qFindEmail() 실행");
+//        MemberEntity find = qMemberService.findByNameAndPhone(name, phone);
+//
+//        if(find != null) {
+//            model.addAttribute("userEmail", find.getEmail());
+//        } else {
+//            model.addAttribute("error", "User not found.");
+//        }
+//
+        return "redirect:member/qFindEmail";
+    }
 }

@@ -355,7 +355,6 @@ public class MemberServiceImpl implements MemberService {
 		return findMember.orElse(null);
 	}
 
-
 	/** 회원정보 수정 */
 	@Transactional
 	@Override
@@ -383,6 +382,12 @@ public class MemberServiceImpl implements MemberService {
 //		return idx;
 
 	}
+
+	/** 회원정보 조회(이름 연락처로) */
+//	@Override
+//	public MemberEntity findByNameAndPhone(String name, String phone) {
+//		return memberRepository.findByNameAndPhone(name, phone);
+//	}
 
 
 	/** 회원가입 유효성 검사 */

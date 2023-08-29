@@ -35,6 +35,7 @@ public interface MemberService {
 
 	public MemberEntity updateMember(Long idx, MemberEntity updatedMember);
 
+//	public MemberEntity findByNameAndPhone(String name, String phone);
 }
 
 //    Map<String, String> validateHandler(Errors errors);

@@ -23,6 +23,6 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {   
     @Override
     void deleteById(Long idx);
 
-
+//    MemberEntity findByNameAndPhone(String name, String phone);
 
 }
