@@ -31,11 +31,11 @@
                 </div>
             </div>
             <div class="layout">
-                <div class="oInfo-top" style="display:inline-block;">
-                    <div class="oInfo-top-wrapper" style="display:flex;">
-                        <div class="oInfo-left" style="display: flex;">
+                <div class="oInfo-top">
+                    <div class="oInfo-top-wrapper">
+                        <div class="oInfo-left" style="display: block; font-weight:bold; font-size:20px;" >
                             <input type="hidden" id="idx" name="idx" th:value="${idx}" />
-                            <span th:text="${userName}" style="font-weight:bold; font-size:20px;"></span>님<br/>
+                            <span th:text="${userName}" ></span>님<br/>
                             <span th:text="${userEmail}" style="font-weight:bold; font-size:13px"></span>
                         </div>
                         <div class="oInfo-right">
@@ -44,11 +44,11 @@
                                 <a href="#"></a>
                             </div>
                             <div>
-                                <div class="oMaemulCnt" style="float:right; width:200px;">
+                                <div class="oMaemulCnt" style="background-color:white; border-left: none; float:right; width:200px;">
                                     <a href="#">1건</a>
                                     <span>관심매물</span>
                                 </div>
-                                <div class="oMaemulCnt" style="float:right; width:200px;">
+                                <div class="oMaemulCnt" style="background-color:white; float:right; width:200px;">
                                     <a href="#">2건</a>
                                     <span>최근 본 매물</span>
                                 </div>
@@ -61,23 +61,27 @@
                 </div>
 
                 <!-- 관심매물 / 최근본매물 -->
-                <div class="menubar">
-                    <button type="button" class="menu-c" id="oInterestMaemul" onclick="location.href = '/notice/list'" >관심매물</button>
-                    <button type="button" class="menu" id="oRecentMaemul" onclick="location.href = '/guide'" >최근본매물</button>
+                <div class="oMyInfo-bottom">
+                    <div class="menubar">
+    <!--                    <button type="button" class="menu-c" id="oInterestMaemul" onclick="location.href = '/notice/list'" >관심매물</button>-->
+    <!--                    <button type="button" class="menu" id="oRecentMaemul" onclick="location.href = '/guide'" >최근본매물</button>-->
+                        <button type="button" class="oMaemulLink" id="oInterestMaemul" onclick="location.href = '#'" >관심매물</button>
+                        <button type="button" class="oMaemulLink" id="oRecentMaemul" onclick="location.href = '#" >최근본매물</button>
+                    </div>
+                    <table style="margin-top: 15px; align=center">
+                        <tr>
+                            <th>거래종류</th>
+                            <th>매물종류</th>
+                            <th>소재지 / 상세주소 매물설명</th>
+                            <th>면적</th>
+                            <th>가격</th>
+                            <th>삭제</th>
+                        </tr>
+                        <tr>
+                            <td colspan="6">조회된 데이터가 없습니다.</td>
+                        </tr>
+                    </table>
                 </div>
-                <table>
-                    <tr>
-                        <th>거래종류</th>
-                        <th>매물종류</th>
-                        <th>소재지 / 상세주소 매물설명</th>
-                        <th>면적</th>
-                        <th>가격</th>
-                        <th>삭제</th>
-                    </tr>
-                    <tr>
-                        <td colspan="6">조회된 데이터가 없습니다.</td>
-                    </tr>
-                </table>
             </div>
         </div>
     </div>

@@ -13,7 +13,7 @@
             crossorigin="anonymous"
     />
     <link rel="stylesheet" href="/css/mapMain.css">
-    <script type="text/javascript" th:src="@{/js/cluster/map.js}" defer></script>
+    <script type="text/javascript" th:src="@{/js/mapMain/mapMain.js}"></script>
 </head>
 <body layout:fragment="content">
 
@@ -31,55 +31,54 @@
                     <div class="input-group">
                         <div class="titlearea">
                             <div class="left">
-                                    <span style="padding-top: 8px;padding-left: 7px;">
-                                      <img style="width:23px;"
-                                           src="https://cdn.icon-icons.com/icons2/1462/PNG/512/134leftarrow_100014.png"
-                                           alt=""/>
-                                    </span>
+
                                 <div class="left1" style="padding-left: 15px;">
                                     <span class="title">서초구 양재동 201-1</span>
                                     <p style="font-size: 13px;">서울특별시 서초구 바우뫼로12길 65</p>
                                 </div>
                             </div>
                             <div class="right" style="align-items: center;">
-                                <button class="shareBtn" type="button" data-bs-toggle="modal" data-bs-target="#shareBtn">
+                                <button class="shareBtn" type="button" data-bs-toggle="modal"
+                                        data-bs-target="#shareBtn">
                                     <img style="width:19px;"
-                                                              src="https://cdn.icon-icons.com/icons2/2368/PNG/512/share_icon_143700.png">
+                                         src="https://cdn.icon-icons.com/icons2/2368/PNG/512/share_icon_143700.png">
                                 </button>
                                 <!-- Modal -->
-                                <div class="modal fade" id="shareBtn" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="shareBtn" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                     aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
+                                        <div class="modal-content aShare">
+                                            <div class="modal-header aShare">
                                                 <h1 class="modal-title fs-5" id="exampleModalLabel">공유하기</h1>
                                             </div>
-                                            <div class="modal-body">
-
+                                            <div class="modal-body aShare">
+                                                <a href="https://accounts.kakao.com/login/?continue=https%3A%2F%2Fcs.kakao.com%2Fhelps%3Fservice%3D8#login"
+                                                   class="aShareBtns">
+                                                    <img class="aShareBtnsImg"
+                                                         src="https://cdn.icon-icons.com/icons2/2429/PNG/512/kakaotalk_logo_icon_147272.png">
+                                                </a>
+                                                <a href="https://accounts.kakao.com/login/?continue=https%3A%2F%2Fcs.kakao.com%2Fhelps%3Fservice%3D8#login"
+                                                   class="aShareBtns">
+                                                    <img class="aShareBtnsImg"
+                                                         src="https://bullsone.com/assets/front/kr/m/image/campaign/sns/icon_cacaostory.png">
+                                                </a>
+                                                <a href="https://www.facebook.com/login/" class="aShareBtns">
+                                                    <img class="aShareBtnsImg"
+                                                         src="https://blog.kakaocdn.net/dn/UGS0q/btree5Viurw/l07AH1VgWJHm4stsAHLdL0/img.png">
+                                                </a>
+                                                <a href="https://nid.naver.com/nidlogin.login" class="aShareBtns">
+                                                    <img class="aShareBtnsImg"
+                                                         src="https://www.facnroll.co.kr/_img/utility/icon_blog.png">
+                                                </a>
                                             </div>
 
                                         </div>
                                     </div>
                                 </div>
-                                    <button type="button" class="btn-close" aria-label="Close"></button>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-
-                <li class="list-group-item 2" style="height:100%;">
-                    <nav id="navbar-example2" class="navbar bg-body-tertiary mb-3">
-                        <ul id="nav-pills" class="nav nav-pills">
-                            <li class="nav-item">
-                                <a class="nav-link" href="#" style="width: 40px;">실거래</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#scrollspyHeading5" style="width: 40px;">매물</a>
-                            </li>
-                            <li class="nav-item">
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-primary review" data-bs-toggle="modal"
                                         data-bs-target="#staticBackdrop2">
-                                    톡톡
+                                    <img src="/sc/aTalkTalkImg.png" style="width: 36px;">
                                 </button>
                                 <div class="modal fade" id="exampleModalToggle2" aria-hidden="true"
                                      aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
@@ -168,7 +167,7 @@
                                                         aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <div class="container-fluid" >
+                                                <div class="container-fluid">
                                                     <div class="rowWrite">
                                                         <div class="col-md-4">
                                                             <div class="css-1ihwis6">
@@ -178,7 +177,7 @@
                                                                             <div class="_photoItem css-mkzt4e">
                                                                                 <a href="#" class="css-16unk8l">
                                                                                     <span class="aTalkImg"
-                                                                                          >
+                                                                                    >
                                                                                         <img alt=""
                                                                                              src="https://image.hogangnono.com/image/nowatermark/original/review/20220404190806_0ph86ZAkat4qoDhsQp?s=720x180&amp;t=outside&amp;q=100"
                                                                                              class=""
@@ -197,7 +196,7 @@
                                                                                      src="https://image.hogangnono.com/image/nowatermark/original/review/20230216161237_gseRp8wtTLgsEzyOQD?s=720x180&amp;t=outside&amp;q=100"
                                                                                      class="" data-id="2490613"
                                                                                      draggable="true"
-                                                                                     >
+                                                                                >
                                                                                 </span>
                                                                                     <div class="css-fopivj"></div>
 
@@ -211,7 +210,7 @@
                                                                                      src="https://image.hogangnono.com/image/nowatermark/original/review/20191125105454_qd9EMkGqJ3wnWCbwGx?s=720x180&amp;t=outside&amp;q=100"
                                                                                      class="" data-id="116477"
                                                                                      draggable="true"
-                                                                                     >
+                                                                                >
                                                                                 </span>
                                                                                     <div class="css-fopivj"></div>
                                                                                 </a>
@@ -222,7 +221,7 @@
                                                                                 <a href="#"
                                                                                    class="css-16unk8l"><span
                                                                                         class=" aTalkImg"
-                                                                                        >
+                                                                                >
 
                                                                                         <img
                                                                                                 alt=""
@@ -237,7 +236,7 @@
                                                                                     href="#"
                                                                                     class="css-16unk8l"><span
                                                                                     class=" aTalkImg"
-                                                                                    >
+                                                                            >
                                                                                     <img
                                                                                             alt=""
                                                                                             src="https://image.hogangnono.com/image/nowatermark/original/review/20210404191627_oe5u5cxgQB3JkUU6az?s=720x180&amp;t=outside&amp;q=100"
@@ -251,7 +250,7 @@
                                                                                     href="#"
                                                                                     class="css-16unk8l"><span
                                                                                     class=" aTalkImg"
-                                                                                    >
+                                                                            >
                                                                                     <img
                                                                                             alt=""
                                                                                             src="https://image.hogangnono.com/image/nowatermark/original/review/20220330232255_mQ1IMA8U0koos44dIY?s=720x180&amp;t=outside&amp;q=100"
@@ -267,7 +266,7 @@
                                                                                     href="#"
                                                                                     class="css-16unk8l"><span
                                                                                     class=" aTalkImg"
-                                                                                    >
+                                                                            >
                                                                                     <img
                                                                                             alt=""
                                                                                             src="https://image.hogangnono.com/image/nowatermark/original/review/20221201205252_niCN9VkNtyRavUkgf7?s=720x180&amp;t=outside&amp;q=100"
@@ -282,7 +281,7 @@
                                                                                     href="#"
                                                                                     class="css-16unk8l"><span
                                                                                     class=" aTalkImg"
-                                                                                    >
+                                                                            >
                                                                                     <img
                                                                                             alt=""
                                                                                             src="https://image.hogangnono.com/image/nowatermark/original/review/20210903082635_LJqoAK9Qyi2k9nq67Q?s=720x180&amp;t=outside&amp;q=100"
@@ -296,7 +295,7 @@
                                                                                     href="#"
                                                                                     class="css-16unk8l"><span
                                                                                     class=" aTalkImg"
-                                                                                    >
+                                                                            >
                                                                                     <img
                                                                                             alt=""
                                                                                             src="https://image.hogangnono.com/image/nowatermark/original/review/20220323095247_pJEy33fmyjlZJ701oi?s=720x180&amp;t=outside&amp;q=100"
@@ -497,8 +496,24 @@
                                             </div>
                                             <div class="modal-footer" style="margin-top: 13px;">
                                             </div>
-                            </li>
-                    </nav>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item 2" style="height:100%;">
+<!--                    <nav id="navbar-example2" class="navbar bg-body-tertiary mb-3">-->
+<!--                        <ul id="nav-pills" class="nav nav-pills">-->
+<!--                            <li class="nav-item">-->
+<!--                                <a class="nav-link" href="#" style="width: 40px;">실거래</a>-->
+<!--                            </li>-->
+<!--                            <li class="nav-item">-->
+<!--                                <a class="nav-link" href="#scrollspyHeading5" style="width: 40px;">매물</a>-->
+<!--                            </li>-->
+<!--                            <li class="nav-item">-->
+
+<!--                            </li>-->
+<!--                    </nav>-->
 
                     <div style="height:85%;">
                         <div
@@ -616,33 +631,139 @@
                                                 </div>
                                             </li>
                                         </ul>
-                                        <div class="etc-if">
-                                            <span class="icon-ytp01 icon-eye-8ea5c1-14_9 ei count-view"></span>
-                                            <span class="icon-ytp01 icon-fav-8ea5c1-9_11 ei count-fav"></span>
-                                        </div>
+
                                         <div class="mes-util">
 
-                                            <a href="#" id="mes-utils" class="save btnRpSaveAddress">
-                                                <button class="etcBtn"><img style="width: 25px;"
-                                                                            src="https://e7.pngegg.com/pngimages/522/320/png-clipart-bookmark-computer-icons-bookmark-miscellaneous-ribbon-thumbnail.png">
+                                            <a href="#" class="mes-utils" >
+                                                <button class="etcBtn" type="button" data-bs-toggle="modal"
+                                                        data-bs-target="#aSaveToMine"
+                                                         id="aSaveBtn">
+                                                    <img style="width: 25px;"
+                                                         src="https://e7.pngegg.com/pngimages/522/320/png-clipart-bookmark-computer-icons-bookmark-miscellaneous-ribbon-thumbnail.png">
                                                 </button>
                                                 <span class="tx">저장</span>
+                                                <!-- Modal -->
+                                                <div th:if="${userEmail==null}"class="modal fade" id="aSaveToMine"
+                                                     tabindex="-1" aria-labelledby="exampleModalLabel"
+                                                     aria-hidden="true">
+
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header aSaveToMine">
+                                                                <h1 class="modal-title fs-5" id="exampleModalLabel">로그인이
+                                                                    필요한 서비스 입니다</h1>
+
+                                                            </div>
+                                                            <div class="modal-body LogInNeed">
+                                                                <div class="aListOfEasyLogIn">
+                                                                    <div style="display: flex;
+    width: 281px;">
+                                                                        <button class="aEasyLogInBtn">
+                                                                            <img class="aEasyLogInImg" src="/images/kakao_login_medium_narrow.png" alt="kakaoLogin" height="44" />
+                                                                        </button>
+                                                                        <button class="aEasyLogInBtn">
+                                                                            <img class="aEasyLogInImg" src="/images/btnG_완성형.png" alt="naverLogin" height="44" width="176px"/>  <!-- 카카오 로그인과 높이만 맞춤 -->
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="LogInNeedContents">
+                                                                    <p class="emailLogInPartTitle">이메일 직접 로그인</p>
+                                                                    <hr>
+                                                                    <div class="emailLogInPartInput">
+                                                                        <input class="LogInInputs"type="text" placeholder="이메일 주소">
+                                                                        <input class="LogInInputs" type="text" placeholder="비밀번호(8자리 이상)">
+                                                                    </div>
+                                                                    <div class="aFindSaveEmail">
+                                                                        <div class="aFindSaveEmailContents">
+                                                                            <div>
+                                                                                <input type="checkbox">
+                                                                                <label>이메일저장</label>
+                                                                            </div>
+                                                                            <p>이메일/비밀번호찾기</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <button class="aLogInBtn">로그인</button>
+                                                                <div class="aJoinBtnsList">
+                                                                    <button class="aJoinBtns">개인회원 가입</button>
+                                                                    <button class="aJoinBtns">중개회원 가입</button>
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Modal -->
+                                                <div th:if="${userEmail!=null}"class="modal fade" id="aSaveToMine"
+                                                     tabindex="-1" aria-labelledby="exampleModalLabel"
+                                                     aria-hidden="true">
+
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header aSaveToMine">
+                                                                <h1 class="modal-title fs-5" id="exampleModalLabel">로그인이
+                                                                    필요한 서비스 입니다</h1>
+
+                                                            </div>
+                                                            <div class="modal-body LogInNeed">
+                                                                <div class="aListOfEasyLogIn">
+                                                                    <div style="display: flex;
+    width: 281px;">
+                                                                        <button class="aEasyLogInBtn">
+                                                                            <img class="aEasyLogInImg" src="/images/kakao_login_medium_narrow.png" alt="kakaoLogin" height="44" />
+                                                                        </button>
+                                                                        <button class="aEasyLogInBtn">
+                                                                            <img class="aEasyLogInImg" src="/images/btnG_완성형.png" alt="naverLogin" height="44" width="176px"/>  <!-- 카카오 로그인과 높이만 맞춤 -->
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="LogInNeedContents">
+                                                                    <p class="emailLogInPartTitle">이메일 직접 로그인</p>
+                                                                    <hr>
+                                                                    <div class="emailLogInPartInput">
+                                                                        <input class="LogInInputs"type="text" placeholder="이메일 주소">
+                                                                        <input class="LogInInputs" type="text" placeholder="비밀번호(8자리 이상)">
+                                                                    </div>
+                                                                    <div class="aFindSaveEmail">
+                                                                        <div class="aFindSaveEmailContents">
+                                                                            <div>
+                                                                                <input type="checkbox">
+                                                                                <label>이메일저장</label>
+                                                                            </div>
+                                                                            <p>이메일/비밀번호찾기</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <button class="aLogInBtn">로그인</button>
+                                                                <div class="aJoinBtnsList">
+                                                                    <button class="aJoinBtns">개인회원 가입</button>
+                                                                    <button class="aJoinBtns">중개회원 가입</button>
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </a>
-                                            <a href="#" id="mes-utils" class="alarm btnRpAlarm">
-                                                <button class="etcBtn"><img style="opacity: 83%;width: 26px;"
+                                            <a href="#" class="mes-utils" >
+                                                <button class="etcBtn" type="button" data-bs-toggle="modal"
+                                                        data-bs-target="#staticBackdrop"><img style="opacity: 83%;width: 26px;"
                                                                             src="https://w7.pngwing.com/pngs/555/826/png-transparent-bell-notification-notification-icon-essential-icon.png">
                                                 </button>
                                                 <span class="tx">알림</span>
                                             </a>
-                                            <a href="#" id="mes-utils" class="way btnRpWay">
+                                            <a href="#" class="mes-utils" >
                                                 <button class="etcBtn"><img style="opacity: 38%;width: 19px;"
                                                                             src="https://e7.pngegg.com/pngimages/580/370/png-clipart-location-computer-icons-icon-geographical-position-location-geolocation-thumbnail.png">
                                                 </button>
                                                 <span class="tx">길찾기</span>
                                             </a>
-                                            <a href="#" id="mes-utils"
-                                               class="share aed-share-minibox-switch btnRpShare">
-                                                <button class="etcBtn"><img style="opacity: 38%;width: 23px;"
+                                            <a href="#" class="mes-utils"
+                                               >
+                                                <button class="etcBtn" type="button" data-bs-toggle="modal"
+                                                        data-bs-target="#shareBtn"><img style="opacity: 38%;width: 23px;"
                                                                             src="https://cdn.icon-icons.com/icons2/2368/PNG/512/share_icon_143700.png">
                                                 </button>
                                                 <span class="tx">공유</span>
@@ -961,6 +1082,33 @@
 
 <!-- 지도를 표시할 div 입니다 -->
 <div id="map" style="width: 100%; height: 100%;">
+    <div class="afilter">
+
+
+            <!-- 통합검색 -->
+            <div class="aSearchAll" style="width: 349px;
+                display: flex;
+                align-items: center;
+                justify-content: center;">
+                <div class="aSearch_area" style="width: 94%;
+                                            height: 29px;
+                                            border: 1px solid lightgray;
+                                            border-radius: 8px;">
+                    <img style="margin-left:8px; width:20px; background-color: transparent;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvcGRzbD6HIXhyARcDnuzWTfGVeLEZHVLS9A&amp;usqp=CAU">
+                    <input type="text" name="asearch_keyword" placeholder="" class="aSearchInput" autocomplete="off">
+                    <script>
+
+                    </script>
+                </div>
+            </div>
+
+            <!-- //통합검색 -->
+
+
+
+
+
+    </div>
     <!--우측 지도도구-->
     <div class="map_util">
         <div
@@ -1052,9 +1200,9 @@
         </div>
 
         <button
-                type="button"
                 id="hsBtn"
                 class="btn btn-primary aSellMyHBtn"
+                type="button" data-bs-toggle="modal" data-bs-target="#aSellMyHModal"
         >
             집 내놓기
             <span
@@ -1064,6 +1212,38 @@
               <span class="visually-hidden">unread messages</span>
             </span>
         </button>
+        <!-- Vertically centered modal -->
+        <div class="modal fade" id="aSellMyHModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">집 내놓기</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body aSearchAPTAll">
+                        <div class="aSearchAPTAll" style="width: 349px;
+                            display: flex;
+                            justify-content: center;">
+                            <div class="aSearch_area" style="display: flex;
+                                                                width: 94%;
+                                                                height: 41px;
+                                                                border: 1px solid lightgray;
+                                                                border-radius: 8px;
+                                                                /* align-content: center; */
+                                                                align-items: center;"
+                            >
+                                <img style="margin-left:8px; width:20px; background-color: transparent;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvcGRzbD6HIXhyARcDnuzWTfGVeLEZHVLS9A&amp;usqp=CAU">
+                                <input type="text" name="asearch_keyword" placeholder="검색할 아파트명을 입력하세요" class="aSearchInput aOnSellMyH" autocomplete="off">
+                                <script>
+
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
 
 

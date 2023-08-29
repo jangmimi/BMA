@@ -48,35 +48,8 @@ spring:
 
   # 데이터베이스 설정
 
-<<<<<<< HEAD
-#    url: jdbc:mysql://localhost:3306/pos
-#    username: root
-#    password: 1234
-##    password: 45723922
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#지현 데베 테스트용 / 개인 노트북 비번이 달라서 만들었어요 나중애 삭제 예정
-
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/board?serverTimezone=Asia/Seoul
-    username: root
-    password: wlgus
-
-
-#  # 테스트 데이터 사용을 위해 data.sql(리소스 바로 아래 경로) 및
-#  # yml 내용 임시 추가 - pjm
-=======
     url: jdbc:mysql://localhost:3306/pos
     username: root
-#    password: 1234
-    password: 45723922
+    password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-
-
-  # 테스트 데이터 사용을 위해 data.sql(리소스 바로 아래 경로) 및
-  # yml 내용 임시 추가 - pjm
->>>>>>> d64afeecb42eeb1cbf9f02677d35c5434d5d327e
-#    url: jdbc:h2:mem:testdb
-#    username: sa
-#    password:
-#    driver-class-name: org.h2.Driver
