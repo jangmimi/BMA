@@ -22,6 +22,7 @@
 
     table{
     border-top: solid 3px #26A9E0;
+    border: 1px solid #ddd;
     }
 
     table th{
@@ -64,6 +65,7 @@
     height: 40px;
     width : 20%;
     }
+
     textarea{
     height: 200px;
     width : 95%;
@@ -82,4 +84,8 @@
     .submit-btn-outer{
     text-align : center;
     width : 100%;
+    }
+
+    input{
+    width : 98%;
     }

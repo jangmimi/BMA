@@ -6,11 +6,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-import java.util.Date;
 import java.util.List;
 
 public interface ChatRepository extends JpaRepository <ChatMessage,Long> {
-    @Query("SELECT c FROM ChatMessage c WHERE c.chatDate BETWEEN :start AND CURRENT_TIMESTAMP")
-    List findByDateMessages(@Param("start") ChatMessage chatMessage);
+
+//    @Query(value = "SELECT c FROM ChatMessage c WHERE CONVERT_TZ(c.chatDate, '+00:00', '+09:00') BETWEEN :entityStartTime AND CURRENT_TIMESTAMP", nativeQuery = true)
+    @Query(value = "SELECT * FROM chat_message WHERE chat_date >= ?1",nativeQuery = true)
+    List findByDateMessages(LocalDateTime entityStartTime);
 }

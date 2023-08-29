@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class AptDetailDTO {
+public class AptRealTradeDTO {
     private String district;            // 구주소
     private String address;             // 번지
     private String complexName;         // 아파트 이름
