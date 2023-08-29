@@ -1,5 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
+
     let sender = document.getElementById("s-chat-sender").value;
+
+    const stompClientSession = sessionStorage.getItem('stompClient');
 
     let stompClient = null;
 
@@ -34,19 +37,11 @@ document.addEventListener("DOMContentLoaded", function () {
             alert("채팅기능은 로그인하셔야 이용 하실 수 있습니다");
             window.location.href = '/member/qLoginForm';
         } else {
-            const chatTextBox = document.querySelector(".s-chat-textbox");
-            // test@test.com
-            // 12121212
-            chatTextBox.innerHTML = ""; // 이 부분을 추가하여 기존 내용을 삭제합니다.
-
             modal.style.display = "flex";
             modalButton.style.transform = "scale(0)";
             //웹통신 시작
             if (stompClient === null) {
                 connect();
-            } else {
-                stompClient.send("/app/loadMessages", {}, JSON.stringify({ userId: sender, connectedTime: connectedTime }));
-                loadMessages();
             }
             //알림 메시지 개수 초기화
             resetNotificationCount();
@@ -80,9 +75,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 showMessages(message);
             });
         });
+        sessionStorage.setItem('stompClient', JSON.stringify({ userId: sender, connectedTime: connectedTime }));
     };
 
     function loadMessages() {
+        stompClient.send("/app/loadMessages", {}, JSON.stringify({ userId: sender, connectedTime: connectedTime }));
         stompClient.subscribe(clientTopic, function (messages) {
             const loadMessages = JSON.parse(messages.body);
             for (const loadMessage of loadMessages) {
