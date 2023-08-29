@@ -11,6 +11,6 @@ public interface ChatService {
 
     public void saveMessage(ChatMessage chatMessage);
 
-    public List showMessages(ChatMessage chatMessage);
+    public List showMessages(LocalDateTime startTime);
 
 }
