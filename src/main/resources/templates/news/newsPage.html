@@ -11,19 +11,23 @@
     <script src="https://kit.fontawesome.com/5b1091f816.js" crossorigin="anonymous"></script>
     <script type="text/javascript" th:src="@{/js/news/newsPage.js}" defer ></script>
 
+
 </head>
 <body layout:fragment="content">
 <div class="news-header">
     <h1>부동산 뉴스</h1>
-    <form action="/news/newsPage" method="get">
+    <form id="search-form" action="/news/newsPage" method="get">
         <div class="search-range">
             <div class="news-search">
-                <input type="text" id="search-input" name="query" placeholder="부동산">
+                <input type="text" id="search-input" name="query" th:value="${searchQuery}">
                 <div class="r-icon-circle">
                     <button id="search-button" type="submit">
                         <i id="icon" class="fa-solid fa-magnifying-glass"></i>
                     </button>
                 </div>
+            </div>
+            <div>
+                제안 ? <pre th:text="${searchKeyword} + '로 검색한 결과입니다'"></pre>
             </div>
         </div>
     </form>
