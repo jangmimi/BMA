@@ -17,63 +17,71 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 </head>
 <body layout:fragment="content">
+    <div th:if="${msg}" class="alert">
+        <script th:inline="javascript">
+            alert([[${msg}]]);
+        </script>
+    </div>
     <span th:if="${userEmail == null}">
         <div class="container mt-5" id="oInner-container" align="center">
             <div id="oLoginTitle">
                 <h3 class="h3 fw-bold">로그인</h3>
             </div>
-            <form th:action="@{/member/qLoginBasic}" method="POST" th:object="${memberDTO}" onsubmit="return oLoginCheck()">
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="email" name="email"
-                           th:value="${rememberedEmail}" placeholder="${session.memberDTO.email}" autofocus="autofocus">
-<!--                           th:field="*{email}" th:class="${#fields.hasErrors('email')} ? 'form-control fieldError' : 'form-control'" />-->
-<!--                    <div th:each="msg : ${#fields.errors('email')}">-->
-<!--                        <p th:text="${msg}"></p>-->
-<!--                    </div>-->
-                    <label th:for="email" class="oLabelColor">이메일 주소</label>
-                    <div id="check" style="display:none; text-align:left; color:red;"></div>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Password" autocomplete="off">
-<!--                        th:field="*{pwd}" th:class="${#fields.hasErrors('pwd')} ? 'form-control fieldError' : 'form-control'" />-->
-                    <label th:for="password" class="oLabelColor">비밀번호</label>
-<!--                    <p th:if="${#fields.hasErrors('pwd')}" th:errors="*{pwd}" style="font-size:12px; text-align: left; color: red;">Incorrect data</p>-->
-                </div>
-                <!-- 아이디 저장 체크박스 -->
-                <div class="form-check" style="display: flex; justify-content:space-between; font-size:13px;">
-                    <div>
-                      <input class="form-check-input" type="checkbox"
-                             id="oSaveId" name="oSaveId" style="margin-right:5px;" th:checked="${rememberedEmail != null}">
-                      <label class="form-check-label ml-3" for="oSaveId">
-                        이메일 저장
-                      </label>
+            <div class="oOutLine">
+                <form th:action="@{/member/qLoginBasic}" method="POST" th:object="${memberDTO}" onsubmit="return oLoginCheck()">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="email" name="email"
+                               th:value="${rememberedEmail}" placeholder="${session.memberDTO.email}" autofocus="autofocus">
+    <!--                           th:field="*{email}" th:class="${#fields.hasErrors('email')} ? 'form-control fieldError' : 'form-control'" />-->
+    <!--                    <div th:each="msg : ${#fields.errors('email')}">-->
+    <!--                        <p th:text="${msg}"></p>-->
+    <!--                    </div>-->
+                        <label th:for="email" class="oLabelColor">이메일 주소</label>
+                        <div id="check" style="display:none; text-align:left; color:red;"></div>
                     </div>
-                    <div><a th:href="@{/member/qFindMemberInfo}" style="color:#212529;">이메일/비밀번호 찾기</a></div>
-                </div>
-                <div class="form-floating">
-<!--                    <input type="button" class="btn btn-dark mt-2 mb-2 w-100" id="oLoginBtn" style="height: 48px;" value="로그인" onclick="oLogin()"/>-->
-                    <input type="submit" class="btn btn-dark mt-2 mb-2 w-100" id="oLoginBtn" style="height: 48px;" value="로그인" />
-                    <input type="button" class="btn btn-outline-primary mt-2 mb-2 w-100" id="oJoinBtn"
-                           style="height: 48px;" th:onclick="|location.href='@{/member/qJoinForm}'|" value="회원가입" />
-                </div>
-            </form>
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Password" autocomplete="off">
+    <!--                        th:field="*{pwd}" th:class="${#fields.hasErrors('pwd')} ? 'form-control fieldError' : 'form-control'" />-->
+                        <label th:for="password" class="oLabelColor">비밀번호</label>
+    <!--                    <p th:if="${#fields.hasErrors('pwd')}" th:errors="*{pwd}" style="font-size:12px; text-align: left; color: red;">Incorrect data</p>-->
+                    </div>
+                    <!-- 아이디 저장 체크박스 -->
+                    <div class="form-check" style="display: flex; justify-content:space-between; font-size:13px;">
+                        <div>
+                          <input class="form-check-input" type="checkbox"
+                                 id="oSaveId" name="oSaveId" style="margin-right:5px;" th:checked="${rememberedEmail != null}">
+                          <label class="form-check-label ml-3" for="oSaveId">
+                            이메일 저장
+                          </label>
+                        </div>
+                        <div><a th:href="@{/member/qFindMemberInfo}" style="color:#212529;">이메일/비밀번호 찾기</a></div>
+                    </div>
+                    <div class="form-floating">
+    <!--                    <input type="button" class="btn btn-dark mt-2 mb-2 w-100" id="oLoginBtn" style="height: 48px;" value="로그인" onclick="oLogin()"/>-->
+                        <input type="submit" class="btn btn-dark mt-2 mb-2 w-100" id="oLoginBtn" style="height: 48px;" value="로그인" />
+                        <input type="button" class="btn btn-outline-primary mt-2 mb-2 w-100" id="oJoinBtn"
+                               style="height: 48px;" th:onclick="|location.href='@{/member/qJoinForm}'|" value="회원가입" />
+                    </div>
+                </form>
 
-            <div class="container" id="oLoginSns" style="mt-5 mb-5">
-                <hr style="width: 380px;"/>
-                <!-- 네이버 로그인 버튼 노출 영역 -->
-                <div id="naver_id_login"></div>
-                <!-- //네이버 로그인 버튼 노출 영역 -->
-                <p style="font-weight: bold; margin-bottom: 20px;">Login with SNS</p>
-                <div class="oLoginSnsBtn-container"
-                     style="display: flex; justify-content: space-between;">
-                    <!-- 카카오 로그인 (공백 넣으면 에러. 한줄로!)-->
-                    <a th:href="@{https://kauth.kakao.com/oauth/authorize?client_id=fae91fecfb7dbda2a80ae22881709a28&redirect_uri=http://localhost:8081/member/qLogin&response_type=code}">
-                        <img src="/images/kakao_login_medium_narrow.png" alt="kakaoLogin" height="44" />
-                    </a>
-                    <!-- 네이버 로그인 -->
-                    <a th:href="@{/member/qLoginNaver}">
-                        <img src="/images/btnG_완성형.png" alt="naverLogin" height="44" />  <!-- 카카오 로그인과 높이만 맞춤 -->
-                    </a>
+
+                <div class="container" id="oLoginSns" style="mt-5 mb-5">
+                    <hr style="width: 380px;"/>
+                    <!-- 네이버 로그인 버튼 노출 영역 -->
+                    <div id="naver_id_login"></div>
+                    <!-- //네이버 로그인 버튼 노출 영역 -->
+                    <p style="font-weight: bold; margin-bottom: 20px;">Login with SNS</p>
+                    <div class="oLoginSnsBtn-container"
+                         style="display: flex; justify-content: space-between;">
+                        <!-- 카카오 로그인 (공백 넣으면 에러. 한줄로!)-->
+                        <a th:href="@{https://kauth.kakao.com/oauth/authorize?client_id=fae91fecfb7dbda2a80ae22881709a28&redirect_uri=http://localhost:8081/member/qLogin&response_type=code}">
+                            <img src="/images/kakao_login_medium_narrow.png" alt="kakaoLogin" height="44" />
+                        </a>
+                        <!-- 네이버 로그인 -->
+                        <a th:href="@{/member/qLoginNaver}">
+                            <img src="/images/btnG_완성형.png" alt="naverLogin" height="44" />  <!-- 카카오 로그인과 높이만 맞춤 -->
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
