@@ -848,7 +848,7 @@ a:active, a:focus, a:hover, a:link, a:visited {
 /*맵 우측 도구*/
 .btn-group-vertical{/*학군상권버튼그룹*/
     top: 40%;
-        position: absolute;
+        position: fixed;
         right: 83px;
         z-index: 1200;
         line-height: 1;
@@ -857,8 +857,8 @@ a:active, a:focus, a:hover, a:link, a:visited {
   padding-left: 18px;
 }
 .btn.btn-primary.aSellMyHBtn{
-    bottom: 9%;
-        position: absolute;
+    bottom: 3%;
+        position: fixed;
         right: 37px;
         z-index: 1200;
         line-height: 1;
@@ -869,3 +869,84 @@ a:active, a:focus, a:hover, a:link, a:visited {
 
 
 
+.modal-header.aSaveToMine{
+    justify-content: center;
+}
+.modal-body.LogInNeed{
+    display: flex;
+        flex-direction: column;
+        align-items: center;
+}
+.LogInNeedContents{
+    width:88%;
+}
+.aFindSaveEmail{
+margin-top: 22px;
+    width: 100%;
+        display: flex;
+        justify-content: center;
+}
+.aFindSaveEmailContents{
+    width: 275px;
+        display: flex;
+        justify-content: space-between;
+}
+.aLogInBtn{
+    height: 35px;
+        width: 257px;
+        border: none;
+        background-color: #26abed;
+        color: white;
+        border-radius: 7px;
+}
+.aJoinBtnsList{
+    margin-top: 7px;
+    margin-bottom:32px;
+}
+.aJoinBtns{
+height: 24px;
+    width: 116px;
+    border: none;
+    color: #26abed;
+    border-radius: 7px;
+}
+
+
+
+
+/*미로그인시 뜨는 모달창*/
+.modal.fade.aSaveToMine{
+    top:140px;
+}
+.aListOfEasyLogIn{
+    display: flex;
+        justify-content: center;
+        align-items:center;
+        margin-bottom:40px;
+}
+.aEasyLogInBtn{
+width: 179px;
+    border: none;
+    background-color: white;}
+.emailLogInPartTitle{
+    font-size: 18px;
+        color: #26abed;
+    display: flex;
+        align-items: center;
+        justify-content: center;
+}
+.aEasyLogInImg{
+    width: 129px;
+        height: 33px;
+}
+.emailLogInPartInput{
+    display: flex;
+        flex-direction: column;
+        align-items: center;
+}
+.LogInInputs{
+width: 269px;
+    height: 36px;
+    border: 1px solid lightgray;
+    border-radius: 7px;
+}
