@@ -214,60 +214,60 @@ function closeOtherOverlays() {
 }
 
 
-function checkEnter(event) {
-    if (event.key === 'Enter') {
-        var keyword = document.querySelector('.aSearchInput').value;
-        closeOtherOverlays();
-
-        // 검색 키워드를 서버로 전송하여 검색 수행
-        $.ajax({
-            type: 'POST',
-            url: '/map/main',
-            data: {
-                keyword: keyword
-            },
-            success: function (response) {
-                if (response && response.aptSearch) {
-                    var result = response.aptSearch;
-
-                    // 검색 결과의 좌표로 맵 이동
-                    var newCenter = new kakao.maps.LatLng(result.latitude, result.longitude);
-                    map.setCenter(newCenter);
-
-                    var markerPosition = new kakao.maps.LatLng(result.latitude, result.longitude);
-
-                    var markerContent = "<div class='e-marker'>" +
-                                        "<div class='e-markerTitle'>" +
-                                        "<h3>" + result.complexName + "</h3>" +
-                                        "</div>" +
-                                        "<div class='e-markerContent'>" +
-                                        "<p>" + result.roadName + "</p>" +
-                                        "</div>" +
-                                        "</div>";
-
-                    createMarker(markerPosition, markerContent, result);
-
-                    var overlayContent = "<div class='overlay'>" +
-                                         "<h4>" + result.complexName + "</h4>" +
-                                         "<p>" + result.roadName + "</p>" +
-                                         "</div>";
-
-                    var overlay = new kakao.maps.CustomOverlay({
-                        content: overlayContent,
-                        map: map,
-                        position: markerPosition,
-                        zIndex: 9999
-                    });
-
-                    overlay.setMap(map);
-
-
-                    });
-                }
-            }
-        });
-    }
-}
+//function checkEnter(event) {
+//    if (event.key === 'Enter') {
+//        var keyword = document.querySelector('.aSearchInput').value;
+//        closeOtherOverlays();
+//
+//        // 검색 키워드를 서버로 전송하여 검색 수행
+//        $.ajax({
+//            type: 'POST',
+//            url: '/map/main',
+//            data: {
+//                keyword: keyword
+//            },
+//            success: function (response) {
+//                if (response && response.aptSearch) {
+//                    var result = response.aptSearch;
+//
+//                    // 검색 결과의 좌표로 맵 이동
+//                    var newCenter = new kakao.maps.LatLng(result.latitude, result.longitude);
+//                    map.setCenter(newCenter);
+//
+//                    var markerPosition = new kakao.maps.LatLng(result.latitude, result.longitude);
+//
+//                    var markerContent = "<div class='e-marker'>" +
+//                                        "<div class='e-markerTitle'>" +
+//                                        "<h3>" + result.complexName + "</h3>" +
+//                                        "</div>" +
+//                                        "<div class='e-markerContent'>" +
+//                                        "<p>" + result.roadName + "</p>" +
+//                                        "</div>" +
+//                                        "</div>";
+//
+//                    createMarker(markerPosition, markerContent, result);
+//
+//                    var overlayContent = "<div class='overlay'>" +
+//                                         "<h4>" + result.complexName + "</h4>" +
+//                                         "<p>" + result.roadName + "</p>" +
+//                                         "</div>";
+//
+//                    var overlay = new kakao.maps.CustomOverlay({
+//                        content: overlayContent,
+//                        map: map,
+//                        position: markerPosition,
+//                        zIndex: 9999
+//                    });
+//
+//                    overlay.setMap(map);
+//
+//
+//                    });
+//                }
+//            }
+//        });
+//    }
+//}
 
 
 
