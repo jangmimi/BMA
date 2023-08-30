@@ -48,7 +48,10 @@ box-sizing: unset;
 /* .nav-link:hover{
 color:#26abed;
 } */
-
+.nav-item.aEctBtns{
+    display:flex;
+    flex-direction:column;
+}
 
 
 
@@ -159,6 +162,18 @@ font-size: 17px;
   white-space: nowrap;
   line-height: 22px;
   letter-spacing: -1px;
+}
+.title{
+    margin-bottom:7px;
+}
+.address{
+    margin-left:11px;
+    font-size:15px;
+}
+
+.roadName{
+    margin-left:7px;
+    font-size: 15px;
 }
 .towriteBtn{
 background-color: transparent;
@@ -405,7 +420,7 @@ background-color: transparent;
 
 .shareBtn,.map-utilSBtn,.etcBtn{
 border: none;
-background-color: transparent;
+background-color: white;
 }
 
 
@@ -414,6 +429,8 @@ display: grid;
 grid-template-columns: 1fr 1fr 1fr;
 align-content: space-evenly;
 justify-items: center;
+width: 250px;
+    height: 150px;
 }
 .edu{
 display: flex;
@@ -481,19 +498,16 @@ margin-top: 30px;
 
 
 #scrollspyHeading6{
-height: 420px;
-display: flex;
-flex-direction: column;
-justify-content: space-between;
+   height: 399px;
+       display: flex;
+       flex-direction: column;
+       justify-content: space-between;
+}
+.aed-map-det{
+    height:184px;
 }
 .price-area{
-height: 55px;
-background-color: #26abed0f;
-color: #26abed;
-font-size: 20px;
-display: flex;
-align-items: center;
-padding-left: 17px;
+
 }
 .aed-main-box.rpinfo-tab-common{
 margin-top: 22px;
@@ -647,6 +661,17 @@ flex-direction: column;
 ol, ul, nav {
 list-style: none;
 }
+.aRealPriceAndGraph{
+    display:flex;
+    height:190px;
+    background-color: #26abed0f;
+    color: #26abed;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    padding-left: 17px;
+        justify-content: space-between;
+}
 
 a:active, a:focus, a:hover, a:link, a:visited {
 color: #222;
@@ -655,7 +680,9 @@ text-decoration: none;
 .aed-map-det .sp-if li {
 line-height: 20px;
 }
-
+tr{
+    height:32px;
+}
 #myTab{
 --bs-nav-tabs-link-active-border-color: #26abed;
 --bs-nav-tabs-border-color: #26abed;
