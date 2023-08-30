@@ -172,8 +172,16 @@ function createMarker(position, markerContent, responseData) {
 }
 >>>>>>> seoYoung
 
+// 한 번만 실행하기 위한 변수
+var onlyOneStart = false;
 // 맵 로드가 완료되면 실행
 kakao.maps.event.addListener(map, 'tilesloaded', function () {
+    // 이미 실행된 경우 함수 종료
+    if (onlyOneStart) {
+        return;
+    }
+    onlyOneStart = true; // 변수 업데이트
+
     var bounds = map.getBounds();
     var southWest = bounds.getSouthWest();
     var northEast = bounds.getNorthEast();
