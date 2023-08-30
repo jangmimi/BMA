@@ -91,8 +91,8 @@ function createMarker(position, markerContent, responseData) {
             titleElement.textContent = title;
 
             mapInfoTitleElement.textContent = title;
-            mapInfoAddressElement.textContent = "구주소 : " + address1 + " " + address2;
-            mapInfoRoadNameElement.textContent  = "도로명주소 : " + roadName;
+            mapInfoAddressElement.textContent = address1 + " " + address2;
+            mapInfoRoadNameElement.textContent  = roadName;
 
             $(".tbl tbody").empty();
             // 도로명 controller에 전달
@@ -104,14 +104,32 @@ function createMarker(position, markerContent, responseData) {
                 },
                 success: function (response) {
                     var tableBody = $(".tbl tbody"); // 테이블의 tbody 요소 선택
-                            if (response && response.aptDetailDTOList && response.aptDetailDTOList.length > 0) {
-                                for (var i = 0; i < response.aptDetailDTOList.length; i++) {
-                                    var detailItem = response.aptDetailDTOList[i];
+                            if (response && response.aptRealTradeDTOList && response.aptRealTradeDTOList.length > 0) {
+                                // 실거래정보 (연하늘색 부분)
+                                var amount = response.aptRealTradeDTOList[0].transactionAmount.toString();
+                                var amountSliceFirst = amount.slice(0, amount.length - 1);
+                                var amountSliceLast = amount.slice(-1)
+                                var floor = response.aptRealTradeDTOList[0].floor;
+                                var txt = null;
+                                if(amountSliceLast != 0) {
+                                    txt = amountSliceFirst + "억 " + amountSliceLast + "000만원(" + floor + "층)";
+                                } else {
+                                    txt = amountSliceFirst + "억(" + floor + "층)";
+                                };
+
+                                var priceArea = document.querySelector(".price-area");
+                                priceArea.querySelector(".txt").textContent = txt;
+
+
+                                // 거래이력 테이블
+                                for (var i = 0; i < response.aptRealTradeDTOList.length; i++) {
+                                    var detailItem = response.aptRealTradeDTOList[i];
+
                                     // transactionAmount를 1억과 1억 미만의 금액으로 분리
                                     var amount = detailItem.transactionAmount.toString();
-
                                     var amountSliceFirst = amount.slice(0, amount.length - 1);
                                     var amountSliceLast = amount.slice(-1)
+
                                     // 테이블 행 생성 및 데이터 추가
                                     var row = $("<tr>");
                                     $("<td>").text(detailItem.area).appendTo(row);
@@ -197,42 +215,87 @@ function closeOtherOverlays() {
 
 
 function checkEnter(event) {
-    if (event.key === 'Enter') {  // 엔터 키를 눌렀을 때만 작업을 수행
-        var keyword = document.querySelector('.aSearchInput').value;  // 입력 필드의 값 가져오기
+    if (event.key === 'Enter') {
+        var keyword = document.querySelector('.aSearchInput').value;
+        closeOtherOverlays();
 
         // 검색 키워드를 서버로 전송하여 검색 수행
         $.ajax({
             type: 'POST',
-            url: '/map/main',  // 검색을 수행하는 서버의 URL
+            url: '/map/main',
             data: {
                 keyword: keyword
             },
             success: function (response) {
-                // 검색 결과에 따라 마커를 생성하고 지도에 표시하기
-                if (response && response.aptDetailDTOList && response.aptDetailDTOList.length > 0) {
-                    for (var i = 0; i < response.aptDetailDTOList.length; i++) {
-                        var result = response.aptDetailDTOList[i];
+                if (response && response.aptSearch) {
+                    var result = response.aptSearch;
 
-                        var markerPosition = new kakao.maps.LatLng(result.latitude, result.longitude);
-                        var markerContent = "<div class='e-marker'>" +
-                            "<div class='e-markerTitle'>" +
-                            "<h3>" + result.complexName + "</h3>" +
-                            "</div>" +
-                            "<div class='e-markerContent'>" +
-                            "<p>" + result.roadName + "</p>" +
-                            "</div>" +
-                            "</div>";
+                    // 검색 결과의 좌표로 맵 이동
+                    var newCenter = new kakao.maps.LatLng(result.latitude, result.longitude);
+                    map.setCenter(newCenter);
 
-                        // 이미 생성된 마커가 아니라면 마커 생성 함수를 호출하여 마커를 생성하고 클릭 이벤트를 등록합니다.
-                        if (!existingMarkers[markerPosition.toString()]) {
-                            createMarker(markerPosition, markerContent, result);
-                        }
-                    }
-                } else {
-                    console.log("검색 결과가 없습니다.");
+                    var markerPosition = new kakao.maps.LatLng(result.latitude, result.longitude);
+
+                    var markerContent = "<div class='e-marker'>" +
+                                        "<div class='e-markerTitle'>" +
+                                        "<h3>" + result.complexName + "</h3>" +
+                                        "</div>" +
+                                        "<div class='e-markerContent'>" +
+                                        "<p>" + result.roadName + "</p>" +
+                                        "</div>" +
+                                        "</div>";
+
+                    createMarker(markerPosition, markerContent, result);
+
+                    var overlayContent = "<div class='overlay'>" +
+                                         "<h4>" + result.complexName + "</h4>" +
+                                         "<p>" + result.roadName + "</p>" +
+                                         "</div>";
+
+                    var overlay = new kakao.maps.CustomOverlay({
+                        content: overlayContent,
+                        map: map,
+                        position: markerPosition,
+                        zIndex: 9999
+                    });
+
+                    overlay.setMap(map);
+
+
+                    });
                 }
             }
         });
     }
 }
+
+
+
+//function checkEnter(event) {
+//    if (event.key === 'Enter') {  // 엔터 키를 눌렀을 때만 작업을 수행
+//        var keyword = document.querySelector('.aSearchInput').value;  // 입력 필드의 값 가져오기
+//        closeOtherOverlays();
+//
+//        // 검색 키워드를 서버로 전송하여 검색 수행
+//        $.ajax({
+//            type: 'POST',
+//            url: '/map/main',  // 검색을 수행하는 서버의 URL
+//            data: {
+//                keyword: keyword
+//            },
+//            success: function (response) {
+//                // 검색 결과에 따라 마커를 생성하고 지도에 표시하기
+//                if (response && response.aptSearch) {
+//                var result = response.aptSearch;
+//
+//                // 검색 결과의 좌표로 맵 이동
+//                var newCenter = new kakao.maps.LatLng(result.latitude, result.longitude);
+//                map.setCenter(newCenter);
+//
+//
+//            }
+//            }
+//        });
+//    }
+//}
 
