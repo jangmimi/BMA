@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class CustomerCenterController {
+public class GuideController {
 
 
     //guide
@@ -14,11 +14,4 @@ public class CustomerCenterController {
         return "customerCenter/guidePage";
     }
 
-
-    //QNA
-    @GetMapping("/qna")
-    public  String QnAWriteForm(){
-
-        return "customerCenter/QnABoard/QnAWrite";
-    }
 }

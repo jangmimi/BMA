@@ -7,8 +7,6 @@
 
      table{
          width : 95%;
-         margin-top:70px;
-         margin : auto;
          border-collapse: collapse;
          border: 1px solid #ddd;
         }
@@ -30,29 +28,15 @@
          }
 
 
-
-
     .viewtable-inner{
      border-top : 3px solid #26A9E0;
     }
-
-    .prenext-tb{
-    width:80%;
-    margin: auto;
-    margin-top: 40px;
-    text-align : center;
-    height:100px;
-    }
-
-           .prenext-tb:hover {
-        background: #eee;
-        cursor: pointer;
-        }
 
 
      .viewtable-inner{
         width:80%;
         margin: auto;
+        margin-top: 70px;
         }
 
     .del-mod{
@@ -78,5 +62,17 @@
     .k-center{
     text-align: center;
     height : 35px;
+    }
+
+    #pre-next{
+    margin-top : 50px;
+    text-align: center;
+    }
+
+    .pre-next{
+    width : 80%;
+    height: 50px;
+    border: #26A9E0;
+    margin-bottom: 5px;
     }
 
