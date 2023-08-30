@@ -2,58 +2,61 @@ package com.ap4j.bma.model.entity.member;
 
 import lombok.*;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class MemberDTO {	// 회원가입 폼 입력 정보 담는 DTO
 
-	private Long idx;
-
-	@NotBlank(message = "이메일을 입력해주세요.")
-	@Email(message = "이메일 형식으로 입력해주세요.")
+	private Long id;
 	private String email;
-
-	@NotBlank(message = "이름은 필수 입력사항입니다.")
 	private String name;
-
-	@NotBlank(message = "비밀번호를 입력해주세요.")
-//	@Pattern(regexp="(?=.*[0-9])(?=.*[a-zA-Z])(?=\\S+$).{8,20}",
-//			message = "영문, 숫자를 조합하여 8~20자 이내로 입력해주세요.")
 	private String pwd;
-
 	private String nickname;
-
 	private String tel;
+	private int root;				// 가입 경로는 기본 기본회원 1
+	private Boolean choice1 = false;		// 약관 동의 1, 2는 기본 false
+	private Boolean choice2 = false;
+	private Boolean member_leave = false;	// 탈퇴 여부는 기본 false
 
-	private String root;
-
-	// 약관동의여부 값 추가예정
-
-	// 빌더 패턴으로 객체 생성
 	public MemberEntity toEntity() {
 		return MemberEntity.builder()
-				.idx(null)
+				.id(null)
 				.email(email)
 				.name(name)
 				.pwd(pwd)
 				.nickname(nickname)
 				.tel(tel)
 				.root(root)
+				.choice1(choice1)
+				.choice2(choice2)
+				.member_leave(member_leave)
 				.build();
 	}
 
 	@Builder
-	public MemberDTO(String email, String name, String nickname, String pwd, String tel, String root) {
+	public MemberDTO(String email, String name, String nickname, String pwd, String tel,
+					 int root, Boolean choice1, Boolean choice2, Boolean member_leave) {
 		this.email = email;
 		this.name = name;
 		this.nickname = nickname;
 		this.pwd = pwd;
 		this.tel = tel;
 		this.root = root;
+		this.choice1 = choice1;
+		this.choice2 = choice2;
+		this.member_leave = member_leave;
+	}
+
+	/** 회원정보 수정 */
+	public void updateEntity(MemberEntity memberEntity) {
+		memberEntity.setName(this.name);
+		memberEntity.setNickname(this.nickname);
+		memberEntity.setName(this.name);
+		memberEntity.setTel(this.tel);
+		memberEntity.setChoice1(this.choice1);
+		memberEntity.setChoice2(this.choice2);
+//		memberEntity.setPwd(this.pwd);
+//		memberEntity.setPwd(pwdConfig.);	// 비밀번호 암호화 필요하면 추가
 	}
 }
 

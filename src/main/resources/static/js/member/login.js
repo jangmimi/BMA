@@ -47,10 +47,10 @@ function oLoginCheck() {
 //    });
 //};
 
-var naver_id_login = new naver_id_login("KxGhFHZ7Xp74X_5IZ23h", "http://localhost:8081/member/qLoginNaverCallback");
-var state = naver_id_login.getUniqState();
-naver_id_login.setButton("green", 4,45);
-naver_id_login.setDomain("http://localhost:8081/member/testnaverLogin");
-naver_id_login.setState(state);
-naver_id_login.setPopup();
-naver_id_login.init_naver_id_login();
+//var naver_id_login = new naver_id_login("KxGhFHZ7Xp74X_5IZ23h", "http://localhost:8081/member/qLoginNaverCallback");
+//var state = naver_id_login.getUniqState();
+//naver_id_login.setButton("green", 4,45);
+//naver_id_login.setDomain("http://localhost:8081/member/testnaverLogin");
+//naver_id_login.setState(state);
+//naver_id_login.setPopup();
+//naver_id_login.init_naver_id_login();

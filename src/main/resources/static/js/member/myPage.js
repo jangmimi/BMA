@@ -74,10 +74,26 @@ function qFindEmailCheck() {
     });
 };
 
-
-
-
-
+<!-- 비밀번호/비밀번호 확인 일치 여부 체크, 비밀번호 형식 체크 -->
+$(document).ready(function(){
+    $("#pwd, #pwdCheck").focusout(function(){
+        let pwdValue = $('#pwd').val();
+        let pwdCheckValue = $('#pwdCheck').val();
+        if (pwdValue !== pwdCheckValue) {
+            $("#opwdCheck1").css("display","block");
+        } else {
+            $("#opwdCheck1").css("display","none");q
+        }
+    });
+    $("#pwd").keyup(function(){
+        let pwdValue = $(this).val();
+        if (pwdValue.length < 8 || pwdValue.length > 20) {
+            $("#opwdCheck2").css("display","block");
+        } else {
+            $("#opwdCheck2").css("display","none");
+        }
+    });
+});
 
 // 회원탈퇴 submit 전 확인 취소
 function oDeleteCheck() {

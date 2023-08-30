@@ -12,7 +12,13 @@
     <link rel="stylesheet" th:href="@{/css/member/login.css}">
 </head>
 <body layout:fragment="content">
-    <span th:if="${userEmail == null}">
+<!--    <th:block th:if="${session.userEmail != null}">-->
+<!--        <script th:inline="javascript">-->
+<!--            alert("이미 로그인하셨습니다.");-->
+<!--            window.location.href='redirect:/member/qMyPage'; // 로그인 한 상태로 접근 시 페이지 표시 X-->
+<!--        </script>-->
+<!--    </th:block>-->
+    <span th:if="${session.userEmail == null}">
         <div class="container mt-5" id="oInner-container" align="center">
             <div id="oLoginTitle">
                 <h3 class="h3 fw-bold">로그인</h3>
@@ -40,6 +46,11 @@
                             <a th:href="@{/member/qFindMemberInfo}" style="color:#212529;">이메일/비밀번호 찾기</a>
                         </div>
                     </div>
+                    <!-- 로그인 실패 메시지 출력 영역 -->
+                    <div th:if="${session.errorMsg}">
+                        <p th:text="${session.errorMsg}" class="oErrorMsg"></p>
+                    </div>
+
                     <div class="form-floating">
                         <input type="submit" class="btn btn-dark mb-2 w-100" id="oLoginBtn" style="height: 48px;" value="로그인" />
                         <input type="button" class="btn btn-outline-primary mb-2 w-100" style="height: 48px;" id="oJoinBtn"
@@ -47,8 +58,7 @@
                     </div>
                 </form>
 
-                <div class="container" id="oLoginSns" style="mt-5 mb-5">
-                    <hr style="width: 380px;"/>
+                <div class="container mt-5 mb-5" id="oLoginSns">
                     <!-- 네이버 로그인 버튼 노출 영역 -->
                     <div id="naver_id_login"></div>
                     <!-- 네이버 로그인 버튼 노출 영역 -->
