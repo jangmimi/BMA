@@ -15,9 +15,9 @@
     <h1>커뮤니티</h1>
     <hr/>
 
-    <div class = "headrow">
+    <div class = "top">
         <form action="/community/list/search" method="get">
-            <div class = "headrowL">
+            <div class = "top-inner">
                 <input type="text" class = "searchbox" name="keyword" placeholder="검색어 입력" th:value="${searchKeyword}">
                 <button class = "searchbtn"  type="submit">검색</button>
             </div>
@@ -25,11 +25,9 @@
     </div>
     <hr/>
 
-    <div class = "headrowR">
-        <button type="button" class="writebtn" onclick="location.href = '/community/write'" >글쓰기</button>
-    </div>
-
-    <table id = "freeboard-tb">
+    <div class="middle">
+        <b class="count"><span id ="count-color" th:text="${totalCommunityCount}"></span> 건</b> <!--게시글 개수-->
+        <table id = "freeboard-tb">
         <thead>
         <tr>
             <th class="b-n">No.</th>
@@ -52,7 +50,12 @@
         </tr>
         </tbody>
     </table>
-    <div class="pagination">
+
+        <div class = "bottomR">
+            <button type="button" class="writebtn" onclick="location.href = '/community/write'" >글쓰기</button>
+        </div>
+
+    <div class="bottom">
     <span th:if="${currentPage > 1}">
         <a th:href="@{/community/list/search(page=${currentPage - 1}, keyword=${searchKeyword})}" class="prev">&lt; 이전</a>
     </span>

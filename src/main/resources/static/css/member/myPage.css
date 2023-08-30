@@ -11,8 +11,7 @@
 .o-wrapper {
     position: relative;
     display: block;
-    margin: 0 auto;
-    width: 1000px;
+    margin-left: 205px;
 }
 .o-lnb-list {
     font-family: 'Noto Sans KR', sans-serif;
@@ -130,4 +129,8 @@
     color: red;
     font-size: 14px;
     margin-top: 20px;
+}
+#oDeleteMemberBtn{
+    font-size: 13px;
+    margin-right: 280px;
 }
