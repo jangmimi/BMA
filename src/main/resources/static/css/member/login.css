@@ -20,7 +20,12 @@
     color: gray;
     font-size: 14px;
 }
-.fieldError {
-    font-size: 10px;
-    color: red;
+#oSaveIdContainer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    margin: 18px 0px 18px 0px;
 }
+/*#oLoginBtn, #oJoinBtn { height: 48px; }*/
+/*
+#oSaveId { margin-right: 5px; }*/

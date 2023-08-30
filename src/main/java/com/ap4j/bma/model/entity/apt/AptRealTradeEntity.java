@@ -5,13 +5,13 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "aptDetail")
+@Table(name = "aptRealTrade")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @ToString
 @Builder
-public class AptDetailEntity {
+public class AptRealTradeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

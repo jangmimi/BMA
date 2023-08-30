@@ -49,6 +49,36 @@ function oFindPwdCheck() {
         return false;
     }
 }
+
+// 이메일 찾기 ajax로
+function qFindEmailCheck() {
+    let email = $('#email').val();
+
+    $.ajax({
+        url: '/member/qFindEmailCheck',
+        type: 'post',
+        data: {email:email},
+        success:function(findEmail) {
+            if(find != null) {
+                $('#btnEmailCheck').attr('class','btn btn-primary');
+            } else if(cnt != 0) {
+                $('#btnEmailCheck').attr('class','btn btn-danger');
+                $('#btnEmailCheck').val("사용 불가");
+                alert('이미 존재하는 이메일입니다.\n이메일을 다시 입력해주세요.');
+            //    $('#email').val('');
+            }
+        },
+        error:function() {
+            alert("에러입니다.");
+        }
+    });
+};
+
+
+
+
+
+
 // 회원탈퇴 submit 전 확인 취소
 function oDeleteCheck() {
     let answer = confirm('정말 탈퇴하시겠습니까?');
