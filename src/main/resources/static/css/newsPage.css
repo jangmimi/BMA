@@ -93,7 +93,6 @@
     box-shadow: 0 0 10px;
     margin-top: 30px;
     margin-bottom: 30px;
-    width: 100%;
 }
 .news-search:hover .r-icon-circle {
     width: 100px;
@@ -146,4 +145,14 @@ div p:nth-child(2) {
     display: flex;
     width: 750px;
     flex-direction: column;
+}
+.support-news{
+    background-color: #fff;
+    margin-bottom: 5px;
+}
+.support-news label{
+    border-bottom: 1px solid black;
+}
+.support-news label > span{
+    font-weight: bolder;
 }

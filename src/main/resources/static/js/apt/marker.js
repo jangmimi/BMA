@@ -91,53 +91,67 @@ function createMarker(position, markerContent, responseData) {
             titleElement.textContent = title;
 
             mapInfoTitleElement.textContent = title;
-            mapInfoAddressElement.textContent = "구주소 : " + address1 + " " + address2;
-            mapInfoRoadNameElement.textContent  = "도로명주소 : " + roadName;
+            mapInfoAddressElement.textContent = address1 + " " + address2;
+            mapInfoRoadNameElement.textContent  = roadName;
 
             $(".tbl tbody").empty();
-            // 도로명 controller에 전달
-            $.ajax({
-                type: 'POST',
-                url: '/map/main',
-                data: {
-                    roadName: roadName
-                },
-                success: function (response) {
-                    var tableBody = $(".tbl tbody"); // 테이블의 tbody 요소 선택
-                            if (response && response.aptDetailDTOList && response.aptDetailDTOList.length > 0) {
-                                for (var i = 0; i < response.aptDetailDTOList.length; i++) {
-                                    var detailItem = response.aptDetailDTOList[i];
-                                    // transactionAmount를 1억과 1억 미만의 금액으로 분리
-                                    var amount = detailItem.transactionAmount.toString();
+                        // 도로명 controller에 전달
+                        $.ajax({
+                            type: 'POST',
+                            url: '/map/main',
+                            data: {
+                                roadName: roadName
+                            },
+                            success: function (response) {
+                                var tableBody = $(".tbl tbody"); // 테이블의 tbody 요소 선택
+                                        if (response && response.aptRealTradeDTOList && response.aptRealTradeDTOList.length > 0) {
+                                            // 실거래정보 (연하늘색 부분)
+                                            var amount = response.aptRealTradeDTOList[0].transactionAmount.toString();
+                                            var amountSliceFirst = amount.slice(0, amount.length - 1);
+                                            var amountSliceLast = amount.slice(-1)
+                                            var floor = response.aptRealTradeDTOList[0].floor;
+                                            var txt = null;
+                                            if(amountSliceLast != 0) {
+                                                txt = amountSliceFirst + "억 " + amountSliceLast + "000만원(" + floor + "층)";
+                                            } else {
+                                                txt = amountSliceFirst + "억(" + floor + "층)";
+                                            };
 
-                                    var amountSliceFirst = amount.slice(0, amount.length - 1);
-                                    var amountSliceLast = amount.slice(-1)
-                                    // 테이블 행 생성 및 데이터 추가
-                                    var row = $("<tr>");
-                                    $("<td>").text(detailItem.area).appendTo(row);
-                                    $("<td>").text(detailItem.floor).appendTo(row);
-                                    $("<td>").text(detailItem.contractYearMonth).appendTo(row);
-                                    if(amountSliceLast != 0) {
-                                        $("<td>").text(amountSliceFirst + "억 " + amountSliceLast + "000만원").appendTo(row);
-                                    } else {
-                                        $("<td>").text(amountSliceFirst + "억").appendTo(row);
-                                    }
+                                            var priceArea = document.querySelector(".price-area");
+                                            priceArea.querySelector(".txt").textContent = txt;
 
-                                    // 테이블에 행 추가
-                                    tableBody.append(row);
+
+                                            // 거래이력 테이블
+                                            for (var i = 0; i < response.aptRealTradeDTOList.length; i++) {
+                                                var detailItem = response.aptRealTradeDTOList[i];
+
+                                                // transactionAmount를 1억과 1억 미만의 금액으로 분리
+                                                var amount = detailItem.transactionAmount.toString();
+                                                var amountSliceFirst = amount.slice(0, amount.length - 1);
+                                                var amountSliceLast = amount.slice(-1)
+
+                                                // 테이블 행 생성 및 데이터 추가
+                                                var row = $("<tr>");
+                                                $("<td>").text(detailItem.area).appendTo(row);
+                                                $("<td>").text(detailItem.floor).appendTo(row);
+                                                $("<td>").text(detailItem.contractYearMonth).appendTo(row);
+                                               래
+
+                                                // 테이블에 행 추가
+                                                tableBody.append(row);
+                                            }
+                                } else {
+                                    console.log("표시할 aptDetailList 데이터가 없습니다.");
                                 }
-                    } else {
-                        console.log("표시할 aptDetailList 데이터가 없습니다.");
-                    }
+                            }
+                        });
+                    });
+
+
+                    clusterer.addMarker(marker); // 클러스터에 마커 추가
+                    existingMarkers[markerKey] = marker; // 생성된 마커를 객체에 추가
                 }
-            });
-        });
-
-
-        clusterer.addMarker(marker); // 클러스터에 마커 추가
-        existingMarkers[markerKey] = marker; // 생성된 마커를 객체에 추가
-    }
-}
+            }
 
 // 화면의 좌표값 가져와서 controller에 전송 후 그 값에 맞는 데이터를 다시 가지고 와서 마커 찍어준다.
 kakao.maps.event.addListener(map, 'idle', function () {
@@ -209,30 +223,12 @@ function checkEnter(event) {
             },
             success: function (response) {
                 // 검색 결과에 따라 마커를 생성하고 지도에 표시하기
-                if (response && response.aptDetailDTOList && response.aptDetailDTOList.length > 0) {
-                    for (var i = 0; i < response.aptDetailDTOList.length; i++) {
-                        var result = response.aptDetailDTOList[i];
-
-                        var markerPosition = new kakao.maps.LatLng(result.latitude, result.longitude);
-                        var markerContent = "<div class='e-marker'>" +
-                            "<div class='e-markerTitle'>" +
-                            "<h3>" + result.complexName + "</h3>" +
-                            "</div>" +
-                            "<div class='e-markerContent'>" +
-                            "<p>" + result.roadName + "</p>" +
-                            "</div>" +
-                            "</div>";
-
-                        // 이미 생성된 마커가 아니라면 마커 생성 함수를 호출하여 마커를 생성하고 클릭 이벤트를 등록합니다.
-                        if (!existingMarkers[markerPosition.toString()]) {
-                            createMarker(markerPosition, markerContent, result);
-                        }
-                    }
-                } else {
-                    console.log("검색 결과가 없습니다.");
-                }
+                if (response && response.aptSearch) {
+                var result = response.response.aptSearch;
+                console.log(result);
+                var markerPosition = new kakao.maps.LatLng(result.latitude, result.longitude);
+            }
             }
         });
     }
 }
-

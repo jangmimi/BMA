@@ -114,10 +114,21 @@ public class ApartmentServiceImpl implements ApartmentService {
     /**
      * 아파트명 또는 도로명으로 검색시 아파트 정보 가져오기
      */
-//    public AptDTO findByKeyword(String keyword) {
-//        AptEntity aptEntity = aptRepository.findByKeyword(keyword);
-//        AptDTO aptKeyword = AptDTO.builder().
-//
-//                build()
-//    }
+    public AptDTO findByKeyword(String keyword) {
+        AptEntity aptEntity = aptRepository.findByKeyword(keyword);
+        AptDTO aptKeyword = null;
+
+        if(aptEntity != null) {
+            aptKeyword = AptDTO.builder().
+                    complexName(aptEntity.getComplexName()).
+                    district(aptEntity.getDistrict()).
+                    address(aptEntity.getAddress()).
+                    roadName(aptEntity.getRoadName()).
+                    longitude(aptEntity.getLongitude()).
+                    latitude(aptEntity.getLatitude()).
+                    build();
+        }
+
+        return aptKeyword;
+    }
 }

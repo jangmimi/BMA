@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -209,7 +210,6 @@ public class MemberServiceImpl implements MemberService {
 			bw.close();
 		} catch (Exception e) {
 			log.info(e.toString());
-//			e.printStackTrace();
 		}
 		return accessToken;
 	}
@@ -220,17 +220,8 @@ public class MemberServiceImpl implements MemberService {
 	public Long joinBasic(MemberEntity pMember) {
 		log.info("서비스 joinBasic() 실행");
 		memberRepository.save(pMember);
-		return pMember.getIdx();			// @GeneratedValue 로 idx는 자동으로 값 저장
+		return pMember.getId();			// @GeneratedValue 로 id는 자동으로 값 저장
 	}
-
-//		validateDuplicateMember(pMember);    // 중복 회원 검증
-	/*private void validateDuplicateMember(Member member) {
-		List<Member> findMembers = memberRepository.findByName(member.getName());
-		//EXCEPTION
-		if(!findMembers.isEmpty()) {
-			throw new IllegalStateException("이미 존재하는 회원입니다.");
-		}
-	}*/
 
 	/** 중복회원 검증 */
 	@Override
@@ -266,21 +257,11 @@ public class MemberServiceImpl implements MemberService {
 			log.info("존재하지 않는 회원입니다.");
 		}
 		return null;
-//        return memberRepository.findByEmail(memberDTO);
 	}
-//	@Override
-//	public MemberEntity login(String loginEmail) {
-//		log.info("서비스 loginByEmail() 실행");
-//		MemberEntity findMember = memberRepository.findByEmail(loginEmail);
-//
-//
-//        return memberRepository.findByEmail(loginEmail);
-//    }
 
 	/** 회원 탈퇴 */
-	public void deleteMemberByIdx(Long idx) {
-		memberRepository.deleteById(idx);
-//		memberRepository.delete(findMember);
+	public void deleteMemberById(Long id) {
+		memberRepository.deleteById(id);
 	}
 
 	/** 회원 한명 찾기 */
@@ -290,22 +271,32 @@ public class MemberServiceImpl implements MemberService {
 		return findMember.orElse(null);
 	}
 
-	/** 회원정보 수정 */
+	/** 회원 정보 수정 */
 	@Transactional
 	@Override
-	public MemberEntity updateMember(Long idx, MemberEntity updatedMember) {
+	public MemberEntity updateMember(Long id, MemberDTO memberDTO) {
 		log.info("서비스 updateMember() 실행");
-		log.info("updatedMember : " + updatedMember);
+		log.info("updatedMember : " + memberDTO);
+		log.info("비밀번호 변경 : " + memberDTO.getPwd());
+		log.info("setChoice1 : " + memberDTO.getChoice1());
+		log.info("setChoice2 : " + memberDTO.getChoice2());
 
-		Optional<MemberEntity> member = memberRepository.findById(updatedMember.getIdx());
+		if(memberDTO.getPwd() != null) {	// 비밀번호 변경 값이 있을 경우
+			memberDTO.setPwd(pwdConfig.passwordEncoder().encode(memberDTO.getPwd()));
+		}
+		if(memberDTO.getChoice1() != null) {
+			memberDTO.setChoice1(memberDTO.getChoice1());
+		}
+		if(memberDTO.getChoice2() != null) {
+			memberDTO.setChoice2(memberDTO.getChoice2());
+		}
+
+		Optional<MemberEntity> member = memberRepository.findById(id);
 		log.info("조회된 member : " + member);
 
 		if(member.isPresent()) {
 			MemberEntity memberEntity = member.get();
-			memberEntity.setName(updatedMember.getName());
-			memberEntity.setNickname(updatedMember.getNickname());
-			memberEntity.setTel(updatedMember.getTel());
-//			memberEntity.setPwd(pwdConfig.passwordEncoder().encode(updatedMember.getPwd()));
+			memberDTO.updateEntity(memberEntity);
 
 			log.info("수정된 정보 : " + memberEntity);
 			return memberRepository.save(memberEntity);

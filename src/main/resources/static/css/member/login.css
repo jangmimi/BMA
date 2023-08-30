@@ -26,6 +26,13 @@
     font-size: 13px;
     margin: 18px 0px 18px 0px;
 }
+.oErrorMsg {
+    color: red;
+    font-weight: 600;
+    font-size: 13px;
+    margin: 20px
+}
+
 /*#oLoginBtn, #oJoinBtn { height: 48px; }*/
 /*
 #oSaveId { margin-right: 5px; }*/

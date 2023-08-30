@@ -115,12 +115,14 @@ $(document).ready(function() {
 });
 
 function oJoinCheck() {
-    let emailValue = $('#email').val();
-    let reg = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+    const reg = /^[A-Za-z0-9_\.]+@[A-Za-z0-9]+\.[A-Za-z0-9]+/;
+    const telreg = /^\d{10,11}$/;
     let email = $('#email').val();
     let name = $('#name').val();
     let pwd = $('#pwd').val();
     let pwdCheck = $('#pwdCheck').val();
+    let nickname = $('#nickname').val();
+    let tel = $('#tel').val();
     let checkedboxes = $("input[type='checkbox']");
     let allChecked = true;
 
@@ -140,19 +142,31 @@ function oJoinCheck() {
         alert('비밀번호를 확인해주세요.');
         return false;
     }
+    if(nickname === '') {
+        alert('닉네임을 입력해주세요.');
+        return false;
+    }
+    if(tel === '') {
+        alert('연락처를 입력해주세요.');
+        return false;
+    }
     checkedboxes.each(function() {
         if(!$(this).is(":checked")) {
             allChecked = false;
             return false;
         }
     });
-    if (reg.test(emailValue) == false) {
+    if (reg.test(email) == false) {
         alert('이메일 형식으로 입력해주세요.');
         return false;
     }
-    if(!allChecked) {
-        alert('필수항목을 모두 체크해주세요.');
+    if (telreg.test(tel) == false) {
+        alert('연락처 형식으로 입력해주세요.');
         return false;
     }
+//    if(!allChecked) {
+//        alert('필수항목을 모두 체크해주세요.');
+//        return false;
+//    }
 
 }
