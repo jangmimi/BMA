@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -247,6 +246,8 @@ public class MemberServiceImpl implements MemberService {
 			MemberEntity memberEntity = findMember.get();
 			if(pwdConfig.passwordEncoder().matches(memberDTO.getPwd(),memberEntity.getPwd())) {
 				log.info("id pw 모두 일치! 로그인 성공!");
+				log.info("entity : " +  memberEntity);
+
 				MemberDTO dto = memberEntity.toDTO();
 				log.info("entity를 toDTO : " +  dto);
 				return dto;
@@ -259,15 +260,15 @@ public class MemberServiceImpl implements MemberService {
 		return null;
 	}
 
-	/** 회원 탈퇴 */
+	/** 회원 탈퇴 id 기준 */
 	public void deleteMemberById(Long id) {
 		memberRepository.deleteById(id);
 	}
 
-	/** 회원 한명 찾기 */
-	public MemberEntity getMemberOne(String email) {
-		log.info("서비스 getMemberOne() 실행");
-		Optional<MemberEntity> findMember = memberRepository.findByEmail(email);
+	/** 회원 한명 찾기 id 기준 */
+	public MemberEntity findMemberById(Long id) {
+		log.info("서비스 findMemberById() 실행");
+		Optional<MemberEntity> findMember = memberRepository.findById(id);
 		return findMember.orElse(null);
 	}
 
@@ -281,6 +282,8 @@ public class MemberServiceImpl implements MemberService {
 		log.info("setChoice1 : " + memberDTO.getChoice1());
 		log.info("setChoice2 : " + memberDTO.getChoice2());
 
+		Optional<MemberEntity> member = memberRepository.findById(id);
+
 		if(memberDTO.getPwd() != null) {	// 비밀번호 변경 값이 있을 경우
 			memberDTO.setPwd(pwdConfig.passwordEncoder().encode(memberDTO.getPwd()));
 		}
@@ -291,7 +294,6 @@ public class MemberServiceImpl implements MemberService {
 			memberDTO.setChoice2(memberDTO.getChoice2());
 		}
 
-		Optional<MemberEntity> member = memberRepository.findById(id);
 		log.info("조회된 member : " + member);
 
 		if(member.isPresent()) {

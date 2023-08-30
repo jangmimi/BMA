@@ -3,7 +3,6 @@ package com.ap4j.bma.model.entity.member;
 import lombok.*;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class MemberDTO {	// 회원가입 폼 입력 정보 담는 DTO
 
@@ -20,7 +19,7 @@ public class MemberDTO {	// 회원가입 폼 입력 정보 담는 DTO
 
 	public MemberEntity toEntity() {
 		return MemberEntity.builder()
-				.id(null)
+				.id(id)
 				.email(email)
 				.name(name)
 				.pwd(pwd)
@@ -34,8 +33,9 @@ public class MemberDTO {	// 회원가입 폼 입력 정보 담는 DTO
 	}
 
 	@Builder
-	public MemberDTO(String email, String name, String nickname, String pwd, String tel,
+	public MemberDTO(Long id, String email, String name, String nickname, String pwd, String tel,
 					 int root, Boolean choice1, Boolean choice2, Boolean member_leave) {
+		this.id = id;
 		this.email = email;
 		this.name = name;
 		this.nickname = nickname;

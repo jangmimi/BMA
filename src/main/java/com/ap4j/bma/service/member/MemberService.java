@@ -28,7 +28,7 @@ public interface MemberService {
 
 	public void deleteMemberById(Long id);
 
-	public MemberEntity getMemberOne(String email);
+	public MemberEntity findMemberById(Long id);
 
 //	public MemberEntity updateMember(Long id, MemberEntity updatedMember);
 	public MemberEntity updateMember(Long id, MemberDTO memberDTO);

@@ -52,6 +52,7 @@ public class MemberEntity {
 
 	public MemberDTO toDTO() {
 		return MemberDTO.builder()
+				.id(id)
 				.email(email)
 				.name(name)
 				.pwd(pwd)
