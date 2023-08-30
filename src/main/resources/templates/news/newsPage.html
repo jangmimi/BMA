@@ -26,8 +26,11 @@
                     </button>
                 </div>
             </div>
-            <div class="support-news">
-                제안 <i id="question" class="fa-solid fa-magnifying-glass"></i> <label><span th:text="${searchKeyword}"></span> (으)로 검색한 결과입니다</label>
+            <div class="support-news" th:unless="${searchQuery == searchKeyword or searchKeyword == null}">
+                <i id="question" class="fa-solid fa-magnifying-glass"></i>
+                <label>
+                    <span th:text="${searchKeyword} + '(으)로 검색된 결과입니다.'"></span>
+                </label>
             </div>
         </div>
     </form>
