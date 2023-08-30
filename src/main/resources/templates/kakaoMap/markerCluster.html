@@ -3,12 +3,13 @@
       layout:decorate="~{fragments/layouts/no_footer_layout}">
 
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <title>아파트사조</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"/>
     <link rel="stylesheet" href="/css/mapMain.css">
-    <script type="text/javascript" th:src="@{/js/mapMain/mapMain.js}"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script><!--D3.js라이브러리-->
+    <script type="text/javascript" th:src="@{/js/mapMain/mapMain.js}" defer></script>
 </head>
 
 <body layout:fragment="content">
@@ -35,21 +36,21 @@
             <tr>
                 <th>대출 금액</th>
                 <td class="e-inputGroup">
-                    <input class="e-input" id="e-inputAmount" />
+                    <input class="e-input" id="e-inputAmount"/>
                     <span>원</span>
                 </td>
             </tr>
             <tr>
                 <th>이자율</th>
                 <td class="e-inputGroup">
-                    <input class="e-input" id="e-inputRate" />
+                    <input class="e-input" id="e-inputRate"/>
                     <span>%</span>
                 </td>
             </tr>
             <tr>
                 <th>상환기간</th>
                 <td class="e-inputGroup">
-                    <input class="e-input" id="e-inputPeriod" />
+                    <input class="e-input" id="e-inputPeriod"/>
                     <span>년</span>
                 </td>
             </tr>
@@ -73,7 +74,7 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <hr />
+                    <hr/>
                 </td>
             </tr>
         </table>
@@ -95,8 +96,8 @@
                 <td class="e-resultTd">원</td>
             </tr>
             <tr class="e-hr">
-                <td colspan="4" >
-                    <hr />
+                <td colspan="4">
+                    <hr/>
                 </td>
             </tr>
             <tr class="e-result4">
@@ -121,7 +122,8 @@
                             <div class="left">
 
                                 <div class="left1" style="padding-left: 15px;">
-                                    <span class="title" style="font-size:20px;">서초구 양재동 201-1</span> <!-- DB 정보 입력 되는 곳 -->
+                                    <span class="title" style="font-size:20px; letter-spacing:2px;">서초구 양재동 201-1</span>
+                                    <!-- DB 정보 입력 되는 곳 -->
                                 </div>
                             </div>
                             <div class="right" style="align-items: center;">
@@ -165,7 +167,7 @@
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-primary review" data-bs-toggle="modal"
                                         data-bs-target="#staticBackdrop2">
-                                    <img src="/sc/aTalkTalkImg.png" style="width: 36px;">
+                                    <img src="/img/mapDetailAndAPTList/aTalkTalkImg.png" style="width: 36px;">
                                 </button>
                                 <div class="modal fade" id="exampleModalToggle2" aria-hidden="true"
                                      aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
@@ -178,7 +180,7 @@
                                                         <span style="padding-top: 8px;padding-left: 7px;">
                                                             <img style="width:20px;"
                                                                  src="https://cdn.icon-icons.com/icons2/1462/PNG/512/134leftarrow_100014.png"
-                                                                 alt="" />
+                                                                 alt=""/>
                                                         </span>
                                                 </button>
                                                 <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">방이동
@@ -284,7 +286,8 @@
                                                                                                  src="https://image.hogangnono.com/image/nowatermark/original/review/20230216161237_gseRp8wtTLgsEzyOQD?s=720x180&amp;t=outside&amp;q=100"
                                                                                                  class=""
                                                                                                  data-id="2490613"
-                                                                                                 draggable="true" style="position: relative;
+                                                                                                 draggable="true"
+                                                                                                 style="position: relative;
     opacity: 1;
     height: 100%;
     left: -2.8333px;">
@@ -609,7 +612,7 @@
                     <!--                            </li>-->
                     <!--                    </nav>-->
 
-                    <div style="height:85%;">
+                    <div style="height:92%;">
                         <div data-bs-spy="scroll" data-bs-target="#navbar-example2"
                              data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true"
                              class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
@@ -621,14 +624,58 @@
                                     </div>
                                     <div class="aed-map-det">
                                         <h2 class="map-info">
-                                            <div class="title">서울특별시 양재 그린카스테이션</div> <!-- DB 내용 저장되는 곳 -->
-                                            <div class="address" style="font-size: 15px;"></div> <!-- DB 내용 저장되는 곳 -->
-                                            <div class="roadName" style="font-size: 15px;"></div> <!-- DB 내용 저장되는 곳 -->
+                                            <div class="title" style="letter-spacing:1px;">서울특별시 양재 그린카스테이션</div> <!-- DB 내용 저장되는 곳 -->
+                                            <div style="
+                                                margin-top:5px;
+                                            height: 43px;
+                                                        display: flex;
+                                                        flex-direction: column;
+                                                        justify-content: space-between;">
+                                                <div style="display:flex;">
+                                                    <img style="opacity: 38%; width: 16px;height: 20px;"
+                                                         src="https://e7.pngegg.com/pngimages/580/370/png-clipart-location-computer-icons-icon-geographical-position-location-geolocation-thumbnail.png">
+                                                    <div class="address" ></div>
+                                                    <!-- DB 내용 저장되는 곳 -->
+                                                </div>
+                                                <div style="display: flex;align-items: center;">
+                                                    <img style="width: 20px;height: 14px;" src="/img/mapDetailAndAPTList/aOldAddress.png">
+                                                    <div class="roadName" style="font-size: 15px;"></div> <!-- DB 내용 저장되는 곳 -->
+                                                </div>
+                                            </div>
                                         </h2>
 
                                         <div class="mes-util">
 
                                             <a href="#" class="mes-utils">
+
+                                                <!-- 이메일 중복 체크-->
+                                                <script>
+                                                    function checkEmail() {
+                                                    let email = $('#email').val();
+
+                                                    $.ajax({
+                                                    url: '/member/qEmailCheck',
+                                                    type: 'get',
+                                                    data: {email:email},
+                                                    success:function(cnt) {
+                                                    if(cnt == 0 && email.length != 0) {
+                                                    $('#aSaveToMine').attr('class','etcBtn');
+                                                    .show('#aSaveToMine');
+                                                    } else if(cnt != 0) {
+                                                    $('#btnEmailCheck').attr('class','etcBtn');
+                                                    $('#btnEmailCheck').val("사용 불가");
+                                                    alert('이미 존재하는 이메일입니다.\n이메일을 다시 입력해주세요.');
+                                                    //    $('#email').val('');
+                                                    } else if(email.length == 0) {
+                                                    alert('이메일을 입력해주세요.');
+                                                    }
+                                                    },
+                                                    error:function() {
+                                                    alert("에러입니다.");
+                                                    }
+                                                    });
+                                                    };
+                                                </script>
                                                 <button class="etcBtn" type="button" data-bs-toggle="modal"
                                                         data-bs-target="#aSaveToMine" id="aSaveBtn">
                                                     <img style="width: 25px;"
@@ -655,13 +702,13 @@
                                                                         <button class="aEasyLogInBtn">
                                                                             <img class="aEasyLogInImg"
                                                                                  src="/images/kakao_login_medium_narrow.png"
-                                                                                 alt="kakaoLogin" height="44" />
+                                                                                 alt="kakaoLogin" height="44"/>
                                                                         </button>
                                                                         <button class="aEasyLogInBtn">
                                                                             <img class="aEasyLogInImg"
                                                                                  src="/images/btnG_완성형.png"
                                                                                  alt="naverLogin" height="44"
-                                                                                 width="176px" />
+                                                                                 width="176px"/>
                                                                             <!-- 카카오 로그인과 높이만 맞춤 -->
                                                                         </button>
                                                                     </div>
@@ -716,13 +763,13 @@
                                                                         <button class="aEasyLogInBtn">
                                                                             <img class="aEasyLogInImg"
                                                                                  src="/images/kakao_login_medium_narrow.png"
-                                                                                 alt="kakaoLogin" height="44" />
+                                                                                 alt="kakaoLogin" height="44"/>
                                                                         </button>
                                                                         <button class="aEasyLogInBtn">
                                                                             <img class="aEasyLogInImg"
                                                                                  src="/images/btnG_완성형.png"
                                                                                  alt="naverLogin" height="44"
-                                                                                 width="176px" />
+                                                                                 width="176px"/>
                                                                             <!-- 카카오 로그인과 높이만 맞춤 -->
                                                                         </button>
                                                                     </div>
@@ -804,12 +851,39 @@
                                         </div>
 
                                     </div>
-                                    <div class="aed-el-price-txt-r rpinfo-tab-common">
+
+
+                                    <div class="aRealPriceAndGraph">
                                         <!-- 가격 -->
                                         <div class="price-area">
                                             <span class="txt">1억 8,500만</span>
                                         </div>
+                                        <div class="graph-area" id="realpricePercentChart">
+<!--                                            <svg width="80" height="50">-->
+<!--                                                <g font-size="13px" transform="translate(5,5)">-->
+<!--                                                    <g class="x axis" transform="translate(0,40)">-->
+<!--                                                        <path class="domain" d="M0,0V0H55V0" stroke="#B7D2E7"-->
+<!--                                                              fill="none" shape-rendering="crispEdges"></path>-->
+<!--                                                    </g>-->
+<!--                                                    <g class="y axis">-->
+<!--                                                        <path class="domain" d="M0,0H0V40H0" stroke="#B7D2E7"-->
+<!--                                                              fill="none" shape-rendering="crispEdges"></path>-->
+<!--                                                    </g>-->
+<!--                                                    <g class="lines">-->
+<!--                                                        <path class="line"-->
+<!--                                                              d="M0,16.340102564102565L17.5,16.340102564102565L35,13.333333333333336"-->
+<!--                                                              stroke="#129EED" stroke-width="1.5px" fill="none"-->
+<!--                                                              stroke-dasharray="35.25642395019531 35.25642395019531"-->
+<!--                                                              stroke-dashoffset="0"></path>-->
+<!--                                                        <text class="percent_t" font-size="12px"-->
+<!--                                                              transform="translate(43,25)" fill="#129EED">+13%-->
+<!--                                                        </text>-->
+<!--                                                    </g>-->
+<!--                                                </g>-->
+<!--                                            </svg>-->
+                                        </div>
                                     </div>
+
 
                                     <!-- 거래이력 -->
                                     <div class="aed-bu-box aed-sg-deal-list rpinfo-tab-etc hide">
@@ -823,7 +897,7 @@
                                             <div class="tbl">
                                                 <table style="width: 100%; text-align: center;">
                                                     <thead
-                                                            style="border-top: 1px solid #26abed; border-bottom: 1px solid #e5e5e5;">
+                                                            style="height:43px;background-color: #f1f1f1;border-top: 1px solid #26abed; border-bottom: 1px solid #e5e5e5;">
                                                     <tr>
                                                         <th>면적</th>
                                                         <th>층</th>
@@ -1047,9 +1121,6 @@
         <!-- //통합검색 -->
 
 
-
-
-
     </div>
     <!--우측 지도도구-->
     <div class="map_util">
@@ -1064,35 +1135,35 @@
                         <div class="edu">
                             <button class="btn btn-primary map-utilSBtn nurs" data-bs-toggle="button">
                                 <img class="aschImg" style="width: 50px; height: 30px"
-                                     src="https://e7.pngegg.com/pngimages/836/224/png-clipart-pictogram-and-icon-collection-from-public-signage-to-web-icons-roseola-child-child-child-baby.png" />
+                                     src="https://e7.pngegg.com/pngimages/836/224/png-clipart-pictogram-and-icon-collection-from-public-signage-to-web-icons-roseola-child-child-child-baby.png"/>
                             </button>
                             <span class="edukind">어린이집</span>
                         </div>
                         <div class="edu">
                             <button class="btn btn-primary map-utilSBtn pres" data-bs-toggle="button">
                                 <img class="aschImg" style="width: 50px; height: 30px"
-                                     src="https://e7.pngegg.com/pngimages/989/150/png-clipart-pictogram-microsoft-dynamics-nav-computer-icons-child-alcorcon-others-child-text.png" />
+                                     src="https://e7.pngegg.com/pngimages/989/150/png-clipart-pictogram-microsoft-dynamics-nav-computer-icons-child-alcorcon-others-child-text.png"/>
                             </button>
                             <span class="edukind">유치원</span>
                         </div>
                         <div class="edu">
                             <button class="btn btn-primary map-utilSBtn pris" data-bs-toggle="button">
                                 <img class="aschImg" style="width: 50px; height: 30px"
-                                     src="https://w7.pngwing.com/pngs/261/891/png-transparent-pictogram-others-english-text-photography.png" />
+                                     src="https://w7.pngwing.com/pngs/261/891/png-transparent-pictogram-others-english-text-photography.png"/>
                             </button>
                             <span class="edukind">초등학교</span>
                         </div>
                         <div class="edu">
                             <button class="btn btn-primary map-utilSBtn secons" data-bs-toggle="button">
                                 <img style="width: 35px; height: 30px"
-                                     src="https://thumb.silhouette-ac.com/t/a3/a33e87822359f0a3e65fa924844c06b5_t.jpeg" />
+                                     src="https://thumb.silhouette-ac.com/t/a3/a33e87822359f0a3e65fa924844c06b5_t.jpeg"/>
                             </button>
                             <span class="edukind">중학교</span>
                         </div>
                         <div class="edu">
                             <button class="btn btn-primary map-utilSBtn highs" data-bs-toggle="button">
                                 <img style="width: 40px; height: 30px"
-                                     src="https://thumb.silhouette-ac.com/t/f2/f2c0df7db0d36e322d8ec497a94a6a92_t.jpeg" />
+                                     src="https://thumb.silhouette-ac.com/t/f2/f2c0df7db0d36e322d8ec497a94a6a92_t.jpeg"/>
                             </button>
                             <span class="edukind">고등학교</span>
                         </div>
@@ -1100,7 +1171,7 @@
                             <button class="btn btn-primary map-utilSBtn unis" data-bs-toggle="button">
                                 <div style="background-color: white;width: 43px;">
                                     <img style="width: 20px; height: 30px"
-                                         src="https://cdn.pixabay.com/photo/2013/07/13/13/21/book-160871_1280.png" />
+                                         src="https://cdn.pixabay.com/photo/2013/07/13/13/21/book-160871_1280.png"/>
                                 </div>
                             </button>
                             <span class="edukind">대학교</span>
@@ -1254,6 +1325,7 @@
 
 
 </div>
+
 
 <!— 조서영 javascript 연결 —>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=40e606b0d3b62e8dc1753ec322a8c92d&libraries=services,clusterer"></script>

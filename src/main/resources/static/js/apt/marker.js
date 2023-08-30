@@ -69,8 +69,16 @@ function createMarker(position, markerContent, responseData) {
     }
 }
 
+// 한 번만 실행하기 위한 변수
+var onlyOneStart = false;
 // 맵 로드가 완료되면 실행
 kakao.maps.event.addListener(map, 'tilesloaded', function () {
+    // 이미 실행된 경우 함수 종료
+    if (onlyOneStart) {
+        return;
+    }
+    onlyOneStart = true; // 변수 업데이트
+
     var bounds = map.getBounds();
     var southWest = bounds.getSouthWest();
     var northEast = bounds.getNorthEast();
@@ -294,6 +302,7 @@ function checkEnter(event) {
                 keyword: keyword
             },
             success: function (response) {
+                // 검색 결과에 따라 마커를 생성하고 지도에 표시하기
                 if (response && response.aptSearch) {
                     var result = response.aptSearch; // 키워드 검색후 전송받은 해당 아파트 데이터
                     var newCenter = new kakao.maps.LatLng(result.latitude, result.longitude);
