@@ -81,61 +81,9 @@ public class MemberServiceImpl implements MemberService {
 			bw.close();
 		} catch (Exception e) {
 			log.info(e.toString());
-//			e.printStackTrace();
 		}
 		return accessToken;
 	}
-
-//	public MemberDTO getUserInfo2(String accessToken) {
-//		MemberDTO dto = new MemberDTO();
-//		String reqUrl = "https://kapi.kakao.com/v2/user/me";
-//		try {
-//			URL url = new URL(reqUrl);
-//			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-//			conn.setRequestMethod("POST");
-//			conn.setRequestProperty("Authorization", "Bearer " + accessToken);
-//			int responseCode = conn.getResponseCode();
-//			log.info("responseCode = " + responseCode);
-//
-//			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-//
-//			String line = "";
-//			String result = "";
-//
-//			while((line = br.readLine()) != null) {
-//				result += line;
-//			}
-//			log.info("response body = " + result);  // 필요한 것만 뽑아 낼 수 있는지 확인하기
-//
-//			JsonParser parser = new JsonParser();
-//			JsonElement element =  parser.parse(result);
-//
-//			JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
-//			JsonObject kakaoAccount = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
-//
-//			String nickname = properties.getAsJsonObject().get("nickname").getAsString();
-//			String email = kakaoAccount.getAsJsonObject().get("email").getAsString();
-//
-//			dto.setName("nickname");
-//			dto.setEmail("email");
-//
-//			MemberEntity tmp = memberRepository.findByEmail(email);
-//
-//			log.info("test tmp (email기준 회원정보있나~?) : " + tmp);
-//
-////			@Override
-////			public Long joinBasic(MemberEntity pMember) {
-////				memberRepository.save(pMember);
-////				return pMember.getId();
-////			}
-//
-//		} catch (Exception e) {
-//			log.info(e.toString());
-////			e.printStackTrace();
-//		}
-//
-//		return dto;
-//	}
 
 	/** 카카오 유저 정보 얻기 */
 	public HashMap<String, Object> getUserInfo(String accessToken) {
@@ -179,19 +127,10 @@ public class MemberServiceImpl implements MemberService {
 
 			Optional<MemberEntity> tmp = memberRepository.findByEmail(email);
 			log.info("test tmp (email기준 회원정보있나~?) : " + tmp);
-//			tmp.setEmail(email);
-//			tmp.setName(nickname);
 			log.info("tmp : " + tmp.toString());
-
-//			@Override
-//			public Long joinBasic(MemberEntity pMember) {
-//				memberRepository.save(pMember);
-//				return pMember.getId();
-//			}
 
 		} catch (Exception e) {
 			log.info(e.toString());
-//			e.printStackTrace();
 		}
 
 		return userInfo;
@@ -317,21 +256,18 @@ public class MemberServiceImpl implements MemberService {
 			MemberEntity memberEntity = findMember.get();
 			if(pwdConfig.passwordEncoder().matches(memberDTO.getPwd(),memberEntity.getPwd())) {
 				log.info("id pw 모두 일치! 로그인 성공!");
-				// entity->dto로 변환
-				MemberDTO dto = new MemberDTO();
-				dto.setEmail(memberEntity.getEmail());
-				dto.setName(memberEntity.getName());
-				dto.setPwd(memberEntity.getPwd());
-
+				MemberDTO dto = memberEntity.toDTO();
+				log.info("entity를 toDTO : " +  dto);
 				return dto;
-
-			} else { log.info("id일치, pw 불일치합니다."); }
+			} else {
+				log.info("id일치, pw 불일치합니다.");
+			}
 		} else {
 			log.info("존재하지 않는 회원입니다.");
 		}
-        return null;
+		return null;
 //        return memberRepository.findByEmail(memberDTO);
-    }
+	}
 //	@Override
 //	public MemberEntity login(String loginEmail) {
 //		log.info("서비스 loginByEmail() 실행");
@@ -383,7 +319,7 @@ public class MemberServiceImpl implements MemberService {
 	public Optional<MemberEntity> findByNameAndTel(String name, String tel) {
 		return memberRepository.findByNameAndTel(name, tel);
 	}
-	
+
 	/** pwd 찾기(이메일 연락처로) */
 	@Override
 	public Optional<MemberEntity> findByEmailAndTel(String email, String tel) {

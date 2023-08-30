@@ -29,22 +29,22 @@
         </p>
     </div>
     <hr/>
-    <form>
-    <div id = "tb-box">
+    <form  id="qnaForm" action="/qna" method="post">
+        <div id="tb-box">
         <table border="1" class="qna-tb">
             <tr>
                 <th>이름<b class="boldtext">＊</b></th>
-                <td>이름 가져와</td>
+                <td><input  name = "user_name" type="text" placeholder="유저이름"></td>
             </tr>
             <tr>
                 <th>이메일<b class="boldtext">＊</b></th>
-                <td>이메일 가져와</td>
+                <td><input  name = "user_email" type="text" placeholder="유저이메일"></td>
             </tr>
             <tr>
                 <th>구분<b class="boldtext">＊</b></th>
                 <td>
                     <select name="category">
-                        <option value="choice">선택해주세요</option>
+                        <option value="choice">선택</option>
                         <option value="member">회원관련</option>
                         <option value="jung">중개관련</option>
                         <option value="maemae">매매관련</option>
@@ -56,11 +56,11 @@
             </tr>
             <tr>
                 <th>제목<b class="boldtext">＊</b></th>
-                <td><input type="text" id="title"></td>
+                <td><input type="text" name = "title" id="title" placeholder="제목을 입력하세요."></td>
             </tr>
             <tr>
                 <th>내용<b class="boldtext">＊</b></th>
-                <td><textarea></textarea></td>
+                <td><textarea name="content"></textarea></td>
             </tr>
             <tr>
                 <th>파일첨부</th>

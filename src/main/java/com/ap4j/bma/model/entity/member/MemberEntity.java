@@ -40,6 +40,16 @@ public class MemberEntity {
 		this.root = root;
 	}
 
+	public MemberDTO toDTO() {
+		return MemberDTO.builder()
+				.email(email)
+				.name(name)
+				.pwd(pwd)
+				.nickname(nickname)
+				.tel(tel)
+				.root(root)
+				.build();
+	}
 //	public static MemberDTO toDTO(MemberEntity entity) {
 //		return MemberDTO.builder()
 //				.idx(entity.getIdx())

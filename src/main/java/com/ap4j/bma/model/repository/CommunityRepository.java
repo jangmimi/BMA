@@ -12,6 +12,10 @@ public interface CommunityRepository extends JpaRepository<CommunityEntity, Inte
     //검색 기능
     Page<CommunityEntity> findByTitleContaining(String keyword, Pageable pageable);
 
+    CommunityEntity findTopByIdLessThanOrderByIdDesc(Integer id);
+
+    CommunityEntity findTopByIdGreaterThanOrderByIdAsc(Integer id);
+
 //    //조회수
 //    @Modifying
 //    @Query("update Board b set b.count = b.count + 1 where b.view = :view")

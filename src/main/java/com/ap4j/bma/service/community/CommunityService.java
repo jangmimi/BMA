@@ -43,7 +43,14 @@ public class CommunityService {
         return communityRepository.findById(id).get();
     }
 
-
+    //이전글
+    public Object getPreArticle(Integer id) {
+        return communityRepository.findTopByIdLessThanOrderByIdDesc(id);
+    }
+    //다음글
+    public Object getNextArticle(Integer id) {
+        return communityRepository.findTopByIdGreaterThanOrderByIdAsc(id);
+    }
     public void communityDelete(Integer id) {
         communityRepository.deleteById(id);
         updateTotalCommunityCount(); //총 게시글 개수 업데이트

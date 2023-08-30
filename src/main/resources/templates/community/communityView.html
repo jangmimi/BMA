@@ -37,22 +37,17 @@
                 </td>
             </tr>
         </table>
+
+        <div id = "pre-next">
+            <a th:if="${prevArticle != null}" th:href="@{/community/view?id={id}(id=${prevArticle.id})}">
+                <button class="pre-next">이전글</button>
+            </a>
+            <a th:if="${nextArticle != null}" th:href="@{/community/view?id={id}(id=${nextArticle.id})}">
+                <button class="pre-next">다음글</button>
+            </a>
+        </div>
+
     </div>
-
-    <div class="prenext">
-        <table class="prenext-tb">
-            <tr>
-                <td>이전글</td>
-            </tr>
-            <tr>
-                <td>다음글</td>
-            </tr>
-        </table>
-    </div>
-
-<!-- <button class="prev">이전글</button>
-<button class="next">다음글</button> -->
-
 </div>
 </body>
 </html>
