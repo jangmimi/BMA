@@ -636,7 +636,7 @@
                                                 </button>
                                                 <span class="tx">저장</span>
                                                 <!-- Modal -->
-                                                <div th:if="${userEmail==null}" class="modal fade" id="aSaveToMine"
+                                                <div th:if="${session.userEmail==null}" class="modal fade" id="aSaveToMine"
                                                      tabindex="-1" aria-labelledby="exampleModalLabel"
                                                      aria-hidden="true">
 
@@ -1255,7 +1255,7 @@
 
 </div>
 
-<!-- 조서영 javascript 연결 -->
+<!— 조서영 javascript 연결 —>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=40e606b0d3b62e8dc1753ec322a8c92d&libraries=services,clusterer"></script>
 <script th:src="@{/js/apt/aptDbCoordinatesSave.js}" type="text/javascript"></script>
 <script th:src="@{/js/apt/marker.js}" type="text/javascript"></script>
