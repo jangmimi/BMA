@@ -26,11 +26,12 @@ public interface MemberService {
 
 	public MemberDTO login(MemberDTO memberDTO);
 
-	public void deleteMemberByIdx(Long idx);
+	public void deleteMemberById(Long id);
 
 	public MemberEntity getMemberOne(String email);
 
-	public MemberEntity updateMember(Long idx, MemberEntity updatedMember);
+//	public MemberEntity updateMember(Long id, MemberEntity updatedMember);
+	public MemberEntity updateMember(Long id, MemberDTO memberDTO);
 
 	public Optional<MemberEntity> findByNameAndTel(String name, String tel);
 
