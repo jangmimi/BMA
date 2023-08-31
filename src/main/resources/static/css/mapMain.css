@@ -196,10 +196,13 @@ top: 31px;
 #staticBackdrop2.modal.fade.show {
 
 }
-#exampleModalToggle2 {
+.modal.fade.aTalkTalkWrite{
 width: 300px;
 left: 399px;
 top: 31px;
+
+}
+#exampleModalToggle2 {
 }
 .aPostcontent{
 border: 2px solid #26abed62;
@@ -506,9 +509,7 @@ margin-top: 30px;
 .aed-map-det{
     height:184px;
 }
-.price-area{
 
-}
 .aed-main-box.rpinfo-tab-common{
 margin-top: 22px;
 }
@@ -607,6 +608,24 @@ width: 269px;
     border-radius: 7px;
 }
 
+.modal-content.aFolderForSaveAPIAPT{
+width: 400px;
+}
+.modal-body.aSaveAPIAPT{
+    padding-left: 40px;
+        padding-right: 40px;
+}
+
+
+.aSaveAPIAPT.memoArea{
+width: 100%;
+    display: flex;
+    overflow-y: auto;
+    flex-direction: column;
+    align-items: center;
+}
+
+
 
 .tac-ul{
 display: grid;
@@ -671,6 +690,12 @@ list-style: none;
     align-items: center;
     padding-left: 17px;
         justify-content: space-between;
+}
+
+
+/*인근지역유사실거래사례*/
+.aSGPrice:hover{
+    background-color:#26abed7a;
 }
 
 a:active, a:focus, a:hover, a:link, a:visited {

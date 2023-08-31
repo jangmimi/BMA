@@ -1,19 +1,68 @@
-//function openModal(){
-//        document.getElementById('aSaveBtn').addEventListener('click', function() {
-//            // 여기서 로그인 여부 확인 및 처리
-//            var isLoggedIn = true;  // 로그인 여부에 따라 true 또는 false 설정
+//document.addEventListener('DOMContentLoaded', function() {
+//        // 모달 버튼 선택
+//        var modalButton = document.getElementById('aSaveBtn');
 //
-//            // 동적으로 모달 내용 변경
-//            var dynamicModalBody = document.getElementById('dynamicModalBody');
+//        // 모달 창 선택
+//        var modal = document.getElementById('aSaveToMine');
 //
-//            if (isLoggedIn) {
-//                dynamicModalBody.innerHTML = '<p>로그인되었습니다.</p>';
-//            } else {
-//                dynamicModalBody.innerHTML = '<p>로그인이 필요합니다.</p>';
-//            }
-//        });
-//
-//}
+//        // 모달 버튼 클릭 이벤트 리스너 추가
+//                modalButton.addEventListener('click', function() {
+//                    // 모달이 열려있을 때와 닫혀있을 때를 번갈아가며 처리
+//                    if (modal.style.display === 'block') {
+//                        modal.style.display = 'none';
+//                        modal.setAttribute('aria-hidden', 'true');
+//                    } else {
+//                        modal.style.display = 'block';
+//                        modal.setAttribute('aria-hidden', 'false');
+//                    }
+//                });
+//    });
+
+const main = {
+    init : function() {
+        const _this = this;
+
+        ...
+        
+        // 댓글 저장
+        $('#btn-comment-save').on('click', function () {
+            _this.commentSave();
+        });
+
+    },
+    
+    ...
+    
+     /** 댓글 저장 */
+    commentSave : function () {
+        const data = {
+            postsId: $('#postsId').val(),
+            comment: $('#comment').val()
+        }
+
+        // 공백 및 빈 문자열 체크
+        if (!data.comment || data.comment.trim() === "") {
+            alert("공백 또는 입력하지 않은 부분이 있습니다.");
+            return false;
+        } else {
+            $.ajax({
+                type: 'POST',
+                url: '/api/posts/' + data.postsId + '/comments',
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(data)
+            }).done(function () {
+                alert('댓글이 등록되었습니다.');
+                window.location.reload();
+            }).fail(function (error) {
+                alert(JSON.stringify(error));
+            });
+        }
+    }
+};
+
+main.init();
+
 
 
 // 데이터 배열 (크기에 따른 값을 포함)
