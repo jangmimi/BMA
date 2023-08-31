@@ -224,6 +224,7 @@ function updateTransactionTable(roadName) {
         success: function (response) {
             var tableBody = $(".tbl tbody");
             tableBody.empty();
+
             if (response && response.aptRealTradeDTOList && response.aptRealTradeDTOList.length > 0) {
 
                 // 실거래정보 (연하늘색 부분) - 최근 거래된 금액
@@ -239,8 +240,103 @@ function updateTransactionTable(roadName) {
                     reformatAmount = amountSliceFirst + "억(" + floor + "층)";
                 };
 
-                var priceArea = document.querySelector(".price-area");
-                priceArea.querySelector(".txt").textContent = reformatAmount;
+                // var priceArea = document.querySelector(".price-area");
+                // priceArea.querySelector(".txt").textContent = reformatAmount;
+
+
+                /* 차트 */
+                var arrrange= [];
+                var arrrange2 = [];
+                var yearToAmountMap = {}; // 년도별 거래 금액을 저장하기 위한 맵
+                var allAmounts = []; // 모든 거래 금액을 저장할 배열
+
+                var chartCanvas = document.getElementById("myChart").getContext("2d");
+
+                if (window.myChart && typeof window.myChart.destroy === 'function') {
+                    window.myChart.destroy();
+                }
+
+                for (let i = 0; i < response.aptRealTradeDTOList.length; i++) {
+                    var contractYearMonth = response.aptRealTradeDTOList[i].contractYearMonth;
+                    var mmmmm = response.aptRealTradeDTOList[i].transactionAmount.toString();
+
+                    var amountSliceFirst = mmmmm.slice(0, mmmmm.length - 1);
+                    var amountSliceLast = mmmmm.slice(-1);
+                    var reformatAmount = parseFloat(amountSliceFirst + "." + amountSliceLast);
+
+                    allAmounts.push(reformatAmount); // 모든금액 넣기
+
+                    if (!yearToAmountMap[contractYearMonth]) {
+                        yearToAmountMap[contractYearMonth] = [reformatAmount]; // 해당 년도에 대한 배열 생성
+                    } else {
+                        yearToAmountMap[contractYearMonth].push(reformatAmount); // 배열에 값을 추가
+                    }
+                }
+
+                const highestAmount = Math.max(...allAmounts);  // 최고가
+                const lowestAmount = Math.min(...allAmounts);   // 최저가
+
+                // 중복 제거 및 평균 계산
+                for (const year in yearToAmountMap) {
+                    const averageAmount = yearToAmountMap[year].reduce((acc, curr) => acc + curr, 0) / yearToAmountMap[year].length;
+                    arrrange.push(year);
+                    arrrange2.push(averageAmount);
+                }
+
+                var chartData = {
+                    labels: arrrange, // 날짜
+                    datasets: [{
+                        label: '',
+                        data: arrrange2, // 거래 금액
+                        backgroundColor: 'rgb(0, 0, 0)',
+                        borderColor: 'rgb(75, 192, 192)',
+                        borderWidth: 1,
+                        // fill: true // 선 아래를 색으로 채우기
+                    }]
+                };
+
+
+                myChart = new Chart(chartCanvas, {
+                    type: 'line',
+                    data: chartData,
+                    options: {
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: "최고:" + highestAmount + "억"+ "          최저:" + lowestAmount + "억",
+                                position: 'top'
+                            },
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                ticks: {
+                                    autoSkip: false,
+                                    maxRotation: 0,
+                                    minRotation: 0,
+                                    maxTicksLimit: 20
+                                },
+                                title: {
+                                    display: true,
+                                    text: '거래연월'
+                                }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: '거래금액(억)'
+                                }
+                            }
+                        }
+                    }
+                });
+
+
+                window.myChart = myChart;
 
                 // 실거래정보 표시
                 response.aptRealTradeDTOList.forEach(function (detailItem) {
@@ -267,7 +363,13 @@ function updateTransactionTable(roadName) {
 
                     // 테이블에 행 추가
                     tableBody.append(row);
+
+
+
+
+
                 });
+
             } else {
                 console.log("표시할 aptDetailList 데이터가 없습니다.");
             }
@@ -275,6 +377,12 @@ function updateTransactionTable(roadName) {
     });
 }
 
+// 날짜 포맷팅 함수
+function formatDate(rawDate) {
+    var year = rawDate.substring(0, 4);
+    var month = rawDate.substring(4, 6);
+    return year + '-' + month;
+}
 // 다른 오버레이 닫아주는 함수
 function closeOtherOverlays() {
     for (var key in existingMarkers) {
