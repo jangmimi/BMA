@@ -16,6 +16,7 @@ import java.util.Map;
 @Controller
 @Slf4j
 @RequestMapping("map")
+@SessionAttributes("userEmail")
 public class MapController {
 
     @Autowired
@@ -34,7 +35,7 @@ public class MapController {
         Map<String, Object> responseData = new HashMap<>();
         responseData.put("aptList", aptList);
         responseData.put("aptRealTradeDTOList", aptRealTradeDTOList);
-        
+
         // 검색했을때만 aptSearch 객체를 전송한다.
         if(aptSearch != null) {
             responseData.put("aptSearch", aptSearch);
