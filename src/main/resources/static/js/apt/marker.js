@@ -258,18 +258,21 @@ function updateTransactionTable(roadName) {
 
                 for (let i = 0; i < response.aptRealTradeDTOList.length; i++) {
                     var contractYearMonth = response.aptRealTradeDTOList[i].contractYearMonth;
-                    var mmmmm = response.aptRealTradeDTOList[i].transactionAmount.toString();
+                    var firstYear= contractYearMonth.slice(2,contractYearMonth.length - 2);
+                    var lastYear = contractYearMonth.slice(contractYearMonth.length - 2,contractYearMonth.length);
+                    var totalYear = firstYear + "." + lastYear;
+                    var chartAmount = response.aptRealTradeDTOList[i].transactionAmount.toString();
 
-                    var amountSliceFirst = mmmmm.slice(0, mmmmm.length - 1);
-                    var amountSliceLast = mmmmm.slice(-1);
+                    var amountSliceFirst = chartAmount.slice(0, chartAmount.length - 1);
+                    var amountSliceLast = chartAmount.slice(-1);
                     var reformatAmount = parseFloat(amountSliceFirst + "." + amountSliceLast);
 
                     allAmounts.push(reformatAmount); // 모든금액 넣기
 
-                    if (!yearToAmountMap[contractYearMonth]) {
-                        yearToAmountMap[contractYearMonth] = [reformatAmount]; // 해당 년도에 대한 배열 생성
+                    if (!yearToAmountMap[totalYear]) {
+                        yearToAmountMap[totalYear] = [reformatAmount]; // 해당 년도에 대한 배열 생성
                     } else {
-                        yearToAmountMap[contractYearMonth].push(reformatAmount); // 배열에 값을 추가
+                        yearToAmountMap[totalYear].push(reformatAmount); // 배열에 값을 추가
                     }
                 }
 
@@ -288,7 +291,7 @@ function updateTransactionTable(roadName) {
                     datasets: [{
                         label: '',
                         data: arrrange2, // 거래 금액
-                        backgroundColor: 'rgb(0, 0, 0)',
+                        backgroundColor: 'rgb(38, 171, 237)',
                         borderColor: 'rgb(75, 192, 192)',
                         borderWidth: 1,
                         // fill: true // 선 아래를 색으로 채우기
@@ -314,10 +317,10 @@ function updateTransactionTable(roadName) {
                             x: {
                                 beginAtZero: true,
                                 ticks: {
-                                    autoSkip: false,
+                                    autoSkip: true,
                                     maxRotation: 0,
                                     minRotation: 0,
-                                    maxTicksLimit: 20
+                                    maxTicksLimit: 10
                                 },
                                 title: {
                                     display: true,
