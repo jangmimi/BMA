@@ -7,9 +7,11 @@ import com.ap4j.bma.model.entity.member.MemberEntity;
 import com.ap4j.bma.service.member.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
 import javax.servlet.http.*;
 import java.lang.reflect.Member;
@@ -104,19 +106,16 @@ public class MemberController {
 
     /** 로그아웃 */
     @RequestMapping("/qLogout")
-    public String qLogout(HttpServletRequest req) {
+    public String qLogout(HttpSession session, SessionStatus sessionStatus) {
         log.info("MemberController - qLogout() 실행");
-        HttpSession session = req.getSession();
 //        token 재사용으로 콘솔에 400에러가 확인되어 주석 처리(정확한 원인 파악 필요)
 //        qMemberServiceImpl.kakaoLogout((String)session.getAttribute("accessToken"));
 //        session.removeAttribute("accessToken");
-//        if(session != null) {
-            session.removeAttribute("userEmail");
-            session.removeAttribute("userName");
-            session.removeAttribute("loginMember");
-            session.invalidate();
-            session.setMaxInactiveInterval(0);
-//        }
+//            session.removeAttribute("userEmail");
+//            session.removeAttribute("userName");
+//            session.removeAttribute("loginMember");
+//        session.invalidate();
+        sessionStatus.setComplete();
 
         log.info("--- 로그아웃 후 ---");
 
