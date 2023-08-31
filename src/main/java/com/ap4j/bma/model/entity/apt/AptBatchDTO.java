@@ -1,10 +1,7 @@
 package com.ap4j.bma.model.entity.apt;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import lombok.*;
 import org.springframework.stereotype.Component;
-
-import javax.persistence.Column;
 
 @Component
 @Builder
@@ -14,7 +11,7 @@ import javax.persistence.Column;
 @ToString
 @Data
 //    @JacksonXmlProperty(localName = "item")
-public class AptDTO {
+public class AptBatchDTO {
     private String dealAmount; // 거래금액
     private String dealType; // 거래유형
     private String buildYear; // 건축년도

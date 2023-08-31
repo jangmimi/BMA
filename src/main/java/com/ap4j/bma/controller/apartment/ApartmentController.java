@@ -1,6 +1,6 @@
 package com.ap4j.bma.controller.apartment;
 
-import com.ap4j.bma.model.entity.apt.AptDTO;
+import com.ap4j.bma.model.entity.apt.AptBatchDTO;
 import com.ap4j.bma.service.apartment.ApartmentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -42,8 +42,8 @@ public class ApartmentController {
 
     /** 화면 좌표 범위의 DB값 데이터 보내주기 (클라이언트가 사용할 페이지)*/
     @PostMapping("/markers")
-    public ResponseEntity<List<AptDTO>> getMarkersInBounds(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng) {
-        List<AptDTO> aptList = aptServiceImpl.findMarkersInBounds(southWestLat, southWestLng, northEastLat, northEastLng);
+    public ResponseEntity<List<AptBatchDTO>> getMarkersInBounds(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng) {
+        List<AptBatchDTO> aptList = aptServiceImpl.findMarkersInBounds(southWestLat, southWestLng, northEastLat, northEastLng);
         return ResponseEntity.ok(aptList);
     }
     @GetMapping("/markers")

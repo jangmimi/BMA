@@ -1,6 +1,6 @@
 package com.ap4j.bma.service.apartment;
 
-import com.ap4j.bma.model.entity.apt.AptDTO;
+import com.ap4j.bma.model.entity.apt.AptBatchDTO;
 import com.ap4j.bma.model.entity.apt.AptEntity;
 import com.ap4j.bma.model.repository.apartment.AptRepository;
 import org.json.JSONArray;
@@ -92,12 +92,12 @@ public class ApartmentServiceImpl implements ApartmentService {
     }
 
     /** DB값 가져와서 html에 넘겨주기 (경도 위도 검색해서 값 가져오기 위해서) */
-    public List<AptDTO> aptList() {
-        List<AptDTO> aptDTOList = new ArrayList<>();
+    public List<AptBatchDTO> aptList() {
+        List<AptBatchDTO> aptDTOList = new ArrayList<>();
         List<AptEntity> aptEntityList = aptRepository.findAll();
 
         for (AptEntity aptEntity : aptEntityList) {
-            AptDTO aptDTO = AptDTO.builder().
+            AptBatchDTO aptDTO = AptBatchDTO.builder().
 //                            aptName(aptEntity.getAptName()).
 //                            aptAddress(aptEntity.getAptAddress()).
 //                            kaptCode(aptEntity.getKaptCode()).
@@ -126,13 +126,13 @@ public class ApartmentServiceImpl implements ApartmentService {
         }
     }
 
-    public List<AptDTO> findMarkersInBounds(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng) {
+    public List<AptBatchDTO> findMarkersInBounds(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng) {
 
-        List<AptDTO> aptDTOList = new ArrayList<>();
+        List<AptBatchDTO> aptDTOList = new ArrayList<>();
         List<AptEntity> aptEntityList = aptRepository.findMarkersInBounds(southWestLat, southWestLng, northEastLat, northEastLng);
 
         for (AptEntity aptEntity : aptEntityList) {
-            AptDTO aptDTO = AptDTO.builder().
+            AptBatchDTO aptDTO = AptBatchDTO.builder().
 //                    aptName(aptEntity.getAptName()).
 //                    aptAddress(aptEntity.getAptAddress()).
 //                    kaptCode(aptEntity.getKaptCode()).

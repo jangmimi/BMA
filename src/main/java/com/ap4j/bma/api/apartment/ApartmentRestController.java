@@ -1,6 +1,6 @@
 package com.ap4j.bma.api.apartment;
 
-import com.ap4j.bma.model.entity.apt.AptDTO;
+import com.ap4j.bma.model.entity.apt.AptBatchDTO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.w3c.dom.Document;
@@ -47,7 +47,7 @@ public class ApartmentRestController {
 	private final String apiUrl = "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev?serviceKey=yCNsY08RNGte7rDDtjdpN8LRA4FXNGAd1mcw2cy59VfwpAA4cffShZy3neeemWjVJ1LMwHQAWaRk%2FuiX%2Fescrw%3D%3D&pageNo=1&numOfRows=10&LAWD_CD=11110&DEAL_YMD=201512";
 
 	@GetMapping("/getApartments")
-	public List<AptDTO> fetchApartments() throws Exception {
+	public List<AptBatchDTO> fetchApartments() throws Exception {
 		int pageNo = 1; // 시작 페이지
 		int numOfRows = 10; // 한 페이지에 표시할 항목 수
 
@@ -59,7 +59,7 @@ public class ApartmentRestController {
 		int LAWD_CD = 11110;
 		int year = 2006; // 200601 ~ 202308까지 있음
 		int month = 01;
-		List<AptDTO> allApartments = new ArrayList<>();
+		List<AptBatchDTO> allApartments = new ArrayList<>();
 
 		while (true) {
 			// URL 생성
@@ -86,7 +86,7 @@ public class ApartmentRestController {
 			Document document = builder.parse(new InputSource(new StringReader(response.toString())));
 
 			NodeList itemList = document.getElementsByTagName("item");
-			List<AptDTO> aptList = new ArrayList<>();
+			List<AptBatchDTO> aptList = new ArrayList<>();
 			int i = 0;
 			for (year = 2006; year < 2022; i++) {
 				if(i > 9) {
@@ -97,96 +97,96 @@ public class ApartmentRestController {
 
 				if (itemNode.getNodeType() == Node.ELEMENT_NODE) {
 					Element element = (Element) itemNode;
-					AptDTO aptDTO = new AptDTO();
+					AptBatchDTO aptBatchDTO = new AptBatchDTO();
 
 					// 거래금액 (Deal Amount)
-					aptDTO.setDealAmount(element.getElementsByTagName("거래금액").item(0).getTextContent());
+					aptBatchDTO.setDealAmount(element.getElementsByTagName("거래금액").item(0).getTextContent());
 
 					// 거래유형 (Transaction Type)
-					aptDTO.setDealType(element.getElementsByTagName("거래유형").item(0).getTextContent());
+					aptBatchDTO.setDealType(element.getElementsByTagName("거래유형").item(0).getTextContent());
 
 					// 건축년도 (Year of Construction)
-					aptDTO.setBuildYear(element.getElementsByTagName("건축년도").item(0).getTextContent());
+					aptBatchDTO.setBuildYear(element.getElementsByTagName("건축년도").item(0).getTextContent());
 
 					// 년 (Year)
-					aptDTO.setYear(element.getElementsByTagName("년").item(0).getTextContent());
+					aptBatchDTO.setYear(element.getElementsByTagName("년").item(0).getTextContent());
 
 					// 도로명 (Road Name)
-					aptDTO.setRoadName(element.getElementsByTagName("도로명").item(0).getTextContent());
+					aptBatchDTO.setRoadName(element.getElementsByTagName("도로명").item(0).getTextContent());
 
 					// 도로명건물본번호코드 (Road Name Main Building Number Code)
-					aptDTO.setRoadNameMainCode(element.getElementsByTagName("도로명건물본번호코드").item(0).getTextContent());
+					aptBatchDTO.setRoadNameMainCode(element.getElementsByTagName("도로명건물본번호코드").item(0).getTextContent());
 
 					// 도로명건물부번호코드 (Road Name Sub-Building Number Code)
-					aptDTO.setRoadNameSubCode(element.getElementsByTagName("도로명건물부번호코드").item(0).getTextContent());
+					aptBatchDTO.setRoadNameSubCode(element.getElementsByTagName("도로명건물부번호코드").item(0).getTextContent());
 
 					// 도로명시군구코드 (Road Name District Code)
-					aptDTO.setRoadNameGuCode(element.getElementsByTagName("도로명시군구코드").item(0).getTextContent());
+					aptBatchDTO.setRoadNameGuCode(element.getElementsByTagName("도로명시군구코드").item(0).getTextContent());
 
 					// 도로명일련번호코드 (Road Name Serial Number Code)
-					aptDTO.setRoadNameSerialCode(element.getElementsByTagName("도로명일련번호코드").item(0).getTextContent());
+					aptBatchDTO.setRoadNameSerialCode(element.getElementsByTagName("도로명일련번호코드").item(0).getTextContent());
 
 					// 도로명지상지하코드 (Road Name Ground/Above Ground Code)
-					aptDTO.setRoadNameGroundCode(element.getElementsByTagName("도로명지상지하코드").item(0).getTextContent());
+					aptBatchDTO.setRoadNameGroundCode(element.getElementsByTagName("도로명지상지하코드").item(0).getTextContent());
 
 					// 도로명코드 (Road Name Code)
-					aptDTO.setRoadNameCode(element.getElementsByTagName("도로명코드").item(0).getTextContent());
+					aptBatchDTO.setRoadNameCode(element.getElementsByTagName("도로명코드").item(0).getTextContent());
 
 					// 등기일자 (Registration Date)
-					aptDTO.setRegistrationDate(element.getElementsByTagName("등기일자").item(0).getTextContent());
+					aptBatchDTO.setRegistrationDate(element.getElementsByTagName("등기일자").item(0).getTextContent());
 
 					// 법정동 (Legal Dong)
-					aptDTO.setLegalDong(element.getElementsByTagName("법정동").item(0).getTextContent());
+					aptBatchDTO.setLegalDong(element.getElementsByTagName("법정동").item(0).getTextContent());
 
 					// 법정동본번코드 (Legal Dong Main Building Number Code)
-					aptDTO.setLegalDongMainNumberCode(element.getElementsByTagName("법정동본번코드").item(0).getTextContent());
+					aptBatchDTO.setLegalDongMainNumberCode(element.getElementsByTagName("법정동본번코드").item(0).getTextContent());
 
 					// 법정동부번코드 (Legal Dong Sub-Building Number Code)
-					aptDTO.setLegalDongSubNumberCode(element.getElementsByTagName("법정동부번코드").item(0).getTextContent());
+					aptBatchDTO.setLegalDongSubNumberCode(element.getElementsByTagName("법정동부번코드").item(0).getTextContent());
 
 					// 법정동시군구코드 (Legal Dong City Code)
-					aptDTO.setLegalDongCityCode(element.getElementsByTagName("법정동시군구코드").item(0).getTextContent());
+					aptBatchDTO.setLegalDongCityCode(element.getElementsByTagName("법정동시군구코드").item(0).getTextContent());
 
 					// 법정동읍면동코드 (Legal Dong Town Code)
-					aptDTO.setLegalDongTownCode(element.getElementsByTagName("법정동읍면동코드").item(0).getTextContent());
+					aptBatchDTO.setLegalDongTownCode(element.getElementsByTagName("법정동읍면동코드").item(0).getTextContent());
 
 					// 법정동지번코드 (Legal Dong Serial Number Code)
-					aptDTO.setLegalDongSerialCode(element.getElementsByTagName("법정동지번코드").item(0).getTextContent());
+					aptBatchDTO.setLegalDongSerialCode(element.getElementsByTagName("법정동지번코드").item(0).getTextContent());
 
 					// 아파트 (Apartment)
-					aptDTO.setApartment(element.getElementsByTagName("아파트").item(0).getTextContent());
+					aptBatchDTO.setApartment(element.getElementsByTagName("아파트").item(0).getTextContent());
 
 					// 월 (Month)
-					aptDTO.setMonth(element.getElementsByTagName("월").item(0).getTextContent());
+					aptBatchDTO.setMonth(element.getElementsByTagName("월").item(0).getTextContent());
 
 					// 일 (Day)
-					aptDTO.setDay(element.getElementsByTagName("일").item(0).getTextContent());
+					aptBatchDTO.setDay(element.getElementsByTagName("일").item(0).getTextContent());
 
 					// 일련번호 (Serial Number)
-					aptDTO.setSerialNumber(element.getElementsByTagName("일련번호").item(0).getTextContent());
+					aptBatchDTO.setSerialNumber(element.getElementsByTagName("일련번호").item(0).getTextContent());
 
 					// 전용면적 (Exclusive Area)
-					aptDTO.setExclusiveArea(element.getElementsByTagName("전용면적").item(0).getTextContent());
+					aptBatchDTO.setExclusiveArea(element.getElementsByTagName("전용면적").item(0).getTextContent());
 
 					// 중개사소재지 (Agent Location)
-					aptDTO.setAgentLocation(element.getElementsByTagName("중개사소재지").item(0).getTextContent());
+					aptBatchDTO.setAgentLocation(element.getElementsByTagName("중개사소재지").item(0).getTextContent());
 
 					// 지번 (Land Lot Number)
-					aptDTO.setLandLot(element.getElementsByTagName("지번").item(0).getTextContent());
+					aptBatchDTO.setLandLot(element.getElementsByTagName("지번").item(0).getTextContent());
 
 					// 지역코드 (Region Code)
-					aptDTO.setRegionCode(element.getElementsByTagName("지역코드").item(0).getTextContent());
+					aptBatchDTO.setRegionCode(element.getElementsByTagName("지역코드").item(0).getTextContent());
 
 					// 층 (Floor)
-					aptDTO.setFloor(element.getElementsByTagName("층").item(0).getTextContent());
+					aptBatchDTO.setFloor(element.getElementsByTagName("층").item(0).getTextContent());
 
 					// 해제사유발생일 (Release Reason Date)
-					aptDTO.setReleaseReasonDate(element.getElementsByTagName("해제사유발생일").item(0).getTextContent());
+					aptBatchDTO.setReleaseReasonDate(element.getElementsByTagName("해제사유발생일").item(0).getTextContent());
 
 					// 해제여부 (Release Status)
-					aptDTO.setReleaseStatus(element.getElementsByTagName("해제여부").item(0).getTextContent());
+					aptBatchDTO.setReleaseStatus(element.getElementsByTagName("해제여부").item(0).getTextContent());
 
-					aptList.add(aptDTO);
+					aptList.add(aptBatchDTO);
 				}
 
 				allApartments.addAll(aptList);

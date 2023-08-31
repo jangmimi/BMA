@@ -1,7 +1,6 @@
 package com.ap4j.bma.batch;
 
-import com.ap4j.bma.model.entity.apt.AptDTO;
-import lombok.NoArgsConstructor;
+import com.ap4j.bma.model.entity.apt.AptBatchDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.item.*;
@@ -14,7 +13,7 @@ import java.util.Set;
 
 @Slf4j
 @RequiredArgsConstructor
-public class ApartmentApiWriter implements ItemWriter<List<AptDTO>> {
+public class ApartmentApiWriter implements ItemWriter<List<AptBatchDTO>> {
 
 
 	private final ApartmentApiService apartmentApiService;
@@ -26,29 +25,29 @@ public class ApartmentApiWriter implements ItemWriter<List<AptDTO>> {
 	//				.forEach(aptList -> apartmentApiService.fetchDataFromApi());
 	//	}
 	@Override
-	public void write(List<? extends List<AptDTO>> items) throws Exception {
+	public void write(List<? extends List<AptBatchDTO>> items) throws Exception {
 		log.info("write 실행됐다@@@@");
 
 		/*
 		* todo
 		*  중복 DB가 여러번 저장되고 조회되는 거 수정해야함. 성능에 무리. 지금은 임시로 Set으로 중복 제거중.
 		* */
-		Set<AptDTO> uniqueAptSet = new HashSet<>();
+		Set<AptBatchDTO> uniqueAptSet = new HashSet<>();
 
-		for (List<AptDTO> aptList : items) {
-			for (AptDTO aptDTO : aptList) {
+		for (List<AptBatchDTO> aptList : items) {
+			for (AptBatchDTO aptBatchDTO : aptList) {
 				// 이미 저장한 데이터인지 확인
-				if (!uniqueAptSet.contains(aptDTO)) {
+				if (!uniqueAptSet.contains(aptBatchDTO)) {
 					// 아파트 데이터를 MySQL 데이터베이스에 저장
-					saveAptDataToDatabase(aptDTO);
+					saveAptDataToDatabase(aptBatchDTO);
 					// 이미 저장한 데이터로 표시
-					uniqueAptSet.add(aptDTO);
+					uniqueAptSet.add(aptBatchDTO);
 				}
 			}
 		}
 	}
 
-	private void saveAptDataToDatabase(AptDTO aptDTO) {
+	private void saveAptDataToDatabase(AptBatchDTO aptBatchDTO) {
 		String sql = "INSERT INTO apt_transactions (deal_amount, deal_type, build_year, year, road_name, " +
 				"road_name_main_code, road_name_sub_code, road_name_gu_code, road_name_serial_code, " +
 				"road_name_ground_code, road_name_code, registration_date, legal_dong, " +
@@ -61,37 +60,37 @@ public class ApartmentApiWriter implements ItemWriter<List<AptDTO>> {
 		try {
 			jdbcTemplate.update(
 					sql,
-					aptDTO.getDealAmount(),
-					aptDTO.getDealType(),
-					aptDTO.getBuildYear(),
-					aptDTO.getYear(),
-					aptDTO.getRoadName(),
-					aptDTO.getRoadNameMainCode(),
-					aptDTO.getRoadNameSubCode(),
-					aptDTO.getRoadNameGuCode(),
-					aptDTO.getRoadNameSerialCode(),
-					aptDTO.getRoadNameGroundCode(),
-					aptDTO.getRoadNameCode(),
-					aptDTO.getRegistrationDate(),
-					aptDTO.getLegalDong(),
-					aptDTO.getLegalDongMainNumberCode(),
-					aptDTO.getLegalDongSubNumberCode(),
-					aptDTO.getLegalDongCityCode(),
-					aptDTO.getLegalDongTownCode(),
-					aptDTO.getLegalDongSerialCode(),
-					aptDTO.getApartment(),
-					aptDTO.getMonth(),
-					aptDTO.getDay(),
-					aptDTO.getSerialNumber(),
-					aptDTO.getExclusiveArea(),
-					aptDTO.getAgentLocation(),
-					aptDTO.getLandLot(),
-					aptDTO.getRegionCode(),
-					aptDTO.getFloor(),
-					aptDTO.getReleaseReasonDate(),
-					aptDTO.getReleaseStatus()
+					aptBatchDTO.getDealAmount(),
+					aptBatchDTO.getDealType(),
+					aptBatchDTO.getBuildYear(),
+					aptBatchDTO.getYear(),
+					aptBatchDTO.getRoadName(),
+					aptBatchDTO.getRoadNameMainCode(),
+					aptBatchDTO.getRoadNameSubCode(),
+					aptBatchDTO.getRoadNameGuCode(),
+					aptBatchDTO.getRoadNameSerialCode(),
+					aptBatchDTO.getRoadNameGroundCode(),
+					aptBatchDTO.getRoadNameCode(),
+					aptBatchDTO.getRegistrationDate(),
+					aptBatchDTO.getLegalDong(),
+					aptBatchDTO.getLegalDongMainNumberCode(),
+					aptBatchDTO.getLegalDongSubNumberCode(),
+					aptBatchDTO.getLegalDongCityCode(),
+					aptBatchDTO.getLegalDongTownCode(),
+					aptBatchDTO.getLegalDongSerialCode(),
+					aptBatchDTO.getApartment(),
+					aptBatchDTO.getMonth(),
+					aptBatchDTO.getDay(),
+					aptBatchDTO.getSerialNumber(),
+					aptBatchDTO.getExclusiveArea(),
+					aptBatchDTO.getAgentLocation(),
+					aptBatchDTO.getLandLot(),
+					aptBatchDTO.getRegionCode(),
+					aptBatchDTO.getFloor(),
+					aptBatchDTO.getReleaseReasonDate(),
+					aptBatchDTO.getReleaseStatus()
 			);
-			log.info("Apt Data Saved to Database: {}", aptDTO);
+			log.info("Apt Data Saved to Database: {}", aptBatchDTO);
 		} catch (DataAccessException e) {
 			log.error("Error saving Apt Data to Database: {}", e.getMessage());
 		}

@@ -1,6 +1,6 @@
 package com.ap4j.bma.batch;
 
-import com.ap4j.bma.model.entity.apt.AptDTO;
+import com.ap4j.bma.model.entity.apt.AptBatchDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
@@ -44,7 +44,7 @@ public class ChunkJobConfig {
 	@Bean
 	public Step step(){
 		return stepBuilderFactory.get("chunkStep")
-				.<List<AptDTO>, List<AptDTO>>chunk(1)
+				.<List<AptBatchDTO>, List<AptBatchDTO>>chunk(1)
 				.reader(aptApiReader())
 				.writer(aptApiWriter())
 				.allowStartIfComplete(true)
@@ -53,13 +53,13 @@ public class ChunkJobConfig {
 
 	@Bean
 	@StepScope
-	public ItemReader<List<AptDTO>> aptApiReader(){
+	public ItemReader<List<AptBatchDTO>> aptApiReader(){
 		return new ApartmentApiReader(apartmentApiService);
 	}
 
 	@Bean
 	@StepScope
-	public ItemWriter<List<AptDTO>> aptApiWriter(){
+	public ItemWriter<List<AptBatchDTO>> aptApiWriter(){
 		return new ApartmentApiWriter(apartmentApiService, jdbcTemplate());
 	}
 
