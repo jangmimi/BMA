@@ -85,22 +85,32 @@ $(document).ready(function () {
     // 전체 선택 체크박스
     const selectAllCheckbox = $("input[name='selectAll']");
     // 개별 체크박스들
-    const checkboxes = $("input[name='agree']");
+    const requiredCheckboxes = $("input[name='agree'][data-required]");
+    const choice1Checkbox = $("#choice1");
+    const choice2Checkbox = $("#choice2");
 
     // 개별 체크박스가 변경될 때
-    checkboxes.on("change", function () {
+    requiredCheckboxes.add(choice1Checkbox).add(choice2Checkbox).on("change", function () {
         updateSelectAllCheckbox();
     });
 
     // 전체 선택 체크박스가 변경될 때
     selectAllCheckbox.on("change", function () {
-        checkboxes.prop("checked", selectAllCheckbox.prop("checked"));
+        const isChecked = $(this).prop("checked");
+        requiredCheckboxes.add(choice1Checkbox).add(choice2Checkbox).prop("checked", isChecked);
     });
 
     // 개별 체크박스의 상태에 따라 전체 선택 체크박스 상태 갱신
     function updateSelectAllCheckbox() {
-        const allChecked = checkboxes.filter(":checked").length === checkboxes.length;
-        selectAllCheckbox.prop("checked", allChecked);
+        const requiredAllChecked = requiredCheckboxes.filter(":checked").length === requiredCheckboxes.length;
+        const choice1Checked = choice1Checkbox.prop("checked");
+        const choice2Checked = choice2Checkbox.prop("checked");
+
+        if (requiredAllChecked && choice1Checked && choice2Checked) {
+            selectAllCheckbox.prop("checked", true);
+        } else if (!requiredAllChecked || !choice1Checked || !choice2Checked) {
+            selectAllCheckbox.prop("checked", false);
+        }
     }
 });
 
@@ -150,23 +160,18 @@ function oJoinCheck() {
         alert('연락처를 입력해주세요.');
         return false;
     }
-    checkedboxes.each(function() {
-        if(!$(this).is(":checked")) {
-            allChecked = false;
-            return false;
-        }
-    });
     if (reg.test(email) == false) {
         alert('이메일 형식으로 입력해주세요.');
         return false;
     }
+
     if (telreg.test(tel) == false) {
         alert('연락처 형식으로 입력해주세요.');
         return false;
     }
-//    if(!allChecked) {
-//        alert('필수항목을 모두 체크해주세요.');
-//        return false;
-//    }
+    if(!allChecked) {
+        alert('필수항목을 모두 체크해주세요.');
+        return false;
+    }
 
 }

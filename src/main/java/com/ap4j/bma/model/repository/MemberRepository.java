@@ -17,12 +17,6 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {   
 
     boolean existsByEmail(String email);    // exists : 해당 데이터가 DB에 존재하는지 확인하기 위해 사용
 
-    @Override
-    void delete(MemberEntity entity);   // 회원 탈퇴
-
-    @Override
-    void deleteById(Long id);
-
     Optional<MemberEntity> findByNameAndTel(String name, String tel);   // email 찾기
 
     Optional<MemberEntity> findByEmailAndTel(String email, String tel);   // pwd 찾기

@@ -1,9 +1,3 @@
-
-//let name = $('#name').val();
-//let tel = $('#tel').val();
-//let emailTel = $('#emailTel').val();
-//let emailPwd = $('#emailPwd').val();
-
 /* oMyInfoUpdate */
 $(document).ready(function() {
     $('#oCancelBtn').click(function() {
@@ -18,10 +12,23 @@ $(document).ready(function() {
 // 내정보수정 submit 전에 공백 체크
 function oUpdateCheck() {
     let name = $('#name').val();
+    let nickname = $('#nickname').val();
+    let tel = $('#tel').val();
+
     if(name === '') {
         alert('이름을 입력해주세요.');
         return false;
     }
+    if(nickname === '') {
+        alert('닉네임을 입력해주세요.');
+        return false;
+    }
+    if(tel === '') {
+        alert('연락처를 입력해주세요.');
+        return false;
+    }
+    let confirmUpdate = confirm('입력한 정보로 수정하시겠습니까?');
+    if(!confirmUpdate) return false;
 }
 
 // 이메일/비밀번호 찾기 submit 전에 공백 체크
