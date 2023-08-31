@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class MemberDTO {	// 회원가입 폼 입력 정보 담는 DTO
 
@@ -23,7 +22,7 @@ public class MemberDTO {	// 회원가입 폼 입력 정보 담는 DTO
 
 	public MemberEntity toEntity() {
 		return MemberEntity.builder()
-				.id(null)
+				.id(id)
 				.email(email)
 				.name(name)
 				.pwd(pwd)
@@ -37,12 +36,13 @@ public class MemberDTO {	// 회원가입 폼 입력 정보 담는 DTO
 	}
 
 	@Builder
-	public MemberDTO(String email, String name, String nickname, String pwd, String tel,
+	public MemberDTO(Long id, String email, String name, String nickname, String pwd, String tel,
 					 int root, Boolean choice1, Boolean choice2, Boolean member_leave) {
+		this.id = id;
 		this.email = email;
 		this.name = name;
 		this.nickname = nickname;
-		this.pwd = pwd;
+		if(pwd != null) { this.pwd = pwd; }
 		this.tel = tel;
 		this.root = root;
 		this.choice1 = choice1;
@@ -56,14 +56,11 @@ public class MemberDTO {	// 회원가입 폼 입력 정보 담는 DTO
 		memberEntity.setNickname(this.nickname);
 		memberEntity.setName(this.name);
 		memberEntity.setTel(this.tel);
+		memberEntity.setPwd(this.pwd);
 		memberEntity.setChoice1(this.choice1);
 		memberEntity.setChoice2(this.choice2);
-//		memberEntity.setPwd(this.pwd);
-//		memberEntity.setPwd(pwdConfig.);	// 비밀번호 암호화 필요하면 추가
 	}
 }
-
-
 
 /*
 @Component
