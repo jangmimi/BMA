@@ -54,4 +54,3 @@ spring:
 #    password: 45723922
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-
