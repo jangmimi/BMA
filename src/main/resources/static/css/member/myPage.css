@@ -22,7 +22,6 @@
     line-height: 1;
     list-style: none;
     margin: 0;
-/*    padding: 0;*/
 }
 .o-lnb-item {
     position: relative;
@@ -39,17 +38,27 @@
 .oInfo-top {
     padding: 30px 0;
 }
+.oInfo-left {
+   display: block; font-weight:bold; font-size:20px;
+}
 .oMaemulCnt {
-    background-color: #999999;
+    text-align: center;
+    align-items: center;
+    display: grid;
+    background-color: white;
+    float: right;
     width: 150px;
     height: 100px;
-    border: 1px solid gray;
+    border: 1px solid #bbc7d6;
 }
 .oMaemulLink {
     font-weight: 700;
     border: none;
     background-color: white;
     font-size: 18px;
+}
+.oUpdateLinkBtn{
+    width: 150px;
 }
 #oInterestMaemul {
     color: #25AAE1;
