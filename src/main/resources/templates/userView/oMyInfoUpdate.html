@@ -23,7 +23,7 @@
 </head>
 <body layout:fragment="content">
 
-<!--<th:block th:object="${loginMember}">-->
+<th:block th:object="${loginMember}">
 <!-- 마이페이지 네비게이션 -->
 <div id="oContainer">
     <div id="content">
@@ -44,8 +44,8 @@
                 <div id="oJoinTitle">
                     <h3 class="h3 fw-bold">내 정보 수정</h3>
                 </div>
-                <form th:action="@{/member/qUpdateMember/__${idx}__}" method="POST" onsubmit="return oUpdateCheck()">
-                    <input type="hidden" id="idx" name="idx" th:value="${idx}" />
+                <form th:action="@{/member/qUpdateMember/__${id}__}" method="POST" onsubmit="return oUpdateCheck()">
+                    <input type="text" id="id" name="id" th:value="${session.loginMember.id}" />
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="name" name="name" th:value="${userName}" autofocus="autofocus" />
                         <label th:for="name">이름(실명)</label>
@@ -61,25 +61,22 @@
                     <div class="form-floating mb-3 mr-3" style="display:flex; flex-wrap:wrap">
                         <input type="text" class="form-control" id="email" th:value="${userEmail}" name="email" disabled="disabled" />
                         <label th:for="email">이메일 주소</label>
-                        <div class="form-floating" id="emailErr" style="text-align:left; color:red; font-size:12px;"></div>
                     </div>
                     <div class="form-floating mb-3 mr-3" style="display:flex; flex-wrap:wrap">
-                        <input type="password" class="form-control" id="changePwd" name="changePwd" />
-                        <label th:for="email">변경할 비밀번호(영문, 숫자 조합 8~20자 이내)</label>
-                        <div class="form-floating" id="emailErr1" style="text-align:left; color:red; font-size:12px;"></div>
+                        <input type="password" class="form-control" id="pwd" name="changePwd" />
+                        <div id="opwdCheck2" style="display:none; text-align:left; color:red; font-size:12px;">영문, 숫자를 조합하여 8~20자 이내로 입력해주세요.</div>
+                        <label th:for="pwd">변경할 비밀번호(영문, 숫자 조합 8~20자 이내)</label>
                     </div>
                     <div class="form-floating mb-3 mr-3" style="display:flex; flex-wrap:wrap">
-                        <input type="password" class="form-control" id="changePwdCk" name="changePwdCk" />
-                        <label th:for="email">변경할 비밀번호 확인</label>
-                        <div class="form-floating" id="emailErr2" style="text-align:left; color:red; font-size:12px;"></div>
+                        <input type="password" class="form-control" id="pwdCheck" name="changePwdCk" />
+                        <div id="opwdCheck1" style="display:none; text-align:left; color:red; font-size:12px;">비밀번호가 일치하지 않습니다.</div>
+                        <label th:for="pwdCheck">변경할 비밀번호 확인</label>
                     </div>
-
-
                     <div class="form-floating" align="left" style="font-size: 12px;";>
                         <ul style="list-style: none; padding: 0px; margin: 20px 0px 20px 0px; border-radius: 7px; border: 1px solid #dee2e6;">
                             <li class="oAgree-li">
                                 <div>
-                                    <input type="checkbox" class="oAgree" name="agree" checked="checked" disabled="disabled">
+                                    <input type="checkbox" class="oAgree" name="agree" checked="checked" disabled="disabled" />
                                     <span class="mustch">[필수] </span>만14세 이상입니다.
                                 </div>
                             </li>
@@ -109,14 +106,14 @@
                             </li>
                             <li class="oAgree-li">
                                 <div>
-                                    <input type="checkbox" class="oAgree" name="agree">
-                                    <span class="userch">[선택] </span>부동산정보 및 혜택 알리미
+                                    <input type="checkbox" class="oAgree" name="agree" th:checked="${loginMember.choice1}">
+                                    <span class="selch">[선택] </span>부동산정보 및 혜택 알리미
                                 </div>
                             </li>
                             <li class="oAgree-li">
                                 <div>
-                                    <input type="checkbox" class="oAgree" name="agree">
-                                    <span class="userfch">[선택] </span>이메일 수신 동의(광고, 이벤트 등)
+                                    <input type="checkbox" class="oAgree" name="agree" th:checked="${loginMember.choice1}">
+                                    <span class="selch">[선택] </span>이메일 수신 동의(광고, 이벤트 등)
                                 </div>
                             </li>
                         </ul>
@@ -128,7 +125,7 @@
                     </div>
                 </form>
 
-                <form th:action="@{/member/qDeleteMember/__${idx}__}" method="POST" onsubmit="return oDeleteCheck()">
+                <form th:action="@{/member/qDeleteMember/__${id}__}" method="POST" onsubmit="return oDeleteCheck()">
                     <input type="submit" class="btn btn-outline-secondary mt-5" id="oDeleteMemberBtn" value="회원탈퇴" />
                     <!-- alert 확인 누르면 비밀번호 입력받고 일치 시 탈퇴하는 기능 추가 -->
                 </form>

@@ -13,7 +13,7 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {   
 
     Optional<MemberEntity> findByEmail(String email);   // email로 회원 정보 조회
     @Override
-    Optional<MemberEntity> findById(Long idx);          // idx로 회원 정보 조회
+    Optional<MemberEntity> findById(Long id);          // id로 회원 정보 조회
 
     boolean existsByEmail(String email);    // exists : 해당 데이터가 DB에 존재하는지 확인하기 위해 사용
 
@@ -21,7 +21,7 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {   
     void delete(MemberEntity entity);   // 회원 탈퇴
 
     @Override
-    void deleteById(Long idx);
+    void deleteById(Long id);
 
     Optional<MemberEntity> findByNameAndTel(String name, String tel);   // email 찾기
 

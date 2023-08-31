@@ -27,18 +27,14 @@
     margin: 10px;
 }
 .mustch {
-    font-weight: 500;
-    color: #129DED;
+    font-weight: 600;
+    color: #26ABED;
 }
-.userch {
-    font-weight: 500;
-    color: gray;
+.selch {
+    font-weight: 600;
+    color: gray; !important
 }
 .oLabelColor {
     color: gray;
     font-size: 14px;
 }
-<!--        .fieldError {-->
-<!--            font-size: 10px;-->
-<!--            color: red;-->
-<!--        }-->

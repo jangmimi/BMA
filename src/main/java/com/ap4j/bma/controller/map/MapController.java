@@ -16,6 +16,7 @@ import java.util.Map;
 @Controller
 @Slf4j
 @RequestMapping("map")
+@SessionAttributes("userEmail")
 public class MapController {
 
     @Autowired
@@ -27,13 +28,18 @@ public class MapController {
         // 화면 좌표값에 따른 아파트 리스트
         List<AptDTO> aptList = aptServiceImpl.findAptListBounds(southWestLat, southWestLng, northEastLat, northEastLng);
         // 도로명에 따른 실거래가 리스트
-        List<AptRealTradeDTO> aptDetailDTOList = aptServiceImpl.findByRoadName(roadName);
+        List<AptRealTradeDTO> aptRealTradeDTOList = aptServiceImpl.findByRoadName(roadName);
         // 도로명, 구주소, 아파트명으로 검색시 해당 아파트 정보
-
+        AptDTO aptSearch = aptServiceImpl.findByKeyword(keyword);
 
         Map<String, Object> responseData = new HashMap<>();
         responseData.put("aptList", aptList);
-        responseData.put("aptDetailDTOList", aptDetailDTOList);
+        responseData.put("aptRealTradeDTOList", aptRealTradeDTOList);
+
+        // 검색했을때만 aptSearch 객체를 전송한다.
+        if(aptSearch != null) {
+            responseData.put("aptSearch", aptSearch);
+        }
 
         return ResponseEntity.ok(responseData);
     }

@@ -17,7 +17,7 @@ public interface AptRepository extends JpaRepository<AptEntity, Long> {
     List<AptEntity> findAptListBounds(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng);
 
     /** 키워드 검색 아파트 불러오기 */
-    @Query("SELECT a FROM AptEntity a WHERE a.roadName = ?1 or a.complexName = ?1")
+    @Query("SELECT a FROM AptEntity a WHERE replace(a.roadName, ' ', '') = ?1 or replace(a.apartmentName, ' ', '') = ?1")
     AptEntity findByKeyword(String keyword);
 
 }

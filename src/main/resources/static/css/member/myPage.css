@@ -93,11 +93,11 @@
    margin: 10px;
 }
 .mustch {
-   font-weight: 500;
-   color: #129DED;
+   font-weight: 600;
+   color: #26ABED;
 }
-.userch {
-   font-weight: 500;
+.selch {
+   font-weight: 600;
    color: gray;
 }
 
