@@ -3,7 +3,7 @@ package com.ap4j.bma.batch;
 import com.ap4j.bma.model.entity.apt.AptBatchDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.batch.item.*;
+import org.springframework.batch.item.ItemWriter;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 

@@ -1,6 +1,7 @@
 package com.ap4j.bma.controller.member;
 // pjm - use m o p q
 // controller -q | model -m | html -o | etc.. -p
+
 import com.ap4j.bma.config.PasswordEncoderConfig;
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
@@ -11,7 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.*;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Optional;
 
