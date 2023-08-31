@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
@@ -260,9 +261,17 @@ public class MemberServiceImpl implements MemberService {
 		return null;
 	}
 
-	/** 회원 탈퇴 id 기준 */
-	public void deleteMemberById(Long id) {
-		memberRepository.deleteById(id);
+	/** 회원 탈퇴 - member_leave : true 변경 */
+	public boolean leaveMember(Long id) {
+		Optional<MemberEntity> leaveMember = Optional.ofNullable(findMemberById(id));
+
+		if(leaveMember.isPresent()) {
+			MemberEntity member = leaveMember.get();
+			member.setMember_leave(true);
+			memberRepository.save(member);
+			return true;
+		}
+		return false;
 	}
 
 	/** 회원 한명 찾기 id 기준 */
@@ -278,20 +287,12 @@ public class MemberServiceImpl implements MemberService {
 	public MemberEntity updateMember(Long id, MemberDTO memberDTO) {
 		log.info("서비스 updateMember() 실행");
 		log.info("updatedMember : " + memberDTO);
-		log.info("비밀번호 변경 : " + memberDTO.getPwd());
-		log.info("setChoice1 : " + memberDTO.getChoice1());
-		log.info("setChoice2 : " + memberDTO.getChoice2());
 
 		Optional<MemberEntity> member = memberRepository.findById(id);
 
 		if(memberDTO.getPwd() != null) {	// 비밀번호 변경 값이 있을 경우
+			log.info("비밀번호 변경 : " + memberDTO.getPwd());
 			memberDTO.setPwd(pwdConfig.passwordEncoder().encode(memberDTO.getPwd()));
-		}
-		if(memberDTO.getChoice1() != null) {
-			memberDTO.setChoice1(memberDTO.getChoice1());
-		}
-		if(memberDTO.getChoice2() != null) {
-			memberDTO.setChoice2(memberDTO.getChoice2());
 		}
 
 		log.info("조회된 member : " + member);
@@ -306,7 +307,7 @@ public class MemberServiceImpl implements MemberService {
 			return null;
 		}
 	}
-
+	
 	/** email 찾기(이름 연락처로) */
 	@Override
 	public Optional<MemberEntity> findByNameAndTel(String name, String tel) {
@@ -319,7 +320,13 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepository.findByEmailAndTel(email, tel);
 	}
 
-	/** 회원가입 유효성 검사 */
+}
+
+//	/** 회원 탈퇴 id 기준 */
+//	public void leaveMemberById(Long id) {
+//		memberRepository.deleteById(id);
+//	}
+//	/** 회원가입 유효성 검사 */
 //	@Override
 //	public Map<String, String> validateHandler(Errors errors) {
 //		Map<String, String> validatorResult = new HashMap<>();
@@ -336,4 +343,4 @@ public class MemberServiceImpl implements MemberService {
 //	@Transactional // 트랜잭션 처리하기
 //	public void addSomething(String something) {
 //	}
-}
+

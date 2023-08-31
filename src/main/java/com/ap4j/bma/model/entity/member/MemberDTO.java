@@ -39,7 +39,7 @@ public class MemberDTO {	// 회원가입 폼 입력 정보 담는 DTO
 		this.email = email;
 		this.name = name;
 		this.nickname = nickname;
-		this.pwd = pwd;
+		if(pwd != null) { this.pwd = pwd; }
 		this.tel = tel;
 		this.root = root;
 		this.choice1 = choice1;
@@ -53,14 +53,11 @@ public class MemberDTO {	// 회원가입 폼 입력 정보 담는 DTO
 		memberEntity.setNickname(this.nickname);
 		memberEntity.setName(this.name);
 		memberEntity.setTel(this.tel);
+		memberEntity.setPwd(this.pwd);
 		memberEntity.setChoice1(this.choice1);
 		memberEntity.setChoice2(this.choice2);
-//		memberEntity.setPwd(this.pwd);
-//		memberEntity.setPwd(pwdConfig.);	// 비밀번호 암호화 필요하면 추가
 	}
 }
-
-
 
 /*
 @Component

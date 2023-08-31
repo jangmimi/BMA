@@ -61,10 +61,10 @@ public class MemberController {
 //        log.info("login thumbnail_image_url : " + userInfo.get("thumbnail_image_url"));
 
         boolean emailCheck = qMemberService.existsByEmail((String) userInfo.get("email"));  // DB내 이메일 존재 여부 체크
+        MemberDTO kloginMember = new MemberDTO();
 
         if(emailCheck) {
             log.info("존재하는 이메일입니다. 로그인을 진행합니다.");    // 이미 가입된 계정이면 로그인 진행
-            MemberDTO kloginMember = new MemberDTO();
             kloginMember.setEmail((String) userInfo.get("email"));
             kloginMember.setName((String) userInfo.get("name"));
             kloginMember.setNickname((String) userInfo.get("nickname"));
@@ -73,52 +73,41 @@ public class MemberController {
 
             kloginMember.toEntity();
 
-            session.setAttribute("userEmail",  kloginMember.getEmail());
-            session.setAttribute("userName",  kloginMember.getName());
-            model.addAttribute("userEmail", kloginMember.getEmail());
-            model.addAttribute("userName",kloginMember.getName());
             model.addAttribute("loginMember",kloginMember);
             log.info("loginMember : " + kloginMember.toString());
 
-            return "userView/oMyPage";
+            return "redirect:/";
 
         } else {
-            MemberDTO memberDTO = new MemberDTO();
-            memberDTO.setEmail((String) userInfo.get("email"));
-            memberDTO.setName((String) userInfo.get("name"));
-            memberDTO.setNickname((String) userInfo.get("nickname"));
-            memberDTO.setTel((String) userInfo.get("phone_number"));
-            memberDTO.setRoot(2);
-            MemberEntity memberEntity = memberDTO.toEntity();
+            kloginMember.setEmail((String) userInfo.get("email"));
+            kloginMember.setName((String) userInfo.get("name"));
+            kloginMember.setNickname((String) userInfo.get("nickname"));
+            kloginMember.setTel((String) userInfo.get("phone_number"));
+            kloginMember.setRoot(2);
+            MemberEntity memberEntity = kloginMember.toEntity();
             //memberDTO.setPwd(pwdConfig.passwordEncoder().encode((String) userInfo.get("email")));   // 암호화는 이메일 암호화로
             qMemberService.joinBasic(memberEntity);   // 카카오정보로 회원가입 실행
 
-            if(userInfo.get("email") != null) {
-                session.setAttribute("userEmail", userInfo.get("email"));
-                session.setAttribute("userName", userInfo.get("nickname"));
-                session.setAttribute("accessToken", accessToken);
-            }
-            model.addAttribute("userEmail", userInfo.get("email"));
-            model.addAttribute("userName", userInfo.get("nickname"));
+//            if(userInfo.get("email") != null) {
+//                session.setAttribute("userEmail", userInfo.get("email"));
+//                session.setAttribute("userName", userInfo.get("nickname"));
+//                session.setAttribute("accessToken", accessToken);
+//            }
+//            model.addAttribute("userEmail", userInfo.get("email"));
+//            model.addAttribute("userName", userInfo.get("nickname"));
+            model.addAttribute("loginMember", kloginMember);
         }
-        return "userView/oMyPage";
+        return "redirect:/";
     }
 
     /** 로그아웃 */
     @RequestMapping("/qLogout")
-    public String qLogout(HttpSession session, SessionStatus sessionStatus) {
+    public String qLogout(SessionStatus sessionStatus) {
         log.info("MemberController - qLogout() 실행");
 //        token 재사용으로 콘솔에 400에러가 확인되어 주석 처리(정확한 원인 파악 필요)
 //        qMemberServiceImpl.kakaoLogout((String)session.getAttribute("accessToken"));
-//        session.removeAttribute("accessToken");
-//            session.removeAttribute("userEmail");
-//            session.removeAttribute("userName");
-//            session.removeAttribute("loginMember");
-//        session.invalidate();
         sessionStatus.setComplete();
-
         log.info("--- 로그아웃 후 ---");
-
         return "redirect:/";
     }
 
@@ -130,7 +119,7 @@ public class MemberController {
         log.info("memberDTO : " + memberDTO);
 
         MemberDTO loginMember = qMemberService.login(memberDTO);
-        if(loginMember != null) {
+        if(loginMember != null && !loginMember.getMember_leave()) {
             session.setAttribute("errorMsg", null);
             log.info(loginMember.toString());
             log.info("로그인 성공");
@@ -151,11 +140,6 @@ public class MemberController {
                 cookie.setMaxAge(0);
                 response.addCookie(cookie);
             }
-//            session.setAttribute("userEmail",  loginMember.getEmail());
-//            session.setAttribute("userName",  loginMember.getName());
-//            model.addAttribute("userEmail", loginMember.getEmail());
-//            model.addAttribute("userName",loginMember.getName());
-
             return "redirect:/";
 
         } else {
@@ -265,11 +249,6 @@ public class MemberController {
         MemberDTO loginMember = (MemberDTO) session.getAttribute("loginMember");
         log.info("qMyPage에서 loginMember 세션 확인 : " + loginMember.toString());
 
-//        session.setAttribute("id", loginMember.getId());
-//        model.addAttribute("id", loginMember.getId());
-//        model.addAttribute("userEmail",session.getAttribute("userEmail"));
-//        model.addAttribute("userName",session.getAttribute("userName"));
-//        model.addAttribute("loginMember",session.getAttribute("loginMember"));
         return "userView/oMyPage";
     }
 
@@ -277,45 +256,37 @@ public class MemberController {
     @GetMapping("/qMyInfoUpdate")
     public String qMyInfoUpdate(HttpSession session, Model model) {
         log.info("MemberController - qMyInfoUpdate() 실행");
-//        String userEmail = (String) session.getAttribute("userEmail");
-//        log.info("로그인 멤버 session : " + loginm);
-//        log.info("로그인중인 userEmail : " + loginMember.getId());
+
         MemberDTO loginMember = (MemberDTO) session.getAttribute("loginMember");
         log.info("qMyPage에서 loginMember 세션 확인 : " + loginMember.toString());
 
-//        MemberEntity findMember = qMemberService.findMemberById(id);
-//        model.addAttribute("userEmail",findMember.getEmail());
-//        model.addAttribute("userName", findMember.getName());
-//        model.addAttribute("id",findMember.getId());
-//        model.addAttribute("nickname", findMember.getNickname());
-//        model.addAttribute("tel", findMember.getTel());
-//        log.info("로그인중인 findMember : " + findMember);
         return "userView/oMyInfoUpdate";
     }
 
     /** 내정보 수정하기 */
     @PostMapping("/qUpdateMember/{id}")
-    public String qUpdate(@PathVariable(required = false) Long id,
-                          @ModelAttribute MemberDTO updatedMember, Model model, HttpSession session) {
+    public String qUpdate(@ModelAttribute MemberDTO updatedMember, Model model, HttpSession session) {
         log.info("MemberController - qUpdate() 실행");
+        log.info("updatedMember : " + updatedMember);
 
-        qMemberService.updateMember(id, updatedMember);
+        Long id =  ((MemberDTO) session.getAttribute("loginMember")).getId();
 
-        log.info("회원정보 수정 완료 (수정 후) : " + updatedMember);
-        session.setAttribute("userName", updatedMember.getName());
+        MemberEntity memberEntity = qMemberService.updateMember(id, updatedMember);
+        model.addAttribute("loginMember", memberEntity.toDTO());   // 수정 객체 지정
+        log.info("회원정보 수정 완료 (수정 후) : " + memberEntity);
 
-        model.addAttribute("member", updatedMember);
-        model.addAttribute("userName", updatedMember.getName());
-        model.addAttribute("userEmail", updatedMember.getEmail());
         return "redirect:/member/qMyPage";
     }
 
     /** 기본 회원탈퇴 */   // sns는 별도 처리 해줘야 함
-    @PostMapping("/qDeleteMember/{id}")
-    public String deleteMember(@PathVariable(required = false) Long id, HttpSession session) {
-        log.info("MemberController - deleteMember() 실행");
-        qMemberService.deleteMemberById(id);  // id 기준으로 회원탈퇴 처리
-        session.invalidate();                   // 회원탈퇴 후 세션 전체 삭제
+    @PostMapping("/qLeaveMember/{id}")
+    public String leaveMember(HttpSession session, SessionStatus sessionStatus) {
+        log.info("MemberController - qLeaveMember() 실행");
+
+        Long id =  ((MemberDTO) session.getAttribute("loginMember")).getId();
+        qMemberService.leaveMember(id);
+        sessionStatus.setComplete();          // 회원탈퇴 후 세션 전체삭제
+
         return "redirect:/";
     }
 
