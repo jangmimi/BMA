@@ -6,116 +6,48 @@
 <head>
     <meta charset="UTF-8">
     <title>게시글 상세 페이지</title>
+    <link rel="stylesheet" th:href="@{/css/community/communityView.css}">
 </head>
-
-<style>
-
-    a{
-    float:right;
-    }
-
-    .layout{
-    margin-top:50px;
-    }
-
-    table{
-    border-collapse: collapse;
-    border: gray;
-
-    }
-
-    .viewtable-inner{
-     border-top : 3px solid #26A9E0;
-    }
-
-    .prenext-tb{
-    width:80%;
-    margin: auto;
-    margin-top: 40px;
-    text-align : center;
-    height:100px;
-    }
-
-    table th {
-        background: #ececec;
-   }
-
-     .viewtable-inner{
-        width:80%;
-        margin: auto;
-        }
-
-    .prev{
-    float: left;
-    }
-
-    .next{
-    float: right;
-    }
-
-    button{
-    background:#26A9E0;
-    border: #26A9E0;
-    color:ffffff;
-    }
-
-    .content-box{
-    height:400px;
-    }
-
-    .k-center{
-    text-align: center;
-    height : 35px;
-    }
-</style>
 
 <body layout:fragment="content">
 
 <div class="layout">
     <div class="viewtable-outer">
-        <table border="1" class="viewtable-inner">
+        <table class="viewtable-inner">
             <tr>
-                <th colspan="6"><p th:text = "${board.title}">제목입니다.</p></th>
-            </tr>
+                <th colspan="6"><p th:text = "${article.title}">제목</p></th>
             <tr>
                 <th>작성자</th>
-                <td class= "k-center">윤지현</td>
+                <td class= "k-center" th:text="${article.author}">작성자</td>
                 <th>작성일</th>
-                <td class= "k-center">2023-08-23</td>
+                <td class= "k-center" th:text="${#temporals.format(article.createdAt, 'yyyy-MM-dd')}">yyyy-mm-dd</td>
                 <th>조회수</th>
-                <td class= "k-center">100</td>
+                <td class= "k-center" th:text= "${article.view}" >조회수</td>
             </tr>
             <tr>
-                <td colspan="6" class="content-box"><p th:text = "${board.content}">
-                    내용이 들어갈 부분입니다.<br>
-                    내용이 들어갈 부분입니다.<br>
-                    내용이 들어갈 부분입니다.<br>
-                    내용이 들어갈 부분입니다.<br>
+                <td colspan="6" class="content-box"><p class="content" th:text="${article.content}">
+                    내용
                 </p></td>
             </tr>
             <tr>
                 <td colspan="6">
-                    <a th:href= "@{/board/delete(id=${board.id})}">삭제</a>
-                    <a th:href= "@{/board/modify/{id}(id=${board.id})}">수정</a>
+                    <button class="del-mod"><a th:href="@{/community/list}">목록</a></button>
+                    <button class="del-mod"><a th:href="@{/community/delete(id=${article.id})}">삭제</a></button>
+                    <button class="del-mod"><a th:href="@{/community/modify/{id}(id=${article.id})}">수정</a></button>
                 </td>
             </tr>
         </table>
+
+        <div id = "pre-next">
+            <a th:if="${prevArticle != null}" th:href="@{/community/view?id={id}(id=${prevArticle.id})}">
+                <button class="pre-next">이전글</button>
+            </a>
+            <a th:if="${nextArticle != null}" th:href="@{/community/view?id={id}(id=${nextArticle.id})}">
+                <button class="pre-next">다음글</button>
+            </a>
+        </div>
+
     </div>
-
-    <div class="prenext">
-        <table border="1" class="prenext-tb">
-            <tr>
-                <td>이전글</td>
-            </tr>
-            <tr>
-                <td>다음글</td>
-            </tr>
-        </table>
-    </div>
-
-<!-- <button class="prev">이전글</button>
-<button class="next">다음글</button> -->
-
 </div>
 </body>
 </html>

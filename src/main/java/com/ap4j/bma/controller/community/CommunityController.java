@@ -1,90 +1,127 @@
 package com.ap4j.bma.controller.community;
 
-import com.ap4j.bma.model.entity.board.BoardVO;
-import com.ap4j.bma.service.board.BoardService;
+import com.ap4j.bma.model.entity.community.CommunityEntity;
+import com.ap4j.bma.service.community.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.data.domain.Pageable;
+//import java.util.List;
 
 @Controller
 public class CommunityController {
-
     @Autowired
-    private BoardService boardService;
+    private CommunityService communityService;
 
-    @GetMapping("/board/write")
-    public  String boardWriteForm(){
+    //커뮤니티 리스트 출력 + 검색 기능
+    @GetMapping("/community/list")
+    public String communityList(Model model, @RequestParam(name = "page", defaultValue = "1") int page) {
+        int pageSize = 10; // 한 페이지당 보여줄 게시글 개수
+        Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by("id").descending());
+        Page<CommunityEntity> communityPage = communityService.getCommunityPage(pageable);
 
-        return "board/freeBoard/boardWrite";
-    }
-    @PostMapping("/board/writepro")
-    public String boardWritePro(BoardVO board, Model model , MultipartFile file) throws Exception{
+        model.addAttribute("list", communityPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", communityPage.getTotalPages());
 
-        boardService.boardWrite(board, file);
-        model.addAttribute("message","글 작성이 완료되었습니다.");
-        model.addAttribute("searchUrl", "list");
+        Long totalCommunityCount = communityService.updateTotalCommunityCount();
+        model.addAttribute("totalCommunityCount", totalCommunityCount); // 총 게시글 개수 추가
 
-        return "board/freeBoard/message";
-    }
-
-    @GetMapping("/board/list")
-    public  String boardList(Model model , @PageableDefault(page = 0, size =10, sort ="id", direction = Sort.Direction.DESC) Pageable pageable){
-
-        Page<BoardVO> list = boardService.boardList(pageable);
-
-        int nowPage = list.getPageable().getPageNumber();
-        int startPage = nowPage - 4;
-        int endPage = nowPage + 5;
-        model.addAttribute("List", boardService.boardList(pageable));
-
-        return "board/freeBoard/boardList";
+        return "community/communityList";
     }
 
-    @GetMapping("/board/view") //localhost:8082/board/view?id=1...
-    public String boardView(Model model , Integer id){
+    //커뮤니티 리스트 검색 결과 페이지
+    @GetMapping("/community/list/search")
+    public String communitySearchList(Model model,
+                                      @RequestParam(name = "page", defaultValue = "1") int page,
+                                      @RequestParam(value = "keyword", required = false) String keyword) {
+        int pageSize = 10; // 한 페이지당 보여줄 게시글 개수
+        Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by("id").descending()); //내림차순 정렬, 최근 등록된 게시물 순
 
-        model.addAttribute("board" , boardService.boardView(id));
-        return "board/freeBoard/boardView";
+        Page<CommunityEntity> communityPage;
+
+        if (keyword != null && !keyword.isEmpty()) {
+            communityPage = communityService.searchByTitle(keyword, page, pageSize);
+            model.addAttribute("searchKeyword", keyword);
+        } else {
+            // 검색어가 없을 경우 전체 리스트를 가져오도록 수정
+            communityPage = communityService.getCommunityPage(pageable);
+        }
+
+        model.addAttribute("list", communityPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", communityPage.getTotalPages());
+
+        return "community/communitySearchList";
     }
 
-    @GetMapping("/board/delete")
-    public String boardDelete(Integer id){
+    //글작성
+    @GetMapping("/community/write")
+    public String communityWriteForm() {
 
-        boardService.boardDelete(id);
-
-        return "redirect:/board/list";
+        return "community/communityWrite";
     }
 
-    @GetMapping("/board/modify/{id}")
-    public String boardModify(@PathVariable("id") Integer id,
-                              Model model){
+    //글 작성 DB저장
+    @PostMapping("/community/write")
+    public String communityWrite(@ModelAttribute CommunityEntity communityEntity, Model model) {
+        communityService.saveCommunity(communityEntity);
 
-        model.addAttribute("board", boardService.boardView(id));
-        return "board/freeBoard/boardModify";
+        model.addAttribute("message", "글 등록이 완료되었습니다.");
+        model.addAttribute("searchUrl", "/community/list");
+
+        return "community/message";
+
     }
 
-    @PostMapping("/board/update/{id}")
-    public String boardUpdate(@PathVariable("id") Integer id, BoardVO board, Model model , MultipartFile file) throws Exception{
 
-        BoardVO boardTemp = boardService.boardView(id);
-        boardTemp.setTitle(board.getTitle());
-        boardTemp.setContent(board.getContent());
+    //글 상세 보기
+    @GetMapping("/community/view")
+    public String communityView(Model model, Integer id) {
 
-        model.addAttribute("message","글 수정이 완료되었습니다.");
-        model.addAttribute("searchUrl", "/board/list");
+        model.addAttribute("article", communityService.communityView(id));
+        model.addAttribute("prevArticle",  communityService.getPreArticle(id));
+        model.addAttribute("nextArticle",  communityService.getNextArticle(id));
+        return "community/communityView";
+    }
 
-        boardService.boardWrite(boardTemp, file);
 
-        return "board/freeBoard/message";
+    //게시글 삭제
+    @GetMapping("/community/delete")
+    public String communityDelete(Integer id) {
+
+        communityService.communityDelete(id);
+
+        return "redirect:/community/list";
+    }
+
+
+    //게시글 업로드
+    @GetMapping("/community/modify/{id}")
+    public String communityModify(@PathVariable("id") Integer id, Model model) {
+
+        model.addAttribute("update", communityService.communityView(id));
+        return "community/communityModify";
+    }
+
+    @PostMapping("/community/update/{id}")
+    public String communityUpdate(@PathVariable("id") Integer id, CommunityEntity communityEntity, Model model) throws Exception {
+
+        CommunityEntity communityTemp = communityService.communityView(id);
+        communityTemp.setTitle(communityEntity.getTitle());
+        communityTemp.setContent(communityEntity.getContent());
+
+        communityService.saveCommunity(communityTemp);
+
+        model.addAttribute("message", "글 수정이 완료되었습니다.");
+        model.addAttribute("searchUrl", "/community/list");
+
+        return "community/message";
 
     }
 }

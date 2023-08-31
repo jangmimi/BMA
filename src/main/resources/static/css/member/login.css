@@ -1,0 +1,38 @@
+.n-header-list {
+    margin: 16px 0px;
+    padding: 0px 0px 0px 40px;
+}
+.form-floating { width: 350px; }
+.form-check {
+    width: 350px;
+   <!-- display: flex; justify-content: right;
+    부트스트랩 충돌-인라인 태그로-->
+}
+#oInner-container {
+    width: 400px;
+    height: 700px;
+}
+#oLoginTitle {
+    padding: 20px 50px;
+    margin: 0px;
+}
+.oLabelColor {
+    color: gray;
+    font-size: 14px;
+}
+#oSaveIdContainer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    margin: 18px 0px 18px 0px;
+}
+.oErrorMsg {
+    color: red;
+    font-weight: 600;
+    font-size: 13px;
+    margin: 20px
+}
+
+/*#oLoginBtn, #oJoinBtn { height: 48px; }*/
+/*
+#oSaveId { margin-right: 5px; }*/

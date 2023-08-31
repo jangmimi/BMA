@@ -19,8 +19,13 @@
 
 
 	<th:block th:replace="~{fragments/header :: headerFragment}"></th:block>
-    <th:block layout:fragment="content">
-	</th:block>
+
+    <th:block layout:fragment="content"></th:block>
+
+	<div class="sticky-chat-modal">
+		<th:block th:replace="~{fragments/chat :: chatModalFragment}"></th:block>
+	</div>
+
 	<th:block th:replace="~{fragments/footer :: tFooter}"></th:block>
 
 

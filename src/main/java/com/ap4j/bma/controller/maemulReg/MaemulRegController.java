@@ -1,7 +1,5 @@
 package com.ap4j.bma.controller.maemulReg;
 
-import com.ap4j.bma.service.board.BoardService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 

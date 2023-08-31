@@ -1,0 +1,136 @@
+.n-header-list {
+    margin: 16px 0px;
+    padding: 0px 0px 0px 40px;
+}
+.o-lnb {
+    min-width: 1000px;
+    height: 50px;
+    background-color: #ededed;
+}
+#o-container { height: auto; }
+.o-wrapper {
+    position: relative;
+    display: block;
+    margin-left: 205px;
+}
+.o-lnb-list {
+    font-family: 'Noto Sans KR', sans-serif;
+    height: 50px;
+    float: left;
+    display: flex;
+    padding-left: 20px;
+    line-height: 1;
+    list-style: none;
+    margin: 0;
+/*    padding: 0;*/
+}
+.o-lnb-item {
+    position: relative;
+    display: inline-flex;
+    margin-right: 15px;
+    align-items: center;
+}
+.o-lnb-item a {
+    font-weight: bold;
+    color: #7790ad;
+    font-size: 13px;
+    text-decoration-line: none;
+}
+.oInfo-top {
+    padding: 30px 0;
+}
+.oMaemulCnt {
+    background-color: #999999;
+    width: 150px;
+    height: 100px;
+    border: 1px solid gray;
+}
+.oMaemulLink {
+    font-weight: 700;
+    border: none;
+    background-color: white;
+    font-size: 18px;
+}
+#oInterestMaemul {
+    color: #25AAE1;
+}
+#oRecentMaemul {
+    color: #999999;
+}
+.oInfo-top {
+    margin-left: 40px;
+    margin-right: 40px;
+}
+.oInfo-top-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+/*oMyInfoUpdate css*/
+.form-floating {
+   width: 350px;
+}
+#oJoinBtn-container {
+   display: flex;
+   justify-content: space-evenly;
+}
+#oInner-container-join {
+   width: 400px;
+   height: auto;
+}
+#oJoinTitle {
+   padding: 20px 50px;
+   margin: 0px;
+}
+#btnEmailCheck {
+   width: 90px;
+   margin-left: 6px;
+}
+.oAgree {
+   margin-right: 5px;
+}
+.oAgree-li {
+   margin: 10px;
+}
+.mustch {
+   font-weight: 600;
+   color: #26ABED;
+}
+.selch {
+   font-weight: 600;
+   color: gray;
+}
+
+/* oFindMemberInfo */
+.form-floating {
+    width: 350px;
+}
+#oInner-container {
+    width: 400px;
+}
+.oFindTitle {
+    padding: 20px 25px;
+    margin: 0px;
+}
+.oLabelColor {
+    color: gray;
+    font-size: 14px;
+}
+.findSubtitle {
+    font-size: 15px;
+    text-align: left;
+    font-weight: bold;
+    margin-left: 20px;
+}
+.ofindResult {
+    display: block;
+    text-align: center;
+    text-weight: 700;
+    color: red;
+    font-size: 14px;
+    margin-top: 20px;
+}
+#oDeleteMemberBtn{
+    font-size: 13px;
+    margin-right: 280px;
+}

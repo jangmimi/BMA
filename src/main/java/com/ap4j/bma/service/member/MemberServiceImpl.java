@@ -1,5 +1,6 @@
 package com.ap4j.bma.service.member;
 
+import com.ap4j.bma.config.PasswordEncoderConfig;
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
 import com.ap4j.bma.model.repository.MemberRepository;
@@ -10,8 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Errors;
-import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -23,7 +23,6 @@ import java.net.URL;
 import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
@@ -33,6 +32,10 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private MemberRepository memberRepository;
 
+	@Autowired
+	private PasswordEncoderConfig pwdConfig;
+
+	/** 카카오 토큰 얻기 */
 	public String getAccessToken(String code) {
 		String accessToken = "";
 		String refreshToken = "";
@@ -79,61 +82,11 @@ public class MemberServiceImpl implements MemberService {
 			bw.close();
 		} catch (Exception e) {
 			log.info(e.toString());
-//			e.printStackTrace();
 		}
 		return accessToken;
 	}
-//	public MemberDTO getUserInfo2(String accessToken) {
-//		MemberDTO dto = new MemberDTO();
-//		String reqUrl = "https://kapi.kakao.com/v2/user/me";
-//		try {
-//			URL url = new URL(reqUrl);
-//			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-//			conn.setRequestMethod("POST");
-//			conn.setRequestProperty("Authorization", "Bearer " + accessToken);
-//			int responseCode = conn.getResponseCode();
-//			log.info("responseCode = " + responseCode);
-//
-//			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-//
-//			String line = "";
-//			String result = "";
-//
-//			while((line = br.readLine()) != null) {
-//				result += line;
-//			}
-//			log.info("response body = " + result);  // 필요한 것만 뽑아 낼 수 있는지 확인하기
-//
-//			JsonParser parser = new JsonParser();
-//			JsonElement element =  parser.parse(result);
-//
-//			JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
-//			JsonObject kakaoAccount = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
-//
-//			String nickname = properties.getAsJsonObject().get("nickname").getAsString();
-//			String email = kakaoAccount.getAsJsonObject().get("email").getAsString();
-//
-//			dto.setName("nickname");
-//			dto.setEmail("email");
-//
-//			MemberEntity tmp = memberRepository.findByEmail(email);
-//
-//			log.info("test tmp (email기준 회원정보있나~?) : " + tmp);
-//
-////			@Override
-////			public Long joinBasic(MemberEntity pMember) {
-////				memberRepository.save(pMember);
-////				return pMember.getId();
-////			}
-//
-//		} catch (Exception e) {
-//			log.info(e.toString());
-////			e.printStackTrace();
-//		}
-//
-//		return dto;
-//	}
 
+	/** 카카오 유저 정보 얻기 */
 	public HashMap<String, Object> getUserInfo(String accessToken) {
 		HashMap<String, Object> userInfo = new HashMap<String, Object>();
 		String reqUrl = "https://kapi.kakao.com/v2/user/me";
@@ -161,33 +114,30 @@ public class MemberServiceImpl implements MemberService {
 			JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
 			JsonObject kakaoAccount = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
 
-			String nickname = properties.getAsJsonObject().get("nickname").getAsString();
 			String email = kakaoAccount.getAsJsonObject().get("email").getAsString();
+			String name = kakaoAccount.getAsJsonObject().get("name").getAsString();
+			String nickname = properties.getAsJsonObject().get("nickname").getAsString();
+			String phone_number = kakaoAccount.getAsJsonObject().get("phone_number").getAsString();
+//			String profile_image_url = properties.getAsJsonObject().get("thumbnail_image_url").getAsString();
 
-			userInfo.put("nickname", nickname);
 			userInfo.put("email", email);
+			userInfo.put("name", name);
+			userInfo.put("nickname", nickname);
+			userInfo.put("phone_number", phone_number);
+//			userInfo.put("thumbnail_image_url", profile_image_url);
 
 			Optional<MemberEntity> tmp = memberRepository.findByEmail(email);
 			log.info("test tmp (email기준 회원정보있나~?) : " + tmp);
-//			tmp.setEmail(email);
-//			tmp.setName(nickname);
 			log.info("tmp : " + tmp.toString());
-
-//			@Override
-//			public Long joinBasic(MemberEntity pMember) {
-//				memberRepository.save(pMember);
-//				return pMember.getId();
-//			}
 
 		} catch (Exception e) {
 			log.info(e.toString());
-//			e.printStackTrace();
 		}
 
 		return userInfo;
 	}
 
-
+	/** 카카오 로그아웃 */
 	public void kakaoLogout(String accessToken) {
 		String reqURL = "https://kauth.kakao.com/oauth/logout";
 		try {
@@ -212,6 +162,7 @@ public class MemberServiceImpl implements MemberService {
 		}
 	}
 
+	/** 네이버 토큰 얻기 */
 	@Override
 	public String getAccessTokenNaver(String code) {
 		String accessToken = "";
@@ -259,46 +210,34 @@ public class MemberServiceImpl implements MemberService {
 			bw.close();
 		} catch (Exception e) {
 			log.info(e.toString());
-//			e.printStackTrace();
 		}
 		return accessToken;
 	}
+
+	/** 기본 회원가입 */
 	@Transactional
 	@Override
 	public Long joinBasic(MemberEntity pMember) {
 		log.info("서비스 joinBasic() 실행");
-//		validateDuplicateMember(pMember);    // 중복 회원 검증
 		memberRepository.save(pMember);
-		return pMember.getIdx();			// @GeneratedValue 로 id는 자동으로 값 저장
+		return pMember.getId();			// @GeneratedValue 로 id는 자동으로 값 저장
 	}
-	//			   validateDuplicateMember
-	/*private void validateDuplicateMember(Member member) {
-		List<Member> findMembers = memberRepository.findByName(member.getName());
-		//EXCEPTION
-		if(!findMembers.isEmpty()) {
-			throw new IllegalStateException("이미 존재하는 회원입니다.");
-		}
-	}*/
 
+	/** 중복회원 검증 */
 	@Override
 	public boolean existsByEmail(String email) {
 		log.info("서비스 existsByEmail() 실행");
 		return memberRepository.existsByEmail(email);
 	}
 
-//	public Long joinBasic(MemberEntity pMember) {
-////		validateDuplicateMember(pMember);    // 중복 회원 검증
-//
-//		memberRepository.save(pMember);
-//		return pMember.getId();
-//	}
-
+	/** 회원전체 조회 */
 	@Override
 	public List<MemberEntity> findMembers() {
 		log.info("서비스 findMember() 실행");
 		return memberRepository.findAll();
 	}
 
+	/** 기본 로그인 */
 	@Override
 	public MemberDTO login(MemberDTO memberDTO) {
 		log.info("서비스 login() 실행");
@@ -306,42 +245,89 @@ public class MemberServiceImpl implements MemberService {
 		if (findMember.isPresent()) {
 			log.info("로그인 시도하는 email DB에 존재!");
 			MemberEntity memberEntity = findMember.get();
-			if(memberEntity.getPwd().equals(memberDTO.getPwd())) {
+			if(pwdConfig.passwordEncoder().matches(memberDTO.getPwd(),memberEntity.getPwd())) {
 				log.info("id pw 모두 일치! 로그인 성공!");
-				// entity->dto로 변환
-				MemberDTO dto = new MemberDTO();
-				dto.setEmail(memberEntity.getEmail());
-//				dto.setName(memberEntity.getName());
-				dto.setPwd(memberEntity.getPwd());
+				MemberDTO dto = memberEntity.toDTO();
+				log.info("entity를 toDTO : " +  dto);
 				return dto;
-
-			} else { log.info("id일치, pw 불일치합니다."); }
+			} else {
+				log.info("id일치, pw 불일치합니다.");
+			}
 		} else {
 			log.info("존재하지 않는 회원입니다.");
 		}
-        return null;
-//        return memberRepository.findByEmail(memberDTO);
-    }
-//	@Override
-//	public MemberEntity login(String loginEmail) {
-//		log.info("서비스 loginByEmail() 실행");
-//		MemberEntity findMember = memberRepository.findByEmail(loginEmail);
-//
-//
-//        return memberRepository.findByEmail(loginEmail);
-//    }
-
-	@Override
-	public Map<String, String> validateHandler(Errors errors) {
-		Map<String, String> validatorResult = new HashMap<>();
-
-		for(FieldError error : errors.getFieldErrors()) {
-			String validKeyName = String .format("valid_%s", error.getField());
-			validatorResult.put(validKeyName, error.getDefaultMessage());
-		}
-		return validatorResult;
+		return null;
 	}
 
+	/** 회원 탈퇴 */
+	public void deleteMemberById(Long id) {
+		memberRepository.deleteById(id);
+	}
+
+	/** 회원 한명 찾기 */
+	public MemberEntity getMemberOne(String email) {
+		log.info("서비스 getMemberOne() 실행");
+		Optional<MemberEntity> findMember = memberRepository.findByEmail(email);
+		return findMember.orElse(null);
+	}
+
+	/** 회원 정보 수정 */
+	@Transactional
+	@Override
+	public MemberEntity updateMember(Long id, MemberDTO memberDTO) {
+		log.info("서비스 updateMember() 실행");
+		log.info("updatedMember : " + memberDTO);
+		log.info("비밀번호 변경 : " + memberDTO.getPwd());
+		log.info("setChoice1 : " + memberDTO.getChoice1());
+		log.info("setChoice2 : " + memberDTO.getChoice2());
+
+		if(memberDTO.getPwd() != null) {	// 비밀번호 변경 값이 있을 경우
+			memberDTO.setPwd(pwdConfig.passwordEncoder().encode(memberDTO.getPwd()));
+		}
+		if(memberDTO.getChoice1() != null) {
+			memberDTO.setChoice1(memberDTO.getChoice1());
+		}
+		if(memberDTO.getChoice2() != null) {
+			memberDTO.setChoice2(memberDTO.getChoice2());
+		}
+
+		Optional<MemberEntity> member = memberRepository.findById(id);
+		log.info("조회된 member : " + member);
+
+		if(member.isPresent()) {
+			MemberEntity memberEntity = member.get();
+			memberDTO.updateEntity(memberEntity);
+
+			log.info("수정된 정보 : " + memberEntity);
+			return memberRepository.save(memberEntity);
+		} else {
+			return null;
+		}
+	}
+
+	/** email 찾기(이름 연락처로) */
+	@Override
+	public Optional<MemberEntity> findByNameAndTel(String name, String tel) {
+		return memberRepository.findByNameAndTel(name, tel);
+	}
+
+	/** pwd 찾기(이메일 연락처로) */
+	@Override
+	public Optional<MemberEntity> findByEmailAndTel(String email, String tel) {
+		return memberRepository.findByEmailAndTel(email, tel);
+	}
+
+	/** 회원가입 유효성 검사 */
+//	@Override
+//	public Map<String, String> validateHandler(Errors errors) {
+//		Map<String, String> validatorResult = new HashMap<>();
+//
+//		for(FieldError error : errors.getFieldErrors()) {
+//			String validKeyName = String .format("valid_%s", error.getField());
+//			validatorResult.put(validKeyName, error.getDefaultMessage());
+//		}
+//		return validatorResult;
+//	}
 
 	// 아래는 예시 코드입니다.
 //	@Override
@@ -349,9 +335,3 @@ public class MemberServiceImpl implements MemberService {
 //	public void addSomething(String something) {
 //	}
 }
-
-// 카카오 로그아웃 작업중 (작업 완료 8/20)
-
-// response body ={"id":2959937821,"connected_at":"2023-08-11T13:03:35Z",
-// "properties":{"nickname":"박장미"},"kakao_account":{"profile_nickname_needs_agreement":false,"profile":{"nickname":"박장미"},
-// "has_email":true,"email_needs_agreement":false,"is_email_valid":true,"is_email_verified":true,"email":"rose6012@hanmail.net"}}

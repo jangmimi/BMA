@@ -5,7 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "apttest")
+@Table(name = "apartmentList")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -17,17 +17,22 @@ public class AptEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private String aptName;         // 아파트 이름
-    @Column
-    private String aptAddress;      // 아파트 주소
-    @Column
-    private String kaptCode;        // 아파트 코드
-    @Column
-    private String bjdCode;         // 법정동 코드
-    @Column
-    private Double latitude;        // 위도
-    @Column
-    private Double longitude;       // 경도
+    @Column(name = "road_name", nullable = false, length = 255)
+    private String roadName; // 도로명
+
+    @Column(name = "district", nullable = false, length = 255)
+    private String district; // 구주소
+
+    @Column(name = "address", nullable = false, length = 255)
+    private String address; // 번지
+
+    @Column(name = "apartment_name", nullable = false, length = 255)
+    private String apartmentName; // 아파트이름
+
+    @Column(name = "longitude", nullable = false, precision = 10, scale = 6)
+    private Double longitude; // 경도
+
+    @Column(name = "latitude", nullable = false, precision = 10, scale = 6)
+    private Double latitude; // 위도
 
 }

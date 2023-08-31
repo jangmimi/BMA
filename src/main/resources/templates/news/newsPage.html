@@ -1,25 +1,125 @@
+
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/layouts/include_footer_layout}">
 
 <head>
     <meta charset="UTF-8">
-    <title></title>
-    <!--여기에 적용하실 css 나 js 작성하시면 됩니다. 아래는 예시들 입니다. -->
+    <title>부동산뉴스</title>
+    <link rel="stylesheet" th:href="@{/css/newsPage.css}">
+    <script src="https://kit.fontawesome.com/5b1091f816.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" th:src="@{/js/news/newsPage.js}" defer ></script>
 
-    <!-- <link rel="stylesheet" th:href="@{/css/파일이름.css}"> -->
 
-    <!-- <script type="text/javascript" th:src="@{/js/search/search.js}"></script>-->
-     <script type="text/javascript" th:src="@{/js/news/newsPage.js}"></script>
 </head>
 <body layout:fragment="content">
-<div>
+<div class="news-header">
     <h1>부동산 뉴스</h1>
-    <input type="text" id="searchInput" placeholder="검색어 입력">
-    <button id="searchButton">검색</button>
-    <div id="results"></div>
+    <form id="search-form" action="/news/newsPage" method="get">
+        <div class="search-range">
+            <div class="news-search">
+                <input type="text" id="search-input" name="query" th:value="${searchQuery}">
+                <div class="r-icon-circle">
+                    <button id="search-button" type="submit">
+                        <i id="icon" class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="support-news" th:unless="${searchQuery == searchKeyword or searchKeyword == null}">
+                <i id="question" class="fa-solid fa-magnifying-glass"></i>
+                <label>
+                    <span th:text="${searchKeyword} + '(으)로 검색된 결과입니다.'"></span>
+                </label>
+            </div>
+        </div>
+    </form>
+    <div class="check">
+        <div class="result-range">
+            <div th:each="newsItem : ${newsList}">
+                <div class="news-result">
+                    <div>
+                        <a th:href="${newsItem.link}" th:text="${newsItem.title}" target="_blank"></a>
+                    </div>
+                    <div>
+                        <p th:text="${newsItem.description}"></p>
+                        <p th:text="${newsItem.pubDate}"></p>
+                    </div>
+                </div>
+            </div>
+            <div th:if="${total} == 0" id="noResult">
+                검색결과가 없습니다.
+            </div>
+        </div>
+        <div class="pagination">
+            <!-- 처음페이지, 이전 버튼 -->
+            <a th:if="${currentPage != 1}" th:href="@{/news/newsPage(query=${searchQuery}, page=${1}, start=${1})}">
+                <button type="button">&lt; 처음페이지 </button>
+            </a>
+            <a th:if="${currentPage > 1}" th:href="@{/news/newsPage(query=${searchQuery}, page=${currentPage - 1}, start=${(currentPage - 1) * 10 - 9})}">
+                <button type="button">&lt; 이전</button>
+            </a>
+            <!-- ******* -->
+
+            <!-- 페이지 번호 -->
+            <span th:if="${currentPage - 4 > 1}">
+                <a th:href="@{/news/newsPage(query=${searchQuery}, page=${1}, start=${1})}">1</a>&nbsp;&hellip;&nbsp;
+            </span>
+            <span th:if="${currentPage - 4 > 0}">
+                <a th:href="@{/news/newsPage(query=${searchQuery}, page=${currentPage - 4}, start=${(currentPage - 4) * 10 - 9})}"
+                    th:text="${currentPage - 4}"></a>&nbsp;
+            </span>
+            <span th:if="${currentPage - 3 > 0}">
+                <a th:href="@{/news/newsPage(query=${searchQuery}, page=${currentPage - 3}, start=${(currentPage - 3) * 10 - 9})}"
+                    th:text="${currentPage - 3}"></a>&nbsp;
+            </span>
+            <span th:if="${currentPage - 2 > 0}">
+                <a th:href="@{/news/newsPage(query=${searchQuery}, page=${currentPage - 2}, start=${(currentPage - 2) * 10 - 9})}"
+                    th:text="${currentPage - 2}"></a>&nbsp;
+            </span>
+            <span th:if="${currentPage - 1 > 0}">
+                <a th:href="@{/news/newsPage(query=${searchQuery}, page=${currentPage - 1}, start=${(currentPage - 1) * 10 - 9})}"
+                    th:text="${currentPage - 1}"></a>&nbsp;
+            </span>
+            <!-- ********* -->
+
+            <!--현재 페이지 -->
+            <span th:text="${currentPage}" class="nowPage"></span>&nbsp;
+            <!-- ********* -->
+
+            <!-- 페이지 번호 -->
+            <span th:if="${currentPage + 1 <= totalPages}">
+                <a th:href="@{/news/newsPage(query=${searchQuery}, page=${currentPage + 1}, start=${currentPage * 10 + 1})}"
+                    th:text="${currentPage + 1}"></a>&nbsp;
+            </span>
+            <span th:if="${currentPage + 2 <= totalPages}">
+                <a th:href="@{/news/newsPage(query=${searchQuery}, page=${currentPage + 2}, start=${currentPage * 10 + 11})}"
+                    th:text="${currentPage + 2}"></a>&nbsp;
+            </span>
+            <span th:if="${currentPage + 3 <= totalPages}">
+                <a th:href="@{/news/newsPage(query=${searchQuery}, page=${currentPage + 3}, start=${currentPage * 10 + 21})}"
+                    th:text="${currentPage + 3}"></a>&nbsp;
+            </span>
+            <span th:if="${currentPage + 4 <= totalPages}">
+                <a th:href="@{/news/newsPage(query=${searchQuery}, page=${currentPage + 4}, start=${currentPage * 10 + 31})}"
+                    th:text="${currentPage + 4}"></a>&nbsp;&hellip;&nbsp;
+            </span>
+            <span th:if="${currentPage + 4 <= totalPages}">
+                <a th:href="@{/news/newsPage(query=${searchQuery}, page=${totalPages}, start=${(totalPages - 1) * 10 + 1})}"
+                    th:text="${totalPages}"></a>
+            </span>
+            <!-- ********* -->
+
+            <!-- 마지막페이지, 다음 버튼 -->
+            <a th:if="${currentPage < totalPages}" th:href="@{/news/newsPage(query=${searchQuery}, page=${currentPage + 1}, start=${currentPage * 10 + 1})}">
+                <button type="button">다음 &gt;</button>
+            </a>
+            <a th:if="${currentPage < totalPages}" th:href="@{/news/newsPage(query=${searchQuery}, page=${totalPages}, start=${(totalPages - 1) * itemsPerPage + 1})}">
+                <button type="button">마지막페이지 &gt;</button>
+            </a>
+            <!-- ****** -->
+        </div>
+    </div>
 </div>
 </body>
 </html>

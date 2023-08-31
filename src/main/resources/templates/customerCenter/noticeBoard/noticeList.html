@@ -1,10 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layouts/include_footer_layout}">
+
 <head>
     <meta charset="UTF-8">
-    <title>공지글 목록</title>
+    <title>고객센터</title>
+    <link rel="stylesheet" th:href="@{/css/CC/noticelist.css}">
+    <link rel="stylesheet" th:href="@{/css/CC/CCBar.css}">
+
 </head>
-<body>
-공지
+<body layout:fragment="content">
+<div class = "layout">
+    <h1>고객센터</h1>
+
+    <div class="menubar">
+        <button type="button" class="menu" id="faq" onclick="location.href = '/faq/list'" >자주 묻는 질문</button>
+        <button type="button" class="menu" id="qna" onclick="location.href = '/qna'" >1:1 문의</button>
+        <button type="button" class="menu-c" id="notice" onclick="location.href = '/notice/list'" >공지사항</button>
+        <button type="button" class="menu" id="guide" onclick="location.href = '/guide'" >서비스 이용안내</button>
+    </div>
+    <table>
+        <tr>
+            <th class="b-q">분류</th>
+            <th class="b-t">제목</th>
+            <th class="b-n">날짜</th>
+        </tr>
+        <tr th:each="notice : ${notices}">
+            <td id = "category">[공지]</td>
+            <td><a th:href="@{/notice/view(id=${notice.id})}" th:text="${notice.title}"></a></td>
+            <td th:text="${notice.createdAt}"></td>
+        </tr>
+    </table>
+    </div>
 </body>
 </html>
