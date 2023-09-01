@@ -28,11 +28,11 @@ public class MemberEntity {
 	@Column
 	private int root;	// 가입 경로
 	@Column
-	private boolean choice1;	// 약관 동의 선택 여부
+	private Boolean choice1;	// 약관 동의 선택 여부
 	@Column
-	private boolean choice2;
+	private Boolean choice2;
 	@Column
-	private boolean member_leave;	// 회원 탈퇴 여부
+	private Boolean member_leave;	// 회원 탈퇴 여부
 
 
 	@Builder	// 빌더 패턴 적용

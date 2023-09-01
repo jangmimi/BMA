@@ -16,6 +16,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import javax.servlet.http.*;
 import java.lang.reflect.Member;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
@@ -51,16 +52,20 @@ public class MemberController {
         log.info("accessToken : " + accessToken);
 
         // 2번 인증코드로 토큰 전달
-//        MemberDTO userInfo = qMemberServiceImpl.getUserInfo2(accessToken);   // 사용자 정보 받음
         HashMap<String, Object> userInfo = qMemberService.getUserInfo(accessToken);   // 사용자 정보 받음
         log.info("login info : " + userInfo.toString());
         log.info("login userEmail : " + userInfo.get("email"));
         log.info("login userName : " + userInfo.get("name"));
         log.info("login userNickname : " + userInfo.get("nickname"));
         log.info("login userPhone_number : " + userInfo.get("phone_number"));
-//        log.info("login thumbnail_image_url : " + userInfo.get("thumbnail_image_url"));
+        log.info("login thumbnail_image : " + userInfo.get("thumbnail_image"));
+
+        String thumbnail_image = (String) userInfo.get("thumbnail_image");
+        log.info("저장한 thumbnail_image : " + thumbnail_image);
+        session.setAttribute("thumbnail_image", thumbnail_image);
 
         boolean emailCheck = qMemberService.existsByEmail((String) userInfo.get("email"));  // DB내 이메일 존재 여부 체크
+
         MemberDTO kloginMember = new MemberDTO();
 
         if(emailCheck) {
@@ -70,13 +75,12 @@ public class MemberController {
             kloginMember.setNickname((String) userInfo.get("nickname"));
             kloginMember.setTel((String) userInfo.get("phone_number"));
             kloginMember = qMemberService.login(kloginMember);
-
             kloginMember.toEntity();
 
             model.addAttribute("loginMember",kloginMember);
             log.info("loginMember : " + kloginMember.toString());
 
-            return "redirect:/";
+//            return "redirect:/";
 
         } else {
             kloginMember.setEmail((String) userInfo.get("email"));
@@ -85,16 +89,8 @@ public class MemberController {
             kloginMember.setTel((String) userInfo.get("phone_number"));
             kloginMember.setRoot(2);
             MemberEntity memberEntity = kloginMember.toEntity();
-            //memberDTO.setPwd(pwdConfig.passwordEncoder().encode((String) userInfo.get("email")));   // 암호화는 이메일 암호화로
+            //memberDTO.setPwd(pwdConfig.passwordEncoder().encode((String) userInfo.get("email")));
             qMemberService.joinBasic(memberEntity);   // 카카오정보로 회원가입 실행
-
-//            if(userInfo.get("email") != null) {
-//                session.setAttribute("userEmail", userInfo.get("email"));
-//                session.setAttribute("userName", userInfo.get("nickname"));
-//                session.setAttribute("accessToken", accessToken);
-//            }
-//            model.addAttribute("userEmail", userInfo.get("email"));
-//            model.addAttribute("userName", userInfo.get("nickname"));
             model.addAttribute("loginMember", kloginMember);
         }
         return "redirect:/";
@@ -102,11 +98,13 @@ public class MemberController {
 
     /** 로그아웃 */
     @RequestMapping("/qLogout")
-    public String qLogout(SessionStatus sessionStatus) {
+    public String qLogout(SessionStatus sessionStatus, HttpSession session) {
         log.info("MemberController - qLogout() 실행");
 //        token 재사용으로 콘솔에 400에러가 확인되어 주석 처리(정확한 원인 파악 필요)
 //        qMemberServiceImpl.kakaoLogout((String)session.getAttribute("accessToken"));
         sessionStatus.setComplete();
+        session.invalidate();
+
         log.info("--- 로그아웃 후 ---");
         return "redirect:/";
     }
@@ -129,7 +127,6 @@ public class MemberController {
 
             // 쿠키 설정
             if(oSaveId) {
-                log.info("쿠키 생성중");
                 Cookie cookie = new Cookie("rememberedEmail", loginMember.getEmail());
                 cookie.setMaxAge(30 * 24 * 60 * 60);    // 30일 동안 유지
                 cookie.setPath("/");                    // 모든 경로에 쿠키 설정
@@ -143,7 +140,7 @@ public class MemberController {
             return "redirect:/";
 
         } else {
-            session.setAttribute("errorMsg","이메일 또는 패스워드를 다시 확인해주세요.");
+             model.addAttribute("errorMsg","이메일 또는 패스워드를 다시 확인해주세요.");
             return "redirect:/member/qLoginForm";
         }
     }
@@ -245,8 +242,11 @@ public class MemberController {
     @RequestMapping("/qMyPage")
     public String qMyPage(HttpSession session, Model model) {
         log.info("MemberController - qMyPage() 실행");
-
+        String thumImg = (String) session.getAttribute("thumbnail_image");
+        model.addAttribute("thumbnail_image", thumImg);
         MemberDTO loginMember = (MemberDTO) session.getAttribute("loginMember");
+
+        model.addAttribute("root", loginMember.getRoot()==2 ? "카카오" : "기본회원");
         log.info("qMyPage에서 loginMember 세션 확인 : " + loginMember.toString());
 
         return "userView/oMyPage";
@@ -300,13 +300,23 @@ public class MemberController {
         return cnt;
     }
 
+    /** 닉네임 중복 체크 (js ajax 활용) */
+    @PostMapping("/qNicknameDuplicationCheck")
+    @ResponseBody
+    public int NicknameDuplicationCheck(@RequestParam("nickname") String nickname) {
+        int cnt = 0;
+        boolean nicknameCheck = qMemberService.existsByNickname(nickname);
+        cnt = nicknameCheck ? 1 : 0;
+        return cnt;
+    }
+
     /** 이메일/비밀번호 찾기 페이지 매핑 */
     @RequestMapping("/qFindMemberInfo")
     public String qFindMemberInfo() {
         return "userView/oFindMemberInfo";
     }
 
-    /** 이메일 찾기 */
+//    /** 이메일 찾기 */
     @PostMapping("/qFindEmail")
     public String qFindEmail(@RequestParam String name, @RequestParam String tel, Model model) {
         log.info("MemberController - qFindEmail() 실행");
@@ -320,16 +330,31 @@ public class MemberController {
             model.addAttribute("findEmailFailed", "일치하는 회원정보가 없습니다.");
         }
         return "userView/oFindMemberInfo";
-//        return "redirect:/member/qFindMemberInfo";
     }
+//    @PostMapping("/qFindEmailtest")
+//    @ResponseBody // JSON 형식의 응답을 반환하도록 설정
+//    public Map<String, Object> qFindEmail(@RequestParam String name, @RequestParam String tel) {
+//        log.info("MemberController - qFindEmail() 실행");
+//
+//        Map<String, Object> response = new HashMap<>();
+//        Optional<MemberEntity> find = qMemberService.findByNameAndTel(name, tel);
+//
+//        if (find.isPresent()) {
+//            log.info("이메일찾기 : " + find.get().getEmail());
+//            response.put("findEmail", find.get().getEmail());
+//        } else {
+//            response.put("findEmail", null); // 결과가 없는 경우 null로 설정
+//        }
+//
+//        return response;
+//    }
     // ajax로 변경
-    @PostMapping("/qFindEmailCheck")
-    @ResponseBody
-    public String qFindEmailCheck(@RequestParam String name, @RequestParam String tel) {
-        Optional<MemberEntity> find = qMemberService.findByNameAndTel(name, tel);
-        String findEmail = find.get().getEmail();
-        return findEmail;
-    }
+//    @PostMapping("/qFindEmailCheck")
+//    @ResponseBody
+//    public String qFindEmailCheck(@RequestParam String name, @RequestParam String tel) {
+//        Optional<MemberEntity> find = qMemberService.findByNameAndTel(name, tel);
+//        return find.map(MemberEntity::getEmail).orElse(null);
+//    }
 
     /** 비밀번혼 찾기 */
     @PostMapping("/qFindPwd")
