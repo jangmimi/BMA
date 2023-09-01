@@ -33,9 +33,18 @@
                 <div class="oInfo-top">
                     <div class="oInfo-top-wrapper">
                         <div class="oInfo-left">
-                            <input type="hidden" id="id" name="id" th:value="*{id}" />
-                            <span th:text="*{name}" ></span>님<br/>
-                            <span th:text="*{email}" style="font-weight:bold; font-size:13px"></span>
+                            <div class="oThumbnailImg">
+                                <img th:if="${thumbnail_image!=null}" th:src="${thumbnail_image}" alt="썸네일이미지">
+                                <img th:if="${thumbnail_image==null}" th:src="@{/img/defaultProfile.jpg}" width="110" alt="썸네일이미지">
+                            </div>
+                            <div class="oInfoMember">
+                                <div class="oInfoMemberContain">
+                                    <input type="hidden" id="id" name="id" th:value="*{id}" />
+                                    <span th:text="*{name}" id="oInfoMemberName"></span>님<br/>
+                                    <span th:text="${root}" id="oInfoMemberRoot"></span>
+                                </div>
+                                <span th:text="*{email}" id="oInfoMemberEmail"></span>
+                            </div>
                         </div>
                         <div class="oInfo-right">
                             <div>

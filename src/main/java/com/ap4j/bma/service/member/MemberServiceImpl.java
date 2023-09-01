@@ -118,17 +118,17 @@ public class MemberServiceImpl implements MemberService {
 			String name = kakaoAccount.getAsJsonObject().get("name").getAsString();
 			String nickname = properties.getAsJsonObject().get("nickname").getAsString();
 			String phone_number = kakaoAccount.getAsJsonObject().get("phone_number").getAsString();
-//			String profile_image_url = properties.getAsJsonObject().get("thumbnail_image_url").getAsString();
+			String thumbnail_image = properties.getAsJsonObject().get("thumbnail_image").getAsString();
 
 			userInfo.put("email", email);
 			userInfo.put("name", name);
 			userInfo.put("nickname", nickname);
 			userInfo.put("phone_number", phone_number);
-//			userInfo.put("thumbnail_image_url", profile_image_url);
+			userInfo.put("thumbnail_image", thumbnail_image);
 
-			Optional<MemberEntity> tmp = memberRepository.findByEmail(email);
-			log.info("test tmp (email기준 회원정보있나~?) : " + tmp);
-			log.info("tmp : " + tmp.toString());
+//			Optional<MemberEntity> tmp = memberRepository.findByEmail(email);
+//			log.info("test tmp (email기준 회원정보있나~?) : " + tmp);
+//			log.info("tmp : " + tmp.toString());
 
 		} catch (Exception e) {
 			log.info(e.toString());
@@ -223,11 +223,18 @@ public class MemberServiceImpl implements MemberService {
 		return pMember.getId();			// @GeneratedValue 로 id는 자동으로 값 저장
 	}
 
-	/** 중복회원 검증 */
+	/** 중복회원 체크 */
 	@Override
 	public boolean existsByEmail(String email) {
 		log.info("서비스 existsByEmail() 실행");
 		return memberRepository.existsByEmail(email);
+	}
+
+	/** 중복닉네임 체크 */
+	@Override
+	public boolean existsByNickname(String nickname) {
+		log.info("서비스 existsByNickname() 실행");
+		return memberRepository.existsByNickname(nickname);
 	}
 
 	/** 회원전체 조회 */
@@ -245,20 +252,30 @@ public class MemberServiceImpl implements MemberService {
 		if (findMember.isPresent()) {
 			log.info("로그인 시도하는 email DB에 존재!");
 			MemberEntity memberEntity = findMember.get();
-			if(pwdConfig.passwordEncoder().matches(memberDTO.getPwd(),memberEntity.getPwd())) {
-				log.info("id pw 모두 일치! 로그인 성공!");
-				log.info("entity : " +  memberEntity);
 
+			if(memberEntity.getRoot() == 2) {	// 카카오는 pwd 체크 없이 로그인 진행
 				MemberDTO dto = memberEntity.toDTO();
 				log.info("entity를 toDTO : " +  dto);
 				return dto;
+
 			} else {
-				log.info("id일치, pw 불일치합니다.");
+				if(pwdConfig.passwordEncoder().matches(memberDTO.getPwd(),memberEntity.getPwd())) {
+					log.info("id pw 모두 일치! 로그인 성공!");
+					log.info("entity : " +  memberEntity);
+
+					MemberDTO dto = memberEntity.toDTO();
+					log.info("entity를 toDTO : " +  dto);
+					return dto;
+
+				} else {
+					log.info("id일치, pw 불일치합니다.");
+					return null;
+				}
 			}
 		} else {
 			log.info("존재하지 않는 회원입니다.");
+			return null;
 		}
-		return null;
 	}
 
 	/** 회원 탈퇴 - member_leave : true 변경 */
@@ -289,20 +306,23 @@ public class MemberServiceImpl implements MemberService {
 		log.info("updatedMember : " + memberDTO);
 
 		Optional<MemberEntity> member = memberRepository.findById(id);
-
-		if(memberDTO.getPwd() != null) {	// 비밀번호 변경 값이 있을 경우
-			log.info("비밀번호 변경 : " + memberDTO.getPwd());
-			memberDTO.setPwd(pwdConfig.passwordEncoder().encode(memberDTO.getPwd()));
-		}
-
 		log.info("조회된 member : " + member);
 
+
 		if(member.isPresent()) {
+			if(memberDTO.getPwd() != null && !memberDTO.getPwd().isEmpty()) {	// 비밀번호 변경 값이 있을 경우
+				log.info("비밀번호 변경 값 있네! 암호화 전 : " + memberDTO.getPwd());
+				memberDTO.setPwd(pwdConfig.passwordEncoder().encode(memberDTO.getPwd()));
+			}
+			memberDTO.setChoice1(Boolean.TRUE.equals(memberDTO.getChoice1()));	// 이 처리 안해주면 언체크시 null됨
+			memberDTO.setChoice2(Boolean.TRUE.equals(memberDTO.getChoice2()));
+
 			MemberEntity memberEntity = member.get();
 			memberDTO.updateEntity(memberEntity);
 
 			log.info("수정된 정보 : " + memberEntity);
 			return memberRepository.save(memberEntity);
+
 		} else {
 			return null;
 		}

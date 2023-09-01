@@ -12,7 +12,6 @@ public interface MemberService {
 	public String getAccessToken(String code);
 
 	public HashMap<String, Object> getUserInfo(String accessToken);	// HashMap -> MemberDTO로 변경 예정
-//	public MemberDTO getUserInfo2(String accessToken);
 
 	public void kakaoLogout(String accessToken);
 
@@ -21,6 +20,8 @@ public interface MemberService {
 	public Long joinBasic(MemberEntity pMember);
 
 	public boolean existsByEmail(String email);
+
+	public boolean existsByNickname(String nickname);
 
 	public List<MemberEntity> findMembers();
 

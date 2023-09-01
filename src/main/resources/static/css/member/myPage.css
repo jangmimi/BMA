@@ -46,9 +46,30 @@
 .oInfo-top-wrapper {
     display: flex;
     justify-content: space-between;
+    margin: 30px 0px;
 }
 .oInfo-left {
-   display: block; font-weight:bold; font-size:20px;
+   display: flex;
+}
+.oInfoMember {
+    margin-left: 30px;
+}
+.oInfoMemberContain {
+   font-size: 22px;
+   font-weight:bold;
+   display: flex;
+   align-items: center;
+}
+#oInfoMemberRoot {
+    font-size: 14px;
+    border: 1px solid #26abed;
+    color: #26abed;
+    margin-left: 10px;
+    padding: 0px 4px;
+}
+#oInfoMemberEmail {
+   font-size: 15px;
+   font-weight:bold;
 }
 .oMaemulCnt {
     text-align: center;
@@ -128,7 +149,7 @@
    width: 90px;
    margin-left: 6px;
 }
-.oAgree {
+.oAgree,.oMustAgree {
    margin-right: 5px;
 }
 .oAgree-li {
@@ -175,4 +196,7 @@
 #oDeleteMemberBtn{
     font-size: 13px;
     margin-right: 280px;
+}
+.oThumbnailImg img{
+    border-radius: 50%;
 }
