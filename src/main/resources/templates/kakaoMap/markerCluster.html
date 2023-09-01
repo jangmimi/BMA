@@ -9,6 +9,8 @@
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"/>
     <link rel="stylesheet" href="/css/mapMain.css">
     <script src="https://d3js.org/d3.v7.min.js"></script><!--D3.js라이브러리-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js"></script>
+
     <script type="text/javascript" th:src="@{/js/mapMain/mapMain.js}" defer></script>
 </head>
 
@@ -169,7 +171,65 @@
                                         data-bs-target="#staticBackdrop2">
                                     <img src="/img/mapDetailAndAPTList/aTalkTalkImg.png" style="width: 36px;">
                                 </button>
-                                <div class="modal fade" id="exampleModalToggle2" aria-hidden="true"
+                                <div th:if="${loginMember==null}" class="modal fade" id="exampleModalToggle2" aria-hidden="true"
+                                     aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header aSaveToMine">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                                    로그인이
+                                                    필요한 서비스 입니다</h1>
+
+                                            </div>
+                                            <div class="modal-body LogInNeed">
+                                                <div class="aListOfEasyLogIn">
+                                                    <div style="display: flex;
+    width: 281px;">
+                                                        <button class="aEasyLogInBtn">
+                                                            <img class="aEasyLogInImg"
+                                                                 src="/images/kakao_login_medium_narrow.png"
+                                                                 alt="kakaoLogin" height="44"/>
+                                                        </button>
+                                                        <button class="aEasyLogInBtn">
+                                                            <img class="aEasyLogInImg"
+                                                                 src="/images/btnG_완성형.png"
+                                                                 alt="naverLogin" height="44"
+                                                                 width="176px"/>
+                                                            <!-- 카카오 로그인과 높이만 맞춤 -->
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="LogInNeedContents">
+                                                    <p class="emailLogInPartTitle">이메일 직접 로그인</p>
+                                                    <hr>
+                                                    <div class="emailLogInPartInput">
+                                                        <input class="LogInInputs" type="text"
+                                                               placeholder="이메일 주소">
+                                                        <input class="LogInInputs" type="text"
+                                                               placeholder="비밀번호(8자리 이상)">
+                                                    </div>
+                                                    <div class="aFindSaveEmail">
+                                                        <div class="aFindSaveEmailContents">
+                                                            <div>
+                                                                <input type="checkbox">
+                                                                <label>이메일저장</label>
+                                                            </div>
+                                                            <p>이메일/비밀번호찾기</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <button class="aLogInBtn">로그인</button>
+                                                <div class="aJoinBtnsList">
+                                                    <button class="aJoinBtns">개인회원 가입</button>
+                                                    <button class="aJoinBtns">중개회원 가입</button>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div th:unless="${loginMember==null}"  class="modal fade aTalkTalkWrite" id="exampleModalToggle2" aria-hidden="true"
                                      aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
@@ -436,13 +496,12 @@
                                                                                     <span class="ninkname">
                                                                                         IlIIlIIllIl
                                                                                     </span>
-                                                                                <span class="id">mFaeec4</span>
                                                                                 <div class="acontent">
                                                                                     보강완료했다는데 그래도 보존등기 늦어지나요? 다들 언제
                                                                                     예상하나요?
                                                                                 </div>
                                                                                 <div class="auploadDate">
-                                                                                    21일 전
+                                                                                    2023.08.31
 
                                                                                 </div>
                                                                             </div>
@@ -461,14 +520,11 @@
                                                                                                                     class="arepNickname">
                                                                                                                 JAIMIE
                                                                                                             </span>
-                                                                                                        <span
-                                                                                                                class="arepId">
-                                                                                                                lIXK9ef
-                                                                                                            </span>
+
                                                                                                     </div>
                                                                                                     <span
                                                                                                             class="auploadDate">
-                                                                                                            18일 전
+                                                                                    2023.08.31
                                                                                                         </span>
                                                                                                 </div>
                                                                                                 <div
@@ -513,13 +569,12 @@
                                                                                     <span class="ninkname">
                                                                                         IlIIlIIllIl
                                                                                     </span>
-                                                                                <span class="id">mFaeec4</span>
                                                                                 <div class="acontent">
                                                                                     보강완료했다는데 그래도 보존등기 늦어지나요? 다들 언제
                                                                                     예상하나요?
                                                                                 </div>
                                                                                 <div class="auploadDate">
-                                                                                    21일 전
+                                                                                    2023.08.31
 
                                                                                 </div>
                                                                             </div>
@@ -538,14 +593,11 @@
                                                                                                                     class="arepNickname">
                                                                                                                 JAIMIE
                                                                                                             </span>
-                                                                                                        <span
-                                                                                                                class="arepId">
-                                                                                                                lIXK9ef
-                                                                                                            </span>
+
                                                                                                     </div>
                                                                                                     <span
                                                                                                             class="auploadDate">
-                                                                                                            18일 전
+                                                                                                            2023.08.31
                                                                                                         </span>
                                                                                                 </div>
                                                                                                 <div
@@ -598,24 +650,11 @@
                                 </div>
                 </li>
 
-                <li class="list-group-item 2" style="height:100%;">
-                    <!--                    <nav id="navbar-example2" class="navbar bg-body-tertiary mb-3">-->
-                    <!--                        <ul id="nav-pills" class="nav nav-pills">-->
-                    <!--                            <li class="nav-item">-->
-                    <!--                                <a class="nav-link" href="#" style="width: 40px;">실거래</a>-->
-                    <!--                            </li>-->
-                    <!--                            <li class="nav-item">-->
-                    <!--                                <a class="nav-link" href="#scrollspyHeading5" style="width: 40px;">매물</a>-->
-                    <!--                            </li>-->
-                    <!--                            <li class="nav-item">-->
-
-                    <!--                            </li>-->
-                    <!--                    </nav>-->
-
-                    <div style="height:92%;">
+                <li class="list-group-item 2" style="height:100%;padding: 0px;">
+                    <div style="height:84%;">
                         <div data-bs-spy="scroll" data-bs-target="#navbar-example2"
-                             data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true"
-                             class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
+                             data-bs-root-margin="0px 0px 0px" data-bs-smooth-scroll="true"
+                             class="scrollspy-example bg-body-tertiary rounded-2" tabindex="0" style="height:104%;">
 
                             <div class="sideContents">
                                 <div h4 id="scrollspyHeading6">
@@ -624,7 +663,8 @@
                                     </div>
                                     <div class="aed-map-det">
                                         <h2 class="map-info">
-                                            <div class="title" style="letter-spacing:1px;">서울특별시 양재 그린카스테이션</div> <!-- DB 내용 저장되는 곳 -->
+                                            <div class="title" style="letter-spacing:1px;">서울특별시 양재 그린카스테이션</div>
+                                            <!-- DB 내용 저장되는 곳 -->
                                             <div style="
                                                 margin-top:5px;
                                             height: 43px;
@@ -634,216 +674,20 @@
                                                 <div style="display:flex;">
                                                     <img style="opacity: 38%; width: 16px;height: 20px;"
                                                          src="https://e7.pngegg.com/pngimages/580/370/png-clipart-location-computer-icons-icon-geographical-position-location-geolocation-thumbnail.png">
-                                                    <div class="address" ></div>
+                                                    <div class="address"></div>
                                                     <!-- DB 내용 저장되는 곳 -->
                                                 </div>
                                                 <div style="display: flex;align-items: center;">
-                                                    <img style="width: 20px;height: 14px;" src="/img/mapDetailAndAPTList/aOldAddress.png">
-                                                    <div class="roadName" style="font-size: 15px;"></div> <!-- DB 내용 저장되는 곳 -->
+                                                    <img style="width: 20px;height: 14px;"
+                                                         src="/img/mapDetailAndAPTList/aOldAddress.png">
+                                                    <div class="roadName" style="font-size: 15px;"></div>
+                                                    <!-- DB 내용 저장되는 곳 -->
                                                 </div>
                                             </div>
                                         </h2>
-
-                                        <div class="mes-util">
-
-                                            <a href="#" class="mes-utils">
-
-                                                <!-- 이메일 중복 체크-->
-                                                <script>
-                                                    function checkEmail() {
-                                                    let email = $('#email').val();
-
-                                                    $.ajax({
-                                                    url: '/member/qEmailCheck',
-                                                    type: 'get',
-                                                    data: {email:email},
-                                                    success:function(cnt) {
-                                                    if(cnt == 0 && email.length != 0) {
-                                                    $('#aSaveToMine').attr('class','etcBtn');
-                                                    .show('#aSaveToMine');
-                                                    } else if(cnt != 0) {
-                                                    $('#btnEmailCheck').attr('class','etcBtn');
-                                                    $('#btnEmailCheck').val("사용 불가");
-                                                    alert('이미 존재하는 이메일입니다.\n이메일을 다시 입력해주세요.');
-                                                    //    $('#email').val('');
-                                                    } else if(email.length == 0) {
-                                                    alert('이메일을 입력해주세요.');
-                                                    }
-                                                    },
-                                                    error:function() {
-                                                    alert("에러입니다.");
-                                                    }
-                                                    });
-                                                    };
-                                                </script>
-                                                <button class="etcBtn" type="button" data-bs-toggle="modal"
-                                                        data-bs-target="#aSaveToMine" id="aSaveBtn">
-                                                    <img style="width: 25px;"
-                                                         src="https://e7.pngegg.com/pngimages/522/320/png-clipart-bookmark-computer-icons-bookmark-miscellaneous-ribbon-thumbnail.png">
-                                                </button>
-                                                <span class="tx">저장</span>
-                                                <!-- Modal -->
-                                                <div th:if="${userEmail==null}" class="modal fade" id="aSaveToMine"
-                                                     tabindex="-1" aria-labelledby="exampleModalLabel"
-                                                     aria-hidden="true">
-
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header aSaveToMine">
-                                                                <h1 class="modal-title fs-5" id="exampleModalLabel">
-                                                                    로그인이
-                                                                    필요한 서비스 입니다</h1>
-
-                                                            </div>
-                                                            <div class="modal-body LogInNeed">
-                                                                <div class="aListOfEasyLogIn">
-                                                                    <div style="display: flex;
-    width: 281px;">
-                                                                        <button class="aEasyLogInBtn">
-                                                                            <img class="aEasyLogInImg"
-                                                                                 src="/images/kakao_login_medium_narrow.png"
-                                                                                 alt="kakaoLogin" height="44"/>
-                                                                        </button>
-                                                                        <button class="aEasyLogInBtn">
-                                                                            <img class="aEasyLogInImg"
-                                                                                 src="/images/btnG_완성형.png"
-                                                                                 alt="naverLogin" height="44"
-                                                                                 width="176px"/>
-                                                                            <!-- 카카오 로그인과 높이만 맞춤 -->
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="LogInNeedContents">
-                                                                    <p class="emailLogInPartTitle">이메일 직접 로그인</p>
-                                                                    <hr>
-                                                                    <div class="emailLogInPartInput">
-                                                                        <input class="LogInInputs" type="text"
-                                                                               placeholder="이메일 주소">
-                                                                        <input class="LogInInputs" type="text"
-                                                                               placeholder="비밀번호(8자리 이상)">
-                                                                    </div>
-                                                                    <div class="aFindSaveEmail">
-                                                                        <div class="aFindSaveEmailContents">
-                                                                            <div>
-                                                                                <input type="checkbox">
-                                                                                <label>이메일저장</label>
-                                                                            </div>
-                                                                            <p>이메일/비밀번호찾기</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <button class="aLogInBtn">로그인</button>
-                                                                <div class="aJoinBtnsList">
-                                                                    <button class="aJoinBtns">개인회원 가입</button>
-                                                                    <button class="aJoinBtns">중개회원 가입</button>
-                                                                </div>
-
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- Modal -->
-                                                <div th:if="${userEmail!=null}" class="modal fade" id="aSaveToMine"
-                                                     tabindex="-1" aria-labelledby="exampleModalLabel"
-                                                     aria-hidden="true">
-
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header aSaveToMine">
-                                                                <h1 class="modal-title fs-5" id="exampleModalLabel">
-                                                                    로그인이
-                                                                    필요한 서비스 입니다</h1>
-
-                                                            </div>
-                                                            <div class="modal-body LogInNeed">
-                                                                <div class="aListOfEasyLogIn">
-                                                                    <div style="display: flex;
-    width: 281px;">
-                                                                        <button class="aEasyLogInBtn">
-                                                                            <img class="aEasyLogInImg"
-                                                                                 src="/images/kakao_login_medium_narrow.png"
-                                                                                 alt="kakaoLogin" height="44"/>
-                                                                        </button>
-                                                                        <button class="aEasyLogInBtn">
-                                                                            <img class="aEasyLogInImg"
-                                                                                 src="/images/btnG_완성형.png"
-                                                                                 alt="naverLogin" height="44"
-                                                                                 width="176px"/>
-                                                                            <!-- 카카오 로그인과 높이만 맞춤 -->
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="LogInNeedContents">
-                                                                    <p class="emailLogInPartTitle">이메일 직접 로그인</p>
-                                                                    <hr>
-                                                                    <div class="emailLogInPartInput">
-                                                                        <input class="LogInInputs" type="text"
-                                                                               placeholder="이메일 주소">
-                                                                        <input class="LogInInputs" type="text"
-                                                                               placeholder="비밀번호(8자리 이상)">
-                                                                    </div>
-                                                                    <div class="aFindSaveEmail">
-                                                                        <div class="aFindSaveEmailContents">
-                                                                            <div>
-                                                                                <input type="checkbox">
-                                                                                <label>이메일저장</label>
-                                                                            </div>
-                                                                            <p>이메일/비밀번호찾기</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <button class="aLogInBtn">로그인</button>
-                                                                <div class="aJoinBtnsList">
-                                                                    <button class="aJoinBtns">개인회원 가입</button>
-                                                                    <button class="aJoinBtns">중개회원 가입</button>
-                                                                </div>
-
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                            <a href="#" class="mes-utils">
-                                                <button class="etcBtn" type="button" data-bs-toggle="modal"
-                                                        data-bs-target="#staticBackdrop"><img
-                                                        style="opacity: 83%;width: 26px;"
-                                                        src="https://w7.pngwing.com/pngs/555/826/png-transparent-bell-notification-notification-icon-essential-icon.png">
-                                                </button>
-                                                <span class="tx">알림</span>
-                                            </a>
-                                            <a href="#" class="mes-utils">
-                                                <button class="etcBtn"><img style="opacity: 38%;width: 19px;"
-                                                                            src="https://e7.pngegg.com/pngimages/580/370/png-clipart-location-computer-icons-icon-geographical-position-location-geolocation-thumbnail.png">
-                                                </button>
-                                                <span class="tx">길찾기</span>
-                                            </a>
-                                            <a href="#" class="mes-utils">
-                                                <button class="etcBtn" type="button" data-bs-toggle="modal"
-                                                        data-bs-target="#shareBtn"><img
-                                                        style="opacity: 38%;width: 23px;"
-                                                        src="https://cdn.icon-icons.com/icons2/2368/PNG/512/share_icon_143700.png">
-                                                </button>
-                                                <span class="tx">공유</span>
-                                            </a>
-
-                                        </div>
-                                        <div class="memo hide">
-                                            <div class="view"></div>
-                                        </div>
-                                        <div class="save-i hide">
-                                            <a href="#" class="folder btnRpSaveAddressInfo">
-                                                <div class="sa-i-won size-medium star" data-sa-color="#fff"></div>
-                                                <span class="folder-name"></span>
-                                                <span class="etctxt"></span>
-                                            </a>
-                                            <a href="#"
-                                               class="btns icon-ytp01 icon-pen-fff-12_12 folder-modify btnRpSaveAddressModify"><span
-                                                    class="txt"></span></a>
-                                        </div>
                                     </div>
                                 </div>
+                                <hr style="border: 13px solid lightgray;border-top: 1px solid;">
                                 <div class="aed-sil-deal-price">
                                     <div class="main-titlearea">
                                         <div class="left">
@@ -854,33 +698,8 @@
 
 
                                     <div class="aRealPriceAndGraph">
-                                        <!-- 가격 -->
-                                        <div class="price-area">
-                                            <span class="txt">1억 8,500만</span>
-                                        </div>
-                                        <div class="graph-area" id="realpricePercentChart">
-<!--                                            <svg width="80" height="50">-->
-<!--                                                <g font-size="13px" transform="translate(5,5)">-->
-<!--                                                    <g class="x axis" transform="translate(0,40)">-->
-<!--                                                        <path class="domain" d="M0,0V0H55V0" stroke="#B7D2E7"-->
-<!--                                                              fill="none" shape-rendering="crispEdges"></path>-->
-<!--                                                    </g>-->
-<!--                                                    <g class="y axis">-->
-<!--                                                        <path class="domain" d="M0,0H0V40H0" stroke="#B7D2E7"-->
-<!--                                                              fill="none" shape-rendering="crispEdges"></path>-->
-<!--                                                    </g>-->
-<!--                                                    <g class="lines">-->
-<!--                                                        <path class="line"-->
-<!--                                                              d="M0,16.340102564102565L17.5,16.340102564102565L35,13.333333333333336"-->
-<!--                                                              stroke="#129EED" stroke-width="1.5px" fill="none"-->
-<!--                                                              stroke-dasharray="35.25642395019531 35.25642395019531"-->
-<!--                                                              stroke-dashoffset="0"></path>-->
-<!--                                                        <text class="percent_t" font-size="12px"-->
-<!--                                                              transform="translate(43,25)" fill="#129EED">+13%-->
-<!--                                                        </text>-->
-<!--                                                    </g>-->
-<!--                                                </g>-->
-<!--                                            </svg>-->
+                                        <div>
+                                            <canvas id="myChart"></canvas>
                                         </div>
                                     </div>
 
@@ -909,9 +728,354 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                        </div>
-                                    </div>
+<!--                                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"-->
+<!--                                                                data-bs-target="#collapseOne" aria-expanded="true"-->
+<!--                                                                aria-controls="collapseOne" id="aload-more-button"style="-->
+<!--                                                            width: 88%;-->
+<!--                                                        " onclick="createLoadMoreButton()">-->
+<!--                                                            <h3 class="title">실거래이력 더보기</h3>-->
+
+<!--                                                        </button>-->
                                     <!--// 거래이력 -->
+
+
+
+
+                                    <div class="aed-toji" style="
+                                                                margin-bottom: 40px;
+                                                                    margin-top: 32px;                                                        "
+                                    >
+                                        <div class="main-titlearea" style="
+                                                                        display: flex;
+                                                                        align-items: center;
+                                                                        justify-content: space-between;
+                                                                    ">
+                                            <div class="left">
+                                                <h3 class="title" style="
+                                                        margin-bottom: 0px;
+                                                    ">
+                                                    토지정보
+                                                </h3>
+                                                <span class="la" id="landSetTitle2" style="
+                                                        display: flex;
+                                                        /* text-align: center; */
+                                                        width: 58px;
+                                                        font-size: 13px;
+                                                        border: 1px solid #26abed66;
+                                                        margin-left: 9px;
+                                                        border-radius: 10px;
+                                                        height: 17px;
+                                                        align-items: center;
+                                                        justify-content: center;
+                                                        color: #616161;
+                                                    ">
+                                                    대표지번
+                                                </span>
+                                            </div>
+                                            <div class="right aToolTipAll">
+                                                <div class="aGroundToolTip" style="/* display: none; */margin-left:5px">
+                                                    <img src="https://www.pngarts.com/files/4/Question-Mark-Transparent-Image.png"
+                                                         style="
+                                                                                                                                        width: 100%;
+                                                                                                                                    ">
+                                                    <div class="aToolTip" style="/* top:30px; *//* right:0px; */">
+                                                        <span class="txt">
+                                                            건물이 있으면 대표지번에서 볼 수 있습니다.
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="aed-main-box" style="
+    margin-top: 13px;
+">
+                                            <div class="con-readme-btn-area" style="display: flex;
+                                                 justify-content: flex-start;">
+                                                <!-- Button trigger modal -->
+                                                <button type="button" class="btns btn-default-gray01 btn-term-readme"
+                                                        data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                    용어설명보기
+                                                </button>
+
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="exampleModal" tabindex="-1"
+                                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                                                    용어설명보기
+                                                                </h1>
+                                                                <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Close">
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body" style="padding:26px;">
+                                                                    <div class="tc">
+                                                                        <strong class="title">고저</strong>
+                                                                        <div class="table_area tbl_style01 tbl_bang_wi">
+                                                                            <div>
+                                                                                <table style="width:100%">
+                                                                                    <colgroup>
+                                                                                        <col style="width:130px">
+                                                                                        <col style="width:">
+                                                                                    </colgroup>
+                                                                                    <thead class="YongExplainthead">
+                                                                                    <tr>
+                                                                                        <th class="txt_c bl_none"><span class="t_tit">지형시세 : 고저</span></th>
+                                                                                        <th class="txt_c bl_none"><span class="t_tit">내용</span></th>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                    <tr>
+                                                                                        <td class="txt_c bl_none"><span class="th_bold">저지</span></td>
+                                                                                        <td class="txt_c">간선도로 또는 주위의 지형지세보다 현저히 낮은 지대의 토지</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="txt_c bl_none"><span class="th_bold">평지</span></td>
+                                                                                        <td class="txt_c">간선도로 또는 주위의 지형지세와 높이가 비슷하거나 경사도가 미미한 토지</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="txt_c bl_none"><span class="th_bold">완경사</span></td>
+                                                                                        <td class="txt_c">간선도로 또는 주위의 지형지세보다 높고 경사도가 15°이하인 지대의 토지</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="txt_c bl_none"><span class="th_bold">급경사</span></td>
+                                                                                        <td class="txt_c">간선도로 또는 주위의 지형지세보다 높고 경사도가 15°를 초과하는 지대의 토지</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="txt_c bl_none"><span class="th_bold">고지</span></td>
+                                                                                        <td class="txt_c">간선도로 또는 주위의 지형지세보다 현저히 높은 지대의 토지</td>
+                                                                                    </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="tc">
+                                                                        <strong class="title">형상</strong>
+                                                                        <div class="table_area tbl_style01 tbl_bang_wi">
+                                                                            <div>
+                                                                                <table style="width:100%">
+                                                                                    <colgroup>
+                                                                                        <col style="width:130px">
+                                                                                        <col style="width:">
+                                                                                    </colgroup>
+                                                                                    <thead class="YongExplainthead">
+                                                                                    <tr>
+                                                                                        <th class="txt_c bl_none"><span class="t_tit">지형시세 : 형상</span></th>
+                                                                                        <th class="txt_c bl_none"><span class="t_tit">내용</span></th>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                    <tr>
+                                                                                        <td class="txt_c bl_none"><span class="th_bold">정방형</span></td>
+                                                                                        <td class="txt_c">정사각형 모양의 토지로서 양변의 길이 비율이 1:1.1 내외인 토지</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="txt_c bl_none"><span class="th_bold">가장형</span></td>
+                                                                                        <td class="txt_c">장방형의 토지로 넓은 면이 도로에 접하거나 도로를 향하고 있는 토지</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="txt_c bl_none"><span class="th_bold">세장형</span></td>
+                                                                                        <td class="txt_c">장방형의 토지로 좁은 면이 도로에 접하거나 도로를 향하고 있는 토지</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="txt_c bl_none"><span class="th_bold">사다리</span></td>
+                                                                                        <td class="txt_c">사다리꼴(변형사다리형을 포함)모양의 토지</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="txt_c bl_none"><span class="th_bold">삼각형</span></td>
+                                                                                        <td class="txt_c">삼각형의 토지로 그 한 면이 도로에 접하거나 도로를 향하고 있는 토지</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="txt_c bl_none"><span class="th_bold">역삼각</span></td>
+                                                                                        <td class="txt_c">삼각형의 토지(역사다리형을 포함)로 꼭지점 부분이 도로에 접하거나 도로를 향하고 있는 토지</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="txt_c bl_none"><span class="th_bold">부정형</span></td>
+                                                                                        <td class="txt_c">다각형 또는 부정형의 토지</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="txt_c bl_none"><span class="th_bold">자루형</span></td>
+                                                                                        <td class="txt_c">출입구가 자루처럼 좁게 생긴 토지</td>
+                                                                                    </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="tc">
+                                                                        <strong class="title">방위</strong>
+                                                                        <div class="table_area tbl_style01 tbl_bang_wi clfix"style="
+                                                                                                                        display: flex;
+                                                                                                                        justify-content: space-between;
+                                                                                                                    ">
+                                                                            <div>
+                                                                                <table style="width:100%">
+                                                                                    <colgroup>
+                                                                                        <col style="width:130px">
+                                                                                    </colgroup>
+                                                                                    <thead class="YongExplainthead">
+                                                                                    <tr>
+                                                                                        <th class="txt_c bl_none"><span class="t_tit">지형시세 : 방위</span></th>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                    <tr>
+                                                                                        <td class="txt_c bl_none"><span class="th_bold">남향</span></td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="txt_c bl_none"><span class="th_bold">남동향</span></td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="txt_c bl_none"><span class="th_bold">남서향</span></td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="txt_c bl_none"><span class="th_bold">동향</span></td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="txt_c bl_none"><span class="th_bold">서향</span></td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="txt_c bl_none"><span class="th_bold">북향</span></td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="txt_c bl_none"><span class="th_bold">북동향</span></td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="txt_c bl_none"><span class="th_bold">북서향</span></td>
+                                                                                    </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                            <div>
+                                                                                <table style="width:100%">
+                                                                                    <colgroup>
+                                                                                        <col style="width:50%">
+                                                                                        <col style="width:">
+                                                                                    </colgroup>
+                                                                                    <thead class="YongExplainthead">
+                                                                                    <tr>
+                                                                                        <th class="txt_c bl_none" colspan="2"><span class="t_tit">접면도로 및 경사방향</span></th>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                    <tr>
+                                                                                        <td class="txt_c bl_none"><img src="https://www.bdsplanet.com/images/img_toji01.png" alt="" class="mCS_img_loaded"></td>
+                                                                                        <td class="txt_c"><img src="https://www.bdsplanet.com/images/img_toji02.png" alt="" class="mCS_img_loaded"></td>
+                                                                                    </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="tc">
+                                                                        <strong class="title">도로조건</strong>
+                                                                        <div class="table_area tbl_style01 tbl_bang_wi">
+                                                                            <div>
+                                                                                <table style="width:100%">
+                                                                                    <colgroup>
+                                                                                        <col style="width:130px">
+                                                                                        <col style="width:">
+                                                                                    </colgroup>
+                                                                                    <thead class="YongExplainthead">
+                                                                                    <tr>
+                                                                                        <th class="txt_c bl_none"><span class="t_tit">도로조건 : 도로접면</span></th>
+                                                                                        <th class="txt_c bl_none"><span class="t_tit">내용</span></th>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                    <tr>
+                                                                                        <td class="txt_c bl_none"><span class="th_bold">광대한면</span></td>
+                                                                                        <td class="txt_c">폭 25m이상의 도로에 한면이 접하고 있는 토지</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="txt_c bl_none"><span class="th_bold">광대소각</span></td>
+                                                                                        <td class="txt_c">광대로에 한면이 접하고 소로(폭 8m이상 12m미만)이상의 도로에 한면 이상 접하고 있는 토지</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="txt_c bl_none"><span class="th_bold">광대세각</span></td>
+                                                                                        <td class="txt_c">광대로에 한면이 접하면서 자동차 통행이 가능한 세로(가)에 한면 이상 접하고 있는 토지</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="txt_c bl_none"><span class="th_bold">중로한면</span></td>
+                                                                                        <td class="txt_c">폭 12m이상 25m미만 도로에 한면이 접하고 있는 토지</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="txt_c bl_none"><span class="th_bold">중로각지</span></td>
+                                                                                        <td class="txt_c">중로에 한면이 접하면서 중로, 소로, 자동차 통행이 가능한 세로(가)에 한면이상 접하고 있는 토지</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="txt_c bl_none"><span class="th_bold">소로한면</span></td>
+                                                                                        <td class="txt_c">폭 8m이상 12m미만의 도로에 한면이 접하고 있는 토지</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="txt_c bl_none"><span class="th_bold">소로각지</span></td>
+                                                                                        <td class="txt_c">소로에 한면이 접하면서 소로, 자동차통행이 가능한 세로(가)에 한면이상 접하고 있는 토지</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="txt_c bl_none"><span class="th_bold">세로(가)</span></td>
+                                                                                        <td class="txt_c">자동차 통행이 가능한 폭 8m미만의 도로에 한 면이 접하고 있는 토지</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="txt_c bl_none"><span class="th_bold">세각(가)</span></td>
+                                                                                        <td class="txt_c">자동차 통행이 가능한 세로에 두면 이상이 접하고 있는 토지</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="txt_c bl_none"><span class="th_bold">세로(불)</span></td>
+                                                                                        <td class="txt_c">자동차 통행이 불가능하나 이륜자동차의 통행이 가능한 세로에 한면이 접하고 있는 토지</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="txt_c bl_none"><span class="th_bold">세각(불)</span></td>
+                                                                                        <td class="txt_c">자동차 통행이 불가능하나 이륜자동차의 통행이 가능한 세로에 두면이상 접하고 있는 토지</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="txt_c bl_none"><span class="th_bold">맹지</span></td>
+                                                                                        <td class="txt_c">이륜자동차의 통행이 불가능한 도로에 접한 토지와 도로에 접하지 아니한 토지</td>
+                                                                                    </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <a href="https://www.gov.kr/main?a=AA020InfoCappViewApp&amp;HighCtgCD=A09005&amp;CappBizCD=13100000026&amp;tp_seq=03"
+                                                   target="_blank"
+                                                   class="btns btn-default-gray01 btn-toji-daejang">
+                                                    <span
+                                                            class="ico-document">
+                                                        <img style="width:18px;"
+                                                             src="https://cdn-icons-png.flaticon.com/512/5219/5219878.png">
+                                                    </span>
+                                                    토지대장
+                                                </a>
+                                                <a href="#" target="_blank"
+                                                   class="btns btn-default-gray01 btn-toji-eyong-service"
+                                                   id="btnLinkLuris">
+                                                    <span
+                                                            class="ico-document">
+                                                        <img style="width:18px;"
+                                                             src="https://cdn-icons-png.flaticon.com/512/5219/5219878.png">
+                                                    </span>
+                                                    토지이용계획원
+                                                </a>
+                                            </div>
+
+                                        </div>
+
+                                        <!-- 소유정보-->
+
+                                        <!-- //소유정보 -->
+
+                                        <!-- 개별공시지가 비교 -->
+
+                                        <!-- //개별공시지가 비교 -->
+                                    </div>
 
 
                                     <!-- Button trigger modal -->
@@ -1110,7 +1274,7 @@
                                             border-radius: 8px;">
                 <img style="margin-left:8px; width:20px; background-color: transparent;"
                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvcGRzbD6HIXhyARcDnuzWTfGVeLEZHVLS9A&amp;usqp=CAU">
-                <input type="text" name="asearch_keyword" placeholder="아파트, 지역 또는 학교명으로 검색" class="aSearchInput"
+                <input type="text" name="asearch_keyword" placeholder="아파트 또는 도로명으로 검색" class="aSearchInput"
                        autocomplete="off" onkeyup="checkEnter(event)">
                 <script>
 
@@ -1236,96 +1400,95 @@
 
 <!-- 지도를 표시할 div 입니다 -->
 <div id="map" style="width: 100%; height: 100%;">
-    <!--우측 지도도구-->
-    <div class="map_util">
-        <div
-                class="btn-group-vertical"
-                role="group"
-                aria-label="Vertical button group"
-        >
-            <div class="btn-group dropstart" role="group">
-                <button
-                        type="button"
-                        class="btn btn-primary dropdown-toggle"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                >
-                    학군
-                </button>
-                <ul class="dropdown">
-                    <div class="dropdown-menu">
-                        <div class="edu">
-                            <button class="map-utilSBtn">
-                                <img style="width:50px; height:30px;"
-                                     src="https://e7.pngegg.com/pngimages/836/224/png-clipart-pictogram-and-icon-collection-from-public-signage-to-web-icons-roseola-child-child-child-baby.png">
-                            </button>
-                            <span class="edukind">어린이집</span>
-                        </div>
-                        <div class="edu">
-                            <button class="map-utilSBtn">
-                                <img style="width:50px; height:30px;"
-                                     src="https://e7.pngegg.com/pngimages/989/150/png-clipart-pictogram-microsoft-dynamics-nav-computer-icons-child-alcorcon-others-child-text.png">
-                            </button>
-                            <span class="edukind">유치원</span>
-                        </div>
-                        <div class="edu">
-                            <button class="map-utilSBtn">
-                                <img style="width:50px; height:30px;"
-                                     src="https://w7.pngwing.com/pngs/261/891/png-transparent-pictogram-others-english-text-photography.png">
-                            </button>
-                            <span class="edukind">초등학교</span>
-                        </div>
-                        <div class="edu">
-                            <button class="map-utilSBtn">
-                                <img style="width:35px; height:30px;"
-                                     src="https://thumb.silhouette-ac.com/t/a3/a33e87822359f0a3e65fa924844c06b5_t.jpeg">
-                            </button>
-                            <span class="edukind">중학교</span>
-                        </div>
-                        <div class="edu">
-                            <button class="map-utilSBtn">
-                                <img style="width:40px; height:30px;"
-                                     src="https://thumb.silhouette-ac.com/t/f2/f2c0df7db0d36e322d8ec497a94a6a92_t.jpeg">
-                            </button>
-                            <span class="edukind">고등학교</span>
-                        </div>
-                        <div class="edu">
-                            <button class="map-utilSBtn">
-                                <img style="width:20px; height:30px;"
-                                     src="https://cdn.pixabay.com/photo/2013/07/13/13/21/book-160871_1280.png">
-                            </button>
-                            <span class="edukind">대학교</span>
-                        </div>
-                    </div>
-                </ul>
-            </div>
-            <div class="btn-group dropstart" role="group">
-                <button
-                        type="button"
-                        class="btn btn-primary dropdown-toggle"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                >
-                    상권
-                </button>
-            </div>
-        </div>
+    <!--    &lt;!&ndash;우측 지도도구&ndash;&gt;-->
+    <!--    <div class="map_util">-->
+    <!--        <div-->
+    <!--                class="btn-group-vertical"-->
+    <!--                role="group"-->
+    <!--                aria-label="Vertical button group"-->
+    <!--        >-->
+    <!--            <div class="btn-group dropstart" role="group">-->
+    <!--                <button-->
+    <!--                        type="button"-->
+    <!--                        class="btn btn-primary dropdown-toggle"-->
+    <!--                        data-bs-toggle="dropdown"-->
+    <!--                        aria-expanded="false"-->
+    <!--                >-->
+    <!--                    학군-->
+    <!--                </button>-->
+    <!--                <ul class="dropdown">-->
+    <!--                    <div class="dropdown-menu">-->
+    <!--                        <div class="edu">-->
+    <!--                            <button class="map-utilSBtn">-->
+    <!--                                <img style="width:50px; height:30px;"-->
+    <!--                                     src="https://e7.pngegg.com/pngimages/836/224/png-clipart-pictogram-and-icon-collection-from-public-signage-to-web-icons-roseola-child-child-child-baby.png">-->
+    <!--                            </button>-->
+    <!--                            <span class="edukind">어린이집</span>-->
+    <!--                        </div>-->
+    <!--                        <div class="edu">-->
+    <!--                            <button class="map-utilSBtn">-->
+    <!--                                <img style="width:50px; height:30px;"-->
+    <!--                                     src="https://e7.pngegg.com/pngimages/989/150/png-clipart-pictogram-microsoft-dynamics-nav-computer-icons-child-alcorcon-others-child-text.png">-->
+    <!--                            </button>-->
+    <!--                            <span class="edukind">유치원</span>-->
+    <!--                        </div>-->
+    <!--                        <div class="edu">-->
+    <!--                            <button class="map-utilSBtn">-->
+    <!--                                <img style="width:50px; height:30px;"-->
+    <!--                                     src="https://w7.pngwing.com/pngs/261/891/png-transparent-pictogram-others-english-text-photography.png">-->
+    <!--                            </button>-->
+    <!--                            <span class="edukind">초등학교</span>-->
+    <!--                        </div>-->
+    <!--                        <div class="edu">-->
+    <!--                            <button class="map-utilSBtn">-->
+    <!--                                <img style="width:35px; height:30px;"-->
+    <!--                                     src="https://thumb.silhouette-ac.com/t/a3/a33e87822359f0a3e65fa924844c06b5_t.jpeg">-->
+    <!--                            </button>-->
+    <!--                            <span class="edukind">중학교</span>-->
+    <!--                        </div>-->
+    <!--                        <div class="edu">-->
+    <!--                            <button class="map-utilSBtn">-->
+    <!--                                <img style="width:40px; height:30px;"-->
+    <!--                                     src="https://thumb.silhouette-ac.com/t/f2/f2c0df7db0d36e322d8ec497a94a6a92_t.jpeg">-->
+    <!--                            </button>-->
+    <!--                            <span class="edukind">고등학교</span>-->
+    <!--                        </div>-->
+    <!--                        <div class="edu">-->
+    <!--                            <button class="map-utilSBtn">-->
+    <!--                                <img style="width:20px; height:30px;"-->
+    <!--                                     src="https://cdn.pixabay.com/photo/2013/07/13/13/21/book-160871_1280.png">-->
+    <!--                            </button>-->
+    <!--                            <span class="edukind">대학교</span>-->
+    <!--                        </div>-->
+    <!--                    </div>-->
+    <!--                </ul>-->
+    <!--            </div>-->
+    <!--            <div class="btn-group dropstart" role="group">-->
+    <!--                <button-->
+    <!--                        type="button"-->
+    <!--                        class="btn btn-primary dropdown-toggle"-->
+    <!--                        data-bs-toggle="dropdown"-->
+    <!--                        aria-expanded="false"-->
+    <!--                >-->
+    <!--                    상권-->
+    <!--                </button>-->
+    <!--            </div>-->
+    <!--        </div>-->
 
-        <button style="width: 61px; height: 25px; text-align: center;" type="button" id="hsBtn"
-                class="btn btn-primary position-relative">
-            집 내놓기
-            <span
-                    class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger"
-            >
-                10초만에 쉽고 빠르게!
-            <span class="visually-hidden">unread messages</span>
-        </span>
-        </button>
-    </div>
+    <!--        <button style="width: 61px; height: 25px; text-align: center;" type="button" id="hsBtn"-->
+    <!--                class="btn btn-primary position-relative">-->
+    <!--            집 내놓기-->
+    <!--            <span-->
+    <!--                    class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger"-->
+    <!--            >-->
+    <!--                10초만에 쉽고 빠르게!-->
+    <!--            <span class="visually-hidden">unread messages</span>-->
+    <!--        </span>-->
+    <!--        </button>-->
+    <!--    </div>-->
 
 
 </div>
-
 <!-- 조서영 javascript 연결 -->
 <script type="text/javascript"
         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=40e606b0d3b62e8dc1753ec322a8c92d&libraries=services,clusterer"></script>

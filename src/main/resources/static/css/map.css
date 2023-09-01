@@ -700,6 +700,77 @@ html,body{
     border:none;
     background-color:white;
 }
+.modal-header.aSaveToMine{
+    justify-content: center;
+}
+.modal-body.LogInNeed{
+    display: flex;
+        flex-direction: column;
+        align-items: center;
+}
+.LogInNeedContents{
+    width:88%;
+}
+.aFindSaveEmail{
+margin-top: 22px;
+    width: 100%;
+        display: flex;
+        justify-content: center;
+}
+.aFindSaveEmailContents{
+    width: 275px;
+        display: flex;
+        justify-content: space-between;
+}
+.aLogInBtn{
+    height: 35px;
+        width: 257px;
+        border: none;
+        background-color: #26abed;
+        color: white;
+        border-radius: 7px;
+}
+.aJoinBtnsList{
+    margin-top: 7px;
+    margin-bottom:32px;
+}
+.aJoinBtns{
+height: 24px;
+    width: 116px;
+    border: none;
+    color: #26abed;
+    border-radius: 7px;
+}
+
+.aListOfEasyLogIn{
+    display: flex;
+        justify-content: center;
+        align-items:center;
+        margin-bottom:40px;
+}
+.aEasyLogInBtn{
+width: 179px;
+    border: none;
+    background-color: white;}
+.emailLogInPartTitle{
+    font-size: 18px;
+        color: #26abed;
+}
+.aEasyLogInImg{
+    width: 129px;
+        height: 33px;
+}
+.emailLogInPartInput{
+    display: flex;
+        flex-direction: column;
+        align-items: center;
+}
+.LogInInputs{
+width: 269px;
+    height: 36px;
+    border: 1px solid lightgray;
+    border-radius: 7px;
+}
 .tac-ul{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;

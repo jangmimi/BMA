@@ -12,6 +12,11 @@
     <link rel="stylesheet" th:href="@{/css/member/login.css}">
 </head>
 <body layout:fragment="content">
+
+<th:block th:if="${loginMember != null}">
+    <div th:replace="oAccessLogin :: oAccessLogin"></div>
+</th:block>
+
 <th:block th:if="${loginMember == null}">
     <th:block th:object="${loginMember}">
         <div class="container mt-5" id="oInner-container" align="center">
@@ -73,9 +78,6 @@
             </div>
         </div>
     </th:block>
-</th:block>
-<th:block th:if="${loginMember != null}">
-    <div th:include="oAccessLogin"></div>
 </th:block>
 
     <script th:src="@{/js/member/login.js}"></script>

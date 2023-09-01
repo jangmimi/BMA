@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+@SessionAttributes("userEmail")
 @Slf4j
 @Controller
 public class newsController {
@@ -44,7 +44,7 @@ public String search(
         @RequestParam(value = "page", defaultValue = "1") int page,
         @RequestParam(value = "start", defaultValue = "1") int start,
         Model model) {
-    String searchResult = newsApiService.searchNews(searchQuery, start);
+    String searchResult = newsApiService.searchNews(searchQuery.replaceAll(" ",""), start);
     log.info(searchQuery);
 
     DateTimeFormatter dateformat = DateTimeFormatter.ofPattern("yyyy.MM.dd a hh:mm");
@@ -117,14 +117,19 @@ public String search(
 
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
-        model.addAttribute("searchQuery", searchQuery);
+        model.addAttribute("searchQuery", searchQuery.replaceAll(" ",""));
 
         model.addAttribute("start", newStartIndex);
 
         model.addAttribute("total", totalResults);
 
         model.addAttribute("itemsPerPage", itemsPerPage);
-        model.addAttribute("searchKeyword", searchKeyword); // 정확도가 높은 검색어
+
+        if (searchKeyword != null) {
+            model.addAttribute("searchKeyword", searchKeyword.replaceAll(" ","")); // 정확도가 높은 검색어
+        } else {
+            model.addAttribute("searchKeyword", searchKeyword);
+        }
 
         log.info(searchKeyword);
     } catch (IOException e) {
