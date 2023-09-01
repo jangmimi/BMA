@@ -4,15 +4,16 @@ import lombok.*;
 import org.springframework.stereotype.Component;
 
 @Component
-@Setter
+@Builder
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 public class AptDTO {
-    private String aptName;    // 아파트 이름
-    private String aptAddress; // 아파트 주소
-    private String aptDealAmount; // 아파트 실 거래가
-//    private String aptLng;     // 아파트 경도
-//    private String aptLat;     // 아파트 위도
+    private String district;            // 구주소
+    private String address;             // 번지
+    private String apartmentName;       // 아파트 이름
+    private String roadName;            // 도로명
+    private Double longitude;           // 경도
+    private Double latitude;            // 위도
 }

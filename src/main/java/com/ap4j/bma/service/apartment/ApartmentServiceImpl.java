@@ -1,76 +1,132 @@
 package com.ap4j.bma.service.apartment;
 
 import com.ap4j.bma.model.entity.apt.AptDTO;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.XML;
-import org.springframework.stereotype.Service;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import com.ap4j.bma.model.entity.apt.AptRealTradeDTO;
+import com.ap4j.bma.model.entity.apt.AptEntity;
+
+import com.ap4j.bma.model.entity.apt.AptRealTradeEntity;
+import com.ap4j.bma.model.repository.AptRealTradeRepository;
+import com.ap4j.bma.model.repository.AptRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ApartmentServiceImpl implements ApartmentService {
 
+    @Autowired
+    private AptRepository aptRepository;
 
-	@Override
-	public ArrayList<AptDTO> getAptLists() {
-		StringBuffer result = new StringBuffer();
-		int pageNo = 1;
-		ArrayList<AptDTO> aptList = null;
-		try {
-			String apiUrl = "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev?"
-					+ "serviceKey=hAiRtZlGRJEkgTG1oYFctUoiFjG785z0otfrJknzsP7CfC3evcfU%2FUzWT2gq54UUPegUJpmrMccLTodwZcSFMQ%3D%3D&"
-					+ "LAWD_CD=11110&"
-					+ "DEAL_YMD=202307";
+    @Autowired
+    private AptRealTradeRepository aptRealTradeRepository;
 
-			URL url = new URL(apiUrl);
+    /**
+     * DB값 가져와서 js에 넘겨주기 (경도 위도 검색해서 값 가져오기 위해서)
+     */
+    public List<AptDTO> aptList() {
+        List<AptDTO> AptDTOList = new ArrayList<>();
+        List<AptEntity> aptEntityList = aptRepository.findAll();
 
-			HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection(); // 연결
+        for (AptEntity aptEntity : aptEntityList) {
+            AptDTO aptDTO = AptDTO.builder().
+                    apartmentName(aptEntity.getApartmentName()).
+                    roadName(aptEntity.getRoadName()).
+                    district(aptEntity.getDistrict()).
+                    address(aptEntity.getAddress()).
+                    build();
+            AptDTOList.add(aptDTO);
+        }
+        return AptDTOList;
+    }
 
-			urlConnection.connect();
+    /**
+     * 가져온 좌표값 DB에 저장하기
+     */
+    @Transactional
+    public void updateApt(String roadName, Double latitude, Double longitude) {
+        AptEntity aptEntity = aptRepository.findByRoadName(roadName);
+        if (aptEntity != null) {
+            AptEntity updateApt = AptEntity.builder().
+                            id(aptEntity.getId()).
+                            district(aptEntity.getDistrict()).
+                            address(aptEntity.getAddress()).
+                            apartmentName(aptEntity.getApartmentName()).
+                            roadName(aptEntity.getRoadName()).
+                            latitude(latitude).
+                            longitude(longitude).
+                            build();
+            aptRepository.save(updateApt);
+        }
+    }
 
-			BufferedInputStream bufferedInputStream = new BufferedInputStream((urlConnection.getInputStream()));
+    /**
+     * ajax통신으로 가져온 화면의 좌표 범위의 데이터만 가져오는 메서드
+     */
+    public List<AptDTO> findAptListBounds(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng) {
 
-			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream, "UTF-8"));
+        List<AptDTO> aptDTOList = new ArrayList<>();
+        List<AptEntity> aptEntityList = aptRepository.findAptListBounds(southWestLat, southWestLng, northEastLat, northEastLng);
 
-			String returnLine;
+        for (AptEntity aptEntity : aptEntityList) {
+            AptDTO aptDTO = AptDTO.builder().
+                    apartmentName(aptEntity.getApartmentName()).
+                    district(aptEntity.getDistrict()).
+                    address(aptEntity.getAddress()).
+                    roadName(aptEntity.getRoadName()).
+                    longitude(aptEntity.getLongitude()).
+                    latitude(aptEntity.getLatitude()).
+                    build();
+            aptDTOList.add(aptDTO);
+        }
+        return aptDTOList;
+    }
 
-			while ((returnLine = bufferedReader.readLine()) != null) {
-				result.append(returnLine + "\n");
-			}
+    /**
+     * 도로명에 맞는 실거래가 데이터 가져오는 메서드
+     */
+    public List<AptRealTradeDTO> findByRoadName(String roadName) {
+        List<AptRealTradeDTO> aptRealTradeDTOList = new ArrayList<>();
+        List<AptRealTradeEntity> aptRealTradeEntityList = aptRealTradeRepository.findByRoadName(roadName);
 
-			JSONObject jsonObject = XML.toJSONObject(result.toString());
+        for (AptRealTradeEntity aptRealTradeEntity : aptRealTradeEntityList) {
+            AptRealTradeDTO aptRealTradeDTO = AptRealTradeDTO.builder().
+                    roadName(aptRealTradeEntity.getRoadName()).
+                    area(aptRealTradeEntity.getArea()).
+                    transactionAmount(aptRealTradeEntity.getTransactionAmount()).
+                    contractYearMonth(aptRealTradeEntity.getContractYearMonth()).
+                    contractDate(aptRealTradeEntity.getContractDate()).
+                    floor(aptRealTradeEntity.getFloor()).
+                    constructionYear(aptRealTradeEntity.getConstructionYear()).
+                    build();
+            aptRealTradeDTOList.add(aptRealTradeDTO);
+        }
+        return aptRealTradeDTOList;
+    }
 
-			System.out.println("jsonObject = " + jsonObject);
+    /**
+     * 아파트명 또는 도로명으로 검색시 아파트 정보 가져오기
+     */
+    public AptDTO findByKeyword(String keyword) {
+        AptEntity aptEntity = aptRepository.findByKeyword(keyword);
 
-			// 필요한 데이터에 접근
-			JSONObject aptJson = jsonObject.getJSONObject("response").getJSONObject("body").getJSONObject("items");
+        AptDTO aptKeyword = null;
 
-			JSONArray jsonArray = aptJson.getJSONArray("item");
+        if(aptEntity != null) {
+            aptKeyword = AptDTO.builder().
+                    apartmentName(aptEntity.getApartmentName()).
+                    district(aptEntity.getDistrict()).
+                    address(aptEntity.getAddress()).
+                    roadName(aptEntity.getRoadName()).
+                    longitude(aptEntity.getLongitude()).
+                    latitude(aptEntity.getLatitude()).
+                    build();
+        }
 
-			aptList = new ArrayList<AptDTO>();
-
-			for (int i = 0; i < jsonArray.length(); i++) {
-				JSONObject obj = jsonArray.getJSONObject(i);
-
-				String aptName = obj.getString("아파트");
-				String aptAddress = obj.getString("도로명");
-				String aptDealAmount = obj.getString("거래금액");
-
-				AptDTO apt = new AptDTO(aptName, aptAddress, aptDealAmount);
-
-				aptList.add(apt);
-			}
-
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return aptList;
-	}
+        return aptKeyword;
+    }
 }

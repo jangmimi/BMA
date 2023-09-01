@@ -1,0 +1,40 @@
+.n-header-list {
+    margin: 16px 0px;
+    padding: 0px 0px 0px 40px;
+}
+.form-floating {
+    width: 350px;
+}
+#oJoinBtn-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+#oInner-container-join {
+    width: 400px;
+}
+#oJoinTitle {
+    padding: 20px 50px;
+    margin: 0px;
+}
+#btnEmailCheck {
+    width: 90px;
+    margin-left: 6px;
+}
+.oAgree {
+    margin-right: 5px;
+}
+.oAgree-li {
+    margin: 10px;
+}
+.mustch {
+    font-weight: 600;
+    color: #26ABED;
+}
+.selch {
+    font-weight: 600;
+    color: gray; !important
+}
+.oLabelColor {
+    color: gray;
+    font-size: 14px;
+}

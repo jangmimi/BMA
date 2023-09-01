@@ -11,59 +11,324 @@
 
 	<!-- <link rel="stylesheet" th:href="@{/css/파일이름.css}"> -->
 	<!-- <script type="text/javascript" th:src="@{/js/search/search.js}"></script>-->
-	<link rel="stylesheet" th:href="@{/css/mainPage.css}">
+	<link rel="stylesheet" th:href="@{/css/mainPage1.css}">
 	<link rel="stylesheet" th:href="@{/css/mainpage_header_footer.css}">
 	<script src="https://kit.fontawesome.com/5b1091f816.js" crossorigin="anonymous"></script>
 </head>
 <body layout:fragment="content">
-<div class="r-main">
+<!--<div class="r-main">-->
 
-	<div class="r-search">
-		<div class="r-search-text">
-			<input type="text" placeholder="지역,지하철,건물명,학교명으로 검색하세요">
-			<div class="r-icon-circle">
-				<i id="icon" class="fa-solid fa-magnifying-glass"></i>
+<!--	<div class="r-search">-->
+<!--		<div class="r-search-text">-->
+<!--			<input type="text" placeholder="지역,지하철,건물명,학교명으로 검색하세요">-->
+<!--			<div class="r-icon-circle">-->
+<!--				<i id="icon" class="fa-solid fa-magnifying-glass"></i>-->
+<!--			</div>-->
+<!--		</div>-->
+<!--	</div>-->
+
+<!--	<div class="r-main-title-text">-->
+<!--		<p>-->
+<!--			어디 원해 한남동?-->
+<!--		</p>-->
+<!--	</div>-->
+
+<!--	<div class="r-button-menu">-->
+<!--		<a href="#">-->
+<!--			<div class="r-button-menu-icon1">-->
+<!--			</div>-->
+<!--			실거래가조회-->
+<!--		</a>-->
+<!--		<a href="#">-->
+<!--			<div class="r-button-menu-icon2">-->
+<!--			</div>-->
+<!--			매물등록-->
+<!--		</a>-->
+<!--		<a href="#">-->
+<!--			<div class="r-button-menu-icon3">-->
+<!--			</div>-->
+<!--			커뮤니티-->
+<!--		</a>-->
+<!--		<a href="/news">-->
+<!--			<div class="r-button-menu-icon4">-->
+<!--			</div>-->
+<!--			부동산뉴스-->
+<!--		</a>-->
+<!--		<a href="#">-->
+<!--			<div class="r-button-menu-icon5">-->
+<!--			</div>-->
+<!--			고객센터-->
+<!--		</a>-->
+<!--	</div>-->
+<!--	<div class="r-empty">-->
+
+<!--	</div>-->
+<!--</div>-->
+<!--<div class="n-background"></div>-->
+<div class="n-main-container">
+
+	<div class="n-main-1">
+		<div class="n-main-1-align">
+			<div class="n-main-1-titletext">
+				<h2>부동산 거래 만족도 1위 <br> 아파트 구할땐, 아파트사조</h2>
+			</div>
+			<div class="n-main-1-submenu">
+				<a href="#">
+					<div class="n-main-1-submenu-searchbody">
+						<span>단지명, 동이름, 지하철로 검색</span>
+						<i class="fa-solid fa-magnifying-glass"></i>
+					</div>
+				</a>
+			</div>
+		</div>
+		<div class="n-main-1-img">
+		</div>
+	</div>
+
+	<div class="n-main-2">
+		<div class="n-main-2-align">
+			<div class="n-main-2-titletext">
+				<span>혁신적인 부동산 거래 플랫폼, 아파트사조</span>
+				<span>더 편리하게, 더 싸게, 더 안전하게</span>
+			</div>
+			<div class="n-main-2-boxlist">
+				<div class="n-main-2-boxlist-box">
+					<span>실거래조회</span>
+					<span>
+                            원하는 아파트 시세를 <br>
+                            한방에!
+                        </span>
+					<img src="/img/mainPage/chartb.png" alt="">
+					<a href="#">
+						더 알아보기
+					</a>
+				</div>
+				<div class="n-main-2-boxlist-box">
+					<span>부동산뉴스</span>
+					<span>
+                            각종 부동산 관련 뉴스를<br>
+                            한눈에!<br>
+                        </span>
+					<img src="/img/mainPage/news2b.png" alt="">
+					<a href="#">
+						더 알아보기
+					</a>
+				</div>
+			</div>
+			<div class="n-main-2-boxlist">
+				<div class="n-main-2-boxlist-box">
+					<span>매물등록</span>
+					<span>
+                            손쉬운<br>
+                            매물 등록!
+                        </span>
+					<img src="/img/mainPage/mamolb.png" alt="">
+					<a href="#">
+						더 알아보기
+					</a>
+				</div>
+				<div class="n-main-2-boxlist-box">
+					<span>커뮤니티</span>
+					<span>
+                            부동산 잘알러들에게<br>
+                            물어보살!
+                        </span>
+					<img src="/img/mainPage/chattingb.png" alt="">
+					<a href="#">
+						더 알아보기
+					</a>
+				</div>
+				<div class="n-main-2-boxlist-box">
+					<span>고객센터</span>
+					<span>
+                            24시 항시대기 <br>
+                            가장 친절한 응대서비스!
+                        </span>
+					<img src="/img/mainPage/centerb.png" alt="">
+					<a href="#">
+						더 알아보기
+					</a>
+				</div>
 			</div>
 		</div>
 	</div>
 
-	<div class="r-main-title-text">
-		<p>
-			어디 원해 한남동?
-		</p>
+	<div class="n-main-3">
+		<div class="n-main-3-align">
+
+			<div class="n-main-3-titletext">
+				<span>가장 편리한 서비스</span>
+				<span>이런 서비스 보셨나요?</span>
+			</div>
+			<div class="n-main-3-slides">
+
+				<div id="n-main-3-slide">
+					<div class="n-main-3-slide-text">
+						<span>실거래조회</span>
+						<span>3시간 걸릴것을 <br> 3분안에</span>
+						<span>국내 최고의 AI기술과<br>지역전문중개사가<br>당신에게 딱 맞는 매물을<br>찾아드립니다 </span>
+						<button>더 알아보기 <i class="fa-solid fa-magnifying-glass"></i> </button>
+					</div>
+					<div class="n-main-3-slide-img">
+						<img src="/img/mainPage/이미지준비중.png" alt="">
+					</div>
+				</div>
+
+				<div id="n-main-3-slide">
+					<div class="n-main-3-slide-text">
+						<span>실거래조회</span>
+						<span>3시간 걸릴것을 <br> 3분안에</span>
+						<span>국내 최고의 AI기술과<br>지역전문중개사가<br>당신에게 딱 맞는 매물을<br>찾아드립니다 </span>
+						<button>더 알아보기 <i class="fa-solid fa-magnifying-glass"></i> </button>
+					</div>
+					<div class="n-main-3-slide-img">
+						<img src="/img/mainPage/이미지준비중.png" alt="">
+					</div>
+				</div>
+
+				<div id="n-main-3-slide">
+					<div class="n-main-3-slide-text">
+						<span>실거래조회</span>
+						<span>3시간 걸릴것을 <br> 3분안에</span>
+						<span>국내 최고의 AI기술과<br>지역전문중개사가<br>당신에게 딱 맞는 매물을<br>찾아드립니다 </span>
+						<button>더 알아보기 <i class="fa-solid fa-magnifying-glass"></i> </button>
+					</div>
+					<div class="n-main-3-slide-img">
+						<img src="/img/mainPage/이미지준비중.png" alt="">
+					</div>
+				</div>
+
+			</div>
+
+		</div>
 	</div>
 
-	<div class="r-button-menu">
-		<a href="#">
-			<div class="r-button-menu-icon1">
-			</div>
-			실거래가조회
-		</a>
-		<a href="#">
-			<div class="r-button-menu-icon2">
-			</div>
-			매물등록
-		</a>
-		<a href="#">
-			<div class="r-button-menu-icon3">
-			</div>
-			커뮤니티
-		</a>
-		<a href="#">
-			<div class="r-button-menu-icon4">
-			</div>
-			부동산뉴스
-		</a>
-		<a href="#">
-			<div class="r-button-menu-icon5">
-			</div>
-			고객센터
-		</a>
-	</div>
-	<div class="r-empty">
 
+	<div class="n-main-4">
+		<div class="n-main-4-align">
+			<div class="n-main-4-titletext">
+				<span>가장 안전한 매물</span>
+				<span>걱정하지마세요</span>
+			</div>
+			<div class="n-main-4-function">
+				<div class="n-main-4-functiontext">
+					<span>실매물 거래보장</span>
+					<span>
+                            아파트사조보다 안전한 곳은 없습니다.<br>
+                            아파트 구할실 때 (매매, 전세, 월세)<br>
+                            실매물 절대보장
+                        </span>
+				</div>
+				<div class="n-main-4-functionboxlist">
+					<div class="n-main-4-functionboxlist-box">
+						<span>매물정보 조회할때는,</span>
+						<span>
+                                실매물 거래보장<br>
+                            </span>
+						<span>
+                                허위매물 NO
+                            </span>
+						<button>
+							자세히 보기
+						</button>
+						<img src="https://d1ow1zydcbqtx3.cloudfront.net/landing/price1-fn.png?w=1920&f=webp&q=80"
+							 alt="">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="n-main-4">
+		<div class="n-main-4-align">
+			<div class="n-main-4-titletext">
+				<span>국내 최저가 중개수수료</span>
+				<span>수수료 걱정 절대 하지마세요</span>
+			</div>
+			<div class="n-main-4-function">
+				<div class="n-main-4-functiontext">
+					<span>국내 최저가 보장</span>
+					<span>
+                            아파트사조보다 싼 곳은 없습니다.<br>
+                            국내 최저가 중개수수료 보장
+                        </span>
+				</div>
+				<div class="n-main-4-functionboxlist">
+					<div class="n-main-4-functionboxlist-box">
+						<span>아파트 구하실 때</span>
+						<span>
+                                아파트 내놓으실 때
+                            </span>
+						<span>
+                                중개 수수료가 반값!
+                            </span>
+						<button>
+							자세히 보기
+						</button>
+						<img src="/img/mainPage/monney.png"
+							 alt="">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="n-main-5">
+		<div class="n-main-5-align">
+			<div class="n-main-5-1box">
+				<div class="n-main-5-1boxtext">
+					<span>부동산 뉴스</span>
+					<span>매일 올라오는 부동산 정보를<br>한눈에 확인하세요</span>
+				</div>
+				<div class="n-main-5-1boximg">
+				</div>
+			</div>
+			<div class="n-main-5-2box">
+				<div class="n-main-5-2box-innerbox">
+					<div class="n-main-5-1boxtext">
+						<span>커뮤니티</span>
+						<span>아파트사조 유저들과<br>아파트 정보공유를 해보세요</span>
+					</div>
+					<div class="n-main-5-2boximg">
+					</div>
+				</div>
+				<div class="n-main-5-2box-innerbox">
+					<div class="n-main-5-1boxtext">
+						<span>전문가 소개</span>
+						<span>업계 최고 전문가들에게<br>조언을 받으세요</span>
+					</div>
+					<div class="n-main-5-2boximg">
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
-<div class="n-background"></div>
+
+
+
+
+<script>
+        const scrollContainer = document.querySelector('.n-main-3-slides');
+        let scrollPosition = 0;
+        let limitPosition = 1800;
+        // 2초마다 스크롤을 움직이는 함수
+
+        function scrollNext() {
+            scrollPosition += 600;
+            if (scrollPosition > limitPosition) {
+                scrollPosition = 0;
+            }
+            scrollContainer.scrollLeft = scrollPosition;
+        }
+
+
+        // 2초마다 스크롤을 움직이는 타이머 설정
+        setInterval(scrollNext, 2000); // 2000 밀리초 = 2초
+    </script>
+<script>
+        history.scrollRestoration = "auto";
+    </script>
+
 </body>
 </html>

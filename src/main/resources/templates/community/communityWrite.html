@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layouts/include_footer_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>게시물 작성폼</title>
+    <link rel="stylesheet" th:href="@{/css/community/communityWrite.css}">
+
+</head>
+
+<body layout:fragment="content">
+
+<div class="layout">
+    <h1>게시글 작성하기</h1>
+    <hr>
+    <div class="write-box">
+    <form action="/community/write" method="post">
+        <table border="1">
+            <tr>
+                <th>제목</th>
+                <td><input  name = "title" type="text" placeholder="제목을 입력하세요."></td>
+            </tr>
+
+            <tr>
+                <th>작성자</th>
+                <td><input  class="read" name = "author" type="text" placeholder="작성자 값" disabled></td>
+            </tr>
+
+            <tr>
+                <th>작성일</th>
+                <td><input  class="read" name = "date" type="text" placeholder="작성일 값" disabled></td>
+            </tr>
+            <tr>
+                <th>내용</th>
+                <td> <textarea name="content"></textarea></td>
+            </tr>
+        </table>
+
+        <div class="buttonL">
+            <button type="button" class="three-btn" onclick="location.href = '/community/list'">
+                목록
+            </button>
+        </div>
+
+        <div class="buttonR">
+            <button type="reset" class="three-btn" >초기화</button>
+            <button type="submit" class="three-btn" >등록</button>
+        </div>
+
+    </form>
+    </div>
+</div>
+</body>
+</html>
