@@ -12,19 +12,14 @@
     <link rel="stylesheet" th:href="@{/css/member/login.css}">
 </head>
 <body layout:fragment="content">
-<!--    <th:block th:if="${session.userEmail != null}">-->
-<!--        <script th:inline="javascript">-->
-<!--            alert("이미 로그인하셨습니다.");-->
-<!--            window.location.href='redirect:/member/qMyPage'; // 로그인 한 상태로 접근 시 페이지 표시 X-->
-<!--        </script>-->
-<!--    </th:block>-->
-    <span th:if="${session.userEmail == null}">
+<th:block th:if="${loginMember == null}">
+    <th:block th:object="${loginMember}">
         <div class="container mt-5" id="oInner-container" align="center">
             <div id="oLoginTitle">
                 <h3 class="h3 fw-bold">로그인</h3>
             </div>
             <div class="oOutLine">
-                <form th:action="@{/member/qLoginBasic}" method="POST" th:object="${memberDTO}" onsubmit="return oLoginCheck()">
+                <form th:action="@{/member/qLoginBasic}" method="POST" onsubmit="return oLoginCheck()">
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="email" name="email"
                                th:value="${rememberedEmail}" placeholder="이메일을 입력하세요." autofocus="autofocus">
@@ -77,7 +72,11 @@
                 </div>
             </div>
         </div>
-    </span>
+    </th:block>
+</th:block>
+<th:block th:if="${loginMember != null}">
+    <div th:include="oAccessLogin"></div>
+</th:block>
 
     <script th:src="@{/js/member/login.js}"></script>
     <!-- 네이버 로그인 script -->

@@ -2,6 +2,7 @@ package com.ap4j.bma.controller.map;
 
 import com.ap4j.bma.model.entity.apt.AptDTO;
 import com.ap4j.bma.model.entity.apt.AptRealTradeDTO;
+import com.ap4j.bma.model.entity.apt.HangJeongDongDTO;
 import com.ap4j.bma.service.apartment.ApartmentServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,9 @@ public class MapController {
 
     /** 화면 좌표 범위의 DB값 데이터 보내주기 (클라이언트가 사용할 페이지)*/
     @PostMapping("/main")
-    public ResponseEntity<Map<String, Object>> getMarker(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng, String roadName, String keyword) {
+    public ResponseEntity<Map<String, Object>> getMarker(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng, String roadName, String keyword, Integer zoomLevel) {
+        // 화면 좌표값에 따른 행정동 리스트
+        List<HangJeongDongDTO> hjdList = aptServiceImpl.findHJDListBounds(southWestLat, southWestLng, northEastLat, northEastLng, zoomLevel);
         // 화면 좌표값에 따른 아파트 리스트
         List<AptDTO> aptList = aptServiceImpl.findAptListBounds(southWestLat, southWestLng, northEastLat, northEastLng);
         // 도로명에 따른 실거래가 리스트
@@ -32,13 +35,20 @@ public class MapController {
         // 도로명, 구주소, 아파트명으로 검색시 해당 아파트 정보
         AptDTO aptSearch = aptServiceImpl.findByKeyword(keyword);
 
-        Map<String, Object> responseData = new HashMap<>();
-        responseData.put("aptList", aptList);
-        responseData.put("aptRealTradeDTOList", aptRealTradeDTOList);
+        System.out.println("행정동 리스트  = " + hjdList);
+        System.out.println("줌레벨 = " + zoomLevel);
 
+
+        Map<String, Object> responseData = new HashMap<>();
+        responseData.put("aptList", aptList); // 아파트 리스트
+        responseData.put("aptRealTradeDTOList", aptRealTradeDTOList); // 아파트 실거래가 리스트
         // 검색했을때만 aptSearch 객체를 전송한다.
-        if(aptSearch != null) {
+        if (aptSearch != null) {
             responseData.put("aptSearch", aptSearch);
+        }
+        // 행정동 리스트 있을 때만 객체 전송
+        if (hjdList != null) {
+            responseData.put("hjdList", hjdList);
         }
 
         return ResponseEntity.ok(responseData);

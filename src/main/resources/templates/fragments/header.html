@@ -11,7 +11,7 @@
       </a>
       <ul class="n-header-list">
         <li>
-          <a href="#">실거래가조회</a>
+          <a href="/map/main">실거래가조회</a>
         </li>
         <li>
           <a href="#">매물등록</a>
@@ -32,7 +32,7 @@
     </div>
     <div class="n-header-right">
 <!--    <div class="n-header-right" th:with="member=null">-->
-      <ul th:if="${userEmail==null}" class="n-header-list">
+      <ul th:if="${loginMember==null}" class="n-header-list">
         <li>
           <a href="/member/qLoginForm">로그인</a>
         </li>
@@ -43,7 +43,7 @@
           <a href="#">고객센터</a>
         </li>
       </ul>
-      <ul th:if="${userEmail!=null}" class="n-header-list">
+      <ul th:if="${loginMember!=null}" class="n-header-list">
         <li>
           <a href="/member/qLogout">로그아웃</a>
         </li>

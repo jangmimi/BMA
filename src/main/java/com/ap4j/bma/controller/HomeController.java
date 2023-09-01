@@ -11,7 +11,7 @@ import org.springframework.web.context.annotation.SessionScope;
 
 import javax.servlet.http.HttpSession;
 
-@SessionAttributes("userEmail")
+@SessionAttributes("loginMember")
 @Slf4j
 @Controller
 public class HomeController {
@@ -24,7 +24,7 @@ public class HomeController {
 
 	@RequestMapping("/")
 	public String mainPage(HttpSession session){
-		log.info("session userEmail : " + session.getAttribute("userEmail"));
+		log.info("session userEmail : " + session.getAttribute("loginMember"));
 
 		return "mainPage/mainPage";
 	}

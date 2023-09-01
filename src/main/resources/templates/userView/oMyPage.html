@@ -6,15 +6,16 @@
 <head>
     <meta charset="UTF-8">
     <title>마이페이지</title>
-    <link rel="stylesheet" th:href="@{/css/CC/noticelist.css}">
-    <link rel="stylesheet" th:href="@{/css/CC/CCBar.css}">
+<!--    <link rel="stylesheet" th:href="@{/css/CC/noticelist.css}">-->
+<!--    <link rel="stylesheet" th:href="@{/css/CC/CCBar.css}">-->
     <link rel="stylesheet" th:href="@{/css/member/myPage.css}">
     <!-- 부트스트랩 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
 <body layout:fragment="content">
-<span th:if="${userEmail != null}">
+<th:block th:object="${loginMember}">
+<th:block th:if="${loginMember != null}">
     <!-- 마이페이지 네비게이션 -->
     <div id="oContainer">
         <div id="content">
@@ -33,55 +34,110 @@
             <div class="layout">
                 <div class="oInfo-top">
                     <div class="oInfo-top-wrapper">
-                        <div class="oInfo-left" style="display: block; font-weight:bold; font-size:20px;" >
-                            <input type="hidden" id="id" name="id" th:value="${id}" />
-                            <span th:text="${userName}" ></span>님<br/>
-                            <span th:text="${userEmail}" style="font-weight:bold; font-size:13px"></span>
+                        <div class="oInfo-left">
+                            <input type="hidden" id="id" name="id" th:value="*{id}" />
+                            <span th:text="*{name}" ></span>님<br/>
+                            <span th:text="*{email}" style="font-weight:bold; font-size:13px"></span>
                         </div>
                         <div class="oInfo-right">
                             <div>
-                                <div class="oMaemulCnt" style="background-color:white; border-left: none; float:right; width:200px;">
+                                <div class="oMaemulCnt">
                                     <a href="#">1건</a>
                                     <span>관심매물</span>
                                 </div>
-                                <div class="oMaemulCnt" style="background-color:white; float:right; width:200px;">
+                                <div class="oMaemulCnt">
                                     <a href="#">2건</a>
                                     <span>최근 본 매물</span>
                                 </div>
-                                <div style="float:right; width:20%;">
-                                    <a th:href="@{/member/qMyInfoUpdate}">내 정보 수정</a>
-                                </div>
+<!--                                <div class="oUpdateLinkBtn">-->
+<!--                                    <a th:href="@{/member/qMyInfoUpdate}">내 정보 수정</a>-->
+<!--                                </div>-->
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- 관심매물 / 최근본매물 -->
-                <div class="oMyInfo-bottom">
-                    <div class="menubar">
-    <!--                    <button type="button" class="menu-c" id="oInterestMaemul" onclick="location.href = '/notice/list'" >관심매물</button>-->
-    <!--                    <button type="button" class="menu" id="oRecentMaemul" onclick="location.href = '/guide'" >최근본매물</button>-->
-                        <button type="button" class="oMaemulLink" id="oInterestMaemul" onclick="location.href = '#'" >관심매물</button>
-                        <button type="button" class="oMaemulLink" id="oRecentMaemul" onclick="location.href = '#" >최근본매물</button>
-                    </div>
-                    <table style="margin-top: 15px; align=center">
+                <div>
+                    <table>
                         <tr>
-                            <th>거래종류</th>
-                            <th>매물종류</th>
-                            <th>소재지 / 상세주소 매물설명</th>
-                            <th>면적</th>
-                            <th>가격</th>
-                            <th>삭제</th>
-                        </tr>
-                        <tr>
-                            <td colspan="6">조회된 데이터가 없습니다.</td>
+                            <td>
+                                <div class="card" style="width: 15rem;">
+                                    <a href="#" style="text-decoration: none; color: black">
+                                        <img src="https://www.bdsplanet.com/common/thumbs.ytp?filepath=/COMP_20201027000920000005/upload/realty/RCODE_20230731160156000045/&filename=1690787077205_1.jpg&thumNum=3"
+                                             class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                            <h5 class="card-title">매매 100억</h5>
+                                        </div>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">서초동 상가주택</li>
+                                            <li class="list-group-item">851.7/851.71m2</li>
+                                            <li class="list-group-item">서초동 역세권 업무 주거배후세대 풍부</li>
+                                        </ul>
+                                    </a>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="card" style="width: 15rem;">
+                                    <a href="#" style="text-decoration: none; color: black">
+                                        <img src="https://www.bdsplanet.com/common/thumbs.ytp?filepath=/COMP_20201027000920000005/upload/realty/RCODE_20230731160156000045/&filename=1690787077205_1.jpg&thumNum=3"
+                                             class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                            <h5 class="card-title">매매 100억</h5>
+                                        </div>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">서초동 상가주택</li>
+                                            <li class="list-group-item">851.7/851.71m2</li>
+                                            <li class="list-group-item">서초동 역세권 업무 주거배후세대 풍부</li>
+                                        </ul>
+                                    </a>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="card" style="width: 15rem;">
+                                    <a href="#" style="text-decoration: none; color: black">
+                                        <img src="https://www.bdsplanet.com/common/thumbs.ytp?filepath=/COMP_20201027000920000005/upload/realty/RCODE_20230731160156000045/&filename=1690787077205_1.jpg&thumNum=3"
+                                             class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                            <h5 class="card-title">매매 100억</h5>
+                                        </div>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">서초동 상가주택</li>
+                                            <li class="list-group-item">851.7/851.71m2</li>
+                                            <li class="list-group-item">서초동 역세권 업무 주거배후세대 풍부</li>
+                                        </ul>
+                                    </a>
+                                </div>
+                            </td>
                         </tr>
                     </table>
                 </div>
+<!--                <div class="oMyInfo-bottom">-->
+<!--                    <div class="menubar">-->
+<!--    &lt;!&ndash;                    <button type="button" class="menu-c" id="oInterestMaemul" onclick="location.href = '/notice/list'" >관심매물</button>&ndash;&gt;-->
+<!--    &lt;!&ndash;                    <button type="button" class="menu" id="oRecentMaemul" onclick="location.href = '/guide'" >최근본매물</button>&ndash;&gt;-->
+<!--                        <button type="button" class="oMaemulLink" id="oInterestMaemul" onclick="location.href = '#'" >관심매물</button>-->
+<!--                        <button type="button" class="oMaemulLink" id="oRecentMaemul" onclick="location.href = '#'" >최근본매물</button>-->
+<!--                    </div>-->
+<!--                    <table style="margin-top: 15px; align:center;">-->
+<!--                        <tr>-->
+<!--                            <th>거래종류</th>-->
+<!--                            <th>매물종류</th>-->
+<!--                            <th>소재지 / 상세주소 매물설명</th>-->
+<!--                            <th>면적</th>-->
+<!--                            <th>가격</th>-->
+<!--                            <th>삭제</th>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td colspan="6">조회된 데이터가 없습니다.</td>-->
+<!--                        </tr>-->
+<!--                    </table>-->
+<!--                </div>-->
             </div>
         </div>
     </div>
-</span>
+</th:block>
+</th:block>
     <!-- 부트스트랩 script -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
