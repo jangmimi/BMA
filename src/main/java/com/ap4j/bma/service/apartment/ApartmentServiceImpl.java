@@ -1,14 +1,11 @@
 package com.ap4j.bma.service.apartment;
 
 import com.ap4j.bma.model.entity.apt.AptDTO;
-
-import com.ap4j.bma.model.entity.apt.AptRealTradeDTO;
 import com.ap4j.bma.model.entity.apt.AptEntity;
-
+import com.ap4j.bma.model.entity.apt.AptRealTradeDTO;
 import com.ap4j.bma.model.entity.apt.AptRealTradeEntity;
 import com.ap4j.bma.model.repository.AptRealTradeRepository;
 import com.ap4j.bma.model.repository.AptRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
