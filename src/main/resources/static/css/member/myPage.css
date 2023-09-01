@@ -1,3 +1,7 @@
+.oLayout {
+    width: 1000px;
+    margin: 0 auto;
+}
 .n-header-list {
     margin: 16px 0px;
     padding: 0px 0px 0px 40px;
@@ -36,7 +40,12 @@
     text-decoration-line: none;
 }
 .oInfo-top {
+    height: 250px;
     padding: 30px 0;
+}
+.oInfo-top-wrapper {
+    display: flex;
+    justify-content: space-between;
 }
 .oInfo-left {
    display: block; font-weight:bold; font-size:20px;
@@ -55,40 +64,39 @@
     width: 1000px;
     display: contents;
 }
-.oMeamulTitle {
+.oMeamulTitleContainer {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    border-bottom: 2px solid black;
+    margin-bottom: 20px;
+    padding: 0px 0px 10px;
+}
+.oMeamulTabLeft {
+    font-size: 17px;
 }
 .oMaemulLink {
     font-weight: 700;
     border: none;
     background-color: white;
-    font-size: 18px;
 }
 #oMaemulAllView {
-    border: 1px solid #26abed;
     background-color: #26abed;
     color: white;
+    padding: 5px;
+    font-size: 13px;
 }
 .oUpdateLinkBtn{
     width: 150px;
+}
+.oCardMaemul {
+    text-decoration: none;
+    color: black
 }
 #oInterestMaemul {
     color: #25AAE1;
 }
 #oRecentMaemul {
     color: #999999;
-}
-.oInfo-top {
-    margin-left: 40px;
-    margin-right: 40px;
-}
-.oInfo-top-wrapper {
-    display: flex;
-    justify-content: space-between;
-}
-.OLayout {
-    width:
 }
 .oInfo-right {
     display: flex;
