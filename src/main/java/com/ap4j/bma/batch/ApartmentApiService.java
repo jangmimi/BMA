@@ -13,13 +13,12 @@ import java.util.List;
 @Slf4j
 public class ApartmentApiService {
 
-
 	private final WebClient webClient;
 
 	public ApartmentApiService(){
 		log.info(">>>>> ApartmentApiService 의 ApartmentApiService기본생성자() 실행.");
 		this.webClient = WebClient.builder()
-				.baseUrl("http://localhost:8083/")
+				.baseUrl("http://localhost:8081/")
 				.build();
 	}
 
