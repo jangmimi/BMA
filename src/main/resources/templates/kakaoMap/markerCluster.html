@@ -650,24 +650,11 @@
                                 </div>
                 </li>
 
-                <li class="list-group-item 2" style="height:100%;">
-                    <!--                    <nav id="navbar-example2" class="navbar bg-body-tertiary mb-3">-->
-                    <!--                        <ul id="nav-pills" class="nav nav-pills">-->
-                    <!--                            <li class="nav-item">-->
-                    <!--                                <a class="nav-link" href="#" style="width: 40px;">실거래</a>-->
-                    <!--                            </li>-->
-                    <!--                            <li class="nav-item">-->
-                    <!--                                <a class="nav-link" href="#scrollspyHeading5" style="width: 40px;">매물</a>-->
-                    <!--                            </li>-->
-                    <!--                            <li class="nav-item">-->
-
-                    <!--                            </li>-->
-                    <!--                    </nav>-->
-
+                <li class="list-group-item 2" style="height:100%;padding: 0px;">
                     <div style="height:84%;">
                         <div data-bs-spy="scroll" data-bs-target="#navbar-example2"
-                             data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true"
-                             class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
+                             data-bs-root-margin="0px 0px 0px" data-bs-smooth-scroll="true"
+                             class="scrollspy-example bg-body-tertiary rounded-2" tabindex="0" style="height:104%;">
 
                             <div class="sideContents">
                                 <div h4 id="scrollspyHeading6">
@@ -700,6 +687,7 @@
                                         </h2>
                                     </div>
                                 </div>
+                                <hr style="border: 13px solid lightgray;border-top: 1px solid;">
                                 <div class="aed-sil-deal-price">
                                     <div class="main-titlearea">
                                         <div class="left">
@@ -710,12 +698,8 @@
 
 
                                     <div class="aRealPriceAndGraph">
-                                        <!-- 가격 -->
-                                        <div class="price-area">
-                                            <span class="txt">1억 8,500만</span>
-                                        </div>
-                                        <div class="graph-area" id="realpricePercentChart">
-
+                                        <div>
+                                            <canvas id="myChart"></canvas>
                                         </div>
                                     </div>
 
@@ -744,125 +728,14 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                            <div class="accordion" id="accordionExample" style="
-    width: 100%;
-">
-                                                <div class="accordion-item">
-                                                    <div class="accordion-header">
-                                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                                                data-bs-target="#collapseOne" aria-expanded="true"
-                                                                aria-controls="collapseOne" style="
-    width: 88%;
-">
-                                                            <h3 class="title">인근 지역 유사 실거래 사례</h3>
+<!--                                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"-->
+<!--                                                                data-bs-target="#collapseOne" aria-expanded="true"-->
+<!--                                                                aria-controls="collapseOne" id="aload-more-button"style="-->
+<!--                                                            width: 88%;-->
+<!--                                                        " onclick="createLoadMoreButton()">-->
+<!--                                                            <h3 class="title">실거래이력 더보기</h3>-->
 
-                                                        </button>
-
-                                                        <div id="collapseOne" class="accordion-collapse collapse show"
-                                                             data-bs-parent="#accordionExample" style="">
-                                                            <div class="accordion-body" id="similarLst">
-                                                                <a class="tbl-util">
-                                                                    <div class="left">
-                                                                        <div class="tac-ty01" style="display:block;"></div>
-                                                                    </div>
-                                                                </a>
-                                                                <div class="right"><a class="tbl-util">
-                                                                </a>
-                                                                    <div class="unit-select" style="
-"><a class="tbl-util">
-                                                                    </a>
-                                                                        <div class="ui-samsik-won-select-wr close aed-sdc-list"
-                                                                             style="opacity:1;"><a class="tbl-util"><select
-                                                                                data-select-class="aed-sdc-list" style="
-    text-align: center;
-    height: 34px;
-    width: 70px;
-">
-                                                                            <option value="1">최신순</option>
-                                                                            <option value="2">거리순</option>
-                                                                            <option value="3">금액순</option>
-                                                                            <option value="4">단가순</option>
-                                                                        </select>
-                                                                        </a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="tbl">
-                                                                    <table class="list_table">
-                                                                        <thead>
-                                                                        <tr>
-                                                                            <th>거래일</th>
-                                                                            <th>주소</th>
-                                                                            <th>거래금액</th>
-                                                                            <th>전용면적(단가)<br>대지권면적(단가)</th>
-                                                                        </tr>
-                                                                        </thead>
-                                                                        <tbody style="
-                                                                            font-size: 14px;
-                                                                        ">
-                                                                        <tr>
-                                                                            <td>59.69</td>
-                                                                            <td>8</td>
-                                                                            <td>202307</td>
-                                                                            <td>31억</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>59.7</td>
-                                                                            <td>5</td>
-                                                                            <td>202307</td>
-                                                                            <td>29억 8000만원</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>59.69</td>
-                                                                            <td>2</td>
-                                                                            <td>202307</td>
-                                                                            <td>31억 3000만원</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>208.48</td>
-                                                                            <td>2</td>
-                                                                            <td>202307</td>
-                                                                            <td>85억</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>59.69</td>
-                                                                            <td>4</td>
-                                                                            <td>202305</td>
-                                                                            <td>27억</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>240.31</td>
-                                                                            <td>5</td>
-                                                                            <td>202303</td>
-                                                                            <td>억 1000만원</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>59.69</td>
-                                                                            <td>1</td>
-                                                                            <td>202302</td>
-                                                                            <td>28억 2000만원</td>
-                                                                        </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-
-                                                                <div class="con-more-area" style="
-                                                                        text-align: center;
-                                                                    ">
-                                                                    <a href="javascript:void(0);" class="btns btn-ct-more">유사 거래
-                                                                        사례 더보기</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
+<!--                                                        </button>-->
                                     <!--// 거래이력 -->
 
 

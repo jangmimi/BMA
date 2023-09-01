@@ -131,10 +131,10 @@ position: absolute;
 }
 .sideContents{
 overflow-y: auto;
-overflow-x: hidden;
-width:335px;
-height: 100%;
-font-size: 14px;
+    overflow-x: hidden;
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
 /* border: 3px solid blue; */
 }
 .scrollspy-example.bg-body-tertiary.p-3.rounded-2{
@@ -501,13 +501,23 @@ margin-top: 30px;
 
 
 #scrollspyHeading6{
-   height: 399px;
+margin-top: 18px;
+padding: 0px 21px 0px 21px;
+    /* width: 100%; */
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+
+   height: 289px;
        display: flex;
        flex-direction: column;
        justify-content: space-between;
 }
 .aed-map-det{
-    height:184px;
+    height:78px;
+}
+
+.aed-sil-deal-price{
+padding: 0px 18px 0px 18px;
 }
 
 .aed-main-box.rpinfo-tab-common{
