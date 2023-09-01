@@ -52,7 +52,7 @@ public class MemberDTO {	// 회원가입 폼 입력 정보 담는 DTO
 		memberEntity.setName(this.name);
 		memberEntity.setNickname(this.nickname);
 		memberEntity.setTel(this.tel);
-		memberEntity.setPwd(this.pwd);
+		if(this.pwd != null && !this.pwd.isEmpty()) { memberEntity.setPwd(this.pwd); }
 		memberEntity.setChoice1(this.choice1);
 		memberEntity.setChoice2(this.choice2);
 	}

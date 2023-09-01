@@ -1,9 +1,11 @@
 package com.ap4j.bma.service.member;
 
 import com.ap4j.bma.config.PasswordEncoderConfig;
+import com.ap4j.bma.model.entity.customerCenter.QnAEntity;
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
 import com.ap4j.bma.model.repository.MemberRepository;
+import com.ap4j.bma.model.repository.QnARepository;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -11,8 +13,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.support.SessionStatus;
 
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
@@ -33,7 +40,10 @@ public class MemberServiceImpl implements MemberService {
 	private MemberRepository memberRepository;
 
 	@Autowired
-	private PasswordEncoderConfig pwdConfig;
+	private PasswordEncoderConfig pwdConfig;	// 비밀번호 암호화 객체 생성
+
+	@Autowired
+	private QnARepository qQnARepository;
 
 	/** 카카오 토큰 얻기 */
 	public String getAccessToken(String code) {
@@ -126,10 +136,6 @@ public class MemberServiceImpl implements MemberService {
 			userInfo.put("phone_number", phone_number);
 			userInfo.put("thumbnail_image", thumbnail_image);
 
-//			Optional<MemberEntity> tmp = memberRepository.findByEmail(email);
-//			log.info("test tmp (email기준 회원정보있나~?) : " + tmp);
-//			log.info("tmp : " + tmp.toString());
-
 		} catch (Exception e) {
 			log.info(e.toString());
 		}
@@ -160,6 +166,14 @@ public class MemberServiceImpl implements MemberService {
 		} catch (Exception e) {
 			log.info(e.toString());
 		}
+	}
+
+	/** 기본 로그아웃 */
+	public void logout(SessionStatus sessionStatus, HttpSession session) {
+		log.info("서비스 Logout() 실행");
+
+		sessionStatus.setComplete();
+		session.invalidate();
 	}
 
 	/** 네이버 토큰 얻기 */
@@ -217,10 +231,21 @@ public class MemberServiceImpl implements MemberService {
 	/** 기본 회원가입 */
 	@Transactional
 	@Override
-	public Long joinBasic(MemberEntity pMember) {
+	public Long joinBasic(@ModelAttribute MemberDTO memberDTO) {
 		log.info("서비스 joinBasic() 실행");
-		memberRepository.save(pMember);
-		return pMember.getId();			// @GeneratedValue 로 id는 자동으로 값 저장
+
+		// pwd는 암호화해서 가입 경로와 별도로 세팅
+		if(memberDTO.getPwd() != null) {
+			memberDTO.setPwd(pwdConfig.passwordEncoder().encode(memberDTO.getPwd()));
+		}
+		// 약관 동의 체크 여부에 따라 값 저장
+		memberDTO.setChoice1(Boolean.TRUE.equals(memberDTO.getChoice1()));
+		memberDTO.setChoice2(Boolean.TRUE.equals(memberDTO.getChoice2()));
+
+		MemberEntity entity = memberDTO.toEntity();
+
+		memberRepository.save(entity);
+		return entity.getId();
 	}
 
 	/** 중복회원 체크 */
@@ -252,7 +277,7 @@ public class MemberServiceImpl implements MemberService {
 		if (findMember.isPresent()) {
 			log.info("로그인 시도하는 email DB에 존재!");
 			MemberEntity memberEntity = findMember.get();
-
+			if(memberEntity.getMember_leave()) { log.info("탈퇴한 회원"); return null; }
 			if(memberEntity.getRoot() == 2) {	// 카카오는 pwd 체크 없이 로그인 진행
 				MemberDTO dto = memberEntity.toDTO();
 				log.info("entity를 toDTO : " +  dto);
@@ -265,6 +290,7 @@ public class MemberServiceImpl implements MemberService {
 
 					MemberDTO dto = memberEntity.toDTO();
 					log.info("entity를 toDTO : " +  dto);
+
 					return dto;
 
 				} else {
@@ -279,13 +305,14 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	/** 회원 탈퇴 - member_leave : true 변경 */
-	public boolean leaveMember(Long id) {
+	public boolean leaveMember(Long id, SessionStatus sessionStatus, HttpSession session) {
 		Optional<MemberEntity> leaveMember = Optional.ofNullable(findMemberById(id));
-
 		if(leaveMember.isPresent()) {
 			MemberEntity member = leaveMember.get();
-			member.setMember_leave(true);
+			member.setMember_leave(true);	// 탈퇴 여부 값 변경
 			memberRepository.save(member);
+			logout(sessionStatus, session);	// 탈퇴 후 로그아웃 처리
+
 			return true;
 		}
 		return false;
@@ -310,10 +337,6 @@ public class MemberServiceImpl implements MemberService {
 
 
 		if(member.isPresent()) {
-			if(memberDTO.getPwd() != null && !memberDTO.getPwd().isEmpty()) {	// 비밀번호 변경 값이 있을 경우
-				log.info("비밀번호 변경 값 있네! 암호화 전 : " + memberDTO.getPwd());
-				memberDTO.setPwd(pwdConfig.passwordEncoder().encode(memberDTO.getPwd()));
-			}
 			memberDTO.setChoice1(Boolean.TRUE.equals(memberDTO.getChoice1()));	// 이 처리 안해주면 언체크시 null됨
 			memberDTO.setChoice2(Boolean.TRUE.equals(memberDTO.getChoice2()));
 
@@ -328,16 +351,23 @@ public class MemberServiceImpl implements MemberService {
 		}
 	}
 	
-	/** email 찾기(이름 연락처로) */
+	/** email 찾기 */
 	@Override
 	public Optional<MemberEntity> findByNameAndTel(String name, String tel) {
 		return memberRepository.findByNameAndTel(name, tel);
 	}
 
-	/** pwd 찾기(이메일 연락처로) */
+	/** pwd 찾기 */
 	@Override
 	public Optional<MemberEntity> findByEmailAndTel(String email, String tel) {
 		return memberRepository.findByEmailAndTel(email, tel);
+	}
+
+	/** 전체 QnA 목록 */
+	@Override
+	public List<QnAEntity> qMyQnaList() {
+
+		return qQnARepository.findAll();
 	}
 
 }
@@ -357,10 +387,3 @@ public class MemberServiceImpl implements MemberService {
 //		}
 //		return validatorResult;
 //	}
-
-	// 아래는 예시 코드입니다.
-//	@Override
-//	@Transactional // 트랜잭션 처리하기
-//	public void addSomething(String something) {
-//	}
-

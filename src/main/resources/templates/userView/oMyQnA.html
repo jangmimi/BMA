@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layouts/include_footer_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>1:1문의</title>
+    <!-- 부트스트랩 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/member/myPage.css}">
+    <link rel="stylesheet" th:href="@{/css/CC/fqnlist.css}">
+    <link rel="stylesheet" th:href="@{/css/CC/CCBar.css}">
+</head>
+<body layout:fragment="content">
+
+<th:block th:if="${loginMember == null}">
+    <div th:replace="oAccessLogin :: oAccessLogin"></div>
+</th:block>
+
+<th:block th:if="${loginMember != null}">
+    <th:block th:object="${loginMember}">
+        <!-- 마이페이지 네비게이션 -->
+        <div id="o-container">
+            <div id="o-content">
+                <!-- inner navbar -->
+                <div class="o-lnb">
+                    <div class="o-wrapper">
+                        <ul class="o-lnb-list">
+                            <li class="o-lnb-item"><a href="/member/qMyPage">내정보</a></li>
+                            <li class="o-lnb-item"><a href="/member/qMyInfoUpdate">내정보수정</a></li>
+                            <li class="o-lnb-item"><a href="#">매물관리</a></li>
+                            <li class="o-lnb-item"><a href="/member/qInterestMaemul">관심매물</a></li>
+                            <li class="o-lnb-item"><a href="/member/qRecentMaemul">최근본매물</a></li>
+                            <li class="o-lnb-item"><a href="/member/qMyQnA" style="color:#26ABED;">1:1문의내역</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="o-mid-wrapper">
+                    <div class="container mt-5" id="o-title-wrap">
+                        <div id="oPageTitle">
+                            <h3 class="h3 fw-bold">1:1 문의내역</h3>
+                            <p>고객님께서 문의하신 내역입니다.</p>
+                        </div>
+                        <div class="oMyQnaTb">
+                            <table class="faq-tb">
+                                <tr>
+                                    <th class="b-n">번호</th>
+                                    <th class="b-n">분류</th>
+                                    <th class="b-t">제목</th>
+                                    <th class="b-t">등록일</th>
+                                </tr>
+                                <!-- 본인이 작성한 문의만 표시하는 조건문 추가해야 함 -->
+                                <tr th:each="myQna : ${myQnaList}">
+                                    <td id="num" th:text="${myQna.id}">번호</td>
+                                    <td id="category" th:text="${myQna.category}">분류</td>
+                                    <td><a th:href="@{/faq/view(id=${myQna.id})}" th:text="${myQna.title}">제목</a></td>
+                                    <td><a th:href="@{/faq/view(id=${myQna.id})}" th:text="${myQna.createdAt}">등록일</a></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </th:block>
+</th:block>
+<!-- 부트스트랩 script -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</body>
+</html>

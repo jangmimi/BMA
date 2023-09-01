@@ -47,8 +47,8 @@
                         </div>
                     </div>
                     <!-- 로그인 실패 메시지 출력 영역 -->
-                    <div th:if="${session.errorMsg}">
-                        <p th:text="${session.errorMsg}" class="oErrorMsg"></p>
+                    <div th:if="${errorMsg}">
+                        <p th:text="${errorMsg}" class="oErrorMsg"></p>
                     </div>
 
                     <div class="form-floating">
