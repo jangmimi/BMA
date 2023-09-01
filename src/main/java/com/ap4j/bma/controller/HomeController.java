@@ -23,9 +23,9 @@ public class HomeController {
 //	}
 
 	@RequestMapping("/")
-	public String mainPage(HttpSession session){
+	public String mainPage(HttpSession session, Model model){
 		log.info("session userEmail : " + session.getAttribute("loginMember"));
-
+		model.addAttribute("loginMember");
 		return "mainPage/mainPage";
 	}
 
