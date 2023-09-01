@@ -40,10 +40,6 @@ public class MapController {
         // 도로명, 구주소, 아파트명으로 검색시 해당 아파트 정보
         AptDTO aptSearch = aptServiceImpl.findByKeyword(keyword);
 
-        System.out.println("행정동 리스트  = " + hjdList);
-        System.out.println("줌레벨 = " + zoomLevel);
-
-
         Map<String, Object> responseData = new HashMap<>();
         responseData.put("aptList", aptList); // 아파트 리스트
         responseData.put("aptRealTradeDTOList", aptRealTradeDTOList); // 아파트 실거래가 리스트

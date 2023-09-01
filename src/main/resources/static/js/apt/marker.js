@@ -5,7 +5,7 @@
 var container = document.getElementById('map');
 var options = {
     center: new kakao.maps.LatLng(37.535814, 127.008644), // 초기 맵 중심 좌표
-    level: 4 // 초기 줌 레벨
+    level: 5 // 초기 줌 레벨
 };
 var map = new kakao.maps.Map(container, options);
 
@@ -83,7 +83,7 @@ kakao.maps.event.addListener(map, 'tilesloaded', function () {
     var southWest = bounds.getSouthWest();
     var northEast = bounds.getNorthEast();
     var currentZoomLevel = map.getLevel(); // 현재 줌 레벨 가져오기
-
+    console.log("실행시 줌레벨 : " + currentZoomLevel);
     var dataToSend = {
         southWestLat: southWest.getLat(),
         southWestLng: southWest.getLng(),
@@ -97,7 +97,7 @@ kakao.maps.event.addListener(map, 'tilesloaded', function () {
         url: '/map/main',
         data: dataToSend,
         success: function (response) {
-            if (response && response.aptList && response.aptList.length > 0) {
+            if (response.aptList) {
                 response.aptList.forEach(function (apt) {
                     var markerPosition = new kakao.maps.LatLng(apt.latitude, apt.longitude);
                     var markerKey = markerPosition.toString();
@@ -140,22 +140,24 @@ function checkEnter(event) {
         closeOtherOverlays(); // 열려있는 아파트리스트 오버레이 닫기
         // 입력한 키워드 공백 제거
         var keyword = document.querySelector('.aSearchInput').value.replaceAll(' ', '');
+        var setZoomLevel = 5;
 
         $.ajax({
             type: 'POST',
             url: '/map/main',
             data: {
-                keyword: keyword
+                keyword: keyword,
+                zoomLevel: setZoomLevel
             },
             success: function (response) {
                 // 검색 결과에 따라 마커를 생성하고 지도에 표시하기
-                if (response && response.aptSearch) {
-
+                if (response.aptSearch) {
                     var result = response.aptSearch; // 키워드 검색후 전송받은 해당 아파트 데이터
                     var newCenter = new kakao.maps.LatLng(result.latitude, result.longitude);
 
-                    map.setLevel(4); // 줌 레벨 4로 변경
+                    map.setLevel(setZoomLevel); // 줌레벨 변경
                     map.setCenter(newCenter); // 해당 아파트 위치로 센터 변경
+                    var currentZoomLevel = map.getLevel(); // 이동시 줌레벨 5로 설정 (줌레벨 안바뀐채로 이동되는 경우 있어서 방지차원)
 
                     var markerPosition = new kakao.maps.LatLng(result.latitude, result.longitude);
                     var markerKey = markerPosition.toString();
@@ -167,14 +169,12 @@ function checkEnter(event) {
                         "<p>" + result.roadName + "</p>" +
                         "</div>" +
                         "</div>";
-                    if (existingMarkers[markerKey]) { // 검색한 아파트가 이미 보고있는 화면에 있어서 마커가 찍혀있으면 기존 마커 사용
-                        var marker = existingMarkers[markerKey];
-                        openOverlay(marker.overlay);
-                        updateSidebar(result);
-                        updateTransactionTable(result.roadName);
-                    } else { // 새로운 화면으로 이동하여 마커가 없다면 새로운 마커 생성
-                        createMarker(markerPosition, markerContent, result);
-                    }
+                    createMarker(markerPosition, markerContent, result);
+                    var marker = existingMarkers[markerKey];
+                    openOverlay(marker.overlay);
+                    updateSidebar(result);
+                    updateTransactionTable(result.roadName);
+                    console.log("클릭시 마커생성");
                 }
             }
         });
@@ -206,7 +206,7 @@ kakao.maps.event.addListener(map, 'idle', function () {
         url: '/map/main',
         data: dataToSend,
         success: function (response) {
-            if (response && response.aptList && response.aptList.length > 0 && currentZoomLevel <= 5) {
+            if (response.aptList && currentZoomLevel <= 5) {
                 response.aptList.forEach(function (apt) {
                     var markerPosition = new kakao.maps.LatLng(apt.latitude, apt.longitude);
                     var markerKey = markerPosition.toString();
@@ -223,7 +223,8 @@ kakao.maps.event.addListener(map, 'idle', function () {
                         createMarker(markerPosition, markerContent, apt);
                     }
                 });
-            } else {
+            }
+            if (currentZoomLevel >= 6) {  // 위 if문뒤에 else로 조건 주면 오류남 따로 조건 줘야함
                 // 줌레벨 6이상시 마커 삭제
                 clusterer.clear();
                 for (var key in existingMarkers) {
@@ -330,7 +331,7 @@ function updateTransactionTable(roadName) {
             var tableBody = $(".tbl tbody");
             tableBody.empty();
 
-            if (response && response.aptRealTradeDTOList && response.aptRealTradeDTOList.length > 0) {
+            if (response.aptRealTradeDTOList) {
                 /* 차트 */
                 var arrrange = [];
                 var arrrange2 = [];
@@ -385,7 +386,6 @@ function updateTransactionTable(roadName) {
                     }]
                 };
 
-
                 myChart = new Chart(chartCanvas, {
                     type: 'line',
                     data: chartData,
@@ -424,7 +424,6 @@ function updateTransactionTable(roadName) {
                         }
                     }
                 });
-
 
                 window.myChart = myChart;
 
