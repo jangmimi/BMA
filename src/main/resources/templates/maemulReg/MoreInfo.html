@@ -9,17 +9,48 @@
     <link rel="stylesheet" href="/static/css/maemulReg.css">
 
     <style>
-        .prenext{
-        margin-top:10%;
+
+        hr {
+     border-bottom : 2px solid #26A9E0;
+     }
+
+     .layout{
+    width : 80%;
+    margin : auto;
+    margin-top: 40px;
+    }
+
+     .number{
+        color: #26A9E0
         }
 
-       .prev{
-         float: left;
-        }
+     .prenext{
+     margin-top:10%;
+     }
 
-        .next{
-        float: right;
-        }
+    .prev{
+      float: left;
+     }
+
+     .next{
+     float: right;
+     }
+
+         table{
+      width : 95%;
+      margin-top:70px;
+      margin : auto;
+      border-collapse: collapse;
+      border: 1px solid #ddd;
+     }
+
+     table th {
+     padding: 15px;
+     background: #ececec;
+     font-size: 15px;
+
+     }
+
 
     </style>
 
@@ -32,7 +63,7 @@
 
 <div class="layout">
 
-    <h3 class="category"><b class="number">04 </b>상세 정보 입력</h3><br>
+    <h2 class="category"><b class="number">04 </b>상세 정보 입력</h2><br>
     <table border="1">
         <tr>매물 이미지 등록하는 버튼</tr><br>
         <tr><input type="text" placeholder="제목"></tr><br>
@@ -93,27 +124,6 @@
                 <input type="checkbox" name="option1" value="value1">전자도어락
             </td>
         </tr>
-        <tr>
-            <th>위치 및 주변 시설</th>
-            <td>
-                <input type="checkbox" name="option1" value="value1">편의시설
-                <input type="checkbox" name="option1" value="value1">지하철역
-                <input type="checkbox" name="option1" value="value1">편의점
-                <input type="checkbox" name="option1" value="value1">카페
-                <input type="checkbox" name="option1" value="value1">은행
-                <input type="checkbox" name="option1" value="value1">관공서
-            </td>
-        </tr>
-        <tr>
-            <th>학군정보</th>
-            <td>
-                <input type="checkbox" name="option1" value="value1">어린이집
-                <input type="checkbox" name="option1" value="value1">유치원
-                <input type="checkbox" name="option1" value="value1">초등학교
-                <input type="checkbox" name="option1" value="value1">중학교
-                <input type="checkbox" name="option1" value="value1">고등학교
-            </td>
-        </tr>
     </table>
     <hr/>
 
@@ -139,4 +149,5 @@
 </div>
 
 </body>
+
 </html>
