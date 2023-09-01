@@ -19,8 +19,6 @@ padding:0;
     display: flex;
     transition: 0.5s;
     justify-content: space-between;
-    position:absolute;
-    top:0;
 }
 
 /*flex 정렬을 위해 오른쪽 왼쪽 나뉨*/
