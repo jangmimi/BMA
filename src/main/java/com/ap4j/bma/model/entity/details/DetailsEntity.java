@@ -1,2 +1,4 @@
-package com.ap4j.bma.model.entity.details;public class DetailsEntity {
+package com.ap4j.bma.model.entity.details;
+
+public class DetailsEntity {
 }

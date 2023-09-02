@@ -1,4 +1,4 @@
-package com.ap4j.bma.model.entity.details;
+package com.ap4j.bma.model.entity.meamulReg;
 
 
 import lombok.*;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class DetailsDTO {
+public class MaeMulRegDTO {
 
 
 }

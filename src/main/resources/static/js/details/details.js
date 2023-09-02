@@ -1,24 +1,6 @@
 
 
 $(document).ready(function() {
-	(function() {
-		var script = document.createElement('script');
-		script.src = '//dapi.kakao.com/v2/maps/sdk.js?appkey=9a3ebc8549eeffd6c970f997b9f91c0c';
-		script.async = true;
-		document.getElementsByTagName('head')[0].appendChild(script);
-
-		script.onload = function() {
-			// Kakao 지도 스크립트가 로드되면 실행
-			var container = $('.y-map'); // 지도를 담을 영역의 DOM 레퍼런스
-			var options = { // 지도를 생성할 때 필요한 기본 옵션
-				center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표.
-				level: 3 // 지도의 레벨(확대, 축소 정도)
-			};
-
-			// 지도 초기화
-			var map = new kakao.maps.Map(container.get(0), options);
-		};
-	})();
 
 	// 초기에는 "편의시설" wrap만 표시되도록 설정
 	$('.y-convenience').css('display', 'inline-block');
