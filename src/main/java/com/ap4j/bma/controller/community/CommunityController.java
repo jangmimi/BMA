@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 //import java.util.List;
 
+@SessionAttributes("userEmail")
 @Controller
 public class CommunityController {
     @Autowired
