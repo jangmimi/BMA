@@ -103,8 +103,8 @@
 #oMaemulAllView {
     background-color: #26abed;
     color: white;
-    padding: 5px;
-    font-size: 13px;
+    padding: 5px 8px;
+    font-size: 15px;
 }
 .oUpdateLinkBtn{
     width: 150px;
@@ -205,4 +205,14 @@
 /* oMyQnA */
 .oMyQnaTb {
     padding: 30px 0px;
+}
+.o-tb-btn {
+    text-align: center;
+}
+.o-tb-btn button {
+    margin: 0 auto;
+    border: none;
+    background-color: #26abed;
+    color: white;
+    font-size: 18px;
 }

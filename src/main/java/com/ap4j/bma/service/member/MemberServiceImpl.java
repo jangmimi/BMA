@@ -335,12 +335,15 @@ public class MemberServiceImpl implements MemberService {
 		Optional<MemberEntity> member = memberRepository.findById(id);
 		log.info("조회된 member : " + member);
 
-
 		if(member.isPresent()) {
+			MemberEntity memberEntity = member.get();
+
+			// pwd는 암호화해서 가입 경로와 별도로 세팅
+			if(memberDTO.getPwd() != null && !memberDTO.getPwd().isEmpty()) {
+				memberDTO.setPwd(pwdConfig.passwordEncoder().encode(memberDTO.getPwd()));
+			}
 			memberDTO.setChoice1(Boolean.TRUE.equals(memberDTO.getChoice1()));	// 이 처리 안해주면 언체크시 null됨
 			memberDTO.setChoice2(Boolean.TRUE.equals(memberDTO.getChoice2()));
-
-			MemberEntity memberEntity = member.get();
 			memberDTO.updateEntity(memberEntity);
 
 			log.info("수정된 정보 : " + memberEntity);

@@ -38,12 +38,13 @@
                     </div>
                 </div>
                 <div class="o-mid-wrapper">
-                    <div class="container mt-5" id="o-title-wrap">
+                    <div class="container mt-5" id="o-tb-wrap">
                         <div id="oPageTitle">
                             <h3 class="h3 fw-bold">1:1 문의내역</h3>
                             <p>고객님께서 문의하신 내역입니다.</p>
                         </div>
                         <div class="oMyQnaTb">
+                            <!-- 총 내 문의 내역 갯수 출력 영역 추가 해야함 -->
                             <table class="faq-tb">
                                 <tr>
                                     <th class="b-n">번호</th>
@@ -51,7 +52,8 @@
                                     <th class="b-t">제목</th>
                                     <th class="b-t">등록일</th>
                                 </tr>
-                                <!-- 본인이 작성한 문의만 표시하는 조건문 추가해야 함 -->
+                                <!-- 본인이 작성한 문의만 표시하는 조건문 -->
+<!--                                <span th:if="${myQnaList.id == loginMember.id}"></span>-->
                                 <tr th:each="myQna : ${myQnaList}">
                                     <td id="num" th:text="${myQna.id}">번호</td>
                                     <td id="category" th:text="${myQna.category}">분류</td>
@@ -60,9 +62,13 @@
                                 </tr>
                             </table>
                         </div>
+                        <div class="o-tb-btn">
+                            <button class="btn btn-primary" th:onclick="|location.href='@{/qna}'|">문의하기</button>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
     </th:block>
 </th:block>
 <!-- 부트스트랩 script -->
