@@ -38,6 +38,13 @@
                         <p th:if="${findEmailFailed != null}" th:text="${findEmailFailed}"></p>
                     </div>
                 </span>
+<!--                <input type="button" class="btn btn-outline-dark" id="btnEmailCheck" style="width:90px;"-->
+<!--                       value="중복검사" onclick="findEmail(event)" />-->
+<!--                <span>-->
+<!--                    <div class="ofindResult" id="resultContainer">-->
+<!--                        &lt;!&ndash; 결과가 여기에 동적으로 업데이트됩니다. &ndash;&gt;-->
+<!--                    </div>-->
+<!--                </span>-->
                 <div class="oFindBtn-container">
                     <input type="submit" class="btn btn-outline-primary mb-5 mt-3" value="이메일 찾기" style="width:46%;" />
                 </div>
@@ -67,34 +74,6 @@
             </form>
         </div>
     </div>
-
-    <script>
-        function findEmail() {
-            let name = $('#name').value;
-            let tel = $('#tel').value;
-
-            fetch('/qFindEmail', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: 'name=' + encodeURIComponent(name) + '&tel=' + encodeURIComponent(tel),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.cnt === 1) {
-                    alert('이메일: ' + data.findEmail);
-                } else {
-                    alert('일치하는 회원이 없습니다.');
-                }
-            })
-            .catch(error => {
-                console.error('에러 발생:', error);
-            });
-
-            return false; // 폼 제출 방지
-        }
-    </script>
 
     <script th:src="@{/js/member/myPage.js}"></script>
     <!-- 부트스트랩 script -->

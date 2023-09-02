@@ -16,11 +16,11 @@
     padding: 20px 50px;
     margin: 0px;
 }
-#btnEmailCheck {
+#btnEmailCheck, #btnNicknameCheck {
     width: 90px;
     margin-left: 6px;
 }
-.oAgree {
+agree {
     margin-right: 5px;
 }
 .oAgree-li {
@@ -37,4 +37,12 @@
 .oLabelColor {
     color: gray;
     font-size: 14px;
+}
+#email, #nickname {
+    width: 254px;
+}
+#emailErr, nicknameErr {
+    text-align: left;
+    color: red;
+    font-size: 12px;
 }

@@ -20,18 +20,25 @@
                 <div id="oJoinTitle">
                     <h3 class="h3 fw-bold">회원가입</h3>
                 </div>
-                <form th:action="@{/member/qJoinBasic}" th:object="${memberDTO}" method="POST" onsubmit="return oJoinCheck()">
+                <form th:action="@{/member/qJoinBasic}" method="POST" onsubmit="return oJoinCheck()">
                     <div class="form-floating mb-3 mr-3" style="display:flex; flex-wrap:wrap">
                         <input type="text" class="form-control" id="email" name="email"
-                               placeholder="myemail@email.com" autofocus="autofocus" style="width:254px;">
+                               placeholder="myemail@email.com" autofocus="autofocus">
                         <label th:for="email" class="oLabelColor">이메일 주소</label>
-                        <input type="button" class="btn btn-outline-dark" id="btnEmailCheck" style="width:90px;"
+                        <input type="button" class="btn btn-outline-dark" id="btnEmailCheck"
                                value="중복검사" onclick="checkEmail()" />
-                        <div class="form-floating" id="emailErr" style="text-align:left; color:red; font-size:12px;"></div>
+                        <div class="form-floating" id="emailErr"></div>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="name" name="name" placeholder="홍길동">
                         <label th:for="name" class="oLabelColor">이름(실명)</label>
+                    </div>
+                    <div class="form-floating mb-3" style="display:flex; flex-wrap:wrap">
+                        <input type="text" class="form-control" id="nickname" name="nickname" placeholder="닉네임">
+                        <label th:for="nickname" class="oLabelColor">닉네임</label>
+                        <input type="button" class="btn btn-outline-dark" id="btnNicknameCheck"
+                               value="중복검사" onclick="checkNickname()" />
+                        <div class="form-floating" id="nicknameErr"></div>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Password">
@@ -44,10 +51,6 @@
                         <label for="pwdCheck" class="oLabelColor">비밀번호 확인</label>
                     </div>
 
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="nickname" name="nickname" placeholder="닉네임">
-                        <label th:for="nickname" class="oLabelColor">닉네임</label>
-                    </div>
                     <div class="form-floating mb-3">
                         <input type="tel" class="form-control" id="tel" name="tel" placeholder="숫자만 입력 '-'제외">
                         <label th:for="tel" class="oLabelColor">연락처</label>
@@ -66,31 +69,31 @@
                             </li>
                             <li class="oAgree-li">
                                 <div>
-                                    <input type="checkbox" class="oAgree" name="agree" data-required>
+                                    <input type="checkbox" class="oMustAgree" name="agree" data-required>
                                     <span class="mustch">[필수] </span>만14세 이상입니다.
                                 </div>
                             </li>
                             <li class="oAgree-li">
                                 <div>
-                                    <input type="checkbox" class="oAgree" name="agree" data-required>
+                                    <input type="checkbox" class="oMustAgree" name="agree" data-required>
                                     <span class="mustch">[필수] </span>이용약관 동의
                                 </div>
                             </li>
                             <li class="oAgree-li">
                                 <div>
-                                    <input type="checkbox" class="oAgree" name="agree" data-required>
+                                    <input type="checkbox" class="oMustAgree" name="agree" data-required>
                                     <span class="mustch">[필수] </span>개인정보 수집·이용 동의
                                 </div>
                             </li>
                             <li class="oAgree-li">
                                 <div>
-                                    <input type="checkbox" class="oAgree" name="agree" data-required>
+                                    <input type="checkbox" class="oMustAgree" name="agree" data-required>
                                     <span class="mustch">[필수] </span>위치 기반 서비스약관 동의
                                 </div>
                             </li>
                             <li class="oAgree-li">
                                 <div>
-                                    <input type="checkbox" class="oAgree" name="agree" data-required>
+                                    <input type="checkbox" class="oMustAgree" name="agree" data-required>
                                     <span class="mustch">[필수] </span>매물 관리 정책 동의
                                 </div>
                             </li>

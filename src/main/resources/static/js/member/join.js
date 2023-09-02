@@ -30,7 +30,7 @@ $(document).ready(function(){
     });
 });
 
-<!-- 이메일 중복 체크-->
+// 이메일 중복 체크
 function checkEmail() {
     let email = $('#email').val();
 
@@ -50,6 +50,33 @@ function checkEmail() {
             //    $('#email').val('');
             } else if(email.length == 0) {
                 alert('이메일을 입력해주세요.');
+            }
+        },
+        error:function() {
+            alert("에러입니다.");
+        }
+    });
+};
+// 닉네임 중복검사
+function checkNickname() {
+    let nickname = $('#nickname').val();
+
+    $.ajax({
+        url: '/member/qNicknameDuplicationCheck',
+        type: 'post',
+        data: {nickname:nickname},
+        success:function(cnt) {
+            if(cnt == 0 && nickname.length != 0) {
+                $('#btnNicknameCheck').attr('class','btn btn-primary');
+                $('#btnNicknameCheck').val("사용 가능");
+                alert('닉네임 사용이 가능합니다.');
+            } else if(cnt != 0) {
+                $('#btnNicknameCheck').attr('class','btn btn-danger');
+                $('#btnNicknameCheck').val("사용 불가");
+                alert('이미 존재하는 닉네임입니다.\n닉네임을 다시 입력해주세요.');
+            //    $('#email').val('');
+            } else if(nickname.length == 0) {
+                alert('닉네임을 입력해주세요.');
             }
         },
         error:function() {
@@ -133,8 +160,10 @@ function oJoinCheck() {
     let pwdCheck = $('#pwdCheck').val();
     let nickname = $('#nickname').val();
     let tel = $('#tel').val();
-    let checkedboxes = $("input[type='checkbox']");
+    let checkedboxes = $("input.oMustAgree:checked");
     let allChecked = true;
+    let emailCheckOk = $("#btnEmailCheck").val();
+    let nicknameCheckOk = $("#btnNicknameCheck").val();
 
     if(email === '') {
         alert('이메일을 입력해주세요.');
@@ -164,14 +193,16 @@ function oJoinCheck() {
         alert('이메일 형식으로 입력해주세요.');
         return false;
     }
-
     if (telreg.test(tel) == false) {
         alert('연락처 형식으로 입력해주세요.');
         return false;
     }
-    if(!allChecked) {
+    if(checkedboxes.length !== $(".oMustAgree").length) {
         alert('필수항목을 모두 체크해주세요.');
         return false;
     }
-
+    if(!(emailCheckOk == '사용 가능' && nicknameCheckOk == '사용 가능')) {
+        alert('중복체크를 확인해주세요.');
+        return false;
+    }
 }

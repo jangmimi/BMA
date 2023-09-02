@@ -31,57 +31,7 @@ function oUpdateCheck() {
     if(!confirmUpdate) return false;
 }
 
-// 이메일/비밀번호 찾기 submit 전에 공백 체크
-function oFindEmailCheck() {
-    let name = $('#name').val();
-    let tel = $('#tel').val();
-    if(name === '') {
-        alert('이름을 입력해주세요.');
-        return false;
-    }
-    if(tel === '') {
-        alert('연락처를 입력해주세요.');
-        return false;
-    }
-}
-function oFindPwdCheck() {
-    let emailpwd = $('#emailpwd').val();
-    let telpwd = $('#telpwd').val();
-    if(emailpwd === '') {
-        alert('이메일 입력해주세요.');
-        return false;
-    }
-    if(telpwd === '') {
-        alert('연락처를 입력해주세요.');
-        return false;
-    }
-}
-
-// 이메일 찾기 ajax로
-function qFindEmailCheck() {
-    let email = $('#email').val();
-
-    $.ajax({
-        url: '/member/qFindEmailCheck',
-        type: 'post',
-        data: {email:email},
-        success:function(findEmail) {
-            if(find != null) {
-                $('#btnEmailCheck').attr('class','btn btn-primary');
-            } else if(cnt != 0) {
-                $('#btnEmailCheck').attr('class','btn btn-danger');
-                $('#btnEmailCheck').val("사용 불가");
-                alert('이미 존재하는 이메일입니다.\n이메일을 다시 입력해주세요.');
-            //    $('#email').val('');
-            }
-        },
-        error:function() {
-            alert("에러입니다.");
-        }
-    });
-};
-
-<!-- 비밀번호/비밀번호 확인 일치 여부 체크, 비밀번호 형식 체크 -->
+// 비밀번호/비밀번호 확인 일치 여부 체크, 비밀번호 형식 체크
 $(document).ready(function(){
     $("#pwd, #pwdCheck").focusout(function(){
         let pwdValue = $('#pwd').val();
@@ -107,4 +57,112 @@ function oDeleteCheck() {
     let answer = confirm('정말 탈퇴하시겠습니까?');
     if(answer) { return true; }
     else { return false; }
+}
+
+/* oFindMemberInfo */
+function findEmail() {
+    let name = $('#name').value;
+    let tel = $('#tel').value;
+
+    fetch('/qFindEmail', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'name=' + encodeURIComponent(name) + '&tel=' + encodeURIComponent(tel),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.cnt === 1) {
+            alert('이메일: ' + data.findEmail);
+        } else {
+            alert('일치하는 회원이 없습니다.');
+        }
+    })
+    .catch(error => {
+        console.error('에러 발생:', error);
+    });
+
+    return false; // 폼 제출 방지
+}
+// 이메일 찾기 submit
+//function findEmail(event) {
+//    let name = $('#name').value;
+//    let tel = $('#tel').value;
+//
+//    fetch('/qFindEmail', {
+//        method: 'POST',
+//        headers: {
+//            'Content-Type': 'application/x-www-form-urlencoded',
+//        },
+//        body: 'name=' + encodeURIComponent(name) + '&tel=' + encodeURIComponent(tel),
+//    })
+//    .then(response => response.json())
+//    .then(data => {
+//        if (data.cnt === 1) {
+//            alert('이메일: ' + data.findEmail);
+//        } else {
+//            alert('일치하는 회원이 없습니다.');
+//        }
+//    })
+//    .catch(error => {
+//        console.error('에러 발생:', error);
+//    });
+//    return false; // 폼 제출 방지
+//}
+
+//test
+//function findEmail(event) {
+//    event.preventDefault(); // 폼 제출 방지
+//    let name = $('#name').val();
+//    let tel = $('#tel').val();
+//
+//    fetch('/qFindEmailtest', {
+//        method: 'POST',
+//        headers: {
+//            'Content-Type': 'application/x-www-form-urlencoded',
+//        },
+//        body: 'name=' + encodeURIComponent(name) + '&tel=' + encodeURIComponent(tel),
+//    })
+//    .then(response => response.json())
+//    .then(data => {
+//        if (data.findEmail) {
+//            // 결과를 현재 페이지에 표시
+//            $('#resultContainer').html('이메일: ' + data.findEmail);
+//        } else {
+//            // 결과가 없는 경우 메시지 표시
+//            alert('이메일 : ' + data.findEmail);
+//            $('#resultContainer').html('일치하는 회원이 없습니다.');
+//        }
+//    })
+//    .catch(error => {
+//        console.error('에러 발생:', error);
+//    });
+//}
+
+
+// 이메일/비밀번호 찾기 submit 전에 공백 체크
+function oFindEmailCheck() {
+    let name = $('#name').val();
+    let tel = $('#tel').val();
+    if(name === '') {
+        alert('이름을 입력해주세요.');
+        return false;
+    }
+    if(tel === '') {
+        alert('연락처를 입력해주세요.');
+        return false;
+    }
+}
+function oFindPwdCheck() {
+    let emailpwd = $('#emailpwd').val();
+    let telpwd = $('#telpwd').val();
+    if(emailpwd === '') {
+        alert('이메일 입력해주세요.');
+        return false;
+    }
+    if(telpwd === '') {
+        alert('연락처를 입력해주세요.');
+        return false;
+    }
 }

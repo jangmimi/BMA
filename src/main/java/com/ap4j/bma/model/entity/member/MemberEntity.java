@@ -15,24 +15,24 @@ public class MemberEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	// Idx 자동 증가
 	private Long id;	// 기본 키(DB PK)
-	@Column
+	@Column(unique = true)
 	private String email;
 	@Column
 	private String name;
 	@Column
 	private String pwd;
-	@Column
+	@Column(unique = true)
 	private String nickname;
 	@Column
 	private String tel;
 	@Column
 	private int root;	// 가입 경로
 	@Column
-	private boolean choice1;	// 약관 동의 선택 여부
+	private Boolean choice1;	// 약관 동의 선택 여부
 	@Column
-	private boolean choice2;
+	private Boolean choice2;
 	@Column
-	private boolean member_leave;	// 회원 탈퇴 여부
+	private Boolean member_leave;	// 회원 탈퇴 여부
 
 
 	@Builder	// 빌더 패턴 적용

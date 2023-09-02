@@ -25,7 +25,7 @@
                         <li class="o-lnb-item"><a href="#">매물관리</a></li>
                         <li class="o-lnb-item"><a href="/member/qInterestMaemul">관심매물</a></li>
                         <li class="o-lnb-item"><a href="/member/qRecentMaemul">최근본매물</a></li>
-                        <li class="o-lnb-item"><a href="#">1:1문의내역</a></li>
+                        <li class="o-lnb-item"><a href="/member/qMyQnA">1:1문의내역</a></li>
                     </ul>
                 </div>
             </div>
@@ -33,9 +33,19 @@
                 <div class="oInfo-top">
                     <div class="oInfo-top-wrapper">
                         <div class="oInfo-left">
-                            <input type="hidden" id="id" name="id" th:value="*{id}" />
-                            <span th:text="*{name}" ></span>님<br/>
-                            <span th:text="*{email}" style="font-weight:bold; font-size:13px"></span>
+                            <div class="oThumbnailImg">
+                                <img class="myImg" th:if="${thumbnail_image!=null}" th:src="${thumbnail_image}" alt="썸네일이미지">
+                                <img class="myImg" th:if="${thumbnail_image==null}" th:src="@{/img/defaultProfile.jpg}" alt="썸네일이미지">
+                            </div>
+                            <div class="oInfoMember">
+                                <div class="oInfoMemberContain">
+                                    <input type="hidden" id="id" name="id" th:value="*{id}" />
+                                    <span th:text="*{name}" id="oInfoMemberName"></span>님<br/>
+                                    <span th:text="${root}" id="oInfoMemberRoot"></span>
+                                </div>
+                                <span th:text="*{email}" id="oInfoMemberEmail"></span>
+<!--                                <span th:text="*{tel}" id="oInfoMemberTel"></span>-->
+                            </div>
                         </div>
                         <div class="oInfo-right">
                             <div>
@@ -59,6 +69,7 @@
                     <div class="oMeamulTitleContainer">
                         <div class="oMeamulTabLeft">
                             <button type="button" class="oMaemulLink" id="oInterestMaemul" onclick="location.href='#'">관심매물</button>
+                            |
                             <button type="button" class="oMaemulLink" id="oRecentMaemul" onclick="location.href='#'">최근본매물</button>
                         </div>
                         <div class="oMeamulTabRight">
@@ -122,27 +133,6 @@
                         </table>
                     </div>
                 </div>
-<!--                <div class="oMyInfo-bottom">-->
-<!--                    <div class="menubar">-->
-<!--    &lt;!&ndash;                    <button type="button" class="menu-c" id="oInterestMaemul" onclick="location.href = '/notice/list'" >관심매물</button>&ndash;&gt;-->
-<!--    &lt;!&ndash;                    <button type="button" class="menu" id="oRecentMaemul" onclick="location.href = '/guide'" >최근본매물</button>&ndash;&gt;-->
-<!--                        <button type="button" class="oMaemulLink" id="oInterestMaemul" onclick="location.href = '#'" >관심매물</button>-->
-<!--                        <button type="button" class="oMaemulLink" id="oRecentMaemul" onclick="location.href = '#'" >최근본매물</button>-->
-<!--                    </div>-->
-<!--                    <table style="margin-top: 15px; align:center;">-->
-<!--                        <tr>-->
-<!--                            <th>거래종류</th>-->
-<!--                            <th>매물종류</th>-->
-<!--                            <th>소재지 / 상세주소 매물설명</th>-->
-<!--                            <th>면적</th>-->
-<!--                            <th>가격</th>-->
-<!--                            <th>삭제</th>-->
-<!--                        </tr>-->
-<!--                        <tr>-->
-<!--                            <td colspan="6">조회된 데이터가 없습니다.</td>-->
-<!--                        </tr>-->
-<!--                    </table>-->
-<!--                </div>-->
             </div>
         </div>
     </div>
@@ -154,5 +144,3 @@
             crossorigin="anonymous"></script>
 </body>
 </html>
-
-<!-- merge 후 push 안한거 확인 -->
