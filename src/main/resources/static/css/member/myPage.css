@@ -1,3 +1,7 @@
+.oLayout {
+    width: 1000px;
+    margin: 0 auto;
+}
 .n-header-list {
     margin: 16px 0px;
     padding: 0px 0px 0px 40px;
@@ -11,8 +15,7 @@
 .o-wrapper {
     position: relative;
     display: block;
-    margin: 0 auto;
-    width: 1000px;
+    margin-left: 205px;
 }
 .o-lnb-list {
     font-family: 'Noto Sans KR', sans-serif;
@@ -23,7 +26,6 @@
     line-height: 1;
     list-style: none;
     margin: 0;
-/*    padding: 0;*/
 }
 .o-lnb-item {
     position: relative;
@@ -38,19 +40,78 @@
     text-decoration-line: none;
 }
 .oInfo-top {
+    height: 250px;
     padding: 30px 0;
 }
+.oInfo-top-wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin: 30px 0px;
+}
+.oInfo-left {
+   display: flex;
+}
+.oInfoMember {
+    margin-left: 30px;
+}
+.oInfoMemberContain {
+   font-size: 22px;
+   font-weight:bold;
+   display: flex;
+   align-items: center;
+}
+#oInfoMemberRoot {
+    font-size: 14px;
+    border: 1px solid #26abed;
+    color: #26abed;
+    margin-left: 10px;
+    padding: 0px 4px;
+}
+#oInfoMemberEmail {
+   font-size: 15px;
+   font-weight:bold;
+}
 .oMaemulCnt {
-    background-color: #999999;
+    text-align: center;
+    align-items: center;
+    display: grid;
+    background-color: white;
+    float: right;
     width: 150px;
     height: 100px;
-    border: 1px solid gray;
+    border: 1px solid #bbc7d6;
+}
+.oMeamulContainer {
+    width: 1000px;
+    display: contents;
+}
+.oMeamulTitleContainer {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid black;
+    margin-bottom: 20px;
+    padding: 0px 0px 10px;
+}
+.oMeamulTabLeft {
+    font-size: 17px;
 }
 .oMaemulLink {
     font-weight: 700;
     border: none;
     background-color: white;
-    font-size: 18px;
+}
+#oMaemulAllView {
+    background-color: #26abed;
+    color: white;
+    padding: 5px 8px;
+    font-size: 15px;
+}
+.oUpdateLinkBtn{
+    width: 150px;
+}
+.oCardMaemul {
+    text-decoration: none;
+    color: black
 }
 #oInterestMaemul {
     color: #25AAE1;
@@ -58,14 +119,15 @@
 #oRecentMaemul {
     color: #999999;
 }
-.oInfo-top {
-    margin-left: 40px;
-    margin-right: 40px;
-}
-.oInfo-top-wrapper {
+.oInfo-right {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
 }
+.oMaemulContainer {
+    display: flex;
+    justify-content: center;
+}
+
 
 /*oMyInfoUpdate css*/
 .form-floating {
@@ -87,18 +149,18 @@
    width: 90px;
    margin-left: 6px;
 }
-.oAgree {
+.oAgree,.oMustAgree {
    margin-right: 5px;
 }
 .oAgree-li {
    margin: 10px;
 }
 .mustch {
-   font-weight: 500;
-   color: #129DED;
+   font-weight: 600;
+   color: #26ABED;
 }
-.userch {
-   font-weight: 500;
+.selch {
+   font-weight: 600;
    color: gray;
 }
 
@@ -130,4 +192,27 @@
     color: red;
     font-size: 14px;
     margin-top: 20px;
+}
+#oDeleteMemberBtn{
+    font-size: 13px;
+    margin-right: 280px;
+}
+.oThumbnailImg img{
+    border-radius: 50%;
+}
+
+
+/* oMyQnA */
+.oMyQnaTb {
+    padding: 30px 0px;
+}
+.o-tb-btn {
+    text-align: center;
+}
+.o-tb-btn button {
+    margin: 0 auto;
+    border: none;
+    background-color: #26abed;
+    color: white;
+    font-size: 18px;
 }

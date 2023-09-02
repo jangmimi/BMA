@@ -16,21 +16,24 @@
 <body layout:fragment="content">
 <div class="news-header">
     <h1>부동산 뉴스</h1>
-    <form id="search-form" action="/news/newsPage" method="get">
-        <div class="search-range">
-            <div class="news-search">
-                <input type="text" id="search-input" name="query" th:value="${searchQuery}">
-                <div class="r-icon-circle">
-                    <button id="search-button" type="submit">
-                        <i id="icon" class="fa-solid fa-magnifying-glass"></i>
-                    </button>
+    <hr/>
+    <div class="search-arr">
+        <form id="search-form" action="/news/newsPage" method="get">
+            <div class="search-range">
+                <div class="news-search">
+                    <input type="text" id="search-input" name="query" th:value="${searchQuery}">
+                        <button id="search-button" type="submit">검색</button>
+                </div>
+                <div class="support-news" th:unless="${searchQuery == searchKeyword or searchKeyword == null}">
+                    <i id="question" class="fa-solid fa-magnifying-glass"></i>
+                    <label>
+                        <span th:text="${searchKeyword} + '(으)로 검색된 결과입니다.'"></span>
+                    </label>
                 </div>
             </div>
-            <div>
-                제안 ? <pre th:text="${searchKeyword} + '로 검색한 결과입니다'"></pre>
-            </div>
-        </div>
-    </form>
+        </form>
+    </div>
+    <hr/>
     <div class="check">
         <div class="result-range">
             <div th:each="newsItem : ${newsList}">

@@ -43,8 +43,8 @@ spring:
     defer-datasource-initialization: true
 
   # 데이터베이스 설정
-#  datasource:
-#    generate-unique-name: false
+  datasource:
+    generate-unique-name: false
 
   # 데이터베이스 설정
 
@@ -53,13 +53,6 @@ spring:
 #    password: 1234
 ##    password: 45723922
 #    driver-class-name: com.mysql.cj.jdbc.Driver
-
-  #이거 삭제하고 올려
-  datasource:
-    url: jdbc:mysql://localhost:3306/board?useSSL=false&serverTimezone=Asia/Seoul
-    username: root
-    password: wlgus
-    driver-class-name: com.mysql.cj.jdbc.Driver
 
 
 

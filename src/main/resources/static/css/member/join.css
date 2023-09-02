@@ -16,29 +16,33 @@
     padding: 20px 50px;
     margin: 0px;
 }
-#btnEmailCheck {
+#btnEmailCheck, #btnNicknameCheck {
     width: 90px;
     margin-left: 6px;
 }
-.oAgree {
+agree {
     margin-right: 5px;
 }
 .oAgree-li {
     margin: 10px;
 }
 .mustch {
-    font-weight: 500;
-    color: #129DED;
+    font-weight: 600;
+    color: #26ABED;
 }
-.userch {
-    font-weight: 500;
-    color: gray;
+.selch {
+    font-weight: 600;
+    color: gray; !important
 }
 .oLabelColor {
     color: gray;
     font-size: 14px;
 }
-<!--        .fieldError {-->
-<!--            font-size: 10px;-->
-<!--            color: red;-->
-<!--        }-->
+#email, #nickname {
+    width: 254px;
+}
+#emailErr, nicknameErr {
+    text-align: left;
+    color: red;
+    font-size: 12px;
+}

@@ -4,16 +4,18 @@ body{
 padding:0;
 margin:0;
 min-width:1800px;
+position: relative;
 }
 
 /*헤더 컨테이너*/
 .n-header{
+    width:100%;
     height: 60px;
     display: flex;
-    justify-content: space-between;
-    padding: 0 25px;
     transition: 0.5s;
-    border-bottom: 1px solid rgb(199, 199, 199);
+    justify-content: space-between;
+    position:absolute;
+    top:0;
 }
 
 /*헤더부분 hover시 배경색이 흰색으로 바뀐다*/
@@ -34,6 +36,7 @@ min-width:1800px;
 
 /*로고이미지*/
 .n-header img{
+  padding-left: 30px;
   height: 40px;
 }
 
@@ -55,6 +58,10 @@ li 기본값이 하단으로 추가되는걸 가로정렬로 변경
     float: left;
     margin-right: 30px;
     margin-top: 2px;
+}
+
+.n-header-list li:last-child {
+    padding-right: 10px;
 }
 
 /*
@@ -82,48 +89,56 @@ a태그 기본값인 색,밑줄 설정제거, 폰트, 사이즈조정
 
 
 /*푸터부분*/
-.r-footer {
-    position: relative;
-    width:100%;
-    bottom: 0;
-    height: 160px;
-    display: flex;
-    justify-content: center;
-    background-color: white;
-    font-family: 'Noto Sans KR', sans-serif;
-    font-weight: 700;
-    background-color:white;
-}
-
-.r-footer-wrap {
+.n-footer {
+    position:relative;
+    bottom:0;
+    margin: 20px 0;
+    width: 100%;
     display: flex;
     justify-content: center;
     flex-direction: column;
-    width: 60%;
+    align-items: center;
+    padding: 0;
 }
 
-.r-footer-a {
+.n-footer-align {
+    width: 1020px;
     display: flex;
-    justify-content: left;
+    flex-direction: column;
+    font-size: small;
+    font-weight: lighter;
+    color: #a1a1a1;
+    line-height: 150%;
 }
 
-.r-footer-a a {
+.n-footer-logo {
+    width: 300px;
+    margin: 30px 0px;
+}
+
+.n-footer-1-text {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.n-footer-1-text ul{
+    list-style:none;
+    margin: 0;
+    padding: 0;
+}
+
+.n-footer-1-text li{
+    float: left;
+    margin-right: 30px;
+}
+
+.n-footer-1-text .n-footer-1-logo img {
+    width: 30px;
+    background-repeat: no-repeat;
+}
+
+.n-footer-1-text .n-footer-1-logo a {
     text-decoration: none;
-    color: #222;
-    margin: 0 10px 10px;
 }
-
-.r-footer-text-wrap {
-    margin-left: 10px;
-    color: #696D71;
-    font-size: smaller;
-}
-
-.r-footer-text3 {
-    margin-top: 5px;
-}
-
-.r-footer-icon img {
-    height: 40px;
-}
-

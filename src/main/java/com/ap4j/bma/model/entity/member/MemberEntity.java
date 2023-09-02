@@ -14,50 +14,55 @@ import javax.persistence.*;
 public class MemberEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	// Idx 자동 증가
-	private Long idx;	// 기본 키(DB PK)
-	@Column
+	private Long id;	// 기본 키(DB PK)
+	@Column(unique = true)
 	private String email;
 	@Column
 	private String name;
 	@Column
 	private String pwd;
-	@Column
+	@Column(unique = true)
 	private String nickname;
 	@Column
 	private String tel;
 	@Column
-	private String root;	// 가입 경로
-	// 약관동의여부 값 추가예정
+	private int root;	// 가입 경로
+	@Column
+	private Boolean choice1;	// 약관 동의 선택 여부
+	@Column
+	private Boolean choice2;
+	@Column
+	private Boolean member_leave;	// 회원 탈퇴 여부
+
 
 	@Builder	// 빌더 패턴 적용
-	public MemberEntity(Long idx, String email, String name, String pwd, String nickname, String tel, String root) {
-		this.idx = idx;
+	public MemberEntity(Long id, String email, String name, String pwd, String nickname,
+						String tel, int root, Boolean choice1, Boolean choice2, Boolean member_leave) {
+		this.id = id;
 		this.email = email;
 		this.name =  name;
 		this.pwd = pwd;
 		this.nickname = nickname;
 		this.tel = tel;
 		this.root = root;
+		this.choice1 = choice1;
+		this.choice2 = choice2;
+		this.member_leave = member_leave;
 	}
 
-//	public static MemberDTO toDTO(MemberEntity entity) {
-//		return MemberDTO.builder()
-//				.idx(entity.getIdx())
-//				.email(entity.getEmail())
-//				.name(entity.getName())
-//				.pwd(entity.getPwd())
-//				.nickname(entity.getNickname())
-//				.tel(entity.getTel())
-//				.root(entity.getRoot())
-//				.build();
-//	}
-
-	/** 회원정보 수정 */
-	public void update(String name, String nickname, String tel, String pwd) {
-		this.name = name;
-		this.nickname = nickname;
-		this.tel = tel;
-		this.pwd = pwd;
+	public MemberDTO toDTO() {
+		return MemberDTO.builder()
+				.id(id)
+				.email(email)
+				.name(name)
+				.pwd(pwd)
+				.nickname(nickname)
+				.tel(tel)
+				.root(root)
+				.choice1(choice1)
+				.choice2(choice2)
+				.member_leave(member_leave)
+				.build();
 	}
 }
 

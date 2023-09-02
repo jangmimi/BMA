@@ -77,6 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
         sessionStorage.setItem('stompClient', JSON.stringify({ userId: sender, connectedTime: connectedTime }));
     };
+    //
 
     function loadMessages() {
         stompClient.send("/app/loadMessages", {}, JSON.stringify({ userId: sender, connectedTime: connectedTime }));

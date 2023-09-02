@@ -69,9 +69,176 @@
                                 </li>
                             </div>
                             <div class="aHeartBtnInTab">
-                                <button class="aHeartBtn">
+                                <button class="aHeartBtn" type="button" data-bs-toggle="modal"
+                                        data-bs-target="#aSaveToMine" id="aHeartBtn">
                                     <img style="width:15px;margin-bottom:2px;"src="/img/mapDetailAndAPTList/aHeartBtn.png">
                                 </button>
+                                <!-- Modal -->
+                                <div th:if="${loginMember==null}" class="modal fade" id="aSaveToMine"
+                                     tabindex="-1" aria-labelledby="exampleModalLabel"
+                                     aria-hidden="true">
+
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header aSaveToMine">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                                    로그인이
+                                                    필요한 서비스 입니다</h1>
+
+                                            </div>
+                                            <div class="modal-body LogInNeed">
+                                                <div class="aListOfEasyLogIn">
+                                                    <div style="display: flex;
+    width: 281px;">
+                                                        <button class="aEasyLogInBtn">
+                                                            <img class="aEasyLogInImg"
+                                                                 src="/images/kakao_login_medium_narrow.png"
+                                                                 alt="kakaoLogin" height="44"/>
+                                                        </button>
+                                                        <button class="aEasyLogInBtn">
+                                                            <img class="aEasyLogInImg"
+                                                                 src="/images/btnG_완성형.png"
+                                                                 alt="naverLogin" height="44"
+                                                                 width="176px"/>
+                                                            <!-- 카카오 로그인과 높이만 맞춤 -->
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="LogInNeedContents">
+                                                    <p class="emailLogInPartTitle">이메일 직접 로그인</p>
+                                                    <hr>
+                                                    <div class="emailLogInPartInput">
+                                                        <input class="LogInInputs" type="text"
+                                                               placeholder="이메일 주소">
+                                                        <input class="LogInInputs" type="text"
+                                                               placeholder="비밀번호(8자리 이상)">
+                                                    </div>
+                                                    <div class="aFindSaveEmail">
+                                                        <div class="aFindSaveEmailContents">
+                                                            <div>
+                                                                <input type="checkbox">
+                                                                <label>이메일저장</label>
+                                                            </div>
+                                                            <p>이메일/비밀번호찾기</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <button class="aLogInBtn">로그인</button>
+                                                <div class="aJoinBtnsList">
+                                                    <button class="aJoinBtns">개인회원 가입</button>
+                                                    <button class="aJoinBtns">중개회원 가입</button>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Modal -->
+                                <div th:unless="${loginMember==null}" class="modal fade"
+                                     id="aSaveToMine"
+                                     tabindex="-1" aria-labelledby="exampleModalLabel"
+                                     aria-hidden="true">
+
+                                    <div class="modal-dialog">
+                                        <div class="modal-content aFolderForSaveAPIAPT">
+                                            <div class="modal-header aSaveToMine">
+                                                <!-- 데이터 들어갈 곳 도로명 or 아파트명-->
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                                    동대문구 답십리동 59-14</h1>
+
+                                            </div>
+                                            <div class="modal-body aSaveAPIAPT">
+                                                <div class="aSaveAPIAPT memoArea">
+                                                    <div class="psa-box" style="
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+">
+                                                        <div class="title"><span class="txt">메모</span><em style="
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    color: #858585;
+">선택</em>
+                                                        </div>
+                                                        <div class="psa-input-memo options-length" style="
+    display: flex;
+    border: 1px solid lightgray;
+    width: 99%;
+    flex-direction: column;
+    align-items: flex-end;
+">
+                                                            <textarea name="memo" class="options-length-check psa-memo" maxlength="100" onkeyup="javascript:inputCheckLength(this);dataUiInputAutoHeight(this)" onkeydown="dataUiInputAutoHeight(this)" data-ui-input-auto-height="Y" placeholder="간단하게 메모를 남겨보세요." style="outline: none;resize: none;display: flex;padding: 15px;border: none;width: 90%;height: 102px;flex-direction: column;align-items: center;"></textarea>
+                                                            <span class="length-wr"><span class="text-length">0</span>/<span class="text-maxlength">100</span></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="psa-box" style="
+    margin-top: 20px;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+">
+                                                        <div class="title"><span class="txt">저장 폴더 선택</span>
+                                                        </div>
+                                                        <div class="save-folder-tac" style="
+    width: 100%;
+">
+                                                            <button href="hgfghfh" class="btns btn-create-folder" style="
+    margin-bottom: 12px;
+    border-radius: 9px;
+    border: 1px solid #26abed;
+    height: 37px;
+    width: 95%;
+    background-color: white;
+    color: #26abed;
+    font-size: 16px;
+"><span class="txt">새 폴더 만들기</span></button>
+                                                            <ul class="asf-folder-list typeCheck" id="pc_select_save_folder_list" style="
+    padding-left: 0px;
+">
+                                                                <li class="item">
+                                                                    <div class="asf-folder" data-grp-code="1">
+                                                                        <button href="jhgkjhgjhg" class="wr" style="
+    border-radius: 9px;
+    border: 1px solid #d1d1d1;
+    height: 68px;
+    width: 95%;
+    background-color: white;
+    /* color: #26abed; */
+    font-size: 16px;
+    width: 95%;
+">
+                                                                            <div class="sa-i-won size-big star" data-sa-color="#fe4a67"></div>
+                                                                            <div class="info" style="display: flex;flex-direction: column;align-items: flex-start;">
+                                                                                <div class="title">
+                                                                                    내 주소
+                                                                                </div>
+                                                                                <div class="etc">
+                                                                                    <span class="views">1</span><span class="readme">기본폴더 입니다.</span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </button>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="__csbScroll__scrollbar__area" style="position: absolute; top: 0px; right: 0px; width: var(--bdsplanet-scrollarea-width); height: 100%; opacity: 0.5; z-index: 1; display: none;">
+                                                    <div class="__csbScroll__scrollbar" style="position: absolute; z-index: 1; right: 0px; width: 100%; text-align: center; user-select: none; padding: 5px 0px; cursor: grab;">
+                                                        <div class="bar" style="display: inline-block; width: var(--bdsplanet-scrollbar-width); height: 100%; background: rgb(187, 199, 214); border-radius: var(--bdsplanet-scrollbar-border);"></div>
+                                                    </div>
+                                                    <div class="__csbScroll__scrollbg" style="width: 100%; height: 100%;"></div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
                                 <a href="javascript:goMyFavority();"><span class="txt" id="rFavorityCount">0</span></a>
                             </div>
                         </ul>
