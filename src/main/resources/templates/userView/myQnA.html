@@ -54,6 +54,7 @@
                                 </tr>
                                 <!-- 본인이 작성한 문의만 표시하는 조건문 -->
 <!--                                <span th:if="${myQnaList.id == loginMember.id}"></span>-->
+                                <p>전체 <span th:text="${myQnaCnt}">건</span></p>
                                 <tr th:each="myQna : ${myQnaList}">
                                     <td id="num" th:text="${myQna.id}">번호</td>
                                     <td id="category" th:text="${myQna.category}">분류</td>
