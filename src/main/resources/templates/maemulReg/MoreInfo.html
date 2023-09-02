@@ -6,7 +6,8 @@
 <head>
     <meta charset="UTF-8">
     <title>상세정보</title>
-    <link rel="stylesheet" href="/static/css/maemulReg.css">
+    <link rel="stylesheet" th:href="@{/css/maemulReg/maemulReg.css}">
+    <link rel="stylesheet" href="/static/css/maemulReg/maemulReg.css">
 
     <style>
 
@@ -51,8 +52,97 @@
 
      }
 
+    .coment{
+    width : 95%;
+    }
 
-    </style>
+    .count{
+    float: right;
+    color : gray;
+    margin-right : 5px;
+    font-size : 13px;
+    }
+
+    .picture{
+    background-color : #26A9E0;
+    border : none;
+    border-radius : 5px;
+    height:30px;
+    width: 120px;
+    color : white;
+    }
+
+/*옵션, 특징 선택 */
+.container {
+    font-size: 13px;
+}
+
+ul.ks-cboxtags {
+    list-style: none;
+    padding: 20px;
+}
+ul.ks-cboxtags li{
+  display: inline;
+}
+ul.ks-cboxtags li label{
+    display: inline-block;
+    background-color: rgba(255, 255, 255, .9);
+    border: 2px solid rgba(139, 139, 139, .3);
+    border-radius: 25px;
+    white-space: nowrap;
+    margin: 3px 0px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: all .2s;
+}
+
+ul.ks-cboxtags li label {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+ul.ks-cboxtags li label::before {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    font-size: 12px;
+    padding: 2px 6px 2px 2px;
+    content: "\f067";
+    transition: transform .3s ease-in-out;
+}
+
+ul.ks-cboxtags li input[type="checkbox"]:checked + label::before {
+    content: "\f00c";
+    transform: rotate(-360deg);
+    transition: transform .3s ease-in-out;
+}
+
+ul.ks-cboxtags li input[type="checkbox"]:checked + label {
+    border: 2px solid #1bdbf8;
+    background-color: #12bbd4;
+    color: #fff;
+    transition: all .2s;
+}
+
+ul.ks-cboxtags li input[type="checkbox"] {
+  display: absolute;
+}
+ul.ks-cboxtags li input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+}
+ul.ks-cboxtags li input[type="checkbox"]:focus + label {
+  border: 2px solid #e9a1ff;
+}
+</style>
 
 </head>
 
@@ -64,68 +154,97 @@
 <div class="layout">
 
     <h2 class="category"><b class="number">04 </b>상세 정보 입력</h2><br>
+    <div class="coment-box">
     <table border="1">
-        <tr>매물 이미지 등록하는 버튼</tr><br>
-        <tr><input type="text" placeholder="제목"></tr><br>
-        <tr><textarea>내용</textarea></tr>
+        <tr>
+            <th>제목</th>
+            <td> <input class="coment" type="text" placeholder="ex) 강남역 도보 10분이내, 3층 투룸 전세"><br>
+                 <p class="count">글자수/20</p> </td>
+        </tr>
+        <tr>
+            <th>상세설명</th>
+            <td> <textarea class="coment" placeholder="해당 방에 대한 상세정보를 입력해주세요,"></textarea>
+                <p class="count">글자수/500</p></td>
+        </tr>
     </table>
-    <hr/>
+        <hr/>
 
-    <table border="1">
-        <tr>
-            <th>특징</th>
-            <td>
-                <input type="checkbox" name="option1" value="value1"> 단기
-                <input type="checkbox" name="option1" value="value1"> 신축
-                <input type="checkbox" name="option1" value="value1"> 투자
-                <input type="checkbox" name="option1" value="value1"> 풀옵션
-                <input type="checkbox" name="option1" value="value1"> 엘리베이터
-                <input type="checkbox" name="option1" value="value1"> 보안/안전
-                <input type="checkbox" name="option1" value="value1"> 분리형
-                <input type="checkbox" name="option1" value="value1"> 주차
-            </td>
-        </tr>
-        <tr>
-            <th>옵션</th>
-            <td>
-                <input type="checkbox" name="option1" value="value1">벽걸이형
-                <input type="checkbox" name="option1" value="value1">침대
-                <input type="checkbox" name="option1" value="value1">책상
-                <input type="checkbox" name="option1" value="value1">옷장
-                <input type="checkbox" name="option1" value="value1">식탁
-                <input type="checkbox" name="option1" value="value1">소파
-                <input type="checkbox" name="option1" value="value1">천장형에어컨
-                <input type="checkbox" name="option1" value="value1">무인택배함
-                <input type="checkbox" name="option1" value="value1">비데
-                <input type="checkbox" name="option1" value="value1">신발장
-                <input type="checkbox" name="option1" value="value1">냉장고
-                <input type="checkbox" name="option1" value="value1">세탁기
-                <input type="checkbox" name="option1" value="value1">샤워부스
-                <input type="checkbox" name="option1" value="value1">싱크대
-                <input type="checkbox" name="option1" value="value1">인덕션
-                <input type="checkbox" name="option1" value="value1">전자레인지
-                <input type="checkbox" name="option1" value="value1">TV
-                <input type="checkbox" name="option1" value="value1">붙박이장
-                <input type="checkbox" name="option1" value="value1">에어컨
-            </td>
-        </tr>
-        <tr>
-            <th>보안/안전시설</th>
-            <td>
-                <input type="checkbox" name="option1" value="value1">현관보안
-                <input type="checkbox" name="option1" value="value1">CCTV
-                <input type="checkbox" name="option1" value="value1">방범창
-                <input type="checkbox" name="option1" value="value1">경비원
-                <input type="checkbox" name="option1" value="value1">화재경보기
-                <input type="checkbox" name="option1" value="value1">비디오폰
-                <input type="checkbox" name="option1" value="value1">인터폰
-                <input type="checkbox" name="option1" value="value1">카드키
-                <input type="checkbox" name="option1" value="value1">사설경비
-                <input type="checkbox" name="option1" value="value1">전자도어락
-            </td>
-        </tr>
-    </table>
-    <hr/>
+        <h2 class="category"><b class="number">05 </b>특징 입력</h2><br>
+        <div class="container">
+            <table border="1">
+                <tr class="property-features">
+                    <th>특징</th>
+                    <td>
+                        <ul class="ks-cboxtags">
+                            <li><input type="checkbox" id="short-term" value="short-term"><label for="short-term">단기</label></li>
+                            <li><input type="checkbox" id="new-construction" value="new-construction"><label for="new-construction">신축</label></li>
+                            <li><input type="checkbox" id="investment" value="investment"><label for="investment">투자</label></li>
+                            <li><input type="checkbox" id="full-option" value="full-option"><label for="full-option">풀옵션</label></li>
+                            <li><input type="checkbox" id="elevator" value="elevator"><label for="elevator">엘리베이터</label></li>
+                            <li><input type="checkbox" id="security" value="security"><label for="security">보안/안전</label></li>
+                            <li><input type="checkbox" id="separate" value="separate"><label for="separate">분리형</label></li>
+                            <li><input type="checkbox" id="parking" value="parking"><label for="parking">주차</label></li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr class="property-options">
+                    <th>옵션</th>
+                    <td>
+                        <ul class="ks-cboxtags">
+                            <li><input type="checkbox" id="wall-mounted" value="wall-mounted"><label for="wall-mounted">벽걸이형</label></li>
+                            <li><input type="checkbox" id="bed" value="bed"><label for="bed">침대</label></li>
+                            <li><input type="checkbox" id="desk" value="desk"><label for="desk">책상</label></li>
+                            <li><input type="checkbox" id="wardrobe" value="wardrobe"><label for="wardrobe">옷장</label></li>
+                            <li><input type="checkbox" id="dining-table" value="dining-table"><label for="dining-table">식탁</label></li>
+                            <li><input type="checkbox" id="sofa" value="sofa"><label for="sofa">소파</label></li>
+                            <li><input type="checkbox" id="ceiling-ac" value="ceiling-ac"><label for="ceiling-ac">천장형 에어컨</label></li>
+                            <li><input type="checkbox" id="parcel-locker" value="parcel-locker"><label for="parcel-locker">무인택배함</label></li>
+                            <li><input type="checkbox" id="bidet" value="bidet"><label for="bidet">비데</label></li>
+                            <li><input type="checkbox" id="shoe-rack" value="shoe-rack"><label for="shoe-rack">신발장</label></li>
+                            <li><input type="checkbox" id="refrigerator" value="refrigerator"><label for="refrigerator">냉장고</label></li>
+                            <li><input type="checkbox" id="washing-machine" value="washing-machine"><label for="washing-machine">세탁기</label></li>
+                            <li><input type="checkbox" id="shower-booth" value="shower-booth"><label for="shower-booth">샤워부스</label></li>
+                            <li><input type="checkbox" id="sink" value="sink"><label for="sink">싱크대</label></li>
+                            <li><input type="checkbox" id="induction-cooktop" value="induction-cooktop"><label for="induction-cooktop">인덕션</label></li>
+                            <li><input type="checkbox" id="microwave" value="microwave"><label for="microwave">전자레인지</label></li>
+                            <li><input type="checkbox" id="tv" value="tv"><label for="tv">TV</label></li>
+                            <li><input type="checkbox" id="built-in-wardrobe" value="built-in-wardrobe"><label for="built-in-wardrobe">붙박이장</label></li>
+                            <li><input type="checkbox" id="air-conditioner" value="air-conditioner"><label for="air-conditioner">에어컨</label></li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr class="security-options">
+                    <th>보안/안전시설</th>
+                    <td>
+                        <ul class="ks-cboxtags">
+                            <li><input type="checkbox" id="security-entrance" value="security-entrance"><label for="security-entrance">현관보안</label></li>
+                            <li><input type="checkbox" id="cctv" value="cctv"><label for="cctv">CCTV</label></li>
+                            <li><input type="checkbox" id="security-bars" value="security-bars"><label for="security-bars">방범창</label></li>
+                            <li><input type="checkbox" id="security-guard" value="security-guard"><label for="security-guard">경비원</label></li>
+                            <li><input type="checkbox" id="fire-alarm" value="fire-alarm"><label for="fire-alarm">화재경보기</label></li>
+                            <li><input type="checkbox" id="video-phone" value="video-phone"><label for="video-phone">비디오폰</label></li>
+                            <li><input type="checkbox" id="intercom" value="intercom"><label for="intercom">인터폰</label></li>
+                            <li><input type="checkbox" id="key-card" value="key-card"><label for="key-card">카드키</label></li>
+                            <li><input type="checkbox" id="private-security" value="private-security"><label for="private-security">사설경비</label></li>
+                            <li><input type="checkbox" id="digital-door-lock" value="digital-door-lock"><label for="digital-door-lock">전자도어락</label></li>
+                        </ul>
+
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <hr/>
+
+        <h2 class="category"><b class="number">05 </b>사진등록</h2><br>
+
+        <li>최소 3장 이상의 사진을 등록해야 하며 최대 15장까지 등록이 가능합니다.</li>
+        <li>첫 번째 사진이 대표 이미지로 보여집니다.</li>
+        <li>워터마크, 상호, 전화번호 등이 포함된 사진이나 관련없는 사진을 등록할 경우 서비스 이용이 제한됩니다.</li>
+        <button class="picture">사진 추가</button>
+    </div>
+
+
 
 </div>
 
@@ -135,14 +254,14 @@
     <div class="pre">
         <div class="predetails">
             <ul>
-                <li><a href="maemulInfo.html">이전</a></li>
+                <li><a href="maemulinfo">이전</a></li>
             </ul>
         </div>
     </div>
     <div class="next">
         <div class="nextdetails">
             <ul>
-                <li><a href="MoreInfo.html">등록</a></li>
+                <li><a href="#">등록</a></li>
             </ul>
         </div>
     </div>
