@@ -28,8 +28,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation group: 'org.json', name: 'json', version: '20230618'
     implementation 'org.springframework.boot:spring-boot-starter'
-    implementation 'org.springframework.boot:spring-boot-starter-batch'
-    implementation 'org.quartz-scheduler:quartz'
     implementation 'org.springframework:spring-context-support'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
@@ -48,16 +46,6 @@ dependencies {
 
     // https://mvnrepository.com/artifact/mysql/mysql-connector-java
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.28'
-
-    // Quartz 의존성
-    implementation group: 'org.quartz-scheduler', name: 'quartz'
-
-    // Spring Batch, Quartz 연동을 위한 의존성
-    implementation group: 'org.springframework.batch', name: 'spring-batch-core'
-
-    // Spring Batch, Quartz 연동을 위한 의존성
-    implementation group: 'org.springframework.batch', name: 'spring-batch-integration'
-
 
     // 스프링 부트 테스트 의존성
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

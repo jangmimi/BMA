@@ -122,3 +122,14 @@
         #Q{
         font-weight: bold;
         }
+
+
+        .bottom{
+        text-align : center;
+        margin-top: 40px;
+        }
+
+        span{
+        margin-right:5px;
+        margin-left:5px;
+        }
