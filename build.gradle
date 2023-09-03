@@ -1,9 +1,7 @@
-
-
 plugins {
-    id 'java'
     id 'org.springframework.boot' version '2.7.14'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'java'
 }
 
 group = 'com.ap4j'
@@ -24,28 +22,60 @@ repositories {
 }
 
 dependencies {
+//    implementation 'org.springframework:spring-messaging:5.3.10.RELEASE'
     implementation 'org.webjars:sockjs-client:1.0.2'
     implementation 'org.webjars:stomp-websocket:2.3.3'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation group: 'org.json', name: 'json', version: '20230618'
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-batch'
+    implementation 'org.quartz-scheduler:quartz'
+    implementation 'org.springframework:spring-context-support'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'  // 수정된 부분
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
-    implementation 'org.json:json:20190722'
     implementation 'com.google.code.gson:gson:2.9.0'    // gson 사용을 위해 추가
     implementation 'org.springframework.boot:spring-boot-starter-validation'    // 유효성 검사를 위해 추가(스프링부트 2.3 이상부터 의존성 추가해야 사용 가능)
     implementation 'org.springframework.boot:spring-boot-starter-security'      // 암호화 위해 추가
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
-    runtimeOnly 'com.mysql:mysql-connector-j'
-    annotationProcessor 'org.projectlombok:lombok'
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+    implementation 'org.springframework.retry:spring-retry'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    // https://mvnrepository.com/artifact/mysql/mysql-connector-java
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.28'
+
+    // Quartz 의존성
+    implementation group: 'org.quartz-scheduler', name: 'quartz'
+
+    // Spring Batch, Quartz 연동을 위한 의존성
+    implementation group: 'org.springframework.batch', name: 'spring-batch-core'
+
+    // Spring Batch, Quartz 연동을 위한 의존성
+    implementation group: 'org.springframework.batch', name: 'spring-batch-integration'
+
+
+    // 스프링 부트 테스트 의존성
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.12.3' // 최신 버전 사용 가능
+
+
+    // Batch WebClient 의존성 추가
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    // https://mvnrepository.com/artifact/io.netty/netty-resolver-dns-native-macos
+    implementation("io.netty:netty-resolver-dns-native-macos:4.1.79.Final:osx-aarch_64")
+
+    // 라이브 서버용.
+    implementation 'org.springframework.boot:spring-boot-devtools'
+
 }
 
 tasks.named('test') {
     useJUnitPlatform()
 }
-
-
