@@ -23,8 +23,8 @@
                         <li class="o-lnb-item"><a href="/member/qMyPage" style="color:#26ABED;">내정보</a></li>
                         <li class="o-lnb-item"><a href="/member/qMyInfoUpdate">내정보수정</a></li>
                         <li class="o-lnb-item"><a href="#">매물관리</a></li>
-                        <li class="o-lnb-item"><a href="/member/qInterestMaemul">관심매물</a></li>
-                        <li class="o-lnb-item"><a href="/member/qRecentMaemul">최근본매물</a></li>
+                        <li class="o-lnb-item"><a href="/member/qInterest">관심매물</a></li>
+                        <li class="o-lnb-item"><a href="/member/qRecent">최근본매물</a></li>
                         <li class="o-lnb-item"><a href="/member/qMyQnA">1:1문의내역</a></li>
                     </ul>
                 </div>
@@ -48,7 +48,7 @@
                             </div>
                         </div>
                         <div class="oInfo-right">
-                            <div>
+                            <div class="oMaemulCnt-inner">
                                 <div class="oMaemulCnt">
                                     <a href="#">1건</a>
                                     <span>관심매물</span>
@@ -65,71 +65,73 @@
                     </div>
                 </div>
                 <div class="oMeamulContainer">
-                    <div class="oMeamulTitleContainer">
-                        <div class="oMeamulTabLeft">
-                            <button type="button" class="oMaemulLink" id="oInterestMaemul" onclick="location.href='#'">관심매물</button>
-                            |
-                            <button type="button" class="oMaemulLink" id="oRecentMaemul" onclick="location.href='#'">최근본매물</button>
+                    <div class="oMaemul-c-inner">
+                        <div class="oMeamulTitleContainer">
+                            <div class="oMeamulTabLeft">
+                                <button type="button" class="oMaemulLink" id="oInterestMaemul" onclick="location.href='#'">관심매물</button>
+                                |
+                                <button type="button" class="oMaemulLink" id="oRecentMaemul" onclick="location.href='#'">최근본매물</button>
+                            </div>
+                            <div class="oMeamulTabRight">
+                                <button type="button" class="oMaemulLink" id="oMaemulAllView" onclick="location.href='#'">전체보기</button>
+                            </div>
                         </div>
-                        <div class="oMeamulTabRight">
-                            <button type="button" class="oMaemulLink" id="oMaemulAllView" onclick="location.href='#'">전체보기</button>
-                        </div>
-                    </div>
 
-                    <!-- 관심매물 / 최근본매물 -->
-                    <div class="oMaemulContainer">
-                        <table>
-                            <tr>
-                                <td>
-                                    <div class="card">
-                                        <a href="#" class="oCardMaemul">
-                                            <img src="https://www.bdsplanet.com/common/thumbs.ytp?filepath=/COMP_20201027000920000005/upload/realty/RCODE_20230731160156000045/&filename=1690787077205_1.jpg&thumNum=3"
-                                                 class="card-img-top" alt="...">
-                                            <div class="card-body">
-                                                <h5 class="card-title">매매 100억</h5>
-                                            </div>
-                                            <ul class="list-group list-group-flush">
-                                                <li class="list-group-item">서초동 상가주택</li>
-                                                <li class="list-group-item">851.7/851.71m2</li>
-                                                <li class="list-group-item">서초동 역세권 업무 주거배후세대 풍부</li>
-                                            </ul>
-                                        </a>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="card" style="margin: 0 15px;">
-                                        <a href="#" class="oCardMaemul">
-                                            <img src="https://www.bdsplanet.com/common/thumbs.ytp?filepath=/COMP_20201027000920000005/upload/realty/RCODE_20230731160156000045/&filename=1690787077205_1.jpg&thumNum=3"
-                                                 class="card-img-top" alt="...">
-                                            <div class="card-body">
-                                                <h5 class="card-title">매매 100억</h5>
-                                            </div>
-                                            <ul class="list-group list-group-flush">
-                                                <li class="list-group-item">서초동 상가주택</li>
-                                                <li class="list-group-item">851.7/851.71m2</li>
-                                                <li class="list-group-item">서초동 역세권 업무 주거배후세대 풍부</li>
-                                            </ul>
-                                        </a>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="card">
-                                        <a href="#" class="oCardMaemul">
-                                            <img src="https://www.bdsplanet.com/common/thumbs.ytp?filepath=/COMP_20201027000920000005/upload/realty/RCODE_20230731160156000045/&filename=1690787077205_1.jpg&thumNum=3"
-                                                 class="card-img-top" alt="...">
-                                            <div class="card-body">
-                                                <h5 class="card-title">매매 100억</h5>
-                                            </div>
-                                            <ul class="list-group list-group-flush">
-                                                <li class="list-group-item">서초동 상가주택</li>
-                                                <li class="list-group-item">851.7/851.71m2</li>
-                                                <li class="list-group-item">서초동 역세권 업무 주거배후세대 풍부</li>
-                                            </ul>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
+                        <!-- 관심매물 / 최근본매물 -->
+                        <div class="oMaemulContainer">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div class="card">
+                                            <a href="#" class="oCardMaemul">
+                                                <img src="https://www.bdsplanet.com/common/thumbs.ytp?filepath=/COMP_20201027000920000005/upload/realty/RCODE_20230731160156000045/&filename=1690787077205_1.jpg&thumNum=3"
+                                                     class="card-img-top" alt="...">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">매매 100억</h5>
+                                                </div>
+                                                <ul class="list-group list-group-flush">
+                                                    <li class="list-group-item">서초동 상가주택</li>
+                                                    <li class="list-group-item">851.7/851.71m2</li>
+                                                    <li class="list-group-item">서초동 역세권 업무 주거배후세대 풍부</li>
+                                                </ul>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="card" style="margin: 0 15px;">
+                                            <a href="#" class="oCardMaemul">
+                                                <img src="https://www.bdsplanet.com/common/thumbs.ytp?filepath=/COMP_20201027000920000005/upload/realty/RCODE_20230731160156000045/&filename=1690787077205_1.jpg&thumNum=3"
+                                                     class="card-img-top" alt="...">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">매매 100억</h5>
+                                                </div>
+                                                <ul class="list-group list-group-flush">
+                                                    <li class="list-group-item">서초동 상가주택</li>
+                                                    <li class="list-group-item">851.7/851.71m2</li>
+                                                    <li class="list-group-item">서초동 역세권 업무 주거배후세대 풍부</li>
+                                                </ul>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="card">
+                                            <a href="#" class="oCardMaemul">
+                                                <img src="https://www.bdsplanet.com/common/thumbs.ytp?filepath=/COMP_20201027000920000005/upload/realty/RCODE_20230731160156000045/&filename=1690787077205_1.jpg&thumNum=3"
+                                                     class="card-img-top" alt="...">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">매매 100억</h5>
+                                                </div>
+                                                <ul class="list-group list-group-flush">
+                                                    <li class="list-group-item">서초동 상가주택</li>
+                                                    <li class="list-group-item">851.7/851.71m2</li>
+                                                    <li class="list-group-item">서초동 역세권 업무 주거배후세대 풍부</li>
+                                                </ul>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

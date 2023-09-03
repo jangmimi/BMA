@@ -73,17 +73,30 @@
 }
 .oMaemulCnt {
     text-align: center;
-    align-items: center;
-    display: grid;
+    font-weight: 600;
     background-color: white;
-    float: right;
     width: 150px;
-    height: 100px;
+    height: 150px;
     border: 1px solid #bbc7d6;
+    display: inline-block;
+}
+.oMaemulCnt a,
+.oMaemulCnt span {
+    display: block;
+    font-size: 20px;
+}
+.oMaemulCnt a {
+    color: #26abed;
+}
+.oMaemulCnt span {
+    font-size: 15px;
 }
 .oMeamulContainer {
     width: 1000px;
     display: contents;
+}
+.oMaemul-c-inner {
+    padding: 40px 0px 50px;
 }
 .oMeamulTitleContainer {
     display: flex;
@@ -151,6 +164,17 @@
    width: 90px;
    margin-left: 6px;
 }
+.form-check-warning {
+   display: none;
+   text-align: left;
+   color: red;
+   font-size:12px;
+}
+.form-check-warning-info {
+   text-align: left;
+   color: red;
+   font-size:12px;
+}
 .oAgree,.oMustAgree {
    margin-right: 5px;
 }
@@ -217,4 +241,9 @@
     background-color: #26abed;
     color: white;
     font-size: 18px;
+}
+
+/* maemulInterest */
+.o-search-btns {
+    width: 150px;
 }

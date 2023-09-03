@@ -22,10 +22,10 @@
                 <div class="o-wrapper">
                     <ul class="o-lnb-list">
                         <li class="o-lnb-item"><a href="/member/qMyPage">내정보</a></li>
-                        <li class="o-lnb-item"><a href="/member/qMyInfoUpdate" style="color:#26ABED;">내정보수정</a></li>
+                        <li class="o-lnb-item"><a href="/member/qMyInfoUpdate"style="color:#26ABED;">내정보수정</a></li>
                         <li class="o-lnb-item"><a href="#">매물관리</a></li>
-                        <li class="o-lnb-item"><a href="/member/qInterestMaemul">관심매물</a></li>
-                        <li class="o-lnb-item"><a href="/member/qRecentMaemul">최근본매물</a></li>
+                        <li class="o-lnb-item"><a href="/member/qInterest">관심매물</a></li>
+                        <li class="o-lnb-item"><a href="/member/qRecent">최근본매물</a></li>
                         <li class="o-lnb-item"><a href="/member/qMyQnA">1:1문의내역</a></li>
                     </ul>
                 </div>
@@ -54,13 +54,14 @@
                             <label th:for="tel">연락처</label>
                         </div>
                         <div class="form-floating mb-3 mr-3" style="display:flex; flex-wrap:wrap">
-                            <input type="password" class="form-control" id="pwd" name="pwd" />
-                            <div id="opwdCheck2" style="display:none; text-align:left; color:red; font-size:12px;">영문, 숫자를 조합하여 8~20자 이내로 입력해주세요.</div>
+                            <input type="password" class="form-control" id="pwd" name="pwd" th:disabled="*{root != 1}"/>
+<!--                            <div class="form-check-warning-info">SNS 계정은 비밀번호 변경이 불가합니다.</div>-->
+                            <div class="form-check-warning" id="opwdCheck2">영문, 숫자를 조합하여 8~20자 이내로 입력해주세요.</div>
                             <label th:for="pwd">변경할 비밀번호(영문, 숫자 조합 8~20자 이내)</label>
                         </div>
                         <div class="form-floating mb-3 mr-3" style="display:flex; flex-wrap:wrap">
-                            <input type="password" class="form-control" id="pwdCheck" name="pwdCheck" />
-                            <div id="opwdCheck1" style="display:none; text-align:left; color:red; font-size:12px;">비밀번호가 일치하지 않습니다.</div>
+                            <input type="password" class="form-control" id="pwdCheck" name="pwdCheck" th:disabled="*{root != 1}"/>
+                            <div class="form-check-warning" id="opwdCheck1">비밀번호가 일치하지 않습니다.</div>
                             <label th:for="pwdCheck">변경할 비밀번호 확인</label>
                         </div>
                         <div class="form-floating" align="left" style="font-size: 12px;";>
@@ -120,6 +121,8 @@
                         <input type="submit" class="btn btn-outline-secondary mt-5" id="oDeleteMemberBtn" value="회원탈퇴" />
                         <!-- alert 확인 누르면 비밀번호 입력받고 일치 시 탈퇴하는 기능 추가 -->
                     </form>
+
+
 
                 </div>
             </div>

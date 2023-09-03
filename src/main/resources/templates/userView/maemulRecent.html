@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layouts/include_footer_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>관심 매물</title>
+    <link rel="stylesheet" th:href="@{/css/member/myPage.css}">
+    <!-- 부트스트랩 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body layout:fragment="content">
+<th:block th:object="${loginMember}">
+    <th:block th:if="${loginMember != null}">
+        <!-- 마이페이지 네비게이션 -->
+        <div id="oContainer">
+            <div id="content">
+                <div class="o-lnb">
+                    <div class="o-wrapper">
+                        <ul class="o-lnb-list">
+                            <li class="o-lnb-item"><a href="/member/qMyPage">내정보</a></li>
+                            <li class="o-lnb-item"><a href="/member/qMyInfoUpdate">내정보수정</a></li>
+                            <li class="o-lnb-item"><a href="#">매물관리</a></li>
+                            <li class="o-lnb-item"><a href="/member/qInterest" style="color:#26ABED;">관심매물</a></li>
+                            <li class="o-lnb-item"><a href="/member/qRecent">최근본매물</a></li>
+                            <li class="o-lnb-item"><a href="/member/qMyQnA">1:1문의내역</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 검색영역 -->
+                <div class="oLayout">
+                    <div class="oInfo-top">
+                        <div class="oInfo-top-wrapper">
+                            <form action="#" method="post">
+                                <input type="text" id="oSearchText" name="oSearchText" placeholder="검색어를 입력하세요."/>
+                                <div class="o-search-btns">
+                                    <input type="submit" class="btn btn-primary" value="검색" />
+                                    <input type="reset" class="btn btn-secondary" value="초기화" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div>테이블영역</div>
+            </div>
+        </div>
+    </th:block>
+</th:block>
+<!-- 부트스트랩 script -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+</body>
+</html>

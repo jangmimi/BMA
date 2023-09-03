@@ -29,10 +29,17 @@ public class MemberController {
     @Autowired
     private PasswordEncoderConfig pwdConfig;
 
+
+    /** 로그인 여부 체크 */
+    private boolean loginStatus(HttpSession session) {
+        return session.getAttribute("loginMember") != null;
+    }
+
     /** 로그인 페이지 매핑 */
     @RequestMapping("/qLoginForm")
     public String qLoginForm(@CookieValue(value = "rememberedEmail", required = false) String rememberedEmail, Model model, HttpSession session) {
         log.info("MemberController - qLoginForm() 실행");
+        if(loginStatus(session)) { return "userView/loginAlready"; }
 
         model.addAttribute("rememberedEmail", rememberedEmail); // 쿠키가 있는 경우, 저장 이메일 표시
         return "userView/oLoginForm";
@@ -126,14 +133,20 @@ public class MemberController {
 
     /** 기본 회원가입 폼 */
     @RequestMapping("/qJoinForm")
-    public String qJoinForm() {
+    public String qJoinForm(HttpSession session) {
+
+        if(loginStatus(session)) {
+            return "userView/loginAlready";
+        }
         return "userView/oJoinForm";
     }
 
     /** 기본 회원가입 */
     @PostMapping("/qJoinBasic")
-    public String qJoinBasic(@ModelAttribute MemberDTO memberDTO) {
+    public String qJoinBasic(@ModelAttribute MemberDTO memberDTO, HttpSession session) {
         log.info("MemberController - qJoinBasic() 실행");
+        if(loginStatus(session)) { return "userView/loginAlready"; }
+
         log.info("회원가입 memberDTO : " + memberDTO);
         memberDTO.setRoot(1);
 
@@ -193,10 +206,7 @@ public class MemberController {
     @RequestMapping("/qMyPage")
     public String qMyPage(HttpSession session, Model model) {
         log.info("MemberController - qMyPage() 실행");
-
-        if(session.getAttribute("loginMember") == null) {
-            return "userView/loginNeed";
-        }
+        if(!loginStatus(session)) { return "userView/loginNeed"; }
 
         String thumImg = (String) session.getAttribute("thumbnail_image");
         model.addAttribute("thumbnail_image", thumImg);
@@ -212,6 +222,7 @@ public class MemberController {
     @GetMapping("/qMyInfoUpdate")
     public String qMyInfoUpdate(HttpSession session) {
         log.info("MemberController - qMyInfoUpdate() 실행");
+        if(!loginStatus(session)) { return "userView/loginNeed"; }
 
         MemberDTO loginMember = (MemberDTO) session.getAttribute("loginMember");
         log.info("qMyPage에서 loginMember 세션 확인 : " + loginMember.toString());
@@ -223,6 +234,8 @@ public class MemberController {
     @PostMapping("/qUpdateMember/{id}")
     public String qUpdate(@ModelAttribute MemberDTO updatedMember, Model model, HttpSession session) {
         log.info("MemberController - qUpdate() 실행");
+        if(!loginStatus(session)) { return "userView/loginNeed"; }
+
         log.info("updatedMember : " + updatedMember);
 
         Long id =  ((MemberDTO) session.getAttribute("loginMember")).getId();
@@ -236,7 +249,10 @@ public class MemberController {
 
     /** 1:1 문의내역 페이지 매핑 */
     @GetMapping("/qMyQnA")
-    public String qMyQnA(Model model) {
+    public String qMyQnA(Model model, HttpSession session) {
+        log.info("MemberController - qMyQnA() 실행");
+        if(!loginStatus(session)) { return "userView/loginNeed"; }
+
         List<QnAEntity> qMyQnaList = qMemberService.qMyQnaList();
         Long qMyQnaCnt = qMemberService.qMyQnaCnt();
         model.addAttribute("myQnaList", qMyQnaList);
@@ -247,6 +263,8 @@ public class MemberController {
     /** 기본 회원탈퇴 */   // sns는 별도 처리 해줘야 함
     @PostMapping("/qLeaveMember/{id}")
     public String leaveMember(HttpSession session, SessionStatus sessionStatus) {
+        log.info("MemberController - leaveMember() 실행");
+
         Long id =  ((MemberDTO) session.getAttribute("loginMember")).getId();
         qMemberService.leaveMember(id,sessionStatus, session);
 
@@ -257,6 +275,8 @@ public class MemberController {
     @PostMapping("/qEmailCheck")
     @ResponseBody
     public int qEmailCheck(@RequestParam("email") String email) {
+        log.info("MemberController - qEmailCheck() 실행");
+
         int cnt = 0;
         boolean emailCheck = qMemberService.existsByEmail(email);
         cnt = emailCheck ? 1 : 0;
@@ -267,6 +287,8 @@ public class MemberController {
     @PostMapping("/qNicknameDuplicationCheck")
     @ResponseBody
     public int NicknameDuplicationCheck(@RequestParam("nickname") String nickname) {
+        log.info("MemberController - NicknameDuplicationCheck() 실행");
+
         int cnt = 0;
         boolean nicknameCheck = qMemberService.existsByNickname(nickname);
         cnt = nicknameCheck ? 1 : 0;
@@ -282,6 +304,8 @@ public class MemberController {
     /** 이메일 찾기 */
     @PostMapping("/qFindEmail")
     public String qFindEmail(@RequestParam String name, @RequestParam String tel, Model model) {
+        log.info("MemberController - qFindEmail() 실행");
+
         Optional<MemberEntity> findMember = qMemberService.findByNameAndTel(name, tel);
 
         if(findMember.isPresent()) {
@@ -295,6 +319,8 @@ public class MemberController {
     /** 비밀번혼 찾기 */
     @PostMapping("/qFindPwd")
     public String qFindPwd(@RequestParam String emailpwd, @RequestParam String telpwd, Model model) {
+        log.info("MemberController - qFindPwd() 실행");
+
         Optional<MemberEntity> find = qMemberService.findByEmailAndTel(emailpwd, telpwd);
         if(find.isPresent()) {
             model.addAttribute("findPwd", find.get().getPwd());
@@ -302,6 +328,22 @@ public class MemberController {
             model.addAttribute("findPwdFailed", "일치하는 회원정보가 없습니다.");
         }
         return "userView/findMemberInfo";
+    }
+
+    /** 관심매물 페이지 매핑 */
+    @RequestMapping("/qInterest")
+    public String qInterest() {
+        log.info("MemberController - qInterest() 실행");
+
+        return "userView/maemulInterest";
+    }
+
+    /** 최근매물 페이지 매핑 */
+    @RequestMapping("/qRecent")
+    public String qRecent() {
+        log.info("MemberController - qRecent() 실행");
+
+        return "userView/maemulRecent";
     }
 }
 

@@ -9,12 +9,19 @@
 }
 .warning-txt {
     margin-top: 20px;
-    font-size: 25px;
+    font-size: 30px;
     font-weight: 600;
 }
 #bold-txt {
     color: #26ABED;
+    text-decoration: none;
+    border-bottom: 4px solid #26ABED;
 }
-.warning-btns {
-    padding: 30px 50px;
+.link-btns {
+    padding: 50px 50px;
+}
+.link-btns a {
+    border: 1px solid #26ABED;
+    color: #26ABED;
+    font-weight: ;
 }
