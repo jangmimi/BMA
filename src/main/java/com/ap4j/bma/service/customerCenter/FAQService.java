@@ -1,8 +1,11 @@
 package com.ap4j.bma.service.customerCenter;
 
 import com.ap4j.bma.model.entity.customerCenter.FAQEntity;
+import com.ap4j.bma.model.entity.customerCenter.NoticeEntity;
 import com.ap4j.bma.model.repository.FAQRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -20,6 +23,10 @@ public class FAQService {
 
     public FAQEntity faqView(Integer id) {
         return faqRepository.findById(id).get();
+    }
+
+    public Page<FAQEntity> getFAQPage(Pageable pageable) {
+        return faqRepository.findAll(pageable);
     }
 
 }

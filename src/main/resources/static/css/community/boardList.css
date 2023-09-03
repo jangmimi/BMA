@@ -101,7 +101,7 @@
     height:120%;
     border: 0px;
     border-radius: 10px;
-    margin-top:5px;
+    margin-top:20px;
     background: #26A9E0;
     outline: none;
     color: #ffffff;
@@ -126,9 +126,11 @@
      margin-top:60px;
     }
 
+/*페이징*/
+
     .bottom{
     text-align : center;
-    margin-top: 40px;
+    margin-top: 60px;
     }
 
     span{
@@ -140,4 +142,25 @@
     height : 40px;
     background : #ffffff;
     float: right;
+    }
+
+    .pre, .next{
+        background: #26A9E0;
+        border-radius: 5px;
+        padding: 5px;
+        padding-right: 10px;
+        padding-left: 10px;
+        color: white;
+        }
+
+    /* 현재 페이지 (active 상태) 스타일 */
+    .bottom a.active {
+        color: #26A9E0; /* active 상태의 링크 색상 */
+        font-weight: bold; /* active 상태의 글꼴 굵게 표시 */
+        border-bottom: 3px solid #26A9E0; /* active 상태의 아래쪽 테두리 추가 */
+    }
+
+    /* 호버 효과 스타일 */
+    .bottom a:hover {
+        color: #26A9E0; /* hover 상태의 링크 색상 */
     }

@@ -80,7 +80,7 @@
 
 <body layout:fragment="content">
 <div style="text-align : center;">
-    <img src="/static/img/maemulReg/moreinfo.jpg" style="width:100%; height:100%;" >
+    <img src="/img/maemulReg/moreinfo.jpg" style="width:100%; height:100%;" >
 </div>
 
 <div class="layout">
@@ -179,7 +179,7 @@
             <div id="previewContainer"></div>
             <!-- 이미지 선택 버튼 -->
             <input type="file" id="imageInput" style="display: none;" accept="image/*" multiple>
-            <img src="/static/img/maemulReg/image.png" style="width : 150px;" height="150px"><br>
+            <img src="/img/maemulReg/image.png" style="width : 150px;" height="150px"><br>
             <button class="pic-btn" type="button" onclick="chooseImages()">+ 사진 등록</button>
         </div>
 
@@ -195,14 +195,14 @@
     <div class="pre">
         <div class="predetails">
             <ul>
-                <li><a href="maemulinfo">이전</a></li>
+                <li><a href="/maemulinfo">이전</a></li>
             </ul>
         </div>
     </div>
     <div class="next">
         <div class="nextdetails">
             <ul>
-                <li><a href="#">등록</a></li>
+                <li><a><button type="submit">등록</button></a></li>
             </ul>
         </div>
     </div>
