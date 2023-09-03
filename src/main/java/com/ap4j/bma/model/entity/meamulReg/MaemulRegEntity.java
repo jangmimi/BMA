@@ -12,8 +12,6 @@ public class MaemulRegEntity {
 
     private String adress; //도로명 주소
     private String APT_name; //단지명
-    private int APT_number; // 아파트 동
-    private int home_number; // 아파트 호수
 
     private String buildingUsage; //건축물 용도
     private int numberOfRooms; //방 수
