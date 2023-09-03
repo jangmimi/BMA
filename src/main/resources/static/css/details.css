@@ -968,6 +968,12 @@ ul span {
 	background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png");
 }
 
+.y-st-q a{
+	text-decoration: none;
+}
+
+
+
 .placeinfo a,
 .placeinfo a:active,
 .placeinfo a:hover {

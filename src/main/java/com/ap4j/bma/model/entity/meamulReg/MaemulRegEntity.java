@@ -36,6 +36,7 @@ public class MaemulRegEntity {
     private boolean shortTermRental;//단기임대
     private String availableMoveInDate;//입주가능일
     private Long loanAmount;//융자금
+//    private
 
     //월세
     private Long monthlyForRent; //희망보증금

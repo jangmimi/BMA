@@ -79,6 +79,17 @@
 	gap: 10px;
 }
 
+.z-bottom-wrap a{
+	text-decoration: none;
+	color: black
+}
+
+.z-none-img{
+	width: 340px;
+	height: 385px;
+}
+
+
 .z-hash-tags {
 	border: 1px solid #e5e5e5;
 	color: #7790ad;
