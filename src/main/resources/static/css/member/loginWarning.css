@@ -5,9 +5,10 @@
     padding-top: 100px;
 }
 .warning-icon img {
-    width: 200px;
+    width: 150px;
 }
 .warning-txt {
+    margin-top: 20px;
     font-size: 25px;
     font-weight: 600;
 }
@@ -15,5 +16,5 @@
     color: #26ABED;
 }
 .warning-btns {
-    padding: 50px 50px;
+    padding: 30px 50px;
 }
