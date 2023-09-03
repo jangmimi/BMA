@@ -5,7 +5,6 @@ import com.ap4j.bma.model.repository.FAQRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
