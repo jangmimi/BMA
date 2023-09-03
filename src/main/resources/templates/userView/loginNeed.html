@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layouts/include_footer_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>아파트사조</title>
+    <link rel="stylesheet" th:href="@{/css/member/loginWarning.css}">
+    <!-- 부트스트랩 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body layout:fragment="content">
+
+<th:block th:if="${loginMember == null}">
+        <div class="container">
+            <div class="container-inner">
+                <div class="warning-icon">
+                    <img th:src="@{/img/warning_icon.png}" alt="경고아이콘">
+                </div>
+                <div class="warning-txt">
+                    <p>죄송합니다.</p>
+                    <p><b id="bold-txt">로그인</b>이 필요한 페이지입니다.</p>
+                </div>
+                <div class="warning-btns">
+                    <a class="btn btn-outline-primary" th:onclick="'javascript:history.back(-1);'">이전페이지</a>
+                    <a class="btn btn-outline-primary" th:href="@{/member/qLoginForm}">로그인</a>
+                </div>
+            </div>
+        </div>
+</th:block>
+
+<!-- 부트스트랩 script -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</body>
+</html>

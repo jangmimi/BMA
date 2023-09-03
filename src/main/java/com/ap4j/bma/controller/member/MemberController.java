@@ -31,7 +31,7 @@ public class MemberController {
 
     /** 로그인 페이지 매핑 */
     @RequestMapping("/qLoginForm")
-    public String qLoginForm(@CookieValue(value = "rememberedEmail", required = false) String rememberedEmail, Model model) {
+    public String qLoginForm(@CookieValue(value = "rememberedEmail", required = false) String rememberedEmail, Model model, HttpSession session) {
         log.info("MemberController - qLoginForm() 실행");
 
         model.addAttribute("rememberedEmail", rememberedEmail); // 쿠키가 있는 경우, 저장 이메일 표시
@@ -193,6 +193,11 @@ public class MemberController {
     @RequestMapping("/qMyPage")
     public String qMyPage(HttpSession session, Model model) {
         log.info("MemberController - qMyPage() 실행");
+
+        if(session.getAttribute("loginMember") == null) {
+            return "userView/loginNeed";
+        }
+
         String thumImg = (String) session.getAttribute("thumbnail_image");
         model.addAttribute("thumbnail_image", thumImg);
         MemberDTO loginMember = (MemberDTO) session.getAttribute("loginMember");
