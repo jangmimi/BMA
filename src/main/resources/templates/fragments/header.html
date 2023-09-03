@@ -34,7 +34,7 @@
 <!--    <div class="n-header-right" th:with="member=null">-->
       <ul th:if="${loginMember==null}" class="n-header-list">
         <li>
-          <a href="/member/qLoginForm">로그인</a>
+          <a class="n-header-login-logout" href="/member/qLoginForm">로그인</a>
         </li>
         <li>
           <a href="/member/qJoinForm">회원가입</a>
@@ -45,7 +45,7 @@
       </ul>
       <ul th:if="${loginMember!=null}" class="n-header-list">
         <li>
-          <a href="/member/qLogout">로그아웃</a>
+          <a class="n-header-login-logout" href="/member/qLogout">로그아웃</a>
         </li>
         <li>
           <a href="/member/qMyPage">마이페이지</a>

@@ -26,11 +26,17 @@ public class ChatMessage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long chatId;
+
     @Column
-    private String chatContent;
-    @Column
-    private String chatSender;
+    private String email;
+
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime chatDate;
+
+    @Column
+    private String chatContent;
+
+    @Column
+    private String nickname;
 
 }

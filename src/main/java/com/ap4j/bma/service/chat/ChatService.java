@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ChatService {
 
-    public void saveMessage(ChatMessage chatMessage);
+    public ChatMessage saveMessage(ChatMessage chatMessage);
 
     public List showMessages(LocalDateTime startTime);
 
