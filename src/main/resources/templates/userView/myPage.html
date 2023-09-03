@@ -34,8 +34,8 @@
                     <div class="oInfo-top-wrapper">
                         <div class="oInfo-left">
                             <div class="oThumbnailImg">
-                                <img th:if="${thumbnail_image!=null}" th:src="${thumbnail_image}" alt="썸네일이미지">
-                                <img th:if="${thumbnail_image==null}" th:src="@{/img/defaultProfile.jpg}" width="110" alt="썸네일이미지">
+                                <img class="myImg" th:if="${thumbnail_image!=null}" th:src="${thumbnail_image}" alt="썸네일이미지">
+                                <img class="myImg" th:if="${thumbnail_image==null}" th:src="@{/img/defaultProfile.jpg}" alt="썸네일이미지">
                             </div>
                             <div class="oInfoMember">
                                 <div class="oInfoMemberContain">
@@ -133,27 +133,6 @@
                         </table>
                     </div>
                 </div>
-<!--                <div class="oMyInfo-bottom">-->
-<!--                    <div class="menubar">-->
-<!--    &lt;!&ndash;                    <button type="button" class="menu-c" id="oInterestMaemul" onclick="location.href = '/notice/list'" >관심매물</button>&ndash;&gt;-->
-<!--    &lt;!&ndash;                    <button type="button" class="menu" id="oRecentMaemul" onclick="location.href = '/guide'" >최근본매물</button>&ndash;&gt;-->
-<!--                        <button type="button" class="oMaemulLink" id="oInterestMaemul" onclick="location.href = '#'" >관심매물</button>-->
-<!--                        <button type="button" class="oMaemulLink" id="oRecentMaemul" onclick="location.href = '#'" >최근본매물</button>-->
-<!--                    </div>-->
-<!--                    <table style="margin-top: 15px; align:center;">-->
-<!--                        <tr>-->
-<!--                            <th>거래종류</th>-->
-<!--                            <th>매물종류</th>-->
-<!--                            <th>소재지 / 상세주소 매물설명</th>-->
-<!--                            <th>면적</th>-->
-<!--                            <th>가격</th>-->
-<!--                            <th>삭제</th>-->
-<!--                        </tr>-->
-<!--                        <tr>-->
-<!--                            <td colspan="6">조회된 데이터가 없습니다.</td>-->
-<!--                        </tr>-->
-<!--                    </table>-->
-<!--                </div>-->
             </div>
         </div>
     </div>
@@ -165,5 +144,3 @@
             crossorigin="anonymous"></script>
 </body>
 </html>
-
-<!-- merge 후 push 안한거 확인 -->

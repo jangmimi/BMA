@@ -47,8 +47,10 @@ public class MemberServiceImpl implements MemberService {
 
 	/** 카카오 토큰 얻기 */
 	public String getAccessToken(String code) {
+		String clientID = "fae91fecfb7dbda2a80ae22881709a28";
+		String redirectURL = "http://localhost:8081/member/qLogin";
+
 		String accessToken = "";
-		String refreshToken = "";
 		String reqURL = "https://kauth.kakao.com/oauth/token";
 
 		try {
@@ -63,9 +65,9 @@ public class MemberServiceImpl implements MemberService {
 			// 파라미터 저장 후 전송
 			StringBuilder sb = new StringBuilder();
 			sb.append("grant_type=authorization_code");
-			sb.append("&client_id=fae91fecfb7dbda2a80ae22881709a28");
-			sb.append("&redirect_uri=http://localhost:8081/member/qLogin");
-			sb.append("&code="+code);
+			sb.append("&client_id=").append(clientID);
+			sb.append("&redirect_uri=").append(redirectURL);
+			sb.append("&code=").append(code);
 
 			bw.write(sb.toString());
 			bw.flush();
@@ -86,7 +88,6 @@ public class MemberServiceImpl implements MemberService {
 			JsonElement element = parser.parse(result);
 
 			accessToken = element.getAsJsonObject().get("access_token").getAsString();
-			refreshToken = element.getAsJsonObject().get("refresh_token").getAsString();
 
 			br.close();
 			bw.close();
@@ -179,11 +180,16 @@ public class MemberServiceImpl implements MemberService {
 	/** 네이버 토큰 얻기 */
 	@Override
 	public String getAccessTokenNaver(String code) {
+		String clientID = "KxGhFHZ7Xp74X_5IZ23h";
+		String clientSecret = "yrJitK_hXC";
+		String redirectURL = "http://localhost:8081/member/qLoginNaver";
+
 		String accessToken = "";
-		String refreshToken = "";
-		String reqURL = "https://nid.naver.com/oauth2.0/authorize";
-		SecureRandom random = new SecureRandom();
-		String state = new BigInteger(130, random).toString(32);
+		String reqURL = "https://nid.naver.com/oauth2.0/token";	// 인증 코드로 토큰 요청
+
+//		SecureRandom random = new SecureRandom();
+//		String state = new BigInteger(130, random).toString(32);
+		String state = "9999";
 
 		try {
 			URL url = new URL(reqURL);
@@ -191,14 +197,15 @@ public class MemberServiceImpl implements MemberService {
 			conn.setRequestMethod("POST");
 			conn.setDoOutput(true);
 
-			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
-
 			StringBuilder sb = new StringBuilder();
-			sb.append("response_type=code");
-			sb.append("&client_id=KxGhFHZ7Xp74X_5IZ23h");
-			sb.append("&redirect_uri=http://localhost:8081/memeber/qLoginNaverCallback");
-			sb.append("&state="+state);
+			sb.append("grant_type=authorization_code");
+			sb.append("&client_id=").append(clientID);
+			sb.append("&client_secret=").append(clientSecret);
+			sb.append("&redirect_uri=").append(redirectURL);
+			sb.append("&code=").append(code);
+			sb.append("&state=").append(state);
 
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
 			bw.write(sb.toString());
 			bw.flush();
 
@@ -218,7 +225,6 @@ public class MemberServiceImpl implements MemberService {
 			JsonElement element = parser.parse(result);
 
 			accessToken = element.getAsJsonObject().get("access_token").getAsString();
-			refreshToken = element.getAsJsonObject().get("refresh_token").getAsString();
 
 			br.close();
 			bw.close();
@@ -226,6 +232,51 @@ public class MemberServiceImpl implements MemberService {
 			log.info(e.toString());
 		}
 		return accessToken;
+	}
+
+	/** 네이버 유저 정보 얻기 */
+	public HashMap<String, Object> getUserInfoNaver(String accessToken) {
+		HashMap<String, Object> userInfo = new HashMap<String, Object>();
+		String reqUrl = "https://openapi.naver.com/v1/nid/me";
+		try {
+			URL url = new URL(reqUrl);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("POST");
+			conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+			int responseCode = conn.getResponseCode();
+			log.info("responseCode = " + responseCode);
+
+			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+			String line = "";
+			String result = "";
+
+			while((line = br.readLine()) != null) {
+				result += line;
+			}
+			log.info("response body = " + result);  // 필요한 것만 뽑아 낼 수 있는지 확인하기
+
+			JsonParser parser = new JsonParser();
+			JsonElement element =  parser.parse(result);
+
+			JsonObject response = element.getAsJsonObject().get("response").getAsJsonObject();
+
+			String email = response.getAsJsonObject().get("email").getAsString();
+			String name = response.getAsJsonObject().get("name").getAsString();
+			String nickname = response.getAsJsonObject().get("nickname").getAsString();
+			String mobile = response.getAsJsonObject().get("mobile").getAsString();
+			String profile_image = response.getAsJsonObject().get("profile_image").getAsString();
+
+			userInfo.put("email", email);
+			userInfo.put("name", name);
+			userInfo.put("nickname", nickname);
+			userInfo.put("mobile", mobile);
+			userInfo.put("profile_image", profile_image);
+
+		} catch (Exception e) {
+			log.info(e.toString());
+		}
+		return userInfo;
 	}
 
 	/** 기본 회원가입 */
@@ -366,13 +417,17 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepository.findByEmailAndTel(email, tel);
 	}
 
-	/** 전체 QnA 목록 */
+	/** 내 QnA 목록 */
 	@Override
 	public List<QnAEntity> qMyQnaList() {
-
 		return qQnARepository.findAll();
 	}
 
+	/** 내 QnA 전체 수 */
+	@Override
+	public Long qMyQnaCnt() {
+		return qQnARepository.count();
+	}
 }
 
 //	/** 회원 탈퇴 id 기준 */

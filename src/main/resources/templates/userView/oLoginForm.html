@@ -70,7 +70,7 @@
                             <img th:src="@{/img/member/kakao_login_medium_narrow.png}" alt="kakaoLoginImg" height="44" />
                         </a>
                         <!-- 네이버 로그인 (카카오 로그인과 높이만 맞춤) -->
-                        <a th:href="@{/member/qLoginNaver}">
+                        <a th:href="@{https://nid.naver.com/oauth2.0/authorize?client_id=KxGhFHZ7Xp74X_5IZ23h&redirect_uri=http://localhost:8081/member/qLoginNaver&response_type=code&state=9999}">
                             <img th:src="@{/img/member/btnG_완성형.png}" alt="naverLoginImg" height="44" />
                         </a>
                     </div>
@@ -81,9 +81,7 @@
 </th:block>
 
     <script th:src="@{/js/member/login.js}"></script>
-    <!-- 네이버 로그인 script -->
-    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+
     <!-- 부트스트랩 script -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>

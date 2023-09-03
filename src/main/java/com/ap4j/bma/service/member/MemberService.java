@@ -24,6 +24,8 @@ public interface MemberService {
 
 	public String getAccessTokenNaver(String code);
 
+	public HashMap<String, Object> getUserInfoNaver(String accessToken);
+
 	public Long joinBasic(@ModelAttribute MemberDTO memberDTO);
 
 	public boolean existsByEmail(String email);
@@ -46,6 +48,7 @@ public interface MemberService {
 
 	// 매물 관련
 	public List<QnAEntity> qMyQnaList();
+	public Long qMyQnaCnt();
 }
 
 //    Map<String, String> validateHandler(Errors errors);
