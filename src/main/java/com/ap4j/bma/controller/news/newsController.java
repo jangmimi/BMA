@@ -120,7 +120,12 @@ public String search(
         model.addAttribute("total", totalResults);
 
         model.addAttribute("itemsPerPage", itemsPerPage);
-        model.addAttribute("searchKeyword", searchKeyword.replaceAll(" ","")); // 정확도가 높은 검색어
+
+        if (searchKeyword != null) {
+            model.addAttribute("searchKeyword", searchKeyword.replaceAll(" ","")); // 정확도가 높은 검색어
+        } else {
+            model.addAttribute("searchKeyword", searchKeyword);
+        }
 
         log.info(searchKeyword);
     } catch (IOException e) {
