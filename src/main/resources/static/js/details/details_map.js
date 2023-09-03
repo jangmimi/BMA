@@ -53,6 +53,8 @@ var ps = new kakao.maps.services.Places(map);
 // 주소-좌표 변환 객체를 생성합니다
 var geocoder = new kakao.maps.services.Geocoder();
 
+
+
 // 주소로 좌표를 검색합니다
 geocoder.addressSearch('서울특별시 영등포구 대림동 992-19', function(result, status) {
 

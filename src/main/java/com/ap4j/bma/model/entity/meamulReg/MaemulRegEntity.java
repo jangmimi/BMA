@@ -19,11 +19,7 @@ public class MaemulRegEntity {
     private Integer id; //매물 등록 번호
 
     private String adress; //도로명 주소
-<<<<<<< HEAD
-    private String APT_name; //단지명
-=======
     private String APT_name; //아파트 이름
->>>>>>> 93709e9ac9c14292d21bebe6e5805af222274645
 
     private String buildingUsage; //건축물 용도
     private int numberOfRooms; //방 수
