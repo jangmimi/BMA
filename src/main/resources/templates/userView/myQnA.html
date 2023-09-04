@@ -52,12 +52,17 @@
                                     <!-- 총 나의 문의 갯수 출력 -->
                                     <p>전체 <span class="myQnaCntAll" th:text="${myQnaCnt}"></span>건</p>
                                     <!-- 본인이 작성한 문의만 표시하는 조건문, 번호는 '플래닛 사이트'도 전체글 기준 번호 보여줌 -->
+                                    <th:block th:if="${loginMember != null}">
+                                    <tr><td colspan="4">조회된 데이터가 없습니다.</td></tr>
+                                    </th:block>
+                                    <th:block th:if="${loginMember == null}">
                                     <tr th:each="myQna : ${myQnaList}" th:if="${myQna.user_email == loginMember.email}">
                                         <td id="num" th:text="${myQna.id}">번호</td>
                                         <td id="category" th:text="${myQna.category}">분류</td>
                                         <td><a th:href="@{/faq/view(id=${myQna.id})}" th:text="${myQna.title}">제목</a></td>
                                         <td><a th:href="@{/faq/view(id=${myQna.id})}" th:text="${#temporals.format(myQna.createdAt, 'yyyy-MM-dd')}">yyyy-MM-dd</a></td>
                                     </tr>
+                                    </th:block>
                                 </tbody>
                             </table>
                         </div>

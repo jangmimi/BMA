@@ -166,6 +166,10 @@
 #nickname {
     width: 254px;
 }
+#btnNicknameCheck {
+    width: 90px;
+    margin-left: 6px;
+}
 #oJoinBtn-container {
    display: flex;
    justify-content: space-evenly;
