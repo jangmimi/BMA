@@ -1,10 +1,13 @@
 package com.ap4j.bma.model.entity.customerCenter;
 
+import groovy.transform.ToString;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@ToString
 @Entity
 public class QnAEntity {
 
@@ -23,7 +26,8 @@ public class QnAEntity {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-
+    private String filename;
+    private String filepath;
     //getter , setter
 
     public Integer getId() {
@@ -80,4 +84,19 @@ public class QnAEntity {
         this.createdAt = createdAt;
     }
 
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
+    public String getFilepath() {
+        return filepath;
+    }
+
+    public void setFilepath(String filepath) {
+        this.filepath = filepath;
+    }
 }
