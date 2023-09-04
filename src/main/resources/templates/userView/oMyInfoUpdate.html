@@ -45,9 +45,12 @@
                             <input type="text" class="form-control" id="name" name="name" th:value="*{name}" autofocus="autofocus" />
                             <label th:for="name">이름(실명)</label>
                         </div>
-                        <div class="form-floating mb-3">
+                        <div class="form-floating mb-3" style="display:flex; flex-wrap:wrap">
                             <input type="text" class="form-control" id="nickname" name="nickname" th:value="*{nickname}" />
                             <label th:for="nickname">닉네임</label>
+                            <input type="button" class="btn btn-outline-dark" id="btnNicknameCheck"
+                                   value="중복검사" onclick="checkNickname()" />
+                            <div class="form-floating" id="nicknameErr"></div>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="tel" name="tel" th:value="*{tel}" />

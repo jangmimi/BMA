@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.*;
 import java.util.HashMap;
@@ -109,12 +110,14 @@ public class MemberController {
 
     /** 기본 로그인 */
     @PostMapping("/qLoginBasic")
-    public String qBasicLogin(@ModelAttribute MemberDTO memberDTO, @RequestParam(required = false) boolean oSaveId,
-                              Model model, HttpSession session, HttpServletResponse response) {
+    public String qBasicLogin(@ModelAttribute MemberDTO memberDTO,
+                              @RequestParam(required = false) boolean oSaveId,
+                              Model model, HttpSession session, HttpServletResponse response,
+                              RedirectAttributes redirectAttributes) {
         log.info("MemberController - qBasicLogin() 실행");
         log.info("memberDTO : " + memberDTO);
-
         MemberDTO loginMember = qMemberService.login(memberDTO);
+
         if(loginMember != null) {
             session.setAttribute("errorMsg", null);
             log.info(loginMember.toString());
@@ -123,10 +126,23 @@ public class MemberController {
             loginMember.toEntity();
             model.addAttribute("loginMember",  loginMember);
 
+            // 쿠키 작업
+            if(oSaveId) {
+                Cookie cookie = new Cookie("rememberedEmail", loginMember.getEmail());
+                cookie.setMaxAge(30 * 24 * 60 * 60);    // 30일 동안 유지
+                cookie.setPath("/");                    // 모든 경로에 쿠키 설정
+                response.addCookie(cookie);
+            } else {
+                Cookie cookie = new Cookie("rememberedEmail", null);
+                cookie.setMaxAge(0);
+                response.addCookie(cookie);
+            }
             return "redirect:/";
 
         } else {
-             model.addAttribute("errorMsg","이메일 또는 패스워드를 다시 확인해주세요.");
+            model.addAttribute("errorMsg","이메일 또는 패스워드를 다시 확인해주세요.");
+//            redirectAttributes.addFlashAttribute("rememberedEmail", memberDTO.getEmail());
+//            redirectAttributes.addFlashAttribute("oSaveId", oSaveId);
             return "userView/oLoginForm";
         }
     }
@@ -247,14 +263,15 @@ public class MemberController {
         return "redirect:/member/qMyPage";
     }
 
-    /** 1:1 문의내역 페이지 매핑 */
+    /** 1:1 문의내역 페이지 매핑 */  // 필요한 것 : list / login email 기준 cnt
     @GetMapping("/qMyQnA")
     public String qMyQnA(Model model, HttpSession session) {
         log.info("MemberController - qMyQnA() 실행");
         if(!loginStatus(session)) { return "userView/loginNeed"; }
-
+;
         List<QnAEntity> qMyQnaList = qMemberService.qMyQnaList();
         Long qMyQnaCnt = qMemberService.qMyQnaCnt();
+
         model.addAttribute("myQnaList", qMyQnaList);
         model.addAttribute("myQnaCnt", qMyQnaCnt);
         return "userView/myQnA";
@@ -334,7 +351,6 @@ public class MemberController {
     @RequestMapping("/qInterest")
     public String qInterest() {
         log.info("MemberController - qInterest() 실행");
-
         return "userView/maemulInterest";
     }
 
@@ -342,7 +358,6 @@ public class MemberController {
     @RequestMapping("/qRecent")
     public String qRecent() {
         log.info("MemberController - qRecent() 실행");
-
         return "userView/maemulRecent";
     }
 }

@@ -428,6 +428,7 @@ public class MemberServiceImpl implements MemberService {
 	public Long qMyQnaCnt() {
 		return qQnARepository.count();
 	}
+
 }
 
 //	/** 회원 탈퇴 id 기준 */
