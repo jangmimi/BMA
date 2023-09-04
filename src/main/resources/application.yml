@@ -54,3 +54,9 @@ spring:
 ##    password: 45723922
 #    driver-class-name: com.mysql.cj.jdbc.Driver
 
+
+    url: jdbc:mysql://localhost:3306/pos
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+

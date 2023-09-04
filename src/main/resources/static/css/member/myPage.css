@@ -127,7 +127,9 @@
     display: flex;
     justify-content: center;
 }
-
+.myImg {
+    width: 150px;
+}
 
 /*oMyInfoUpdate css*/
 .form-floating {
