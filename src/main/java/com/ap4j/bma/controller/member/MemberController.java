@@ -31,7 +31,7 @@ public class MemberController {
     private PasswordEncoderConfig pwdConfig;
 
     /** 로그인 여부 체크 */
-    private boolean loginStatus(HttpSession session) {
+    public boolean loginStatus(HttpSession session) {
         return session.getAttribute("loginMember") != null;
     }
 

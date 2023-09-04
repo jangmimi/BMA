@@ -160,11 +160,6 @@ float: right;
     color: #26A9E0; /* hover 상태의 링크 색상 */
 }
 
-/* myQnA-pjm */
-.faq-tb {
-    width: 100%;
-    text-align: center;
-}
 #myQnaBtn {
     margin-top: 50px;
 }

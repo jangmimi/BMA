@@ -5,42 +5,12 @@
     margin: 16px 0px;
     padding: 0px 0px 0px 40px;
 }
-.o-lnb {
-    min-width: 1000px;
-    height: 50px;
-    background-color: #ededed;
-}
-#o-container { height: auto; }
-.o-wrapper {
-    position: relative;
-    display: block;
-    margin-left: 205px;
+#o-container {
+    height: auto;
 }
 .o-mid-inner {
     width: 1200px;
     margin: 0 auto;
-}
-.o-lnb-list {
-    font-family: 'Noto Sans KR', sans-serif;
-    height: 50px;
-    float: left;
-    display: flex;
-    padding-left: 20px;
-    line-height: 1;
-    list-style: none;
-    margin: 0;
-}
-.o-lnb-item {
-    position: relative;
-    display: inline-flex;
-    margin-right: 15px;
-    align-items: center;
-}
-.o-lnb-item a {
-    font-weight: bold;
-    color: #7790ad;
-    font-size: 13px;
-    text-decoration-line: none;
 }
 .oInfo-top {
     display: flex;
@@ -259,7 +229,7 @@
     border: none;
     background-color: #26abed;
     color: white;
-    font-size: 18px;
+    font-size: 16px;
 }
 .myQnaCntAll {
     color: #26ABED;

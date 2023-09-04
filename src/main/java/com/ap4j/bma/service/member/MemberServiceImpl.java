@@ -329,7 +329,7 @@ public class MemberServiceImpl implements MemberService {
 			log.info("로그인 시도하는 email DB에 존재!");
 			MemberEntity memberEntity = findMember.get();
 			if(memberEntity.getMember_leave()) { log.info("탈퇴한 회원"); return null; }
-			if(memberEntity.getRoot() == 2) {	// 카카오는 pwd 체크 없이 로그인 진행
+			if(memberEntity.getRoot() == 2 ) {	// 카카오네이버는 pwd 체크 없이 로그인 진행
 				MemberDTO dto = memberEntity.toDTO();
 				log.info("entity를 toDTO : " +  dto);
 				return dto;

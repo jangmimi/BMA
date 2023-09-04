@@ -11,6 +11,8 @@
 </head>
 
 <body layout:fragment="content">
+<!-- 로그인중일때만 접근 가능 -->
+<th:block th:if="${loginMember != null}">
 <div class="layout">
     <h1>고객센터</h1>
 
@@ -28,17 +30,23 @@
         ＊ 문의하신 내역은 <b class="boldtext">[내정보 > 1:1 문의내역]</b>에서 확인하실 수 있습니다.<br>
         </p>
     </div>
-    <hr/>
-    <form  id="qnaForm" action="/qna" method="post">
+    <hr/>                                           <!-- 세션 객체 받아와서 지정 -->
+    <form  id="qnaForm" action="/qna" method="post" th:object="${loginMember}">
         <div id="tb-box">
         <table border="1" class="qna-tb">
             <tr>
                 <th>이름<b class="boldtext">＊</b></th>
-                <td><input  name = "user_name" type="text" placeholder="유저이름"></td>
+                <td>             <!-- DB로 값 넘기기 위해 hidden, th:value로 요소 값 설정 -->
+                    <input type="hidden" id="user_name" name="user_name" th:value="*{name}">
+                    <label th:text="*{name}"></label>   <!-- 세션 로그인멤버(loginMember) name 표시 -->
+                </td>
             </tr>
             <tr>
                 <th>이메일<b class="boldtext">＊</b></th>
-                <td><input  name = "user_email" type="text" placeholder="유저이메일"></td>
+                <td>
+                    <input type="hidden" id="user_email" name="user_email" th:value="*{email}">
+                    <label th:text="*{email}"></label>
+                </td>
             </tr>
             <tr>
                 <th>구분<b class="boldtext">＊</b></th>
@@ -78,6 +86,6 @@
     </div>
     </form>
 </div>
-
+</th:block>
 </body>
 </html>

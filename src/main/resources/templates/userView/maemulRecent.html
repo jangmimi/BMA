@@ -10,6 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/member/myPage.css}">
+    <link rel="stylesheet" th:href="@{/css/member/myCommon.css}">
     <link rel="stylesheet" th:href="@{/css/member/myQna.css}">
     <link rel="stylesheet" th:href="@{/css/member/myMaemul.css}">
 </head>
@@ -36,7 +37,7 @@
 
                 <div class="o-mid-wrapper">
                     <div class="o-mid-inner mt-5" id="o-tb-wrap">
-                        <div id="oPageTitle">
+                        <div id="o-page-title">
                             <h3 class="h3 fw-bold">최근본매물</h3>
                         </div>
                         <div class="oSearch-c">
@@ -48,7 +49,7 @@
                             </div>
                         </div>
                         <div class="oMyQnaTb">
-                            <table class="faq-tb" style="width: 100%; text=align: center;">
+                            <table class="faq-tb">
                                 <thead>
                                 <tr>
                                     <th class="b-n">번호</th>

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import javax.servlet.http.HttpSession;
+
 @SessionAttributes("loginMember")
 @Controller
 public class QnAController {
@@ -19,7 +21,10 @@ public class QnAController {
 
     //QNA
     @GetMapping("/qna")
-    public String QnAWriteForm() {
+    public String QnAWriteForm(HttpSession session) {
+        // 로그인 안했을 경우 접근제한 페이지 표시
+        if(session.getAttribute("loginMember") == null) { return "userView/loginNeed"; }
+
         return "customerCenter/QnABoard/QnAWrite";
     }
 

@@ -10,6 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/member/myPage.css}">
+    <link rel="stylesheet" th:href="@{/css/member/myCommon.css}">
     <link rel="stylesheet" th:href="@{/css/member/myQna.css}">
     <link rel="stylesheet" th:href="@{/css/member/myMaemul.css}">
 </head>
@@ -36,11 +37,11 @@
 
                 <div class="o-mid-wrapper">
                     <div class="o-mid-inner mt-5" id="o-tb-wrap">
-                        <div id="oPageTitle">
+                        <div id="o-page-title">
                             <h3 class="h3 fw-bold">관심 매물</h3>
                         </div>
                         <div class="oSearch-c">
-                            <div class = "headrow">
+                            <div class="headrow">
                                 <div class = "headrowL">
                                     <input type="text" class = "searchbox" placeholder="검색어 입력">
                                     <button class = "searchbtn">검색</button>
@@ -48,27 +49,27 @@
                             </div>
                         </div>
                         <div class="oMyQnaTb">
-                            <table class="faq-tb" style="width: 100%; text=align: center;">
+                            <table class="faq-tb">
                                 <thead>
-                                <tr>
-                                    <th class="-n">사진</th>
-                                    <th class="b-n">소재지/상세주소</th>
-                                    <th class="b-t">면적</th>
-                                    <th class="b-t">가격(만원)</th>
-                                    <th class="b-t">삭제</th>
-                                </tr>
+                                    <tr>
+                                        <th class="-n">사진</th>
+                                        <th class="b-n">소재지/상세주소</th>
+                                        <th class="b-t">면적</th>
+                                        <th class="b-t">가격(만원)</th>
+                                        <th class="b-t">삭제</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <p>전체 <span class="myQnaCntAll" th:text="${myQnaCnt}"></span>건</p>
-                                <tr th:each="myQna : ${myQnaList}">
-                                    <td colspan="4">조회된 데이터가 없습니다.</td>
-                                </tr>
-                                <tr th:each="myQna : ${myQnaList}" th:if="${myQna.user_email == loginMember.email}">
-                                    <td id="num" th:text="${myQna.id}">번호</td>
-                                    <td id="category" th:text="${myQna.category}">분류</td>
-                                    <td><a th:href="@{/faq/view(id=${myQna.id})}" th:text="${myQna.title}">제목</a></td>
-                                    <td><a th:href="@{/faq/view(id=${myQna.id})}" th:text="${#temporals.format(myQna.createdAt, 'yyyy-MM-dd')}">yyyy-MM-dd</a></td>
-                                </tr>
+                                    <p>전체 <span class="myQnaCntAll" th:text="${myQnaCnt}"></span>건</p>
+                                    <tr th:each="myQna : ${myQnaList}">
+                                        <td colspan="4">조회된 데이터가 없습니다.</td>
+                                    </tr>
+                                    <tr th:each="myQna : ${myQnaList}" th:if="${myQna.user_email == loginMember.email}">
+                                        <td id="num" th:text="${myQna.id}">번호</td>
+                                        <td id="category" th:text="${myQna.category}">분류</td>
+                                        <td><a th:href="@{/faq/view(id=${myQna.id})}" th:text="${myQna.title}">제목</a></td>
+                                        <td><a th:href="@{/faq/view(id=${myQna.id})}" th:text="${#temporals.format(myQna.createdAt, 'yyyy-MM-dd')}">yyyy-MM-dd</a></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>

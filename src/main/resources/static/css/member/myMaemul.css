@@ -160,9 +160,3 @@ border-bottom: 3px solid #26A9E0; /* active 상태의 아래쪽 테두리 추가
 .bottom a:hover {
 color: #26A9E0; /* hover 상태의 링크 색상 */
 }
-
-
-/* maemulInterest - pjm */
-#oPageTitle {
-text-align: center;
-}
