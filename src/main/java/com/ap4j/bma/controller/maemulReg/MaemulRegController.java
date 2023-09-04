@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@SessionAttributes("userEmail")
+@SessionAttributes("loginMember")
 @Controller
 public class MaemulRegController {
 
