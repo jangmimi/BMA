@@ -12,6 +12,7 @@
     <!--금액 콤마처리 / 말고 단위를 만원 단위로 하기로!-->
 <!--    <script defer th:src="@{/js/maemulReg/comma.js}" type="text/javascript"></script>-->
 
+
     <script defer th:src="@{/js/maemulReg/maemulinfo.js}" type="text/javascript"></script>
 
     <!-- 카카오 도로명 API -->
@@ -19,7 +20,7 @@
     <script  src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a2f0e9ee9b85c547e29b750c43418fb0"></script>
 
     <!-- Google Geocoding API -->
-<!--    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>-->
+    <!--    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>-->
 
 </head>
 
@@ -30,6 +31,7 @@
 </div>
 
 <form action="/maemulinfo" method="POST" id="maemulForm"><!--폼 추가-->
+
 <div class="layout">
 
 <h2 class="category"><b class="number">01 </b>주소 정보 입력</h2>
@@ -149,11 +151,7 @@
         </tr>
     </table>
         <br>
-    </div>
 
-    <div id="priceSection" style="display: none;">
-        <h2 class="category"><b class="number">03 </b>가격 정보 입력</h2>
-        <hr>
         <div class="btn-group">
             <button type="button" onclick="showMonthRent()">월세</button>
             <button type="button" onclick="showLease()">전세</button>
@@ -205,29 +203,30 @@
         <br><br>
         <b>공급면적</b><br><br>
         공급면적은 자신의 집과 밀접하게 붙어있는 복도, 엘리베이터 , 계단 등을 전용 면적에 더한 면적입니다.</p>
+
         <br><br>
         <img src="/img/maemulReg/popupimg.png" style="width: 600px; height:500px;" >
 
-</div>
-
-<div class="prenext">
-<div class="pre">
-    <div class="predetails">
-        <ul>
-            <li><a href="/agree">이전</a></li>
-        </ul>
     </div>
-</div>
-    <div class="next">
-        <div class="nextdetails">
-            <ul>
-                <li><button type="submit">다음</button></li>
-            </ul>
+
+    <div class="prenext">
+        <div class="pre">
+            <div class="predetails">
+                <ul>
+                    <li><a href="/agree">이전</a></li>
+                </ul>
+            </div>
         </div>
+        <div class="next">
+            <div class="nextdetails">
+                <ul>
+                    <li><button type="submit">다음</button></li>
+                </ul>
+            </div>
 
 
+        </div>
     </div>
-</div>
 </form>
 
 </body>
