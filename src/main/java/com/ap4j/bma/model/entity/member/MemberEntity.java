@@ -15,13 +15,13 @@ public class MemberEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	// Idx 자동 증가
 	private Long id;	// 기본 키(DB PK)
-	@Column
+	@Column(unique = true)
 	private String email;
 	@Column
 	private String name;
 	@Column
 	private String pwd;
-	@Column
+	@Column(unique = true)
 	private String nickname;
 	@Column
 	private String tel;

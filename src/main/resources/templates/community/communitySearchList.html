@@ -57,7 +57,7 @@
 
     <div class="bottom">
     <span th:if="${currentPage > 1}">
-        <a th:href="@{/community/list/search(page=${currentPage - 1}, keyword=${searchKeyword})}" class="prev">&lt; 이전</a>
+        <a th:href="@{/community/list/search(page=${currentPage - 1}, keyword=${searchKeyword})}" class="prev"> ◀ </a>
     </span>
         <span th:each="pageNum : ${#numbers.sequence(1, totalPages)}">
         <a th:href="@{/community/list/search(page=${pageNum}, keyword=${searchKeyword})}" th:classappend="${pageNum == currentPage} ? 'active' : ''">
@@ -65,7 +65,7 @@
         </a>
      </span>
         <span th:if="${currentPage < totalPages}">
-        <a th:href="@{/community/list/search(page=${currentPage + 1}, keyword=${searchKeyword})}" class="next">다음 &gt;</a>
+        <a th:href="@{/community/list/search(page=${currentPage + 1}, keyword=${searchKeyword})}" class="next"> ▶ </a>
     </span>
     </div>
 </div>

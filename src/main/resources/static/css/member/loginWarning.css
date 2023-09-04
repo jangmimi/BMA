@@ -1,0 +1,19 @@
+.container {
+    text-align:center;
+}
+.container-inner{
+    padding-top: 100px;
+}
+.warning-icon img {
+    width: 200px;
+}
+.warning-txt {
+    font-size: 25px;
+    font-weight: 600;
+}
+#bold-txt {
+    color: #26ABED;
+}
+.warning-btns {
+    padding: 50px 50px;
+}

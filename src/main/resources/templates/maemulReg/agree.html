@@ -1,65 +1,25 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/layouts/no_footer_layout}">
 <head>
     <meta charset="UTF-8">
     <title>매물 등록</title>
-    <link rel="stylesheet" href="/static/css/maemulReg.css">
+    <link rel="stylesheet" th:href="@{/css/maemulReg/maemulReg.css}">
+    <link rel="stylesheet" th:href="@{/css/maemulReg/agree.css}">
+    <script defer th:src="@{/js/maemulReg/agree.js}" type="text/javascript"></script>
 
-    <!--부트스트랩-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
-    <style>
-        textarea {
-        width : 100%;
-        height : 280px;
-        margin: 0 auto;
-        margin-top : 20px;
-        margin-bottom : 10px;
-        box-sizing : border-box;
-        }
-
-        .prenext{
-        margin-top:10%;
-        }
-
-        .prev{
-         float: left;
-        }
-
-        .next{
-        float: right;
-        }
-        .agreement{
-        margin-bottom:10%;
-        float:right;
-        }
-
-         .agreementall{
-        float:right;
-        }
-
-        .number{
-        color: #26A9E0
-        }
-
-    </style>
 </head>
 
 <body layout:fragment="content">
 
 <div style="text-align : center;">
-    <img src="/static/img/maemulReg/agree.jpg" style="width:100%; height:100%;">
+    <img src="/img/maemulReg/agree.jpg" style="width:100%; height:100%;">
 </div>
-
+<div class="layout">
 <h3><b class="number">01 </b>총칙</h3>
-<hr>
-<textarea>
+
+<textarea readonly>
 제 1 조 (목적)
 (주)아파트사조는 이용자의 개인정보를 소중하게 생각하고, 보호하기 위하여 항상 최선을 다해 노력하고 있습니다. 회사는 「개인정보보호법」을 비롯한 모든 개인정보보호 관련 법률규정을 준수하고 있으며, 관련 법령에 의거한 개인정보처리방침을 정하여 이용자 권익 보호에 최선을 다하고 있습니다. 또한 「개인정보처리방침」을 제정하여 이를 준수하고 있으며, 이를 인터넷사이트 및 모바일 어플리케이션에 공개하여 이용자가 언제나 용이하게 열람할 수 있도록 하고 있습니다.
 
@@ -82,10 +42,11 @@
         <span>개인정보 수집 및 이용에 동의합니다.</span>
     </label>
 </div>
+<hr>
 
 <h3><b class="number">02 </b>개인정보의 처리</h3>
-<hr>
-<textarea>
+
+<textarea readonly>
 회사는 이용하는 서비스의 형태에 따라 다음과 같은 개인정보를 처리하고 있습니다. 또한, 회사는 이용자의 개인식별이 가능한 개인정보를 수집하는 때에는 반드시 이용자의 동의를 받습니다. 그리고 수집된 개인정보는 이용목적 범위 외의 용도로 활용되지 않으며, 이용목적에 대한 내용이 변경될 경우 「개인정보보호법」에 따라 반드시 별도의 동의를 받습니다. 수집된 정보에 대하여 이용자는 충분한 권리를 행사할 수 있습니다. 또한, 개인정보처리방침이 변경되었을 때는 이용자께 항상 알리며, 수시로 확인할 수 있도록 게시하겠습니다.
 
 1. 이용자 정보는 다음과 같이 사용합니다.
@@ -117,10 +78,10 @@
         <span>개인정보 수집 및 이용에 동의합니다.</span>
     </label>
 </div>
+<hr>
 
 <h3><b class="number">03 </b>개인정보의 이용목적 외 제3자 제공 및 개인정보 위탁처리</h3>
-<hr>
-<textarea>
+<textarea readonly>
 제7조 (이용자 정보의 제3자 제공)
 1. 회사는 이용자의 개인정보를 "제3조 (이용자 정보 수집 및 이용)"에서 고지한 범위 내에서 사용하며, 이용자의 사전 동의 없이 수집목적 범위를 초과하여 이용하거나 원칙적으로 제3자에게 제공하지 않습니다. 다만, 다음과 같은 양질의 서비스 제공을 위해 회원의 개인정보를 제휴사 또는 개인정보 수탁업체에 제공하는 경우에는 사전에 이용자에게 업체명, 제공되는 개인정보 항목, 제공 목적, 보유기간 등에 대해서 고지하고 개별적으로 동의를 구하는 절차를 제공합니다. 동의가 없는 경우에는 제공되지 않으며, 제휴사 및 개인정보 수탁업체가 변경된 경우에도 고지를 합니다.
 2. 다음의 경우에는 예외로 합니다.
@@ -136,10 +97,11 @@
         <span>개인정보 수집 및 이용에 동의합니다.</span>
     </label>
 </div>
+<hr>
 
 <h3><b class="number">04 </b>개인정보의 보유기간 및 파기</h3>
-<hr>
-<textarea>
+
+<textarea readonly>
 제9조 (이용자 정보 보유기간 및 파기 방법)
 회사가 개인정보를 수집하는 경우 개인정보의 처리목적이 달성되거나 고객의 동의를 받은 기간까지 보유하며, 관계법령(상법, 전자금융거래법, 신용정보의 이용 및 보호에 관한 법률, 정보통신망 이용촉진 및 정보보호 등에 관한 법률, 개인정보보호법 등)에 의한 정보보호 사유 의무가 있는 경우에는 일정기간 동안 보유한 뒤 파기합니다.
 
@@ -165,7 +127,7 @@
 
 <div class = "agreement">
     <label>
-        <input type="checkbox" name="agreement4" />
+        <input type="checkbox" name="agreement4"/>
         <span>개인정보 수집 및 이용에 동의합니다.</span>
     </label>
 </div>
@@ -173,23 +135,23 @@
 <hr>
 <div class = "agreementall">
     <label>
-        <input type="checkbox" name="agreementall" />
+        <input type="checkbox" name="agreementall" id="agreementall"/>
         <span>전체 동의</span>
     </label>
 </div>
-
+</div>
 <div class="prenext">
 <div class="pre">
     <div class="predetails">
         <ul>
-            <li><a href="agree.html">이전</a></li>
+            <li><a href="agree">이전</a></li>
         </ul>
     </div>
 </div>
 <div class="next">
     <div class="nextdetails">
         <ul>
-            <li><a href="maemulInfo.html">다음</a></li>
+            <li><a href="/maemulinfo" onclick="return checkAgreement();">다음</a></li>
         </ul>
     </div>
 </div>
