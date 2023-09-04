@@ -263,12 +263,12 @@ public class MemberController {
         return "redirect:/member/qMyPage";
     }
 
-    /** 1:1 문의내역 페이지 매핑 */  // 필요한 것 : list / login email 기준 cnt
+    /** 1:1 문의내역 페이지 매핑 */  // 필요한 것 : list / login email 기준 cnt // test 추가
     @GetMapping("/qMyQnA")
     public String qMyQnA(Model model, HttpSession session) {
         log.info("MemberController - qMyQnA() 실행");
         if(!loginStatus(session)) { return "userView/loginNeed"; }
-;
+
         List<QnAEntity> qMyQnaList = qMemberService.qMyQnaList();
         Long qMyQnaCnt = qMemberService.qMyQnaCnt();
 
