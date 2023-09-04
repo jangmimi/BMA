@@ -45,7 +45,6 @@ spring:
 #   데이터베이스 설정
   datasource:
     generate-unique-name: false
-
     url: jdbc:mysql://localhost:3306/pos
     username: root
     password: 1234

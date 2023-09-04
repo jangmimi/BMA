@@ -14,8 +14,4 @@ public interface CommunityRepository extends JpaRepository<CommunityEntity, Inte
 
     CommunityEntity findTopByIdGreaterThanOrderByIdAsc(Integer id);
 
-//    //조회수
-//    @Modifying
-//    @Query("update Board b set b.count = b.count + 1 where b.view = :view")
-//    void updateCount(Long view);
 }
