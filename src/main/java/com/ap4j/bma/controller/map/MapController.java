@@ -62,11 +62,11 @@ public class MapController {
     //리뷰리스트 출력하는 메서드
     @GetMapping("/main")
     public String getMarker(HttpSession session, Model model) {
-        log.info("map main 실행");
-        log.info("login session : " + session.getAttribute("loginMember"));
+        log.info("map main 실행!");
+        log.info("로그인한 회원정보~ : " + session.getAttribute("loginMember"));
 
         List<TalkTalkReviewEntity> list = reviewService.reviewList();
-        log.info(list.toString());
+        log.info("맵컨트롤러에서 리뷰리스트출력~ : "+list.toString());
 
         //서비스에서 생성한 리스트를 list라는 이름으로 반환하겠다.
         model.addAttribute("list", list);
