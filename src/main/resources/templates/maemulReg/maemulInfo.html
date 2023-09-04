@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{fragments/layouts/no_footer_layout}" xmlns="http://www.w3.org/1999/html">
+      layout:decorate="~{fragments/layouts/no_footer_layout}">
 <head>
     <meta charset="UTF-8">
     <title>매물 정보</title>
@@ -29,18 +29,18 @@
     <img src="/img/maemulReg/maemulinfo.jpg" style="width:100%; height:100%;">
 </div>
 
-
+<form action="/maemulinfo" method="POST"><!--폼 추가-->
 <div class="layout">
 
 <h2 class="category"><b class="number">01 </b>주소 정보 입력</h2>
     <hr>
     <div id="addressSection">
-    <table border="1" class="info">
+        <table border="1" class="info">
         <tr >
             <th>주소<b class="number"> *</b></th>
             <td colspan="3">
                 <input id="addressInput" name="address" type="text" readonly>
-                <button onclick="openKakaoAddressSearch()" class="address-btn"><img src="/img/maemulReg/search-address.png" style="width:40px; height:40px;" alt="도로명 주소" ></button>
+                <button type="button" onclick="openKakaoAddressSearch()" class="address-btn"><img src="/img/maemulReg/search-address.png" style="width:40px; height:40px;" alt="도로명 주소" ></button>
                 <button onclick="getCurrentLocation()" class="address-btn"><img src="/img/maemulReg/mygps.png" style="width:40px; height:40px;" alt="내 위치" ></button>
             </td>
         </tr>
@@ -155,9 +155,9 @@
         <h2 class="category"><b class="number">03 </b>가격 정보 입력</h2>
         <hr>
     <div class="btn-group">
-        <button onclick="showMonthRent()">월세</button>
-        <button onclick="showLease()">전세</button>
-        <button onclick="showSelling()">매매</button>
+        <button type="button" onclick="showMonthRent()">월세</button>
+        <button type="button" onclick="showLease()">전세</button>
+        <button type="button" onclick="showSelling()">매매</button>
     </div>
     <table id="monthRentSection" class="hidden">
         <tr>
@@ -223,9 +223,11 @@
                 <li><button type="submit">다음</button></li>
             </ul>
         </div>
-    </div>
 
+
+    </div>
 </div>
+</form>
 
 </body>
 
