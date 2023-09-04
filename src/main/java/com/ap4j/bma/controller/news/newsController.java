@@ -14,8 +14,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-@SessionAttributes("userEmail")
+@SessionAttributes("loginMember")
 @Slf4j
 @Controller
 public class newsController {
