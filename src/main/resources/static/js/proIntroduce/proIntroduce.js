@@ -21,20 +21,20 @@ for (var i = 0; i < elementsToAnimate.length; i++) {
             if (triggerElement) {
                 triggerElement.classList.add("visible");
             }
-            if (triggerElement.id === "item5") {
-                setTimeout(function() {
-                    var item6Element = document.querySelector("#item6");
-                    if (item6Element) {
-                        item6Element.classList.add("visible");
-                        setTimeout(function() {
-                            var item7Element = document.querySelector("#item7");
-                            if (item7Element) {
-                                item7Element.classList.add("visible");
-                            }
-                        }, 500); //item6 visible일 때 item7 visible
-                    }
-                }, 500); //item5 visible일 때 item6 visible
-            }
+            // if (triggerElement.id === "item5") {
+            //     setTimeout(function() {
+            //         var item6Element = document.querySelector("#item6");
+            //         if (item6Element) {
+            //             item6Element.classList.add("visible");
+            //             setTimeout(function() {
+            //                 var item7Element = document.querySelector("#item7");
+            //                 if (item7Element) {
+            //                     item7Element.classList.add("visible");
+            //                 }
+            //             }, 500); //item6 visible일 때 item7 visible
+            //         }
+            //     }, 500); //item5 visible일 때 item6 visible
+            // }
         })
         .on("leave", function(event) {
             var triggerElement = event.target.triggerElement();

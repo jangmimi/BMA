@@ -54,4 +54,8 @@ public class MaemulRegEntity {
     private String title;//상세 설명 제목
     private String content; //상세설명 내용
 
+    //좌표
+    private Double longitude; //경도
+    private Double latitude; //위도
+
 }
