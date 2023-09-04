@@ -5,7 +5,8 @@ $(document).ready(function() {
         let searchInput = $("#search-input").val().trim();
 
         if (searchInput === "" || searchInput === null) {
-            notification("입력 필수입니다.", "error");
+            alert("입력 필수입니다.");
+            // notification("입력 필수입니다.", "error");
             return false;
         }
 
