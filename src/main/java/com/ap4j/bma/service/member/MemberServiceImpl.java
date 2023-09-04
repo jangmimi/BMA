@@ -1,9 +1,11 @@
 package com.ap4j.bma.service.member;
 
 import com.ap4j.bma.config.PasswordEncoderConfig;
+import com.ap4j.bma.model.entity.customerCenter.QnAEntity;
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
 import com.ap4j.bma.model.repository.MemberRepository;
+import com.ap4j.bma.model.repository.QnARepository;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -11,8 +13,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.support.SessionStatus;
 
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
@@ -33,12 +40,17 @@ public class MemberServiceImpl implements MemberService {
 	private MemberRepository memberRepository;
 
 	@Autowired
-	private PasswordEncoderConfig pwdConfig;
+	private PasswordEncoderConfig pwdConfig;	// 비밀번호 암호화 객체 생성
+
+	@Autowired
+	private QnARepository qQnARepository;
 
 	/** 카카오 토큰 얻기 */
 	public String getAccessToken(String code) {
+		String clientID = "fae91fecfb7dbda2a80ae22881709a28";
+		String redirectURL = "http://localhost:8081/member/qLogin";
+
 		String accessToken = "";
-		String refreshToken = "";
 		String reqURL = "https://kauth.kakao.com/oauth/token";
 
 		try {
@@ -53,9 +65,9 @@ public class MemberServiceImpl implements MemberService {
 			// 파라미터 저장 후 전송
 			StringBuilder sb = new StringBuilder();
 			sb.append("grant_type=authorization_code");
-			sb.append("&client_id=fae91fecfb7dbda2a80ae22881709a28");
-			sb.append("&redirect_uri=http://localhost:8081/member/qLogin");
-			sb.append("&code="+code);
+			sb.append("&client_id=").append(clientID);
+			sb.append("&redirect_uri=").append(redirectURL);
+			sb.append("&code=").append(code);
 
 			bw.write(sb.toString());
 			bw.flush();
@@ -76,7 +88,6 @@ public class MemberServiceImpl implements MemberService {
 			JsonElement element = parser.parse(result);
 
 			accessToken = element.getAsJsonObject().get("access_token").getAsString();
-			refreshToken = element.getAsJsonObject().get("refresh_token").getAsString();
 
 			br.close();
 			bw.close();
@@ -118,17 +129,13 @@ public class MemberServiceImpl implements MemberService {
 			String name = kakaoAccount.getAsJsonObject().get("name").getAsString();
 			String nickname = properties.getAsJsonObject().get("nickname").getAsString();
 			String phone_number = kakaoAccount.getAsJsonObject().get("phone_number").getAsString();
-//			String profile_image_url = properties.getAsJsonObject().get("thumbnail_image_url").getAsString();
+			String thumbnail_image = properties.getAsJsonObject().get("thumbnail_image").getAsString();
 
 			userInfo.put("email", email);
 			userInfo.put("name", name);
 			userInfo.put("nickname", nickname);
 			userInfo.put("phone_number", phone_number);
-//			userInfo.put("thumbnail_image_url", profile_image_url);
-
-			Optional<MemberEntity> tmp = memberRepository.findByEmail(email);
-			log.info("test tmp (email기준 회원정보있나~?) : " + tmp);
-			log.info("tmp : " + tmp.toString());
+			userInfo.put("thumbnail_image", thumbnail_image);
 
 		} catch (Exception e) {
 			log.info(e.toString());
@@ -162,14 +169,27 @@ public class MemberServiceImpl implements MemberService {
 		}
 	}
 
+	/** 기본 로그아웃 */
+	public void logout(SessionStatus sessionStatus, HttpSession session) {
+		log.info("서비스 Logout() 실행");
+
+		sessionStatus.setComplete();
+		session.invalidate();
+	}
+
 	/** 네이버 토큰 얻기 */
 	@Override
 	public String getAccessTokenNaver(String code) {
+		String clientID = "KxGhFHZ7Xp74X_5IZ23h";
+		String clientSecret = "yrJitK_hXC";
+		String redirectURL = "http://localhost:8081/member/qLoginNaver";
+
 		String accessToken = "";
-		String refreshToken = "";
-		String reqURL = "https://nid.naver.com/oauth2.0/authorize";
-		SecureRandom random = new SecureRandom();
-		String state = new BigInteger(130, random).toString(32);
+		String reqURL = "https://nid.naver.com/oauth2.0/token";	// 인증 코드로 토큰 요청
+
+//		SecureRandom random = new SecureRandom();
+//		String state = new BigInteger(130, random).toString(32);
+		String state = "9999";
 
 		try {
 			URL url = new URL(reqURL);
@@ -177,14 +197,15 @@ public class MemberServiceImpl implements MemberService {
 			conn.setRequestMethod("POST");
 			conn.setDoOutput(true);
 
-			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
-
 			StringBuilder sb = new StringBuilder();
-			sb.append("response_type=code");
-			sb.append("&client_id=KxGhFHZ7Xp74X_5IZ23h");
-			sb.append("&redirect_uri=http://localhost:8081/memeber/qLoginNaverCallback");
-			sb.append("&state="+state);
+			sb.append("grant_type=authorization_code");
+			sb.append("&client_id=").append(clientID);
+			sb.append("&client_secret=").append(clientSecret);
+			sb.append("&redirect_uri=").append(redirectURL);
+			sb.append("&code=").append(code);
+			sb.append("&state=").append(state);
 
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
 			bw.write(sb.toString());
 			bw.flush();
 
@@ -204,7 +225,6 @@ public class MemberServiceImpl implements MemberService {
 			JsonElement element = parser.parse(result);
 
 			accessToken = element.getAsJsonObject().get("access_token").getAsString();
-			refreshToken = element.getAsJsonObject().get("refresh_token").getAsString();
 
 			br.close();
 			bw.close();
@@ -214,20 +234,83 @@ public class MemberServiceImpl implements MemberService {
 		return accessToken;
 	}
 
+	/** 네이버 유저 정보 얻기 */
+	public HashMap<String, Object> getUserInfoNaver(String accessToken) {
+		HashMap<String, Object> userInfo = new HashMap<String, Object>();
+		String reqUrl = "https://openapi.naver.com/v1/nid/me";
+		try {
+			URL url = new URL(reqUrl);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("POST");
+			conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+			int responseCode = conn.getResponseCode();
+			log.info("responseCode = " + responseCode);
+
+			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+			String line = "";
+			String result = "";
+
+			while((line = br.readLine()) != null) {
+				result += line;
+			}
+			log.info("response body = " + result);  // 필요한 것만 뽑아 낼 수 있는지 확인하기
+
+			JsonParser parser = new JsonParser();
+			JsonElement element =  parser.parse(result);
+
+			JsonObject response = element.getAsJsonObject().get("response").getAsJsonObject();
+
+			String email = response.getAsJsonObject().get("email").getAsString();
+			String name = response.getAsJsonObject().get("name").getAsString();
+			String nickname = response.getAsJsonObject().get("nickname").getAsString();
+			String mobile = response.getAsJsonObject().get("mobile").getAsString();
+			String profile_image = response.getAsJsonObject().get("profile_image").getAsString();
+
+			userInfo.put("email", email);
+			userInfo.put("name", name);
+			userInfo.put("nickname", nickname);
+			userInfo.put("mobile", mobile);
+			userInfo.put("profile_image", profile_image);
+
+		} catch (Exception e) {
+			log.info(e.toString());
+		}
+		return userInfo;
+	}
+
 	/** 기본 회원가입 */
 	@Transactional
 	@Override
-	public Long joinBasic(MemberEntity pMember) {
+	public Long joinBasic(@ModelAttribute MemberDTO memberDTO) {
 		log.info("서비스 joinBasic() 실행");
-		memberRepository.save(pMember);
-		return pMember.getId();			// @GeneratedValue 로 id는 자동으로 값 저장
+
+		// pwd는 암호화해서 가입 경로와 별도로 세팅
+		if(memberDTO.getPwd() != null) {
+			memberDTO.setPwd(pwdConfig.passwordEncoder().encode(memberDTO.getPwd()));
+		}
+		// 약관 동의 체크 여부에 따라 값 저장
+		memberDTO.setChoice1(Boolean.TRUE.equals(memberDTO.getChoice1()));
+		memberDTO.setChoice2(Boolean.TRUE.equals(memberDTO.getChoice2()));
+
+		MemberEntity entity = memberDTO.toEntity();
+
+		memberRepository.save(entity);
+		return entity.getId();
 	}
 
-	/** 중복회원 검증 */
+	/** 중복회원 체크 */
 	@Override
 	public boolean existsByEmail(String email) {
 		log.info("서비스 existsByEmail() 실행");
 		return memberRepository.existsByEmail(email);
+	}
+
+	/** 중복닉네임 체크 */
+	@Override
+	public boolean existsByNickname(String nickname) {
+		log.info("서비스 existsByNickname() 실행");
+		return memberRepository.existsByNickname(nickname);
 	}
 
 	/** 회원전체 조회 */
@@ -245,30 +328,42 @@ public class MemberServiceImpl implements MemberService {
 		if (findMember.isPresent()) {
 			log.info("로그인 시도하는 email DB에 존재!");
 			MemberEntity memberEntity = findMember.get();
-			if(pwdConfig.passwordEncoder().matches(memberDTO.getPwd(),memberEntity.getPwd())) {
-				log.info("id pw 모두 일치! 로그인 성공!");
-				log.info("entity : " +  memberEntity);
-
+			if(memberEntity.getMember_leave()) { log.info("탈퇴한 회원"); return null; }
+			if(memberEntity.getRoot() == 2) {	// 카카오는 pwd 체크 없이 로그인 진행
 				MemberDTO dto = memberEntity.toDTO();
 				log.info("entity를 toDTO : " +  dto);
 				return dto;
+
 			} else {
-				log.info("id일치, pw 불일치합니다.");
+				if(pwdConfig.passwordEncoder().matches(memberDTO.getPwd(),memberEntity.getPwd())) {
+					log.info("id pw 모두 일치! 로그인 성공!");
+					log.info("entity : " +  memberEntity);
+
+					MemberDTO dto = memberEntity.toDTO();
+					log.info("entity를 toDTO : " +  dto);
+
+					return dto;
+
+				} else {
+					log.info("id일치, pw 불일치합니다.");
+					return null;
+				}
 			}
 		} else {
 			log.info("존재하지 않는 회원입니다.");
+			return null;
 		}
-		return null;
 	}
 
 	/** 회원 탈퇴 - member_leave : true 변경 */
-	public boolean leaveMember(Long id) {
+	public boolean leaveMember(Long id, SessionStatus sessionStatus, HttpSession session) {
 		Optional<MemberEntity> leaveMember = Optional.ofNullable(findMemberById(id));
-
 		if(leaveMember.isPresent()) {
 			MemberEntity member = leaveMember.get();
-			member.setMember_leave(true);
+			member.setMember_leave(true);	// 탈퇴 여부 값 변경
 			memberRepository.save(member);
+			logout(sessionStatus, session);	// 탈퇴 후 로그아웃 처리
+
 			return true;
 		}
 		return false;
@@ -289,37 +384,50 @@ public class MemberServiceImpl implements MemberService {
 		log.info("updatedMember : " + memberDTO);
 
 		Optional<MemberEntity> member = memberRepository.findById(id);
-
-		if(memberDTO.getPwd() != null) {	// 비밀번호 변경 값이 있을 경우
-			log.info("비밀번호 변경 : " + memberDTO.getPwd());
-			memberDTO.setPwd(pwdConfig.passwordEncoder().encode(memberDTO.getPwd()));
-		}
-
 		log.info("조회된 member : " + member);
 
 		if(member.isPresent()) {
 			MemberEntity memberEntity = member.get();
+
+			// pwd는 암호화해서 가입 경로와 별도로 세팅
+			if(memberDTO.getPwd() != null && !memberDTO.getPwd().isEmpty()) {
+				memberDTO.setPwd(pwdConfig.passwordEncoder().encode(memberDTO.getPwd()));
+			}
+			memberDTO.setChoice1(Boolean.TRUE.equals(memberDTO.getChoice1()));	// 이 처리 안해주면 언체크시 null됨
+			memberDTO.setChoice2(Boolean.TRUE.equals(memberDTO.getChoice2()));
 			memberDTO.updateEntity(memberEntity);
 
 			log.info("수정된 정보 : " + memberEntity);
 			return memberRepository.save(memberEntity);
+
 		} else {
 			return null;
 		}
 	}
 	
-	/** email 찾기(이름 연락처로) */
+	/** email 찾기 */
 	@Override
 	public Optional<MemberEntity> findByNameAndTel(String name, String tel) {
 		return memberRepository.findByNameAndTel(name, tel);
 	}
 
-	/** pwd 찾기(이메일 연락처로) */
+	/** pwd 찾기 */
 	@Override
 	public Optional<MemberEntity> findByEmailAndTel(String email, String tel) {
 		return memberRepository.findByEmailAndTel(email, tel);
 	}
 
+	/** 내 QnA 목록 */
+	@Override
+	public List<QnAEntity> qMyQnaList() {
+		return qQnARepository.findAll();
+	}
+
+	/** 내 QnA 전체 수 */
+	@Override
+	public Long qMyQnaCnt() {
+		return qQnARepository.count();
+	}
 }
 
 //	/** 회원 탈퇴 id 기준 */
@@ -337,10 +445,3 @@ public class MemberServiceImpl implements MemberService {
 //		}
 //		return validatorResult;
 //	}
-
-	// 아래는 예시 코드입니다.
-//	@Override
-//	@Transactional // 트랜잭션 처리하기
-//	public void addSomething(String something) {
-//	}
-

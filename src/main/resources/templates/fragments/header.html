@@ -11,10 +11,10 @@
       </a>
       <ul class="n-header-list">
         <li>
-          <a href="#">실거래가조회</a>
+          <a href="/map/main">실거래가조회</a>
         </li>
         <li>
-          <a href="#">매물등록</a>
+          <a href="/agree">매물등록</a>
         </li>
         <li>
           <a href="#">청약정보</a>
@@ -23,10 +23,10 @@
           <a href="/news">부동산뉴스</a>
         </li>
         <li>
-          <a href="#">커뮤니티</a>
+          <a href="/community/list">커뮤니티</a>
         </li>
         <li>
-          <a href="#">전문가소개</a>
+          <a href="/introduce">전문가소개</a>
         </li>
       </ul>
     </div>
@@ -34,24 +34,24 @@
 <!--    <div class="n-header-right" th:with="member=null">-->
       <ul th:if="${loginMember==null}" class="n-header-list">
         <li>
-          <a href="/member/qLoginForm">로그인</a>
+          <a class="n-header-login-logout" href="/member/qLoginForm">로그인</a>
         </li>
         <li>
           <a href="/member/qJoinForm">회원가입</a>
         </li>
         <li>
-          <a href="#">고객센터</a>
+          <a href="/qna">고객센터</a>
         </li>
       </ul>
       <ul th:if="${loginMember!=null}" class="n-header-list">
         <li>
-          <a href="/member/qLogout">로그아웃</a>
+          <a class="n-header-login-logout" href="/member/qLogout">로그아웃</a>
         </li>
         <li>
           <a href="/member/qMyPage">마이페이지</a>
         </li>
         <li>
-          <a href="#">고객센터</a>
+          <a href="/qna">고객센터</a>
         </li>
       </ul>
     </div>

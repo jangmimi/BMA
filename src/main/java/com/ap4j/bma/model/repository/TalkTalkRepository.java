@@ -1,0 +1,1 @@
+//public interface TalkTalkRepository extends JpaRepository<Comment,Long>{}
