@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-@SessionAttributes("userEmail")
+@SessionAttributes("loginMember")
 @Controller
 public class QnAController {
 

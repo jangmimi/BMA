@@ -2,18 +2,24 @@
     padding: 0 0 5rem;
 }
 .scrollContent{
-    max-width: 1232px;
-    margin: 0 auto;
-    padding: 0 1em;
-    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    margin: auto;
+    margin-top: 20px;
 }
-.proPageHeader{
-    position: relative;
-    margin: 0 0 1rem;
-    padding: 3rem 1rem;
-    font-size: 20px;
-    text-align: center;
+.scrollContent > hr{
+    width: 90%;
 }
+/*.proPageHeader{*/
+/*    position: relative;*/
+/*    margin: 0 0 1rem;*/
+/*    padding: 3rem 1rem;*/
+/*    font-size: 20px;*/
+/*    text-align: center;*/
+/*}*/
 
 #item1 {
     opacity: 1;
@@ -81,3 +87,8 @@
     object-fit: cover;
 }
 
+.itemArray{
+    width: 90%;
+    box-shadow: 0 1px 30px 0 rgba(0, 0, 0, .03);
+    margin-top: 50px;
+}
