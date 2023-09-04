@@ -62,6 +62,24 @@ function createMarker(position, markerContent, responseData) {
             openOverlay(marker.overlay); // 오버레이 열기
             updateSidebar(responseData); // 사이드바에 데이터 전송
             updateTransactionTable(responseData.roadName); // 사이드바의 거래내역 테이블에 데이터 전송
+             // 마커의 아이디값 가져오기
+             var id = responseData.id;
+             console.log(id);
+
+//             // 리뷰 작성 후 저장
+//             function talk(id) {
+//
+//             }
+             // AJAX 요청을 보내 아파트 아이디를 서버에 전송
+             $.ajax({
+                 type: 'POST',
+                 url: '/map/main',
+                 data: { id: id },
+                 success: function(response) {
+                     // 서버에서의 응답 처리
+                 }
+             });
+
         });
 
         clusterer.addMarker(marker); // 클러스터러에 마커 추가
@@ -113,6 +131,7 @@ kakao.maps.event.addListener(map, 'tilesloaded', function () {
                     if (!existingMarkers[markerKey]) {
                         createMarker(markerPosition, markerContent, apt);
                     }
+
                 });
             } else {
                 console.log("표시할 마커가 없습니다. (좌표값 누락)");
@@ -481,3 +500,5 @@ function closeOtherOverlays() {
         }
     }
 }
+
+

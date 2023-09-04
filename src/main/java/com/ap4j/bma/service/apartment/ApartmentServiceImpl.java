@@ -73,6 +73,7 @@ public class ApartmentServiceImpl implements ApartmentService {
 
         for (AptEntity aptEntity : aptEntityList) {
             AptDTO aptDTO = AptDTO.builder().
+                    id(aptEntity.getId()).
                     apartmentName(aptEntity.getApartmentName()).
                     district(aptEntity.getDistrict()).
                     address(aptEntity.getAddress()).
