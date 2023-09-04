@@ -1,6 +1,6 @@
 # 서블릿 인코딩 강제 설정
 server:
-  port: 8081
+  port: 8080
   servlet:
     encoding:
       force: true
@@ -45,7 +45,7 @@ spring:
   #   데이터베이스 설정
   datasource:
     generate-unique-name: false
-    url: jdbc:mysql://localhost:3306/bma
+    url: jdbc:mysql://18.219.34.36:3306/bma
     username: root
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
