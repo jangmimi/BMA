@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class TalkTalkReviewController {
     @GetMapping("/board/list")
     public String reviewList(Model model){
         List<TalkTalkReviewEntity> list = reviewService.reviewList();
-        log.info(list.toString());
+        log.info("리뷰컨트롤러 리뷰리스트반환~"+list.toString());
 
         //서비스에서 생성한 리스트를 list라는 이름으로 반환하겠다.
         model.addAttribute("list", list);
@@ -53,7 +54,8 @@ public class TalkTalkReviewController {
 
 
     @PostMapping("/board/writepro")
-    public String boardwritePro(@RequestParam("content") String content, HttpSession session) {
+    public String boardwritePro(@RequestParam("content") String content,
+                                HttpServletRequest request, HttpSession session) {
 
         log.info("리뷰컨트롤러 boardWritePro실행, content: " + content);
         TalkTalkReviewEntity reviewEntity = new TalkTalkReviewEntity();
@@ -62,13 +64,26 @@ public class TalkTalkReviewController {
 //        AptEntity aptEntity = aptService.aptList();
 //        List<AptDTO> aptDTOList = aptService.aptList();
 //        int aptId = aptDTOList.get
-        List<AptDTO> aptEntity = aptService.aptList();
-        for (AptDTO aptDTO: aptEntity){
-            aptDTO.getId();
-        }
+//        List<AptDTO> aptEntity = aptService.aptList();
+//        for (AptDTO aptDTO: aptEntity){
+//            aptDTO.getId();
+//        }
 //        reviewEntity.setId(99);
 //        AptDTO aptInfo = aptServiceImpl.getAptInfoById(apartmentId);
-
+        Long apartmentId = null;
+        String idParam = request.getParameter("id");
+        if (idParam != null && !idParam.isEmpty()) {
+            try {
+                apartmentId = Long.valueOf(idParam);
+                log.info("리뷰컨트롤러 boardWritePro실행, id:" + apartmentId);
+                reviewEntity.setId(apartmentId);
+            } catch (NumberFormatException e) {
+                log.error("아파트 아이디 파라미터가 올바르지 않습니다.");
+            }
+        } else {
+            log.info("아파트 아이디 파라미터가 없습니다.");
+        }
+//        reviewEntity.setId(id);
 
 
         reviewEntity.setBoard_no(99);
