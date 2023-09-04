@@ -13,6 +13,7 @@
 	<!-- <script type="text/javascript" th:src="@{/js/search/search.js}"></script>-->
 	<link rel="stylesheet" th:href="@{/css/mainPage1.css}">
 	<link rel="stylesheet" th:href="@{/css/mainpage_header_footer.css}">
+	<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 	<script src="https://kit.fontawesome.com/5b1091f816.js" crossorigin="anonymous"></script>
 </head>
 <body layout:fragment="content">
@@ -231,7 +232,9 @@
 						<button>
 							자세히 보기
 						</button>
-						<img src="https://d1ow1zydcbqtx3.cloudfront.net/landing/price1-fn.png?w=1920&f=webp&q=80"
+						<img  data-aos="fade-up"
+							  data-aos-anchor-placement="center-bottom"
+								src="https://d1ow1zydcbqtx3.cloudfront.net/landing/price1-fn.png?w=1920&f=webp&q=80"
 							 alt="">
 					</div>
 				</div>
@@ -265,7 +268,7 @@
 						<button>
 							자세히 보기
 						</button>
-						<img src="/img/mainPage/monney.png"
+						<img data-aos="fade-left" src="/img/mainPage/monney.png"
 							 alt="">
 					</div>
 				</div>
@@ -275,7 +278,7 @@
 
 	<div class="n-main-5">
 		<div class="n-main-5-align">
-			<div class="n-main-5-1box">
+			<div data-aos="fade-up" class="n-main-5-1box">
 				<div class="n-main-5-1boxtext">
 					<span>부동산 뉴스</span>
 					<span>매일 올라오는 부동산 정보를<br>한눈에 확인하세요</span>
@@ -284,15 +287,15 @@
 				</div>
 			</div>
 			<div class="n-main-5-2box">
-				<div class="n-main-5-2box-innerbox">
+				<div data-aos="fade-down" class="n-main-5-2box-innerbox">
 					<div class="n-main-5-1boxtext">
 						<span>커뮤니티</span>
 						<span>아파트사조 유저들과<br>아파트 정보공유를 해보세요</span>
 					</div>
-					<div class="n-main-5-2boximg">
+					<div class="n-main-5-2boximg" >
 					</div>
 				</div>
-				<div class="n-main-5-2box-innerbox">
+				<div data-aos="fade-left" class="n-main-5-2box-innerbox">
 					<div class="n-main-5-1boxtext">
 						<span>전문가 소개</span>
 						<span>업계 최고 전문가들에게<br>조언을 받으세요</span>
@@ -329,6 +332,10 @@
 <script>
         history.scrollRestoration = "auto";
     </script>
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+    AOS.init();
+  </script>
 
 </body>
 </html>

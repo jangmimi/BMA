@@ -58,6 +58,8 @@ public class CommunityController {
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", communityPage.getTotalPages());
 
+        // 검색 결과의 게시글 개수를 totalCommunityCount에 설정
+        model.addAttribute("totalCommunityCount", communityPage.getTotalElements());
         return "community/communitySearchList";
     }
 

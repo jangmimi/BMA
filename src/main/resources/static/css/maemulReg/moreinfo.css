@@ -1,0 +1,141 @@
+
+
+        input, textarea{
+        margin-left: 5px;
+        padding: 5px;
+        border: 1px solid #ccc;
+        transition: all 0.3s ease; /* 입력 필드 크기 변경에 부드러운 애니메이션 추가 */
+    }
+
+    input:focus, textarea:focus {
+        border-color: #26A9E0;
+        outline: none;
+        transform: scale(1.005); /* 포커스를 얻을 때 크기가 조금 더 커지도록 설정 */
+    }
+
+
+      table{
+      width : 95%;
+      margin-top:70px;
+      margin : auto;
+      border-collapse: collapse;
+      border: 1px solid #ddd;
+     }
+
+
+    .coment-t{
+    width : 95%;
+    border: #ddd 1px solid;
+    margin:10px;
+    height : 30px;
+    border-radius : 5px;
+    }
+    .back{
+    margin-left : 60px;
+    }
+    .coment{
+        width : 95%;
+        height: 200px;
+        border: #ddd 1px solid;
+        resize: none;
+        margin:10px;
+        border-radius : 5px;
+  }
+    .count{
+    float: right;
+    color : gray;
+    margin-right : 50px;
+    }
+
+   .pic-box{
+   width : 90%;
+   height: 200px;
+   background-color : #fafafa;
+   border : 1px solid #26A9E0;
+   text-align : center;
+   margin: auto;
+   }
+
+   .pic-btn{
+   color : white;
+   background-color : #26A9E0;
+   border : 1px solid #26A9E0;
+   border-radius : 5px;
+   width : 120px;
+   height : 35px;
+   }
+
+/*옵션, 특징 선택 */
+.container {
+    font-size: 13px;
+}
+
+.container table th{
+width :15%;
+}
+
+ul.ks-cboxtags {
+    list-style: none;
+    padding: 20px;
+}
+ul.ks-cboxtags li{
+  display: inline;
+}
+ul.ks-cboxtags li label{
+    display: inline-block;
+    background-color: rgba(255, 255, 255, .9);
+    border: 2px solid rgba(139, 139, 139, .3);
+    border-radius: 25px;
+    white-space: nowrap;
+    margin: 3px 0px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: all .2s;
+}
+
+ul.ks-cboxtags li label {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+ul.ks-cboxtags li label::before {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    font-size: 12px;
+    padding: 2px 6px 2px 2px;
+    content: "\f067";
+    transition: transform .3s ease-in-out;
+}
+
+ul.ks-cboxtags li input[type="checkbox"]:checked + label::before {
+    content: "\f00c";
+    transform: rotate(-360deg);
+    transition: transform .3s ease-in-out;
+}
+
+ul.ks-cboxtags li input[type="checkbox"]:checked + label {
+    border: 2px solid #1bdbf8;
+    background-color: #12bbd4;
+    color: #fff;
+    transition: all .2s;
+}
+
+ul.ks-cboxtags li input[type="checkbox"] {
+  display: absolute;
+}
+ul.ks-cboxtags li input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+}
+ul.ks-cboxtags li input[type="checkbox"]:focus + label {
+  border: 2px solid #ddd; /*e9a1ff*/
+}

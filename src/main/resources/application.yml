@@ -42,17 +42,11 @@ spring:
         show_sql: true
     defer-datasource-initialization: true
 
-  # 데이터베이스 설정
+#   데이터베이스 설정
   datasource:
     generate-unique-name: false
-
-  # 데이터베이스 설정
-
     url: jdbc:mysql://localhost:3306/pos
     username: root
     password: 1234
-#    password: 45723922
     driver-class-name: com.mysql.cj.jdbc.Driver
-
-
 

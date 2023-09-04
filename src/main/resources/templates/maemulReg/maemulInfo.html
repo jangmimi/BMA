@@ -2,273 +2,46 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{fragments/layouts/no_footer_layout}">
+      layout:decorate="~{fragments/layouts/no_footer_layout}" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>매물 정보</title>
-    <link rel="stylesheet" href="/static/css/maemulReg/maemulReg.css">
+    <link rel="stylesheet" th:href="@{/css/maemulReg/maemulReg.css}">
+    <link rel="stylesheet" th:href="@{/css/maemulReg/maemulinfo.css}">
 
     <!--금액 콤마처리-->
     <script defer th:src="@{/js/maemulReg/comma.js}" type="text/javascript"></script>
-    <script src="/static/js/maemulReg/comma.js"></script>
 
-    <style>
-        hr {
-        border-bottom : 2px solid #26A9E0;
-        margin-top : 30px;
-        }
+    <script defer th:src="@{/js/maemulReg/maemulinfo.js}" type="text/javascript"></script>
 
-        h2{
-        margin-left : 3%;
-        }
+    <!-- 카카오 도로명 API -->
+    <script  src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script  src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a2f0e9ee9b85c547e29b750c43418fb0"></script>
 
-        .layout{
-        width : 80%;
-        margin : auto;
-        margin-top: 40px;
-        }
+    <!-- Google Geocoding API -->
+<!--    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>-->
 
-
-        .btn-group button {
-        border: 1px solid #26A9E0;
-        padding: 10px 100px;
-        width :30%;
-        height : 60px;
-        cursor: pointer;
-        float: left;
-        font-size : 17px;
-         }
-
-         .btn-group  {
-        display: flex;
-        justify-content: center;
-         }
-
-        .btn-group:after {
-        content: "";
-        clear: both;
-        display: table;
-        }
-
-
-        .btn-group button:hover {
-         background-color: #26A9E0;
-        }
-
-        .btn-group button.active {
-         background-color: #26A9E0;
-         color: white;
-        }
-
-        .prenext{
-        margin-top:10%;
-        }
-
-        .prev{
-         float: left;
-        }
-
-        .next{
-        float: right;
-        }
-
-        .number{
-        color: #26A9E0;
-        }
-
-        .info{
-         width : 95%;
-         margin-top:70px;
-         margin : auto;
-         border-collapse: collapse;
-         border: 1px solid #ddd;
-        }
-
-        table th {
-        padding: 15px;
-        background: #ececec;
-        font-size: 15px;
-
-        }
-
-        .num{
-        text-align : right;
-        width : 40px;
-        height : 18px;
-        }
-
-        .won{
-        text-align : right;
-        width : 130px;
-        height : 18px;
-        }
-
-        .combo{
-        margin-left :5px;
-        width : 120px;
-        height : 18px;
-        }
-
-        input {
-        margin-left: 5px;
-        padding: 5px;
-        border: 1px solid #ccc;
-        transition: all 0.3s ease; /* 입력 필드 크기 변경에 부드러운 애니메이션 추가 */
-    }
-
-    input:focus {
-        border-color: #26A9E0;
-        outline: none;
-        transform: scale(1.05); /* 포커스를 얻을 때 크기가 조금 더 커지도록 설정 */
-    }
-
-        #addressInput{
-        margin-left :5px;
-        width : 250px;
-        height : 18px;
-        }
-
-        #apt-name{
-        margin-left :5px;
-        width : 160px;
-        height : 18px;
-        }
-
-        .hidden {
-         display: none;
-         border-collapse: collapse;
-    }
-
-        #monthRentSection{
-        margin-left : 5%;
-        border-collapse: collapse;
-        border: 1px solid #ddd;
-        width : 30%;
-        }
-
-        #leaseSection{
-        margin-left : 35%;
-        border-collapse: collapse;
-        border: 1px solid #ddd;
-        width : 30%;
-        }
-
-        #sellingSection{
-        margin-left : 65%;
-        border-collapse: collapse;
-        border: 1px solid #ddd;
-        width : 30%;
-        }
-
-        .address-btn{
-        height : 30px;
-        border : #26A9E0 solid 1px;
-        background-color : #ececec;
-        border-radius: 10px;
-        }
-    </style>
-
-    <script>
-
-        function setActiveButton(button) {
-          const buttons = document.querySelectorAll('.btn-group button');
-          buttons.forEach(btn => {
-              btn.classList.remove('active');
-          });
-          button.classList.add('active');
-      }
-
-      function showMonthRent() {
-          document.getElementById("monthRentSection").classList.remove("hidden");
-          document.getElementById("leaseSection").classList.add("hidden");
-          document.getElementById("sellingSection").classList.add("hidden");
-          setActiveButton(document.querySelector('.btn-group button:nth-child(1)'));
-      }
-
-      function showLease() {
-          document.getElementById("monthRentSection").classList.add("hidden");
-          document.getElementById("leaseSection").classList.remove("hidden");
-          document.getElementById("sellingSection").classList.add("hidden");
-          setActiveButton(document.querySelector('.btn-group button:nth-child(2)'));
-      }
-
-      function showSelling() {
-          document.getElementById("monthRentSection").classList.add("hidden");
-          document.getElementById("leaseSection").classList.add("hidden");
-          document.getElementById("sellingSection").classList.remove("hidden");
-          setActiveButton(document.querySelector('.btn-group button:nth-child(3)'));
-      }
-
-    // 주소 정보 입력란이 모두 채워지면 호출되는 함수
-    function showBuildingInfo() {
-        // 여기에서 주소 정보 입력란이 모두 채워진지를 확인하고, 그 결과에 따라 건물 정보 입력란을 보이게 합니다.
-        var addressInputField = document.getElementById("addressInput");
-
-        if (addressInputField.value !== "") {
-            document.getElementById("buildingSection").style.display = "block";
-        } else {
-            document.getElementById("buildingSection").style.display = "none";
-        }
-    }
-
-        // 건물 정보 입력란이 모두 채워지면 호출되는 함수
-        function showPriceInfo() {
-            var buildingInputField = document.getElementById("useInput");
-
-            if (buildingInputField.value !== "") {
-                document.getElementById("priceSection").style.display = "block";
-            } else {
-                document.getElementById("priceSection").style.display = "none";
-            }
-        }
-
-        // 카카오 도로명 api
-        function getRoadAddress() {
-        new daum.Postcode({
-        oncomplete: function(data) {
-        document.getElementById("addressInput").value = data.roadAddress;
-        }
-        }).open();
-        }
-
-        function getCurrentLocation() {
-            if ("geolocation" in navigator) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    const latitude = position.coords.latitude;
-                    const longitude = position.coords.longitude;
-
-                    const geocoder = new daum.maps.services.Geocoder();
-                    geocoder.coord2Address(longitude, latitude, function(result, status) {
-                        if (status === daum.maps.services.Status.OK) {
-                            const fullAddress = result[0].address.address_name;
-                            document.getElementById("addressInput").value = fullAddress;
-                        }
-                    });
-                });
-            } else {
-                alert("이 브라우저는 위치 정보를 지원하지 않습니다.");
-            }
-        }
-    </script>
 </head>
 
 
 <body layout:fragment="content">
 <div style="text-align : center;">
-    <img src="/static//img/maemulReg/maemulinfo.jpg" style="width:100%; height:100%;">
+    <img src="/img/maemulReg/maemulinfo.jpg" style="width:100%; height:100%;">
 </div>
+
 
 <div class="layout">
 
-<h2 class="category"><b class="number">01 </b>주소 정보</h2><br>
+<h2 class="category"><b class="number">01 </b>주소 정보 입력</h2>
+    <hr>
     <div id="addressSection">
     <table border="1" class="info">
         <tr >
-            <th>주소</th>
+            <th>주소<b class="number"> *</b></th>
             <td colspan="3">
-                <input id="addressInput" type="text" readonly>
-                <button onclick="getRoadAddress()" class="address-btn">도로명주소</button>
-                <button onclick="getCurrentLocation()" class="address-btn">내 위치</button>
+                <input id="addressInput" name="address" type="text" readonly>
+                <button onclick="openKakaoAddressSearch()" class="address-btn"><img src="/img/maemulReg/search-address.png" style="width:40px; height:40px;" alt="도로명 주소" ></button>
+                <button onclick="getCurrentLocation()" class="address-btn"><img src="/img/maemulReg/mygps.png" style="width:40px; height:40px;" alt="내 위치" ></button>
             </td>
         </tr>
         <tr>
@@ -276,42 +49,43 @@
             <td colspan="3"><input id="apt-name" onblur="showBuildingInfo();" type="text"></td>
         </tr>
     </table>
+        <br>
     </div>
-    <hr>
 
-<h2 class="category"><b class="number">02 </b>건물 정보</h2><br>
     <div id="buildingSection" style="display: none;">
+        <h2 class="category"><b class="number">02 </b>건물 정보 입력</h2>
+        <hr>
     <table border="1" class="info">
         <tr>
             <th>건축물 용도</th>
-            <td colspan="3">
+            <td colspan="4">
                 <input type="radio" name="use" value="">거주용
                 <input type="radio" name="use" value="">업무용
                 <input type="radio" name="use" value="">거주/업무용
             </td>
         </tr>
         <tr>
-            <th>방 수</th>
-            <td><input class="num" type="text" id = "useInput" placeholder="0"> 개</td>
-            <th>욕실 수</th>
-            <td><input class="num" type="text" placeholder="0"> 개</td>
+            <th>방 수<b class="number"> *</b></th>
+            <td><input class="num" type="text" id = "useInput" name="numberOfRooms" placeholder="0"> 개</td>
+            <th>욕실 수<b class="number"> *</b></th>
+            <td colspan="2"><input class="num" type="text" name="numberOfBathrooms" placeholder="0"> 개</td>
         </tr>
         <tr>
-            <th>해당 층 수</th>
-            <td><input class="num" type="text" placeholder="1"> 층</td>
-            <th>건물 층 수</th>
-            <td><input class="num" type="text" placeholder="1"> 층</td>
+            <th>해당 층 수<b class="number"> *</b></th>
+            <td><input class="num" type="text" name="floorNumber" placeholder="1"> 층</td>
+            <th>건물 층 수<b class="number"> *</b></th>
+            <td colspan="2"><input class="num" type="text" name="totalFloors" placeholder="1"> 층</td>
         </tr>
         <tr>
-            <th>전용 면적
-                <a href="#">도움말</a></th>
-            <td><input class="num" type="text" placeholder="0"> m²</td>
-            <th>공급 면적</th>
-            <td><input class="num" type="text" placeholder="0"> m²</td>
+            <th>전용 면적<b class="number"> *</b></th>
+            <td><input class="num" type="text" name="privateArea" placeholder="0"> m²</td>
+            <th>공급 면적<b class="number"> *</b></th>
+            <td><input class="num" type="text" name="supplyArea" placeholder="0"> m²</td>
+            <th><a href="javascript:void(0);" id="helpLink" onclick="showPopup()">도움말</a></th>
         </tr>
         <tr>
             <th>방향</th>
-            <td colspan="3">
+            <td colspan="4">
                 <select class="combo" name="direction">
                     <option value="none">=== 선택 ===</option>
                     <option value="동향">동향</option>
@@ -328,8 +102,8 @@
         </tr>
         <tr>
             <th>난방 종류</th>
-            <td colspan="3">
-                <select class="combo" name="hiter">
+            <td colspan="4">
+                <select class="combo" name="heatingType">
                     <option value="none">=== 선택 ===</option>
                     <option value="지역">지역난방</option>
                     <option value="중앙">중앙난방</option>
@@ -339,30 +113,30 @@
         </tr>
         <tr>
             <th>엘리베이터</th>
-            <td colspan="3">
+            <td colspan="4">
                 <input type="radio" name="elevator" value="">유
                 <input type="radio" name="elevator" value="">무
             </td>
         </tr>
         <tr>
-            <th>주차가능여부</th>
+            <th>주차가능여부<b class="number"> *</b></th>
             <td>
                 <input type="radio" name="parking" value="">가능
                 <input type="radio" name="parking" value="">불가능
             </td>
             <th>총 주차대수</th>
-            <td><input class="num" type="text" placeholder="0"> 대</td>
+            <td colspan="2"><input class="num" type="text" name="totalParking" placeholder="0"> 대</td>
         </tr>
         <tr>
             <th>단기임대</th>
-            <td colspan="3">
+            <td colspan="4">
                 <input type="radio" name="short" value="">가능
                 <input type="radio" name="short" value="">불가능
             </td>
         </tr>
         <tr>
-            <th>입주가능일</th>
-            <td colspan="3">
+            <th>입주가능일<b class="number"> *</b></th>
+            <td colspan="4">
                 <input type="date"
                        id="comedate"
                        max="2030-12-31"
@@ -370,15 +144,16 @@
                        value="2023-09-13">
         </tr>
         <tr>
-            <th>융자금 여부</th>
-            <td colspan="3"><input class="won" name="mypay" type="text" onchange="getNumber(this);" onkeyup="getNumber(this);" placeholder="0" onblur = "showPriceInfo();"> 원</td>
+            <th>융자금 여부<b class="number"> *</b></th>
+            <td colspan="4"><input class="won" name="loanAmount" type="text" onchange="getNumber(this);" onkeyup="getNumber(this);" placeholder="0" onblur = "showPriceInfo();"> 원</td>
         </tr>
     </table>
+        <br>
     </div>
-<hr>
 
-<h2 class="category"><b class="number">03 </b>가격정보</h2><br>
     <div id="priceSection" style="display: none;">
+        <h2 class="category"><b class="number">03 </b>가격 정보 입력</h2>
+        <hr>
     <div class="btn-group">
         <button onclick="showMonthRent()">월세</button>
         <button onclick="showLease()">전세</button>
@@ -386,60 +161,73 @@
     </div>
     <table id="monthRentSection" class="hidden">
         <tr>
-            <th>보증금</th>
-            <td><input class="won" name="mypay" type="text" onchange="getNumber(this);" onkeyup="getNumber(this);" placeholder="0"> 원</td>
+            <th>보증금<b class="number"> *</b></th>
+            <td><input class="won" name="ForRent" type="text" onchange="getNumber(this);" onkeyup="getNumber(this);" placeholder="0"> 원</td>
         </tr>
         <tr>
-            <th>월세</th>
-            <td><input class="won" name="mypay" type="text" onchange="getNumber(this);" onkeyup="getNumber(this);" placeholder="0"> 원</td>
+            <th>월세<b class="number"> *</b></th>
+            <td><input class="won" name="price" type="text" onchange="getNumber(this);" onkeyup="getNumber(this);" placeholder="0"> 원</td>
         </tr>
         <tr>
-            <th>관리비</th>
-            <td><input class="won" name="mypay" type="text" onchange="getNumber(this);" onkeyup="getNumber(this);" placeholder="0"> 원</td>
+            <th>관리비<b class="number"> *</b></th>
+            <td><input class="won" name="managementFee" type="text" onchange="getNumber(this);" onkeyup="getNumber(this);" placeholder="0"> 원</td>
         </tr>
     </table>
 
     <table id="leaseSection" class="hidden">
         <tr>
-            <th>전세가</th>
-            <td colspan="3"><input class="won" name="mypay" type="text" onchange="getNumber(this);" onkeyup="getNumber(this);" placeholder="0"> 원</td>
+            <th>전세가<b class="number"> *</b></th>
+            <td colspan="3"><input class="won" name="price" type="text" onchange="getNumber(this);" onkeyup="getNumber(this);" placeholder="0"> 원</td>
         </tr>
         <tr>
-            <th>관리비</th>
-            <td><input class="won" name="mypay" type="text" onchange="getNumber(this);" onkeyup="getNumber(this);" placeholder="0"> 원</td>
+            <th>관리비<b class="number"> *</b></th>
+            <td><input class="won" name="managementFee" type="text" onchange="getNumber(this);" onkeyup="getNumber(this);" placeholder="0"> 원</td>
         </tr>
     </table>
 
     <table  id="sellingSection" class="hidden">
         <tr>
-            <th>매매가</th>
-            <td colspan="5"><input class="won" name="mypay" type="text" onchange="getNumber(this);" onkeyup="getNumber(this);" placeholder="0"> 원</td>
+            <th>매매가<b class="number"> *</b></th>
+            <td colspan="5"><input class="won" name="price" type="text" onchange="getNumber(this);" onkeyup="getNumber(this);" placeholder="0"> 원</td>
         </tr>
     </table>
 </div>
+</div>
+
+<div id="helpPopup" class="popup" style="display:none;">
+    <button onclick="closePopup()" class="x-btn"><img src="/img/maemulReg/x.png" class="ximg"></button>
+    <h3 >전용면적과 공급면적이란?</h3>
+    <hr>
+    <!-- 팝업 -->
+    <p class="pop-content"><b>전용면적</b><br><br>
+        전용면적은 현관부터 방과 욕실, 주방 등 실제 사용할 수 있는 모든 공간을 합한 면적을 말합니다.<br>
+        <br><br>
+        <b>공급면적</b><br><br>
+        공급면적은 자신의 집과 밀접하게 붙어있는 복도, 엘리베이터 , 계단 등을 전용 면적에 더한 면적입니다.</p>
+        <br><br>
+        <img src="/img/maemulReg/popupimg.png" style="width: 600px; height:500px;" >
+
 </div>
 
 <div class="prenext">
 <div class="pre">
     <div class="predetails">
         <ul>
-            <li><a href="agree">이전</a></li>
+            <li><a href="/agree">이전</a></li>
         </ul>
     </div>
 </div>
     <div class="next">
         <div class="nextdetails">
             <ul>
-                <li><a href="moreinfo">다음</a></li>
+                <li><button type="submit">다음</button></li>
             </ul>
         </div>
     </div>
+
 </div>
+
 </body>
 
-<!-- 카카오 도로명 api-->
-
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a2f0e9ee9b85c547e29b750c43418fb0&libraries=services"></script>
 
 </html>

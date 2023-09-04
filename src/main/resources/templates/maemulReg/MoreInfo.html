@@ -1,175 +1,106 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/layouts/no_footer_layout}">
 <head>
     <meta charset="UTF-8">
     <title>상세정보</title>
     <link rel="stylesheet" th:href="@{/css/maemulReg/maemulReg.css}">
+    <link rel="stylesheet" th:href="@{/css/maemulReg/moreinfo.css}">
+
     <link rel="stylesheet" href="/static/css/maemulReg/maemulReg.css">
-
+    <link rel="stylesheet" href="/static/css/maemulReg/moreinfo.css">
     <style>
-
-        hr {
-     border-bottom : 2px solid #26A9E0;
-     }
-
-     .layout{
-    width : 80%;
-    margin : auto;
-    margin-top: 40px;
-    }
-
-     .number{
-        color: #26A9E0
+        /* 이미지 미리보기 스타일 */
+        #previewContainer img {
+            max-width: 120px;
+            max-height: 200px;
         }
+    </style>
+    <script>
+        function countCharacters(inputElement, countElementId, maxLength) {
+              const countElement = document.getElementById(countElementId);
+              const currentLength = inputElement.value.length;
+              if (currentLength > maxLength) {
+                  inputElement.value = inputElement.value.slice(0, maxLength);
+                  countElement.textContent = `${maxLength}/${maxLength}`;
+              } else {
+                  countElement.textContent = `${currentLength}/${maxLength}`;
+              }
+          }
 
-     .prenext{
-     margin-top:10%;
-     }
+          // 이미지
+          function chooseImages() {
+              const imageInput = document.getElementById("imageInput");
+              const previewContainer = document.getElementById("previewContainer");
 
-    .prev{
-      float: left;
-     }
+              // 이미지 개수 확인
+              if (previewContainer.children.length >= 15) {
+                  alert("최대 15장까지 등록할 수 있습니다.");
+                  return;
+              }
 
-     .next{
-     float: right;
-     }
+              // 파일 선택 다이얼로그 열기
+              imageInput.click();
+          }
 
-         table{
-      width : 95%;
-      margin-top:70px;
-      margin : auto;
-      border-collapse: collapse;
-      border: 1px solid #ddd;
-     }
+          document.addEventListener("DOMContentLoaded", function () {
+              // 파일 입력 필드의 변경 이벤트 감지
+              document.getElementById("imageInput").addEventListener("change", function (event) {
+                  const imagePreviews = document.getElementById("previewContainer");
 
-     table th {
-     padding: 15px;
-     background: #ececec;
-     font-size: 15px;
+                  // 선택된 파일들을 순회하면서 미리보기 이미지를 생성하고 컨테이너에 추가
+                  for (const file of event.target.files) {
+                      if (imagePreviews.children.length >= 15) {
+                          alert("최대 15장까지 등록할 수 있습니다.");
+                          return;
+                      }
 
-     }
+                      // 선택한 파일이 이미지인지 확인
+                      if (file.type.startsWith("image/")) {
+                          const reader = new FileReader();
 
-    .coment{
-    width : 95%;
-    }
+                          reader.onload = function (e) {
+                              const imagePreview = document.createElement("img");
+                              imagePreview.classList.add("preview-image");
+                              imagePreview.src = e.target.result;
+                              imagePreviews.appendChild(imagePreview);
+                          };
 
-    .count{
-    float: right;
-    color : gray;
-    margin-right : 5px;
-    font-size : 13px;
-    }
-
-    .picture{
-    background-color : #26A9E0;
-    border : none;
-    border-radius : 5px;
-    height:30px;
-    width: 120px;
-    color : white;
-    }
-
-/*옵션, 특징 선택 */
-.container {
-    font-size: 13px;
-}
-
-ul.ks-cboxtags {
-    list-style: none;
-    padding: 20px;
-}
-ul.ks-cboxtags li{
-  display: inline;
-}
-ul.ks-cboxtags li label{
-    display: inline-block;
-    background-color: rgba(255, 255, 255, .9);
-    border: 2px solid rgba(139, 139, 139, .3);
-    border-radius: 25px;
-    white-space: nowrap;
-    margin: 3px 0px;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-    transition: all .2s;
-}
-
-ul.ks-cboxtags li label {
-    padding: 8px 12px;
-    cursor: pointer;
-}
-
-ul.ks-cboxtags li label::before {
-    display: inline-block;
-    font-style: normal;
-    font-variant: normal;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    font-size: 12px;
-    padding: 2px 6px 2px 2px;
-    content: "\f067";
-    transition: transform .3s ease-in-out;
-}
-
-ul.ks-cboxtags li input[type="checkbox"]:checked + label::before {
-    content: "\f00c";
-    transform: rotate(-360deg);
-    transition: transform .3s ease-in-out;
-}
-
-ul.ks-cboxtags li input[type="checkbox"]:checked + label {
-    border: 2px solid #1bdbf8;
-    background-color: #12bbd4;
-    color: #fff;
-    transition: all .2s;
-}
-
-ul.ks-cboxtags li input[type="checkbox"] {
-  display: absolute;
-}
-ul.ks-cboxtags li input[type="checkbox"] {
-  position: absolute;
-  opacity: 0;
-}
-ul.ks-cboxtags li input[type="checkbox"]:focus + label {
-  border: 2px solid #e9a1ff;
-}
-</style>
-
+                          reader.readAsDataURL(file);
+                      } else {
+                          alert("이미지 파일을 선택하세요.");
+                      }
+                  }
+              });
+          });
+    </script>
 </head>
 
 <body layout:fragment="content">
 <div style="text-align : center;">
-    <img src="/static//img/maemulReg/moreinfo.jpg" style="width:100%; height:100%;" >
+    <img src="/img/maemulReg/moreinfo.jpg" style="width:100%; height:100%;" >
 </div>
 
 <div class="layout">
 
-    <h2 class="category"><b class="number">04 </b>상세 정보 입력</h2><br>
+    <h2 class="category"><b class="number">04 </b>상세 정보 입력</h2>
+    <hr>
     <div class="coment-box">
     <table border="1">
         <tr>
-            <th>제목</th>
-            <td> <input class="coment" type="text" placeholder="ex) 강남역 도보 10분이내, 3층 투룸 전세"><br>
-                 <p class="count">글자수/20</p> </td>
+            <th>제목 <b class="number">*</b></th>
+            <td> <input class="coment-t" type="text" placeholder="ex) 강남역 도보 10분이내, 3층 투룸 전세" oninput="countCharacters(this, 'titleCount', 20)"><br>
+                <p class="count" id="titleCount">0/20</p> </td>
         </tr>
         <tr>
             <th>상세설명</th>
-            <td> <textarea class="coment" placeholder="해당 방에 대한 상세정보를 입력해주세요,"></textarea>
-                <p class="count">글자수/500</p></td>
+            <td> <textarea class="coment" placeholder="해당 방에 대한 상세정보를 입력해주세요." oninput="countCharacters(this, 'descriptionCount', 500)"></textarea>
+                <p class="count" id="descriptionCount">0/500</p></td>
         </tr>
     </table>
-        <hr/>
 
-        <h2 class="category"><b class="number">05 </b>특징 입력</h2><br>
+        <br>
         <div class="container">
             <table border="1">
                 <tr class="property-features">
@@ -233,15 +164,24 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
                 </tr>
             </table>
         </div>
-
-        <hr/>
-
-        <h2 class="category"><b class="number">05 </b>사진등록</h2><br>
-
+        <br>
+        <h2 class="category"><b class="number">05 </b>사진등록</h2>
+        <hr>
+    <ul class="back">
         <li>최소 3장 이상의 사진을 등록해야 하며 최대 15장까지 등록이 가능합니다.</li>
         <li>첫 번째 사진이 대표 이미지로 보여집니다.</li>
         <li>워터마크, 상호, 전화번호 등이 포함된 사진이나 관련없는 사진을 등록할 경우 서비스 이용이 제한됩니다.</li>
-        <button class="picture">사진 추가</button>
+    </ul>
+        <br>
+        <div class="pic-box">
+            <!-- 미리보기 이미지를 표시할 div -->
+            <div id="previewContainer"></div>
+            <!-- 이미지 선택 버튼 -->
+            <input type="file" id="imageInput" style="display: none;" accept="image/*" multiple>
+            <img src="/img/maemulReg/image.png" style="width : 150px;" height="150px"><br>
+            <button class="pic-btn" type="button" onclick="chooseImages()">+ 사진 등록</button>
+        </div>
+
     </div>
 
 
@@ -254,14 +194,14 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
     <div class="pre">
         <div class="predetails">
             <ul>
-                <li><a href="maemulinfo">이전</a></li>
+                <li><a href="/maemulinfo">이전</a></li>
             </ul>
         </div>
     </div>
     <div class="next">
         <div class="nextdetails">
             <ul>
-                <li><a href="#">등록</a></li>
+                <li><a><button type="submit">등록</button></a></li>
             </ul>
         </div>
     </div>
