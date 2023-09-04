@@ -1,0 +1,167 @@
+
+    h1{
+    text-align:center;
+    }
+
+    .atext{
+      text-decoration: none;
+      color: white;
+      }
+
+    .layout {
+        width : 80%;
+        margin: 0 auto;
+        margin-top : 40px;
+    }
+
+     table{
+     width : 95%;
+     margin : auto;
+     margin-top:20px;
+     border-collapse: collapse;
+    }
+
+    table th {
+    padding: 20px;
+    background: #ececec;
+    color: #666;
+    font-size: 15px;
+    border: 1px solid #ddd;
+    border-top: 3px solid #26A9E0;
+    }
+
+    table td {
+    padding: 14px 21px;
+    color: #666;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+     }
+
+    table tr:hover {
+    background: #eee;
+    cursor: pointer;
+    }
+
+    .b-q{
+    width:5%;
+    }
+
+    .b-n {
+    width :10%;
+    }
+    .b-t{
+    width : 50%;
+    }
+
+    .headrow{
+    height : 100px;
+    width: 50%;
+    background : #f8f8f8;
+    margin: auto;
+    border: 1px solid #ddd;
+    margin-top:105px;
+    }
+
+    .headrowL{
+    height : 40px;
+    width: 60%;
+    border: 2px solid #26A9E0;
+    background : #ffffff;
+    display:flex;
+    justify-content:space-between;
+    margin: auto;
+    margin-top:25px
+    }
+
+    .headrowR{
+    height : 40px;
+    width :12%;
+    background : #ffffff;
+    float: right;
+    }
+
+
+    .searchbox{
+    padding: 10px;
+    border: 0px;
+    outline: none;
+    float: left;
+    }
+
+    .searchbtn{
+    width: 100px;
+    height:100%;
+    border: 0px;
+    background: #26A9E0;
+    outline: none;
+    float: left;
+    color: #ffffff;
+    }
+
+    .writebtn{
+    width: 100px;
+    height:120%;
+    border: 0px;
+    margin-top:5px;
+    background: #26A9E0;
+    outline: none;
+    color: #ffffff;
+    }
+
+    a{
+    text-decoration:none;
+    color: black;
+    }
+
+    #category{
+    color : #26A9E0;
+    font-weight: bold;
+
+    }
+
+    #Q{
+    font-weight: bold;
+    }
+
+
+.bottom{
+text-align : center;
+margin-top: 60px;
+}
+
+span{
+margin-right:5px;
+margin-left:5px;
+}
+
+.bottomR{
+height : 40px;
+background : #ffffff;
+float: right;
+}
+
+.pre, .next{
+    background: #26A9E0;
+    border-radius: 5px;
+    padding: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+    color: white;
+    }
+
+/* 현재 페이지 (active 상태) 스타일 */
+.bottom a.active {
+    color: #26A9E0; /* active 상태의 링크 색상 */
+    font-weight: bold; /* active 상태의 글꼴 굵게 표시 */
+    border-bottom: 3px solid #26A9E0; /* active 상태의 아래쪽 테두리 추가 */
+}
+
+/* 호버 효과 스타일 */
+.bottom a:hover {
+    color: #26A9E0; /* hover 상태의 링크 색상 */
+}
+
+/* myQnA-pjm */
+.faq-tb {
+    text-align: center;
+}

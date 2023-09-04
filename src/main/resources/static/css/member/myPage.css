@@ -1,5 +1,4 @@
 .oLayout {
-    width: 1000px;
     margin: 0 auto;
 }
 .n-header-list {
@@ -44,11 +43,14 @@
     text-decoration-line: none;
 }
 .oInfo-top {
+    display: flex;
+    justify-content: center;
     height: 250px;
     padding: 30px 0;
     background-color: #fafafa;
 }
 .oInfo-top-wrapper {
+    width: 1000px;
     display: flex;
     justify-content: space-between;
     margin: 30px 0px;
@@ -83,7 +85,9 @@
     width: 150px;
     height: 150px;
     border: 1px solid #bbc7d6;
-    display: inline-block;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .oMaemulCnt a,
 .oMaemulCnt span {
@@ -98,7 +102,8 @@
 }
 .oMeamulContainer {
     width: 1000px;
-    display: contents;
+    display: grid;
+    margin: 0 auto;
 }
 .oMaemul-c-inner {
     padding: 40px 0px 50px;
@@ -138,8 +143,14 @@
     color: #999999;
 }
 .oInfo-right {
-    display: flex;
-    justify-content: center;
+    height: 100%;
+}
+.oMaemulCnt-inner {
+    display:flex;
+    height: 100%;
+}
+.oMaemulCnt-inner > .oMaemulCnt:first-child {
+    border-right: none;
 }
 .oMaemulContainer {
     display: flex;

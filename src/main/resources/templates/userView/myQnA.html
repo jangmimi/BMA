@@ -10,8 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/member/myPage.css}">
-    <link rel="stylesheet" th:href="@{/css/CC/fqnlist.css}">
-    <link rel="stylesheet" th:href="@{/css/CC/CCBar.css}">
+    <link rel="stylesheet" th:href="@{/css/member/myQna.css}">
 </head>
 <body layout:fragment="content">
 
@@ -41,7 +40,7 @@
                         </div>
                         <div class="oMyQnaTb">
                             <!-- 총 내 문의 내역 갯수 출력 영역 추가 해야함 -->
-                            <table class="faq-tb" style="width: 100%;">
+                            <table class="faq-tb" style="width: 100%; text=align: center;">
                                 <tr>
                                     <th class="b-n">번호</th>
                                     <th class="b-n">분류</th>
@@ -54,7 +53,7 @@
                                     <td id="num" th:text="${myQna.id}">번호</td>
                                     <td id="category" th:text="${myQna.category}">분류</td>
                                     <td><a th:href="@{/faq/view(id=${myQna.id})}" th:text="${myQna.title}">제목</a></td>
-                                    <td><a th:href="@{/faq/view(id=${myQna.id})}" th:text="${myQna.createdAt}">등록일</a></td>
+                                    <td><a th:href="@{/faq/view(id=${myQna.id})}" th:text="${#temporals.format(myQna.createdAt, 'yyyy-MM-dd')}">yyyy-MM-dd</a></td>
                                 </tr>
                             </table>
                         </div>
