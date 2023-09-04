@@ -5,18 +5,22 @@
       layout:decorate="~{fragments/layouts/include_footer_layout}">
 <head>
     <meta charset="UTF-8">
-    <title>최근 본 매물</title>
-    <link rel="stylesheet" th:href="@{/css/member/myPage.css}">
+    <title>관심매물</title>
     <!-- 부트스트랩 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/member/myPage.css}">
+    <link rel="stylesheet" th:href="@{/css/member/myQna.css}">
+    <link rel="stylesheet" th:href="@{/css/member/myMaemul.css}">
 </head>
 <body layout:fragment="content">
-<th:block th:object="${loginMember}">
-    <th:block th:if="${loginMember != null}">
+
+<th:block th:if="${loginMember != null}">
+    <th:block th:object="${loginMember}">
         <!-- 마이페이지 네비게이션 -->
-        <div id="oContainer">
-            <div id="content">
+        <div id="o-container">
+            <div id="o-content">
+                <!-- inner navbar -->
                 <div class="o-lnb">
                     <div class="o-wrapper">
                         <ul class="o-lnb-list">
@@ -30,36 +34,52 @@
                     </div>
                 </div>
 
-                <!-- 검색영역 -->
-                <div class = "headrow">
-                    <div class = "headrowL">
-                        <input type="text" class = "searchbox" placeholder="검색어 입력">
-                        <button class = "searchbtn">검색</button>
+                <div class="o-mid-wrapper">
+                    <div class="o-mid-inner mt-5" id="o-tb-wrap">
+                        <div id="oPageTitle">
+                            <h3 class="h3 fw-bold">관심 매물</h3>
+                        </div>
+                        <div class="oSearch-c">
+                            <div class = "headrow">
+                                <div class = "headrowL">
+                                    <input type="text" class = "searchbox" placeholder="검색어 입력">
+                                    <button class = "searchbtn">검색</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="oMyQnaTb">
+                            <table class="faq-tb" style="width: 100%; text=align: center;">
+                                <thead>
+                                <tr>
+                                    <th class="-n">사진</th>
+                                    <th class="b-n">소재지/상세주소</th>
+                                    <th class="b-t">면적</th>
+                                    <th class="b-t">가격(만원)</th>
+                                    <th class="b-t">삭제</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <p>전체 <span class="myQnaCntAll" th:text="${myQnaCnt}"></span>건</p>
+                                <tr th:each="myQna : ${myQnaList}">
+                                    <td colspan="4">조회된 데이터가 없습니다.</td>
+                                </tr>
+                                <tr th:each="myQna : ${myQnaList}" th:if="${myQna.user_email == loginMember.email}">
+                                    <td id="num" th:text="${myQna.id}">번호</td>
+                                    <td id="category" th:text="${myQna.category}">분류</td>
+                                    <td><a th:href="@{/faq/view(id=${myQna.id})}" th:text="${myQna.title}">제목</a></td>
+                                    <td><a th:href="@{/faq/view(id=${myQna.id})}" th:text="${#temporals.format(myQna.createdAt, 'yyyy-MM-dd')}">yyyy-MM-dd</a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-
-<!--                <div class="oLayout">-->
-<!--                    <div class="oInfo-top">-->
-<!--                        <div class="oInfo-top-wrapper">-->
-<!--                            <form action="#" method="post">-->
-<!--                                <input type="text" id="oSearchText" name="oSearchText" placeholder="검색어를 입력하세요."/>-->
-<!--                                <div class="o-search-btns">-->
-<!--                                    <input type="submit" class="btn btn-primary" value="검색" />-->
-<!--                                    <input type="reset" class="btn btn-secondary" value="초기화" />-->
-<!--                                </div>-->
-<!--                            </form>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-                <div>테이블영역</div>
             </div>
         </div>
     </th:block>
 </th:block>
 <!-- 부트스트랩 script -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-        crossorigin="anonymous"></script>
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </body>
 </html>

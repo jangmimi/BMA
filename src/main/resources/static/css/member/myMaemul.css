@@ -1,3 +1,4 @@
+
 h1{
 text-align:center;
 }
@@ -36,7 +37,7 @@ border-bottom: 1px solid #ddd;
 text-align: center;
  }
 
-tbody tr:hover {
+table tr:hover {
 background: #eee;
 cursor: pointer;
 }
@@ -53,12 +54,12 @@ width : 50%;
 }
 
 .headrow{
-height : 100px;
-width: 50%;
-background : #f8f8f8;
-margin: auto;
-border: 1px solid #ddd;
-margin-top:105px;
+    height : 100px;
+    width: 50%;
+    background : #f8f8f8;
+    margin: auto;
+    border: 1px solid #ddd;
+    margin-top:40px;
 }
 
 .headrowL{
@@ -140,31 +141,28 @@ float: right;
 }
 
 .pre, .next{
-    background: #26A9E0;
-    border-radius: 5px;
-    padding: 5px;
-    padding-right: 10px;
-    padding-left: 10px;
-    color: white;
-    }
+background: #26A9E0;
+border-radius: 5px;
+padding: 5px;
+padding-right: 10px;
+padding-left: 10px;
+color: white;
+}
 
 /* 현재 페이지 (active 상태) 스타일 */
 .bottom a.active {
-    color: #26A9E0; /* active 상태의 링크 색상 */
-    font-weight: bold; /* active 상태의 글꼴 굵게 표시 */
-    border-bottom: 3px solid #26A9E0; /* active 상태의 아래쪽 테두리 추가 */
+color: #26A9E0; /* active 상태의 링크 색상 */
+font-weight: bold; /* active 상태의 글꼴 굵게 표시 */
+border-bottom: 3px solid #26A9E0; /* active 상태의 아래쪽 테두리 추가 */
 }
 
 /* 호버 효과 스타일 */
 .bottom a:hover {
-    color: #26A9E0; /* hover 상태의 링크 색상 */
+color: #26A9E0; /* hover 상태의 링크 색상 */
 }
 
-/* myQnA-pjm */
-.faq-tb {
-    width: 100%;
-    text-align: center;
-}
-#myQnaBtn {
-    margin-top: 50px;
+
+/* maemulInterest - pjm */
+#oPageTitle {
+text-align: center;
 }

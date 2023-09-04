@@ -30,7 +30,6 @@ public class MemberController {
     @Autowired
     private PasswordEncoderConfig pwdConfig;
 
-
     /** 로그인 여부 체크 */
     private boolean loginStatus(HttpSession session) {
         return session.getAttribute("loginMember") != null;
@@ -277,6 +276,24 @@ public class MemberController {
         return "userView/myQnA";
     }
 
+    /** 관심매물 페이지 매핑 */
+    @RequestMapping("/qInterest")
+    public String qInterest(HttpSession session, Model model) {
+        log.info("MemberController - qInterest() 실행");
+        if(!loginStatus(session)) { return "userView/loginNeed"; }
+
+        return "userView/maemulInterest";
+    }
+
+    /** 최근매물 페이지 매핑 */
+    @RequestMapping("/qRecent")
+    public String qRecent(HttpSession session, Model model) {
+        log.info("MemberController - qRecent() 실행");
+        if(!loginStatus(session)) { return "userView/loginNeed"; }
+
+        return "userView/maemulRecent";
+    }
+
     /** 기본 회원탈퇴 */   // sns는 별도 처리 해줘야 함
     @PostMapping("/qLeaveMember/{id}")
     public String leaveMember(HttpSession session, SessionStatus sessionStatus) {
@@ -345,20 +362,6 @@ public class MemberController {
             model.addAttribute("findPwdFailed", "일치하는 회원정보가 없습니다.");
         }
         return "userView/findMemberInfo";
-    }
-
-    /** 관심매물 페이지 매핑 */
-    @RequestMapping("/qInterest")
-    public String qInterest() {
-        log.info("MemberController - qInterest() 실행");
-        return "userView/maemulInterest";
-    }
-
-    /** 최근매물 페이지 매핑 */
-    @RequestMapping("/qRecent")
-    public String qRecent() {
-        log.info("MemberController - qRecent() 실행");
-        return "userView/maemulRecent";
     }
 }
 

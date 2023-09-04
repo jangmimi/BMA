@@ -39,8 +39,7 @@
                             <p>고객님께서 문의하신 내역입니다.</p>
                         </div>
                         <div class="oMyQnaTb">
-                            <!-- 총 내 문의 내역 갯수 출력 영역 추가 해야함 -->
-                            <table class="faq-tb" style="width: 100%; text=align: center;">
+                            <table class="faq-tb">
                                 <thead>
                                     <tr>
                                         <th class="b-n">번호</th>
@@ -50,8 +49,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- 본인이 작성한 문의만 표시하는 조건문 -->
+                                    <!-- 총 나의 문의 갯수 출력 -->
                                     <p>전체 <span class="myQnaCntAll" th:text="${myQnaCnt}"></span>건</p>
+                                    <!-- 본인이 작성한 문의만 표시하는 조건문, 번호는 '플래닛 사이트'도 전체글 기준 번호 보여줌 -->
                                     <tr th:each="myQna : ${myQnaList}" th:if="${myQna.user_email == loginMember.email}">
                                         <td id="num" th:text="${myQna.id}">번호</td>
                                         <td id="category" th:text="${myQna.category}">분류</td>
