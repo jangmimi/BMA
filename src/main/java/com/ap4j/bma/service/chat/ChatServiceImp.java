@@ -4,6 +4,7 @@ import com.ap4j.bma.model.entity.chat.ChatMessage;
 import com.ap4j.bma.model.repository.ChatRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 import java.util.List;
 

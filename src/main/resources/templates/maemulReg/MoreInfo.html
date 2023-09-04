@@ -1,121 +1,190 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/layouts/no_footer_layout}">
 <head>
     <meta charset="UTF-8">
     <title>상세정보</title>
-    <link rel="stylesheet" href="/static/css/maemulReg.css">
+    <link rel="stylesheet" th:href="@{/css/maemulReg/maemulReg.css}">
+    <link rel="stylesheet" th:href="@{/css/maemulReg/moreinfo.css}">
 
+    <link rel="stylesheet" href="/static/css/maemulReg/maemulReg.css">
+    <link rel="stylesheet" href="/static/css/maemulReg/moreinfo.css">
     <style>
-        .prenext{
-        margin-top:10%;
+        /* 이미지 미리보기 스타일 */
+        #previewContainer img {
+            max-width: 120px;
+            max-height: 200px;
         }
-
-       .prev{
-         float: left;
-        }
-
-        .next{
-        float: right;
-        }
-
     </style>
+    <script>
+        function countCharacters(inputElement, countElementId, maxLength) {
+              const countElement = document.getElementById(countElementId);
+              const currentLength = inputElement.value.length;
+              if (currentLength > maxLength) {
+                  inputElement.value = inputElement.value.slice(0, maxLength);
+                  countElement.textContent = `${maxLength}/${maxLength}`;
+              } else {
+                  countElement.textContent = `${currentLength}/${maxLength}`;
+              }
+          }
 
+          // 이미지
+          function chooseImages() {
+              const imageInput = document.getElementById("imageInput");
+              const previewContainer = document.getElementById("previewContainer");
+
+              // 이미지 개수 확인
+              if (previewContainer.children.length >= 15) {
+                  alert("최대 15장까지 등록할 수 있습니다.");
+                  return;
+              }
+
+              // 파일 선택 다이얼로그 열기
+              imageInput.click();
+          }
+
+          document.addEventListener("DOMContentLoaded", function () {
+              // 파일 입력 필드의 변경 이벤트 감지
+              document.getElementById("imageInput").addEventListener("change", function (event) {
+                  const imagePreviews = document.getElementById("previewContainer");
+
+                  // 선택된 파일들을 순회하면서 미리보기 이미지를 생성하고 컨테이너에 추가
+                  for (const file of event.target.files) {
+                      if (imagePreviews.children.length >= 15) {
+                          alert("최대 15장까지 등록할 수 있습니다.");
+                          return;
+                      }
+
+                      // 선택한 파일이 이미지인지 확인
+                      if (file.type.startsWith("image/")) {
+                          const reader = new FileReader();
+
+                          reader.onload = function (e) {
+                              const imagePreview = document.createElement("img");
+                              imagePreview.classList.add("preview-image");
+                              imagePreview.src = e.target.result;
+                              imagePreviews.appendChild(imagePreview);
+                          };
+
+                          reader.readAsDataURL(file);
+                      } else {
+                          alert("이미지 파일을 선택하세요.");
+                      }
+                  }
+              });
+          });
+    </script>
 </head>
 
 <body layout:fragment="content">
 <div style="text-align : center;">
-    <img src="/static//img/maemulReg/moreinfo.jpg" style="width:100%; height:100%;" >
+    <img src="/static/img/maemulReg/moreinfo.jpg" style="width:100%; height:100%;" >
 </div>
 
 <div class="layout">
 
-    <h3 class="category"><b class="number">04 </b>상세 정보 입력</h3><br>
+    <h2 class="category"><b class="number">04 </b>상세 정보 입력</h2>
+    <hr>
+    <div class="coment-box">
     <table border="1">
-        <tr>매물 이미지 등록하는 버튼</tr><br>
-        <tr><input type="text" placeholder="제목"></tr><br>
-        <tr><textarea>내용</textarea></tr>
+        <tr>
+            <th>제목 <b class="number">*</b></th>
+            <td> <input class="coment-t" type="text" placeholder="ex) 강남역 도보 10분이내, 3층 투룸 전세" oninput="countCharacters(this, 'titleCount', 20)"><br>
+                <p class="count" id="titleCount">0/20</p> </td>
+        </tr>
+        <tr>
+            <th>상세설명</th>
+            <td> <textarea class="coment" placeholder="해당 방에 대한 상세정보를 입력해주세요." oninput="countCharacters(this, 'descriptionCount', 500)"></textarea>
+                <p class="count" id="descriptionCount">0/500</p></td>
+        </tr>
     </table>
-    <hr/>
 
-    <table border="1">
-        <tr>
-            <th>특징</th>
-            <td>
-                <input type="checkbox" name="option1" value="value1"> 단기
-                <input type="checkbox" name="option1" value="value1"> 신축
-                <input type="checkbox" name="option1" value="value1"> 투자
-                <input type="checkbox" name="option1" value="value1"> 풀옵션
-                <input type="checkbox" name="option1" value="value1"> 엘리베이터
-                <input type="checkbox" name="option1" value="value1"> 보안/안전
-                <input type="checkbox" name="option1" value="value1"> 분리형
-                <input type="checkbox" name="option1" value="value1"> 주차
-            </td>
-        </tr>
-        <tr>
-            <th>옵션</th>
-            <td>
-                <input type="checkbox" name="option1" value="value1">벽걸이형
-                <input type="checkbox" name="option1" value="value1">침대
-                <input type="checkbox" name="option1" value="value1">책상
-                <input type="checkbox" name="option1" value="value1">옷장
-                <input type="checkbox" name="option1" value="value1">식탁
-                <input type="checkbox" name="option1" value="value1">소파
-                <input type="checkbox" name="option1" value="value1">천장형에어컨
-                <input type="checkbox" name="option1" value="value1">무인택배함
-                <input type="checkbox" name="option1" value="value1">비데
-                <input type="checkbox" name="option1" value="value1">신발장
-                <input type="checkbox" name="option1" value="value1">냉장고
-                <input type="checkbox" name="option1" value="value1">세탁기
-                <input type="checkbox" name="option1" value="value1">샤워부스
-                <input type="checkbox" name="option1" value="value1">싱크대
-                <input type="checkbox" name="option1" value="value1">인덕션
-                <input type="checkbox" name="option1" value="value1">전자레인지
-                <input type="checkbox" name="option1" value="value1">TV
-                <input type="checkbox" name="option1" value="value1">붙박이장
-                <input type="checkbox" name="option1" value="value1">에어컨
-            </td>
-        </tr>
-        <tr>
-            <th>보안/안전시설</th>
-            <td>
-                <input type="checkbox" name="option1" value="value1">현관보안
-                <input type="checkbox" name="option1" value="value1">CCTV
-                <input type="checkbox" name="option1" value="value1">방범창
-                <input type="checkbox" name="option1" value="value1">경비원
-                <input type="checkbox" name="option1" value="value1">화재경보기
-                <input type="checkbox" name="option1" value="value1">비디오폰
-                <input type="checkbox" name="option1" value="value1">인터폰
-                <input type="checkbox" name="option1" value="value1">카드키
-                <input type="checkbox" name="option1" value="value1">사설경비
-                <input type="checkbox" name="option1" value="value1">전자도어락
-            </td>
-        </tr>
-        <tr>
-            <th>위치 및 주변 시설</th>
-            <td>
-                <input type="checkbox" name="option1" value="value1">편의시설
-                <input type="checkbox" name="option1" value="value1">지하철역
-                <input type="checkbox" name="option1" value="value1">편의점
-                <input type="checkbox" name="option1" value="value1">카페
-                <input type="checkbox" name="option1" value="value1">은행
-                <input type="checkbox" name="option1" value="value1">관공서
-            </td>
-        </tr>
-        <tr>
-            <th>학군정보</th>
-            <td>
-                <input type="checkbox" name="option1" value="value1">어린이집
-                <input type="checkbox" name="option1" value="value1">유치원
-                <input type="checkbox" name="option1" value="value1">초등학교
-                <input type="checkbox" name="option1" value="value1">중학교
-                <input type="checkbox" name="option1" value="value1">고등학교
-            </td>
-        </tr>
-    </table>
-    <hr/>
+        <br>
+        <div class="container">
+            <table border="1">
+                <tr class="property-features">
+                    <th>특징</th>
+                    <td>
+                        <ul class="ks-cboxtags">
+                            <li><input type="checkbox" id="short-term" value="short-term"><label for="short-term">단기</label></li>
+                            <li><input type="checkbox" id="new-construction" value="new-construction"><label for="new-construction">신축</label></li>
+                            <li><input type="checkbox" id="investment" value="investment"><label for="investment">투자</label></li>
+                            <li><input type="checkbox" id="full-option" value="full-option"><label for="full-option">풀옵션</label></li>
+                            <li><input type="checkbox" id="elevator" value="elevator"><label for="elevator">엘리베이터</label></li>
+                            <li><input type="checkbox" id="security" value="security"><label for="security">보안/안전</label></li>
+                            <li><input type="checkbox" id="separate" value="separate"><label for="separate">분리형</label></li>
+                            <li><input type="checkbox" id="parking" value="parking"><label for="parking">주차</label></li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr class="property-options">
+                    <th>옵션</th>
+                    <td>
+                        <ul class="ks-cboxtags">
+                            <li><input type="checkbox" id="wall-mounted" value="wall-mounted"><label for="wall-mounted">벽걸이형</label></li>
+                            <li><input type="checkbox" id="bed" value="bed"><label for="bed">침대</label></li>
+                            <li><input type="checkbox" id="desk" value="desk"><label for="desk">책상</label></li>
+                            <li><input type="checkbox" id="wardrobe" value="wardrobe"><label for="wardrobe">옷장</label></li>
+                            <li><input type="checkbox" id="dining-table" value="dining-table"><label for="dining-table">식탁</label></li>
+                            <li><input type="checkbox" id="sofa" value="sofa"><label for="sofa">소파</label></li>
+                            <li><input type="checkbox" id="ceiling-ac" value="ceiling-ac"><label for="ceiling-ac">천장형 에어컨</label></li>
+                            <li><input type="checkbox" id="parcel-locker" value="parcel-locker"><label for="parcel-locker">무인택배함</label></li>
+                            <li><input type="checkbox" id="bidet" value="bidet"><label for="bidet">비데</label></li>
+                            <li><input type="checkbox" id="shoe-rack" value="shoe-rack"><label for="shoe-rack">신발장</label></li>
+                            <li><input type="checkbox" id="refrigerator" value="refrigerator"><label for="refrigerator">냉장고</label></li>
+                            <li><input type="checkbox" id="washing-machine" value="washing-machine"><label for="washing-machine">세탁기</label></li>
+                            <li><input type="checkbox" id="shower-booth" value="shower-booth"><label for="shower-booth">샤워부스</label></li>
+                            <li><input type="checkbox" id="sink" value="sink"><label for="sink">싱크대</label></li>
+                            <li><input type="checkbox" id="induction-cooktop" value="induction-cooktop"><label for="induction-cooktop">인덕션</label></li>
+                            <li><input type="checkbox" id="microwave" value="microwave"><label for="microwave">전자레인지</label></li>
+                            <li><input type="checkbox" id="tv" value="tv"><label for="tv">TV</label></li>
+                            <li><input type="checkbox" id="built-in-wardrobe" value="built-in-wardrobe"><label for="built-in-wardrobe">붙박이장</label></li>
+                            <li><input type="checkbox" id="air-conditioner" value="air-conditioner"><label for="air-conditioner">에어컨</label></li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr class="security-options">
+                    <th>보안/안전시설</th>
+                    <td>
+                        <ul class="ks-cboxtags">
+                            <li><input type="checkbox" id="security-entrance" value="security-entrance"><label for="security-entrance">현관보안</label></li>
+                            <li><input type="checkbox" id="cctv" value="cctv"><label for="cctv">CCTV</label></li>
+                            <li><input type="checkbox" id="security-bars" value="security-bars"><label for="security-bars">방범창</label></li>
+                            <li><input type="checkbox" id="security-guard" value="security-guard"><label for="security-guard">경비원</label></li>
+                            <li><input type="checkbox" id="fire-alarm" value="fire-alarm"><label for="fire-alarm">화재경보기</label></li>
+                            <li><input type="checkbox" id="video-phone" value="video-phone"><label for="video-phone">비디오폰</label></li>
+                            <li><input type="checkbox" id="intercom" value="intercom"><label for="intercom">인터폰</label></li>
+                            <li><input type="checkbox" id="key-card" value="key-card"><label for="key-card">카드키</label></li>
+                            <li><input type="checkbox" id="private-security" value="private-security"><label for="private-security">사설경비</label></li>
+                            <li><input type="checkbox" id="digital-door-lock" value="digital-door-lock"><label for="digital-door-lock">전자도어락</label></li>
+                        </ul>
+
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <h2 class="category"><b class="number">05 </b>사진등록</h2>
+        <hr>
+    <ul class="back">
+        <li>최소 3장 이상의 사진을 등록해야 하며 최대 15장까지 등록이 가능합니다.</li>
+        <li>첫 번째 사진이 대표 이미지로 보여집니다.</li>
+        <li>워터마크, 상호, 전화번호 등이 포함된 사진이나 관련없는 사진을 등록할 경우 서비스 이용이 제한됩니다.</li>
+    </ul>
+        <br>
+        <div class="pic-box">
+            <!-- 미리보기 이미지를 표시할 div -->
+            <div id="previewContainer"></div>
+            <!-- 이미지 선택 버튼 -->
+            <input type="file" id="imageInput" style="display: none;" accept="image/*" multiple>
+            <img src="/static/img/maemulReg/image.png" style="width : 150px;" height="150px"><br>
+            <button class="pic-btn" type="button" onclick="chooseImages()">+ 사진 등록</button>
+        </div>
+
+    </div>
+
+
 
 </div>
 
@@ -125,18 +194,19 @@
     <div class="pre">
         <div class="predetails">
             <ul>
-                <li><a href="maemulInfo.html">이전</a></li>
+                <li><a href="maemulinfo">이전</a></li>
             </ul>
         </div>
     </div>
     <div class="next">
         <div class="nextdetails">
             <ul>
-                <li><a href="MoreInfo.html">등록</a></li>
+                <li><a href="#">등록</a></li>
             </ul>
         </div>
     </div>
 </div>
 
 </body>
+
 </html>
