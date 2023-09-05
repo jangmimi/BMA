@@ -1,11 +1,13 @@
 package com.ap4j.bma.model.entity.community;
 
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@ToString
 @Entity
 public class CommunityEntity {
     @Id

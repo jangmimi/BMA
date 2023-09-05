@@ -1,49 +1,26 @@
 .oLayout {
-    width: 1000px;
     margin: 0 auto;
 }
 .n-header-list {
     margin: 16px 0px;
     padding: 0px 0px 0px 40px;
 }
-.o-lnb {
-    min-width: 1000px;
-    height: 50px;
-    background-color: #ededed;
+#o-container {
+    height: auto;
 }
-#o-container { height: auto; }
-.o-wrapper {
-    position: relative;
-    display: block;
-    margin-left: 205px;
-}
-.o-lnb-list {
-    font-family: 'Noto Sans KR', sans-serif;
-    height: 50px;
-    float: left;
-    display: flex;
-    padding-left: 20px;
-    line-height: 1;
-    list-style: none;
-    margin: 0;
-}
-.o-lnb-item {
-    position: relative;
-    display: inline-flex;
-    margin-right: 15px;
-    align-items: center;
-}
-.o-lnb-item a {
-    font-weight: bold;
-    color: #7790ad;
-    font-size: 13px;
-    text-decoration-line: none;
+.o-mid-inner {
+    width: 1200px;
+    margin: 0 auto;
 }
 .oInfo-top {
+    display: flex;
+    justify-content: center;
     height: 250px;
     padding: 30px 0;
+    background-color: #fafafa;
 }
 .oInfo-top-wrapper {
+    width: 1000px;
     display: flex;
     justify-content: space-between;
     margin: 30px 0px;
@@ -73,17 +50,32 @@
 }
 .oMaemulCnt {
     text-align: center;
-    align-items: center;
-    display: grid;
+    font-weight: 600;
     background-color: white;
-    float: right;
     width: 150px;
-    height: 100px;
+    height: 150px;
     border: 1px solid #bbc7d6;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.oMaemulCnt a,
+.oMaemulCnt span {
+    display: block;
+    font-size: 20px;
+}
+.oMaemulCnt a {
+    color: #26abed;
+}
+.oMaemulCnt span {
+    font-size: 15px;
 }
 .oMeamulContainer {
     width: 1000px;
-    display: contents;
+    margin: 0 auto;
+}
+.oMaemul-c-inner {
+    padding: 40px 0px 50px;
 }
 .oMeamulTitleContainer {
     display: flex;
@@ -100,7 +92,7 @@
     border: none;
     background-color: white;
 }
-#oMaemulAllView {
+#oAllView {
     background-color: #26abed;
     color: white;
     padding: 5px 8px;
@@ -113,19 +105,25 @@
     text-decoration: none;
     color: black
 }
-#oInterestMaemul {
+#oInterest {
     color: #25AAE1;
 }
-#oRecentMaemul {
+#oRecent {
     color: #999999;
 }
 .oInfo-right {
-    display: flex;
-    justify-content: center;
+    height: 100%;
+}
+.oMaemulCnt-inner {
+    display:flex;
+    height: 100%;
+}
+.oMaemulCnt-inner > .oMaemulCnt:first-child {
+    border-right: none;
 }
 .oMaemulContainer {
     display: flex;
-    justify-content: center;
+    justify-content: left;
 }
 .myImg {
     width: 150px;
@@ -134,6 +132,13 @@
 /*oMyInfoUpdate css*/
 .form-floating {
    width: 350px;
+}
+#nickname {
+    width: 254px;
+}
+#btnNicknameCheck {
+    width: 90px;
+    margin-left: 6px;
 }
 #oJoinBtn-container {
    display: flex;
@@ -151,6 +156,17 @@
    width: 90px;
    margin-left: 6px;
 }
+.form-check-warning {
+   display: none;
+   text-align: left;
+   color: red;
+   font-size:12px;
+}
+.form-check-warning-info {
+   text-align: left;
+   color: red;
+   font-size:12px;
+}
 .oAgree,.oMustAgree {
    margin-right: 5px;
 }
@@ -167,9 +183,6 @@
 }
 
 /* oFindMemberInfo */
-.form-floating {
-    width: 350px;
-}
 #oInner-container {
     width: 400px;
 }
@@ -216,5 +229,249 @@
     border: none;
     background-color: #26abed;
     color: white;
-    font-size: 18px;
+    font-size: 16px;
+}
+.myQnaCntAll {
+    color: #26ABED;
+    font-weight: 600;
+}
+
+/* maemulInterest */
+.o-search-btns {
+    width: 150px;
+}
+
+
+
+/* 관심매물 최근본매물 영역 css */
+* {
+	box-sizing: border-box;
+}
+
+.z-main-container {
+	display: flex;
+	align-items: center; /* 세로 중앙 정렬 */
+	flex-direction: column;
+	background-color: #efeff0;
+	height: 100%;
+}
+
+.z-top-container {
+	width: 100%;
+	background-color: #fff;
+}
+.z-top-first {
+	border-bottom: 1px solid #e5e5e5;
+}
+
+.z-top-size-wrap {
+	margin: 20px;
+	display: flex;
+	justify-content: center;
+}
+
+.z-top-info {
+	display: flex;
+	align-items: center;
+	gap: 30px;
+	line-height: 30px;
+}
+
+.z-top-text {
+	font-size: 14px;
+}
+
+.z-top-title {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.z-category {
+	color: #666666;
+}
+
+.z-top-wrap {
+	display: flex;
+	justify-content: center;
+}
+
+.z-top-btn {
+	border: none;
+	background-color: #fff;
+	width: 200px;
+	height: 60px;
+	cursor: pointer;
+}
+
+.z-top-btn:hover {
+	background-color: #efeff0;
+}
+
+.z-top-seperate1 {
+	border-bottom: 2px solid #000;
+}
+
+.z-count {
+	color: #129ded;
+}
+
+.z-middle-container {
+	margin: 30px;
+}
+
+.z-middle-wrap {
+	display: flex;
+	justify-content: center;
+/*	gap: 10px;*/
+}
+
+.z-hash-tags {
+	border: 1px solid #e5e5e5;
+	color: #7790ad;
+	border-radius: 20px;
+	padding: 10px;
+	cursor: pointer;
+}
+
+.z-hash-tags:hover {
+	background-color: gray;
+	color: white;
+}
+
+.z-content-wrap {
+	width: 340px;
+	height: 385px;
+}
+
+.z-img-wrap,
+.z-img {
+	width: 340px;
+	height: 191.25px;
+}
+
+.z-text-content2::before {
+	content: "ㆍ";
+}
+
+.z-bottom-wrap {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 30px;
+}
+
+.z-text-content3 {
+	color: #888888;
+}
+
+.z-bottom-text {
+	padding: 20px;
+}
+
+.z-bottom-text {
+	font-size: 15px;
+	background-color: #fff;
+	width: 340px;
+	height: 195px;
+}
+
+.z-text-contents {
+	margin-top: 10px;
+	line-height: 22px;
+}
+
+.z-text-wrap {
+	font-size: 15px;
+	background-color: #fff;
+	width: 340px;
+	height: 195px;
+}
+
+.z-text-title {
+	font-size: 22px;
+	color: #129ded;
+}
+
+.z-t {
+	color: #129ded;
+}
+
+.z-text-hash-wrap {
+	height: 24px;
+	margin-top: 30px;
+}
+
+.z-text-hash {
+	border: none;
+	background-color: #eeeeee;
+	color: #888;
+	border-radius: 30px;
+	align-items: center;
+	padding: 5px;
+	padding-right: 10px;
+	padding-left: 10px;
+}
+
+.z-second-wrap {
+	padding-bottom: 100px;
+	width: 1080px;
+}
+
+.z-page-container {
+	margin-top: 30px;
+}
+
+.z-page-wrap {
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+}
+.z-page-before,
+.z-page-after {
+	width: 30px;
+	height: 30px;
+	font-size: 13px;
+	cursor: pointer;
+}
+
+.z-page-before::before {
+	content: "";
+	display: inline-block;
+	background: url(https://www.bdsplanet.com/images/ui_pagenate.png) no-repeat 0
+	0;
+	width: 4px;
+	height: 7px;
+	background-position: -37px 0;
+}
+
+.z-page-after::before {
+	content: "";
+	display: inline-block;
+	background: url(https://www.bdsplanet.com/images/ui_pagenate.png) no-repeat 0
+	0;
+	width: 4px;
+	height: 7px;
+	background-position: -56px 0;
+}
+
+.z-page-wrap a {
+	text-decoration: none;
+	font-size: 13px;
+	font-weight: bold;
+}
+
+.z-pagenation {
+	width: 30px;
+	color: #888;
+	align-items: center;
+	display: flex;
+	justify-content: center;
+}
+
+.z-pagenation:hover {
+	border-bottom: 2px solid #888;
+}
+
+.z-p1 {
+	border-bottom: 2px solid #000;
+	color: #000;
 }

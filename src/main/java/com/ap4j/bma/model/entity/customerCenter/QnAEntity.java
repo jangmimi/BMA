@@ -1,6 +1,6 @@
 package com.ap4j.bma.model.entity.customerCenter;
 
-import groovy.transform.ToString;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.web.multipart.MultipartFile;
 
