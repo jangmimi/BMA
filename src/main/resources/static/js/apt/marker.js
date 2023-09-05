@@ -69,31 +69,34 @@ function createMarker(position, markerContent, responseData) {
              // RESTful API 엔드포인트 URL
              var apiUrl = '/board/writepro/' + id;
 
-//             // 리뷰 작성 후 저장
-//             function talk(id) {
-//
-//             }
-//             // AJAX 요청을 보내 아파트 아이디를 서버에 전송
-//             $.ajax({
-//                 type: 'POST',
-//                 url: apiUrl,
-//                 data: { id: id },
-//                 success: function(response) {
-//                     // 서버에서의 응답 처리
-//                     console.log(response+"아파트 아이디값을 챙길거임");
-//                 },
-//                 error: function(xhr, status, error,cors) {
-//                     console.error(error);
-//                 }
-//             });
-// AJAX 요청을 보내 아파트 아이디를 서버에 전송
+             // AJAX 요청을 보내 아파트 아이디를 서버에 전송
              $.ajax({
                  type: 'POST',
-                 url: '/map/main',
+                 url: apiUrl,
                  data: { id: id, content:null , session:null},
                  success: function(response) {
                      // 서버에서의 응답 처리
                      console.log(response+"아파트 아이디값을 챙길거임");
+
+//                     // 이제 response에는 서버에서 리턴한 아파트 아이디가 있음
+//                     // 이 값을 활용하여 리뷰 엔티티에 저장 가능
+//                     // 다음과 같이 변수에 저장해서 활용
+                     var apartmentId = response;
+
+                     // 이제 이 apartmentId 값을 boardwritePro 메서드로 전달
+                     // AJAX 요청을 보내 아파트 아이디를 서버에 전송
+                     $.ajax({
+                         type: 'POST',
+                         url: '/board/writepro',
+                         data: { id: apartmentId,content:null , session:null }, // 서버로 아파트 아이디 전달
+                         success: function(response) {
+                             // 서버에서의 응답 처리
+                             console.log(response + " 리뷰 작성이 완료되었습니다.");
+                         },
+                         error: function(xhr, status, error, cors) {
+                             console.error(error);
+                         }
+                     });
                  },
                  error: function(xhr, status, error,cors) {
                      console.error(error);

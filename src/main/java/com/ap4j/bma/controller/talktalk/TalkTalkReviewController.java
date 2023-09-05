@@ -69,22 +69,18 @@ public class TalkTalkReviewController {
                                 @RequestParam("id") Long apartmentId, HttpSession session) {
 
         log.info("리뷰컨트롤러 boardWritePro실행, content: " + content);
-//        TalkTalkReviewEntity reviewEntity = new TalkTalkReviewEntity();
 
+        // boardwritePro2 메서드를 호출하여 아파트 아이디를 가져옴
+        ResponseEntity<Long> responseEntity = boardwritePro2(apartmentId);
+        String apartmentIdString = String.valueOf(responseEntity.getBody());
 
-//        AptEntity aptEntity = aptService.aptList();
-//        List<AptDTO> aptDTOList = aptService.aptList();
-//        int aptId = aptDTOList.get
-//        List<AptDTO> aptEntity = aptService.aptList();
-//        for (AptDTO aptDTO: aptEntity){
-//            aptDTO.getId();
-//        }
-//        reviewEntity.setId(99);
-//        AptDTO aptInfo = aptServiceImpl.getAptInfoById(apartmentId);
+        // 아파트 아이디를 long 타입으로 파싱
+        Long returnedApartmentId = Long.parseLong(apartmentIdString);
+
         // 아파트 아이디가 null이 아닌지 확인
         if (apartmentId != null) {
             TalkTalkReviewEntity reviewEntity = new TalkTalkReviewEntity();
-            reviewEntity.setId(apartmentId);
+            reviewEntity.setId(apartmentId); // 아파트 아이디 설정
             reviewEntity.setBoard_no(99);
 
             MemberDTO dto = (MemberDTO) session.getAttribute("loginMember");
@@ -94,7 +90,7 @@ public class TalkTalkReviewController {
             reviewEntity.setContent(content);
 
             reviewService.write(reviewEntity);
-            log.info(reviewEntity.toString());
+            log.info("리뷰작성, 저장이 완료되었다~"+reviewEntity.toString());
         } else {
             log.error("아파트 아이디가 올바르지 않습니다.");
         }

@@ -814,8 +814,6 @@ a:active, a:focus, a:hover, a:link, a:visited {
     display:flex;
     justify-content:center;
   --bs-nav-tabs-link-active-border-color: #26abed;
-  display: flex;
-  justify-content: space-around;
 }
 .aHeartBtnInTab{
     margin-right:2px;
@@ -912,7 +910,7 @@ a:active, a:focus, a:hover, a:link, a:visited {
 /*맵 우측 도구*/
 .map_util{
     top: 40%;
-    height: 479px;
+    height: 349px;
     position: absolute;
     right: 30px;
     z-index: 1200;
