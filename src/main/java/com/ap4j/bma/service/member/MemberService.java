@@ -40,7 +40,7 @@ public interface MemberService {
 
 	public MemberEntity updateMember(Long id, MemberDTO memberDTO);
 
-	public boolean leaveMember(Long id, SessionStatus sessionStatus, HttpSession session);
+	public boolean leaveMember(Long id, String password, SessionStatus sessionStatus, HttpSession session);
 
 	public Optional<MemberEntity> findByNameAndTel(String name, String tel);
 

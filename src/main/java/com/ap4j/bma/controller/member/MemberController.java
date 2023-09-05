@@ -2,11 +2,14 @@ package com.ap4j.bma.controller.member;
 // pjm - use m o p q
 import com.ap4j.bma.config.PasswordEncoderConfig;
 import com.ap4j.bma.model.entity.customerCenter.QnAEntity;
+import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
+import com.ap4j.bma.service.maemulReg.MaemulRegService;
 import com.ap4j.bma.service.member.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +32,9 @@ public class MemberController {
 
     @Autowired
     private PasswordEncoderConfig pwdConfig;
+
+    @Autowired
+    private MaemulRegService maemulRegService;
 
     /** 로그인 여부 체크 */
     public boolean loginStatus(HttpSession session) {
@@ -279,16 +285,24 @@ public class MemberController {
         log.info("MemberController - qManagement() 실행");
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
+        List<MaemulRegEntity> mmList = maemulRegService.getAllList();
+        Long mmAllCnt = maemulRegService.getAllCnt();
+        log.info(mmList.toString());
+        log.info(String.valueOf(mmAllCnt));
+
+        model.addAttribute("mmList",mmList);
+        model.addAttribute("mmAllCnt",mmAllCnt);
+
         return "userView/maemulManagement";
     }
 
     /** 관심매물 페이지 매핑 */
-    @RequestMapping("/qInterest")
+    @RequestMapping("/qLiked")
     public String qInterest(HttpSession session, Model model) {
-        log.info("MemberController - qInterest() 실행");
+        log.info("MemberController - qLiked() 실행");
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
-        return "userView/maemulInterest";
+        return "userView/maemulLiked";
     }
 
     /** 최근매물 페이지 매핑 */
@@ -300,16 +314,27 @@ public class MemberController {
         return "userView/maemulRecent";
     }
 
-    /** 기본 회원탈퇴 */   // sns 탈퇴 시 로그인 별도 처리 필요
-    @PostMapping("/qLeaveMember/{id}")
-    public String leaveMember(HttpSession session, SessionStatus sessionStatus) {
-        log.info("MemberController - leaveMember() 실행");
-
+    /** 기본 회원탈퇴 (js ajax 활용) */   // sns 탈퇴 시 로그인 별도 처리 필요
+    @PostMapping("/qLeaveMember2")
+    public ResponseEntity<Integer> qLeaveMember2(@RequestParam String password, HttpSession session, SessionStatus sessionStatus) {
         Long id =  ((MemberDTO) session.getAttribute("loginMember")).getId();
-        qMemberService.leaveMember(id,sessionStatus, session);
+        boolean success = qMemberService.leaveMember(id, password, sessionStatus, session);
 
-        return "redirect:/";
+        if (success) {
+            return ResponseEntity.ok(1);
+        } else {
+            return ResponseEntity.ok(0);
+        }
     }
+//    @PostMapping("/qLeaveMember/{id}")    // 기존 id사용해서 탈퇴처리했던 코드 남겨둠
+//    public String leaveMember(HttpSession session, SessionStatus sessionStatus) {
+//        log.info("MemberController - leaveMember() 실행");
+//
+//        Long id =  ((MemberDTO) session.getAttribute("loginMember")).getId();
+////        qMemberService.leaveMember(id, sessionStatus, session);
+//
+//        return "redirect:/";
+//    }
 
     /** 이메일 중복 체크 (js ajax 활용) */
     @PostMapping("/qEmailCheck")

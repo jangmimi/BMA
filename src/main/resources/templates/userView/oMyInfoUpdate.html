@@ -25,7 +25,7 @@
                         <li class="o-lnb-item"><a th:href="@{/member/qMyPage}">내정보</a></li>
                         <li class="o-lnb-item"><a th:href="@{/member/qMyInfoUpdate}" style="color:#26ABED;">내정보수정</a></li>
                         <li class="o-lnb-item"><a th:href="@{/member/qManagement}">매물관리</a></li>
-                        <li class="o-lnb-item"><a th:href="@{/member/qInterest}">관심매물</a></li>
+                        <li class="o-lnb-item"><a th:href="@{/member/qLiked}">관심매물</a></li>
                         <li class="o-lnb-item"><a th:href="@{/member/qRecent}">최근본매물</a></li>
                         <li class="o-lnb-item"><a th:href="@{/member/qMyQnA}">1:1문의내역</a></li>
                     </ul>
@@ -121,12 +121,37 @@
                         </div>
                     </form>
 
-                    <form th:action="@{/member/qLeaveMember/__${id}__}" method="POST" onsubmit="return oDeleteCheck()">
-                        <input type="submit" class="btn btn-outline-secondary mt-5" id="oDeleteMemberBtn" value="회원탈퇴" />
-                        <!-- alert 확인 누르면 비밀번호 입력받고 일치 시 탈퇴하는 기능 추가 -->
-                    </form>
+                    <!-- 모달창으로 비밀번호 입력받고 일치 시 탈퇴 -->
+                    <!-- 회원탈퇴 버튼 -->
+                    <div class="o-leaveBtn-c">
+                        <button type="button" class="btn btn-outline-secondary" id="leaveBtn">회원탈퇴</button>
+                    </div>
 
-
+                    <!-- 회원탈퇴 비밀번호 입력 모달 -->
+                    <div class="modal fade" id="pwdCheckModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">회원탈퇴 비밀번호</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <label for="pwdLeave">비밀번호</label>
+                                        <input type="password" id="pwdLeave" name="pwdLeave">
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                                    <button type="button" class="btn btn-primary" id="confirmBtn">탈퇴하기</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <!-- id 기준 단순 탈퇴 처리 -->
+<!--                    <form th:action="@{/member/qLeaveMember/__${id}__}" method="POST" onsubmit="return oDeleteCheck()">-->
+<!--                        <input type="submit" class="btn btn-outline-secondary mt-5" id="oDeleteMemberBtn" value="회원탈퇴" />-->
+<!--                    </form>-->
 
                 </div>
             </div>

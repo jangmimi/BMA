@@ -356,15 +356,24 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	/** 회원 탈퇴 - member_leave : true 변경 */
-	public boolean leaveMember(Long id, SessionStatus sessionStatus, HttpSession session) {
+	public boolean leaveMember(Long id, String password, SessionStatus sessionStatus, HttpSession session) {
 		Optional<MemberEntity> leaveMember = Optional.ofNullable(findMemberById(id));
 		if(leaveMember.isPresent()) {
-			MemberEntity member = leaveMember.get();
-			member.setMember_leave(true);	// 탈퇴 여부 값 변경
-			memberRepository.save(member);
-			logout(sessionStatus, session);	// 탈퇴 후 로그아웃 처리
+			log.info("pwdLeave : " + password);
+			String dbPwd = leaveMember.get().getPwd();
 
-			return true;
+			if(pwdConfig.passwordEncoder().matches(password, dbPwd)) {
+				log.info("비밀번호 일치! 회원 탈퇴 시도");
+				MemberEntity member = leaveMember.get();
+				member.setMember_leave(true);	// 탈퇴 여부 값 변경
+				memberRepository.save(member);
+				logout(sessionStatus, session);	// 탈퇴 후 로그아웃 처리
+		
+				return true;
+			} else {
+				log.info("비밀번호가 일치하지 않습니다. 탈퇴 실패");
+				return false;
+			}
 		}
 		return false;
 	}

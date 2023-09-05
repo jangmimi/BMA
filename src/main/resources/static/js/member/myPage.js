@@ -15,7 +15,7 @@ $(document).ready(function() {
         if (pwdValue !== pwdCheckValue) {
             $("#opwdCheck1").css("display","block");
         } else {
-            $("#opwdCheck1").css("display","none");q
+            $("#opwdCheck1").css("display","none");
         }
     });
     $("#pwd").keyup(function(){
@@ -26,6 +26,48 @@ $(document).ready(function() {
             $("#opwdCheck2").css("display","none");
         }
     });
+
+   // 회원탈퇴 버튼 클릭 시 모달 열기
+      $(document).ready(function() {
+          $('#leaveBtn').click(function() {
+              $('#pwdLeave').val(''); // 모달 열 때 입력한 비밀번호 초기화
+              $('#pwdCheckModal').modal('show');
+          });
+
+       // 확인 버튼 클릭 시
+      $('#confirmBtn').click(function() {
+           var password = $('#pwdLeave').val();
+           if(password === null || password === '') {
+                alert('비밀번호를 입력해주세요.');
+           }
+           // AJAX를 사용하여 비밀번호를 컨트롤러로 전송
+           $.ajax({
+               type: 'POST',
+               url: '/member/qLeaveMember2', // 컨트롤러 URL 수정 필요
+               data: {
+                   password: password
+               },
+               success: function(result) {
+                   // 성공적으로 처리된 경우
+                   // 처리 결과에 따라 적절한 동작 수행
+                   if (result === 1) {
+                       alert('탈퇴가 완료되었습니다.');
+                       window.location.href = '/';
+                   } else {
+                       alert('아이디 또는 비밀번호를 다시 확인해주세요.');
+                       window.location.href=window.location.href;
+                   }
+               },
+               error: function() {
+                   // 오류 처리
+                   alert('오류');
+               }
+           });
+
+           // 모달 창 닫기
+           $('#pwdCheckModal').modal('hide');
+       });
+   });
 
 });
 
@@ -137,7 +179,9 @@ function checkNickname() {
             alert("에러입니다.");
         }
     });
-};
+}
+
+
 
 // 이메일 찾기 submit
 //function findEmail(event) {

@@ -70,3 +70,8 @@
     color: white;
     font-size: 16px;
 }
+/* 게시판 전체 개수 */
+.o-cntAll {
+    color: #26ABED;
+    font-weight: 600;
+}

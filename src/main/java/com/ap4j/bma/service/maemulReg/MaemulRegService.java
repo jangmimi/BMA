@@ -29,4 +29,12 @@ public class MaemulRegService {
         // 매물 ID로 매물 정보를 조회
         return maemulRegRepository.findById(maemulId).orElse(null);
     }
+    // 매물 목록 전체 조회
+    public List<MaemulRegEntity> getAllList() {
+        return  maemulRegRepository.findAll();
+    }
+    // 매물 전체 개수
+    public Long getAllCnt() {
+        return maemulRegRepository.count();
+    }
 }
