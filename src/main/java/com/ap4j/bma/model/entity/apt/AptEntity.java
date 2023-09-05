@@ -1,6 +1,7 @@
 package com.ap4j.bma.model.entity.apt;
 
 import lombok.*;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @Getter
 @ToString
 @Builder
+@Component
 public class AptEntity {
 
     @Id

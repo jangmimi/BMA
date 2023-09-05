@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ApartmentServiceImpl implements ApartmentService {
@@ -23,6 +24,19 @@ public class ApartmentServiceImpl implements ApartmentService {
     private AptRealTradeRepository aptRealTradeRepository;
     @Autowired
     private HangJeongDongRepository hangJeongDongRepository;
+
+    /**
+     * 아파트 아이디 가져오는 메서드
+     */
+    public Long getApartmentIdByRoadName(String roadName) {
+        Optional<AptEntity> aptEntityOptional = Optional.ofNullable(aptRepository.findByRoadName(roadName));
+
+        if (aptEntityOptional.isPresent()) {
+            return aptEntityOptional.get().getId();
+        } else {
+            return null; // 아파트 아이디를 찾지 못한 경우 null 반환
+        }
+    }
 
     /**
      * DB값 가져와서 js에 넘겨주기 (경도 위도 검색해서 값 가져오기 위해서)
@@ -73,6 +87,7 @@ public class ApartmentServiceImpl implements ApartmentService {
 
         for (AptEntity aptEntity : aptEntityList) {
             AptDTO aptDTO = AptDTO.builder().
+                    id(aptEntity.getId()).
                     apartmentName(aptEntity.getApartmentName()).
                     district(aptEntity.getDistrict()).
                     address(aptEntity.getAddress()).
