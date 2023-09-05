@@ -160,3 +160,7 @@
     .bottom a:hover {
         color: #26A9E0; /* hover 상태의 링크 색상 */
     }
+
+    .hashtag{
+        text-align: center;
+    }
