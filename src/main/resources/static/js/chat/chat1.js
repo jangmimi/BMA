@@ -9,11 +9,18 @@ document.addEventListener("DOMContentLoaded", function () {
         stompClient.connect({}, function (frame) {
 
             stompClient.send("/app/connect", {}, JSON.stringify({}))
+
+            stompClient.subscribe("/topic/chatting/status", function (userCountMessage) {
+                const connectInfo = JSON.parse(userCountMessage.body);
+                // 사용자 수 메시지를 처리
+                handleUserCountMessage(connectInfo.chatContent);
+                console.log("사용자수="+connectInfo.chatContent);
+            });
             stompClient.subscribe("/topic/chatting/connectmessage", function (message) {
                 const connectInfo = JSON.parse(message.body);
-                if (!localStorage.getItem('connectTime')) {
+                if (!sessionStorage.getItem('connectTime')) {
                     openingComment(connectInfo.chatContent);
-                    localStorage.setItem('connectTime', connectInfo.chatDate);
+                    sessionStorage.setItem('connectTime', connectInfo.chatDate);
                 } else {
                     document.querySelector(".s-chat-textbox").innerHTML = '';
                     loadMessages();
@@ -29,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     document.querySelector(".n-header-login-logout").addEventListener("click", function () {
-        localStorage.clear();
+        sessionStorage.clear();
     });
 
     function disconnectWebSocket() {
@@ -37,6 +44,13 @@ document.addEventListener("DOMContentLoaded", function () {
             stompClient.disconnect((frame) => {
                 console.log('웹소켓 연결이 종료되었습니다.');
             });
+        }
+    }
+
+    function handleUserCountMessage(content) {
+        const userCountElement = document.querySelector(".s-chat-closebox-count");
+        if (userCountElement) {
+            userCountElement.textContent = content;
         }
     }
 
@@ -48,16 +62,17 @@ document.addEventListener("DOMContentLoaded", function () {
         // 이전에 구독한 메시지를 해지합니다.
         stompClient.unsubscribe(clientTopic);
 
-        stompClient.send("/app/loadMessages", {}, JSON.stringify({ chatDate: localStorage.getItem('connectTime') }));
+        stompClient.send("/app/loadMessages", {}, JSON.stringify({ chatDate: sessionStorage.getItem('connectTime') }));
         stompClient.subscribe(clientTopic, function (messages) {
             const loadMessages = JSON.parse(messages.body);
+            console.log(loadMessages);
             // 기존 메시지를 모두 지웁니다.
             document.querySelector(".s-chat-textbox").innerHTML = '';
             for (const loadMessage of loadMessages) {
                 message = {
                     chatContent: loadMessage[1],
                     chatDate: loadMessage[2],
-                    nickname: loadMessage[5]
+                    nickname: loadMessage[4]
                 }
                 showMessages(message);
             }
@@ -79,8 +94,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const closeButton = document.querySelector(".s-chat-close");
 
     const textarea = document.querySelector("#s-chat-input");
-    const image = document.querySelector("#s-chat-input-img");
-    image.src = "/sc/free-icon-sent-mail-71746.png";
     modal.style.display = "none";
 
     modalButton.addEventListener("click", function () {
@@ -92,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function () {
     closeButton.addEventListener("click", function () {
         modal.style.display = "none";
         modalButton.style.transform = "scale(1)";
-                            document.querySelector(".s-chat-textbox").innerHTML = '';
+        document.querySelector(".s-chat-textbox").innerHTML = '';
         disconnectWebSocket();
     });
 
@@ -101,17 +114,20 @@ document.addEventListener("DOMContentLoaded", function () {
             if (textarea.value.trim() !== '') {
                 sendMessage();
                 document.querySelector("#s-chat-input").value = '';
-                textarea.style.height = '62px';
-                image.src = "/sc/free-icon-sent-mail-71746.png";
             }
         }
     });
 
     function showMessages(message) {
 
-        const chatTextBox = document.querySelector(".s-chat-textbox");
-        chatTextBox.scrollTo(0, chatTextBox.scrollHeight);
-
+////        const chatTextBox = document.querySelector(".s-chat-textbox");
+////        chatTextBox.scrollTo(0, chatTextBox.scrollHeight);
+//const chatTextBox = document.querySelector(".s-chat-textbox");
+//chatTextBox.scrollTop = chatTextBox.scrollHeight+10;
+const chatTextBox = document.querySelector(".s-chat-textbox");
+requestAnimationFrame(() => {
+  chatTextBox.scrollTo(0, chatTextBox.scrollHeight);
+});
 
         const messageBlock = document.createElement("div");
         messageBlock.className = "s-chat-message";
@@ -156,10 +172,9 @@ document.addEventListener("DOMContentLoaded", function () {
         chatTextBox.appendChild(messageBlock);
     }
 
-    textarea.addEventListener("input", function () {
-        this.style.height = `${this.scrollHeight}px`;
-        image.src = "/sc/free-icon-sent-blue-mail-71746.png";
-    });
+//    textarea.addEventListener("input", function () {
+//        this.style.height = `${this.scrollHeight}px`;
+//    });
 
     //Date를 간단한 시간으로 변환해주는 코드
     function sendMessageCurrentTime(chatDate) {

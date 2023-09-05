@@ -74,4 +74,15 @@ public class MapController {
         log.info("MapController.map.execute");
         return "map/map";
     }
+
+    @PostMapping("map")
+    public ResponseEntity<Map<String, Object>> map2(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng, Integer zoomLevel){
+        log.info("MapController.map.execute");
+        // 화면 좌표값에 따른 행정동 리스트
+        List<HangJeongDongDTO> hjdList = aptServiceImpl.findHJDListBounds(southWestLat, southWestLng, northEastLat, northEastLng, zoomLevel);
+        Map<String, Object> responseData = new HashMap<>();
+        responseData.put("hjdList", hjdList);
+
+        return ResponseEntity.ok(responseData);
+    }
 }

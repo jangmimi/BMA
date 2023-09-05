@@ -10,6 +10,7 @@
     <!-- content script -->
     <th:block th:replace="~{fragments/main_config::configFragment}"></th:block>
 
+
 </head>
 <!--	<th:block layout:fragment="css"></th:block>-->
 
@@ -19,14 +20,15 @@
 <body>
 
 
+
 <th:block th:replace="~{fragments/header :: headerFragment}"></th:block>
 
 
 <th:block layout:fragment="content"></th:block>
 
-<div class="sticky-chat-modal">
-    <th:block th:replace="~{fragments/chat :: chatModalFragment}"></th:block>
-</div>
+    <div class="sticky-chat-modal">
+        <th:block th:replace="~{fragments/chat :: chatModalFragment}"></th:block>
+    </div>
 
 <th:block th:replace="~{fragments/footer :: tFooter}"></th:block>
 
