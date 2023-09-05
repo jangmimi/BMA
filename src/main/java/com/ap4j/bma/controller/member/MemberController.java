@@ -220,7 +220,6 @@ public class MemberController {
     /** 마이페이지 매핑 */
     @RequestMapping("/qMyPage")
     public String qMyPage(HttpSession session, Model model) {
-        log.info("MemberController - qMyPage() 실행");
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
         String thumImg = (String) session.getAttribute("thumbnail_image");
@@ -228,7 +227,6 @@ public class MemberController {
         MemberDTO loginMember = (MemberDTO) session.getAttribute("loginMember");
 
         model.addAttribute("root", loginMember.getRoot() == 1 ? "기본회원" : loginMember.getRoot() == 2? "카카오" : "네이버");
-        log.info("qMyPage에서 loginMember 세션 확인 : " + loginMember.toString());
 
         return "userView/myPage";
     }
@@ -265,7 +263,6 @@ public class MemberController {
     /** 1:1 문의내역 페이지 매핑 */  // 필요한 것 : list / login email 기준 cnt // test 추가
     @GetMapping("/qMyQnA")
     public String qMyQnA(Model model, HttpSession session) {
-        log.info("MemberController - qMyQnA() 실행");
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
         List<QnAEntity> qMyQnaList = qMemberService.qMyQnaList();
@@ -274,6 +271,15 @@ public class MemberController {
         model.addAttribute("myQnaList", qMyQnaList);
         model.addAttribute("myQnaCnt", qMyQnaCnt);
         return "userView/myQnA";
+    }
+
+    /** 매물관리 페이지 매핑 */
+    @RequestMapping("/qManagement")
+    public String qManagement(HttpSession session, Model model) {
+        log.info("MemberController - qManagement() 실행");
+        if(!loginStatus(session)) { return "userView/loginNeed"; }
+
+        return "userView/maemulManagement";
     }
 
     /** 관심매물 페이지 매핑 */
@@ -294,7 +300,7 @@ public class MemberController {
         return "userView/maemulRecent";
     }
 
-    /** 기본 회원탈퇴 */   // sns는 별도 처리 해줘야 함
+    /** 기본 회원탈퇴 */   // sns 탈퇴 시 로그인 별도 처리 필요
     @PostMapping("/qLeaveMember/{id}")
     public String leaveMember(HttpSession session, SessionStatus sessionStatus) {
         log.info("MemberController - leaveMember() 실행");

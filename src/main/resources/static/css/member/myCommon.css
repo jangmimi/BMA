@@ -32,11 +32,41 @@
     margin: 0;
 }
 /* 상단 타이틀 */
-#o-page-title {
+.o-page-title {
     text-align: center;
+    margin: 30px 0px;
+}
+/* 이메일 비밀번호 찾기 타이틀 */
+.o-find-subTitle {
+    font-size: 15px;
+    font-weight: bold;
+    text-align: left;
+    margin-left: 20px;
 }
 /* 테이블 */
 .faq-tb {
     width: 100%;
     text-align: center;
+}
+/* 회원가입 로그인 버튼들 */
+.o-btns-c {
+    display: flex;
+    justify-content: space-evenly;
+}
+.o-btns-c input {
+    width: 45%;
+}
+/* 1:1문의내역 버튼 */
+.o-tb-btn {
+    text-align: center;
+}
+#myQnaBtn {
+    margin-top: 50px;
+}
+.o-tb-btn button, .o-find-btn-c input {
+    margin: 0 auto;
+    border: none;
+    background-color: #26abed;
+    color: white;
+    font-size: 16px;
 }

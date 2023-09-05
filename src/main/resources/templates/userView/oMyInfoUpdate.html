@@ -22,18 +22,18 @@
             <div class="o-lnb">
                 <div class="o-wrapper">
                     <ul class="o-lnb-list">
-                        <li class="o-lnb-item"><a href="/member/qMyPage">내정보</a></li>
-                        <li class="o-lnb-item"><a href="/member/qMyInfoUpdate"style="color:#26ABED;">내정보수정</a></li>
-                        <li class="o-lnb-item"><a href="#">매물관리</a></li>
-                        <li class="o-lnb-item"><a href="/member/qInterest">관심매물</a></li>
-                        <li class="o-lnb-item"><a href="/member/qRecent">최근본매물</a></li>
-                        <li class="o-lnb-item"><a href="/member/qMyQnA">1:1문의내역</a></li>
+                        <li class="o-lnb-item"><a th:href="@{/member/qMyPage}">내정보</a></li>
+                        <li class="o-lnb-item"><a th:href="@{/member/qMyInfoUpdate}" style="color:#26ABED;">내정보수정</a></li>
+                        <li class="o-lnb-item"><a th:href="@{/member/qManagement}">매물관리</a></li>
+                        <li class="o-lnb-item"><a th:href="@{/member/qInterest}">관심매물</a></li>
+                        <li class="o-lnb-item"><a th:href="@{/member/qRecent}">최근본매물</a></li>
+                        <li class="o-lnb-item"><a th:href="@{/member/qMyQnA}">1:1문의내역</a></li>
                     </ul>
                 </div>
             </div>
             <div class="oContainer-wrap">
                 <div class="container mt-5" id="oInner-container-join" style="background-color:white" align="center">
-                    <div id="oJoinTitle">
+                    <div class="o-page-title">
                         <h3 class="h3 fw-bold">내 정보 수정</h3>
                     </div>
                     <form th:action="@{/member/qUpdateMember/__${id}__}" method="POST" onsubmit="return oUpdateCheck()">
@@ -115,9 +115,9 @@
                             </ul>
                         </div>
 
-                        <div id="oJoinBtn-container">
-                            <input type="button" class="btn btn-outline-secondary" id="oCancelBtn" value="취소" style="width:47%" />
-                            <input type="submit" class="btn btn-primary" value="수정" style="width:47%" />
+                        <div class="o-btns-c">
+                            <input type="button" class="btn btn-outline-secondary" id="oCancelBtn" value="취소" />
+                            <input type="submit" class="btn btn-primary" value="수정" />
                         </div>
                     </form>
 

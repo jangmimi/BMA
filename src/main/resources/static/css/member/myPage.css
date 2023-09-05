@@ -148,10 +148,6 @@
    width: 400px;
    height: auto;
 }
-#oJoinTitle {
-   padding: 20px 50px;
-   margin: 0px;
-}
 #btnEmailCheck {
    width: 90px;
    margin-left: 6px;
@@ -186,19 +182,9 @@
 #oInner-container {
     width: 400px;
 }
-.oFindTitle {
-    padding: 20px 25px;
-    margin: 0px;
-}
 .oLabelColor {
     color: gray;
     font-size: 14px;
-}
-.findSubtitle {
-    font-size: 15px;
-    text-align: left;
-    font-weight: bold;
-    margin-left: 20px;
 }
 .ofindResult {
     display: block;
@@ -221,16 +207,7 @@
 .oMyQnaTb {
     padding: 30px 0px;
 }
-.o-tb-btn {
-    text-align: center;
-}
-.o-tb-btn button {
-    margin: 0 auto;
-    border: none;
-    background-color: #26abed;
-    color: white;
-    font-size: 16px;
-}
+
 .myQnaCntAll {
     color: #26ABED;
     font-weight: 600;
@@ -240,8 +217,6 @@
 .o-search-btns {
     width: 150px;
 }
-
-
 
 /* 관심매물 최근본매물 영역 css */
 * {
