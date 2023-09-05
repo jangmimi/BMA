@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @ToString
-public class RecenlEntity {
+public class RecentEntity {
     @Id
     @NotNull
     private String road_name;
@@ -22,7 +22,7 @@ public class RecenlEntity {
     private String email;
 
     @Builder
-    public RecenlEntity(String road_name, String email) {
+    public RecentEntity(String road_name, String email) {
         this.road_name = road_name;
         this.email = email;
     }
