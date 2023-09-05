@@ -5,15 +5,23 @@
     padding-top: 100px;
 }
 .warning-icon img {
-    width: 200px;
+    width: 150px;
 }
 .warning-txt {
-    font-size: 25px;
+    margin-top: 20px;
+    font-size: 30px;
     font-weight: 600;
 }
 #bold-txt {
     color: #26ABED;
+    text-decoration: none;
+    border-bottom: 4px solid #26ABED;
 }
-.warning-btns {
+.link-btns {
     padding: 50px 50px;
+}
+.link-btns a {
+    border: 1px solid #26ABED;
+    color: #26ABED;
+    font-weight: ;
 }

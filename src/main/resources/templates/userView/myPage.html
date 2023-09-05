@@ -7,9 +7,11 @@
     <meta charset="UTF-8">
     <title>마이페이지</title>
     <link rel="stylesheet" th:href="@{/css/member/myPage.css}">
+    <link rel="stylesheet" th:href="@{/css/member/myCommon.css}">
     <!-- 부트스트랩 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
 </head>
 <body layout:fragment="content">
 <th:block th:object="${loginMember}">
@@ -23,8 +25,8 @@
                         <li class="o-lnb-item"><a href="/member/qMyPage" style="color:#26ABED;">내정보</a></li>
                         <li class="o-lnb-item"><a href="/member/qMyInfoUpdate">내정보수정</a></li>
                         <li class="o-lnb-item"><a href="#">매물관리</a></li>
-                        <li class="o-lnb-item"><a href="/member/qInterestMaemul">관심매물</a></li>
-                        <li class="o-lnb-item"><a href="/member/qRecentMaemul">최근본매물</a></li>
+                        <li class="o-lnb-item"><a href="/member/qInterest">관심매물</a></li>
+                        <li class="o-lnb-item"><a href="/member/qRecent">최근본매물</a></li>
                         <li class="o-lnb-item"><a href="/member/qMyQnA">1:1문의내역</a></li>
                     </ul>
                 </div>
@@ -44,17 +46,16 @@
                                     <span th:text="${root}" id="oInfoMemberRoot"></span>
                                 </div>
                                 <span th:text="*{email}" id="oInfoMemberEmail"></span>
-<!--                                <span th:text="*{tel}" id="oInfoMemberTel"></span>-->
                             </div>
                         </div>
                         <div class="oInfo-right">
-                            <div>
+                            <div class="oMaemulCnt-inner">
                                 <div class="oMaemulCnt">
-                                    <a href="#">1건</a>
+                                    <a th:href="@{/member/qInterest}">1건</a>
                                     <span>관심매물</span>
                                 </div>
                                 <div class="oMaemulCnt">
-                                    <a href="#">2건</a>
+                                    <a th:href="@{/member/qRecent}">2건</a>
                                     <span>최근 본 매물</span>
                                 </div>
 <!--                                <div class="oUpdateLinkBtn">-->
@@ -62,78 +63,283 @@
 <!--                                </div>-->
                             </div>
                         </div>
-                        <hr />
                     </div>
                 </div>
                 <div class="oMeamulContainer">
-                    <div class="oMeamulTitleContainer">
-                        <div class="oMeamulTabLeft">
-                            <button type="button" class="oMaemulLink" id="oInterestMaemul" onclick="location.href='#'">관심매물</button>
-                            |
-                            <button type="button" class="oMaemulLink" id="oRecentMaemul" onclick="location.href='#'">최근본매물</button>
-                        </div>
-                        <div class="oMeamulTabRight">
-                            <button type="button" class="oMaemulLink" id="oMaemulAllView" onclick="location.href='#'">전체보기</button>
+                    <div class="oMaemul-c-inner">
+                        <div class="oMeamulTitleContainer">
+                            <div class="oMeamulTabLeft">
+                                <button type="button" class="oMaemulLink" id="oInterest"
+                                        onclick="location.href='#'">관심매물</button>
+                                |
+                                <button type="button" class="oMaemulLink" id="oRecent"
+                                        onclick="location.href='#'">최근본매물</button>
+                            </div>
+                            <div class="oMeamulTabRight">
+                                <button type="button" class="oMaemulLink" id="oAllView"
+                                        th:onclick="|location.href='@{/member/qInterest}'|">전체보기</button>
+                            </div>
                         </div>
                     </div>
+                    <div class="z-bottom-container">
+                        <div class="z-bottom-wrap">
+                            <!-- 매물 1개 -->
+                            <div class="z-content-wrap">
+                                <div class="z-img-wrap">
+                                    <img src="/img/details/t.jpeg" alt="이미지" class="z-img">
+                                </div>
+                                <div class="z-text-wrap">
+                                    <div class="z-bottom-text">
+                                        <div class="z-text-title">매매 100억</div>
+                                        <div class="z-text-contents">
+                                            <div class="z-text-content1">
+                                                <span class="z-t">상가주택</span>
+                                                <span class="z-text-content2">서초동 상가주택</span>
+                                            </div>
+                                            <div class="z-text-content1">
+                                                851.7/851.71㎡
+                                                <span class="z-text-content2">지하-/지상2층</span>
+                                            </div>
+                                            <div class="z-text-content3">서초역 역세권 업무주거배후세대 풍부</div>
+                                        </div>
+                                        <!-- z-text-contents 끝 -->
+                                        <div class="z-text-hash-wrap">
+                                            <!-- 이건 마지막값 한개만 가져오는 것. -->
+                                            <button class="z-text-hash">#역세권</button>
+                                        </div>
+                                        <!-- z-text-hash-wrap 끝 -->
+                                    </div>
+                                    <!-- z-bottom-text 끝 -->
+                                </div>
+                                <!-- z-text-wrap 끝 -->
+                            </div>
 
-                    <!-- 관심매물 / 최근본매물 -->
-                    <div class="oMaemulContainer">
-                        <table>
-                            <tr>
-                                <td>
-                                    <div class="card">
-                                        <a href="#" class="oCardMaemul">
-                                            <img src="https://www.bdsplanet.com/common/thumbs.ytp?filepath=/COMP_20201027000920000005/upload/realty/RCODE_20230731160156000045/&filename=1690787077205_1.jpg&thumNum=3"
-                                                 class="card-img-top" alt="...">
-                                            <div class="card-body">
-                                                <h5 class="card-title">매매 100억</h5>
+                            <!-- 매물 1개 -->
+                            <div class="z-content-wrap">
+                                <div class="z-img-wrap">
+                                    <img src="/img/details/t.jpeg" alt="이미지" class="z-img">
+                                </div>
+                                <div class="z-text-wrap">
+                                    <div class="z-bottom-text">
+                                        <div class="z-text-title">매매 100억</div>
+                                        <div class="z-text-contents">
+                                            <div class="z-text-content1">
+                                                <span class="z-t">상가주택</span>
+                                                <span class="z-text-content2">서초동 상가주택</span>
                                             </div>
-                                            <ul class="list-group list-group-flush">
-                                                <li class="list-group-item">서초동 상가주택</li>
-                                                <li class="list-group-item">851.7/851.71m2</li>
-                                                <li class="list-group-item">서초동 역세권 업무 주거배후세대 풍부</li>
-                                            </ul>
-                                        </a>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="card" style="margin: 0 15px;">
-                                        <a href="#" class="oCardMaemul">
-                                            <img src="https://www.bdsplanet.com/common/thumbs.ytp?filepath=/COMP_20201027000920000005/upload/realty/RCODE_20230731160156000045/&filename=1690787077205_1.jpg&thumNum=3"
-                                                 class="card-img-top" alt="...">
-                                            <div class="card-body">
-                                                <h5 class="card-title">매매 100억</h5>
+                                            <div class="z-text-content1">
+                                                851.7/851.71㎡
+                                                <span class="z-text-content2">지하-/지상2층</span>
                                             </div>
-                                            <ul class="list-group list-group-flush">
-                                                <li class="list-group-item">서초동 상가주택</li>
-                                                <li class="list-group-item">851.7/851.71m2</li>
-                                                <li class="list-group-item">서초동 역세권 업무 주거배후세대 풍부</li>
-                                            </ul>
-                                        </a>
+                                            <div class="z-text-content3">서초역 역세권 업무주거배후세대 풍부</div>
+                                        </div>
+                                        <!-- z-text-contents 끝 -->
+                                        <div class="z-text-hash-wrap">
+                                            <!-- 이건 마지막값 한개만 가져오는 것. -->
+                                            <button class="z-text-hash">#역세권</button>
+                                        </div>
+                                        <!-- z-text-hash-wrap 끝 -->
                                     </div>
-                                </td>
-                                <td>
-                                    <div class="card">
-                                        <a href="#" class="oCardMaemul">
-                                            <img src="https://www.bdsplanet.com/common/thumbs.ytp?filepath=/COMP_20201027000920000005/upload/realty/RCODE_20230731160156000045/&filename=1690787077205_1.jpg&thumNum=3"
-                                                 class="card-img-top" alt="...">
-                                            <div class="card-body">
-                                                <h5 class="card-title">매매 100억</h5>
+                                    <!-- z-bottom-text 끝 -->
+                                </div>
+                                <!-- z-text-wrap 끝 -->
+                            </div>
+
+                            <!-- 매물 1개 -->
+                            <div class="z-content-wrap">
+                                <div class="z-img-wrap">
+                                    <img src="/img/details/t.jpeg" alt="이미지" class="z-img">
+                                </div>
+                                <div class="z-text-wrap">
+                                    <div class="z-bottom-text">
+                                        <div class="z-text-title">매매 100억</div>
+                                        <div class="z-text-contents">
+                                            <div class="z-text-content1">
+                                                <span class="z-t">상가주택</span>
+                                                <span class="z-text-content2">서초동 상가주택</span>
                                             </div>
-                                            <ul class="list-group list-group-flush">
-                                                <li class="list-group-item">서초동 상가주택</li>
-                                                <li class="list-group-item">851.7/851.71m2</li>
-                                                <li class="list-group-item">서초동 역세권 업무 주거배후세대 풍부</li>
-                                            </ul>
-                                        </a>
+                                            <div class="z-text-content1">
+                                                851.7/851.71㎡
+                                                <span class="z-text-content2">지하-/지상2층</span>
+                                            </div>
+                                            <div class="z-text-content3">서초역 역세권 업무주거배후세대 풍부</div>
+                                        </div>
+                                        <!-- z-text-contents 끝 -->
+                                        <div class="z-text-hash-wrap">
+                                            <!-- 이건 마지막값 한개만 가져오는 것. -->
+                                            <button class="z-text-hash">#역세권</button>
+                                        </div>
+                                        <!-- z-text-hash-wrap 끝 -->
                                     </div>
-                                </td>
-                            </tr>
-                        </table>
+                                    <!-- z-bottom-text 끝 -->
+                                </div>
+                                <!-- z-text-wrap 끝 -->
+                            </div>
+
+                            <!-- 매물 1개 -->
+                            <div class="z-content-wrap">
+                                <div class="z-img-wrap">
+                                    <img src="/img/details/t.jpeg" alt="이미지" class="z-img">
+                                </div>
+                                <div class="z-text-wrap">
+                                    <div class="z-bottom-text">
+                                        <div class="z-text-title">매매 100억</div>
+                                        <div class="z-text-contents">
+                                            <div class="z-text-content1">
+                                                <span class="z-t">상가주택</span>
+                                                <span class="z-text-content2">서초동 상가주택</span>
+                                            </div>
+                                            <div class="z-text-content1">
+                                                851.7/851.71㎡
+                                                <span class="z-text-content2">지하-/지상2층</span>
+                                            </div>
+                                            <div class="z-text-content3">서초역 역세권 업무주거배후세대 풍부</div>
+                                        </div>
+                                        <!-- z-text-contents 끝 -->
+                                        <div class="z-text-hash-wrap">
+                                            <!-- 이건 마지막값 한개만 가져오는 것. -->
+                                            <button class="z-text-hash">#역세권</button>
+                                        </div>
+                                        <!-- z-text-hash-wrap 끝 -->
+                                    </div>
+                                    <!-- z-bottom-text 끝 -->
+                                </div>
+                                <!-- z-text-wrap 끝 -->
+                            </div>
+
+                            <!-- 매물 1개 -->
+                            <div class="z-content-wrap">
+                                <div class="z-img-wrap">
+                                    <img src="/img/details/t.jpeg" alt="이미지" class="z-img">
+                                </div>
+                                <div class="z-text-wrap">
+                                    <div class="z-bottom-text">
+                                        <div class="z-text-title">매매 100억</div>
+                                        <div class="z-text-contents">
+                                            <div class="z-text-content1">
+                                                <span class="z-t">상가주택</span>
+                                                <span class="z-text-content2">서초동 상가주택</span>
+                                            </div>
+                                            <div class="z-text-content1">
+                                                851.7/851.71㎡
+                                                <span class="z-text-content2">지하-/지상2층</span>
+                                            </div>
+                                            <div class="z-text-content3">서초역 역세권 업무주거배후세대 풍부</div>
+                                        </div>
+                                        <!-- z-text-contents 끝 -->
+                                        <div class="z-text-hash-wrap">
+                                            <!-- 이건 마지막값 한개만 가져오는 것. -->
+                                            <button class="z-text-hash">#역세권</button>
+                                        </div>
+                                        <!-- z-text-hash-wrap 끝 -->
+                                    </div>
+                                    <!-- z-bottom-text 끝 -->
+                                </div>
+                                <!-- z-text-wrap 끝 -->
+                            </div>
+
+                            <!-- 매물 1개 -->
+                            <div class="z-content-wrap">
+                                <div class="z-img-wrap">
+                                    <img src="/img/details/t.jpeg" alt="이미지" class="z-img">
+                                </div>
+                                <div class="z-text-wrap">
+                                    <div class="z-bottom-text">
+                                        <div class="z-text-title">매매 100억</div>
+                                        <div class="z-text-contents">
+                                            <div class="z-text-content1">
+                                                <span class="z-t">상가주택</span>
+                                                <span class="z-text-content2">서초동 상가주택</span>
+                                            </div>
+                                            <div class="z-text-content1">
+                                                851.7/851.71㎡
+                                                <span class="z-text-content2">지하-/지상2층</span>
+                                            </div>
+                                            <div class="z-text-content3">서초역 역세권 업무주거배후세대 풍부</div>
+                                        </div>
+                                        <!-- z-text-contents 끝 -->
+                                        <div class="z-text-hash-wrap">
+                                            <!-- 이건 마지막값 한개만 가져오는 것. -->
+                                            <button class="z-text-hash">#역세권</button>
+                                        </div>
+                                        <!-- z-text-hash-wrap 끝 -->
+                                    </div>
+                                    <!-- z-bottom-text 끝 -->
+                                </div>
+                                <!-- z-text-wrap 끝 -->
+                            </div>
+
+                            <!-- 매물 1개 -->
+                            <div class="z-content-wrap">
+                                <div class="z-img-wrap">
+                                    <img src="/img/details/t.jpeg" alt="이미지" class="z-img">
+                                </div>
+                                <div class="z-text-wrap">
+                                    <div class="z-bottom-text">
+                                        <div class="z-text-title">매매 100억</div>
+                                        <div class="z-text-contents">
+                                            <div class="z-text-content1">
+                                                <span class="z-t">상가주택</span>
+                                                <span class="z-text-content2">서초동 상가주택</span>
+                                            </div>
+                                            <div class="z-text-content1">
+                                                851.7/851.71㎡
+                                                <span class="z-text-content2">지하-/지상2층</span>
+                                            </div>
+                                            <div class="z-text-content3">서초역 역세권 업무주거배후세대 풍부</div>
+                                        </div>
+                                        <!-- z-text-contents 끝 -->
+                                        <div class="z-text-hash-wrap">
+                                            <!-- 이건 마지막값 한개만 가져오는 것. -->
+                                            <button class="z-text-hash">#역세권</button>
+                                        </div>
+                                        <!-- z-text-hash-wrap 끝 -->
+                                    </div>
+                                    <!-- z-bottom-text 끝 -->
+                                </div>
+                                <!-- z-text-wrap 끝 -->
+                            </div>
+
+                            <!-- 매물 1개 -->
+                            <div class="z-content-wrap">
+                                <div class="z-img-wrap">
+                                    <img src="/img/details/t.jpeg" alt="이미지" class="z-img">
+                                </div>
+                                <div class="z-text-wrap">
+                                    <div class="z-bottom-text">
+                                        <div class="z-text-title">매매 100억</div>
+                                        <div class="z-text-contents">
+                                            <div class="z-text-content1">
+                                                <span class="z-t">상가주택</span>
+                                                <span class="z-text-content2">서초동 상가주택</span>
+                                            </div>
+                                            <div class="z-text-content1">
+                                                851.7/851.71㎡
+                                                <span class="z-text-content2">지하-/지상2층</span>
+                                            </div>
+                                            <div class="z-text-content3">서초역 역세권 업무주거배후세대 풍부</div>
+                                        </div>
+                                        <!-- z-text-contents 끝 -->
+                                        <div class="z-text-hash-wrap">
+                                            <!-- 이건 마지막값 한개만 가져오는 것. -->
+                                            <button class="z-text-hash">#역세권</button>
+                                        </div>
+                                        <!-- z-text-hash-wrap 끝 -->
+                                    </div>
+                                    <!-- z-bottom-text 끝 -->
+                                </div>
+                                <!-- z-text-wrap 끝 -->
+                            </div>
+                            <!-- z-content-wrap 끝 -->
+
+
+                        </div>
+                        <!-- z-bottom-wrap 끝 -->
                     </div>
+                    <!-- z-bottom-container 끝 -->
                 </div>
             </div>
+
         </div>
     </div>
 </th:block>

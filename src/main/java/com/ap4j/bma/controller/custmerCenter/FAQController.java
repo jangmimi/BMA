@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.util.List;
 
-@SessionAttributes("userEmail")
+@SessionAttributes("loginMember")
 @Controller
 public class FAQController {
     @Autowired
