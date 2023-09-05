@@ -1,11 +1,13 @@
 package com.ap4j.bma.model.entity.community;
 
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@ToString
 @Entity
 public class CommunityEntity {
     @Id
@@ -26,7 +28,7 @@ public class CommunityEntity {
     private String author;
 
     @Column(columnDefinition = "integer default 0", nullable = false)
-    private Long view;
+    private Long view = 0L;; //초기값 0으로 설정
 
     // Getters and setters
     // Getter and Setter methods

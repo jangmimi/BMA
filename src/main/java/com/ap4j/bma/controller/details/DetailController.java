@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
 @RequestMapping("details")
-@SessionAttributes("userEmail")
+@SessionAttributes("loginMember")
 @Slf4j
 public class DetailController {
 

@@ -166,3 +166,8 @@ function oFindPwdCheck() {
         return false;
     }
 }
+//$(document).ready(function() {
+//    $('#oInterest').click(function() {
+//
+//    });
+//});

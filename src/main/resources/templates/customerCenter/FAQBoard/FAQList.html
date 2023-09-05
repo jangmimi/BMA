@@ -26,6 +26,13 @@
             <input type="text" class = "searchbox" placeholder="검색어 입력">
             <button class = "searchbtn">검색</button>
         </div>
+        <div class="hashtag">
+            <a href="#">회원</a>
+            <a href="#">실거래가</a>
+            <a href="#">매물</a>
+            <a href="#">광고/제휴</a>
+            <a href="#">기타</a>
+        </div>
     </div>
     <hr/>
     <table class="faq-tb">
@@ -44,7 +51,7 @@
 
     <div class="bottom">
     <span th:if="${currentPage > 1}">
-        <a th:href="@{/faq/list(page=${currentPage - 1})}" class="prev">이전</a>
+        <a th:href="@{/faq/list(page=${currentPage - 1})}" class="pre"> ◀ </a>
     </span>
         <span th:each="pageNum : ${#numbers.sequence(1, totalPages)}">
         <a th:href="@{/faq/list(page=${pageNum})}" th:classappend="${pageNum == currentPage} ? 'active' : ''">
@@ -52,7 +59,7 @@
         </a>
      </span>
         <span th:if="${currentPage < totalPages}">
-        <a th:href="@{/faq/list(page=${currentPage + 1})}" class="next">다음</a>
+        <a th:href="@{/faq/list(page=${currentPage + 1})}" class="next"> ▶ </a>
     </span>
     </div>
 

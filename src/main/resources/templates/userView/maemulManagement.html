@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layouts/include_footer_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>관심매물</title>
+    <!-- 부트스트랩 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/member/myPage.css}">
+    <link rel="stylesheet" th:href="@{/css/member/myCommon.css}">
+    <link rel="stylesheet" th:href="@{/css/member/myQna.css}">
+    <link rel="stylesheet" th:href="@{/css/member/myMaemul.css}">
+</head>
+<body layout:fragment="content">
+
+<th:block th:if="${loginMember != null}">
+    <th:block th:object="${loginMember}">
+        <!-- 마이페이지 네비게이션 -->
+        <div id="o-container">
+            <div id="o-content">
+                <!-- inner navbar -->
+                <div class="o-lnb">
+                    <div class="o-wrapper">
+                        <ul class="o-lnb-list">
+                            <li class="o-lnb-item"><a href="/member/qMyPage">내정보</a></li>
+                            <li class="o-lnb-item"><a href="/member/qMyInfoUpdate">내정보수정</a></li>
+                            <li class="o-lnb-item"><a href="/member/qManagement" style="color:#26ABED;">매물관리</a></li>
+                            <li class="o-lnb-item"><a href="/member/qInterest">관심매물</a></li>
+                            <li class="o-lnb-item"><a href="/member/qRecent">최근본매물</a></li>
+                            <li class="o-lnb-item"><a href="/member/qMyQnA">1:1문의내역</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="o-mid-wrapper">
+                    <div class="o-mid-inner mt-5" id="o-tb-wrap">
+                        <div id="o-page-title">
+                            <h3 class="h3 fw-bold">관심 매물</h3>
+                        </div>
+                        <div class="oSearch-c">
+                            <div class="headrow">
+                                <div class = "headrowL">
+                                    <input type="text" class = "searchbox" placeholder="검색어 입력">
+                                    <button class = "searchbtn">검색</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="oMyQnaTb">
+                            <table class="faq-tb">
+                                <thead>
+                                <tr>
+                                    <th class="-n">사진</th>
+                                    <th class="b-n">소재지/상세주소</th>
+                                    <th class="b-t">면적</th>
+                                    <th class="b-t">가격(만원)</th>
+                                    <th class="b-t">삭제</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <p>전체 <span class="myQnaCntAll" th:text="${myQnaCnt}"></span>건</p>
+                                <tr th:each="myQna : ${myQnaList}">
+                                    <td colspan="4">조회된 데이터가 없습니다.</td>
+                                </tr>
+                                <tr th:each="myQna : ${myQnaList}" th:if="${myQna.user_email == loginMember.email}">
+                                    <td id="num" th:text="${myQna.id}">번호</td>
+                                    <td id="category" th:text="${myQna.category}">분류</td>
+                                    <td><a th:href="@{/faq/view(id=${myQna.id})}" th:text="${myQna.title}">제목</a></td>
+                                    <td><a th:href="@{/faq/view(id=${myQna.id})}" th:text="${#temporals.format(myQna.createdAt, 'yyyy-MM-dd')}">yyyy-MM-dd</a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+</th:block>
+<!-- 부트스트랩 script -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</body>
+</html>

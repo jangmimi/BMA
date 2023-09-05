@@ -2,9 +2,7 @@ package com.ap4j.bma.model.entity.member;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Table(name="liked") // DB 테이블 이름 지정
@@ -14,25 +12,25 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @ToString
-public class InterestMaemulEntity {
+public class InterestEntity {
     @Id
-    @NotNull
-    private Boolean liked;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @NotNull
     private String email;
     @NotNull
     private String road_name;
 
     @Builder
-    public InterestMaemulEntity(Boolean liked, String email, String road_name) {
-        this.liked = liked;
+    public InterestEntity(Long id, String email, String road_name) {
+        this.id = id;
         this.email = email;
         this.road_name = road_name;
     }
 
-    public InterestMaemulDTO toDTO() {
-        return InterestMaemulDTO.builder()
-                .liked(liked)
+    public InterestlDTO toDTO() {
+        return InterestlDTO.builder()
+                .id(id)
                 .email (email)
                 .road_name(road_name)
                 .build();

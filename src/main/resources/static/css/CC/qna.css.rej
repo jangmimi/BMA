@@ -1,9 +1,0 @@
-diff a/src/main/resources/static/css/CC/qna.css b/src/main/resources/static/css/CC/qna.css	(rejected hunks)
-@@ -22,6 +22,7 @@
- 
-     table{
-     border-top: solid 3px #26A9E0;
-+    border: 1px solid #ddd;
-     }
- 
-     table th{

@@ -7,7 +7,7 @@
 --    pwd varchar(255),
 --    primary key (idx)
 --);
-
-insert into member(email, name, pwd, root) values('test@test.com', '박미미', '1111aaaa', '기본회원');
-insert into member(email, name, pwd, root) values('abc@def.com', '김미미', 'asdf1111','기본회원');
-insert into member(email, name, pwd, root) values('a@a.a', '미미', 'qwer1234','기본회원');
+select * from member;
+--insert into member(email, name, pwd, root) values('test@test.com', '박미미', '1111aaaa', '기본회원');
+--insert into member(email, name, pwd, root) values('abc@def.com', '김미미', 'asdf1111','기본회원');
+--insert into member(email, name, pwd, root) values('a@a.a', '미미', 'qwer1234','기본회원');

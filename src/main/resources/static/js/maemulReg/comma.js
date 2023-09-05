@@ -18,4 +18,7 @@ function getNumber(obj){
          return n;
     }
 
+//적용시
+//<input class="won" name="loanAmount" type="text" onchange="getNumber(this);" onkeyup="getNumber(this);" placeholder="0" onblur = "showPriceInfo();"> 원
+//onchange="getNumber(this);" onkeyup="getNumber(this);"
 
