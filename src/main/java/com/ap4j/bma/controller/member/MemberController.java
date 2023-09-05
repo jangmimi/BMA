@@ -271,8 +271,13 @@ public class MemberController {
     public String qMyQnA(Model model, HttpSession session) {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
+        String userEmail = memberDTO.getEmail();
+        log.info("userEmail : " + userEmail);
+
         List<QnAEntity> qMyQnaList = qMemberService.qMyQnaList();
-        Long qMyQnaCnt = qMemberService.qMyQnaCnt();
+        long qMyQnaCnt = qMemberService.qMyQnaCnt();
+        log.info("qMyQnaCnt : " + qMyQnaCnt);
 
         model.addAttribute("myQnaList", qMyQnaList);
         model.addAttribute("myQnaCnt", qMyQnaCnt);
@@ -285,8 +290,8 @@ public class MemberController {
         log.info("MemberController - qManagement() 실행");
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
-        List<MaemulRegEntity> mmList = maemulRegService.getAllList();
-        Long mmAllCnt = maemulRegService.getAllCnt();
+        List<MaemulRegEntity> mmList = qMemberService.getAllList();
+        Long mmAllCnt = qMemberService.getAllCnt();
         log.info(mmList.toString());
         log.info(String.valueOf(mmAllCnt));
 

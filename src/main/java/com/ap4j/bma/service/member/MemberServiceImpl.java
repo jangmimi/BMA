@@ -2,8 +2,10 @@ package com.ap4j.bma.service.member;
 
 import com.ap4j.bma.config.PasswordEncoderConfig;
 import com.ap4j.bma.model.entity.customerCenter.QnAEntity;
+import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
+import com.ap4j.bma.model.repository.MaemulRegRepository;
 import com.ap4j.bma.model.repository.MemberRepository;
 import com.ap4j.bma.model.repository.QnARepository;
 import com.google.gson.JsonElement;
@@ -11,6 +13,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -44,6 +47,9 @@ public class MemberServiceImpl implements MemberService {
 
 	@Autowired
 	private QnARepository qQnARepository;
+
+	@Autowired
+	private MaemulRegRepository maemulRegRepository;
 
 	/** 카카오 토큰 얻기 */
 	public String getAccessToken(String code) {
@@ -434,8 +440,20 @@ public class MemberServiceImpl implements MemberService {
 
 	/** 내 QnA 전체 수 */
 	@Override
-	public Long qMyQnaCnt() {
+	public long qMyQnaCnt() {
+//		return qQnARepository.countByUserEmail(userEmail);
+//		return qQnARepository.countByUserEmail(userEmail);
 		return qQnARepository.count();
+	}
+
+	/** 매물 목록 전체 조회 */
+	public List<MaemulRegEntity> getAllList() {
+		return  maemulRegRepository.findAll();
+	}
+
+	/** 매물 전체 개수 */
+	public Long getAllCnt() {
+		return maemulRegRepository.count();
 	}
 
 }

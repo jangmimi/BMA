@@ -1,6 +1,7 @@
 package com.ap4j.bma.service.member;
 
 import com.ap4j.bma.model.entity.customerCenter.QnAEntity;
+import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -46,9 +47,12 @@ public interface MemberService {
 
 	public Optional<MemberEntity> findByEmailAndTel(String email, String tel);
 
-	// 매물 관련
+	// 매물 관련 qna
 	public List<QnAEntity> qMyQnaList();
-	public Long qMyQnaCnt();
+//	public Integer qMyQnaCnt(String userEmail);
+	public long qMyQnaCnt();
+	public List<MaemulRegEntity> getAllList();
+	public Long getAllCnt();
 }
 
 //    Map<String, String> validateHandler(Errors errors);
