@@ -13,23 +13,23 @@
 </head>
 <body layout:fragment="content">
 
-<th:block th:if="${loginMember != null}">
-    <div class="container">
-        <div class="container-inner">
-            <div class="warning-icon">
-                <img th:src="@{/img/warning_icon.png}" alt="경고아이콘">
-            </div>
-            <div class="warning-txt">
-                <span>죄송합니다.<br/>
-                    접근 하실 수 없는 페이지입니다.
-                </span>
-            </div>
-            <div class="link-btns">
-                <a class="btn btn-outline-primary" th:onclick="'javascript:history.back(-1);'">이전페이지</a>
+    <th:block th:if="${loginMember != null}">
+        <div class="container">
+            <div class="c-inner">
+                <div class="warning-icon">
+                    <img th:src="@{/img/warning_icon.png}" alt="경고아이콘">
+                </div>
+                <div class="warning-txt">
+                    <span>죄송합니다.<br/>
+                        접근 하실 수 없는 페이지입니다.
+                    </span>
+                </div>
+                <div class="link-btns">
+                    <a class="btn btn-outline-primary" th:onclick="'javascript:history.back(-1);'">이전페이지</a>
+                </div>
             </div>
         </div>
-    </div>
-</th:block>
+    </th:block>
 
 <!-- 부트스트랩 script -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"

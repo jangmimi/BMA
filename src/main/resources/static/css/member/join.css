@@ -5,16 +5,8 @@
 .form-floating {
     width: 350px;
 }
-#oJoinBtn-container {
-    display: flex;
-    justify-content: space-evenly;
-}
 #oInner-container-join {
     width: 400px;
-}
-#oJoinTitle {
-    padding: 20px 50px;
-    margin: 0px;
 }
 #btnEmailCheck, #btnNicknameCheck {
     width: 90px;
