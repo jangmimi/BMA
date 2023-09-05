@@ -66,40 +66,44 @@ function createMarker(position, markerContent, responseData) {
              var id = responseData.id;
              console.log(id);
 
+             // RESTful API 엔드포인트 URL
+             var apiUrl = '/board/writepro/' + id;
+
 //             // 리뷰 작성 후 저장
 //             function talk(id) {
 //
 //             }
-             // AJAX 요청을 보내 아파트 아이디를 서버에 전송
+//             // AJAX 요청을 보내 아파트 아이디를 서버에 전송
+//             $.ajax({
+//                 type: 'POST',
+//                 url: apiUrl,
+//                 data: { id: id },
+//                 success: function(response) {
+//                     // 서버에서의 응답 처리
+//                     console.log(response+"아파트 아이디값을 챙길거임");
+//                 },
+//                 error: function(xhr, status, error,cors) {
+//                     console.error(error);
+//                 }
+//             });
+// AJAX 요청을 보내 아파트 아이디를 서버에 전송
              $.ajax({
                  type: 'POST',
                  url: '/map/main',
-                 data: { id: id }, // content와 aptId를 함께 전송
+                 data: { id: id, content:null , session:null},
                  success: function(response) {
                      // 서버에서의 응답 처리
-                     console.log(response+"아파트 아이디값을 챙길거임"); // "리뷰 작성이 완료되었습니다."와 같은 응답 메시지 출력
-                     // 추가적인 클라이언트 동작 또는 메시지 표시 가능
-                     // 원하는 메서드로 데이터를 전송하는 코드를 추가
-                             $.ajax({
-                                 type: 'POST',
-                                 url: '/board/writepro', // 원하는 메서드의 엔드포인트 URL을 설정
-                                 data: { id: id}, // id와 서버 응답(response) 데이터를 함께 전송
-                                 success: function(writeResponse) {
-                                     // 서버에서의 응답 처리
-                                     console.log(writeResponse + " 아파트아이디 갖고왔다.");
-                                     // 추가적인 클라이언트 동작 또는 메시지 표시 가능
-                                 },
-                                 error: function(xhr, status, error, cors) {
-                                     // AJAX 요청이 실패한 경우의 처리
-                                     console.error(error); // 오류 메시지 출력
-                                 }
-                             });
+                     console.log(response+"아파트 아이디값을 챙길거임");
                  },
                  error: function(xhr, status, error,cors) {
-                     // AJAX 요청이 실패한 경우의 처리
-                     console.error(error); // 오류 메시지 출력
+                     console.error(error);
                  }
              });
+//             아작스로 put전송방식 써서 url을 board/writepro{id}로 넣고 Long타입으로 뽑아오야 함
+//             서비스로 객체 넘겨주으
+//json으로 리턴해 보기.......
+
+
 
         });
 

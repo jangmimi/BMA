@@ -811,6 +811,8 @@ a:active, a:focus, a:hover, a:link, a:visited {
 }x
 
 #amyTab{
+    display:flex;
+    justify-content:center;
   --bs-nav-tabs-link-active-border-color: #26abed;
   display: flex;
   justify-content: space-around;
