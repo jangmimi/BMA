@@ -1,32 +1,36 @@
+   // HTML 요소를 가져옵니다.
+    var monthRadio = document.getElementById("month");
+    var yearRadio = document.getElementById("year");
+    var sellRadio = document.getElementById("sell");
 
-        function setActiveButton(button) {
-          const buttons = document.querySelectorAll('.btn-group button');
-          buttons.forEach(btn => {
-              btn.classList.remove('active');
-          });
-          button.classList.add('active');
-      }
+    var monthRentSection = document.getElementById("monthRentSection");
+    var leaseSection = document.getElementById("leaseSection");
+    var sellingSection = document.getElementById("sellingSection");
 
-      function showMonthRent() {
-          document.getElementById("monthRentSection").classList.remove("hidden");
-          document.getElementById("leaseSection").classList.add("hidden");
-          document.getElementById("sellingSection").classList.add("hidden");
-          setActiveButton(document.querySelector('.btn-group button:nth-child(1)'));
-      }
+    // 라디오 버튼의 변경 이벤트 리스너를 추가합니다.
+    monthRadio.addEventListener("change", function() {
+        if (monthRadio.checked) {
+            monthRentSection.style.display = "table"; // 월세 섹션을 표시
+            leaseSection.style.display = "none"; // 전세 섹션을 숨김
+            sellingSection.style.display = "none"; // 매매 섹션을 숨김
+        }
+    });
 
-      function showLease() {
-          document.getElementById("monthRentSection").classList.add("hidden");
-          document.getElementById("leaseSection").classList.remove("hidden");
-          document.getElementById("sellingSection").classList.add("hidden");
-          setActiveButton(document.querySelector('.btn-group button:nth-child(2)'));
-      }
+    yearRadio.addEventListener("change", function() {
+        if (yearRadio.checked) {
+            monthRentSection.style.display = "none"; // 월세 섹션을 숨김
+            leaseSection.style.display = "table"; // 전세 섹션을 표시
+            sellingSection.style.display = "none"; // 매매 섹션을 숨김
+        }
+    });
 
-      function showSelling() {
-          document.getElementById("monthRentSection").classList.add("hidden");
-          document.getElementById("leaseSection").classList.add("hidden");
-          document.getElementById("sellingSection").classList.remove("hidden");
-          setActiveButton(document.querySelector('.btn-group button:nth-child(3)'));
-      }
+    sellRadio.addEventListener("change", function() {
+        if (sellRadio.checked) {
+            monthRentSection.style.display = "none"; // 월세 섹션을 숨김
+            leaseSection.style.display = "none"; // 전세 섹션을 숨김
+            sellingSection.style.display = "table"; // 매매 섹션을 표시
+        }
+    });
 
     // 주소 정보 입력란이 모두 채워지면 호출되는 함수
     function showBuildingInfo() {

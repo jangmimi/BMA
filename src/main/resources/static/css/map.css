@@ -156,6 +156,18 @@ html,body{
 }
 
 
+.overlay_info a strong {
+   padding-left: 27px;}
+.overlay_info .desc {
+  padding:14px;position: relative; min-width: 14px; height: 14px;}
+.overlay_info .address {
+  font-size: 12px; color: #333; position: absolute; white-space: normal}
+.overlay_info:after {
+  content:'';position: absolute; margin-left: -11px; left: 50%; bottom: -12px; width: 22px; height: 12px; background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png) no-repeat 0 bottom;}
+
+
+
+
 
 
 .list-group{
@@ -808,6 +820,8 @@ a:active, a:focus, a:hover, a:link, a:visited {
 }x
 
 #amyTab{
+    display:flex;
+    justify-content:center;
   --bs-nav-tabs-link-active-border-color: #26abed;
   display: flex;
   justify-content: space-around;
