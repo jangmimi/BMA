@@ -23,13 +23,21 @@ public class FAQController {
     @Autowired
     private FAQService faqService;
 
-    //FAQ
     @GetMapping("/faq/list")
-    public String noticeList(Model model, @RequestParam(name = "page", defaultValue = "1") int page) {
+    public String faqList(Model model,
+                          @RequestParam(name = "page", defaultValue = "1") int page,
+                          @RequestParam(name = "category", required = false) String category) {
         int pageSize = 10; // 한 페이지당 보여줄 게시글 개수
         Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by("id").descending());
-        Page<FAQEntity> faqPage = faqService.getFAQPage(pageable);
+        Page<FAQEntity> faqPage;
 
+        if (category != null) {
+            faqPage = faqService.findByCategory(category, pageable);
+        } else {
+            faqPage = faqService.getFAQPage(pageable);
+        }
+
+        model.addAttribute("category", category);
         model.addAttribute("faq", faqPage.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", faqPage.getTotalPages());

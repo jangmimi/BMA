@@ -1,7 +1,6 @@
 package com.ap4j.bma.service.customerCenter;
 
 import com.ap4j.bma.model.entity.customerCenter.FAQEntity;
-import com.ap4j.bma.model.entity.customerCenter.NoticeEntity;
 import com.ap4j.bma.model.repository.FAQRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,4 +27,7 @@ public class FAQService {
         return faqRepository.findAll(pageable);
     }
 
+    public Page<FAQEntity> findByCategory(String category, Pageable pageable) {
+        return faqRepository.findByCategory(category, pageable);
+    }
 }
