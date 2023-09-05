@@ -276,7 +276,7 @@ public class MemberController {
         log.info("userEmail : " + userEmail);
 
         List<QnAEntity> qMyQnaList = qMemberService.qMyQnaList();
-        long qMyQnaCnt = qMemberService.qMyQnaCnt();
+        long qMyQnaCnt = qMemberService.qMyQnaCnt(userEmail);
         log.info("qMyQnaCnt : " + qMyQnaCnt);
 
         model.addAttribute("myQnaList", qMyQnaList);

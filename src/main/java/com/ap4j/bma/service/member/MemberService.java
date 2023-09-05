@@ -49,8 +49,8 @@ public interface MemberService {
 
 	// 매물 관련 qna
 	public List<QnAEntity> qMyQnaList();
-//	public Integer qMyQnaCnt(String userEmail);
-	public long qMyQnaCnt();
+	public long qMyQnaCnt(String userEmail);
+//	public long qMyQnaCnt();
 	public List<MaemulRegEntity> getAllList();
 	public Long getAllCnt();
 }

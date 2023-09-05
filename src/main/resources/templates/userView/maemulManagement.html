@@ -40,33 +40,35 @@
                         <div class="o-page-title">
                             <h3 class="h3 fw-bold">매물 관리</h3>
                         </div>
-
                         <div class="oMyQnaTb">
                             <table class="faq-tb">
                                 <thead>
-                                <tr>
-                                    <th class="b-n">매물종류</th>
-                                    <th class="b-n">사진</th>
-                                    <th class="b-n">소재지/상세주소</th>
-                                    <th class="b-t">면적</th>
-                                    <th class="b-t">거래 및 가격</th>
-                                    <th class="b-t">수정/삭제</th>
-                                </tr>
+                                    <tr>
+                                        <th class="b-n">매물종류</th>
+                                        <th class="b-n">제목</th>
+                                        <th class="b-n">소재지/상세주소</th>
+                                        <th class="b-t">면적</th>
+                                        <th class="b-t">거래 및 가격</th>
+                                        <th class="b-t">수정/삭제</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <p>전체 <span class="o-cntAll" th:text="${mmAllCnt}"></span>건</p>
-                                <tr th:if="${mmAllCnt == 0}">
-                                    <td colspan="4">조회된 데이터가 없습니다.</td>
-                                </tr>
-                                <tr th:if="${mmAllCnt != 0}" th:each="mmList : ${mmList}">
-                                    <input type="hidden" id="num" th:value="${mmList.id}">
-                                    <td id="종류" th:text="${mmList.monthlyForRent}">매물종류</td>
-                                    <td id="사진" th:text="${mmList.address}">사진</td>
-                                    <td id="전월세매매" th:text="${mmList.address}">소재지/상세주소</td>
-                                    <td><a th:href="@{/}" th:text="${mmList.privateArea}">면적</a></td>
-                                    <td><a th:href="@{/}" th:text="${mmList.privateArea}">거래 및 가격</a></td>
-                                    <td><a th:href="@{/}" th:text="${mmList.privateArea}">수정/삭제</a></td>
-                                </tr>
+                                    <p>전체 <span class="o-cntAll" th:text="${mmAllCnt}"></span>건</p>
+                                    <tr th:if="${mmAllCnt == 0}">
+                                        <td colspan="4">조회된 데이터가 없습니다.</td>
+                                    </tr>
+                                    <tr th:if="${mmAllCnt != 0}" th:each="mmList : ${mmList}">
+                                        <input type="hidden" id="num" th:value="${mmList.id}">
+                                        <td id="종류" th:text="${mmList.monthlyForRent}">매물종류</td>
+                                        <td id="title" th:text="${mmList.title}">사진</td>
+                                        <td id="전월세매매" th:text="${mmList.address}">소재지/상세주소</td>
+                                        <td><a th:href="@{/}" th:text="${mmList.privateArea}">면적</a></td>
+                                        <td><a th:href="@{/}" th:text="${mmList.optional}">거래 및 가격</a></td>
+                                        <td class="o-t-btns">
+                                            <button type="button">수정</button>
+                                            <button type="button">삭제</button>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>

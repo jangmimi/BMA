@@ -440,9 +440,12 @@ public class MemberServiceImpl implements MemberService {
 
 	/** 내 QnA 전체 수 */
 	@Override
-	public long qMyQnaCnt() {
+	public long qMyQnaCnt(String userEmail) {
 //		return qQnARepository.countByUserEmail(userEmail);
 //		return qQnARepository.countByUserEmail(userEmail);
+//		Long count = qQnARepository.findAll().stream()
+//				.filter(qna -> qna.getUser_email().equals(userEmail))
+//				.count();
 		return qQnARepository.count();
 	}
 
