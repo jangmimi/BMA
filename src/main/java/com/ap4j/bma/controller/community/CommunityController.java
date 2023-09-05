@@ -36,6 +36,7 @@ public class CommunityController {
         return "community/communityList";
     }
 
+
     //커뮤니티 리스트 검색 결과 페이지
     @GetMapping("/community/list/search")
     public String communitySearchList(Model model,

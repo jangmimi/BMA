@@ -1,6 +1,8 @@
 package com.ap4j.bma.service.community;
 
+import com.ap4j.bma.model.entity.community.CommunityCommentEntity;
 import com.ap4j.bma.model.entity.community.CommunityEntity;
+import com.ap4j.bma.model.repository.CommunityCommentRepository;
 import com.ap4j.bma.model.repository.CommunityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,7 +15,8 @@ import org.springframework.stereotype.Service;
 public class CommunityService {
     @Autowired
     private CommunityRepository communityRepository;
-
+    @Autowired
+    private CommunityCommentEntity communityCommentEntity;
     //글작성처리
     public CommunityEntity saveCommunity(CommunityEntity communityEntity) {
         CommunityEntity savedEntity = communityRepository.save(communityEntity);
@@ -43,6 +46,11 @@ public class CommunityService {
     public CommunityEntity communityView(Integer id) {
         return communityRepository.findById(id).get();
     }
+
+    //댓글보기
+//    public CommunityCommentEntity communityCommentEntity(Integer id){
+//        return CommunityCommentRepository.findById(id).orElse(null);
+//    }
 
     //이전글
     public Object getPreArticle(Integer id) {
