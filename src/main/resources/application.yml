@@ -12,9 +12,9 @@ spring:
       enabled: true
     restart:
       enabled: true
-#  h2:
-#    console:
-#      enabled: true
+  #  h2:
+  #    console:
+  #      enabled: true
 
   # Thymeleaf 설정
   thymeleaf:
@@ -45,7 +45,6 @@ spring:
   #   데이터베이스 설정
   datasource:
     generate-unique-name: false
-
     url: jdbc:mysql://18.219.34.36:3306/bma
     username: root
     password: 1234

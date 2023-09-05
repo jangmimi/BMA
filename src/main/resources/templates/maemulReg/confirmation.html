@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmation Page</title>
+</head>
+<body>
+<h1>Confirmation Page</h1>
+
+<h2>Maemul Registration Details</h2>
+<p>ID, 식별번호: <span th:text="${maemulRegEntity.id}"></span></p>
+<p>address, 주소: <span th:text="${maemulRegEntity.address}"></span></p>
+<p>APT_name, 아파트명: <span th:text="${maemulRegEntity.APT_name}"></span></p>
+<p>buildingUsage, 건물용도: <span th:text="${maemulRegEntity.buildingUsage}"></span></p>
+<p>numberOfRooms, 방 수 : <span th:text="${maemulRegEntity.numberOfRooms}"></span></p>
+<p>numberOfBathrooms, 욕실 수: <span th:text="${maemulRegEntity.numberOfBathrooms}"></span></p>
+<p>floorNumber, 층: <span th:text="${maemulRegEntity.floorNumber}"></span></p>
+<p>totalFloors, 전체 층: <span th:text="${maemulRegEntity.totalFloors}"></span></p>
+<p>privateArea, 전용면적: <span th:text="${maemulRegEntity.privateArea}"></span></p>
+<p>supplyArea, 공용면적: <span th:text="${maemulRegEntity.supplyArea}"></span></p>
+<p>direction, 방향: <span th:text="${maemulRegEntity.direction}"></span></p>
+<p>heatingType, 난방: <span th:text="${maemulRegEntity.heatingType}"></span></p>
+<p>Elevator, 엘베: <span th:text="${maemulRegEntity.Elevator}"></span></p>
+<p>Parking, 주차: <span th:text="${maemulRegEntity.Parking}"></span></p>
+<p>totalParking, 몇대?: <span th:text="${maemulRegEntity.totalParking}"></span></p>
+<p>shortTermRental, 단기임대: <span th:text="${maemulRegEntity.shortTermRental}"></span></p>
+<p>availableMoveInDate, 입주가능일: <span th:text="${maemulRegEntity.availableMoveInDate}"></span></p>
+<p>loanAmount, 융자금: <span th:text="${maemulRegEntity.loanAmount}"></span></p>
+
+
+<p>TradeType, 거래유형: <span th:text="${maemulRegEntity.tradeType}"></span></p>
+
+<p>monthlyForRent, 보증금: <span th:text="${maemulRegEntity.monthlyForRent}"></span></p>
+<p>monthlyRent, 월세: <span th:text="${maemulRegEntity.monthlyRent}"></span></p>
+<p>m_managementFee, 관리비: <span th:text="${maemulRegEntity.m_managementFee}"></span></p>
+
+<p>depositForLease ,전세: <span th:text="${maemulRegEntity.depositForLease}"></span></p>
+<p>d_managementFee, 관리비: <span th:text="${maemulRegEntity.d_managementFee}"></span></p>
+
+<p>SellingPrice, 매매: <span th:text="${maemulRegEntity.SellingPrice}"></span></p>
+
+<p>title, 제목: <span th:text="${maemulRegEntity.title}"></span></p>
+<p>content, 상세내용: <span th:text="${maemulRegEntity.content}"></span></p>
+
+<p>features, 특징: <span th:text="${maemulRegEntity.features}"></span></p>
+<p>optional, 옵션: <span th:text="${maemulRegEntity.optional}"></span></p>
+<p>security, 보안: <span th:text="${maemulRegEntity.security}"></span></p>
+
+<!-- 나머지 필드들을 출력... -->
+
+<!-- 이하 생략 -->
+</body>
+</html>

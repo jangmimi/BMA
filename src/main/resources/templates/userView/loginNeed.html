@@ -14,21 +14,22 @@
 <body layout:fragment="content">
 
 <th:block th:if="${loginMember == null}">
-        <div class="container">
-            <div class="container-inner">
-                <div class="warning-icon">
-                    <img th:src="@{/img/warning_icon.png}" alt="경고아이콘">
-                </div>
-                <div class="warning-txt">
-                    <p>죄송합니다.</p>
-                    <p><b id="bold-txt">로그인</b>이 필요한 페이지입니다.</p>
-                </div>
-                <div class="warning-btns">
-                    <a class="btn btn-outline-primary" th:onclick="'javascript:history.back(-1);'">이전페이지</a>
-                    <a class="btn btn-outline-primary" th:href="@{/member/qLoginForm}">로그인</a>
-                </div>
+    <div class="container">
+        <div class="container-inner">
+            <div class="warning-icon">
+                <img th:src="@{/img/warning_icon.png}" alt="경고아이콘">
+            </div>
+            <div class="warning-txt">
+                <span>죄송합니다.<br/>
+                    <a th:href="@{/member/qLoginForm}" id="bold-txt">로그인</a>이 필요한 페이지입니다.
+                </span>
+            </div>
+            <div class="link-btns">
+                <a class="btn btn-outline-primary" th:onclick="'javascript:history.back(-1);'">이전페이지</a>
+                <a class="btn btn-outline-primary" th:href="@{/member/qLoginForm}">로그인</a>
             </div>
         </div>
+    </div>
 </th:block>
 
 <!-- 부트스트랩 script -->

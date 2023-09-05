@@ -1,0 +1,42 @@
+/* 서브 네비게이션바 */
+.o-lnb {
+    min-width: 1000px;
+    height: 50px;
+    background-color: #ededed;
+}
+.o-lnb-item {
+    position: relative;
+    display: inline-flex;
+    margin-right: 15px;
+    align-items: center;
+}
+.o-lnb-item a {
+    font-weight: bold;
+    color: #7790ad;
+    font-size: 13px;
+    text-decoration-line: none;
+}
+.o-wrapper {
+    position: relative;
+    display: block;
+    margin-left: 205px;
+}
+.o-lnb-list {
+    font-family: 'Noto Sans KR', sans-serif;
+    height: 50px;
+    float: left;
+    display: flex;
+    padding-left: 20px;
+    line-height: 1;
+    list-style: none;
+    margin: 0;
+}
+/* 상단 타이틀 */
+#o-page-title {
+    text-align: center;
+}
+/* 테이블 */
+.faq-tb {
+    width: 100%;
+    text-align: center;
+}
