@@ -6,19 +6,19 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class RecentMaemulDTO {
+public class RecentDTO {
 
     private String road_name;
     private String email;
 
     @Builder
-    public  RecentMaemulDTO(String road_name, String email) {
+    public RecentDTO(String road_name, String email) {
         this.road_name = road_name;
         this.email = email;
     }
 
-    public RecentMaemulEntity toEntity() {
-        return RecentMaemulEntity.builder()
+    public RecenlEntity toEntity() {
+        return RecenlEntity.builder()
                 .road_name(road_name)
                 .email(email)
                 .build();

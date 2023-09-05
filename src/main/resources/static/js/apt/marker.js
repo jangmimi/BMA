@@ -286,6 +286,12 @@ function clearHJDOverlays() {
 // 행정동 오버레이 배열 초기화
 var hjdOverlays = [];
 
+// 행정동 오버레이 클릭 이벤트 리스너 추가
+kakao.maps.event.addListener(hjdOverlay, 'click', function() {
+    var overlayPosition = hjdOverlay.getPosition();
+    map.setLevel(map.getLevel() + 1, { anchor: overlayPosition }); // 클릭된 오버레이의 위치를 중심으로 맵을 줌인합니다.
+});
+
 // 사이드바 정보 업데이트
 function updateSidebar(responseData) {
     // 사이드바 미니 지도 (staticMap)

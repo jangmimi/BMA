@@ -6,23 +6,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpSession;
-
-@SessionAttributes("loginMember")
 @Slf4j
 @Controller
+@SessionAttributes("loginMember")
 public class HomeController {
 
-//	@RequestMapping("/")
-//	public String test(){
-//		log.info("HomeController.payments.execute");
-//		return "payments/payments";
-//	}
-
-	@RequestMapping("/")
-	public String mainPage(HttpSession session){
-		log.info("session userEmail : " + session.getAttribute("loginMember"));
-
-		return "mainPage/mainPage";
-	}
+    @RequestMapping("/")
+    public String mainPage(HttpSession session){
+        log.info("session userEmail : " + session.getAttribute("loginMember"));
+        return "mainPage/mainPage";
+    }
 
 }

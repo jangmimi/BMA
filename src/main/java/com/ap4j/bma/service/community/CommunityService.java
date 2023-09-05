@@ -27,6 +27,7 @@ public class CommunityService {
 
         return totalCount;
     }
+
     //게시글 리스트 처리
 //    public Page<CommunityEntity> getAllCommunity(int pageNum, int pageSize) {
 //        Pageable pageable = PageRequest.of(pageNum - 1, pageSize);

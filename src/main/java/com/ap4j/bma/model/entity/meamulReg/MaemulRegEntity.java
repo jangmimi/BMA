@@ -18,7 +18,7 @@ public class MaemulRegEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id; //매물 등록 번호
 
-    private String adress; //도로명 주소
+    private String address; //도로명 주소
     private String APT_name; //아파트 이름
 
     private String buildingUsage; //건축물 용도
@@ -53,5 +53,9 @@ public class MaemulRegEntity {
     //매물 이미지
     private String title;//상세 설명 제목
     private String content; //상세설명 내용
+
+    //좌표
+    private Double longitude; //경도
+    private Double latitude; //위도
 
 }

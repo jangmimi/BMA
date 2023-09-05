@@ -17,7 +17,7 @@ $(document).ready(function(){
             $("#opwdCheck2").css("display","none");
         }
     });
-    <!-- 이메일 형식 체크 -->
+    // 이메일 형식 체크
     $("#email").keyup(function() {
         let emailValue = $('#email').val();
         let reg = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
@@ -28,7 +28,15 @@ $(document).ready(function(){
             $("#emailErr").text("");
         }
     });
+
+    // 연락처 입력 창 형식
+    $("#tel").keyup(function(){
+        let telValue = $("#tel").val();
+        telValue = telValue.replace(/[a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]|[^\w\s-]/g, "").replace(/-/g, "");
+        $("#tel").val(telValue);
+    });
 });
+
 
 // 이메일 중복 체크
 function checkEmail() {

@@ -62,6 +62,9 @@ dependencies {
     // 라이브 서버용.
     implementation 'org.springframework.boot:spring-boot-devtools'
 
+    annotationProcessor('org.projectlombok:lombok')
+    testAnnotationProcessor('org.projectlombok:lombok')
+
 }
 
 tasks.named('test') {

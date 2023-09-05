@@ -1,8 +1,10 @@
 package com.ap4j.bma.model.entity.customerCenter;
 
 
-import javax.persistence.*;
+import lombok.ToString;
 
+import javax.persistence.*;
+@ToString
 @Entity
 public class FAQEntity {
     @Id
