@@ -20,7 +20,7 @@ public class QnAService {
 
     public void saveQnA(QnAEntity qnAEntity, MultipartFile file) throws Exception {
 
-        String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\qnaFile";
+        String path = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static" + File.separator + "qnaFile";
 
         UUID uuid = UUID.randomUUID();
 
