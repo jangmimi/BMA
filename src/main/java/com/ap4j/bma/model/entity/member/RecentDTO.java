@@ -17,8 +17,8 @@ public class RecentDTO {
         this.email = email;
     }
 
-    public RecenlEntity toEntity() {
-        return RecenlEntity.builder()
+    public RecentEntity toEntity() {
+        return RecentEntity.builder()
                 .road_name(road_name)
                 .email(email)
                 .build();

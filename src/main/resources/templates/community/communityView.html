@@ -15,14 +15,14 @@
     <div class="viewtable-outer">
         <table class="viewtable-inner">
             <tr>
-                <th colspan="6"><p th:text = "${article.title}">제목</p></th>
+                <th colspan="6"><p th:text="${article.title}">제목</p></th>
             <tr>
                 <th>작성자</th>
-                <td class= "k-center" th:text="${article.author}">작성자</td>
+                <td class="k-center" th:text="${article.author}">작성자</td>
                 <th>작성일</th>
-                <td class= "k-center" th:text="${#temporals.format(article.createdAt, 'yyyy-MM-dd')}">yyyy-mm-dd</td>
+                <td class="k-center" th:text="${#temporals.format(article.createdAt, 'yyyy-MM-dd')}">yyyy-mm-dd</td>
                 <th>조회수</th>
-                <td class= "k-center" th:text= "${article.view}" >조회수</td>
+                <td class="k-center" th:text="${article.view}">조회수</td>
             </tr>
             <tr>
                 <td colspan="6" class="content-box"><p class="content" th:text="${article.content}">
@@ -38,7 +38,7 @@
             </tr>
         </table>
 
-        <div id = "pre-next">
+        <div id="pre-next">
             <a th:if="${prevArticle != null}" th:href="@{/community/view?id={id}(id=${prevArticle.id})}">
                 <button class="pre-next">이전글</button>
             </a>
@@ -49,54 +49,39 @@
 
 
         <div class="s-commentbox">
+            <p class="s-commentbox-titlecount">댓글 <span th:text="${comment.size()}"></span></p>
 
-            <p class="s-commentbox-titlecount">댓글 <span>1</span></p>
 
-
-            <div class="s-comment">
+            <div class="s-comment" th:each="comment : ${comment}">
                 <div class="s-comment-info">
-                    <span>김기무</span>
-                    <span>2023-09-05 16:02</span>
+                    <span th:text = "${comment.author}"></span>
+                    <span th:text = "${comment.createdAt}"></span>
                 </div>
-                <div class="s-comment-content">이것은댓글입니다<br>이것은댓글입니다 <br>이것은댓글입니다 <br></div>
+                <div class="s-comment-content" th:text = "${comment.content}"></div>
                 <div class="s-button-align">
-                    <button>삭제</button>
-                </div>
-            </div>
-            <div class="s-comment">
-                <div class="s-comment-info">
-                    <span>김기무</span>
-                    <span>2023-09-05 16:02</span>
-                </div>
-                <div class="s-comment-content">이것은댓글입니다<br>이것은댓글입니다 <br>이것은댓글입니다 <br></div>
-                <div class="s-button-align">
-                    <button>삭제</button>
-                </div>
-            </div>
-            <div class="s-comment">
-                <div class="s-comment-info">
-                    <span>김기무</span>
-                    <span>2023-09-05 16:02</span>
-                </div>
-                <div class="s-comment-content">이것은댓글입니다<br>이것은댓글입니다 <br>이것은댓글입니다 <br>이것은댓글입니다 <br>이것은댓글입니다 <br></div>
-                <div class="s-button-align">
-                    <button>삭제</button>
+                    <form action="/comment/delete" method="post">
+                        <input type="hidden" name="articleId" th:value="${article.id}">
+                        <input type="hidden" name="id" th:value="${comment.id}">
+                        <button type="submit">삭제</button>
+                    </form>
                 </div>
             </div>
 
-
-            <div class="s-comment-input">
-                    <span>
-                        댓글내용
-                    </span>
-                <textarea name="" id="" cols="30" rows="10"></textarea>
-                <button>댓글작성</button>
-            </div>
+            <form action="/community/comment" method="post">
+                <div class="s-comment-input">
+                <span>
+                    댓글내용
+                </span>
+                    <textarea name="content" cols="30" rows="10"></textarea>
+                    <input type="hidden" name="articleId" th:value="${article.id}">
+                    <input type="hidden" name="author" th:value="${loginMember?.nickname}">
+                    <button type="submit">댓글 작성</button>
+                </div>
+            </form>
 
         </div>
 
     </div>
-
 
 </div>
 </body>

@@ -37,21 +37,36 @@ border-bottom: 1px solid #ddd;
 text-align: center;
  }
 
-table tr:hover {
-background: #eee;
-cursor: pointer;
+tbody tr:hover {
+    background: #eee;
+    cursor: pointer;
 }
 
-.b-q{
-width:5%;
+.o-d-type {
+    width: 10%;
+}
+.o-d-title {
+    width: 20%;
+}
+.o-d-add{
+    width: 45%;
+}
+.o-d-area {
+
+}
+.o-d-btns {
+    width: 10%;
+}
+.o-t-btns input, .o-t-btn input {
+    font-size: 13px;
+    border: 1px solid lightgray;
+    margin: 5px 0px;
+    padding: 3px 12px;
+}
+.o-d-btn {
+    width: 7%;
 }
 
-.b-n {
-width :10%;
-}
-.b-t{
-width : 50%;
-}
 
 .headrow{
     height : 100px;
