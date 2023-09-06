@@ -11,13 +11,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/member/join.css}">
+    <link rel="stylesheet" th:href="@{/css/member/myCommon.css}">
 </head>
 <body layout:fragment="content">
+
 <th:block th:if="${loginMember == null}">
     <th:block th:object="${loginMember}">
         <div class="oContainer-wrap">
             <div class="container mt-5" id="oInner-container-join" style="background-color:white" align="center">
-                <div id="oJoinTitle">
+                <div class="o-page-title">
                     <h3 class="h3 fw-bold">회원가입</h3>
                 </div>
                 <form th:action="@{/member/qJoinBasic}" method="POST" onsubmit="return oJoinCheck()">
@@ -112,29 +114,26 @@
                         </ul>
                     </div>
 
-                    <div id="oJoinBtn-container">
-                        <input type="button" class="btn btn-dark" id="oJoinCancelBtn" value="취소" style="width:47%" />
-                        <input type="submit" class="btn btn-dark" id="oJoinBtn" value="회원가입" style="width:47%" />
-                        <!-- th:onclick="|location.href='@{/member/qLoginForm}'|"-->
+                    <div class="o-btns-c">
+                        <input type="button" class="btn btn-outline-secondary" id="oJoinCancelBtn" value="취소" />
+                        <input type="submit" class="btn btn-primary" id="oJoinBtn" value="회원가입" />
                     </div>
                 </form>
 
-                <div class="container mt-5 mb-5" id="oJoinSns">
-                    <p style="font-weight: bold; margin-bottom: 20px;">Join with SNS</p>
-                    <div class="oJoinSnsBtn-container"
-                         style="display: flex; justify-content: space-between;">
-                        <!-- 카카오 회원가입 -->
-                        <a th:href="@{https://kauth.kakao.com/oauth/authorize?client_id=fae91fecfb7dbda2a80ae22881709a28&redirect_uri=http://localhost:8081/member/qLogin&response_type=code}">
-                            <img th:src="@{/img/member/kakao_join_medium_narrow.png}" alt="kakaoJoinImg" height="44" />
-                        </a>
-                        <!--</div>
-                        <div class="oLoginSnsBtn-container">-->
-                        <!-- 네이버 회원가입 -->
-                        <a th:href="@{/member/qLoginNaver}">
-                            <img src="/img/member/btnG_완성형.png" alt="naverJoinImg" height="44" />
-                        </a>
-                    </div>
-                </div>
+<!--                <div class="container mt-5 mb-5" id="oJoinSns">-->
+<!--                    <p style="font-weight: bold; margin-bottom: 20px;">Join with SNS</p>-->
+<!--                    <div class="oJoinSnsBtn-container"-->
+<!--                         style="display: flex; justify-content: space-between;">-->
+<!--                        &lt;!&ndash; 카카오 회원가입 &ndash;&gt;-->
+<!--                        <a th:href="@{https://kauth.kakao.com/oauth/authorize?client_id=fae91fecfb7dbda2a80ae22881709a28&redirect_uri=http://localhost:8081/member/qLogin&response_type=code}">-->
+<!--                            <img th:src="@{/img/member/kakao_join_medium_narrow.png}" alt="kakaoJoinImg" height="44" />-->
+<!--                        </a>-->
+<!--                        &lt;!&ndash; 네이버 회원가입 &ndash;&gt;-->
+<!--                        <a th:href="@{/member/qLoginNaver}">-->
+<!--                            <img src="/img/member/btnG_완성형.png" alt="naverJoinImg" height="44" />-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                </div>-->
 
             </div>
         </div>

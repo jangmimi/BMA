@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-@Table(name="current_saw_maemul") // DB 테이블 이름 지정
+@Table(name="recent") // DB 테이블 이름 지정
 @Entity
 @NoArgsConstructor
 //@AllArgsConstructor

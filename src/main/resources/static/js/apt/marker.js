@@ -62,6 +62,55 @@ function createMarker(position, markerContent, responseData) {
             openOverlay(marker.overlay); // 오버레이 열기
             updateSidebar(responseData); // 사이드바에 데이터 전송
             updateTransactionTable(responseData.roadName); // 사이드바의 거래내역 테이블에 데이터 전송
+             // 마커의 아이디값 가져오기
+             var id = responseData.id;
+             console.log(id);
+
+             // RESTful API 엔드포인트 URL
+             var apiUrl = '/board/writepro/' + id;
+
+
+
+             // AJAX 요청을 보내 아파트 아이디를 서버에 전송
+             $.ajax({
+                 type: 'post',
+                 url: apiUrl,
+                 data: { id: id , session:null},
+                 success: function(response) {
+                     // 서버에서의 응답 처리
+                     console.log(response+"아파트 아이디값을 챙길거임");
+//                     // 이제 response에는 서버에서 리턴한 아파트 아이디가 있음
+//                     // 이 값을 활용하여 리뷰 엔티티에 저장 가능
+//                     // 다음과 같이 변수에 저장해서 활용
+                     //var apartmentId = response;
+
+                     // 이제 이 apartmentId 값을 boardwritePro 메서드로 전달
+                     // AJAX 요청을 보내 아파트 아이디를 서버에 전송
+                 },
+                 error: function(xhr, status, error,cors) {
+                     console.error(error);
+                 }
+             });
+//              $.ajax({
+//                  type: 'POST',
+//                  url: '/board/writepro',
+//                  //data: { id: apartmentId,content:null , session:null }, // 서버로 아파트 아이디 전달
+//                  success: function(response) {
+//                      // 서버에서의 응답 처리
+//                      console.log(response + " 리뷰 작성이 완료되었습니다.");
+//                      //location.href = "/map/main";
+//                  },
+//                  error: function(xhr, status, error, cors) {
+//                      console.error(error);
+//                  }
+//              });
+
+//             아작스로 put전송방식 써서 url을 board/writepro{id}로 넣고 Long타입으로 뽑아오야 함
+//             서비스로 객체 넘겨주으
+//json으로 리턴해 보기.......
+
+
+
         });
 
         clusterer.addMarker(marker); // 클러스터러에 마커 추가
@@ -113,6 +162,7 @@ kakao.maps.event.addListener(map, 'tilesloaded', function () {
                     if (!existingMarkers[markerKey]) {
                         createMarker(markerPosition, markerContent, apt);
                     }
+
                 });
             } else {
                 console.log("표시할 마커가 없습니다. (좌표값 누락)");
@@ -487,3 +537,5 @@ function closeOtherOverlays() {
         }
     }
 }
+
+
