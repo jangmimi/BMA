@@ -117,6 +117,7 @@ public class CommunityController {
         return "community/communityView";
     }
 
+    
 
     //게시글 삭제
     @GetMapping("/community/delete")
