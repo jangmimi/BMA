@@ -18,10 +18,9 @@
 
 <th:block th:if="${loginMember != null}">
     <th:block th:object="${loginMember}">
-        <!-- 마이페이지 네비게이션 -->
         <div id="o-container">
             <div id="o-content">
-                <!-- inner navbar -->
+                <!-- 마이페이지 네비게이션바 -->
                 <div class="o-lnb">
                     <div class="o-wrapper">
                         <ul class="o-lnb-list">
@@ -52,8 +51,9 @@
                             <table class="faq-tb">
                                 <thead>
                                     <tr>
-                                        <th class="b-n">사진</th>
-                                        <th class="b-n">소재지/상세주소</th>
+                                        <th class="b-n">번호</th>
+                                        <th class="o-d-type">거래종류 매물종류</th>
+                                        <th class="b-n">소재지/상세주소 매물설명</th>
                                         <th class="b-t">면적</th>
                                         <th class="b-t">가격(만원)</th>
                                         <th class="b-t">삭제</th>
@@ -64,11 +64,15 @@
                                     <th:block th:if="${mmAllLikedCnt == 0}">
                                         <tr><td colspan="4">조회된 데이터가 없습니다.</td></tr>
                                     </th:block>
-                                    <tr th:each="myQna : ${myQnaList}" th:if="${myQna.user_email == loginMember.email}">
-                                        <td id="num" th:text="${myQna.id}">번호</td>
-                                        <td id="category" th:text="${myQna.category}">분류</td>
-                                        <td><a th:href="@{/faq/view(id=${myQna.id})}" th:text="${myQna.title}">제목</a></td>
-                                        <td><a th:href="@{/faq/view(id=${myQna.id})}" th:text="${#temporals.format(myQna.createdAt, 'yyyy-MM-dd')}">yyyy-MM-dd</a></td>
+                                    <tr th:each="mmList : ${mmList}"><!--th:if="${mmLiked.nickname == loginMember.nickname}"-->
+                                        <td id="num" th:text="${mmList.id}">번호</td>
+                                        <td id="tradeType" th:text="${mmList.tradeType}">거래유형</td>
+                                        <td id="address" th:text="${mmList.address}">주소</td>
+                                        <td id="privateArea" th:text="${mmList.privateArea}">면적</td>
+                                        <td id="monthlyForRent" th:text="${mmList.monthlyForRent}">가격</td>
+                                        <td>
+                                            <button>삭제</button>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>

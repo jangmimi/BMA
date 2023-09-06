@@ -317,13 +317,21 @@ public class MemberController {
         log.info("MemberController - qLiked() 실행");
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
-        List<LikedEntity> mmLiked = likedService.getAllList();
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
+        String nickname = memberDTO.getNickname();
+
+        List<LikedEntity> mmLikedList = likedService.getAllList();
+
         Long mmAllLikedCnt = likedService.countAll();
-        log.info(mmLiked.toString());
+        log.info(mmLikedList.toString());
         log.info(String.valueOf(mmAllLikedCnt));
 
-        model.addAttribute("mmLiked",mmLiked);
+        List<MaemulRegEntity> mmList = qMemberService.getAllList();
+        log.info(mmList.toString());
+
+        model.addAttribute("mmLiked",mmLikedList);
         model.addAttribute("mmAllLikedCnt",mmAllLikedCnt);
+        model.addAttribute("mmList",mmList);
 
         return "userView/maemulLiked";
     }

@@ -1,6 +1,8 @@
 package com.ap4j.bma.service.member;
 
+import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
 import com.ap4j.bma.model.entity.member.LikedEntity;
+import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.repository.LikedRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,4 +23,5 @@ public class LikedService {
     public List<LikedEntity> getAllList() {
         return likedRepository.findAll();
     }
+
 }
