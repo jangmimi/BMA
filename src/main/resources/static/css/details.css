@@ -480,6 +480,10 @@ ul span {
 	border: 0;
 }
 
+.y-st-q a{
+	text-decoration: none;
+}
+
 .y-st-btns div + div {
 	width: 77px;
 	margin-left: 8px;
