@@ -27,15 +27,13 @@ public class QnAController {
     @GetMapping("/qna")
     public String QnAWriteForm(HttpSession session, Model model) {
         // 로그인 안했을 경우 접근제한 페이지 표시
-        if (session.getAttribute("loginMember") == null) {
-            return "userView/loginNeed";
-        }
+        if(session.getAttribute("loginMember") == null) { return "userView/loginNeed"; }
 
         return "customerCenter/QnABoard/QnAWrite";
     }
 
     @PostMapping("/qna")
-    public String savaQnA(@ModelAttribute QnAEntity qnAEntity, Model model, @RequestParam("file") MultipartFile file) throws Exception {
+    public String savaQnA(@ModelAttribute QnAEntity qnAEntity, Model model, @RequestParam("file") MultipartFile file) throws Exception{
 
         qnAService.saveQnA(qnAEntity, file);
 
@@ -47,14 +45,9 @@ public class QnAController {
     }
 
     @GetMapping("/qnaview")
-    public String QnAView(@RequestParam("id") Integer id, Model model) {
-        // 글 ID를 이용하여 글 정보를 조회
-        QnAEntity qna = qnAService.findById(id);
+    public String QnAView(HttpSession session) {
 
-        // 조회한 글 정보를 모델에 추가하여 뷰로 전달
-        model.addAttribute("qna", qna);
-
-        return "customerCenter/QnABoard/QnAView"; // 상세보기 페이지로 이동
+        return "customerCenter/QnABoard/QnAView";
     }
 
     // 게시글 삭제 요청 처리
