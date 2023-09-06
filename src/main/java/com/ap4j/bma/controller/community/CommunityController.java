@@ -2,6 +2,7 @@ package com.ap4j.bma.controller.community;
 
 import com.ap4j.bma.model.entity.community.CommunityCommentEntity;
 import com.ap4j.bma.model.entity.community.CommunityEntity;
+import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.service.community.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -69,8 +70,11 @@ public class CommunityController {
 
     //글작성
     @GetMapping("/community/write")
-    public String communityWriteForm() {
-
+    public String communityWriteForm(HttpSession session) {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
+        if(memberDTO == null){
+            return "userView/loginNeed";
+        }
         return "community/communityWrite";
     }
 
