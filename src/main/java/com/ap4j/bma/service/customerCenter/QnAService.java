@@ -24,14 +24,20 @@ public class QnAService {
 
         UUID uuid = UUID.randomUUID();
 
-        String fileName = uuid + "_" + file.getOriginalFilename();
-        File saveFile = new File(path, fileName);
+        if(file == null || file.isEmpty()){
 
-        file.transferTo(saveFile);
+            qnAEntity.setFilename(null);
+            qnAEntity.setFilepath(null);
 
-        qnAEntity.setFilename(fileName);
-        qnAEntity.setFilepath("/qnaFile/" + fileName);
+        }else{
+            String fileName = uuid + "_" + file.getOriginalFilename();
+            File saveFile = new File(path, fileName);
+            file.transferTo(saveFile);
 
+            qnAEntity.setFilename(fileName);
+            qnAEntity.setFilepath("/qnaFile/" + fileName);
+        }
+        
         qnARepository.save(qnAEntity);
 
     }
