@@ -33,9 +33,11 @@ public class LikedService {
     public List<LikedEntity> findLikedByNickname(String nickname) {
         return likedRepository.findLikedByNickname(nickname);
     }
+
     public List<MaemulRegEntity> findLikedByRoadname(String road_name) {
         return likedRepository.findMaemulByRoadName(road_name);
     }
+    
 //    public List<MaemulRegEntity> findLikedByRoadname(String roadName) {
 //        List<MaemulRegEntity> likedmList = likedRepository.findMaemulByRoadName(roadName);
 //
@@ -54,9 +56,8 @@ public class LikedService {
 //
 //        return maemulRegEntities;
 //    }
-
+    /** 관심 매물 저장 */
     public Long save(LikedEntity likeEntity) {
-
         likedRepository.save(likeEntity);
         return likeEntity.getId();
     }

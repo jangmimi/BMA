@@ -11,17 +11,15 @@
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/member/myPage.css}">
     <link rel="stylesheet" th:href="@{/css/member/myCommon.css}">
-    <link rel="stylesheet" th:href="@{/css/member/myQna.css}">
     <link rel="stylesheet" th:href="@{/css/member/myMaemul.css}">
 </head>
 <body layout:fragment="content">
 
 <th:block th:if="${loginMember != null}">
     <th:block th:object="${loginMember}">
-        <!-- 마이페이지 네비게이션바 -->
         <div id="o-container">
             <div id="o-content">
-                <!-- inner navbar -->
+                <!-- 마이페이지 네비게이션바 -->
                 <div class="o-lnb">
                     <div class="o-wrapper">
                         <ul class="o-lnb-list">
