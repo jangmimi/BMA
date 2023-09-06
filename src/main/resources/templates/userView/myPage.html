@@ -17,9 +17,9 @@
 
 <th:block th:object="${loginMember}">
 <th:block th:if="${loginMember != null}">
-    <!-- 마이페이지 네비게이션 -->
     <div id="oContainer">
         <div id="content">
+            <!-- 마이페이지 네비게이션바 -->
             <div class="o-lnb">
                 <div class="o-wrapper">
                     <ul class="o-lnb-list">
@@ -36,7 +36,7 @@
                 <div class="oInfo-top">
                     <div class="oInfo-top-wrapper">
                         <div class="oInfo-left">
-                            <div class="oThumbnailImg">
+                            <div class="oThumbnailImg"> <!-- sns로그인 시 model에서 프로필링크 가져옴, 없으면 default img -->
                                 <img class="myImg" th:if="${thumbnail_image!=null}" th:src="${thumbnail_image}" alt="썸네일이미지">
                                 <img class="myImg" th:if="${thumbnail_image==null}" th:src="@{/img/defaultProfile.jpg}" alt="썸네일이미지">
                             </div>
@@ -52,7 +52,7 @@
                         <div class="oInfo-right">
                             <div class="oMaemulCnt-inner">
                                 <div class="oMaemulCnt">
-                                    <a th:href="@{/member/qInterest}">1건</a>
+                                    <a th:href="@{/member/qLiked}">1건</a>
                                     <span>관심매물</span>
                                 </div>
                                 <div class="oMaemulCnt">
