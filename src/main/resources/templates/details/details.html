@@ -10,7 +10,7 @@
 	<!-- <link rel="stylesheet" th:href="@{/css/파일이름.css}"> -->
 
 	<!-- <script type="text/javascript" th:src="@{/js/search/search.js}"></script>-->
-	 <script type="text/javascript" th:src="@{/js/details/details.js}"></script>
+	<script type="text/javascript" th:src="@{/js/details/details.js}"></script>
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
 	      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
@@ -66,15 +66,18 @@
 			<!-- 오른쪽에 정보 보여주는 컨테이너 -->
 			<div class="y-text-big-con">
 				<div class="y-text-con">
-					<div class="y-mamuel-number">매물번호:88877</div>
+					<div class="y-mamuel-number">
+						매물번호:[[${maemulList.get().id}]]
+
+					</div>
 					<br>
-					<div class="y-price">매매 3억 6,000만</div>
-					<div class="y-price-area">1,700만원(3.3㎡)</div>
+					<div class="y-price">[[${maemulList.get().tradeType}]] [[${maemulList.get().SellingPrice}]]원</div>
+					<div class="y-price-area">1,700만원(3.3㎡) 계산 해야됨.</div>
 				</div>
 				<div class="y-sub-text-con">
-					<div class="y-dong">종암동</div>
-					<div class="y-house-hold">다가구</div>
-					<div class="y-location">고려대역 도보 8분</div>
+					<div class="y-dong">[[${maemulList.get().address}]]</div>
+					<div class="y-house-hold">[[${maemulList.get().APT_name}]]</div>
+					<!--					<div class="y-location">고려대역 도보 8분</div>-->
 				</div>
 				<div class="y-button-con">
 					<a href="#" class="y-interest-maemul-btn fav">관심매물</a>
@@ -138,10 +141,10 @@
 				<ul class="y-lists">
 					<li>
 						<div class="y-list-title">
-							<p>월세</p>
+							<p>[[${maemulList.get().tradeType}]]</p>
 						</div>
 						<div class="y-list-content">
-							<p>300/130</p>
+							<p>[[${maemulList.get().SellingPrice}]]만원</p>
 						</div>
 					</li>
 					<li>
@@ -149,15 +152,23 @@
 							<p>융자금</p>
 						</div>
 						<div class="y-list-content">
-							<p>-</p>
+							<p>[[${maemulList.get().loanAmount}]]</p>
 						</div>
 					</li>
 					<li>
 						<div class="y-list-title">
 							<p>관리비</p>
 						</div>
-						<div class="y-list-content">
-							<p>매월 10만원</p>
+						<div th:if="${maemulList.get().id != null and maemulList.get().id != 0}">
+							<div class="y-list-content">
+								<p>-</p>
+							</div>
+						</div>
+
+						<div th:if="${maemulList.get().id == null and maemul.get().id == 0}">
+							<div class="y-list-content">
+								<p>매월 [[${maemulList.get().m_managementFee}]] 만원</p>
+							</div>
 						</div>
 					</li>
 					<li>
@@ -204,7 +215,7 @@
 						<div>
 							<div class="y-st-num-text">
 								<p>
-									매물번호 38066659
+									매물번호 [[${maemulList.get().id}]]
 								</p>
 							</div>
 							<button class="y-btn-share">
@@ -220,7 +231,7 @@
 					</div>
 					<div class="y-st-price">
 						<p class="y-st-ptag">
-							월세 300/130
+							[[${maemulList.get().tradeType}]] [[${maemulList.get().SellingPrice}]]만원
 						</p>
 						<div class="y-st-ptag2">
 							최근 7일 매물 조회수 289 회
@@ -1121,7 +1132,7 @@
 			<div class="y-ar-title">
 				<p>위치 : 서울특별시 영등포구 대림동 992-19</p>
 			</div>
-<!--			<div class="y-map" id="map"></div>-->
+			<!--			<div class="y-map" id="map"></div>-->
 			<div class="map_wrap">
 				<div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
 				<ul id="category">
@@ -1151,7 +1162,8 @@
 					</li>
 				</ul>
 			</div>
-			<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9a3ebc8549eeffd6c970f997b9f91c0c&libraries=services"></script>
+			<script type="text/javascript"
+			        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9a3ebc8549eeffd6c970f997b9f91c0c&libraries=services"></script>
 			<script type="text/javascript" th:src="@{/js/details/details_map.js}"></script>
 
 
@@ -1367,13 +1379,14 @@
 		<!-- 비대면 계약 규정 안내 시작 -->
 		<div class="y-non-face-to-face-rule-con">
 			<div class="y-face-box">
-				<strong><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-				             xmlns="http://www.w3.org/2000/svg" style="flex: 0 0 auto;">
-					<circle cx="12" cy="12" r="9" fill="#EDEDED"></circle>
-					<path fill-rule="evenodd" clip-rule="evenodd"
-					      d="M11.5081 13.0899C11.5504 13.3231 11.7546 13.5 12 13.5C12.2762 13.5 12.5 13.2761 12.5 13V8.5L12.492 8.41012C12.4496 8.17688 12.2455 8 12 8C11.7239 8 11.5 8.22386 11.5 8.5V13L11.5081 13.0899ZM12 16.2C12.3314 16.2 12.6 15.9314 12.6 15.6C12.6 15.2686 12.3314 15 12 15C11.6687 15 11.4 15.2686 11.4 15.6C11.4 15.9314 11.6687 16.2 12 16.2Z"
-					      fill="#222222"></path>
-				</svg>
+				<strong>
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+					     xmlns="http://www.w3.org/2000/svg" style="flex: 0 0 auto;">
+						<circle cx="12" cy="12" r="9" fill="#EDEDED"></circle>
+						<path fill-rule="evenodd" clip-rule="evenodd"
+						      d="M11.5081 13.0899C11.5504 13.3231 11.7546 13.5 12 13.5C12.2762 13.5 12.5 13.2761 12.5 13V8.5L12.492 8.41012C12.4496 8.17688 12.2455 8 12 8C11.7239 8 11.5 8.22386 11.5 8.5V13L11.5081 13.0899ZM12 16.2C12.3314 16.2 12.6 15.9314 12.6 15.6C12.6 15.2686 12.3314 15 12 15C11.6687 15 11.4 15.2686 11.4 15.6C11.4 15.9314 11.6687 16.2 12 16.2Z"
+						      fill="#222222"></path>
+					</svg>
 					비대면 계약 규정 안내
 				</strong>
 				<p>-임대인이 승낙하기 전까지 '나의 비대면 계약'에서 직접 계약 요청 취소가 가능합니다.</p>
