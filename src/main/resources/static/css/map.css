@@ -19,7 +19,7 @@ html,body{
 
 .afilter{
     position: absolute;
-    z-index: 1100;
+    z-index: 1050;
     top: 0px;
     left: 0px;
     width: 100%;
@@ -193,7 +193,7 @@ html,body{
   position: absolute;
   top: 130px;
   width: 400px;
-  z-index: 1100;
+  z-index: 1050;
   height: calc(100% - 60px);
   line-height: 1;
 }
@@ -560,12 +560,35 @@ html,body{
   inset: 0px auto auto 0px;
   margin: 0px;
   transform: translate3d(504px, 55.5px, 0px);
-  height: 212px;
+  height: 72px;
 }
 .abox_maemae{
   display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top:15px;
+}
+.aMinAndMaxPriceAll{
+    display:flex;
+}
+.ainputMaeMaePrice{
+    width: 117px;
+        border: 1px solid lightgray;
+}
+button#searchPriceMonthStartMinus, button#searchPriceMonthStartPlus {
+    width: 16px;
+        border: 1px solid lightgray;
+}
+button#searchPriceMonthEndMinus, button#searchPriceMonthEndPlus {
+    width: 16px;
+        border: 1px solid lightgray;
+}
+span.dash {
+    margin: 0px 10px 0px 10px;
+}
+
+.price_input{
+    display:flex;
 }
 .aTtang.top,.nav-item.aTtangSize{
   display: flex;
@@ -700,6 +723,9 @@ html,body{
     border:none;
     background-color:white;
 }
+#aSaveToMine{
+    top:26%;
+}
 .modal-header.aSaveToMine{
     justify-content: center;
 }
@@ -746,7 +772,7 @@ height: 24px;
     display: flex;
         justify-content: center;
         align-items:center;
-        margin-bottom:40px;
+        margin-top:20px;
 }
 .aEasyLogInBtn{
 width: 179px;
@@ -919,7 +945,7 @@ a:active, a:focus, a:hover, a:link, a:visited {
 /*맵 우측 도구*/
 .map_util{
     top: 40%;
-    height: 349px;
+    height: 453px;
     position: absolute;
     right: 30px;
     z-index: 1200;

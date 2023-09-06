@@ -20,10 +20,6 @@ import javax.persistence.Id;
 
 
 @NoArgsConstructor
-////@AllArgsConstructor
-////@Builder
-//@Getter
-//@Setter
 @Table(name="APARTMENT_REVIEW")
 @Entity
 @Data
