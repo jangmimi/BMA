@@ -275,3 +275,21 @@ function clearSidebar() {
     sidebarContainer.innerHTML = "";
 }
 
+// 하트 버튼을 클릭하면 매물 id 전송
+$(document).on("click", ".aHeartBtn", function() {
+    var listItem = $(this).closest("li"); // 클릭한 하트 버튼이 속한 li 요소를 찾습니다.
+    var maemulId = listItem.find(".abox").attr("href").split("/").pop(); // a 요소의 href의 maemulId를 추출합니다.
+
+    $.ajax({
+        url: "/member/qLiked", //
+        type: "POST", //
+        data: { maemulId: maemulId }, //
+        success: function(response) {
+            console.log("Ajax 요청 성공: " + response);
+            console.log("매물 아이디" + maemulId);
+        },
+        error: function(xhr, status, error) {
+            console.error("Ajax 요청 실패: " + error);
+        }
+    });
+});
