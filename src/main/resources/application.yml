@@ -12,13 +12,6 @@ spring:
       enabled: true
     restart:
       enabled: true
-<<<<<<< HEAD
-
-#  h2:
-#    console:
-#      enabled: true
-=======
->>>>>>> 28d7ebfe2d2c7ad1a9fe381e066872b4dbbeffeb
 
   # Thymeleaf 설정
   thymeleaf:
@@ -49,13 +42,8 @@ spring:
 #   데이터베이스 설정
   datasource:
     generate-unique-name: false
-#    url: jdbc:mysql://18.219.34.36:3306/bma #공용
-    url: jdbc:mysql://127.0.0.1:3306/pos #개인
+    url: jdbc:mysql://18.219.34.36:3306/bma #공용
+#    url: jdbc:mysql://127.0.0.1:3306/pos #개인
     username: root
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 28d7ebfe2d2c7ad1a9fe381e066872b4dbbeffeb
