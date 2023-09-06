@@ -36,6 +36,7 @@ public class DetailController {
 		log.info("maemulList 객체 {}", maemulRegRepository.findAll());
 		return "details/details";
 	}
+
 	
 	@GetMapping("/miniHome")
 	public String test(){
