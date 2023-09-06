@@ -41,6 +41,7 @@
             <th class="b-n">분류</th>
             <th class="b-t">제목</th>
         </tr>
+
         <tr th:each="faq : ${faq}">
             <td id = "Q">Q</td>
             <td id = "category" th:text="${faq.category}">분류</td>
