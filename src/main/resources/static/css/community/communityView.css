@@ -130,6 +130,7 @@
 
 .s-button-align button {
     position: absolute;
+    right: 20px;
     bottom: 10px;
     width: 50px;
     height: 25px;
@@ -146,6 +147,7 @@
     width: 100%;
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
+    width: 100%;
 }
 
 .s-comment-input span:first-child {
@@ -172,4 +174,8 @@
     border: none;
     color: white;
     font-weight: bold;
+}
+
+form {
+    width: 100%;
 }

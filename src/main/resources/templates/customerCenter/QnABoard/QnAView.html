@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layouts/include_footer_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>문의글 상세 페이지</title>
+    <link rel="stylesheet" th:href="@{/css/CC/qna.css}">
+    <link rel="stylesheet" th:href="@{/css/CC/CCBar.css}">
+</head>
+
+<body layout:fragment="content">
+
+    <div class="layout">
+
+        <hr/>
+            <div id="tb-box">
+                <table border="1" class="qna-tb">
+                    <tr>
+                        <th>이름<b class="boldtext">＊</b></th>
+                        <td>
+                            <label th:text="${qna.user_name}"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>이메일<b class="boldtext">＊</b></th>
+                        <td>
+                            <label th:text="${qna.user_email}"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>구분<b class="boldtext">＊</b></th>
+                        <td>
+                            <label th:text="${qna.category}"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>제목<b class="boldtext">＊</b></th>
+                        <td>
+                            <label th:text="${qna.title}"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>내용<b class="boldtext">＊</b></th>
+                        <td>
+                            <label th:text="${qna.content}"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>파일첨부</th>
+                        <td>
+                            <!-- 파일 첨부 관련 정보는 QnAEntity에서 가져와야 합니다. -->
+                            <label th:text="${qna.filename}"></label>
+                            <label th:text="${qna.filepath}"></label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        <div class="btn-group">
+        <button>
+            목록
+        </button>
+        <button>
+            삭제
+        </button>
+        </div>
+    </div>
+</body>
+</html>

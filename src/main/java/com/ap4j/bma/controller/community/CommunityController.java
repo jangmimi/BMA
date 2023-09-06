@@ -2,6 +2,9 @@ package com.ap4j.bma.controller.community;
 
 import com.ap4j.bma.model.entity.community.CommunityCommentEntity;
 import com.ap4j.bma.model.entity.community.CommunityEntity;
+
+import com.ap4j.bma.model.entity.member.MemberDTO;
+
 import com.ap4j.bma.service.community.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -69,8 +72,11 @@ public class CommunityController {
 
     //글작성
     @GetMapping("/community/write")
-    public String communityWriteForm() {
-
+    public String communityWriteForm(HttpSession session) {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
+        if(memberDTO == null){
+            return "userView/loginNeed";
+        }
         return "community/communityWrite";
     }
 
@@ -88,20 +94,22 @@ public class CommunityController {
 
     //댓글삭제
     @PostMapping("/comment/delete")
-    public String commentDelete(Integer id,Integer articleId,Model model){
-        System.out.println("코멘트아이디"+id+" 아티클아이디"+articleId);
-       communityService.communityCommentDelete(id);
-       return "redirect:/community/view?id=" + articleId;
+    public String commentDelete(Integer id, String a, Integer articleId, Model model) {
+        System.out.println("코멘트아이디" + id + " 아티클아이디" + articleId);
+        communityService.communityCommentDelete(id);
+        return "redirect:/community/view?id=" + articleId;
     }
 
     //댓글작성
     @PostMapping("/community/comment")
     public String commentWrite(@ModelAttribute("communityComment") CommunityCommentEntity communityCommentEntity, Integer articleId,
-                               HttpSession session,Model model){
-        model.addAttribute("loginMember",session.getAttribute("loginMember"));
-        CommunityEntity communityEntity = communityService.communityView(articleId); // 커뮤니티 조회 메소드를 호출하여 커뮤니티 엔티티를 가져옴
-        communityCommentEntity.setCommunityEntity(communityEntity); // communityEntity 필드 설정
-        communityService.CommentWrite(communityCommentEntity);
+                               HttpSession session, Model model) {
+
+            model.addAttribute("loginMember", session.getAttribute("loginMember"));
+            CommunityEntity communityEntity = communityService.communityView(articleId); // 커뮤니티 조회 메소드를 호출하여 커뮤니티 엔티티를 가져옴
+            communityCommentEntity.setCommunityEntity(communityEntity); // communityEntity 필드 설정
+            communityService.CommentWrite(communityCommentEntity);
+
         return "redirect:/community/view?id=" + articleId;
     }
 
@@ -110,13 +118,13 @@ public class CommunityController {
     @GetMapping("/community/view")
     public String communityView(Model model, Integer id) {
         System.out.println(id);
-        model.addAttribute("comment",communityService.communityCommentEntity(id));
+        model.addAttribute("comment", communityService.communityCommentEntity(id));
         model.addAttribute("article", communityService.communityView(id));
-        model.addAttribute("prevArticle",  communityService.getPreArticle(id));
-        model.addAttribute("nextArticle",  communityService.getNextArticle(id));
+        model.addAttribute("prevArticle", communityService.getPreArticle(id));
+        model.addAttribute("nextArticle", communityService.getNextArticle(id));
         return "community/communityView";
     }
-    
+
 
     //게시글 삭제
     @GetMapping("/community/delete")

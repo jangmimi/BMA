@@ -1,3 +1,13 @@
+$(document).ready(function() {
+    var currentDate = new Date();
+    var dateString = currentDate.toISOString().slice(0, 10);
+
+    var dateLabel = $("label[name='date']");
+    dateLabel.text(dateString);
+
+    dateLabel.after('<input type="hidden" name="date" value="' + dateString + '">');
+});
+
 
     function validateForm() {
         var title = document.forms["writeForm"]["title"].value;

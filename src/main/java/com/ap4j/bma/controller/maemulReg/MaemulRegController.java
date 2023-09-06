@@ -1,12 +1,17 @@
 package com.ap4j.bma.controller.maemulReg;
 
+import com.ap4j.bma.model.entity.meamulReg.MaemulPhotoEntity;
 import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
+import com.ap4j.bma.model.entity.member.MemberDTO;
+import com.ap4j.bma.service.maemulReg.MaemulPhotoService;
 import com.ap4j.bma.service.maemulReg.MaemulRegService;
 import groovy.util.logging.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
@@ -19,10 +24,17 @@ public class MaemulRegController {
 
     @Autowired
     private MaemulRegService maemulRegService;
+    @Autowired
+    private MaemulPhotoService maemulPhotoService;
 
     //약관동의 페이지
     @GetMapping("/agree")
-    public String agreementForm() {
+    public String agreementForm(HttpSession session) {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
+        if(memberDTO == null){
+            return "userView/loginNeed";
+        }
+
         return "maemulReg/agree";
     }
 
@@ -35,13 +47,12 @@ public class MaemulRegController {
 
     //매뮬정보저장
     @PostMapping("/maemulinfo")
-    public String saveMaemulInfo(@ModelAttribute MaemulRegEntity maemulRegEntity, Model model) {
+    public String saveMaemulInfo(@ModelAttribute MaemulRegEntity maemulRegEntity, MaemulPhotoEntity maemulPhotoEntity, Model model) {
         // 매물 정보를 임시로 세션에 저장
         model.addAttribute("maemulRegEntity", maemulRegEntity);
         return "redirect:/moreinfo";
     }
 
-    // 상세 정보 입력 페이지
     // 상세 정보 입력 페이지
     @GetMapping("/moreinfo")
     public String moreinfoForm(Model model) {
@@ -53,16 +64,19 @@ public class MaemulRegController {
 
     // 상세 정보 저장
     @PostMapping("/moreinfo")
-    public String saveMoreInfo(@ModelAttribute MaemulRegEntity maemulRegEntity, RedirectAttributes redirectAttributes) {
-        // 매물 정보를 데이터베이스에 저장
-        MaemulRegEntity savedEntity = maemulRegService.saveMaemulInfo(maemulRegEntity);
+    @Transactional
+    public String saveMoreInfo(@ModelAttribute MaemulRegEntity maemulRegEntity,
+                               @RequestParam("imageFiles") MultipartFile file,
+                               RedirectAttributes redirectAttributes) throws Exception{
+            // 매물 정보를 데이터베이스에 저장
+            MaemulRegEntity savedEntity = maemulRegService.saveMaemulInfo(maemulRegEntity);
 
-        // 저장된 매물 정보의 ID를 리다이렉트 시에 전달
-        redirectAttributes.addAttribute("maemulId", savedEntity.getId());
+            // 저장된 매물 정보의 ID를 리다이렉트 시에 전달
+            redirectAttributes.addAttribute("maemulId", savedEntity.getId());
 
-        return "redirect:/confirmation";
+            return "redirect:/confirmation";
+
     }
-
     // 확인 페이지
     @GetMapping("/confirmation")
     public String confirmationPage(@RequestParam("maemulId") Integer maemulId, Model model) {
@@ -78,4 +92,5 @@ public class MaemulRegController {
     }
 
 }
+
 
