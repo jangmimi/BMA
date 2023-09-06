@@ -8,7 +8,6 @@ import javax.validation.constraints.NotNull;
 @Table(name="liked") // DB 테이블 이름 지정
 @Entity
 @NoArgsConstructor
-//@AllArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -16,22 +15,26 @@ public class LikedEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "nickname", referencedColumnName = "nickname")
     @NotNull
-    private String email;
+    private String nickname;
+
     @NotNull
     private String road_name;
 
     @Builder
-    public LikedEntity(Long id, String email, String road_name) {
+    public LikedEntity(Long id, String nickname, String road_name) {
         this.id = id;
-        this.email = email;
+        this.nickname = nickname;
         this.road_name = road_name;
     }
 
     public LikedDTO toDTO() {
         return LikedDTO.builder()
                 .id(id)
-                .email (email)
+                .nickname (nickname)
                 .road_name(road_name)
                 .build();
     }
