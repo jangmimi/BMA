@@ -124,7 +124,15 @@
                     <!-- 모달창으로 비밀번호 입력받고 일치 시 탈퇴 -->
                     <!-- 회원탈퇴 버튼 -->
                     <div class="o-leaveBtn-c">
-                        <button type="button" class="btn btn-outline-secondary" id="leaveBtn">회원탈퇴</button>
+                        <div th:if="${loginMember.root == 1}">
+                            <button type="button" class="btn btn-outline-secondary" id="leaveBtn">회원탈퇴</button>
+                        </div>
+                        <div th:else>
+                            <!-- id 기준 단순 탈퇴 처리 -->
+                            <form th:action="@{/member/qLeaveMember/__${id}__}" method="POST" onsubmit="return oDeleteCheck()">
+                                <input type="submit" class="btn btn-outline-secondary mt-5" id="oDeleteMemberBtn" value="회원탈퇴" />
+                            </form>
+                        </div>
                     </div>
 
                     <!-- 회원탈퇴 비밀번호 입력 모달 -->

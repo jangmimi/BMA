@@ -19,8 +19,10 @@ $(document).ready(function() {
         }
     });
     $("#pwd").keyup(function(){
+    // 비밀번호 형식 체크 : 8자 이상, 20자 이하, 숫자와 영문 조합
         let pwdValue = $(this).val();
-        if (pwdValue.length < 8 || pwdValue.length > 20) {
+        let pwdreg = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
+        if (pwdValue.length < 8 || pwdValue.length > 20 || !pwdreg.test(pwdValue)) {
             $("#opwdCheck2").css("display","block");
         } else {
             $("#opwdCheck2").css("display","none");

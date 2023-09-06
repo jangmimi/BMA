@@ -3,10 +3,14 @@ package com.ap4j.bma.controller.member;
 import com.ap4j.bma.config.PasswordEncoderConfig;
 import com.ap4j.bma.model.entity.customerCenter.QnAEntity;
 import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
+import com.ap4j.bma.model.entity.member.LikedEntity;
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
+import com.ap4j.bma.model.entity.member.RecentEntity;
 import com.ap4j.bma.service.maemulReg.MaemulRegService;
+import com.ap4j.bma.service.member.LikedService;
 import com.ap4j.bma.service.member.MemberService;
+import com.ap4j.bma.service.member.RecentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,10 +35,13 @@ public class MemberController {
     private MemberService qMemberService;       // 서비스 객체 생성
 
     @Autowired
-    private PasswordEncoderConfig pwdConfig;
+    private LikedService likedService;
 
     @Autowired
-    private MaemulRegService maemulRegService;
+    private RecentService recentService;
+
+    @Autowired
+    private PasswordEncoderConfig pwdConfig;
 
     /** 로그인 여부 체크 */
     public boolean loginStatus(HttpSession session) {
@@ -123,7 +130,7 @@ public class MemberController {
         log.info("memberDTO : " + memberDTO);
         MemberDTO loginMember = qMemberService.login(memberDTO);
 
-        if(loginMember != null) {
+        if(loginMember != null && !loginMember.getMember_leave()) {
             session.setAttribute("errorMsg", null);
             log.info(loginMember.toString());
             log.info("로그인 성공");
@@ -204,6 +211,9 @@ public class MemberController {
             loginMember.setNickname((String) userInfo.get("nickname"));
             loginMember.setTel((String) userInfo.get("phone_number"));
             loginMember = qMemberService.login(loginMember);
+
+            if(loginMember == null) { return "redirect:/member/qLoginForm"; }
+
             loginMember.toEntity();
 
             model.addAttribute("loginMember",loginMember);
@@ -307,6 +317,22 @@ public class MemberController {
         log.info("MemberController - qLiked() 실행");
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
+        String nickname = memberDTO.getNickname();
+
+        List<LikedEntity> mmLikedList = likedService.getAllList();
+
+        Long mmAllLikedCnt = likedService.countAll();
+        log.info(mmLikedList.toString());
+        log.info(String.valueOf(mmAllLikedCnt));
+
+        List<MaemulRegEntity> mmList = qMemberService.getAllList();
+        log.info(mmList.toString());
+
+        model.addAttribute("mmLiked",mmLikedList);
+        model.addAttribute("mmAllLikedCnt",mmAllLikedCnt);
+        model.addAttribute("mmList",mmList);
+
         return "userView/maemulLiked";
     }
 
@@ -316,12 +342,20 @@ public class MemberController {
         log.info("MemberController - qRecent() 실행");
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
+        List<RecentEntity> mmRecentList = recentService.getAllList();
+        Long mmAllRecentCnt = recentService.countAll();
+        log.info(mmRecentList.toString());
+        log.info(String.valueOf(mmAllRecentCnt));
+
+        model.addAttribute("mmRecentList",mmRecentList);
+        model.addAttribute("mmAllRecentCnt",mmAllRecentCnt);
+
         return "userView/maemulRecent";
     }
 
     /** 기본 회원탈퇴 (js ajax 활용) */   // sns 탈퇴 시 로그인 별도 처리 필요
     @PostMapping("/qLeaveMember2")
-    public ResponseEntity<Integer> qLeaveMember2(@RequestParam String password, HttpSession session, SessionStatus sessionStatus) {
+    public ResponseEntity<Integer> qLeaveMember2(@RequestParam(required = false) String password, HttpSession session, SessionStatus sessionStatus) {
         Long id =  ((MemberDTO) session.getAttribute("loginMember")).getId();
         boolean success = qMemberService.leaveMember(id, password, sessionStatus, session);
 
@@ -331,15 +365,16 @@ public class MemberController {
             return ResponseEntity.ok(0);
         }
     }
-//    @PostMapping("/qLeaveMember/{id}")    // 기존 id사용해서 탈퇴처리했던 코드 남겨둠
-//    public String leaveMember(HttpSession session, SessionStatus sessionStatus) {
-//        log.info("MemberController - leaveMember() 실행");
-//
-//        Long id =  ((MemberDTO) session.getAttribute("loginMember")).getId();
-////        qMemberService.leaveMember(id, sessionStatus, session);
-//
-//        return "redirect:/";
-//    }
+    @PostMapping("/qLeaveMember/{id}")    // 기존 id사용해서 탈퇴처리했던 코드 남겨둠
+    public String leaveMember(HttpSession session, SessionStatus sessionStatus) {
+        log.info("MemberController - leaveMember() 실행");
+
+        Long id =  ((MemberDTO) session.getAttribute("loginMember")).getId();
+        String pwd =  ((MemberDTO) session.getAttribute("loginMember")).getPwd();
+        qMemberService.leaveMember(id, pwd, sessionStatus, session);
+
+        return "redirect:/";
+    }
 
     /** 이메일 중복 체크 (js ajax 활용) */
     @PostMapping("/qEmailCheck")
