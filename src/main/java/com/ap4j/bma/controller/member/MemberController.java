@@ -24,6 +24,7 @@ import javax.servlet.http.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @SessionAttributes("loginMember")   // 세션 자동 설정
@@ -320,9 +321,10 @@ public class MemberController {
         log.info("MemberController - qLiked() 실행");
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
-        log.info("저장한 관심매물아이디 : " + maemulId);
-        MaemulRegEntity finemm = qMemberService.findMaemulById(maemulId);
-        log.info("해당 매물정보 : " + finemm);
+        // 매물 좋아요 클릭 시 해당 매물 정보
+//        log.info("저장한 관심매물아이디 : " + maemulId);
+//        MaemulRegEntity finemm = qMemberService.findMaemulById(maemulId);
+//        log.info("해당 매물정보 : " + finemm);
 
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
         String nickname = memberDTO.getNickname();
@@ -332,7 +334,7 @@ public class MemberController {
 
         LikedEntity likedEntity = new LikedEntity();
         likedEntity.setNickname(nickname);
-        likedEntity.setRoad_name(finemm.getAddress());
+//        likedEntity.setRoad_name(finemm.getAddress());
 
         likedService.save(likedEntity);
         log.info("저장 후 likedEntity : " + likedEntity);
@@ -341,8 +343,16 @@ public class MemberController {
 //        log.info("좋아요한 매물 + " + likedlist.toString());
 
         List<LikedEntity> mmLikedList = likedService.getAllList();
+        List<MaemulRegEntity> mmFilterList = mmLikedList.stream()
+                        .map(LikedEntity -> {
+                            MaemulRegEntity mmEntity = new MaemulRegEntity();
+                            mmEntity.setAddress(likedEntity.getRoad_name());
+                            return mmEntity;
+                        })
+                                .collect(Collectors.toList());
 
-        Long mmAllLikedCnt = likedService.countAll();
+
+        Long myLikedCnt = likedService.countAll();
 //        log.info(mmLikedList.toString());
 //        log.info(String.valueOf(mmAllLikedCnt));
 
@@ -350,7 +360,7 @@ public class MemberController {
 //        log.info(mmList.toString());
 
         model.addAttribute("mmLiked",mmLikedList);
-        model.addAttribute("mmAllLikedCnt",mmAllLikedCnt);
+        model.addAttribute("mmLikedCnt",myLikedCnt);
         model.addAttribute("mmList",mmList);
 
         return "userView/maemulLiked";
