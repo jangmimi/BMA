@@ -308,6 +308,9 @@ public class MemberController {
         model.addAttribute("mmList",mmList);
         model.addAttribute("mmAllCnt",mmAllCnt);
 
+
+        // 서영이 작업
+
         return "userView/maemulManagement";
     }
 
