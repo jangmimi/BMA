@@ -37,7 +37,6 @@ public class MaemulRegEntity {
     private String shortTermRental;//단기임대
     private String availableMoveInDate;//입주가능일
     private Long loanAmount;//융자금
-//    private
 
 
     //거래 유형
