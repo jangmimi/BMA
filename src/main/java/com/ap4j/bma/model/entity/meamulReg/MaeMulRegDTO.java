@@ -33,24 +33,23 @@ public class MaeMulRegDTO {
     private int totalParking;//총 주차대수
     private String shortTermRental;//단기임대
     private String availableMoveInDate;//입주가능일
-    private Long loanAmount;//융자금
+    private int loanAmount;//융자금
 
 
     //거래 유형
     private String tradeType;//거래 유형
 
     //월세
-    private Long monthlyForRent; //희망보증금
-    private Long monthlyRent; //희망월세
-    private Long m_managementFee;//관리비
+    private int monthlyForRent; //희망보증금
+    private int monthlyRent; //희망월세
 
 
     //전세
-    private Long depositForLease; //희망 전세
-    private Long d_managementFee; //관리비
+    private int depositForLease; //희망 전세
+    private int managementFee; // 전 월세 관리비
 
     //매매
-    private Long SellingPrice;//희망매매가
+    private int SellingPrice;//희망매매가
 
     //상세정보 페이지
     private String title; //제목
@@ -66,4 +65,7 @@ public class MaeMulRegDTO {
     //좌표
     private Double longitude; //경도
     private Double latitude; //위도
+
+    //등록일자
+    private String createdAt;
 }

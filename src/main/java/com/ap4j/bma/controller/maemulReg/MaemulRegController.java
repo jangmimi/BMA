@@ -7,9 +7,7 @@ import com.ap4j.bma.service.maemulReg.MaemulPhotoService;
 import com.ap4j.bma.service.maemulReg.MaemulRegService;
 import groovy.util.logging.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +16,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
-import java.io.File;
-import java.io.IOException;
 
 @SessionAttributes({"loginMember", "maemulRegEntity"})
 @Controller
