@@ -318,24 +318,29 @@ public class MemberController {
     @RequestMapping("/qLiked")
     public String qInterest(HttpSession session, Model model, Integer maemulId) {
         log.info("MemberController - qLiked() 실행");
-        System.out.println("매물아이디 : " + maemulId);
+        log.info("저장한 관심매물아이디 : " + maemulId);
+
+
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
         String nickname = memberDTO.getNickname();
 
-        List<LikedEntity> mmLikedList = likedService.getAllList();
+        List<LikedEntity> likedlist = likedService.findLikedByNickname(nickname);
+        log.info(likedlist.toString());
 
-        Long mmAllLikedCnt = likedService.countAll();
-        log.info(mmLikedList.toString());
-        log.info(String.valueOf(mmAllLikedCnt));
-
-        List<MaemulRegEntity> mmList = qMemberService.getAllList();
-        log.info(mmList.toString());
-
-        model.addAttribute("mmLiked",mmLikedList);
-        model.addAttribute("mmAllLikedCnt",mmAllLikedCnt);
-        model.addAttribute("mmList",mmList);
+//        List<LikedEntity> mmLikedList = likedService.getAllList();
+//
+//        Long mmAllLikedCnt = likedService.countAll();
+//        log.info(mmLikedList.toString());
+//        log.info(String.valueOf(mmAllLikedCnt));
+//
+//        List<MaemulRegEntity> mmList = qMemberService.getAllList();
+//        log.info(mmList.toString());
+//
+//        model.addAttribute("mmLiked",mmLikedList);
+//        model.addAttribute("mmAllLikedCnt",mmAllLikedCnt);
+//        model.addAttribute("mmList",mmList);
 
         return "userView/maemulLiked";
     }
