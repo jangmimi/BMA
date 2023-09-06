@@ -31,7 +31,7 @@ public class MaemulRegService {
         // 매물 ID로 매물 정보를 조회
         return maemulRegRepository.findById(maemulId).orElse(null);
     }
-
+    
     // 매물 좌표값 업데이트
     public void updateMeamulReg(Integer maemulId, Double latitude, Double longitude) {
         MaemulRegEntity updateMaemul = maemulRegRepository.findById(maemulId).orElse(null);

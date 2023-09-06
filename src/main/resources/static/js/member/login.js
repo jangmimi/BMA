@@ -18,7 +18,11 @@ function oLoginCheck() {
     }
 };
 
-<!-- 로그인 체크 -->
+
+
+
+
+/* 로그인 체크 */
 //function checkLogin() {
 //    let email = $('#email').val();
 //    let pwd = $('#pwd').val();

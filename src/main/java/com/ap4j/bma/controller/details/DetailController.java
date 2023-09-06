@@ -19,7 +19,7 @@ public class DetailController {
 		return "details/details";
 	}
 	
-	@GetMapping("/test")
+	@GetMapping("/miniHome")
 	public String test(){
 	    log.info(">>>>> DetailController.test.executed()");
 	    return "details/miniHome";

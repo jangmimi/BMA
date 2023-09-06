@@ -1,11 +1,13 @@
 package com.ap4j.bma.controller.map;
 
+import com.ap4j.bma.model.entity.TalkTalk.TalkTalkReviewEntity;
 import com.ap4j.bma.model.entity.apt.AptDTO;
 import com.ap4j.bma.model.entity.apt.AptRealTradeDTO;
 import com.ap4j.bma.model.entity.apt.HangJeongDongDTO;
 import com.ap4j.bma.model.entity.meamulReg.MaeMulRegDTO;
 import com.ap4j.bma.service.apartment.ApartmentServiceImpl;
 import com.ap4j.bma.service.maemulReg.MaemulRegService;
+import com.ap4j.bma.service.talktalk.ReviewService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,8 @@ import java.util.Map;
 @Controller
 @RequestMapping("map")
 public class MapController {
+    @Autowired
+    private ReviewService reviewService;
 
 
     @Autowired
@@ -59,20 +63,23 @@ public class MapController {
 
         return ResponseEntity.ok(responseData);
     }
+
+    //리뷰리스트 출력하는 메서드
     @GetMapping("/main")
-    public String getMarker() {
+    public String getMarker(HttpSession session, Model model) {
+        log.info("map main 실행!");
+        log.info("로그인한 회원정보~ : " + session.getAttribute("loginMember"));
+
+        List<TalkTalkReviewEntity> list = reviewService.reviewList();
+        log.info("맵컨트롤러에서 리뷰리스트출력~ : "+list.toString());
+
+        //서비스에서 생성한 리스트를 list라는 이름으로 반환하겠다.
+        model.addAttribute("list", list);
+
         return "kakaoMap/markerCluster";
     }
 
-//    @GetMapping("/main")
-//    public String getOtherData(Model model) {
-//        // 다른 데이터 가져오기
-//        // 예를 들어, 다른 데이터를 가져오는 로직을 여기에 구현하고, 모델에 추가하세요.
-//        // List<OtherDataDTO> otherDataList = aptServiceImpl.getOtherData();
-//        // model.addAttribute("otherDataList", otherDataList);
-//
-//        return "kakaoMap/markerCluster";  // 다른 데이터를 표시할 뷰 페이지로 리턴
-//    }
+
 
     @RequestMapping("map")
     public String map(){

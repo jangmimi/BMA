@@ -1,8 +1,9 @@
 
-    .layout{
+.layout{
     width : 80%;
     margin : auto;
     margin-top: 40px;
+
     }
 
      table{
@@ -67,6 +68,7 @@
     #pre-next{
     margin-top : 50px;
     text-align: center;
+    margin-bottom: 30px;
     }
 
     .pre-next{
@@ -76,3 +78,98 @@
     margin-bottom: 5px;
     }
 
+.s-commentbox {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+}
+
+.s-commentbox-titlecount {
+    font-weight: bold;
+    width: 100%;
+    border-bottom: 3px solid #26A9E0;
+    padding-bottom: 5px;
+    margin: 0;
+    color: #5c5c5c;
+}
+
+.s-comment {
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    position: relative;
+}
+
+.s-comment-info {
+    margin: 10px 30px;
+    font-size: small;
+}
+
+.s-comment-info span {
+    color: #b6b6b6;
+}
+
+.s-comment-info span:first-child {
+    font-size: 16px;
+    color: #222;
+    font-weight: 700;
+}
+
+.s-comment-content {
+    margin: 10px 30px 0px 30px;
+    color: #5c5c5c;
+}
+
+.s-button-align {
+    display: flex;
+    justify-content: right;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.s-button-align button {
+    position: absolute;
+    bottom: 10px;
+    width: 50px;
+    height: 25px;
+    background-color: #26A9E0;
+    border: none;
+    color: white;
+}
+
+.s-comment-input {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+.s-comment-input span:first-child {
+    background-color: #ececec;
+    height: 200px;
+    width: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.s-comment-input textarea {
+    width: 67%;
+    height: 82%;
+    border: 1px solid #ddd;
+    resize: none;
+    outline: #b6b6b6;
+}
+
+.s-comment-input button {
+    width: 15%;
+    height: 155px;
+    background-color: #26A9E0;
+    border: none;
+    color: white;
+    font-weight: bold;
+}
