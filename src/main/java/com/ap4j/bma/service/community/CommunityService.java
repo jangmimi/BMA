@@ -11,12 +11,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class CommunityService {
     @Autowired
     private CommunityRepository communityRepository;
     @Autowired
-    private CommunityCommentEntity communityCommentEntity;
+    private CommunityCommentRepository communityCommentRepository;
+
     //글작성처리
     public CommunityEntity saveCommunity(CommunityEntity communityEntity) {
         CommunityEntity savedEntity = communityRepository.save(communityEntity);
@@ -47,10 +51,21 @@ public class CommunityService {
         return communityRepository.findById(id).get();
     }
 
-    //댓글보기
-//    public CommunityCommentEntity communityCommentEntity(Integer id){
-//        return CommunityCommentRepository.findById(id).orElse(null);
-//    }
+    //댓글 삭제
+    public void communityCommentDelete(Integer id){
+        communityCommentRepository.deleteById(id);
+    }
+
+    //댓글 보기
+    public List<CommunityCommentEntity> communityCommentEntity(Integer id){
+        List<CommunityCommentEntity> commentList = communityCommentRepository.findAllComment(id);
+        return commentList;
+    }
+
+    //댓글 작성
+    public void CommentWrite(CommunityCommentEntity communityCommentEntity){
+        communityCommentRepository.save(communityCommentEntity);
+    }
 
     //이전글
     public Object getPreArticle(Integer id) {

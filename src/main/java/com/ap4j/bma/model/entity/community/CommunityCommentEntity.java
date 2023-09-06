@@ -13,10 +13,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "community-comment")
 public class CommunityCommentEntity {
 
-    @ManyToOne(cascade=CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name="community_id", referencedColumnName = "id")
     private CommunityEntity communityEntity;
 
@@ -28,5 +27,9 @@ public class CommunityCommentEntity {
 
     @CreationTimestamp
     private LocalDateTime createdAt;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
 }

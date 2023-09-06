@@ -58,9 +58,9 @@ html,body{
 
 .aSearch_area{
     width: 185px;
-        height: 29px;
-        border: 1px solid lightgray;
-        border-radius: 8px;
+    height: 29px;
+    border: 1px solid lightgray;
+    border-radius: 8px;
 }
 .aSearchInput{
     border: none;
@@ -94,33 +94,33 @@ html,body{
 
 
 .nav-link{
-  font-size: 15px;
-  text-align: center;
-  padding: 10px;
+    font-size: 15px;
+    text-align: center;
+    padding: 10px;
 }
 .nav{
-  --bs-nav-link-hover-color: #1d80b2;
-  --bs-nav-link-color: #6c6c6c;
+    --bs-nav-link-hover-color: #1d80b2;
+    --bs-nav-link-color: #6c6c6c;
 }
 .nav-pills {
-  --bs-nav-pills-link-active-color: #fff;
-  --bs-nav-pills-link-active-bg: #26abed;
+    --bs-nav-pills-link-active-color: #fff;
+    --bs-nav-pills-link-active-bg: #26abed;
 }
 .nav-tabs{
---bs-nav-tabs-link-active-color: #26abed;
+    --bs-nav-tabs-link-active-color: #26abed;
 }
 #navbar-example2{
-  --bs-navbar-padding-x:none;
-  height: 10px;
+    --bs-navbar-padding-x:none;
+    height: 10px;
 }
 #nav-pills.nav.nav-pills{
-  justify-content: space-evenly;
-  width: 370px;
+    justify-content: space-evenly;
+    width: 370px;
 }
 *,
 *::before,
 *::after {
-  box-sizing: unset;
+    box-sizing: unset;
 }
 /* .nav-link:hover{
   color:#26abed;
@@ -135,35 +135,35 @@ html,body{
 
 /*클러스터러관련*/
 .overlay_info {
-  border-radius: 6px;
-  margin-bottom: 12px;
-  float:left;position:
-  relative; border: 1px solid #ccc;
-  border-bottom: 2px solid #ddd;
-  background-color:#fff;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    float:left;position:
+        relative; border: 1px solid #ccc;
+    border-bottom: 2px solid #ddd;
+    background-color:#fff;
 }
 .overlay_info:nth-of-type(n) {
-  border:0; box-shadow: 0px 1px 2px #888;
+    border:0; box-shadow: 0px 1px 2px #888;
 }
 .overlay_info a {
-  display: block;
-  height:40px;
-  background: #d95050;
-  background: #26abed url() no-repeat right 14px center;
-  text-decoration: none;
-  color: #fff;
-  padding:12px 36px 12px 14px;
-  font-size: 14px;
-  border-radius: 6px 6px 0 0
+    display: block;
+    height:40px;
+    background: #d95050;
+    background: #26abed url() no-repeat right 14px center;
+    text-decoration: none;
+    color: #fff;
+    padding:12px 36px 12px 14px;
+    font-size: 14px;
+    border-radius: 6px 6px 0 0
 }
 .overlay_info a strong {
-   no-repeat; padding-left: 27px;}
+    no-repeat; padding-left: 27px;}
 .overlay_info .desc {
-  padding:14px;position: relative; min-width: 14px; height: 14px;}
+    padding:14px;position: relative; min-width: 14px; height: 14px;}
 .overlay_info .address {
-  font-size: 12px; color: #333; position: absolute; white-space: normal}
+    font-size: 12px; color: #333; position: absolute; white-space: normal}
 .overlay_info:after {
-  content:'';position: absolute; margin-left: -11px; left: 50%; bottom: -12px; width: 22px; height: 12px; background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png) no-repeat 0 bottom;}
+    content:'';position: absolute; margin-left: -11px; left: 50%; bottom: -12px; width: 22px; height: 12px; background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png) no-repeat 0 bottom;}
 
 
 
@@ -176,8 +176,8 @@ html,body{
 }
 
 .form-control{
-  width:30px;
-  border: none;
+    width:30px;
+    border: none;
 }
 
 
@@ -190,155 +190,155 @@ html,body{
 
 /*사이드바 속 세부 조정들*/
 .asideBarAll{
-  position: absolute;
-  top: 130px;
-  width: 400px;
-  z-index: 1100;
-  height: calc(100% - 60px);
-  line-height: 1;
+    position: absolute;
+    top: 130px;
+    width: 400px;
+    z-index: 1100;
+    height: calc(100% - 60px);
+    line-height: 1;
 }
 .sideContents{
-  overflow-y: auto;
-  overflow-x: hidden;
-  height: 100%;
-  font-size: 14px;
-  /* border: 3px solid blue; */
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100%;
+    font-size: 14px;
+    /* border: 3px solid blue; */
 }
 .asideMenu{
-  height: 100%;
+    height: 100%;
 }
 .input-group{
-  justify-content: space-between;
+    justify-content: space-between;
 }
 /*위치명,위치세부,뒤로가기,끄기,공유*/
 .titlearea,.left ,.right{
-  display: flex;
+    display: flex;
 }
 .left{
-  margin-top: 10px;
+    margin-top: 10px;
 }
 .left1{
-  width:263px;
+    width:263px;
 }
 .right{
-  justify-content: right;
+    justify-content: right;
 }
 .title,.titleModal{
-  font-size: 17px;
+    font-size: 17px;
     font-weight: bold;
     white-space: nowrap;
     line-height: 22px;
     letter-spacing: -1px;
 }
 .towriteBtn{
-  background-color: transparent;
-  border: none;
+    background-color: transparent;
+    border: none;
 }
 #staticBackdrop2.modal.fade.show{
-  width: 300px;
-  height: 1000px;
-  left: 399px;
-  top:41px;
+    width: 300px;
+    height: 1000px;
+    left: 399px;
+    top:41px;
 }
 #exampleModalToggle2{
-  width: 300px;
-  height: 513px;
-  left: 399px;
+    width: 300px;
+    height: 513px;
+    left: 399px;
 }
 .aPostcontent{
-  border: 2px solid #26abed62;
-  width: 93%;
-  height: 150px;
+    border: 2px solid #26abed62;
+    width: 93%;
+    height: 150px;
 
-  font-size: 13px;
-  padding: 9px;
+    font-size: 13px;
+    padding: 9px;
 
-  margin-bottom: 15px;
+    margin-bottom: 15px;
 }
 .css-2stcwj.eke1oq31{
-  background-color: #26abed33;
-  padding: 15px;
+    background-color: #26abed33;
+    padding: 15px;
 }
 .css-1pprlvp {
-  font-size: 15px;
-  font-weight: normal;
-  line-height: 1.31;
-  color: #26abed;
+    font-size: 15px;
+    font-weight: normal;
+    line-height: 1.31;
+    color: #26abed;
 }
 .name-container{
-  margin-top: 19px;
+    margin-top: 19px;
 }
 .input.name{
-  border: none;
-  width: 160px;
+    border: none;
+    width: 160px;
 }
 .id,.arepNickname{
-  font-size: 13px;
+    font-size: 13px;
 }
 .arepUserInfo{
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
 .uploadDate{
-  -webkit-font-smoothing: antialiased;
+    -webkit-font-smoothing: antialiased;
 }
 .acontent{
-  margin-top: 10px;
-  padding: 10px;
-  height: 137px;
-  border: 1px solid #26abed33;
-  border-radius: 10px;
-  resize: none;
-  font-size: 15px;
-  line-height:20px;
+    margin-top: 10px;
+    padding: 10px;
+    height: 137px;
+    border: 1px solid #26abed33;
+    border-radius: 10px;
+    resize: none;
+    font-size: 15px;
+    line-height:20px;
 }
 .areplyOnresitell{
-  margin-top: 10px;
+    margin-top: 10px;
 }
 .css-mkzt4e {
-  display: inline-block;
-  margin-left: 2px;
+    display: inline-block;
+    margin-left: 2px;
 }
 .col-md-3.ms-auto{
-  width: 100%;
+    width: 100%;
 }
 .storyList{
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    align-items: center;
 }
 #ResidentReviewCheckbox{
-  accent-color: #26abed;
+    accent-color: #26abed;
 }
 .residentsTell{
-  font-size: 14px;
+    font-size: 14px;
 }
 .apostAndReply{
-  margin-top: 20px;
+    margin-top: 20px;
 }
 .dropdown.option{
-  background-color: #26abed;
+    background-color: #26abed;
 }
 .arepContentAlign,.areplyOnPostAlign{
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
 }
 .arepId{
-  font-size: 10px;
+    font-size: 10px;
 }
 .arepContent{
-  background: #26abed39;
-  width: 204px;
-  height: 40px;
-  border-radius: 10px;
+    background: #26abed39;
+    width: 204px;
+    height: 40px;
+    border-radius: 10px;
 
-  font-size: 13px;
-  padding: 10px;
+    font-size: 13px;
+    padding: 10px;
 }
 .areplyOnReply{
-  font-size: 13px;
-  padding-left: 23px;
+    font-size: 13px;
+    padding-left: 23px;
 }
 .areplyOnPostAlign{
     margin-top: 10px;
@@ -358,36 +358,36 @@ html,body{
     font-size: 15px;
 }
 .btn.btn-primary.aSummitReply{
-  background-color: #fff;
+    background-color: #fff;
 
-  border-left: 1px solid rgba(38, 171, 237, 0.2);
+    border-left: 1px solid rgba(38, 171, 237, 0.2);
 
-  height: 25px;
-  width: 35px;
-  font-size: 14px;
-  color:#26abed;
-  justify-content: normal;
+    height: 25px;
+    width: 35px;
+    font-size: 14px;
+    color:#26abed;
+    justify-content: normal;
 }
 
 .sellInfoTr{
-  height: 40px;
+    height: 40px;
 }#rpSupplyAreaUnitPrice,#rpUseAreaUnitPrice{
-  height: 80px;
-}
+     height: 80px;
+ }
 
 
 
 /*버튼들세부조정*/
 .btn-primary {
-  --bs-btn-color: #fff;
-  --bs-btn-bg: #26abed;
-  --bs-btn-border-color: #26abed;
-  --bs-btn-hover-color: #fff;
-  --bs-btn-hover-bg: #36bcff;
-  --bs-btn-active-color: #26abed;
-  --bs-btn-active-bg: #ffffff;
-  --bs-btn-active-border-color: #ffffff;
-  --bs-btn-hover-border-color: #ffffff;
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #26abed;
+    --bs-btn-border-color: #26abed;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #36bcff;
+    --bs-btn-active-color: #26abed;
+    --bs-btn-active-bg: #ffffff;
+    --bs-btn-active-border-color: #ffffff;
+    --bs-btn-hover-border-color: #ffffff;
 }
 .btn-outline-primary {
     --bs-btn-color: #5d5d5d;
@@ -398,69 +398,69 @@ html,body{
     --bs-btn-hover-border-color: #26abed;
 }
 .btn-close{
-  padding-top: 30px;
+    padding-top: 30px;
 }
 
 #yBtm{
-  width:84px;
-  margin:1px;
+    width:84px;
+    margin:1px;
 }
 
 .btn.btn-primary.spriceAlert{
-  display: flex;
-  justify-content: center;
-  padding-left: 20px;
+    display: flex;
+    justify-content: center;
+    padding-left: 20px;
 
-  background-color: #26abed;
-  color: white;
-  width: 40px;
-  height: 40px;
-  border: none;
+    background-color: #26abed;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border: none;
 
-  align-items: center;
-  text-align: center;
+    align-items: center;
+    text-align: center;
 }
 .btn.btn-primary.spriceAlert{
-  margin-top: 20px;
+    margin-top: 20px;
 
-  background-color: #26abed;
-  color: white;
+    background-color: #26abed;
+    color: white;
 
-  border-radius: 15px;
+    border-radius: 15px;
 }
 .btn.btn-primary.review{
-  width: 29px;
-  height: 23px;
-  padding-left: 15px;
+    width: 29px;
+    height: 23px;
+    padding-left: 15px;
 }
 .btn.btn-primary.dropdown-toggle.tellOption{
-  height: 14px;
-  font-size: 14px;
+    height: 14px;
+    font-size: 14px;
 
 }
 .writeBfr{
-  background-color: transparent;
-  border: none;
+    background-color: transparent;
+    border: none;
 }
 .btn-write{
-  width: 100%;
-  height: 35px;
-  display:flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #26abed;
-  border-radius: 10px;
+    width: 100%;
+    height: 35px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #26abed;
+    border-radius: 10px;
 }
 
 
 .ringimg,.penImg{
-  background-color: transparent;
+    background-color: transparent;
 }
 
 
 .shareBtn,.etcBtn{
-  border: none;
-  background-color: transparent;
+    border: none;
+    background-color: transparent;
 }
 .btn.btn-primary.map-utilSBtn{
     width:26px;
@@ -493,27 +493,27 @@ html,body{
     border:4px solid #f166ff;
 }
 .dropdown-menu.aTtang.show{
-  padding: 20px;
-  width: 429px;
-  height: 159px;
-  position: absolute;
-  inset: 0px auto auto 0px;
-  margin: 0px;
-  transform: translate3d(571px, 55.5px, 0px);
+    padding: 20px;
+    width: 429px;
+    height: 159px;
+    position: absolute;
+    inset: 0px auto auto 0px;
+    margin: 0px;
+    transform: translate3d(571px, 55.5px, 0px);
 }
 .dropdown-menu.aOption{
-  width: 872px;
-  height: 415px;
-  padding: 18px;
-  font-size:14px;
+    width: 872px;
+    height: 415px;
+    padding: 18px;
+    font-size:14px;
 }
 .aDir,.aFloorList{
-  display: flex;
-  justify-content:space-between;
+    display: flex;
+    justify-content:space-between;
 }
 .aOptionsUp{
-  display: flex;
-  justify-content: space-around;
+    display: flex;
+    justify-content: space-around;
 }
 .aOptionsDown{
     margin-top:18px;
@@ -521,7 +521,7 @@ html,body{
     justify-content: space-around;
 }
 .btn.btn-primary.aTheme{
-  display: initial;
+    display: initial;
     border-radius: 25px;
     height: 13px;
     --bs-btn-color: #989898;
@@ -531,61 +531,61 @@ html,body{
 }
 
 .aThemeListAll{
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .dropdown-menu{
-  width: 250px;
-  height: 150px;
+    width: 250px;
+    height: 150px;
 
 }
 .dropdown-menu.show {
-  grid-template-columns: 1fr 1fr 1fr;
-  align-content: space-evenly;
-  justify-items: center;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-content: space-evenly;
+    justify-items: center;
 }
 .dropdown-menu.school{
 
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  align-content: space-evenly;
-  justify-items: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-content: space-evenly;
+    justify-items: center;
 
 }
 .dropdown-menu.aPrice{
-  padding: 22px;
-  width: 403px;
-  position: absolute;
-  inset: 0px auto auto 0px;
-  margin: 0px;
-  transform: translate3d(504px, 55.5px, 0px);
-  height: 212px;
+    padding: 22px;
+    width: 403px;
+    position: absolute;
+    inset: 0px auto auto 0px;
+    margin: 0px;
+    transform: translate3d(504px, 55.5px, 0px);
+    height: 212px;
 }
 .abox_maemae{
-  display: flex;
+    display: flex;
     flex-direction: column;
     align-items: center;
 }
 .aTtang.top,.nav-item.aTtangSize{
-  display: flex;
+    display: flex;
 }
 .top{
-  margin-right: 10px;
+    margin-right: 10px;
 }
 .aTtangSizeList{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .btn.btn-outline-primary.aPrice{
-  width: 41px;
+    width: 41px;
 }
 .btn.btn-outline-primary.aTtangSize{
-  width: 82px;
+    width: 82px;
 }
 .first.room.one,.first.sadae.one{
-  width: 89px;
+    width: 89px;
 }
 .aFloorCountListAll{
     width:164px;
@@ -594,27 +594,27 @@ html,body{
     width:147px;
 }
 .aBathListAll{
-  width: 80px;
+    width: 80px;
 }
 .aMainTenanceAll{
     width:115px;
 }
 .aEleListAll{
-  width: 282px;
+    width: 282px;
 }
 .aThemeList{
-  display: flex;
-  width: 282px;
+    display: flex;
+    width: 282px;
 }
 .edu{
-  display: flex;
-  flex-direction: column;
-  width: 60px;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 60px;
+    align-items: center;
 
 }
 .edukind{
-  font-size: 13px;
+    font-size: 13px;
 }
 
 
@@ -630,63 +630,63 @@ html,body{
 
 /*미니맵*/
 .map-area{
-  z-index: 3;
-  position: absolute;
-  width: 360px;
-  height: 180px;
+    z-index: 3;
+    position: absolute;
+    width: 360px;
+    height: 180px;
 }
 .aed-mini-map{
-  position: relative;
+    position: relative;
 }
 .p-3 {
-  padding-top: 1rem !important;
+    padding-top: 1rem !important;
 }
 .aed-map-det .map-info .txt01 {
-  color: #000;
-  font-size: 18px;
-  font-weight: 600;
-  line-height: 22px;
+    color: #000;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 22px;
 }
 .aed-map-det .mes-util {
-  position: relative;
-  display: flex;
-  height: 70px;
-  margin: 20px 0 0;
-  border-top: 1px solid #f2f2f2;
-  align-items: center;
+    position: relative;
+    display: flex;
+    height: 70px;
+    margin: 20px 0 0;
+    border-top: 1px solid #f2f2f2;
+    align-items: center;
 }
 .aed-mm-price .bx.on {
-  position: relative;
-  padding-top: 13px;
-  padding-left: 14px;
+    position: relative;
+    padding-top: 13px;
+    padding-left: 14px;
 
-  border: 1px solid #26abed;
-  border-radius: 15px;
-  background: #fff;
-  box-shadow: 0px 3px 7px 0px rgba(59, 126, 216, 0.2);
+    border: 1px solid #26abed;
+    border-radius: 15px;
+    background: #fff;
+    box-shadow: 0px 3px 7px 0px rgba(59, 126, 216, 0.2);
 }
 
 #scrollspyHeading5{
-  margin-top: 30px;
+    margin-top: 30px;
 }
 
 
 #scrollspyHeading6{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .price-area{
-  height: 55px;
-  background-color: #26abed0f;
-  color: #26abed;
-  font-size: 20px;
-  display: flex;
-  align-items: center;
-  padding-left: 17px;
+    height: 55px;
+    background-color: #26abed0f;
+    color: #26abed;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    padding-left: 17px;
 }
 .aed-main-box.rpinfo-tab-common{
-  margin-top: 22px;
+    margin-top: 22px;
 }
 
 
@@ -701,29 +701,29 @@ html,body{
     background-color:white;
 }
 .tac-ul{
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 4px;
-  margin-bottom: 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 4px;
+    margin-bottom: 24px;
 }
 .titleModal{
-  margin: 0 0 15px;
+    margin: 0 0 15px;
 }
 .modal-body{
-  overflow-x: hidden;
+    overflow-x: hidden;
 }
 .rowWrite{
-  width: 250px;
+    width: 250px;
 }
 .col-md-4{
-  width: 250px;
+    width: 250px;
 }
 .css-14yaugs{
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
 }
 .span.css-0{
-  width: 10px;
+    width: 10px;
 }
 
 
@@ -731,28 +731,28 @@ html,body{
 
 
 #mes-utils{
-  width: 90px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
+    width: 90px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
 }
 ol, ul, nav {
-  list-style: none;
+    list-style: none;
 }
 
 a:active, a:focus, a:hover, a:link, a:visited {
-  color: #222;
-  text-decoration: none;
+    color: #222;
+    text-decoration: none;
 }
 .aed-map-det .sp-if li {
-  line-height: 20px;
+    line-height: 20px;
 }x
 
-#amyTab{
-  --bs-nav-tabs-link-active-border-color: #26abed;
-  display: flex;
-  justify-content: space-around;
-}
+ #amyTab{
+     --bs-nav-tabs-link-active-border-color: #26abed;
+     display: flex;
+     justify-content: space-around;
+ }
 .aHeartBtnInTab{
     margin-right:2px;
 }
@@ -825,8 +825,8 @@ a:active, a:focus, a:hover, a:link, a:visited {
     height: 23px;
 }
 #playNav{
-  width:89px;
-  color: #323232;
+    width:89px;
+    color: #323232;
 }
 
 
@@ -848,23 +848,23 @@ a:active, a:focus, a:hover, a:link, a:visited {
 /*맵 우측 도구*/
 .btn-group-vertical{/*학군상권버튼그룹*/
     top: 40%;
-        position: fixed;
-        right: 83px;
-        z-index: 1200;
-        line-height: 1;
+    position: fixed;
+    right: 83px;
+    z-index: 1200;
+    line-height: 1;
 
-  width: 20px;
-  padding-left: 18px;
+    width: 20px;
+    padding-left: 18px;
 }
 .btn.btn-primary.aSellMyHBtn{
     bottom: 3%;
-        position: fixed;
-        right: 37px;
-        z-index: 1200;
-        line-height: 1;
-        padding-left: 18px;
-        height: 25px;
-        text-align: center;
+    position: fixed;
+    right: 37px;
+    z-index: 1200;
+    line-height: 1;
+    padding-left: 18px;
+    height: 25px;
+    text-align: center;
 }
 
 
@@ -874,37 +874,37 @@ a:active, a:focus, a:hover, a:link, a:visited {
 }
 .modal-body.LogInNeed{
     display: flex;
-        flex-direction: column;
-        align-items: center;
+    flex-direction: column;
+    align-items: center;
 }
 .LogInNeedContents{
     width:88%;
 }
 .aFindSaveEmail{
-margin-top: 22px;
+    margin-top: 22px;
     width: 100%;
-        display: flex;
-        justify-content: center;
+    display: flex;
+    justify-content: center;
 }
 .aFindSaveEmailContents{
     width: 275px;
-        display: flex;
-        justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
 .aLogInBtn{
     height: 35px;
-        width: 257px;
-        border: none;
-        background-color: #26abed;
-        color: white;
-        border-radius: 7px;
+    width: 257px;
+    border: none;
+    background-color: #26abed;
+    color: white;
+    border-radius: 7px;
 }
 .aJoinBtnsList{
     margin-top: 7px;
     margin-bottom:32px;
 }
 .aJoinBtns{
-height: 24px;
+    height: 24px;
     width: 116px;
     border: none;
     color: #26abed;
@@ -920,32 +920,32 @@ height: 24px;
 }
 .aListOfEasyLogIn{
     display: flex;
-        justify-content: center;
-        align-items:center;
-        margin-bottom:40px;
+    justify-content: center;
+    align-items:center;
+    margin-bottom:40px;
 }
 .aEasyLogInBtn{
-width: 179px;
+    width: 179px;
     border: none;
     background-color: white;}
 .emailLogInPartTitle{
     font-size: 18px;
-        color: #26abed;
+    color: #26abed;
     display: flex;
-        align-items: center;
-        justify-content: center;
+    align-items: center;
+    justify-content: center;
 }
 .aEasyLogInImg{
     width: 129px;
-        height: 33px;
+    height: 33px;
 }
 .emailLogInPartInput{
     display: flex;
-        flex-direction: column;
-        align-items: center;
+    flex-direction: column;
+    align-items: center;
 }
 .LogInInputs{
-width: 269px;
+    width: 269px;
     height: 36px;
     border: 1px solid lightgray;
     border-radius: 7px;
