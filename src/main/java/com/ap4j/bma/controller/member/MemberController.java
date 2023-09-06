@@ -21,6 +21,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -321,47 +322,52 @@ public class MemberController {
         log.info("MemberController - qLiked() 실행");
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
-        // 매물 좋아요 클릭 시 해당 매물 정보
-//        log.info("저장한 관심매물아이디 : " + maemulId);
-//        MaemulRegEntity finemm = qMemberService.findMaemulById(maemulId);
-//        log.info("해당 매물정보 : " + finemm);
-
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
         String nickname = memberDTO.getNickname();
-
-        List<LikedEntity> likedlist = likedService.findLikedByNickname(nickname);
-        log.info("좋아요 테이블 + " + likedlist.toString());
-
-        LikedEntity likedEntity = new LikedEntity();
-        likedEntity.setNickname(nickname);
+//
+//        // 매물 좋아요 클릭 시 해당 매물 정보
+//        log.info("저장한 관심매물아이디 : " + maemulId);
+//        MaemulRegEntity finemm = qMemberService.findMaemulById(maemulId);
+//
+//
+//        List<LikedEntity> likedlist = likedService.findLikedByNickname(nickname);
+//        log.info("좋아요 테이블 + " + likedlist.toString());
+//
+//        LikedEntity likedEntity = new LikedEntity();
+//        likedEntity.setNickname(nickname);
 //        likedEntity.setRoad_name(finemm.getAddress());
-
-        likedService.save(likedEntity);
-        log.info("저장 후 likedEntity : " + likedEntity);
+//
+//        likedService.save(likedEntity);
+//        log.info("저장 후 likedEntity : " + likedEntity);
 
 //        List<MaemulRegEntity> likemaemulList = likedService.findLikedByRoadname(roadname);
 //        log.info("좋아요한 매물 + " + likedlist.toString());
 
-        List<LikedEntity> mmLikedList = likedService.getAllList();
-        List<MaemulRegEntity> mmFilterList = mmLikedList.stream()
-                        .map(LikedEntity -> {
-                            MaemulRegEntity mmEntity = new MaemulRegEntity();
-                            mmEntity.setAddress(likedEntity.getRoad_name());
-                            return mmEntity;
-                        })
-                                .collect(Collectors.toList());
 
+        List<LikedEntity> mmLikedList = likedService.getAllList();
+        List<MaemulRegEntity> mmList = qMemberService.getAllList();
+        List<MaemulRegEntity> mmFilterList = new ArrayList<>();
+
+        for (LikedEntity likedEntityF : mmLikedList) {
+            if(likedEntityF.getNickname().equals(nickname)) {
+                for(MaemulRegEntity maemulRegEntityF : mmList) {
+                    if (likedEntityF.getRoad_name().equals(maemulRegEntityF.getAddress())) {
+                        mmFilterList.add(maemulRegEntityF);
+                    }
+                }
+            }
+        }
+        log.info("추가된 매물 리스트: " + mmFilterList);
 
         Long myLikedCnt = likedService.countAll();
 //        log.info(mmLikedList.toString());
 //        log.info(String.valueOf(mmAllLikedCnt));
 
-        List<MaemulRegEntity> mmList = qMemberService.getAllList();
 //        log.info(mmList.toString());
 
         model.addAttribute("mmLiked",mmLikedList);
         model.addAttribute("mmLikedCnt",myLikedCnt);
-        model.addAttribute("mmList",mmList);
+        model.addAttribute("mmList",mmFilterList);
 
         return "userView/maemulLiked";
     }

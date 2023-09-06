@@ -35,24 +35,28 @@ padding: 14px 21px;
 color: #666;
 border-bottom: 1px solid #ddd;
 text-align: center;
+    font-size:14px;
  }
-
+/* tbody쪽만 마우스오버 */
 tbody tr:hover {
     background: #eee;
     cursor: pointer;
 }
 
-.o-d-type, .o-d-type {
+.o-d-type, .o-d-type, .o-d-btns {
     width: 10%;
 }
 .o-d-title {
     width: 20%;
 }
 .o-d-add{
-    width: 45%;
+    width: 30%;
 }
-.o-d-btns {
-    width: 10%;
+.o-d-add div{
+    align: left%;
+}
+.o-d-about {
+    width: 15%;
 }
 #o-d-load {
     color: #26abed;

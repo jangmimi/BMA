@@ -52,14 +52,15 @@
                                     <tr>
                                         <th class="o-d-type">거래종류 매물종류</th>
                                         <th class="o-d-img">이미지</th>
-                                        <th class="o-d-add">소재지/상세주소 매물설명</th>
+                                        <th class="o-d-add">소재지/상세주소</th>
+                                        <th class="o-d-about">매물설명</th>
                                         <th class="o-d-area">면적</th>
                                         <th class="o-d-price">가격(만원)</th>
                                         <th class="o-d-btn">삭제</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <p>전체 <span class="o-cntAll" th:text="${myLikedCnt}"></span>건</p>
+                                    <p>전체 <span class="o-cntAll" th:text="${mmLikedCnt}"></span>건</p>
 
                                     <tr th:each="mmList : ${mmList}"><!--th:if="${mmLiked.nickname == loginMember.nickname}"-->
                                         <input type="hidden" id="num" th:value="${mmList.id}">
@@ -72,12 +73,16 @@
                                             <div th:text="${mmList.APT_name}">아파트이름</div>
                                         </td>
                                         <td>
+                                            <div th:text="${mmList.floorNumber + '층/' + mmList.totalFloors + '층'}">층수</div>
+                                            <div th:text="${mmList.features}">매물설명</div>
+                                        </td>
+                                        <td>
                                             <div th:text="${'계약' + mmList.privateArea + '㎡'}">면적</div>
                                             <div th:text="${'전용' + mmList.supplyArea + '㎡'}">공용면적</div>
                                         </td>
                                         <td>
-                                            <div id="o-d-load" th:text="${'보증금' + mmList.monthlyForRent}"></div>
-                                            <div th:text="${'관리비' + mmList.monthlyRent}">월세</div>
+                                            <div id="o-d-load" th:text="${mmList.monthlyForRent != null ? '보증금' + mmList.monthlyForRent : '보증금 없음'}">보증금</div>
+                                            <div th:text="${mmList.monthlyRent != null ? '관리비' + mmList.monthlyRent : '관리비 없음'}">관리비</div>
                                         </td>
                                         <td class="o-t-btn">
                                             <input type="button" value="삭제">
