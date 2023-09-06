@@ -11,8 +11,7 @@
 </head>
 
 <body layout:fragment="content">
-<!-- 로그인중일때만 접근 가능 -->
-<th:block th:if="${loginMember != null}">
+
     <div class="layout">
 
         <hr/>
@@ -20,42 +19,53 @@
                 <table border="1" class="qna-tb">
                     <tr>
                         <th>이름<b class="boldtext">＊</b></th>
-                        <td>             <!-- DB로 값 넘기기 위해 hidden, th:value로 요소 값 설정 -->
-                            <input type="hidden" id="user_name" name="user_name" th:value="*{name}">
-                            <label th:text="*{name}"></label>   <!-- 세션 로그인멤버(loginMember) name 표시 -->
+                        <td>
+                            <label th:text="${qna.user_name}"></label>
                         </td>
                     </tr>
                     <tr>
                         <th>이메일<b class="boldtext">＊</b></th>
                         <td>
-                            <input type="hidden" id="user_email" name="user_email" th:value="*{email}">
-                            <label th:text="*{email}"></label>
+                            <label th:text="${qna.user_email}"></label>
                         </td>
                     </tr>
                     <tr>
                         <th>구분<b class="boldtext">＊</b></th>
                         <td>
-                        <p>구분 값 가져오기</p>
+                            <label th:text="${qna.category}"></label>
                         </td>
                     </tr>
                     <tr>
                         <th>제목<b class="boldtext">＊</b></th>
-                        <td><input type="text" name = "title" id="title" placeholder="제목을 입력하세요."></td>
+                        <td>
+                            <label th:text="${qna.title}"></label>
+                        </td>
                     </tr>
                     <tr>
                         <th>내용<b class="boldtext">＊</b></th>
-                        <td><textarea name="content"></textarea></td>
+                        <td>
+                            <label th:text="${qna.content}"></label>
+                        </td>
                     </tr>
                     <tr>
                         <th>파일첨부</th>
                         <td>
-                            <div class="mb-3">
-                                <input class="form-control" type="file" name="file">
-                            </div>
+                            <!-- 파일 첨부 관련 정보는 QnAEntity에서 가져와야 합니다. -->
+                            <label th:text="${qna.filename}"></label>
+                            <label th:text="${qna.filepath}"></label>
                         </td>
                     </tr>
                 </table>
             </div>
+
+        <div class="btn-group">
+        <button>
+            목록
+        </button>
+        <button>
+            삭제
+        </button>
+        </div>
     </div>
 </body>
 </html>

@@ -59,8 +59,11 @@
                                     <tr th:each="myQna : ${myQnaList}" th:if="${myQna.user_email == loginMember.email}">
                                         <td id="num" th:text="${myQna.id}">번호</td>
                                         <td id="category" th:text="${myQna.category}">분류</td>
-                                        <td><a th:href="@{/faq/view(id=${myQna.id})}" th:text="${myQna.title}">제목</a></td>
-                                        <td><a th:href="@{/faq/view(id=${myQna.id})}" th:text="${#temporals.format(myQna.createdAt, 'yyyy-MM-dd')}">yyyy-MM-dd</a></td>
+                                        <td>
+                                            <!-- 작성한 글의 상세보기 페이지로 링크 -->
+                                            <a th:href="@{/qnaview(id=${myQna.id})}" th:text="${myQna.title}">제목</a>
+                                        </td>
+                                        <td><a th:text="${#temporals.format(myQna.createdAt, 'yyyy-MM-dd')}">yyyy-MM-dd</a></td>
                                     </tr>
                                 </tbody>
                             </table>
