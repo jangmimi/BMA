@@ -64,26 +64,35 @@ public class TalkTalkReviewController {
 //    }
 
     @PostMapping("/board/writepro")
-    @ResponseBody
     public String boardwritePro(@RequestParam("content") String content,
-                                @RequestParam("id") Long apartmentId, HttpSession session) {
+                                @RequestParam(value = "id", defaultValue = "0") Object apartmentId, HttpSession session){
 
         log.info("리뷰컨트롤러 boardWritePro실행, content: " + content);
 
         // boardwritePro2 메서드를 호출하여 아파트 아이디를 가져옴
-        ResponseEntity<Long> responseEntity = boardwritePro2(apartmentId);
-        String apartmentIdString = String.valueOf(responseEntity.getBody());
+        //ResponseEntity<Long> responseEntity = boardwritePro2(apartmentId);
+        //String apartmentIdString = String.valueOf(responseEntity.getBody());
 
+        apartmentId = session.getAttribute("id");
         // 아파트 아이디를 long 타입으로 파싱
-        Long returnedApartmentId = Long.parseLong(apartmentIdString);
+//        Long returnedApartmentId = Long.parseLong(apartmentIdString);
+
+        System.out.println(apartmentId instanceof Long);
+        System.out.println(apartmentId instanceof Object);
+
 
         // 아파트 아이디가 null이 아닌지 확인
-        if (apartmentId != null) {
+
+        boolean res = content != null && apartmentId != "0";
+        System.out.println("결과: "+ res);
+
+        if (res)  {
             TalkTalkReviewEntity reviewEntity = new TalkTalkReviewEntity();
-            reviewEntity.setId(apartmentId); // 아파트 아이디 설정
+            reviewEntity.setId((Long)apartmentId); // 아파트 아이디 설정
             reviewEntity.setBoard_no(99);
 
             MemberDTO dto = (MemberDTO) session.getAttribute("loginMember");
+//            session.setAttribute("id",apartmentId);
             String email = dto.getEmail();
             reviewEntity.setEmail(email);
 
@@ -106,14 +115,27 @@ public class TalkTalkReviewController {
 //
 //        reviewService.write(reviewEntity);
 //        log.info(reviewEntity.toString());
+
+
         return "redirect:/map/main";
     }
 
 
     @PostMapping("/board/writepro/{id}")
     @ResponseBody
-    public ResponseEntity<Long> boardwritePro2(@PathVariable("id") Long apartmentId) {
+    public ResponseEntity<Long> boardwritePro2(@PathVariable("id") Long apartmentId,HttpSession session) {
         log.info("리뷰컨트롤러 boardWritePro실행, id: " + apartmentId);
+        session.setAttribute("id",apartmentId);
+//        //세션값 받기, 새로운 새션값 들어오면 기존 거 삭제. =!
+//        //리턴값 필요없거나 아이디값만 넘겨. 세ㅔ션에 저ㅏㅇ되니까. 빌드메서드(바디가 비어있다는)
+//        httpservletReqeust res = null;
+//        httpseesein see = req.getsseigon()
+//        if (session == null) {
+//
+//        }
+//        req.setattrivute("id",apartmentId);
+//
+//        if(apartmentId)
 
         // 아파트 아이디를 ResponseEntity로 감싸서 리턴
         return new ResponseEntity<>(apartmentId, HttpStatus.OK);
