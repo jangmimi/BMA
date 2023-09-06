@@ -85,7 +85,6 @@ public class MaemulRegService {
                     .security(maemulRegEntity.getSecurity())
                     .longitude(maemulRegEntity.getLongitude())
                     .latitude(maemulRegEntity.getLatitude())
-                    .createdAt(maemulRegEntity.getCreatedAt())
                     .build();
             maeMulRegDTOList.add(maeMulRegDTO);
         }
