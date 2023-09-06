@@ -46,7 +46,7 @@ public class MemberServiceImpl implements MemberService {
 	private PasswordEncoderConfig pwdConfig;	// 비밀번호 암호화 객체 생성
 
 	@Autowired
-	private QnARepository qQnARepository;
+	private QnARepository qnARepository;
 
 	@Autowired
 	private MaemulRegRepository maemulRegRepository;
@@ -299,6 +299,13 @@ public class MemberServiceImpl implements MemberService {
 		memberDTO.setChoice1(Boolean.TRUE.equals(memberDTO.getChoice1()));
 		memberDTO.setChoice2(Boolean.TRUE.equals(memberDTO.getChoice2()));
 
+		// sns 가입 시 연락처 +82 - 제거하고 저장
+		String cleanTel = memberDTO.getTel().replaceAll("[^0-9+]","");
+		if (cleanTel.startsWith("+82")) {
+			cleanTel = "0" + cleanTel.substring(3); // +82 제거 후 0 추가
+		}
+		memberDTO.setTel(cleanTel.trim());
+
 		MemberEntity entity = memberDTO.toEntity();
 
 		memberRepository.save(entity);
@@ -335,7 +342,8 @@ public class MemberServiceImpl implements MemberService {
 			log.info("로그인 시도하는 email DB에 존재!");
 			MemberEntity memberEntity = findMember.get();
 			if(memberEntity.getMember_leave()) { log.info("탈퇴한 회원"); return null; }
-			if(memberEntity.getRoot() == 2 ) {	// 카카오네이버는 pwd 체크 없이 로그인 진행
+
+			if(memberEntity.getRoot() == 2) {	// 카카오네이버는 pwd 체크 없이 로그인 진행
 				MemberDTO dto = memberEntity.toDTO();
 				log.info("entity를 toDTO : " +  dto);
 				return dto;
@@ -365,7 +373,16 @@ public class MemberServiceImpl implements MemberService {
 	public boolean leaveMember(Long id, String password, SessionStatus sessionStatus, HttpSession session) {
 		Optional<MemberEntity> leaveMember = Optional.ofNullable(findMemberById(id));
 		if(leaveMember.isPresent()) {
-			log.info("pwdLeave : " + password);
+			int root = leaveMember.get().getRoot();
+			if(root != 1) {
+				log.info("SNS계정은 즉시 회원 탈퇴 처리 됩니다.");
+				MemberEntity member = leaveMember.get();
+				member.setMember_leave(true);	// 탈퇴 여부 값 변경
+				memberRepository.save(member);
+				logout(sessionStatus, session);	// 탈퇴 후 로그아웃 처리
+
+				return true;
+			}
 			String dbPwd = leaveMember.get().getPwd();
 
 			if(pwdConfig.passwordEncoder().matches(password, dbPwd)) {
@@ -435,7 +452,7 @@ public class MemberServiceImpl implements MemberService {
 	/** 내 QnA 목록 */
 	@Override
 	public List<QnAEntity> qMyQnaList() {
-		return qQnARepository.findAll();
+		return qnARepository.findAll();
 	}
 
 	/** 내 QnA 전체 수 */
@@ -446,7 +463,7 @@ public class MemberServiceImpl implements MemberService {
 //		Long count = qQnARepository.findAll().stream()
 //				.filter(qna -> qna.getUser_email().equals(userEmail))
 //				.count();
-		return qQnARepository.count();
+		return qnARepository.count();
 	}
 
 	/** 매물 목록 전체 조회 */

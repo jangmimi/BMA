@@ -14,10 +14,7 @@
           <a href="/map/main">실거래가조회</a>
         </li>
         <li>
-          <a href="/agree">매물등록</a>
-        </li>
-        <li>
-          <a href="#">청약정보</a>
+          <a href="/map/map">매물조회</a>
         </li>
         <li>
           <a href="/news">부동산뉴스</a>
@@ -40,7 +37,7 @@
           <a href="/member/qJoinForm">회원가입</a>
         </li>
         <li>
-          <a href="/faq/list">고객센터</a>
+          <a href="/notice/list">고객센터</a>
         </li>
       </ul>
       <ul th:if="${loginMember!=null}" class="n-header-list">
@@ -51,8 +48,14 @@
           <a href="/member/qMyPage">마이페이지</a>
         </li>
         <li>
-          <a href="/qna">고객센터</a>
+          <a href="/notice/list">고객센터</a>
         </li>
+        <li>
+          <a href="/agree">
+           매물등록
+          </a>
+        </li>
+
       </ul>
     </div>
   </div>

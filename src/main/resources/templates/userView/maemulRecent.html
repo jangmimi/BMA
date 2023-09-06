@@ -18,7 +18,7 @@
 
 <th:block th:if="${loginMember != null}">
     <th:block th:object="${loginMember}">
-        <!-- 마이페이지 네비게이션 -->
+        <!-- 마이페이지 네비게이션바 -->
         <div id="o-container">
             <div id="o-content">
                 <!-- inner navbar -->
@@ -59,11 +59,11 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <p>전체 <span class="o-cntAll" th:text="${myQnaCnt}"></span>건</p>
-                                <tr th:each="myQna : ${myQnaList}">
-                                    <td colspan="4">조회된 데이터가 없습니다.</td>
-                                </tr>
-                                <tr th:each="myQna : ${myQnaList}" th:if="${myQna.user_email == loginMember.email}">
+                                <p>전체 <span class="o-cntAll" th:text="${mmAllRecentCnt}"></span>건</p>
+                                <th:block th:if="${mmAllRecentCnt == 0}">
+                                    <tr><td colspan="4">조회된 데이터가 없습니다.</td></tr>
+                                </th:block>
+                                <tr th:each="mmRecent : ${mmRecentList}" th:if="${myQna.user_email == loginMember.email}">
                                     <td id="num" th:text="${myQna.id}">번호</td>
                                     <td id="category" th:text="${myQna.category}">분류</td>
                                     <td><a th:href="@{/faq/view(id=${myQna.id})}" th:text="${myQna.title}">제목</a></td>

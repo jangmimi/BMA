@@ -81,4 +81,20 @@ public class MaemulRegController {
             return "redirect:/confirmation";
 
     }
+    // 확인 페이지
+    @GetMapping("/confirmation")
+    public String confirmationPage(@RequestParam("maemulId") Integer maemulId, Model model) {
+        // 매물 정보를 데이터베이스에서 가져와서 확인 페이지에 표시
+        MaemulRegEntity maemulRegEntity = maemulRegService.getMaemulById(maemulId);
+        model.addAttribute("maemulRegEntity", maemulRegEntity);
+        return "maemulReg/confirmation";
+    }
+
+    @PostMapping("/confirmation")
+    public void maemulSaveCoordinates(Integer maemulId, Double latitude, Double longitude) {
+        maemulRegService.updateMeamulReg(maemulId, latitude, longitude);
+    }
+
 }
+
+

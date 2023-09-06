@@ -13,7 +13,6 @@ public class HomeController {
 
     @RequestMapping("/")
     public String mainPage(HttpSession session){
-        log.info("session userEmail : " + session.getAttribute("loginMember"));
         return "mainPage/mainPage";
     }
 

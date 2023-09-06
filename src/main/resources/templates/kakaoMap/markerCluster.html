@@ -502,7 +502,7 @@
                                                                                 <div class="acontent" th:text="${review.content}">
 
                                                                                 </div>
-                                                                                <div class="auploadDate" >
+                                                                                <div class="auploadDate" th:text="${#temporals.format(review.create_at,'yyyy-MM-dd HH:mm:ss')}">
                                                                                     2023.08.31
 
                                                                                 </div>
@@ -1350,49 +1350,6 @@
                         aria-expanded="false">
                     상권
                 </button>
-            </div>
-        </div>
-
-        <button id="hsBtn" class="btn btn-primary aSellMyHBtn" type="button" data-bs-toggle="modal"
-                data-bs-target="#aSellMyHModal">
-            집 내놓기
-            <span class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger">
-                    10초만에 쉽고 빠르게!
-                    <span class="visually-hidden">unread messages</span>
-                </span>
-        </button>
-        <!-- Vertically centered modal -->
-        <div class="modal fade" id="aSellMyHModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">집 내놓기</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body aSearchAPTAll">
-                        <div class="aSearchAPTAll" style="width: 349px;
-                            display: flex;
-                            justify-content: center;">
-                            <div class="aSearch_area" style="display: flex;
-                                                                width: 94%;
-                                                                height: 41px;
-                                                                border: 1px solid lightgray;
-                                                                border-radius: 8px;
-                                                                /* align-content: center; */
-                                                                align-items: center;">
-                                <img style="margin-left:8px; width:20px; background-color: transparent;"
-                                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvcGRzbD6HIXhyARcDnuzWTfGVeLEZHVLS9A&amp;usqp=CAU">
-                                <input type="text" name="asearch_keyword" placeholder="검색할 아파트명을 입력하세요"
-                                       class="aSearchInput aOnSellMyH" autocomplete="off">
-                                <script>
-
-                                </script>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
             </div>
         </div>
     </div>

@@ -1,6 +1,8 @@
 package com.ap4j.bma.service.community;
 
+import com.ap4j.bma.model.entity.community.CommunityCommentEntity;
 import com.ap4j.bma.model.entity.community.CommunityEntity;
+import com.ap4j.bma.model.repository.CommunityCommentRepository;
 import com.ap4j.bma.model.repository.CommunityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,10 +11,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class CommunityService {
     @Autowired
     private CommunityRepository communityRepository;
+    @Autowired
+    private CommunityCommentRepository communityCommentRepository;
 
     //글작성처리
     public CommunityEntity saveCommunity(CommunityEntity communityEntity) {
@@ -42,6 +49,22 @@ public class CommunityService {
     //상세페이지 보기
     public CommunityEntity communityView(Integer id) {
         return communityRepository.findById(id).get();
+    }
+
+    //댓글 삭제
+    public void communityCommentDelete(Integer id){
+        communityCommentRepository.deleteById(id);
+    }
+
+    //댓글 보기
+    public List<CommunityCommentEntity> communityCommentEntity(Integer id){
+        List<CommunityCommentEntity> commentList = communityCommentRepository.findAllComment(id);
+        return commentList;
+    }
+
+    //댓글 작성
+    public void CommentWrite(CommunityCommentEntity communityCommentEntity){
+        communityCommentRepository.save(communityCommentEntity);
     }
 
     //이전글
