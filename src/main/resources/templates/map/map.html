@@ -79,23 +79,7 @@
 
                                             </div>
                                             <div class="modal-body LogInNeed">
-                                                <div class="aListOfEasyLogIn">
-                                                    <div style="display: flex;
-    width: 281px;">
-                                                        <button class="aEasyLogInBtn">
-                                                            <img class="aEasyLogInImg"
-                                                                 src="/images/kakao_login_medium_narrow.png"
-                                                                 alt="kakaoLogin" height="44"/>
-                                                        </button>
-                                                        <button class="aEasyLogInBtn">
-                                                            <img class="aEasyLogInImg"
-                                                                 src="/images/btnG_완성형.png"
-                                                                 alt="naverLogin" height="44"
-                                                                 width="176px"/>
-                                                            <!-- 카카오 로그인과 높이만 맞춤 -->
-                                                        </button>
-                                                    </div>
-                                                </div>
+
                                                 <div class="LogInNeedContents">
                                                     <p class="emailLogInPartTitle">이메일 직접 로그인</p>
                                                     <hr>
@@ -116,9 +100,22 @@
                                                     </div>
                                                 </div>
                                                 <button class="aLogInBtn">로그인</button>
-                                                <div class="aJoinBtnsList">
-                                                    <button class="aJoinBtns">개인회원 가입</button>
-                                                    <button class="aJoinBtns">중개회원 가입</button>
+                                                <div class="aListOfEasyLogIn">
+                                                    <div style="display: flex;
+    width: 281px;">
+                                                        <button class="aEasyLogInBtn">
+                                                            <img class="aEasyLogInImg"
+                                                                 src="/img/member/kakao_login_medium_narrow.png"
+                                                                 alt="kakaoLogin" height="44"/>
+                                                        </button>
+                                                        <button class="aEasyLogInBtn">
+                                                            <img class="aEasyLogInImg"
+                                                                 src="/img/member/btnG_완성형.png"
+                                                                 alt="naverLogin" height="44"
+                                                                 width="176px"/>
+                                                            <!-- 카카오 로그인과 높이만 맞춤 -->
+                                                        </button>
+                                                    </div>
                                                 </div>
 
                                             </div>
@@ -734,205 +731,224 @@
                         <div class="top"><strong class="tit">매매가/전세가/보증금</strong></div>
 
                         <div class="abox_maemae" id="priceDiv">
-                            <div style="display: flex;">
-                                <div>
-                                    <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off"
-                                           value="1000" order="999" status="under">
-                                    <label class="btn btn-outline-primary aPrice" for="btncheck1">
-                                        ~1천
-                                    </label>
+                            <div class="aMinAndMaxPriceAll">
+                                <div class="price_input">
+                                    <button class="bt minus" id="searchPriceMonthStartMinus">-</button>
+                                    <div class="d_input style01">
+                                        <div class="input_danview"></div>
+                                        <input type="text" name="searchPriceMonthStart" placeholder="최소" maxlength="12" class="ainputMaeMaePrice">
+                                    </div>
+                                    <button class="bt plus" id="searchPriceMonthStartPlus">+</button>
                                 </div>
-
-
-                                <div>
-                                    <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off"
-                                           value="1000" order="1000">
-                                    <label class="btn btn-outline-primary aPrice" for="btncheck2">
-                                        1천
-                                    </label>
-                                </div>
-
-                                <div>
-                                    <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off"
-                                           value="2000" order="2000">
-                                    <label class="btn btn-outline-primary aPrice" for="btncheck3">
-                                        2천
-                                    </label>
-                                </div>
-
-                                <div>
-                                    <input type="checkbox" class="btn-check" id="btncheck4" autocomplete="off"
-                                           value="3000" order="3000">
-                                    <label class="btn btn-outline-primary aPrice" for="btncheck4">
-                                        3천
-                                    </label>
-                                </div>
-
-                                <div>
-                                    <input type="checkbox" class="btn-check" id="btncheck5" autocomplete="off"
-                                           value="4000" order="4000">
-                                    <label class="btn btn-outline-primary aPrice" for="btncheck5">
-                                        4천
-                                    </label>
-                                </div>
-
-                                <div>
-                                    <input type="checkbox" class="btn-check" id="btncheck6" autocomplete="off"
-                                           value="5000" order="5000">
-                                    <label class="btn btn-outline-primary aPrice" for="btncheck6">
-                                        5천
-                                    </label>
+                                <span class="dash">~</span>
+                                <div class="price_input">
+                                    <button class="bt minus" id="searchPriceMonthEndMinus">-</button>
+                                    <div class="d_input style01">
+                                        <div class="input_danview"></div>
+                                        <input type="text" name="searchPriceMonthEnd" placeholder="최대" maxlength="12" class="ainputMaeMaePrice">
+                                    </div>
+                                    <button class="bt plus" id="searchPriceMonthEndPlus">+</button>
                                 </div>
                             </div>
+<!--                            <div style="display: flex;">-->
+<!--                                <div>-->
+<!--                                    <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off"-->
+<!--                                           value="1000" order="999" status="under">-->
+<!--                                    <label class="btn btn-outline-primary aPrice" for="btncheck1">-->
+<!--                                        ~1천-->
+<!--                                    </label>-->
+<!--                                </div>-->
 
-                            <div style="display: flex;">
-                                <div>
-                                    <input type="checkbox" class="btn-check" id="btncheck7" autocomplete="off"
-                                           value="6000" order="6000">
-                                    <label class="btn btn-outline-primary aPrice" for="btncheck7">
-                                        6천
-                                    </label>
-                                </div>
 
-                                <div>
-                                    <input type="checkbox" class="btn-check" id="btncheck8" autocomplete="off"
-                                           value="7000" order="7000">
-                                    <label class="btn btn-outline-primary aPrice" for="btncheck8">
-                                        7천
-                                    </label>
-                                </div>
+<!--                                <div>-->
+<!--                                    <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off"-->
+<!--                                           value="1000" order="1000">-->
+<!--                                    <label class="btn btn-outline-primary aPrice" for="btncheck2">-->
+<!--                                        1천-->
+<!--                                    </label>-->
+<!--                                </div>-->
 
-                                <div>
-                                    <input type="checkbox" class="btn-check" id="btncheck9" autocomplete="off"
-                                           value="8000" order="8000">
-                                    <label class="btn btn-outline-primary aPrice" for="btncheck9">
-                                        8천
-                                    </label>
-                                </div>
+<!--                                <div>-->
+<!--                                    <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off"-->
+<!--                                           value="2000" order="2000">-->
+<!--                                    <label class="btn btn-outline-primary aPrice" for="btncheck3">-->
+<!--                                        2천-->
+<!--                                    </label>-->
+<!--                                </div>-->
 
-                                <div>
-                                    <input type="checkbox" class="btn-check" id="btncheck10" autocomplete="off"
-                                           value="9000" order="9000">
-                                    <label class="btn btn-outline-primary aPrice" for="btncheck10">
-                                        9천
-                                    </label>
-                                </div>
+<!--                                <div>-->
+<!--                                    <input type="checkbox" class="btn-check" id="btncheck4" autocomplete="off"-->
+<!--                                           value="3000" order="3000">-->
+<!--                                    <label class="btn btn-outline-primary aPrice" for="btncheck4">-->
+<!--                                        3천-->
+<!--                                    </label>-->
+<!--                                </div>-->
 
-                                <div>
-                                    <input type="checkbox" class="btn-check" id="btncheck11" autocomplete="off"
-                                           value="10000" order="10000">
-                                    <label class="btn btn-outline-primary aPrice" for="btncheck11">
-                                        1억
-                                    </label>
-                                </div>
+<!--                                <div>-->
+<!--                                    <input type="checkbox" class="btn-check" id="btncheck5" autocomplete="off"-->
+<!--                                           value="4000" order="4000">-->
+<!--                                    <label class="btn btn-outline-primary aPrice" for="btncheck5">-->
+<!--                                        4천-->
+<!--                                    </label>-->
+<!--                                </div>-->
 
-                                <div>
-                                    <input type="checkbox" class="btn-check" id="btncheck12" autocomplete="off"
-                                           value="20000" order="20000">
-                                    <label class="btn btn-outline-primary aPrice" for="btncheck12">
-                                        2억
-                                    </label>
-                                </div>
-                            </div>
+<!--                                <div>-->
+<!--                                    <input type="checkbox" class="btn-check" id="btncheck6" autocomplete="off"-->
+<!--                                           value="5000" order="5000">-->
+<!--                                    <label class="btn btn-outline-primary aPrice" for="btncheck6">-->
+<!--                                        5천-->
+<!--                                    </label>-->
+<!--                                </div>-->
+<!--                            </div>-->
 
-                            <div style="display: flex;">
-                                <div>
-                                    <input type="checkbox" class="btn-check" id="btncheck13" autocomplete="off"
-                                           value="30000" order="30000">
-                                    <label class="btn btn-outline-primary aPrice" for="btncheck13">
-                                        3억
-                                    </label>
-                                </div>
+<!--                            <div style="display: flex;">-->
+<!--                                <div>-->
+<!--                                    <input type="checkbox" class="btn-check" id="btncheck7" autocomplete="off"-->
+<!--                                           value="6000" order="6000">-->
+<!--                                    <label class="btn btn-outline-primary aPrice" for="btncheck7">-->
+<!--                                        6천-->
+<!--                                    </label>-->
+<!--                                </div>-->
 
-                                <div>
-                                    <input type="checkbox" class="btn-check" id="btncheck14" autocomplete="off"
-                                           value="40000" order="40000">
-                                    <label class="btn btn-outline-primary aPrice" for="btncheck14">
-                                        4억
-                                    </label>
-                                </div>
+<!--                                <div>-->
+<!--                                    <input type="checkbox" class="btn-check" id="btncheck8" autocomplete="off"-->
+<!--                                           value="7000" order="7000">-->
+<!--                                    <label class="btn btn-outline-primary aPrice" for="btncheck8">-->
+<!--                                        7천-->
+<!--                                    </label>-->
+<!--                                </div>-->
 
-                                <div>
-                                    <input type="checkbox" class="btn-check" id="btncheck15" autocomplete="off"
-                                           value="50000" order="50000">
-                                    <label class="btn btn-outline-primary aPrice" for="btncheck15">
-                                        5억
-                                    </label>
-                                </div>
+<!--                                <div>-->
+<!--                                    <input type="checkbox" class="btn-check" id="btncheck9" autocomplete="off"-->
+<!--                                           value="8000" order="8000">-->
+<!--                                    <label class="btn btn-outline-primary aPrice" for="btncheck9">-->
+<!--                                        8천-->
+<!--                                    </label>-->
+<!--                                </div>-->
 
-                                <div>
-                                    <input type="checkbox" class="btn-check" id="btncheck16" autocomplete="off"
-                                           value="60000" order="60000">
-                                    <label class="btn btn-outline-primary aPrice" for="btncheck16">
-                                        6억
-                                    </label>
-                                </div>
+<!--                                <div>-->
+<!--                                    <input type="checkbox" class="btn-check" id="btncheck10" autocomplete="off"-->
+<!--                                           value="9000" order="9000">-->
+<!--                                    <label class="btn btn-outline-primary aPrice" for="btncheck10">-->
+<!--                                        9천-->
+<!--                                    </label>-->
+<!--                                </div>-->
 
-                                <div>
-                                    <input type="checkbox" class="btn-check" id="btncheck17" autocomplete="off"
-                                           value="70000" order="70000">
-                                    <label class="btn btn-outline-primary aPrice" for="btncheck17">
-                                        7억
-                                    </label>
-                                </div>
+<!--                                <div>-->
+<!--                                    <input type="checkbox" class="btn-check" id="btncheck11" autocomplete="off"-->
+<!--                                           value="10000" order="10000">-->
+<!--                                    <label class="btn btn-outline-primary aPrice" for="btncheck11">-->
+<!--                                        1억-->
+<!--                                    </label>-->
+<!--                                </div>-->
 
-                                <div>
-                                    <input type="checkbox" class="btn-check" id="btncheck18" autocomplete="off"
-                                           value="80000" order="80000">
-                                    <label class="btn btn-outline-primary aPrice" for="btncheck18">
-                                        8억
-                                    </label>
-                                </div>
-                            </div>
-                            <div style="display: flex;">
-                                <div>
-                                    <input type="checkbox" class="btn-check" id="btncheck19" autocomplete="off"
-                                           value="90000" order="90000">
-                                    <label class="btn btn-outline-primary aPrice" for="btncheck19">
-                                        9억
-                                    </label>
-                                </div>
+<!--                                <div>-->
+<!--                                    <input type="checkbox" class="btn-check" id="btncheck12" autocomplete="off"-->
+<!--                                           value="20000" order="20000">-->
+<!--                                    <label class="btn btn-outline-primary aPrice" for="btncheck12">-->
+<!--                                        2억-->
+<!--                                    </label>-->
+<!--                                </div>-->
+<!--                            </div>-->
 
-                                <div>
-                                    <input type="checkbox" class="btn-check" id="btncheck20" autocomplete="off"
-                                           value="100000" order="100000">
-                                    <label class="btn btn-outline-primary aPrice" for="btncheck20">
-                                        10억
-                                    </label>
-                                </div>
+<!--                            <div style="display: flex;">-->
+<!--                                <div>-->
+<!--                                    <input type="checkbox" class="btn-check" id="btncheck13" autocomplete="off"-->
+<!--                                           value="30000" order="30000">-->
+<!--                                    <label class="btn btn-outline-primary aPrice" for="btncheck13">-->
+<!--                                        3억-->
+<!--                                    </label>-->
+<!--                                </div>-->
 
-                                <div>
-                                    <input type="checkbox" class="btn-check" id="btncheck21" autocomplete="off"
-                                           value="110000" order="110000">
-                                    <label class="btn btn-outline-primary aPrice" for="btncheck21">
-                                        11억
-                                    </label>
-                                </div>
+<!--                                <div>-->
+<!--                                    <input type="checkbox" class="btn-check" id="btncheck14" autocomplete="off"-->
+<!--                                           value="40000" order="40000">-->
+<!--                                    <label class="btn btn-outline-primary aPrice" for="btncheck14">-->
+<!--                                        4억-->
+<!--                                    </label>-->
+<!--                                </div>-->
 
-                                <div>
-                                    <input type="checkbox" class="btn-check" id="btncheck22" autocomplete="off"
-                                           value="120000" order="120000">
-                                    <label class="btn btn-outline-primary aPrice" for="btncheck22">
-                                        12억
-                                    </label>
-                                </div>
+<!--                                <div>-->
+<!--                                    <input type="checkbox" class="btn-check" id="btncheck15" autocomplete="off"-->
+<!--                                           value="50000" order="50000">-->
+<!--                                    <label class="btn btn-outline-primary aPrice" for="btncheck15">-->
+<!--                                        5억-->
+<!--                                    </label>-->
+<!--                                </div>-->
 
-                                <div>
-                                    <input type="checkbox" class="btn-check" id="btncheck23" autocomplete="off"
-                                           value="130000" order="130000">
-                                    <label class="btn btn-outline-primary aPrice" for="btncheck23">
-                                        13억
-                                    </label>
-                                </div>
+<!--                                <div>-->
+<!--                                    <input type="checkbox" class="btn-check" id="btncheck16" autocomplete="off"-->
+<!--                                           value="60000" order="60000">-->
+<!--                                    <label class="btn btn-outline-primary aPrice" for="btncheck16">-->
+<!--                                        6억-->
+<!--                                    </label>-->
+<!--                                </div>-->
 
-                                <div>
-                                    <input type="checkbox" class="btn-check" id="btncheck24" autocomplete="off"
-                                           value="130000" order="130001">
-                                    <label class="btn btn-outline-primary aPrice" for="btncheck24">
-                                        13억~
-                                    </label>
-                                </div>
-                            </div>
+<!--                                <div>-->
+<!--                                    <input type="checkbox" class="btn-check" id="btncheck17" autocomplete="off"-->
+<!--                                           value="70000" order="70000">-->
+<!--                                    <label class="btn btn-outline-primary aPrice" for="btncheck17">-->
+<!--                                        7억-->
+<!--                                    </label>-->
+<!--                                </div>-->
+
+<!--                                <div>-->
+<!--                                    <input type="checkbox" class="btn-check" id="btncheck18" autocomplete="off"-->
+<!--                                           value="80000" order="80000">-->
+<!--                                    <label class="btn btn-outline-primary aPrice" for="btncheck18">-->
+<!--                                        8억-->
+<!--                                    </label>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div style="display: flex;">-->
+<!--                                <div>-->
+<!--                                    <input type="checkbox" class="btn-check" id="btncheck19" autocomplete="off"-->
+<!--                                           value="90000" order="90000">-->
+<!--                                    <label class="btn btn-outline-primary aPrice" for="btncheck19">-->
+<!--                                        9억-->
+<!--                                    </label>-->
+<!--                                </div>-->
+
+<!--                                <div>-->
+<!--                                    <input type="checkbox" class="btn-check" id="btncheck20" autocomplete="off"-->
+<!--                                           value="100000" order="100000">-->
+<!--                                    <label class="btn btn-outline-primary aPrice" for="btncheck20">-->
+<!--                                        10억-->
+<!--                                    </label>-->
+<!--                                </div>-->
+
+<!--                                <div>-->
+<!--                                    <input type="checkbox" class="btn-check" id="btncheck21" autocomplete="off"-->
+<!--                                           value="110000" order="110000">-->
+<!--                                    <label class="btn btn-outline-primary aPrice" for="btncheck21">-->
+<!--                                        11억-->
+<!--                                    </label>-->
+<!--                                </div>-->
+
+<!--                                <div>-->
+<!--                                    <input type="checkbox" class="btn-check" id="btncheck22" autocomplete="off"-->
+<!--                                           value="120000" order="120000">-->
+<!--                                    <label class="btn btn-outline-primary aPrice" for="btncheck22">-->
+<!--                                        12억-->
+<!--                                    </label>-->
+<!--                                </div>-->
+
+<!--                                <div>-->
+<!--                                    <input type="checkbox" class="btn-check" id="btncheck23" autocomplete="off"-->
+<!--                                           value="130000" order="130000">-->
+<!--                                    <label class="btn btn-outline-primary aPrice" for="btncheck23">-->
+<!--                                        13억-->
+<!--                                    </label>-->
+<!--                                </div>-->
+
+<!--                                <div>-->
+<!--                                    <input type="checkbox" class="btn-check" id="btncheck24" autocomplete="off"-->
+<!--                                           value="130000" order="130001">-->
+<!--                                    <label class="btn btn-outline-primary aPrice" for="btncheck24">-->
+<!--                                        13억~-->
+<!--                                    </label>-->
+<!--                                </div>-->
+<!--                            </div>-->
 
 
                     </ul>
@@ -1205,7 +1221,7 @@
                     <ul class="dropdown-menu aOption">
                         <div class="tac_area">
                             <div class="aOptionsUp">
-                                <div class="first room one">
+                            <div class="first room one">
                                     <div class="top">
                                         <strong class="tit">방개수</strong>
                                     </div>
@@ -1930,8 +1946,43 @@
             <button class="btn btn-primary">초기화</button>
         </div>
     </div>
+
+    <!-- 커스텀 줌 컨트롤을 담을 div -->
+    <div id="zoomControl" style="z-index: 1029;
+                position: absolute;
+                top: 10%;
+                right: 1.5%;
+                display: flex;
+                /* justify-content: flex-end; */
+                /* align-items: flex-end; */
+                padding: 10px;
+                display: flex;
+                width: 56px;
+                /* height: 37px; */
+                flex-direction: column;">
+
+        <button id="buttonp" style="border-radius: 10px 10px 0px 0px; border: none;
+                background-color: white;
+                font-size: 24px;
+                box-shadow: 1px 2px 3px -1px gray;
+                /* border-radius: 3px; */
+                box-shadow: 17px;
+                height: 53px;
+                width: 39px;}"></button>
+        <button id="buttonm" style="border-radius: 0px 0px 10px 10px; border: none;
+                background-color: white;
+                font-size: 24px;
+                box-shadow: 1px 2px 3px -1px gray;
+                /* border-radius: 3px; */
+                box-shadow: 17px;
+                height: 53px;
+                width: 39px;"></button>
+    </div>
+
+
     <!--우측 지도도구-->
     <div class="map_util">
+
         <div
                 class="btn-group-vertical"
                 role="group"
@@ -2020,21 +2071,27 @@
             </div>
         </div>
 
-        <div>
-            <button
-                    onclick="location.href='/agree'"
-                    style="width: 61px; height: 25px; text-align: center"
-                    type="button"
-                    id="hsBtn"
-                    class="btn btn-primary position-absolute"
-            >
-                집 내놓기
-                <span class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger">
+
+    </div>
+    <div style="
+    z-index: 1100;
+    position: absolute;
+    bottom: 13%;
+    right: 6%;
+">
+        <button
+                onclick="location.href='/agree'"
+                style="width: 61px; height: 25px; text-align: center"
+                type="button"
+                id="hsBtn"
+                class="btn btn-primary position-absolute"
+        >
+            집 내놓기
+            <span class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger">
                   10초만에 쉽고 빠르게!
                     <span class="visually-hidden">unread messages</span>
                 </span>
-            </button>
-        </div>
+        </button>
     </div>
 
 
