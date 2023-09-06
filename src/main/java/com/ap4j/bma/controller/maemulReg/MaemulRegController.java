@@ -72,5 +72,10 @@ public class MaemulRegController {
         return "maemulReg/confirmation";
     }
 
+    @PostMapping("/confirmation")
+    public void maemulSaveCoordinates(Integer maemulId, Double latitude, Double longitude) {
+        maemulRegService.updateMeamulReg(maemulId, latitude, longitude);
+    }
+
 }
 
