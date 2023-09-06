@@ -28,21 +28,13 @@
     <div class="asideMenu">
         <ul class="list-group">
             <li class="list-group-item">
-                <ul class="nav nav-tabs" id="amyTab" role="tablist">
+                <ul class="nav nav-tabs" id="amyTab" role="tablist" style="display:flex;justify-content:center;">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
                                 data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane"
                                 aria-selected="true">
                             지도 내 조건에 맞는 매물
                             <span id="aTotalCount" class="count">357</span>
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
-                                data-bs-target="#profile-tab-pane" type="button" role="tab"
-                                aria-controls="profile-tab-pane" aria-selected="false">
-                            경기도 내 중개사무소
-                            <span id="aTotalCountAgency" class="count">7</span>
                         </button>
                     </li>
 
@@ -2606,6 +2598,7 @@
 
         <div>
             <button
+                    onclick="location.href='/agree'"
                     style="width: 61px; height: 25px; text-align: center"
                     type="button"
                     id="hsBtn"

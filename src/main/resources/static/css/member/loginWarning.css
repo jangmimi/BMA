@@ -1,11 +1,11 @@
 .container {
     text-align:center;
 }
-.container-inner{
-    padding-top: 100px;
+.c-inner{
+    padding-top: 150px;
 }
 .warning-icon img {
-    width: 150px;
+    width: 130px;
 }
 .warning-txt {
     margin-top: 20px;

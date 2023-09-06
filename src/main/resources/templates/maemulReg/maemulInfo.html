@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{fragments/layouts/no_footer_layout}">
+      layout:decorate="~{fragments/layouts/no_footer_layout}" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>매물 정보</title>
@@ -21,7 +21,6 @@
 
     <!-- Google Geocoding API -->
     <!--    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>-->
-
 </head>
 
 
@@ -61,9 +60,9 @@
         <tr>
             <th>건축물 용도</th>
             <td colspan="4">
-                <input type="radio" name="buildingUsage" value="living">거주용
-                <input type="radio" name="buildingUsage" value="Work">업무용
-                <input type="radio" name="buildingUsage" value="both">거주/업무용
+                <input type="radio" name="buildingUsage" value="거주용">거주용
+                <input type="radio" name="buildingUsage" value="업무용">업무용
+                <input type="radio" name="buildingUsage" value="거주/업무용">거주/업무용
             </td>
         </tr>
         <tr>
@@ -90,14 +89,14 @@
             <td colspan="4">
                 <select class="combo" name="direction">
                     <option value="none">=== 선택 ===</option>
-                    <option value="east">동향</option>
-                    <option value="west">서향</option>
-                    <option value="south">남향</option>
-                    <option value="north">북향</option>
-                    <option value="southeast">남동향</option>
-                    <option value="southwest">남서향</option>
-                    <option value="northeast">북동향</option>
-                    <option value="northwest">북서향</option>
+                    <option value="동향">동향</option>
+                    <option value="서향">서향</option>
+                    <option value="남향">남향</option>
+                    <option value="북향">북향</option>
+                    <option value="남동향">남동향</option>
+                    <option value="남서향">남서향</option>
+                    <option value="북동향">북동향</option>
+                    <option value="북서향">북서향</option>
                 </select>
             </td>
         </tr>
@@ -106,24 +105,24 @@
             <td colspan="4">
                 <select class="combo" name="heatingType">
                     <option value="none">=== 선택 ===</option>
-                    <option value="local">지역난방</option>
-                    <option value="central">중앙난방</option>
-                    <option value="individual">개별난방</option>
+                    <option value="지역난방">지역난방</option>
+                    <option value="중앙난방">중앙난방</option>
+                    <option value="개별난방">개별난방</option>
                 </select>
             </td>
         </tr>
         <tr>
             <th>엘리베이터</th>
             <td colspan="4">
-                <input type="radio" name="elevator" value="true">유
-                <input type="radio" name="elevator" value="false">무
+                <input type="radio" name="elevator" value="유">유
+                <input type="radio" name="elevator" value="무">무
             </td>
         </tr>
         <tr>
             <th>주차가능여부<b class="number"> *</b></th>
             <td>
-                <input type="radio" name="parking" value="true">가능
-                <input type="radio" name="parking" value="false">불가능
+                <input type="radio" name="parking" value="가능">가능
+                <input type="radio" name="parking" value="불가능">불가능
             </td>
             <th>총 주차대수</th>
             <td colspan="2"><input class="num" type="text" name="totalParking" placeholder="0"> 대</td>
@@ -131,8 +130,8 @@
         <tr>
             <th>단기임대</th>
             <td colspan="4">
-                <input type="radio" name="shortTermRental" value="true">가능
-                <input type="radio" name="shortTermRental" value="false">불가능
+                <input type="radio" name="shortTermRental" value="가능">가능
+                <input type="radio" name="shortTermRental" value="불가능">불가능
             </td>
         </tr>
         <tr>
@@ -151,46 +150,65 @@
         </tr>
     </table>
         <br>
+    </div>
+
+    <div id="priceSection" style="display: none;">
+        <h2 class="category"><b class="number">03 </b>가격 정보 입력</h2>
+        <hr>
 
         <div class="btn-group">
-            <button type="button" onclick="showMonthRent()">월세</button>
-            <button type="button" onclick="showLease()">전세</button>
-            <button type="button" onclick="showSelling()">매매</button>
+            <!--버튼-->
+            <div class="form_radio_btn radio_male">
+                <input id="month" type="radio" name="tradeType" value="월세">
+                <label for="month">월세</label>
+            </div>
 
-        </div>
-    <table id="monthRentSection" class="hidden">
-        <tr>
-            <th>보증금<b class="number"> *</b></th>
-            <td><input class="won" name="monthlyForRent" type="text" placeholder="0"> 원</td>
-        </tr>
-        <tr>
-            <th>월세<b class="number"> *</b></th>
-            <td><input class="won" name="monthlyRent" type="text"  placeholder="0"> 원</td>
-        </tr>
-        <tr>
-            <th>관리비<b class="number"> *</b></th>
-            <td><input class="won" name="m_managementFee" type="text" placeholder="0"> 원</td>
-        </tr>
-    </table>
+            <div class="form_radio_btn">
+                <input id="year" type="radio" name="tradeType" value="전세">
+                <label for="year">전세</label>
+            </div>
 
-    <table id="leaseSection" class="hidden">
-        <tr>
-            <th>전세가<b class="number"> *</b></th>
-            <td colspan="3"><input class="won" name="depositForLease" type="text" placeholder="0"> 원</td>
-        </tr>
-        <tr>
-            <th>관리비<b class="number"> *</b></th>
-            <td><input class="won" name="d_managementFee" type="text" placeholder="0"> 원</td>
-        </tr>
-    </table>
+            <div class="form_radio_btn radio_male">
+                <input id="sell" type="radio" name="tradeType" value="매매">
+                <label for="sell">매매</label>
+            </div>
+    </div>
 
-    <table  id="sellingSection" class="hidden">
-        <tr>
-            <th>매매가<b class="number"> *</b></th>
-            <td colspan="5"><input class="won" name="SellingPrice" type="text" placeholder="0"> 원</td>
-        </tr>
-    </table>
-</div>
+        <!--가격 입력 창-->
+        <table id="monthRentSection" class="hidden">
+            <tr>
+                <th>보증금<b class="number"> *</b></th>
+                <td><input class="won" name="monthlyForRent" type="text" placeholder="0"> 원</td>
+            </tr>
+            <tr>
+                <th>월세<b class="number"> *</b></th>
+                <td><input class="won" name="monthlyRent" type="text"  placeholder="0"> 원</td>
+            </tr>
+            <tr>
+                <th>관리비<b class="number"> *</b></th>
+                <td><input class="won" name="m_managementFee" type="text" placeholder="0"> 원</td>
+            </tr>
+        </table>
+
+        <table id="leaseSection" class="hidden">
+            <tr>
+                <th>전세가<b class="number"> *</b></th>
+                <td colspan="3"><input class="won" name="depositForLease" type="text" placeholder="0"> 원</td>
+            </tr>
+            <tr>
+                <th>관리비<b class="number"> *</b></th>
+                <td><input class="won" name="d_managementFee" type="text" placeholder="0"> 원</td>
+            </tr>
+        </table>
+
+        <table  id="sellingSection" class="hidden">
+            <tr>
+                <th>매매가<b class="number"> *</b></th>
+                <td colspan="5"><input class="won" name="SellingPrice" type="text" placeholder="0"> 원</td>
+            </tr>
+        </table>
+    </div>
+
 </div>
 
 <div id="helpPopup" class="popup" style="display:none;">

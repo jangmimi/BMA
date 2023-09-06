@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @ToString
-public class InterestEntity {
+public class LikedEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,14 +22,14 @@ public class InterestEntity {
     private String road_name;
 
     @Builder
-    public InterestEntity(Long id, String email, String road_name) {
+    public LikedEntity(Long id, String email, String road_name) {
         this.id = id;
         this.email = email;
         this.road_name = road_name;
     }
 
-    public InterestlDTO toDTO() {
-        return InterestlDTO.builder()
+    public LikedDTO toDTO() {
+        return LikedDTO.builder()
                 .id(id)
                 .email (email)
                 .road_name(road_name)
