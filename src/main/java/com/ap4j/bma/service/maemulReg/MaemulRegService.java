@@ -29,4 +29,5 @@ public class MaemulRegService {
         // 매물 ID로 매물 정보를 조회
         return maemulRegRepository.findById(maemulId).orElse(null);
     }
+
 }
