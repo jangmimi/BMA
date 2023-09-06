@@ -4,7 +4,9 @@ import com.ap4j.bma.model.entity.TalkTalk.TalkTalkReviewEntity;
 import com.ap4j.bma.model.entity.apt.AptDTO;
 import com.ap4j.bma.model.entity.apt.AptRealTradeDTO;
 import com.ap4j.bma.model.entity.apt.HangJeongDongDTO;
+import com.ap4j.bma.model.entity.meamulReg.MaeMulRegDTO;
 import com.ap4j.bma.service.apartment.ApartmentServiceImpl;
+import com.ap4j.bma.service.maemulReg.MaemulRegService;
 import com.ap4j.bma.service.talktalk.ReviewService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,9 @@ public class MapController {
 
     @Autowired
     ApartmentServiceImpl aptServiceImpl;
+
+    @Autowired
+    MaemulRegService maemulRegService;
 
     /** 화면 좌표 범위의 DB값 데이터 보내주기 (클라이언트가 사용할 페이지)*/
     @PostMapping("/main")
@@ -85,10 +90,16 @@ public class MapController {
     @PostMapping("map")
     public ResponseEntity<Map<String, Object>> map2(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng, Integer zoomLevel){
         log.info("MapController.map.execute");
+
+        Map<String, Object> responseData = new HashMap<>();
         // 화면 좌표값에 따른 행정동 리스트
         List<HangJeongDongDTO> hjdList = aptServiceImpl.findHJDListBounds(southWestLat, southWestLng, northEastLat, northEastLng, zoomLevel);
-        Map<String, Object> responseData = new HashMap<>();
         responseData.put("hjdList", hjdList);
+
+        // 화면 좌표값에 따른 마커
+        List<MaeMulRegDTO> maemulList = maemulRegService.findMaemulListBounds(southWestLat, southWestLng, northEastLat, northEastLng);
+        responseData.put("maenulList", maemulList);
+//        System.out.println("매물리스트 : " + maemulList);
 
         return ResponseEntity.ok(responseData);
     }
