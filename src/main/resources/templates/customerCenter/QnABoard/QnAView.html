@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layouts/include_footer_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>문의글 상세 페이지</title>
+    <link rel="stylesheet" th:href="@{/css/CC/qna.css}">
+    <link rel="stylesheet" th:href="@{/css/CC/CCBar.css}">
+</head>
+
+<body layout:fragment="content">
+<!-- 로그인중일때만 접근 가능 -->
+<th:block th:if="${loginMember != null}">
+    <div class="layout">
+
+        <hr/>
+            <div id="tb-box">
+                <table border="1" class="qna-tb">
+                    <tr>
+                        <th>이름<b class="boldtext">＊</b></th>
+                        <td>             <!-- DB로 값 넘기기 위해 hidden, th:value로 요소 값 설정 -->
+                            <input type="hidden" id="user_name" name="user_name" th:value="*{name}">
+                            <label th:text="*{name}"></label>   <!-- 세션 로그인멤버(loginMember) name 표시 -->
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>이메일<b class="boldtext">＊</b></th>
+                        <td>
+                            <input type="hidden" id="user_email" name="user_email" th:value="*{email}">
+                            <label th:text="*{email}"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>구분<b class="boldtext">＊</b></th>
+                        <td>
+                        <p>구분 값 가져오기</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>제목<b class="boldtext">＊</b></th>
+                        <td><input type="text" name = "title" id="title" placeholder="제목을 입력하세요."></td>
+                    </tr>
+                    <tr>
+                        <th>내용<b class="boldtext">＊</b></th>
+                        <td><textarea name="content"></textarea></td>
+                    </tr>
+                    <tr>
+                        <th>파일첨부</th>
+                        <td>
+                            <div class="mb-3">
+                                <input class="form-control" type="file" name="file">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+    </div>
+</body>
+</html>

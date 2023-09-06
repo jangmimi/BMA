@@ -11,70 +11,105 @@
 
     <link rel="stylesheet" href="/static/css/maemulReg/maemulReg.css">
     <link rel="stylesheet" href="/static/css/maemulReg/moreinfo.css">
-    <style>
-        /* 이미지 미리보기 스타일 */
-        #previewContainer img {
-            max-width: 120px;
-            max-height: 200px;
-        }
-    </style>
+
     <script>
         function countCharacters(inputElement, countElementId, maxLength) {
-              const countElement = document.getElementById(countElementId);
-              const currentLength = inputElement.value.length;
-              if (currentLength > maxLength) {
-                  inputElement.value = inputElement.value.slice(0, maxLength);
-                  countElement.textContent = `${maxLength}/${maxLength}`;
-              } else {
-                  countElement.textContent = `${currentLength}/${maxLength}`;
-              }
-          }
+         const countElement = document.getElementById(countElementId);
+         const currentLength = inputElement.value.length;
+         if (currentLength > maxLength) {
+             inputElement.value = inputElement.value.slice(0, maxLength);
+             countElement.textContent = `${maxLength}/${maxLength}`;
+         } else {
+             countElement.textContent = `${currentLength}/${maxLength}`;
+         }
+     }
 
-          // 이미지
-          function chooseImages() {
-              const imageInput = document.getElementById("imageInput");
-              const previewContainer = document.getElementById("previewContainer");
+     // 이미지
+     function chooseImages() {
+         const imageInput = document.getElementById("imageInput");
+         const previewContainer = document.getElementById("previewContainer");
 
-              // 이미지 개수 확인
-              if (previewContainer.children.length >= 15) {
-                  alert("최대 15장까지 등록할 수 있습니다.");
-                  return;
-              }
+         // 이미지 개수 확인
+         if (previewContainer.children.length >= 5) {
+             alert("최대 5장까지 등록할 수 있습니다.");
+             return;
+         }
 
-              // 파일 선택 다이얼로그 열기
-              imageInput.click();
-          }
+         // 파일 선택 다이얼로그 열기
+         imageInput.click();
+     }
 
-          document.addEventListener("DOMContentLoaded", function () {
-              // 파일 입력 필드의 변경 이벤트 감지
-              document.getElementById("imageInput").addEventListener("change", function (event) {
-                  const imagePreviews = document.getElementById("previewContainer");
 
-                  // 선택된 파일들을 순회하면서 미리보기 이미지를 생성하고 컨테이너에 추가
-                  for (const file of event.target.files) {
-                      if (imagePreviews.children.length >= 15) {
-                          alert("최대 15장까지 등록할 수 있습니다.");
-                          return;
-                      }
+    document.addEventListener("DOMContentLoaded", function () {
+        const imageInput = document.getElementById("imageInput");
+        const imagePreviews = document.getElementById("previewContainer");
 
-                      // 선택한 파일이 이미지인지 확인
-                      if (file.type.startsWith("image/")) {
-                          const reader = new FileReader();
+        // 대표 사진 레이블 추가 함수
+        function addRepresentativeLabel() {
+            const representativeLabel = document.createElement("div");
+            representativeLabel.classList.add("representative-label");
+            representativeLabel.textContent = "대표사진";
+            return representativeLabel;
+        }
 
-                          reader.onload = function (e) {
-                              const imagePreview = document.createElement("img");
-                              imagePreview.classList.add("preview-image");
-                              imagePreview.src = e.target.result;
-                              imagePreviews.appendChild(imagePreview);
-                          };
+        // 파일 입력 필드의 변경 이벤트 감지
+        imageInput.addEventListener("change", function (event) {
+            // 선택된 파일들을 순회하면서 미리보기 이미지를 생성하고 컨테이너에 추가
+            for (const file of event.target.files) {
+                if (imagePreviews.children.length >= 5) {
+                    alert("최대 5장까지 등록할 수 있습니다.");
+                    return;
+                }
 
-                          reader.readAsDataURL(file);
-                      } else {
-                          alert("이미지 파일을 선택하세요.");
-                      }
-                  }
-              });
-          });
+                // 선택한 파일이 이미지인지 확인
+                if (file.type.startsWith("image/")) {
+                    const reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        // 이미지와 X 버튼을 감싸는 부모 div 요소 생성
+                        const imageContainer = document.createElement("div");
+                        imageContainer.classList.add("image-container");
+
+                        // 대표 사진 레이블 추가 (항상 첫 번째 이미지가 대표 사진)
+                        if (imagePreviews.children.length === 0) {
+                            imageContainer.appendChild(addRepresentativeLabel());
+                        }
+
+                        // 미리보기 이미지 생성 및 추가
+                        const imagePreview = document.createElement("img");
+                        imagePreview.classList.add("preview-image");
+                        imagePreview.src = e.target.result;
+                        imageContainer.appendChild(imagePreview);
+
+                        // X 버튼 생성 및 스타일 적용
+                        const deleteButton = document.createElement("div");
+                        deleteButton.classList.add("delete-button");
+                        deleteButton.textContent = "X";
+                        deleteButton.onclick = function () {
+                            // 이미지와 X 버튼을 감싸는 부모 div 요소 삭제
+                            imagePreviews.removeChild(imageContainer);
+
+                            // 대표 이미지 삭제 시 다음 이미지를 대표 이미지로 설정
+                            if (imagePreviews.children.length > 0) {
+                                const firstImageContainer = imagePreviews.children[0];
+                                if (!firstImageContainer.querySelector(".representative-label")) {
+                                    firstImageContainer.insertBefore(addRepresentativeLabel(), firstImageContainer.firstChild);
+                                }
+                            }
+                        };
+                        imageContainer.appendChild(deleteButton);
+
+                        // 이미지와 X 버튼을 감싸는 div 요소를 미리보기 컨테이너에 추가
+                        imagePreviews.appendChild(imageContainer);
+                    };
+
+                    reader.readAsDataURL(file);
+                } else {
+                    alert("이미지 파일을 선택하세요.");
+                }
+            }
+        });
+    });
     </script>
 </head>
 
@@ -82,7 +117,7 @@
 <div style="text-align : center;">
     <img src="/img/maemulReg/moreinfo.jpg" style="width:100%; height:100%;" >
 </div>
-<form action="/moreinfo" method="POST">
+<form action="/moreinfo" method="POST" enctype="multipart/form-data">
 
     <div class="layout">
 
@@ -109,14 +144,14 @@
                         <th>특징</th>
                         <td>
                             <ul class="ks-cboxtags">
-                                <li><input type="checkbox" name="features" id="short_term" value="단기"><label for="short_term">단기</label></li>
-                                <li><input type="checkbox" name="features" id="new_build" value="신축"><label for="new_build">신축</label></li>
-                                <li><input type="checkbox" name="features" id="investigation" value="투자"><label for="investigation">투자</label></li>
-                                <li><input type="checkbox" name="features" id="full_option" value="풀옵션"><label for="full_option">풀옵션</label></li>
-                                <li><input type="checkbox" name="features" id="elevator" value="엘리베이터"><label for="elevator">엘리베이터</label></li>
-                                <li><input type="checkbox" name="features" id="safety" value="보안/안전"><label for="safety">보안/안전</label></li>
-                                <li><input type="checkbox" name="features" id="separate" value="분리형"><label for="separate">분리형</label></li>
-                                <li><input type="checkbox" name="features" id="parking" value="주차"><label for="parking">주차</label></li>
+                                <li><input type="checkbox" name="shortTerm" id="short_term" value="1"><label for="short_term">단기</label></li>
+                                <li><input type="checkbox" name="newBuild" id="new_build" value="1"><label for="new_build">신축</label></li>
+                                <li><input type="checkbox" name="investigation" id="investigation" value="1"><label for="investigation">투자</label></li>
+                                <li><input type="checkbox" name="fullOption" id="full_option" value="1"><label for="full_option">풀옵션</label></li>
+                                <li><input type="checkbox" name="elevator" id="elevator" value="1"><label for="elevator">엘리베이터</label></li>
+                                <li><input type="checkbox" name="safety" id="safety" value="1"><label for="safety">보안/안전</label></li>
+                                <li><input type="checkbox" name="separate" id="separate" value="1"><label for="separate">분리형</label></li>
+                                <li><input type="checkbox" name="parking" id="parking" value="1"><label for="parking">주차</label></li>
                             </ul>
                         </td>
                     </tr>
@@ -124,25 +159,25 @@
                         <th>옵션</th>
                         <td>
                             <ul class="ks-cboxtags">
-                                <li><input type="checkbox" name="optional" id="wall_hanging" value="벽걸이형"><label for="wall_hanging">벽걸이형</label></li>
-                                <li><input type="checkbox" name="optional" id="bed" value="침대"><label for="bed">침대</label></li>
-                                <li><input type="checkbox" name="optional" id="desk" value="책상"><label for="desk">책상</label></li>
-                                <li><input type="checkbox" name="optional" id="closet" value="옷장"><label for="closet">옷장</label></li>
-                                <li><input type="checkbox" name="optional" id="shoe_closet" value="신발장"><label for="shoe_closet">신발장</label></li>
-                                <li><input type="checkbox" name="optional" id="built_in_closet" value="붙박이장"><label for="built_in_closet">붙박이장</label></li>
-                                <li><input type="checkbox" name="optional" id="eating_table" value="식탁"><label for="eating_table">식탁</label></li>
-                                <li><input type="checkbox" name="optional" id="sofa" value="소파"><label for="sofa">소파</label></li>
-                                <li><input type="checkbox" name="optional" id="ceiling_air_conditioner" value="천장형 에어컨"><label for="ceiling_air_conditioner">천장형 에어컨</label></li>
-                                <li><input type="checkbox" name="optional" id="manless_delivery_box" value="무인택배함"><label for="manless_delivery_box">무인택배함</label></li>
-                                <li><input type="checkbox" name="optional" id="bidet" value="비데"><label for="bidet">비데</label></li>
-                                <li><input type="checkbox" name="optional" id="refrigerator" value="냉장고"><label for="refrigerator">냉장고</label></li>
-                                <li><input type="checkbox" name="optional" id="washing_machine" value="세탁기"><label for="washing_machine">세탁기</label></li>
-                                <li><input type="checkbox" name="optional" id="shower_booth" value="샤워부스"><label for="shower_booth">샤워부스</label></li>
-                                <li><input type="checkbox" name="optional" id="sink" value="싱크대"><label for="sink">싱크대</label></li>
-                                <li><input type="checkbox" name="optional" id="induction" value="인덕션"><label for="induction">인덕션</label></li>
-                                <li><input type="checkbox" name="optional" id="microwave" value="전자레인지"><label for="microwave">전자레인지</label></li>
-                                <li><input type="checkbox" name="optional" id="tv" value="TV"><label for="tv">TV</label></li>
-                                <li><input type="checkbox" name="optional" id="air_conditioner" value="에어컨"><label for="air_conditioner">에어컨</label></li>
+                                <li><input type="checkbox" name="wallHanging" id="wall_hanging" value="1"><label for="wall_hanging">벽걸이형</label></li>
+                                <li><input type="checkbox" name="bed" id="bed" value="1"><label for="bed">침대</label></li>
+                                <li><input type="checkbox" name="desk" id="desk" value="1"><label for="desk">책상</label></li>
+                                <li><input type="checkbox" name="closet" id="closet" value="1"><label for="closet">옷장</label></li>
+                                <li><input type="checkbox" name="shoeCloset" id="shoe_closet" value="1"><label for="shoe_closet">신발장</label></li>
+                                <li><input type="checkbox" name="builtInCloset" id="built_in_closet" value="1"><label for="built_in_closet">붙박이장</label></li>
+                                <li><input type="checkbox" name="eatingTable" id="eating_table" value="1"><label for="eating_table">식탁</label></li>
+                                <li><input type="checkbox" name="sofa" id="sofa" value="1"><label for="sofa">소파</label></li>
+                                <li><input type="checkbox" name="ceilingAirConditioner" id="ceiling_air_conditioner" value="1"><label for="ceiling_air_conditioner">천장형 에어컨</label></li>
+                                <li><input type="checkbox" name="manlessDeliveryBox" id="manless_delivery_box" value="1"><label for="manless_delivery_box">무인택배함</label></li>
+                                <li><input type="checkbox" name="bidet" id="bidet" value="1"><label for="bidet">비데</label></li>
+                                <li><input type="checkbox" name="refrigerator" id="refrigerator" value="1"><label for="refrigerator">냉장고</label></li>
+                                <li><input type="checkbox" name="washingMachine" id="washing_machine" value="1"><label for="washing_machine">세탁기</label></li>
+                                <li><input type="checkbox" name="showerBooth" id="shower_booth" value="1"><label for="shower_booth">샤워부스</label></li>
+                                <li><input type="checkbox" name="sink" id="sink" value="1"><label for="sink">싱크대</label></li>
+                                <li><input type="checkbox" name="induction" id="induction" value="1"><label for="induction">인덕션</label></li>
+                                <li><input type="checkbox" name="microwave" id="microwave" value="1"><label for="microwave">전자레인지</label></li>
+                                <li><input type="checkbox" name="tv" id="tv" value="1"><label for="tv">TV</label></li>
+                                <li><input type="checkbox" name="airConditioner" id="air_conditioner" value="1"><label for="air_conditioner">에어컨</label></li>
                             </ul>
                         </td>
                     </tr>
@@ -150,16 +185,16 @@
                         <th>보안/안전시설</th>
                         <td>
                             <ul class="ks-cboxtags">
-                                <li><input type="checkbox" name="security" id="security_entrance" value="현관보안"><label for="security_entrance">현관보안</label></li>
-                                <li><input type="checkbox" name="security" id="cctv" value="CCTV"><label for="cctv">CCTV</label></li>
-                                <li><input type="checkbox" name="security" id="security_bars" value="방범창"><label for="security_bars">방범창</label></li>
-                                <li><input type="checkbox" name="security" id="security_guard" value="경비원"><label for="security_guard">경비원</label></li>
-                                <li><input type="checkbox" name="security" id="fire_alarm" value="화재경보기"><label for="fire_alarm">화재경보기</label></li>
-                                <li><input type="checkbox" name="security" id="video_phone" value="비디오폰"><label for="video_phone">비디오폰</label></li>
-                                <li><input type="checkbox" name="security" id="intercom" value="인터폰"><label for="intercom">인터폰</label></li>
-                                <li><input type="checkbox" name="security" id="key_card" value="카드키"><label for="key_card">카드키</label></li>
-                                <li><input type="checkbox" name="security" id="private_security" value="사설경비"><label for="private_security">사설경비</label></li>
-                                <li><input type="checkbox" name="security" id="digital_door_lock" value="전자도어락"><label for="digital_door_lock">전자도어락</label></li>
+                                <li><input type="checkbox" name="securityEntrance" id="security_entrance" value="1"><label for="security_entrance">현관보안</label></li>
+                                <li><input type="checkbox" name="CCTV" id="cctv" value="1"><label for="cctv">CCTV</label></li>
+                                <li><input type="checkbox" name="securityBars" id="security_bars" value="1"><label for="security_bars">방범창</label></li>
+                                <li><input type="checkbox" name="securityGuard" id="security_guard" value="1"><label for="security_guard">경비원</label></li>
+                                <li><input type="checkbox" name="fireAlarm" id="fire_alarm" value="1"><label for="fire_alarm">화재경보기</label></li>
+                                <li><input type="checkbox" name="videoPhone" id="video_phone" value="1"><label for="video_phone">비디오폰</label></li>
+                                <li><input type="checkbox" name="intercom" id="intercom" value="1"><label for="intercom">인터폰</label></li>
+                                <li><input type="checkbox" name="keyCard" id="key_card" value="1"><label for="key_card">카드키</label></li>
+                                <li><input type="checkbox" name="privateSecurity" id="private_security" value="1"><label for="private_security">사설경비</label></li>
+                                <li><input type="checkbox" name="digitalDoorLock" id="digital_door_lock" value="1"><label for="digital_door_lock">전자도어락</label></li>
                             </ul>
 
                         </td>
@@ -170,7 +205,7 @@
             <h2 class="category"><b class="number">05 </b>사진등록</h2>
             <hr>
             <ul class="back">
-                <li>최소 3장 이상의 사진을 등록해야 하며 최대 15장까지 등록이 가능합니다.</li>
+                <li>최소 1장 이상의 사진을 등록해야 하며 최대 5장까지 등록이 가능합니다.</li>
                 <li>첫 번째 사진이 대표 이미지로 보여집니다.</li>
                 <li>워터마크, 상호, 전화번호 등이 포함된 사진이나 관련없는 사진을 등록할 경우 서비스 이용이 제한됩니다.</li>
             </ul>
@@ -178,10 +213,11 @@
             <div class="pic-box">
                 <!-- 미리보기 이미지를 표시할 div -->
                 <div id="previewContainer"></div>
+
                 <!-- 이미지 선택 버튼 -->
-                <input type="file" id="imageInput" style="display: none;" accept="image/*" multiple>
-                <img src="/img/maemulReg/image.png" style="width : 150px;" height="150px"><br>
-                <button class="pic-btn" type="button" onclick="chooseImages()">+ 사진 등록</button>
+                <input type="file" id="imageInput" name="imageFiles" style="display: none;" accept="image/*" multiple>
+                <button type="button" onclick="chooseImages()"><img src="/img/maemulReg/image.png" style="width : 150px;" height="150px"></button><br>
+                <!--                <button class="pic-btn" type="button" onclick="chooseImages()">+ 사진 등록</button>-->
             </div>
 
         </div>

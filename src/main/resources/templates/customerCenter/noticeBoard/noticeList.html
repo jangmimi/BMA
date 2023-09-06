@@ -21,12 +21,14 @@
         <button type="button" class="menu-c" id="notice" onclick="location.href = '/notice/list'" >공지사항</button>
         <button type="button" class="menu" id="guide" onclick="location.href = '/guide'" >서비스 이용안내</button>
     </div>
+
     <table>
         <tr>
             <th class="b-q">분류</th>
             <th class="b-t">제목</th>
             <th class="b-n">날짜</th>
         </tr>
+
         <tr th:each="notice : ${notices}">
             <td id = "category">[공지]</td>
             <td><a th:href="@{/notice/view(id=${notice.id})}" th:text="${notice.title}"></a></td>

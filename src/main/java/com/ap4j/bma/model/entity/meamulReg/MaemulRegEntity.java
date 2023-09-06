@@ -31,29 +31,29 @@ public class MaemulRegEntity {
     private Double supplyArea; //공급면적
     private String direction; //방향
     private String heatingType;//난방종류
-    private String Elevator;//엘리베이터(value를 1,0으로 받아오면 int값으로 저장될 거 같아서 int로함)
+    private String Elevator;//엘리베이터
     private String Parking;//주차가능여부 (엘베랑 같은 이유)
     private int totalParking;//총 주차대수
     private String shortTermRental;//단기임대
     private String availableMoveInDate;//입주가능일
-    private Long loanAmount;//융자금
+    private int loanAmount;//융자금
 
 
     //거래 유형
     private String tradeType;//거래 유형
 
     //월세
-    private Long monthlyForRent; //희망보증금
-    private Long monthlyRent; //희망월세
-    private Long m_managementFee;//관리비
+    private int monthlyForRent; //보증금
+    private int monthlyRent; //월세
 
 
     //전세
-    private Long depositForLease; //희망 전세
-    private Long d_managementFee; //관리비
+    private int depositForLease; //희망 전세
+
+    private int managementFee;//전 월세 관리비
 
     //매매
-    private Long SellingPrice;//희망매매가
+    private int SellingPrice;//희망매매가
 
     //상세정보 페이지
     private String title; //제목
@@ -69,5 +69,8 @@ public class MaemulRegEntity {
     //좌표
     private Double longitude; //경도
     private Double latitude; //위도
+
+    //등록일자
+    private String createdAt;
 
 }

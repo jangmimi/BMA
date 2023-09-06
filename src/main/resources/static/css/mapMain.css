@@ -856,6 +856,24 @@ top: 40%;
     border:4px solid #f166ff;
 }
 
+
+/* 줌 컨트롤을 담을 div의 스타일을 지정합니다. */
+        #zoomControl {
+            z-index: 1029;
+                position: absolute;
+                top: 10%;
+                right: 1.5%;
+                display: flex;
+                /* justify-content: flex-end; */
+                /* align-items: flex-end; */
+                padding: 10px;
+                display: flex;
+                width: 56px;
+                /* height: 37px; */
+                flex-direction: column;
+        }
+
+
 .btn.btn-primary.aSellMyHBtn{
     bottom: 3%;
         position: fixed;

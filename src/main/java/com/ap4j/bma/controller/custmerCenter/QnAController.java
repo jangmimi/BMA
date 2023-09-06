@@ -34,9 +34,15 @@ public class QnAController {
         qnAService.saveQnA(qnAEntity, file);
 
 
-        model.addAttribute("message", "1:1 문의가 등록되었습니다..");
+        model.addAttribute("message", "1:1 문의가 등록되었습니다.");
         model.addAttribute("searchUrl", "/qna");
 
         return "community/message";
+    }
+
+    @GetMapping("/qnaview")
+    public String QnAView(HttpSession session) {
+
+        return "customerCenter/QnABoard/QnAView";
     }
 }
