@@ -318,29 +318,40 @@ public class MemberController {
     @RequestMapping("/qLiked")
     public String qInterest(HttpSession session, Model model, Integer maemulId) {
         log.info("MemberController - qLiked() 실행");
-        log.info("저장한 관심매물아이디 : " + maemulId);
-
-
         if(!loginStatus(session)) { return "userView/loginNeed"; }
+
+        log.info("저장한 관심매물아이디 : " + maemulId);
+        MaemulRegEntity finemm = qMemberService.findMaemulById(maemulId);
+        log.info("해당 매물정보 : " + finemm);
 
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
         String nickname = memberDTO.getNickname();
 
         List<LikedEntity> likedlist = likedService.findLikedByNickname(nickname);
-        log.info(likedlist.toString());
+        log.info("좋아요 테이블 + " + likedlist.toString());
 
-//        List<LikedEntity> mmLikedList = likedService.getAllList();
-//
-//        Long mmAllLikedCnt = likedService.countAll();
+        LikedEntity likedEntity = new LikedEntity();
+        likedEntity.setNickname(nickname);
+        likedEntity.setRoad_name(finemm.getAddress());
+
+        likedService.save(likedEntity);
+        log.info("저장 후 likedEntity : " + likedEntity);
+
+//        List<MaemulRegEntity> likemaemulList = likedService.findLikedByRoadname(roadname);
+//        log.info("좋아요한 매물 + " + likedlist.toString());
+
+        List<LikedEntity> mmLikedList = likedService.getAllList();
+
+        Long mmAllLikedCnt = likedService.countAll();
 //        log.info(mmLikedList.toString());
 //        log.info(String.valueOf(mmAllLikedCnt));
-//
-//        List<MaemulRegEntity> mmList = qMemberService.getAllList();
+
+        List<MaemulRegEntity> mmList = qMemberService.getAllList();
 //        log.info(mmList.toString());
-//
-//        model.addAttribute("mmLiked",mmLikedList);
-//        model.addAttribute("mmAllLikedCnt",mmAllLikedCnt);
-//        model.addAttribute("mmList",mmList);
+
+        model.addAttribute("mmLiked",mmLikedList);
+        model.addAttribute("mmAllLikedCnt",mmAllLikedCnt);
+        model.addAttribute("mmList",mmList);
 
         return "userView/maemulLiked";
     }

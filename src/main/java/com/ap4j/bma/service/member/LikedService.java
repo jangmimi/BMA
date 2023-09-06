@@ -1,5 +1,6 @@
 package com.ap4j.bma.service.member;
 
+import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
 import com.ap4j.bma.model.entity.member.LikedEntity;
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.repository.LikedRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -28,23 +30,32 @@ public class LikedService {
         return likedRepository.findAll();
     }
 
-//    public void addLike(Member member, Long postId, String postEmail, String postTitle) {
-//        LikedEntity like = new LikedEntity();
-//        like.setMember(member);
-//        like.setPostId(postId);
-//        like.setPostEmail(postEmail);
-//        like.setPostTitle(postTitle);
-//        likeRepository.save(like);
-//    }
-
-    // 좋아요 버튼 클릭한 매물 저장
-//    public LikedEntity saveLiked(LikedEntity likedEntity) {
-//        return likedRepository.save(likedEntity);
-//    }
-
     public List<LikedEntity> findLikedByNickname(String nickname) {
         List<LikedEntity> likedList = likedRepository.findLikedByNickname(nickname);
         return likedList;
     }
+//    public List<MaemulRegEntity> findLikedByRoadname(String roadName) {
+//        List<MaemulRegEntity> likedmList = likedRepository.findMaemulByRoadName(roadName);
+//
+//        return likedRepository.findMaemulByRoadName(maemulList).stream()
+//                .map(LikedEntity::getMaemul)
+//                .collect(Collectors.toList());
+//    }
 
+//    public List<MaemulRegEntity> findMaemulByRoadNames(List<String> roadNames) {
+//        List<LikedEntity> likedEntities = likedRepository.findByMaemulRoadNameIn(roadNames);
+//
+//        // LikedEntity에서 MaemulRegEntity로 변환
+//        List<MaemulRegEntity> maemulRegEntities = likedEntities.stream()
+//                .map(LikedEntity::getMaemul)
+//                .collect(Collectors.toList());
+//
+//        return maemulRegEntities;
+//    }
+
+    public Long save(LikedEntity likeEntity) {
+
+        likedRepository.save(likeEntity);
+        return likeEntity.getId();
+    }
 }

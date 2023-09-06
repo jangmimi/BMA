@@ -19,4 +19,14 @@ public interface LikedRepository extends JpaRepository<LikedEntity, Long> {
             "JOIN MemberEntity m ON l.nickname = m.nickname " +
             "WHERE l.nickname = :nickname")
     List<LikedEntity> findLikedByNickname(@Param("nickname") String nickname);
+
+    @Query("SELECT mr FROM MaemulRegEntity mr " +
+            "JOIN LikedEntity l ON mr.nickname = l.nickname " +
+            "JOIN MemberEntity m ON mr.nickname = m.nickname " +
+            "WHERE l.road_name = :roadName")
+    List<MaemulRegEntity> findMaemulByRoadName(@Param("roadName") String roadName);
+
+//    List<LikedEntity> findByMaemulRoadNameIn(List<String> roadNames);
+
+
 }
