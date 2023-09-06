@@ -12,13 +12,6 @@ spring:
       enabled: true
     restart:
       enabled: true
-<<<<<<< HEAD
-
-#  h2:
-#    console:
-#      enabled: true
-=======
->>>>>>> 28d7ebfe2d2c7ad1a9fe381e066872b4dbbeffeb
 
   # Thymeleaf 설정
   thymeleaf:
@@ -55,7 +48,3 @@ spring:
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 28d7ebfe2d2c7ad1a9fe381e066872b4dbbeffeb
