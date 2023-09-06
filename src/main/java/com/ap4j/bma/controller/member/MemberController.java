@@ -300,6 +300,7 @@ public class MemberController {
         log.info("MemberController - qManagement() 실행");
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
+
         List<MaemulRegEntity> mmList = qMemberService.getAllList();
         Long mmAllCnt = qMemberService.getAllCnt();
         log.info(mmList.toString());
@@ -309,15 +310,15 @@ public class MemberController {
         model.addAttribute("mmAllCnt",mmAllCnt);
 
 
-        // 서영이 작업
 
         return "userView/maemulManagement";
     }
 
     /** 관심매물 페이지 매핑 */
     @RequestMapping("/qLiked")
-    public String qInterest(HttpSession session, Model model) {
+    public String qInterest(HttpSession session, Model model, Integer maemulId) {
         log.info("MemberController - qLiked() 실행");
+        System.out.println("매물아이디 : " + maemulId);
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
