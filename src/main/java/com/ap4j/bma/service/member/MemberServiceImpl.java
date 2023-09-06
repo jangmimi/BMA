@@ -476,6 +476,17 @@ public class MemberServiceImpl implements MemberService {
 		return maemulRegRepository.count();
 	}
 
+	public MaemulRegEntity findMaemulById(Integer id) {
+		log.info("서비스 findMaemulById() 실행");
+		Optional<MaemulRegEntity> findMaemul = maemulRegRepository.findMaemulById(id);
+		return findMaemul.orElse(null);
+	}
+//	public MemberEntity findMemberById(Long id) {
+//		log.info("서비스 findMemberById() 실행");
+//		Optional<MemberEntity> findMember = memberRepository.findById(id);
+//		return findMember.orElse(null);
+//	}
+
 }
 
 //	/** 회원 탈퇴 id 기준 */

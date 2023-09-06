@@ -53,6 +53,9 @@ public interface MemberService {
 //	public long qMyQnaCnt();
 	public List<MaemulRegEntity> getAllList();
 	public Long getAllCnt();
+
+	public MaemulRegEntity findMaemulById(Integer id);
+
 }
 
 //    Map<String, String> validateHandler(Errors errors);
