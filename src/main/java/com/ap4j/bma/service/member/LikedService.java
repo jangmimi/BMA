@@ -1,11 +1,13 @@
 package com.ap4j.bma.service.member;
 
 import com.ap4j.bma.model.entity.member.LikedEntity;
+import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.repository.LikedRepository;
 import com.ap4j.bma.model.repository.MaemulRegRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.List;
 
@@ -34,5 +36,15 @@ public class LikedService {
 //        like.setPostTitle(postTitle);
 //        likeRepository.save(like);
 //    }
+
+    // 좋아요 버튼 클릭한 매물 저장
+//    public LikedEntity saveLiked(LikedEntity likedEntity) {
+//        return likedRepository.save(likedEntity);
+//    }
+
+    public List<LikedEntity> findLikedByNickname(String nickname) {
+        List<LikedEntity> likedList = likedRepository.findLikedByNickname(nickname);
+        return likedList;
+    }
 
 }

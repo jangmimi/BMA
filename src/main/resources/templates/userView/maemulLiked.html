@@ -50,8 +50,8 @@
                             <table class="faq-tb">
                                 <thead>
                                     <tr>
-                                        <th class="b-n">번호</th>
                                         <th class="o-d-type">거래종류 매물종류</th>
+                                        <th class="o-d-img">이미지</th>
                                         <th class="o-d-add">소재지/상세주소 매물설명</th>
                                         <th class="o-d-area">면적</th>
                                         <th class="o-d-price">가격(만원)</th>
@@ -60,21 +60,25 @@
                                 </thead>
                                 <tbody>
                                     <p>전체 <span class="o-cntAll" th:text="${mmAllLikedCnt}"></span>건</p>
-                                    <th:block th:if="${mmAllLikedCnt == 0}">
-                                        <tr><td colspan="4">조회된 데이터가 없습니다.</td></tr>
-                                    </th:block>
+
                                     <tr th:each="mmList : ${mmList}"><!--th:if="${mmLiked.nickname == loginMember.nickname}"-->
-                                        <td id="num" th:text="${mmList.id}">번호</td>
+                                        <input type="hidden" id="num" th:value="${mmList.id}">
                                         <td id="tradeType" th:text="${mmList.tradeType}">거래유형</td>
+                                        <td id="o-d-photo">
+                                            <img src="https://www.bdsplanet.com/common/thumbs.ytp?filepath=/COMP_20201027000920000005/upload/realty/RCODE_20230731160156000045/&filename=1690787077205_1.jpg" width="80">
+                                        </td>
                                         <td>
                                             <div th:text="${mmList.address}">주소</div>
                                             <div th:text="${mmList.APT_name}">아파트이름</div>
                                         </td>
                                         <td>
-                                            <div th:text="${mmList.privateArea}">면적</div>
-                                            <div th:text="${mmList.privateArea}">면적</div>
+                                            <div th:text="${'계약' + mmList.privateArea + '㎡'}">면적</div>
+                                            <div th:text="${'전용' + mmList.supplyArea + '㎡'}">공용면적</div>
                                         </td>
-                                        <td id="monthlyForRent" th:text="${mmList.monthlyForRent}">가격</td>
+                                        <td>
+                                            <div id="o-d-load" th:text="${'보증금' + mmList.monthlyForRent}"></div>
+                                            <div th:text="${'관리비' + mmList.monthlyRent}">월세</div>
+                                        </td>
                                         <td class="o-t-btn">
                                             <input type="button" value="삭제">
                                         </td>
