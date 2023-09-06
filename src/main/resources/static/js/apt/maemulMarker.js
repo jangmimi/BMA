@@ -8,9 +8,32 @@ var options = {
 };
 var map = new kakao.maps.Map(container, options);
 
-// 줌 컨트롤러 지도에 추가
-var zoomControl = new kakao.maps.ZoomControl();
-map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+// 줌 컨트롤을 생성하고 커스텀 컨트롤로 사용할 div를 지정합니다.
+            var zoomControlContainer = document.getElementById('zoomControl');
+
+            // 줌 인 버튼을 생성하고 이벤트 핸들러를 추가합니다.
+            var zoomInButton = document.getElementById('buttonp');
+            zoomInButton.textContent = '+';
+            zoomInButton.addEventListener('click', function () {
+                map.setLevel(map.getLevel() - 1, { animate: true });
+            });
+
+            // 줌 아웃 버튼을 생성하고 이벤트 핸들러를 추가합니다.
+            var zoomOutButton = document.getElementById('buttonm');
+            zoomOutButton.textContent = '-';
+            zoomOutButton.addEventListener('click', function () {
+                map.setLevel(map.getLevel() + 1, { animate: true });
+            });
+
+            // 버튼을 컨테이너에 추가합니다.
+            zoomControlContainer.appendChild(zoomInButton);
+            zoomControlContainer.appendChild(zoomOutButton);
+
+            // 커스텀 줌 컨트롤을 생성하고 맵에 추가합니다.
+            var customZoomControl = new kakao.maps.CustomControl(zoomControlContainer, {
+                position: kakao.maps.ControlPosition.TOPLEFT
+            });
+            map.addControl(customZoomControl);
 
 // 클러스터
 var clusterer = new kakao.maps.MarkerClusterer({
@@ -251,10 +274,10 @@ var hjdOverlays = [];
 // 사이드바 정보 업데이트
 function updateSidebar(responseData) {
 
-    // sellingPrice를 기준으로 responseData 배열을 내림차순 정렬
-    responseData.sort(function (a, b) {
-        return b.sellingPrice - a.sellingPrice;
-    });
+//    // sellingPrice를 기준으로 responseData 배열을 내림차순 정렬
+//    responseData.sort(function (a, b) {
+//        return b.sellingPrice - a.sellingPrice;
+//    });
 
     // 사이드바 컨테이너
     var sidebarContainer = document.querySelector(".sideContents ul.list-group");
@@ -357,4 +380,6 @@ $(document).on("click", ".aHeartBtn", function() {
             console.error("Ajax 요청 실패: " + error);
         }
     });
+
+
 });
