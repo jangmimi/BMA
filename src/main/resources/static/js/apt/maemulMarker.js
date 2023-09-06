@@ -142,8 +142,6 @@ kakao.maps.event.addListener(map, 'tilesloaded', function () {
         }
     });
 });
-
-
 // 맵 이동시 현재 맵의 경계를 기준으로 데이터 요청하고 그 범위에 속하는 행정동 또는 아파트 데이터의 마커 생성
 kakao.maps.event.addListener(map, 'idle', function () {
     // 행정동 오버레이 초기화
