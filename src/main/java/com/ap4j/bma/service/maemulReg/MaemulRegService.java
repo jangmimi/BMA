@@ -31,7 +31,7 @@ public class MaemulRegService {
         // 매물 ID로 매물 정보를 조회
         return maemulRegRepository.findById(maemulId).orElse(null);
     }
-    
+
     // 매물 좌표값 업데이트
     public void updateMeamulReg(Integer maemulId, Double latitude, Double longitude) {
         MaemulRegEntity updateMaemul = maemulRegRepository.findById(maemulId).orElse(null);
@@ -71,9 +71,8 @@ public class MaemulRegService {
                     .tradeType(maemulRegEntity.getTradeType())
                     .monthlyForRent(maemulRegEntity.getMonthlyForRent())
                     .monthlyRent(maemulRegEntity.getMonthlyRent())
-                    .m_managementFee(maemulRegEntity.getM_managementFee())
+                    .managementFee(maemulRegEntity.getManagementFee())
                     .depositForLease(maemulRegEntity.getDepositForLease())
-                    .d_managementFee(maemulRegEntity.getD_managementFee())
                     .SellingPrice(maemulRegEntity.getSellingPrice())
                     .title(maemulRegEntity.getTitle())
                     .content(maemulRegEntity.getContent())
@@ -82,6 +81,7 @@ public class MaemulRegService {
                     .security(maemulRegEntity.getSecurity())
                     .longitude(maemulRegEntity.getLongitude())
                     .latitude(maemulRegEntity.getLatitude())
+                    .createdAt(maemulRegEntity.getCreatedAt())
                     .build();
             maeMulRegDTOList.add(maeMulRegDTO);
         }
