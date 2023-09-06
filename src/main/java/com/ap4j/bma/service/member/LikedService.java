@@ -31,8 +31,10 @@ public class LikedService {
     }
 
     public List<LikedEntity> findLikedByNickname(String nickname) {
-        List<LikedEntity> likedList = likedRepository.findLikedByNickname(nickname);
-        return likedList;
+        return likedRepository.findLikedByNickname(nickname);
+    }
+    public List<MaemulRegEntity> findLikedByRoadname(String road_name) {
+        return likedRepository.findMaemulByRoadName(road_name);
     }
 //    public List<MaemulRegEntity> findLikedByRoadname(String roadName) {
 //        List<MaemulRegEntity> likedmList = likedRepository.findMaemulByRoadName(roadName);

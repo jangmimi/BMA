@@ -59,7 +59,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <p>전체 <span class="o-cntAll" th:text="${mmAllLikedCnt}"></span>건</p>
+                                    <p>전체 <span class="o-cntAll" th:text="${myLikedCnt}"></span>건</p>
 
                                     <tr th:each="mmList : ${mmList}"><!--th:if="${mmLiked.nickname == loginMember.nickname}"-->
                                         <input type="hidden" id="num" th:value="${mmList.id}">

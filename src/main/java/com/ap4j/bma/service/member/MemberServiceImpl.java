@@ -481,6 +481,7 @@ public class MemberServiceImpl implements MemberService {
 		Optional<MaemulRegEntity> findMaemul = maemulRegRepository.findMaemulById(id);
 		return findMaemul.orElse(null);
 	}
+
 //	public MemberEntity findMemberById(Long id) {
 //		log.info("서비스 findMemberById() 실행");
 //		Optional<MemberEntity> findMember = memberRepository.findById(id);
