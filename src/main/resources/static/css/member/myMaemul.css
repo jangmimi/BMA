@@ -57,15 +57,16 @@ tbody tr:hover {
 .o-d-btns {
     width: 10%;
 }
-.o-t-btns input {
-    background-color: #26abed;
-    color: white;
-    font-size: 15px;
-    font-weight: 600;
-    border: none;
+.o-t-btns input, .o-t-btn input {
+    font-size: 13px;
+    border: 1px solid lightgray;
     margin: 5px 0px;
     padding: 3px 12px;
 }
+.o-d-btn {
+    width: 7%;
+}
+
 
 .headrow{
     height : 100px;
