@@ -193,7 +193,7 @@ html,body{
   position: absolute;
   top: 130px;
   width: 400px;
-  z-index: 1050;
+  z-index: 1051;
   height: calc(100% - 60px);
   line-height: 1;
 }
