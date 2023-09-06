@@ -116,7 +116,6 @@ public class CommunityController {
         model.addAttribute("nextArticle",  communityService.getNextArticle(id));
         return "community/communityView";
     }
-
     
 
     //게시글 삭제
