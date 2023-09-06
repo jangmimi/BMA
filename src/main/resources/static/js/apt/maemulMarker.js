@@ -216,7 +216,7 @@ function updateSidebar(responseData) {
 
         // 새로운 a 요소 생성
         var anchor = document.createElement("a");
-        anchor.href = "";
+        anchor.href = "/details/" + maemul.id ;
         anchor.className = "abox";
         anchor.target = "";
 
