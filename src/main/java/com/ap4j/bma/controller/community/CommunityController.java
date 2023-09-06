@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.time.format.DateTimeFormatter;
 
 //import java.util.List;
 
@@ -99,7 +100,6 @@ public class CommunityController {
     @PostMapping("/community/comment")
     public String commentWrite(@ModelAttribute("communityComment") CommunityCommentEntity communityCommentEntity, Integer articleId,
                                HttpSession session, Model model) {
-
             model.addAttribute("loginMember", session.getAttribute("loginMember"));
             CommunityEntity communityEntity = communityService.communityView(articleId); // 커뮤니티 조회 메소드를 호출하여 커뮤니티 엔티티를 가져옴
             communityCommentEntity.setCommunityEntity(communityEntity); // communityEntity 필드 설정
@@ -113,7 +113,9 @@ public class CommunityController {
     @GetMapping("/community/view")
     public String communityView(Model model, Integer id) {
         System.out.println(id);
+        //김재환의 것
         model.addAttribute("comment", communityService.communityCommentEntity(id));
+        //
         model.addAttribute("article", communityService.communityView(id));
         model.addAttribute("prevArticle", communityService.getPreArticle(id));
         model.addAttribute("nextArticle", communityService.getNextArticle(id));
