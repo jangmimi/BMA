@@ -55,15 +55,32 @@
             <div class="s-comment" th:each="comment : ${comment}">
                 <div class="s-comment-info">
                     <span th:text = "${comment.author}"></span>
-                    <span th:text = "${comment.createdAt}"></span>
+                    <span th:text = "${comment.createdAt}" class="createdAtSpan"> </span>
+                    <script>
+                        // 클래스 이름으로 엘리먼트를 선택하고 NodeList를 반환합니다.
+                            var createdAtElements = document.getElementsByClassName('createdAtSpan');
+
+                            // NodeList를 배열로 변환하여 각 엘리먼트에 대해 작업할 수 있습니다.
+                            Array.from(createdAtElements).forEach(function (element) {
+                                var createdAt = element.textContent; // 엘리먼트의 텍스트 내용 가져오기
+                                var formattedDate = new Date(createdAt); // JavaScript Date 객체 생성
+                                var formattedDateString = formattedDate.toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+
+                                // 원하는 형식으로 변경된 날짜를 엘리먼트에 설정합니다.
+                                element.textContent = formattedDateString;
+                            });
+                    </script>
                 </div>
                 <div class="s-comment-content" th:text = "${comment.content}"></div>
                 <div class="s-button-align">
+
+                    <!--지현은 이것을 보시오-->
                     <form action="/comment/delete" method="post">
                         <input type="hidden" name="articleId" th:value="${article.id}">
                         <input type="hidden" name="id" th:value="${comment.id}">
-                        <button type="submit">삭제</button>
+                        <button type="submit" th:if="${comment.author == loginMember?.nickname}">삭제</button>
                     </form>
+
                 </div>
             </div>
 
@@ -72,7 +89,7 @@
                 <span>
                     댓글내용
                 </span>
-                    <textarea name="content" cols="30" rows="10"></textarea>
+                    <textarea name="content" cols="30" rows="10" th:disabled="${loginMember==null}" ></textarea>
                     <input type="hidden" name="articleId" th:value="${article.id}">
                     <input type="hidden" name="author" th:value="${loginMember?.nickname}">
                     <button type="submit">댓글 작성</button>
