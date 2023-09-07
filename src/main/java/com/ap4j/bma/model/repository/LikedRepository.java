@@ -46,5 +46,9 @@ public interface LikedRepository extends JpaRepository<LikedEntity, Long> {
     /** nickname과 road_name으로 이미 있는 관심매물인지 조회 */
 //    Optional<LikedEntity> findByNicknameAndRoad_name(String nickname, String road_name);
 
+    @Modifying
+    @Query("DELETE FROM LikedEntity l WHERE l.nickname = :nickname AND l.road_name = :roadName")
+    void deleteLikedEntitiesByNicknameAndRoadName(@Param("nickname") String nickname, @Param("roadName") String roadName);
+
+    List<LikedEntity> findByNickname(String nickname);
 }
-//(깃머지충돌)

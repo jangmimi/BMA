@@ -34,8 +34,8 @@ public class LikedService {
     }
 
     /** 특정 닉네임이랑 매치되는 Liked 전부 조회 */
-    public List<LikedEntity> findLikedByNickname(String nickname) {
-        return likedRepository.findLikedByNickname(nickname);
+    public List<LikedEntity> findByNickname(String nickname) {
+        return likedRepository.findByNickname(nickname);
     }
 
     /** 특정 주소와 매치되는 매물 전부 조회 */
@@ -52,7 +52,6 @@ public class LikedService {
                 .collect(Collectors.toList());
     }
 
-
     /** 관심 매물 저장 (*중복 저장 안되게 작업중) */
     @Transactional
     public Long save(LikedEntity likeEntity) {
@@ -66,6 +65,11 @@ public class LikedService {
             log.info("중복된 매물이네요. 삭제 실행 - 임시로 컨트롤러에서 실행");
         }
         return likeEntity.getId();
+    }
+
+
+    public void deleteByNicknameAndRoadName(String nickname, String roadName) {
+        likedRepository.deleteLikedEntitiesByNicknameAndRoadName(nickname, roadName);
     }
 
 //    @Transactional
