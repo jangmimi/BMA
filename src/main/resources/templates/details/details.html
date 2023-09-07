@@ -81,6 +81,10 @@
 						   th:with="dp_djr=${maemulList.get().depositForLease / 10000}, dp_aks=${maemulList.get().depositForLease % 10000}"
 						   th:text="${'전세' + #strings.concat(dp_djr > 0 ? dp_djr + '억 ' : '', dp_aks > 0 ? dp_aks + '만원' : '')}">
 						</p>
+						<p th:if="${maemulList.get().tradeType == '월세'}"
+							th:text="${'월세 ' + maemulList.get().monthlyRent + '/' + maemulList.get().monthlyForRent}">
+
+						</p>
 					</div>
 					<div class="y-price-area">1,700만원(3.3㎡) 계산 해야됨.</div>
 				</div>
