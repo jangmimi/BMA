@@ -18,4 +18,7 @@ public interface MaemulRegRepository extends JpaRepository<MaemulRegEntity, Inte
     /** id기준으로 매물 조회 */
 
     Optional<MaemulRegEntity> findMaemulById(Integer id);
+
+    /**  마커 클릭시 해당 주소값과 같은 매물 리스트 불러오기 */
+    List<MaemulRegEntity> findMaemulByAddress(String address);
 }

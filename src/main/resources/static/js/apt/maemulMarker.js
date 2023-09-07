@@ -59,8 +59,20 @@ function createMarker(position, markerContent, responseData) {
         kakao.maps.event.addListener(marker, 'click', function () {
             closeOtherOverlays(); // 다른 오버레이 닫기
             openOverlay(marker.overlay); // 오버레이 열기
-            updateSidebar(responseData); // 사이드바에 데이터 전송
-            updateTransactionTable(responseData.roadName); // 사이드바의 거래내역 테이블에 데이터 전송
+            clearSidebar(); // 사이드바 초기화
+            console.log(responseData.address);
+            $.ajax({
+                    type: 'POST',
+                    url: '/map/map',
+                    data: {address : responseData.address},
+                    success: function (response) {
+                        if(response.maemulClickList) {
+                            updateSidebar(response.maemulClickList);
+                        }
+                    }
+
+            });
+
         });
 
         clusterer.addMarker(marker); // 클러스터러에 마커 추가
@@ -125,7 +137,8 @@ kakao.maps.event.addListener(map, 'tilesloaded', function () {
 kakao.maps.event.addListener(map, 'idle', function () {
     // 행정동 오버레이 초기화
     clearHJDOverlays();
-
+    // 마커 초기화
+    closeOtherOverlays();
     // 사이드바 초기화
     clearSidebar();
 
@@ -258,19 +271,27 @@ function updateSidebar(responseData) {
     responseData.forEach(function (maemul) {
 
         // 보증금
-
         var monthlyForRent = null; // 이 변수 사용하면됨
         var monthlyForRentString = maemul.monthlyForRent.toString();
-        var monthlyForRentSliceUk = monthlyForRentString.charAt(0);
-        var monthlyForRentSliceMan = monthlyForRentString.slice(1);
-
+        var monthlyForRentSliceUk = null;
+        var monthlyForRentSliceMan = null;
+        if (monthlyForRentString.length <= 4) {
+            monthlyForRentSliceMan = monthlyForRentString.slice(0);
+        } else if (monthlyForRentString.length === 5) {
+            monthlyForRentSliceUk = monthlyForRentString.charAt(0);
+            monthlyForRentSliceMan = monthlyForRentString.slice(1);
+        }
         if (monthlyForRentSliceUk != null) {
-            monthlyForRent = "보증금 " + monthlyForRentSliceUk + "억 " + monthlyForRentSliceMan + "만";
+            if (monthlyForRentSliceMan.charAt(0) != '0') {
+                monthlyForRent = "보증금 " + monthlyForRentSliceUk + "억 " + monthlyForRentSliceMan + "만원";
+            } else {
+                monthlyForRent = "보증금 " + monthlyForRentSliceUk + "억";
+            }
         } else {
-            monthlyForRent = "보증금 " + monthlyForRentSliceMan + "만";
+            monthlyForRent = "보증금 " + monthlyForRentSliceMan + "만원";
         }
         // 월세
-        var monthlyRent = "월세 " + maemul.monthlyRent; // 이 변수 사용하면됨
+        var monthlyRent = "월세 " + maemul.monthlyRent + "만원"; // 이 변수 사용하면됨
 
 
         // 전세
@@ -286,10 +307,15 @@ function updateSidebar(responseData) {
             depositForLeaseSliceMan = depositForLeaseString.slice(2);
         }
         if(depositForLeaseSliceUk != null) {
-            depositForLease = "전세 " + depositForLeaseSliceUk + "억 " + depositForLeaseSliceMan + "만";
+            if(depositForLeaseSliceMan.charAt(0) != '0') {
+                depositForLease = "전세 " + depositForLeaseSliceUk + "억 " + depositForLeaseSliceMan + "만원";
+            } else {
+                depositForLease = "전세 " + depositForLeaseSliceUk + "억";
+            }
         } else {
-            depositForLease = "전세 " + depositForLeaseSliceMan + "만";
+            depositForLease = "전세 " + depositForLeaseSliceMan + "만원";
         }
+
 
         // 매매
         var sellingPrice = null;
@@ -307,9 +333,13 @@ function updateSidebar(responseData) {
             sellingPriceSliceMan = sellingPriceString.slice(3);
         }
         if(sellingPriceSliceUk != null) {
-            sellingPrice = "매매 " + sellingPriceSliceUk + "억 " + sellingPriceSliceMan + "만";
+            if(sellingPriceSliceMan.charAt(0) != '0') {
+                sellingPrice = "매매 " + sellingPriceSliceUk + "억 " + sellingPriceSliceMan + "만원";
+            } else {
+                sellingPrice = "매매 " + sellingPriceSliceUk + "억";
+            }
         } else {
-            sellingPrice = "매매 " + sellingPriceSliceMan + "만";
+            sellingPrice = "매매 " + sellingPriceSliceMan + "만원";
         }
 
 
@@ -336,14 +366,13 @@ function updateSidebar(responseData) {
                     <h5 class="ii loc_title">
                         <span class="payf_num_b">
                             ${
-                              maemul.monthlyForRent != 999 ? monthlyForRent :
+                              maemul.monthlyForRent != 999 ? `${monthlyForRent}<br/>${monthlyRent}` :
                               maemul.depositForLease != 999 ? depositForLease:
                               sellingPrice
                             }
                         </span>
                     </h5>
                     <div class="ii loc_ii01">
-                        <span class="type">아파트</span>
                         <span class="loc">${maemul.apt_name}</span>
                     </div>
                     <div class="ii etc_txt">

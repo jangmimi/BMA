@@ -88,7 +88,7 @@ public class MapController {
     }
 
     @PostMapping("map")
-    public ResponseEntity<Map<String, Object>> map2(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng, Integer zoomLevel){
+    public ResponseEntity<Map<String, Object>> map2(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng, Integer zoomLevel, String address){
         log.info("MapController.map.execute");
 
         Map<String, Object> responseData = new HashMap<>();
@@ -98,10 +98,11 @@ public class MapController {
 
         // 화면 좌표값에 따른 마커
         List<MaeMulRegDTO> maemulList = maemulRegService.findMaemulListBounds(southWestLat, southWestLng, northEastLat, northEastLng);
-        if (maemulList != null) {
-            responseData.put("maenulList", maemulList);
-        }
-//        System.out.println("매물리스트 : " + maemulList);
+        responseData.put("maenulList", maemulList);
+
+        // 마커 클릭시 해당 주소의 매물 리스트 가져오기
+        List<MaeMulRegDTO> maemulClickList = maemulRegService.findMaemulByAddress(address);
+        responseData.put("maemulClickList", maemulClickList);
 
         return ResponseEntity.ok(responseData);
     }
