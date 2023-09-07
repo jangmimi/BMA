@@ -30,7 +30,6 @@ public class MapController {
     @Autowired
     private ReviewService reviewService;
 
-
     @Autowired
     ApartmentServiceImpl aptServiceImpl;
 
@@ -89,7 +88,7 @@ public class MapController {
 
     @PostMapping("map")
     public ResponseEntity<Map<String, Object>> map2(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng, Integer zoomLevel, String address, String tradeType){
-
+        System.out.println("컨트롤러 address " + address);
         log.info("MapController.map.execute");
 
         Map<String, Object> responseData = new HashMap<>();

@@ -60,11 +60,26 @@ function createMarker(position, markerContent, responseData) {
             closeOtherOverlays(); // 다른 오버레이 닫기
             openOverlay(marker.overlay); // 오버레이 열기
             clearSidebar(); // 사이드바 초기화
+
             console.log(responseData.address);
+
+            var bounds = map.getBounds();
+            var southWest = bounds.getSouthWest();
+            var northEast = bounds.getNorthEast();
+            var currentZoomLevel = map.getLevel(); // 현재 줌 레벨 가져오기
+
+            var dataToSend = {
+                    southWestLat: southWest.getLat(),
+                    southWestLng: southWest.getLng(),
+                    northEastLat: northEast.getLat(),
+                    northEastLng: northEast.getLng(),
+                    zoomLevel: currentZoomLevel,
+                    address : responseData.address
+                    }
             $.ajax({
                     type: 'POST',
                     url: '/map/map',
-                    data: {address : responseData.address},
+                    data: dataToSend,
                     success: function (response) {
                         if(response.maemulClickList) {
                             updateSidebar(response.maemulClickList);

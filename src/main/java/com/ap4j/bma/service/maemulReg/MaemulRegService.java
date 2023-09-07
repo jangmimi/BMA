@@ -89,8 +89,9 @@ public class MaemulRegService {
 
     // 마커 클릭시 해당 주소값과 같은 매물 리스트 불러오기
     public List<MaeMulRegDTO> findMaemulByAddress(String address) {
+        System.out.println("서비스 address" + address);
         List<MaeMulRegDTO> maeMulRegDTOList = new ArrayList<>();
-        List<MaemulRegEntity> maemulRegEntityList = maemulRegRepository.findMaemulByAddress(address);
+        List<MaemulRegEntity> maemulRegEntityList = maemulRegEntityRepository.findMaemulByAddress(address);
         for (MaemulRegEntity maemulRegEntity : maemulRegEntityList) {
             MaeMulRegDTO maeMulRegDTO = MaeMulRegDTO.builder()
                     .id(maemulRegEntity.getId())

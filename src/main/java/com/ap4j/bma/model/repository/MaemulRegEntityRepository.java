@@ -2,8 +2,11 @@ package com.ap4j.bma.model.repository;
 
 import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -20,5 +23,13 @@ public interface MaemulRegEntityRepository extends JpaRepository<MaemulRegEntity
     Optional<MaemulRegEntity> findMaemulById(Integer id);
 
     /**  마커 클릭시 해당 주소값과 같은 매물 리스트 불러오기 */
+    @Query("select m from MaemulRegEntity m WHERE m.address = ?1")
     List<MaemulRegEntity> findMaemulByAddress(String address);
+
+    /** 로그인한 멤버 nickname이랑 매치되는 매물 리스트 불러오기 */
+    @Query("SELECT mr FROM MaemulRegEntity mr " +
+            "JOIN MemberEntity m ON mr.nickname = m.nickname " +
+            "WHERE m.nickname = :nickname")
+    List<MaemulRegEntity> findMaemulByMemberNickname(@Param("nickname") String nickname);
+
 }
