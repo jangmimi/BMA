@@ -66,7 +66,12 @@ public class LikedService {
         }
         return likeEntity.getId();
     }
-
+    /** id로 관심매물 삭제 */
+    @Transactional
+    public void deleteById(Long id) {
+        log.info("관심매물삭제 서비스 실행");
+        likedRepository.deleteById(id);
+    }
 
     public void deleteByNicknameAndRoadName(String nickname, String roadName) {
         likedRepository.deleteLikedEntitiesByNicknameAndRoadName(nickname, roadName);
