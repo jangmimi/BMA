@@ -62,7 +62,7 @@
                                 <tbody>
                                     <p>전체 <span class="o-cntAll" th:text="${mmFilterListSize}"></span>건</p>
 
-                                    <tr th:each="mmList : ${mmList}"><!--th:if="${mmLiked.nickname == loginMember.nickname}"-->
+                                    <tr th:each="mmList : ${mmList}">
                                         <input type="hidden" id="num" th:value="${mmList.id}">
                                         <td id="tradeType" th:text="${mmList.tradeType}">거래유형</td>
                                         <td id="o-d-photo">

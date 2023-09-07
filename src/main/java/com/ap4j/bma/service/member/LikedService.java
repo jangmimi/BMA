@@ -8,6 +8,7 @@ import com.ap4j.bma.model.repository.MaemulRegRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.ArrayList;
@@ -52,15 +53,17 @@ public class LikedService {
 
 
     /** 관심 매물 저장 (*중복 저장 안되게 작업중) */
-    public Long save(LikedEntity likeEntity, String mynickname) {
-//        if(findLikedByRoadname(likeEntity.getRoad_name()) != null
-//            && findLikedByNickname(likeEntity.getNickname()) !=null) {
-//            return -1L;
-//        } else {
-//            likedRepository.save(likeEntity);
-//            return likeEntity.getId();
-//        }
-        likedRepository.save(likeEntity);
+    @Transactional
+    public Long save(LikedEntity likeEntity) {
+        String roadName = likeEntity.getRoad_name();
+        String nickname = likeEntity.getNickname();
+        boolean isDuplicate = likedRepository.existsByNicknameAndRoadName(roadName, nickname);
+        log.info("중복여부 : " + isDuplicate);
+        if(!isDuplicate) {
+            likedRepository.save(likeEntity);
+        } else {
+            log.info("중복된 매물이네요.");
+        }
         return likeEntity.getId();
     }
     
