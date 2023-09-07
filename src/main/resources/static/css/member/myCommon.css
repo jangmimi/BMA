@@ -36,6 +36,9 @@
     text-align: center;
     margin: 50px 0px;
 }
+.o-page-title h3 {
+    font-size: 30px;
+}
 
 /* 테이블 */
 .faq-tb {
