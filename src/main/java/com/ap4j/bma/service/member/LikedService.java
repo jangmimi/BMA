@@ -4,7 +4,7 @@ import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
 import com.ap4j.bma.model.entity.member.LikedEntity;
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.repository.LikedRepository;
-import com.ap4j.bma.model.repository.MaemulRegRepository;
+import com.ap4j.bma.model.repository.MaemulRegEntityRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ public class LikedService {
     private LikedRepository likedRepository;
 
     @Autowired
-    private MaemulRegRepository maemulRegRepository;
+    private MaemulRegEntityRepository maemulRegEntityRepository;
 
     public Long countAll() {
         return likedRepository.count();
