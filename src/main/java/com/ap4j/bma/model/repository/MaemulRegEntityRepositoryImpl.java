@@ -19,11 +19,14 @@ public class MaemulRegEntityRepositoryImpl implements MaemulRepositoryCustom{
 
     @Override
     public List<MaemulRegEntity> findMaemulListBounds(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng, String tradeTypes) {
-
         BooleanExpression tradeTypeCondition = null;
 
-        if (!tradeTypes.isEmpty()) {
-            tradeTypeCondition = maemulRegEntity.tradeType.in(tradeTypes);
+        if (!StringUtils.isEmpty(tradeTypes)) {
+            // tradeTypes 문자열을 쉼표로 분리하여 배열로 변환
+            String[] tradeTypeArray = tradeTypes.split(",");
+
+            // 배열을 사용하여 in 조건 설정
+            tradeTypeCondition = maemulRegEntity.tradeType.in(tradeTypeArray);
         }
 
         return queryFactory
