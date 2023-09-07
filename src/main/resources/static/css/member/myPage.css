@@ -324,13 +324,13 @@
 }
 
 .z-content-wrap {
-	width: 340px;
+	width: 300px;
 	height: 385px;
 }
 
 .z-img-wrap,
 .z-img {
-	width: 340px;
+	width: 300px;
 	height: 191.25px;
 }
 
@@ -339,9 +339,9 @@
 }
 
 .z-bottom-wrap {
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	gap: 30px;
+	display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .z-text-content3 {
