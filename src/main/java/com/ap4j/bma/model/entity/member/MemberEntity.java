@@ -1,8 +1,10 @@
 package com.ap4j.bma.model.entity.member;
 
+import com.ap4j.bma.model.entity.customerCenter.QnAEntity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Table(name="member") // DB 테이블 이름 지정
 @Entity
@@ -64,30 +66,5 @@ public class MemberEntity {
 				.member_leave(member_leave)
 				.build();
 	}
-}
-
-// DATABASE (MySQL) TIP!!
-// 컬럼 순서 바꾸기
-// alter table member modify column root varchar(2) after tel;
-//				테이블명				바꿀컬럼명 타입 ~뒤로 컬럼명(얘 뒤로)
-
-/*
-// 이건 JPA 에서 쓰는 자바 테이블 이라고 생각 하시면 됩니다 :) 아래가 예시에요.
-@Entity
-@Table(name="member") // 명시적으로 테이블 이름 지정.
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
-public class MemberEntity {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id; // 기본 키
-
-	@Column
-	private String user_id; // 유저 아이디
 
 }
-*/
