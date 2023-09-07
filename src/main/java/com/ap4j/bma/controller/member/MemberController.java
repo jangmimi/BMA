@@ -240,9 +240,6 @@ public class MemberController {
     public String qMyPage(HttpSession session, Model model) {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
-
-
-
         String thumImg = (String) session.getAttribute("thumbnail_image");
         model.addAttribute("thumbnail_image", thumImg);
         MemberDTO loginMember = (MemberDTO) session.getAttribute("loginMember");
@@ -266,9 +263,7 @@ public class MemberController {
     /** 내정보 수정하기 */
     @PostMapping("/qUpdateMember/{id}")
     public String qUpdate(@ModelAttribute MemberDTO updatedMember, Model model, HttpSession session) {
-        log.info("MemberController - qUpdate() 실행");
         if(!loginStatus(session)) { return "userView/loginNeed"; }
-
         log.info("updatedMember : " + updatedMember);
 
         Long id =  ((MemberDTO) session.getAttribute("loginMember")).getId();
@@ -287,13 +282,10 @@ public class MemberController {
 
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
         String userEmail = memberDTO.getEmail();
-        log.info("userEmail : " + userEmail);
 
         List<QnAEntity> qMyQnaList = qMemberService.qMyQnaList(userEmail);
         long cnt = qMyQnaList.size();
         log.info("내가쓴글수 : " + cnt);
-        long qMyQnaCnt = qMemberService.qMyQnaCnt(userEmail);
-        log.info("qMyQnaCnt : " + qMyQnaCnt);
 
         model.addAttribute("myQnaList", qMyQnaList);
         model.addAttribute("myQnaCnt", cnt);
@@ -302,8 +294,11 @@ public class MemberController {
 
     /** 매물관리 페이지 매핑 */
     @RequestMapping("/qManagement")
-    public String qManagement(@ModelAttribute("loginMember") MemberDTO memberDTO, HttpSession session, Model model) {
+    public String qManagement(HttpSession session, Model model) {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
+
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
+        String nickname = memberDTO.getNickname();
 
         List<MaemulRegEntity> mmList = qMemberService.getListByNickname(memberDTO.getNickname());
 
@@ -316,7 +311,6 @@ public class MemberController {
     /** 관심매물 등록 */
     @RequestMapping("/qLiked")
     public String qLiked(HttpSession session, Model model, Integer maemulId) {
-        log.info("MemberController - qLiked() 실행");
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
@@ -401,10 +395,8 @@ public class MemberController {
             return ResponseEntity.ok(0);
         }
     }
-    @PostMapping("/qLeaveMember/{id}")    // 기존 id사용해서 탈퇴처리했던 코드 남겨둠
+    @PostMapping("/qLeaveMember/{id}")    // id 사용해서 탈퇴 (sns계정 탈퇴)
     public String leaveMember(HttpSession session, SessionStatus sessionStatus) {
-        log.info("MemberController - leaveMember() 실행");
-
         Long id =  ((MemberDTO) session.getAttribute("loginMember")).getId();
         String pwd =  ((MemberDTO) session.getAttribute("loginMember")).getPwd();
         qMemberService.leaveMember(id, pwd, sessionStatus, session);

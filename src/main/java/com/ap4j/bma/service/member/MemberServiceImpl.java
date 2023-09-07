@@ -450,7 +450,7 @@ public class MemberServiceImpl implements MemberService {
 	/** 내 QnA 목록 */
 	@Override
 	public List<QnAEntity> qMyQnaList(String userEmail) {
-		return qnARepository.findAll();
+		return qnARepository.findMaemulByMemberEmail(userEmail);
 	}
 
 	/** QnA 전체 수 */
