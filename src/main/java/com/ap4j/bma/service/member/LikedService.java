@@ -7,6 +7,9 @@ import com.ap4j.bma.model.repository.LikedRepository;
 import com.ap4j.bma.model.repository.MaemulRegEntityRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -66,6 +69,12 @@ public class LikedService {
             log.info("중복된 매물이네요. 삭제 실행 - 임시로 컨트롤러에서 실행");
         }
         return likeEntity.getId();
+    }
+
+    /*김재환작성 페이징처리*/
+    public Page<LikedEntity> getPaginatedItems(String nickname,int page, int pageSize) {
+        Pageable pageable = PageRequest.of(page - 1, pageSize);
+        return (Page<LikedEntity>) likedRepository.findLikedByNicknameAndPaging(nickname,pageable);
     }
 
 //    @Transactional

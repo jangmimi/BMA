@@ -5,6 +5,7 @@ import com.ap4j.bma.model.entity.member.LikedEntity;
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -38,6 +39,13 @@ public interface LikedRepository extends JpaRepository<LikedEntity, Long> {
     @Modifying
     @Query("DELETE FROM LikedEntity l WHERE l.nickname = :nickname AND l.road_name IN (SELECT mr.address FROM MaemulRegEntity mr WHERE mr.nickname = :nickname)")
     void deleteLikedEntitiesByNicknameAndRoadName(@Param("nickname") String nickname);
+
+    /*김재환 페이징 처리*/
+    @Query("SELECT l FROM LikedEntity l " +
+            "JOIN MaemulRegEntity mr ON l.nickname = mr.nickname " +
+            "JOIN MemberEntity m ON l.nickname = m.nickname " +
+            "WHERE l.nickname = :nickname")
+    List<LikedEntity> findLikedByNicknameAndPaging(@Param("nickname") String nickname, Pageable pageable);
 
     /** 관심매물 삭제 */
 //    @Override
