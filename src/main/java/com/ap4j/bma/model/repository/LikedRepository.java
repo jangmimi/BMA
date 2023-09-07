@@ -31,5 +31,8 @@ public interface LikedRepository extends JpaRepository<LikedEntity, Long> {
             "FROM LikedEntity l " +
             "WHERE l.nickname = :nickname AND l.road_name = :roadName")
     boolean existsByNicknameAndRoadName(@Param("nickname") String nickname, @Param("roadName") String roadName);
+
+    List<LikedEntity> findByNickname(String nickname);
+
 }
 //(깃머지충돌)
