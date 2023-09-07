@@ -72,38 +72,28 @@ function createMarker(position, markerContent, responseData) {
 var onlyOneStart = false; // 한 번만 실행하기 위한 변수
 // 맵 로드가 완료되면 실행
 
-var tradeType = []; // 선택된 거래 유형을 담을 배열
+var tradeType = ""; // 기본값
 
-// 체크박스의 변경 이벤트를 감지하고 선택된 거래 유형을 배열에 추가 또는 제거합니다.
+// 체크박스의 변경 이벤트를 감지하고 tradeType을 업데이트합니다.
 $("#flexCheckAll").change(function () {
-    updateSelectedTradeTypes("", this.checked);
+    tradeType = this.checked ? null : "";
 });
 
 $("#flexCheckSale").change(function () {
-    updateSelectedTradeTypes("매매", this.checked);
+    tradeType = this.checked ? "매매" : "";
 });
 
 $("#flexCheckLease").change(function () {
-    updateSelectedTradeTypes("전세", this.checked);
+    tradeType = this.checked ? "전세" : "";
 });
 
 $("#flexCheckMonthly").change(function () {
-    updateSelectedTradeTypes("월세", this.checked);
+    tradeType = this.checked ? "월세" : "";
 });
 
 $("#flexCheckShortTerm").change(function () {
-    updateSelectedTradeTypes("단기임대", this.checked);
+    tradeType = this.checked ? "단기임대" : "";
 });
-
-function updateSelectedTradeTypes(type, isChecked) {
-    if (isChecked) {
-        // 체크된 경우 배열에 추가
-        tradeType.push(type);
-    } else {
-        // 체크 해제된 경우 배열에서 제거
-        tradeType = tradeType.filter(item => item !== type);
-    }
-}
 
 
 

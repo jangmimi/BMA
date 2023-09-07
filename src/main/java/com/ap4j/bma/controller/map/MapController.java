@@ -88,7 +88,7 @@ public class MapController {
     }
 
     @PostMapping("map")
-    public ResponseEntity<Map<String, Object>> map2(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng, Integer zoomLevel, String[] tradeType){
+    public ResponseEntity<Map<String, Object>> map2(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng, Integer zoomLevel, String tradeType){
         log.info("MapController.map.execute");
 
         Map<String, Object> responseData = new HashMap<>();
