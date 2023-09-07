@@ -22,6 +22,6 @@ public class MailController {
         MailDTO dto = emailService.createMailAndChangePassword(userEmail);
         emailService.mailSend(dto);
 
-        return "member/qLoginForm";
+        return "redirect:/member/qLoginForm";
     }
 }

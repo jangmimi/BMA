@@ -1,0 +1,71 @@
+/* 로그인 회원가입 css */
+
+/* 공통 스타일 */
+.n-header-list {
+    margin: 16px 0px;
+    padding: 0px 0px 0px 40px;
+}
+.form-floating {
+    width: 350px;
+}
+.oLabelColor {
+    color: gray;
+    font-size: 14px;
+}
+
+/* 로그인 */
+.form-check {
+    width: 350px;
+}
+#oInner-container {
+    width: 400px;
+}
+#oSaveIdContainer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    margin: 18px 0px 18px 0px;
+}
+.oErrorMsg {
+    color: red;
+    font-weight: 600;
+    font-size: 13px;
+    margin: 20px
+}
+.o-sns-title {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* 회원가입 */
+#oInner-container-join {
+    width: 400px;
+}
+#btnEmailCheck, #btnNicknameCheck {
+    width: 90px;
+    margin-left: 6px;
+}
+agree {
+    margin-right: 5px;
+}
+.oAgree-li {
+    margin: 10px;
+}
+.mustch {
+    font-weight: 600;
+    color: #26ABED;
+}
+.selch {
+    font-weight: 600;
+    color: gray; !important
+}
+
+#j-input-c #email, #nickname {
+    width: 254px;
+}
+#emailErr, nicknameErr {
+    text-align: left;
+    color: red;
+    font-size: 12px;
+}
