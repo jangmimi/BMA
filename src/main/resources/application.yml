@@ -53,7 +53,7 @@ spring:
     host: smtp.naver.com
     port: 465
     username: alwkd920101@naver.com
-    password: 
+    password: wkdal1234!! # 커밋 전 주석처리 잊지말기
     properties:
       mail.smtp.auth: true
       mail.smtp.ssl.enable: true
