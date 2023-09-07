@@ -71,6 +71,42 @@ function createMarker(position, markerContent, responseData) {
 // 맵 최초 로드시 마커 생성 해주는 함수
 var onlyOneStart = false; // 한 번만 실행하기 위한 변수
 // 맵 로드가 완료되면 실행
+
+var tradeType = []; // 선택된 거래 유형을 담을 배열
+
+// 체크박스의 변경 이벤트를 감지하고 선택된 거래 유형을 배열에 추가 또는 제거합니다.
+$("#flexCheckAll").change(function () {
+    updateSelectedTradeTypes("", this.checked);
+});
+
+$("#flexCheckSale").change(function () {
+    updateSelectedTradeTypes("매매", this.checked);
+});
+
+$("#flexCheckLease").change(function () {
+    updateSelectedTradeTypes("전세", this.checked);
+});
+
+$("#flexCheckMonthly").change(function () {
+    updateSelectedTradeTypes("월세", this.checked);
+});
+
+$("#flexCheckShortTerm").change(function () {
+    updateSelectedTradeTypes("단기임대", this.checked);
+});
+
+function updateSelectedTradeTypes(type, isChecked) {
+    if (isChecked) {
+        // 체크된 경우 배열에 추가
+        tradeType.push(type);
+    } else {
+        // 체크 해제된 경우 배열에서 제거
+        tradeType = tradeType.filter(item => item !== type);
+    }
+}
+
+
+
 kakao.maps.event.addListener(map, 'tilesloaded', function () {
     // 이미 실행된 경우 함수 종료
     if (onlyOneStart) {
@@ -88,7 +124,8 @@ kakao.maps.event.addListener(map, 'tilesloaded', function () {
         southWestLng: southWest.getLng(),
         northEastLat: northEast.getLat(),
         northEastLng: northEast.getLng(),
-        zoomLevel: currentZoomLevel
+        zoomLevel: currentZoomLevel,
+        tradeType: tradeType
     };
 
     $.ajax({
@@ -139,7 +176,8 @@ kakao.maps.event.addListener(map, 'idle', function () {
         southWestLng: southWest.getLng(),
         northEastLat: northEast.getLat(),
         northEastLng: northEast.getLng(),
-        zoomLevel: currentZoomLevel
+        zoomLevel: currentZoomLevel,
+        tradeType: tradeType
     };
 
 //    console.log(dataToSend);
