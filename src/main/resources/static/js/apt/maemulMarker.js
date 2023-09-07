@@ -251,16 +251,68 @@ var hjdOverlays = [];
 // 사이드바 정보 업데이트
 function updateSidebar(responseData) {
 
-    // sellingPrice를 기준으로 responseData 배열을 내림차순 정렬
-    responseData.sort(function (a, b) {
-        return b.sellingPrice - a.sellingPrice;
-    });
-
     // 사이드바 컨테이너
     var sidebarContainer = document.querySelector(".sideContents ul.list-group");
 
     // responseData 배열을 순회하며 사이드바 항목 생성
     responseData.forEach(function (maemul) {
+
+        // 보증금
+
+        var monthlyForRent = null; // 이 변수 사용하면됨
+        var monthlyForRentString = maemul.monthlyForRent.toString();
+        var monthlyForRentSliceUk = monthlyForRentString.charAt(0);
+        var monthlyForRentSliceMan = monthlyForRentString.slice(1);
+
+        if (monthlyForRentSliceUk != null) {
+            monthlyForRent = "보증금 " + monthlyForRentSliceUk + "억 " + monthlyForRentSliceMan + "만";
+        } else {
+            monthlyForRent = "보증금 " + monthlyForRentSliceMan + "만";
+        }
+        // 월세
+        var monthlyRent = "월세 " + maemul.monthlyRent; // 이 변수 사용하면됨
+
+
+        // 전세
+        var depositForLease = null; // 이 변수 사용하면됨
+        var depositForLeaseString = maemul.depositForLease.toString();
+        var depositForLeaseSliceUk = null;
+        var depositForLeaseSliceMan = null;
+        if(depositForLeaseString.length === 5) {
+            depositForLeaseSliceUk = depositForLeaseString.charAt(0);
+            depositForLeaseSliceMan = depositForLeaseString.slice(1);
+        } else if (depositForLeaseString.length === 6) {
+            depositForLeaseSliceUk = depositForLeaseString.slice(0,2);
+            depositForLeaseSliceMan = depositForLeaseString.slice(2);
+        }
+        if(depositForLeaseSliceUk != null) {
+            depositForLease = "전세 " + depositForLeaseSliceUk + "억 " + depositForLeaseSliceMan + "만";
+        } else {
+            depositForLease = "전세 " + depositForLeaseSliceMan + "만";
+        }
+
+        // 매매
+        var sellingPrice = null;
+        var sellingPriceString = maemul.sellingPrice.toString();
+        var sellingPriceSliceUk = null;
+        var sellingPriceSliceMan = null;
+        if(sellingPriceString.length === 5) {
+            sellingPriceSliceUk = sellingPriceString.charAt(0);
+            sellingPriceSliceMan = sellingPriceString.slice(1);
+        } else if (sellingPriceString.length === 6) {
+            sellingPriceSliceUk = sellingPriceString.slice(0,2);
+            sellingPriceSliceMan = sellingPriceString.slice(2);
+        } else if (sellingPriceString.length === 7) {
+            sellingPriceSliceUk = sellingPriceString.slice(0,3);
+            sellingPriceSliceMan = sellingPriceString.slice(3);
+        }
+        if(sellingPriceSliceUk != null) {
+            sellingPrice = "매매 " + sellingPriceSliceUk + "억 " + sellingPriceSliceMan + "만";
+        } else {
+            sellingPrice = "매매 " + sellingPriceSliceMan + "만";
+        }
+
+
         // 새로운 li 요소 생성
         var listItem = document.createElement("li");
         listItem.className = "list-group-item a";
@@ -282,7 +334,13 @@ function updateSidebar(responseData) {
             <div class="ainfo_area">
                 <div class="in">
                     <h5 class="ii loc_title">
-                        <span class="payf_num_b">${maemul.sellingPrice}</span>
+                        <span class="payf_num_b">
+                            ${
+                              maemul.monthlyForRent != 999 ? monthlyForRent :
+                              maemul.depositForLease != 999 ? depositForLease:
+                              sellingPrice
+                            }
+                        </span>
                     </h5>
                     <div class="ii loc_ii01">
                         <span class="type">아파트</span>

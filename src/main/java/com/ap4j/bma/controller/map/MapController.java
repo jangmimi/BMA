@@ -98,7 +98,9 @@ public class MapController {
 
         // 화면 좌표값에 따른 마커
         List<MaeMulRegDTO> maemulList = maemulRegService.findMaemulListBounds(southWestLat, southWestLng, northEastLat, northEastLng);
-        responseData.put("maenulList", maemulList);
+        if (maemulList != null) {
+            responseData.put("maenulList", maemulList);
+        }
 //        System.out.println("매물리스트 : " + maemulList);
 
         return ResponseEntity.ok(responseData);
