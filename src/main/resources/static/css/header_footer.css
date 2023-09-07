@@ -6,6 +6,10 @@ margin:0;
 min-width:1800px;
 }
 
+ul{
+    margin: unset;
+}
+
 /*헤더 컨테이너*/
 
 /*body{
