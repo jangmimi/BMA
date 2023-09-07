@@ -30,7 +30,7 @@ $(document).ready(function(){
         }
     }
 
-    // 비밀번호/비밀번호 확인 일치 여부 체크, 비밀번호 형식 체크
+    // 비밀번호/비밀번호 확인 일치 여부 체크
     $("#pwd, #pwdCheck").focusout(function(){
         let pwdValue = $('#pwd').val();
         let pwdCheckValue = $('#pwdCheck').val();
@@ -41,8 +41,10 @@ $(document).ready(function(){
         }
     });
     $("#pwd").keyup(function(){
+        // 비밀번호 형식 체크 : 8자 이상, 20자 이하, 숫자와 영문 조합
         let pwdValue = $(this).val();
-        if (pwdValue.length < 8 || pwdValue.length > 20) {
+        let pwdreg = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
+        if (pwdValue.length < 8 || pwdValue.length > 20 || !pwdreg.test(pwdValue)) {
             $("#opwdCheck2").css("display","block");
         } else {
             $("#opwdCheck2").css("display","none");
@@ -134,33 +136,10 @@ function checkNickname() {
     });
 };
 
-// 회원가입 및 체크
-//function checkJoinInfo() {
-//    let email = $('#email').val();
-//    let name = $('#name').val();
-//    let pwd = $('#pwd').val();
-//    let pwdCheck = $('#pwdCheck').val();
-//
-//    $.ajax({
-//        url: '/member/qEmailCheck',
-//        type: 'post',
-//        data: {email:email},
-//        success:function(cnt) {
-//            if(email === '') alert('이메일을 입력해주세요.');
-//            if(name === '') alert('이름을 입력해주세요');
-//            if(pwd === '') alert('비밀번호를 입력해주세요.');
-//            if(pwdCheck === '') alert('비밀번호를 확인해주세요.');
-//
-//        },
-//        error:function() {
-//            alert("에러입니다.");
-//        }
-//    });
-//};
-
 function oJoinCheck() {
     const reg = /^[A-Za-z0-9_\.]+@[A-Za-z0-9]+\.[A-Za-z0-9]+/;
     const telreg = /^\d{10,11}$/;
+    const pwdreg = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
     let email = $('#email').val();
     let name = $('#name').val();
     let pwd = $('#pwd').val();
@@ -171,6 +150,9 @@ function oJoinCheck() {
     let allChecked = true;
     let emailCheckOk = $("#btnEmailCheck").val();
     let nicknameCheckOk = $("#btnNicknameCheck").val();
+
+    checkEmail()
+    checkNickname()
 
     if(email === '') {
         alert('이메일을 입력해주세요.');
@@ -204,6 +186,10 @@ function oJoinCheck() {
         alert('연락처 형식으로 입력해주세요.');
         return false;
     }
+    if (!pwdreg.test(pwd)) {
+        alert('비밀번호 형식으로 입력해주세요.');
+        return false;
+    }
     if(checkedboxes.length !== $(".oMustAgree").length) {
         alert('필수항목을 모두 체크해주세요.');
         return false;
@@ -213,3 +199,29 @@ function oJoinCheck() {
         return false;
     }
 }
+
+
+
+// 회원가입 및 체크 ajax 로 변경
+//function checkJoinInfo() {
+//    let email = $('#email').val();
+//    let name = $('#name').val();
+//    let pwd = $('#pwd').val();
+//    let pwdCheck = $('#pwdCheck').val();
+//
+//    $.ajax({
+//        url: '/member/qEmailCheck',
+//        type: 'post',
+//        data: {email:email},
+//        success:function(cnt) {
+//            if(email === '') alert('이메일을 입력해주세요.');
+//            if(name === '') alert('이름을 입력해주세요');
+//            if(pwd === '') alert('비밀번호를 입력해주세요.');
+//            if(pwdCheck === '') alert('비밀번호를 확인해주세요.');
+//
+//        },
+//        error:function() {
+//            alert("에러입니다.");
+//        }
+//    });
+//};

@@ -174,7 +174,7 @@
 
     <div class="middle">
         <b class="count"><span id ="count-color" th:text="${totalCommunityCount}"></span> 건</b> <!--게시글 개수-->
-    <table id = "freeboard-tb">
+        <table id = "freeboard-tb">
         <thead>
         <tr>
             <th class="b-n">No.</th>
@@ -186,6 +186,11 @@
         </thead>
 
         <tbody>
+        <!--작성한 글 없을 때 -->
+        <th:block th:if="${totalCommunityCount == 0}">
+            <tr><td colspan="5">조회된 데이터가 없습니다.</td></tr>
+        </th:block>
+        <!--작성한 글 있을 때 -->
         <tr th:each="community : ${list}">
             <td th:text = "${community.id}">1</td>
             <td>

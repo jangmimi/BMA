@@ -42,4 +42,7 @@ public class QnAService {
 
     }
 
+    public QnAEntity findById(Integer id) {
+        return qnARepository.findById(id).orElse(null); // ID에 해당하는 글을 조회하고 반환
+    }
 }
