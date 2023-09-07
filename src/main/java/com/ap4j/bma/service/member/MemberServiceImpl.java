@@ -460,7 +460,7 @@ public class MemberServiceImpl implements MemberService {
 
 	/** 내가 등록한 매물 목록 조회 */
 	public List<MaemulRegEntity> getListByNickname(String nickname) {
-		return  maemulRegRepository.findMaemulByMemberNickname(nickname);
+		return  maemulRegEntityRepository.findMaemulByMemberNickname(nickname);
 	}
 
 	/** 매물 전체 개수 */

@@ -55,12 +55,12 @@ public class LikedService {
     /** 관심 매물 저장 (*중복 저장 안되게 작업중) */
     @Transactional
     public Long save(LikedEntity likeEntity) {
-        String roadName = likeEntity.getRoad_name();
         String nickname = likeEntity.getNickname();
-        boolean isDuplicate = likedRepository.existsByNicknameAndRoadName(roadName, nickname);
-        log.info("중복여부 : " + isDuplicate);
+        String roadName = likeEntity.getRoad_name();
+        boolean isDuplicate = likedRepository.existsByNicknameAndRoadName(nickname, roadName);
+
         if(!isDuplicate) {
-            likedRepository.save(likeEntity);
+            likedRepository.save(likeEntity); log.info("중복아니라 저장완료");
         } else {
             log.info("중복된 매물이네요.");
         }
