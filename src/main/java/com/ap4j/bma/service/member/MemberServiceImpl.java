@@ -312,17 +312,15 @@ public class MemberServiceImpl implements MemberService {
 		return entity.getId();
 	}
 
-	/** 중복회원 체크 */
+	/** 중복회원(이메일) 체크 */
 	@Override
 	public boolean existsByEmail(String email) {
-		log.info("서비스 existsByEmail() 실행");
 		return memberRepository.existsByEmail(email);
 	}
 
 	/** 중복닉네임 체크 */
 	@Override
 	public boolean existsByNickname(String nickname) {
-		log.info("서비스 existsByNickname() 실행");
 		return memberRepository.existsByNickname(nickname);
 	}
 

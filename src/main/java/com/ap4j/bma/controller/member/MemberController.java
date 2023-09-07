@@ -431,28 +431,20 @@ public class MemberController {
         return "redirect:/";
     }
 
-    /** 이메일 중복 체크 (js ajax 활용) */
+    /** 중복회원(이메일) 체크 (js ajax 활용) */
     @PostMapping("/qEmailCheck")
     @ResponseBody
     public int qEmailCheck(@RequestParam("email") String email) {
-        log.info("MemberController - qEmailCheck() 실행");
-
-        int cnt = 0;
         boolean emailCheck = qMemberService.existsByEmail(email);
-        cnt = emailCheck ? 1 : 0;
-        return cnt;
+        return emailCheck ? 1 : 0;
     }
 
     /** 닉네임 중복 체크 (js ajax 활용) */
     @PostMapping("/qNicknameDuplicationCheck")
     @ResponseBody
     public int NicknameDuplicationCheck(@RequestParam("nickname") String nickname) {
-        log.info("MemberController - NicknameDuplicationCheck() 실행");
-
-        int cnt = 0;
         boolean nicknameCheck = qMemberService.existsByNickname(nickname);
-        cnt = nicknameCheck ? 1 : 0;
-        return cnt;
+        return nicknameCheck ? 1 : 0;
     }
 
     /** 이메일/비밀번호 찾기 페이지 매핑 */
@@ -464,8 +456,6 @@ public class MemberController {
     /** 이메일 찾기 */
     @PostMapping("/qFindEmail")
     public String qFindEmail(@RequestParam String name, @RequestParam String tel, Model model) {
-        log.info("MemberController - qFindEmail() 실행");
-
         Optional<MemberEntity> findMember = qMemberService.findByNameAndTel(name, tel);
 
         if(findMember.isPresent()) {
@@ -477,11 +467,10 @@ public class MemberController {
     }
 
     /** 비밀번혼 찾기 */
-    @PostMapping("/qFindPwd")
+    @PostMapping("/qFindPwd")    // * 임시 비번 이메일 발급으로 수정 적용 필요 *
     public String qFindPwd(@RequestParam String emailpwd, @RequestParam String telpwd, Model model) {
-        log.info("MemberController - qFindPwd() 실행");
-
         Optional<MemberEntity> find = qMemberService.findByEmailAndTel(emailpwd, telpwd);
+
         if(find.isPresent()) {
             model.addAttribute("findPwd", find.get().getPwd());
         } else {
