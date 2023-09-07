@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MaemulPhotoRepository extends JpaRepository<MaemulPhotoEntity, Integer> {
+    MaemulPhotoEntity findByMaemulID(Integer maemulId);
 }

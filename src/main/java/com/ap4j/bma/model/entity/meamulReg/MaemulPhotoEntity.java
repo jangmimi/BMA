@@ -14,22 +14,27 @@ public class MaemulPhotoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int PhotoID; //사진식별번호 - 기본키
-    private int maemulID; //매물ID - 외래키
+    private int photoID; // 사진 식별번호 - 기본키
+    private int maemulID; // 매물 ID - 외래키
 
-    private String primeName; //대표 사진 이름
-    private String primePhoto; // 대표 사진 경로
+    // 이미지 경로를 쉼표로 구분하여
+    @Column(length = 1000)
+    private String imagePaths; // 이미지 경로를 쉼표로 구분하여 저장
 
-    private String twoName;  // 2번째 사진
-    private String photoTwo;
+    // 이미지 경로를 설정하는 메서드 추가
+    public void addImagePath(String imagePath) {
+        if (imagePaths == null || imagePaths.isEmpty()) {
+            imagePaths = imagePath;
+        } else {
+            imagePaths += "," + imagePath;
+        }
+    }
 
-    private String threeName; // 3번째 사진
-    private String photoThree;
-
-    private String fourName; // 4번째 사진
-    private String photoFour;
-
-    private String fiveName; // 5번째 사진
-    private String photoFive;
-
+    // 이미지 경로를 배열로 반환하는 메서드
+    public String[] getImagePathsArray() {
+        if (imagePaths != null && !imagePaths.isEmpty()) {
+            return imagePaths.split(",");
+        }
+        return new String[0]; // 이미지가 없는 경우 빈 배열 반환
+    }
 }

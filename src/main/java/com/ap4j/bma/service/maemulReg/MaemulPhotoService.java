@@ -7,36 +7,27 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
-import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import java.util.UUID;
 
 @Service
 public class MaemulPhotoService {
-    private final MaemulPhotoRepository maemulPhotoRepository;
 
     @Autowired
-    public MaemulPhotoService(MaemulPhotoRepository maemulPhotoRepository) {
-        this.maemulPhotoRepository = maemulPhotoRepository;
-    }
+    private MaemulPhotoRepository maemulPhotoRepository;
+
+    @Autowired
+    private FileStorageService fileStorageService;
+
 
     @Transactional
-    public void saveMaemulPhotos(MaemulPhotoEntity maemulPhotoEntity, MultipartFile file) throws IOException {
+    public void saveImage(MultipartFile file, MaemulPhotoEntity maemulPhotoEntity) throws IOException {
+        // 이미지 파일을 업로드 폴더에 저장하고 URL을 반환
+        String imagePath = fileStorageService.storeFile(file, "photo");
 
-        String path = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static" + File.separator + "maemulFile";
+        // 이미지 경로를 MaemulPhotoEntity에 추가
+        maemulPhotoEntity.addImagePath(imagePath);
 
-        UUID uuid = UUID.randomUUID();
-
-        String fileName = uuid + "_" + file.getOriginalFilename();
-        File saveFile = new File(path, fileName);
-
-        file.transferTo(saveFile);
-//
-//        maemulPhotoEntity.setFilename(fileName);
-//        maemulPhotoEntity.setFilepath("/maemulPhoto/" + fileName);
-
-
+        // 수정된 이미지 엔티티를 저장
         maemulPhotoRepository.save(maemulPhotoEntity);
     }
 }

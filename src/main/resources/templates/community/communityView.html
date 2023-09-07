@@ -32,8 +32,8 @@
             <tr>
                 <td colspan="6">
                     <button class="del-mod"><a th:href="@{/community/list}">목록</a></button>
-                    <button class="del-mod"><a th:href="@{/community/delete(id=${article.id})}">삭제</a></button>
-                    <button class="del-mod"><a th:href="@{/community/modify/{id}(id=${article.id})}">수정</a></button>
+                    <button class="del-mod" th:if="${article.author == loginMember?.nickname}"><a th:href="@{/community/delete(id=${article.id})}">삭제</a></button>
+                    <button class="del-mod" th:if="${article.author == loginMember?.nickname}"><a th:href="@{/community/modify/{id}(id=${article.id})}">수정</a></button>
                 </td>
             </tr>
         </table>

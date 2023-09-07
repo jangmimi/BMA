@@ -59,11 +59,11 @@
             </div>
 
         <div class="btn-group">
-        <button>
-            목록
+        <button id="go-list">
+            <a href="/member/qMyQnA">목록</a>
         </button>
-        <button>
-            삭제
+        <button id="deleteButton">
+                <a th:href="@{/deleteQnA(id=${qna.id})}">삭제</a>
         </button>
         </div>
     </div>

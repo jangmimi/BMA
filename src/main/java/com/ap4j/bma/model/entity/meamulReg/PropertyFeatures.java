@@ -15,6 +15,7 @@ public class PropertyFeatures {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int featuresID; //특징식별번호 -기본키
+
     private int maemulID; //매물ID -외래키
 
     private boolean shortTerm; //단기임대

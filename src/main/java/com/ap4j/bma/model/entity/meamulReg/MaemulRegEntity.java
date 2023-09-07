@@ -43,16 +43,21 @@ public class MaemulRegEntity {
     private String tradeType;//거래 유형
 
     //월세
+    //int는 null값이 들어갈 수 없어서 기본값을 0으로 설정함.
+    @Column(columnDefinition = "int default 0")
     private int monthlyForRent; //보증금
+    @Column(columnDefinition = "int default 0")
     private int monthlyRent; //월세
 
 
     //전세
+    @Column(columnDefinition = "int default 0")
     private int depositForLease; //희망 전세
-
+    @Column(columnDefinition = "int default 0")
     private int managementFee;//전 월세 관리비
 
     //매매
+    @Column(columnDefinition = "int default 0")
     private int SellingPrice;//희망매매가
 
     //상세정보 페이지

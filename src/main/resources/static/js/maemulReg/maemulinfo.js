@@ -1,4 +1,4 @@
-   // HTML 요소를 가져옵니다.
+   // HTML 요소
    var monthRadio = document.getElementById("month");
    var yearRadio = document.getElementById("year");
    var sellRadio = document.getElementById("sell");
@@ -7,7 +7,7 @@
    var leaseSection = document.getElementById("leaseSection");
    var sellingSection = document.getElementById("sellingSection");
 
-   // 라디오 버튼의 변경 이벤트 리스너를 추가합니다.
+   // 월세 라디오 버튼의 변경 이벤트 리스너
    monthRadio.addEventListener("change", function () {
        if (monthRadio.checked) {
            monthRentSection.style.display = "table"; // 월세 섹션을 표시
@@ -15,12 +15,13 @@
            sellingSection.style.display = "none"; // 매매 섹션을 숨김
 
            // 월세 라디오 버튼을 선택한 경우, 전세와 매매 관련 필드의 값을 초기화
-           document.getElementsByName("depositForLease")[0].value = "";
-           document.getElementsByName("d_managementFee")[0].value = "";
-           document.getElementsByName("SellingPrice")[0].value = "";
+           document.getElementById("depositForLease").value = "0";
+           document.getElementById("d_managementFee").value = "0";
+           document.getElementById("SellingPrice").value = "0";
        }
    });
 
+   // 전세 라디오 버튼의 변경 이벤트 리스너
    yearRadio.addEventListener("change", function () {
        if (yearRadio.checked) {
            monthRentSection.style.display = "none"; // 월세 섹션을 숨김
@@ -28,13 +29,14 @@
            sellingSection.style.display = "none"; // 매매 섹션을 숨김
 
            // 전세 라디오 버튼을 선택한 경우, 월세와 매매 관련 필드의 값을 초기화
-           document.getElementsByName("monthlyForRent")[0].value = "";
-           document.getElementsByName("monthlyRent")[0].value = "";
-           document.getElementsByName("m_managementFee")[0].value = "";
-           document.getElementsByName("SellingPrice")[0].value = "";
+           document.getElementById("monthlyForRent").value = "0";
+           document.getElementById("monthlyRent").value = "0";
+           document.getElementById("m_managementFee").value = "0";
+           document.getElementById("SellingPrice").value = "0";
        }
    });
 
+   // 매매 라디오 버튼의 변경 이벤트 리스너
    sellRadio.addEventListener("change", function () {
        if (sellRadio.checked) {
            monthRentSection.style.display = "none"; // 월세 섹션을 숨김
@@ -42,11 +44,11 @@
            sellingSection.style.display = "table"; // 매매 섹션을 표시
 
            // 매매 라디오 버튼을 선택한 경우, 월세와 전세 관련 필드의 값을 초기화
-           document.getElementsByName("monthlyForRent")[0].value = "";
-           document.getElementsByName("monthlyRent")[0].value = "";
-           document.getElementsByName("m_managementFee")[0].value = "";
-           document.getElementsByName("depositForLease")[0].value = "";
-           document.getElementsByName("d_managementFee")[0].value = "";
+           document.getElementById("monthlyForRent").value = "0";
+           document.getElementById("monthlyRent").value = "0";
+           document.getElementById("m_managementFee").value = "0";
+           document.getElementById("depositForLease").value = "0";
+           document.getElementById("d_managementFee").value = "0";
        }
    });
 
@@ -121,13 +123,17 @@
 //                });
 //            }
 
-        //팝업
+  //팝업 열기
     function showPopup(event) {
           var popup = document.getElementById("helpPopup");
           popup.style.display = "block";
       }
 
-      function closePopup() {
-          var popup = document.getElementById("helpPopup");
-          popup.style.display = "none";
-      }
+ // 팝업 닫기
+ function closePopup(event) {
+     var popup = document.getElementById("helpPopup");
+     popup.style.display = "none";
+
+     // 이벤트의 기본 동작(새로고침)을 막음
+     event.preventDefault();
+ }

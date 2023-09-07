@@ -15,6 +15,7 @@ public class SecurityFacilities {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int securityID; //옵션식별번호 -기본키
+
     private int maemulID; //매물ID -외래키
 
     private boolean securityEntrance; //현관보안

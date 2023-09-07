@@ -5,6 +5,7 @@ import com.ap4j.bma.model.entity.community.CommunityEntity;
 
 import com.ap4j.bma.model.entity.member.MemberDTO;
 
+import com.ap4j.bma.model.repository.CommunityRepository;
 import com.ap4j.bma.service.community.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashSet;
+import java.util.Set;
 
 //import java.util.List;
 
@@ -24,6 +27,8 @@ import javax.servlet.http.HttpSession;
 public class CommunityController {
     @Autowired
     private CommunityService communityService;
+    @Autowired
+    private CommunityRepository communityRepository;
 
     //커뮤니티 리스트 출력 + 검색 기능
     @GetMapping("/community/list")
@@ -92,6 +97,43 @@ public class CommunityController {
 
     }
 
+    // 글 상세 보기
+    @GetMapping("/community/view")
+    public String communityView(Model model, Integer id, HttpSession session) {
+        // 게시글 ID를 세션에 저장
+        Set<Integer> viewedArticles = (Set<Integer>) session.getAttribute("viewedArticles");
+
+        if (viewedArticles == null) {
+            viewedArticles = new HashSet<>();
+            session.setAttribute("viewedArticles", viewedArticles);
+        }
+
+        // 게시글이 이미 조회되었는지 확인
+        if (!viewedArticles.contains(id)) {
+            // 게시글이 처음 조회되었으므로 조회수 증가 처리
+            CommunityEntity communityEntity = communityService.communityView(id);
+
+            if (communityEntity == null) {
+                // 해당 ID의 게시글이 존재하지 않는 경우 예외 처리 또는 에러 페이지로 이동
+                return "community/error"; // 에러 페이지로 이동하도록 수정
+            }
+
+            // 조회수 증가 후 세션에 해당 게시물 ID 저장
+            communityService.updateViewCount(id);
+            viewedArticles.add(id);
+        }
+
+        // 게시글 조회
+        CommunityEntity communityEntity = communityService.communityView(id);
+        model.addAttribute("comment", communityService.communityCommentEntity(id));
+        model.addAttribute("article", communityEntity);
+        model.addAttribute("prevArticle", communityService.getPreArticle(id));
+        model.addAttribute("nextArticle", communityService.getNextArticle(id));
+
+        // 이미 조회한 게시글인 경우에도 조회 가능(조회수 증가 없음)
+        return "community/communityView";
+    }
+
     //댓글삭제
     @PostMapping("/comment/delete")
     public String commentDelete(Integer id, String a, Integer articleId, Model model) {
@@ -105,24 +147,12 @@ public class CommunityController {
     public String commentWrite(@ModelAttribute("communityComment") CommunityCommentEntity communityCommentEntity, Integer articleId,
                                HttpSession session, Model model) {
 
-            model.addAttribute("loginMember", session.getAttribute("loginMember"));
-            CommunityEntity communityEntity = communityService.communityView(articleId); // 커뮤니티 조회 메소드를 호출하여 커뮤니티 엔티티를 가져옴
-            communityCommentEntity.setCommunityEntity(communityEntity); // communityEntity 필드 설정
-            communityService.CommentWrite(communityCommentEntity);
+        model.addAttribute("loginMember", session.getAttribute("loginMember"));
+        CommunityEntity communityEntity = communityService.communityView(articleId); // 커뮤니티 조회 메소드를 호출하여 커뮤니티 엔티티를 가져옴
+        communityCommentEntity.setCommunityEntity(communityEntity); // communityEntity 필드 설정
+        communityService.CommentWrite(communityCommentEntity);
 
         return "redirect:/community/view?id=" + articleId;
-    }
-
-
-    //글 상세 보기
-    @GetMapping("/community/view")
-    public String communityView(Model model, Integer id) {
-        System.out.println(id);
-        model.addAttribute("comment", communityService.communityCommentEntity(id));
-        model.addAttribute("article", communityService.communityView(id));
-        model.addAttribute("prevArticle", communityService.getPreArticle(id));
-        model.addAttribute("nextArticle", communityService.getNextArticle(id));
-        return "community/communityView";
     }
 
 

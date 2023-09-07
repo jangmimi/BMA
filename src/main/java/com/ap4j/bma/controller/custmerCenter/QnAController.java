@@ -1,6 +1,7 @@
 package com.ap4j.bma.controller.custmerCenter;
 
 import com.ap4j.bma.model.entity.customerCenter.QnAEntity;
+import com.ap4j.bma.model.repository.QnARepository;
 import com.ap4j.bma.service.customerCenter.QnAService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ public class QnAController {
 
     @Autowired
     private QnAService qnAService;
+    @Autowired
+    private QnARepository qnARepository;
 
     //QNA
     @GetMapping("/qna")
@@ -52,4 +55,19 @@ public class QnAController {
 
         return "customerCenter/QnABoard/QnAView"; // 상세보기 페이지로 이동
     }
+
+    // 게시글 삭제 요청 처리
+    @GetMapping("/deleteQnA")
+    public String deleteQnA(@RequestParam("id") Integer id, Model model) {
+        // 게시글 삭제
+        qnAService.deleteQnA(id);
+
+        // 전체 게시글 개수 업데이트
+        int totalQnACount = qnARepository.countAllQnA();
+
+        model.addAttribute("totalQnACount", totalQnACount);
+
+        return "redirect:/member/qMyQnA"; // 게시글 목록 페이지로 리다이렉트
+    }
+
 }

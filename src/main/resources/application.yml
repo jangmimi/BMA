@@ -13,6 +13,14 @@ spring:
     restart:
       enabled: true
 
+# ※파일 업로드 설정
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 30MB
+      max-request-size: 10MB
+      location: C:/project/src/main/resources/static/maemulPhoto #각자 경로에 맞게 설정
+
   # Thymeleaf 설정
   thymeleaf:
     encoding: UTF-8
@@ -27,16 +35,16 @@ spring:
     hibernate:
       ddl-auto: update
     properties:
+     hibernate:
+      format_sql: true
+      org:
       hibernate:
-        format_sql: true
-        org:
-          hibernate:
-            SQL: DEBUG
-            type:
-              descriptor:
-                sql:
-                  BasicBinder: TRACE
-        show_sql: true
+      SQL: DEBUG
+      type:
+      descriptor:
+      sql:
+      BasicBinder: TRACE
+      show_sql: true
     defer-datasource-initialization: true
 
 #   데이터베이스 설정
@@ -47,4 +55,5 @@ spring:
     username: root
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
+
 
