@@ -470,7 +470,7 @@ public class MemberServiceImpl implements MemberService {
 
 	/** 매물 id기준 조회 */
 	public MaemulRegEntity findMaemulById(Integer id) {
-		Optional<MaemulRegEntity> findMaemul = maemulRegRepository.findMaemulById(id);
+		Optional<MaemulRegEntity> findMaemul = maemulRegEntityRepository.findMaemulById(id);
 		return findMaemul.orElse(null);
 	}
 
