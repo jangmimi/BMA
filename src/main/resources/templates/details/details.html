@@ -217,8 +217,8 @@
 							<p>단기임대</p>
 						</div>
 						<div class="y-list-content">
-							<p th:if="${maemulList.get().shortTermRental.contains('가능')}">가능</p>
-							<p th:if="${maemulList.get().shortTermRental.contains('불가능')}">불가능</p>
+							<p th:if="${maemulList.get().shortTermRental.equals('가능')}">가능</p>
+							<p th:if="${maemulList.get().shortTermRental.equals('불가능')}">불가능</p>
 						</div>
 					</li>
 					<li th:unless="${maemulList.get().monthlyRent == 999}">
