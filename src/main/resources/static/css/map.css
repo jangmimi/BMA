@@ -854,12 +854,12 @@ a:active, a:focus, a:hover, a:link, a:visited {
     margin-right:2px;
 }
 .list-group-item.a{
-    display: flex;
-    align-items: flex-start;
-
+display: flex;
+    align-items: center;
     position: relative;
     height: 131px;
     border-bottom: 1px solid #eee;
+    justify-content: space-between;
 }
 .aHeartBtnInList{
     opacity:16%;

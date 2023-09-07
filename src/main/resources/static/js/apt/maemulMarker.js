@@ -8,9 +8,40 @@ var options = {
 };
 var map = new kakao.maps.Map(container, options);
 
-// 줌 컨트롤러 지도에 추가
-var zoomControl = new kakao.maps.ZoomControl();
-map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+// 새로운 div 엘리먼트를 생성하여 줌 컨트롤 역할을 할 컨테이너를 만듭니다
+var zoomControlContainer = document.getElementById('zoomControl');
+
+var zoomInButton = document.getElementById('buttonp');
+zoomInButton.textContent = '+';
+zoomInButton.addEventListener('click', function () {
+  map.setLevel(map.getLevel() - 1, { animate: true });
+});
+
+// 줌 아웃 버튼을 만듭니다
+var zoomOutButton = document.getElementById('buttonm');
+zoomOutButton.textContent = '-';
+zoomOutButton.addEventListener('click', function () {
+  map.setLevel(map.getLevel() + 1, { animate: true });
+});
+
+// 컨테이너에 버튼을 추가합니다
+zoomControlContainer.appendChild(zoomInButton);
+zoomControlContainer.appendChild(zoomOutButton);
+
+// 클러스터
+var clusterer = new kakao.maps.MarkerClusterer({
+    map: map,
+    gridSize: 300,
+    averageCenter: false,
+    minLevel: 14
+});
+
+// 생성된 마커 저장 객체
+var existingMarkers = {};
+
+// 마커 생성 함수
+function createMarker(position, markerContent, responseData) {
+    var markerKey = position.toString();
 
     var imageSrc = '/img/mapDetailAndAPTList/houseMarker.png',
         imageSize = new kakao.maps.Size(32, 32),
@@ -52,6 +83,58 @@ map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
         existingMarkers[markerKey] = marker; // 생성된 마커를 마커리스트에 저장
     }
 }
+
+// 맵 최초 로드시 마커 생성 해주는 함수
+var onlyOneStart = false; // 한 번만 실행하기 위한 변수
+// 맵 로드가 완료되면 실행
+kakao.maps.event.addListener(map, 'tilesloaded', function () {
+    // 이미 실행된 경우 함수 종료
+    if (onlyOneStart) {
+        return;
+    }
+    onlyOneStart = true; // 변수 업데이트
+
+    var bounds = map.getBounds();
+    var southWest = bounds.getSouthWest();
+    var northEast = bounds.getNorthEast();
+    var currentZoomLevel = map.getLevel(); // 현재 줌 레벨 가져오기
+    console.log("실행시 줌레벨 : " + currentZoomLevel);
+    var dataToSend = {
+        southWestLat: southWest.getLat(),
+        southWestLng: southWest.getLng(),
+        northEastLat: northEast.getLat(),
+        northEastLng: northEast.getLng(),
+        zoomLevel: currentZoomLevel
+    };
+
+    $.ajax({
+        type: 'POST',
+        url: '/map/map',
+        data: dataToSend,
+        success: function (response) {
+            if(response.maenulList) {
+               response.maenulList.forEach(function (maemul) {
+                   var markerPosition = new kakao.maps.LatLng(maemul.latitude, maemul.longitude);
+                   var markerKey = markerPosition.toString();
+                   var markerContent = "<div class='e-marker'>" +
+                       "<div class='e-markerTitle'>" +
+                       "<h3>" + maemul.apt_name + "</h3>" +
+                       "</div>" +
+                       "<div class='e-markerContent'>" +
+                       "<p>" + maemul.address + "</p>" +
+                       "</div>" +
+                       "</div>";
+
+                   if (!existingMarkers[markerKey]) {
+                       createMarker(markerPosition, markerContent, maemul);
+                   }
+
+               });
+               updateSidebar(response.maenulList);
+            }
+        }
+    });
+});
 
 
 // 맵 이동시 현재 맵의 경계를 기준으로 데이터 요청하고 그 범위에 속하는 행정동 또는 아파트 데이터의 마커 생성
@@ -184,16 +267,85 @@ var hjdOverlays = [];
 // 사이드바 정보 업데이트
 function updateSidebar(responseData) {
 
-    // sellingPrice를 기준으로 responseData 배열을 내림차순 정렬
-    responseData.sort(function (a, b) {
-        return b.sellingPrice - a.sellingPrice;
-    });
-
     // 사이드바 컨테이너
     var sidebarContainer = document.querySelector(".sideContents ul.list-group");
 
     // responseData 배열을 순회하며 사이드바 항목 생성
     responseData.forEach(function (maemul) {
+
+        // 보증금
+        var monthlyForRent = null; // 이 변수 사용하면됨
+        var monthlyForRentString = maemul.monthlyForRent.toString();
+        var monthlyForRentSliceUk = null;
+        var monthlyForRentSliceMan = null;
+        if (monthlyForRentString.length <= 4) {
+            monthlyForRentSliceMan = monthlyForRentString.slice(0);
+        } else if (monthlyForRentString.length === 5) {
+            monthlyForRentSliceUk = monthlyForRentString.charAt(0);
+            monthlyForRentSliceMan = monthlyForRentString.slice(1);
+        }
+        if (monthlyForRentSliceUk != null) {
+            if (monthlyForRentSliceMan.charAt(0) != '0') {
+                monthlyForRent = "보증금 " + monthlyForRentSliceUk + "억 " + monthlyForRentSliceMan + "만원";
+            } else {
+                monthlyForRent = "보증금 " + monthlyForRentSliceUk + "억";
+            }
+        } else {
+            monthlyForRent = "보증금 " + monthlyForRentSliceMan + "만원";
+        }
+        // 월세
+        var monthlyRent = "월세 " + maemul.monthlyRent + "만원"; // 이 변수 사용하면됨
+
+
+        // 전세
+        var depositForLease = null; // 이 변수 사용하면됨
+        var depositForLeaseString = maemul.depositForLease.toString();
+        var depositForLeaseSliceUk = null;
+        var depositForLeaseSliceMan = null;
+        if(depositForLeaseString.length === 5) {
+            depositForLeaseSliceUk = depositForLeaseString.charAt(0);
+            depositForLeaseSliceMan = depositForLeaseString.slice(1);
+        } else if (depositForLeaseString.length === 6) {
+            depositForLeaseSliceUk = depositForLeaseString.slice(0,2);
+            depositForLeaseSliceMan = depositForLeaseString.slice(2);
+        }
+        if(depositForLeaseSliceUk != null) {
+            if(depositForLeaseSliceMan.charAt(0) != '0') {
+                depositForLease = "전세 " + depositForLeaseSliceUk + "억 " + depositForLeaseSliceMan + "만원";
+            } else {
+                depositForLease = "전세 " + depositForLeaseSliceUk + "억";
+            }
+        } else {
+            depositForLease = "전세 " + depositForLeaseSliceMan + "만원";
+        }
+
+
+        // 매매
+        var sellingPrice = null;
+        var sellingPriceString = maemul.sellingPrice.toString();
+        var sellingPriceSliceUk = null;
+        var sellingPriceSliceMan = null;
+        if(sellingPriceString.length === 5) {
+            sellingPriceSliceUk = sellingPriceString.charAt(0);
+            sellingPriceSliceMan = sellingPriceString.slice(1);
+        } else if (sellingPriceString.length === 6) {
+            sellingPriceSliceUk = sellingPriceString.slice(0,2);
+            sellingPriceSliceMan = sellingPriceString.slice(2);
+        } else if (sellingPriceString.length === 7) {
+            sellingPriceSliceUk = sellingPriceString.slice(0,3);
+            sellingPriceSliceMan = sellingPriceString.slice(3);
+        }
+        if(sellingPriceSliceUk != null) {
+            if(sellingPriceSliceMan.charAt(0) != '0') {
+                sellingPrice = "매매 " + sellingPriceSliceUk + "억 " + sellingPriceSliceMan + "만원";
+            } else {
+                sellingPrice = "매매 " + sellingPriceSliceUk + "억";
+            }
+        } else {
+            sellingPrice = "매매 " + sellingPriceSliceMan + "만원";
+        }
+
+
         // 새로운 li 요소 생성
         var listItem = document.createElement("li");
         listItem.className = "list-group-item a";
@@ -215,10 +367,15 @@ function updateSidebar(responseData) {
             <div class="ainfo_area">
                 <div class="in">
                     <h5 class="ii loc_title">
-                        <span class="payf_num_b">${maemul.sellingPrice}</span>
+                        <span class="payf_num_b">
+                            ${
+                              maemul.monthlyForRent != 999 ? `${monthlyForRent}<br/>${monthlyRent}` :
+                              maemul.depositForLease != 999 ? depositForLease:
+                              sellingPrice
+                            }
+                        </span>
                     </h5>
                     <div class="ii loc_ii01">
-                        <span class="type">아파트</span>
                         <span class="loc">${maemul.apt_name}</span>
                     </div>
                     <div class="ii etc_txt">
@@ -244,6 +401,8 @@ function updateSidebar(responseData) {
                 <img style="width:15px;margin-bottom:2px;" src="/img/mapDetailAndAPTList/aHeartBtn.png">
             </button>
         `;
+
+        heartButton.querySelector("button").setAttribute("data-isButton", "false");
 
         // li 요소에 a 요소와 하트 버튼 추가
         listItem.appendChild(anchor);

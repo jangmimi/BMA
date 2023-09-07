@@ -11,9 +11,8 @@
     <script type="text/javascript" th:src="@{/js/mapMain/mapMain.js}" defer></script>
 </head>
 <body layout:fragment="content">
-
 <!-- 조서영 css 연결 -->
-<link rel="stylesheet" href="/css/calculator.css">
+<link rel="stylesheet" type="text/css" href="/css/calculator.css">
 <link rel="stylesheet" href="/css/marker.css">
 
 <!-- 모달 버튼 -->
@@ -34,22 +33,28 @@
             <tr>
                 <th>대출 금액</th>
                 <td class="e-inputGroup">
-                    <input class="e-input" id="e-inputAmount"/>
-                    <span>원</span>
+                    <div class="a-inputDiv">
+                        <input class="e-input" id="e-inputAmount"/>
+                        <span>원</span>
+                    </div>
                 </td>
             </tr>
             <tr>
                 <th>이자율</th>
                 <td class="e-inputGroup">
-                    <input class="e-input" id="e-inputRate"/>
-                    <span>%</span>
+                    <div class="a-inputDiv">
+                        <input class="e-input" id="e-inputRate"/>
+                        <span>%</span>
+                    </div>
                 </td>
             </tr>
             <tr>
                 <th>상환기간</th>
                 <td class="e-inputGroup">
-                    <input class="e-input" id="e-inputPeriod"/>
-                    <span>년</span>
+                    <div class="a-inputDiv">
+                        <input class="e-input" id="e-inputPeriod"/>
+                        <span>년</span>
+                    </div>
                 </td>
             </tr>
             <tr>
