@@ -2,7 +2,7 @@
 .e-modalButton {
     position: fixed;
     bottom: 120px;
-    right: 10px;
+    right: 35px;
     background-color: transparent;
     border: none;
     cursor: pointer;
@@ -17,8 +17,8 @@
 /** 모달 레이아웃 */
 .e-modalContent {
     position: fixed;
-    width: 360px;
-    height: 400px;
+    width: 382px;
+    height: 478px;
     border: 1px solid lightgray;
     padding: 15px;
     display: flex;
@@ -69,11 +69,15 @@
     font-size: 15px;
 }
 
+tr.firstTable{
+    height:43px;
+}
+
 /** 결과창 */
 .e-resultContainer {
     position: absolute;
     width: 100%;
-    top: 68%;
+    top: 67%;
     margin-left: 5px;
 }
 
@@ -105,12 +109,17 @@
 /** input */
 .e-inputGroup {
     position: relative;
-    border: 1px solid lightgray;
     height: 30px;
     text-align: right;
-    border-radius: 8px;
 }
-
+.a-inputDiv{
+    display: flex;
+    border: 1px solid lightgray;
+    height: 35px;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+}
 .e-input {
     width: 240px;
     text-align: right;
@@ -165,6 +174,7 @@
 }
 
 #e-buttonRepayment .e-button {
+    max-width:95px;
     height: 20px;
     border: 1px solid lightgray;
     border-radius: 8px;

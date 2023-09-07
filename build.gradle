@@ -37,6 +37,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.9.0'    // gson 사용을 위해 추가
     implementation 'org.springframework.boot:spring-boot-starter-validation'    // 유효성 검사를 위해 추가(스프링부트 2.3 이상부터 의존성 추가해야 사용 가능)
     implementation 'org.springframework.boot:spring-boot-starter-security'      // 암호화 위해 추가
+    implementation 'org.springframework.boot:spring-boot-starter-mail'      // 임시비밀번호 이메일발송 위해 추가
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
 

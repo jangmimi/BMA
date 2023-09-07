@@ -35,9 +35,9 @@ $(document).ready(function(){
         let pwdValue = $('#pwd').val();
         let pwdCheckValue = $('#pwdCheck').val();
         if (pwdValue !== pwdCheckValue) {
-            $("#opwdCheck1").css("display","block");
+            $("#o-pwdCk").css("display","block");
         } else {
-            $("#opwdCheck1").css("display","none");q
+            $("#o-pwdCk").css("display","none");q
         }
     });
     $("#pwd").keyup(function(){
@@ -45,9 +45,9 @@ $(document).ready(function(){
         let pwdValue = $(this).val();
         let pwdreg = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
         if (pwdValue.length < 8 || pwdValue.length > 20 || !pwdreg.test(pwdValue)) {
-            $("#opwdCheck2").css("display","block");
+            $("#o-pwd").css("display","block");
         } else {
-            $("#opwdCheck2").css("display","none");
+            $("#o-pwd").css("display","none");
         }
     });
 
