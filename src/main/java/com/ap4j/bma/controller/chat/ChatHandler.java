@@ -1,6 +1,7 @@
 package com.ap4j.bma.controller.chat;
 
 import com.ap4j.bma.model.entity.chat.ChatMessage;
+import com.ap4j.bma.model.entity.chat.ChatMessageDTO;
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.service.chat.ChatService;
 import lombok.RequiredArgsConstructor;
@@ -31,29 +32,30 @@ public class ChatHandler {
 
     @MessageMapping("/connect")
     @SendTo("/topic/chatting/connectmessage")
-    public ChatMessage ConnectMessage(ChatMessage message, SimpMessageHeaderAccessor accessor) {
+    public ChatMessageDTO ConnectMessage(ChatMessageDTO messageDTO, SimpMessageHeaderAccessor accessor) {
+        //세션 정보를 인터셉터
         MemberDTO member = (MemberDTO) accessor.getSessionAttributes().get("loginMember");
+        //로그인이 안되어있다면 출력되지 않는 입장메세지
         if (member != null) {
-            LocalDateTime connectTime = LocalDateTime.now(); // 현재 시간을 가져옴
-            message.setChatDate(connectTime);
-            message.setChatContent(member.getNickname() + "님이 입장하셨습니다");
-
+            messageDTO.setChatContent(member.getNickname() + "님이 입장하셨습니다");
+            messageDTO.setChatDate(LocalDateTime.now());
             // 새로 연결된 사용자를 connectedUsers 목록에 추가
-            connectedUsers.add(member.getEmail());
+            connectedUsers.add(member.getNickname());
 
             // 연결된 사용자 수를 클라이언트에 전송
             sendConnectedUsersCount();
 
         } else {
-            message.setChatContent("연결실패");
+            messageDTO.setChatContent("연결실패");
         }
-        return message;
+        return messageDTO;
     }
 
     private void sendConnectedUsersCount() {
         // 연결된 사용자 수를 전체 채팅방에 알리는 메시지 생성
-        ChatMessage userCountMessage = new ChatMessage();
+        ChatMessageDTO userCountMessage = new ChatMessageDTO();
         userCountMessage.setChatContent(String.valueOf(connectedUsers.size()));
+
         System.out.println("핸들러 사용자수 "+userCountMessage);
         // 전체 채팅방에 메시지 전송
         messagingTemplate.convertAndSend("/topic/chatting/status", userCountMessage);
@@ -65,10 +67,9 @@ public class ChatHandler {
         // 사용자 세션에서 email 정보를 가져와 connectedUsers 목록에서 제거
         SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor.wrap(event.getMessage());
         String sessionId = headerAccessor.getSessionId();
-        String email = (String) headerAccessor.getSessionAttributes().get("email");
-        if (email != null) {
-            connectedUsers.remove(email);
-
+        MemberDTO member = (MemberDTO) headerAccessor.getSessionAttributes().get("loginMember");
+        if (member != null) {
+            connectedUsers.remove(member.getNickname());
             // 연결된 사용자 수를 다시 전송
             sendConnectedUsersCount();
         }
@@ -76,21 +77,17 @@ public class ChatHandler {
 
     @MessageMapping("/saveMessage")
     @SendTo("/topic/chatting")
-    public ChatMessage saveMessage(ChatMessage message, SimpMessageHeaderAccessor accessor) {
+    public ChatMessageDTO saveMessage(ChatMessageDTO message, SimpMessageHeaderAccessor accessor) {
         MemberDTO member = (MemberDTO) accessor.getSessionAttributes().get("loginMember");
-        message.setEmail(member.getEmail());
         message.setNickname(member.getNickname());
-        message = chatService.saveMessage(message);
+        message = chatService.saveMessage(message).toDTO();
         return message;
     }
 
     @MessageMapping("/loadMessages")
-    public void loadMessages(ChatMessage message,SimpMessageHeaderAccessor accessor) {
-        LocalDateTime connectTime = message.getChatDate();
+    public void loadMessages(ChatMessageDTO message,SimpMessageHeaderAccessor accessor) {
         MemberDTO member = (MemberDTO) accessor.getSessionAttributes().get("loginMember");
-        System.out.println("loadMessages 컨트롤러 시간출력 = " + connectTime);
-        List<ChatMessage> messages = chatService.showMessages(connectTime);
-        System.out.println(messages);
+        List<ChatMessage> messages = chatService.showMessages(message.getChatDate());
         String clientTopic = "/topic/" + member.getEmail();
         messagingTemplate.convertAndSend(clientTopic, messages);
     }
