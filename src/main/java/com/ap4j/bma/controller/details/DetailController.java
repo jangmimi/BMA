@@ -33,7 +33,7 @@ public class DetailController {
 		log.info("DetailController.details.executed");
 
 		model.addAttribute("maemulList", maemulRegRepository.findById(id));
-		log.info("maemulList 객체 {}", maemulRegRepository.findAll());
+		log.info("maemulList 객체 {}", maemulRegRepository.findById(id));
 		return "details/details";
 	}
 

@@ -46,7 +46,7 @@ public class MaemulRegEntity {
     private String shortTermRental;//단기임대
     private String availableMoveInDate;//입주가능일
 
-    @ColumnDefault("0")
+    @ColumnDefault("999")
     private Integer loanAmount;//융자금
 
 
