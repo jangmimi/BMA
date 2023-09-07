@@ -320,9 +320,23 @@ public class MemberController {
         LikedEntity likedEntity = new LikedEntity();
         likedEntity.setNickname(nickname);
         likedEntity.setRoad_name(finemm.getAddress());
+
+
+
+//        Optional<LikedEntity> find = likedService.findByNicknameAndRoad_name(nickname, finemm.getAddress());
+//        if(find.isPresent()) {
+//            LikedEntity entity = find.get();
+//            likedService.delete(entity);
+//        }
         likedService.save(likedEntity);
 
         return "redirect:/map/map";
+    }
+    /** 삭제 */
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteLikedEntity(@RequestParam("nickname") String nickname, @RequestParam("roadName") String roadName) {
+//        likedService.deleteLikedEntitiesByNicknameAndRoadName(nickname, roadName);
+        return ResponseEntity.ok("관심 매물이 삭제되었습니다.");
     }
 
     /** 관심매물 페이지 매핑 */
