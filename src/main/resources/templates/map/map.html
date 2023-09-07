@@ -7,11 +7,9 @@
 >
 <head>
     <meta charset="UTF-8"/>
-    <title></title>
+    <title>매물조회</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-
-    <!-- <link rel="stylesheet" th:href="@{/css/파일이름.css}"> -->
     <link rel="stylesheet" th:href="@{/css/map.css}">
     <link rel="stylesheet" th:href="@{/css/marker.css}">
     <script type="text/javascript" th:src="@{/js/search/search.js}"></script>
@@ -640,7 +638,11 @@
 
 
 <!-- 지도를 표시할 div 입니다 -->
-<div id="map" style="width: 100%; height: 100%">
+<div id="map" style="width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    background: url(http://t1.daumcdn.net/mapjsapi/images/bg_tile.png);">
     <div class="afilter">
         <div class="afilterLeft">
 
@@ -729,7 +731,9 @@
                         가격
                     </button>
                     <ul class="dropdown-menu aPrice">
-                        <div class="top"><strong class="tit">매매가/전세가/보증금</strong></div>
+                        <div class="top">
+                            <strong class="tit">매매가/전세가/보증금</strong>
+                        </div>
 
                         <div class="abox_maemae" id="priceDiv">
                             <div class="aMinAndMaxPriceAll">
@@ -950,7 +954,7 @@
 <!--                                    </label>-->
 <!--                                </div>-->
 <!--                            </div>-->
-
+                        </div>
 
                     </ul>
 
