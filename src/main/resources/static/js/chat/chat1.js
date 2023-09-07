@@ -1,26 +1,24 @@
 document.addEventListener("DOMContentLoaded", function () {
-
     let stompClient = null;
 
     function connect() {
-
         const socket = new SockJS('/chat');
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
-
-            stompClient.send("/app/connect", {}, JSON.stringify({}))
+            stompClient.send("/app/connect", {}, JSON.stringify({}));
 
             stompClient.subscribe("/topic/chatting/status", function (userCountMessage) {
                 const connectInfo = JSON.parse(userCountMessage.body);
-                // 사용자 수 메시지를 처리
                 handleUserCountMessage(connectInfo.chatContent);
-                console.log("사용자수="+connectInfo.chatContent);
+                console.log("사용자수=" + connectInfo.chatContent);
             });
+
             stompClient.subscribe("/topic/chatting/connectmessage", function (message) {
                 const connectInfo = JSON.parse(message.body);
                 if (!sessionStorage.getItem('connectTime')) {
                     openingComment(connectInfo.chatContent);
                     sessionStorage.setItem('connectTime', connectInfo.chatDate);
+                    console.log(connectInfo.chatDate);
                 } else {
                     document.querySelector(".s-chat-textbox").innerHTML = '';
                     loadMessages();
@@ -55,29 +53,47 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function loadMessages() {
+        var loadingScreen = document.getElementById("loadingScreen");
+        loadingScreen.style.display = "flex";
+
         const email = document.querySelector("#s-chat-email").value;
         console.log(email);
         const clientTopic = "/topic/" + email;
 
-        // 이전에 구독한 메시지를 해지합니다.
         stompClient.unsubscribe(clientTopic);
 
         stompClient.send("/app/loadMessages", {}, JSON.stringify({ chatDate: sessionStorage.getItem('connectTime') }));
         stompClient.subscribe(clientTopic, function (messages) {
             const loadMessages = JSON.parse(messages.body);
             console.log(loadMessages);
-            // 기존 메시지를 모두 지웁니다.
+
             document.querySelector(".s-chat-textbox").innerHTML = '';
-            for (const loadMessage of loadMessages) {
-                message = {
-                    chatContent: loadMessage[1],
-                    chatDate: loadMessage[2],
-                    nickname: loadMessage[4]
-                }
-                showMessages(message);
+
+            function showMessageCallback() {
+                loadingScreen.style.display = "none";
             }
-            console.log(message);
+
+            showMessagesWithCallback(loadMessages, 0, showMessageCallback);
         });
+    }
+
+    function showMessagesWithCallback(messages, index, callback) {
+        if (index >= messages.length) {
+            callback();
+            return;
+        }
+
+        const message = {
+            chatContent: messages[index][1],
+            chatDate: messages[index][2],
+            nickname: messages[index][3]
+        };
+
+        showMessages(message);
+
+        setTimeout(function () {
+            showMessagesWithCallback(messages, index + 1, callback);
+        }, 0);
     }
 
     function sendMessage() {
@@ -92,14 +108,19 @@ document.addEventListener("DOMContentLoaded", function () {
     const modalButton = document.getElementById("s-chat-connect-button");
     const modal = document.querySelector(".s-chatbox");
     const closeButton = document.querySelector(".s-chat-close");
-
+    const email = document.getElementById("s-chat-email");
     const textarea = document.querySelector("#s-chat-input");
     modal.style.display = "none";
 
     modalButton.addEventListener("click", function () {
-        modal.style.display = "flex";
-        modalButton.style.transform = "scale(0)";
-        connect();
+        if(email.value){
+            modal.style.display = "flex";
+            modalButton.style.transform = "scale(0)";
+            connect();
+        }else {
+            alert("채팅은 로그인 한 회원만 가능한 서비스입니다");
+            window.location.href='/member/qLoginForm';
+        }
     });
 
     closeButton.addEventListener("click", function () {
@@ -118,16 +139,18 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    function showMessages(message) {
+    document.querySelector('.s-chat-sendbox button').addEventListener('click', (e) => {
+        if (textarea.value.trim() !== '') {
+            sendMessage();
+            document.querySelector("#s-chat-input").value = '';
+        }
+    });
 
-////        const chatTextBox = document.querySelector(".s-chat-textbox");
-////        chatTextBox.scrollTo(0, chatTextBox.scrollHeight);
-//const chatTextBox = document.querySelector(".s-chat-textbox");
-//chatTextBox.scrollTop = chatTextBox.scrollHeight+10;
-const chatTextBox = document.querySelector(".s-chat-textbox");
-requestAnimationFrame(() => {
-  chatTextBox.scrollTo(0, chatTextBox.scrollHeight);
-});
+    function showMessages(message) {
+        const chatTextBox = document.querySelector(".s-chat-textbox");
+        requestAnimationFrame(() => {
+            chatTextBox.scrollTo(0, chatTextBox.scrollHeight);
+        });
 
         const messageBlock = document.createElement("div");
         messageBlock.className = "s-chat-message";
@@ -136,19 +159,15 @@ requestAnimationFrame(() => {
         messageInfo.className = "s-chat-info";
 
         const messageNickname = document.createElement("span");
-
-        //이메일에서 아이디값만 추출
         messageNickname.textContent = message.nickname;
         const messageTime = document.createElement("span");
-
         messageNickname.className = "s-chat-nickname";
-
         messageTime.className = "s-chat-time";
         messageTime.textContent = sendMessageCurrentTime(message.chatDate);
 
         const messageText = document.createElement("p");
         messageText.className = "s-chat-text";
-        messageText.textContent = message.chatContent; // 메시지 내용 변경
+        messageText.textContent = message.chatContent;
 
         messageInfo.appendChild(messageNickname);
         messageInfo.appendChild(messageTime);
@@ -157,7 +176,6 @@ requestAnimationFrame(() => {
         messageBlock.appendChild(messageText);
 
         chatTextBox.appendChild(messageBlock);
-
     }
 
     function openingComment(message) {
@@ -172,21 +190,17 @@ requestAnimationFrame(() => {
         chatTextBox.appendChild(messageBlock);
     }
 
-//    textarea.addEventListener("input", function () {
-//        this.style.height = `${this.scrollHeight}px`;
-//    });
-
-    //Date를 간단한 시간으로 변환해주는 코드
     function sendMessageCurrentTime(chatDate) {
         const messageTime = new Date(chatDate);
+        console.log("전송메세지시간확인" + messageTime);
         let hours = messageTime.getHours();
         let minutes = messageTime.getMinutes();
         let ampm = hours >= 12 ? "PM" : "AM";
 
         hours = hours % 12;
-        hours = hours ? hours : 12; // 0시일 경우 12시로 변경
+        hours = hours ? hours : 12;
 
-        minutes = minutes < 10 ? "0" + minutes : minutes; // 분이 10 미만일 경우 앞에 0 추가
+        minutes = minutes < 10 ? "0" + minutes : minutes;
 
         let currentTime = hours + ":" + minutes + " " + ampm;
         return currentTime;
