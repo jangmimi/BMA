@@ -1,13 +1,17 @@
 package com.ap4j.bma.service.member;
 
+import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
 import com.ap4j.bma.model.entity.member.LikedEntity;
+import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.repository.LikedRepository;
-import com.ap4j.bma.model.repository.MaemulRegRepository;
+import com.ap4j.bma.model.repository.MaemulRegEntityRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -16,7 +20,7 @@ public class LikedService {
     private LikedRepository likedRepository;
 
     @Autowired
-    private MaemulRegRepository maemulRegRepository;
+    private MaemulRegEntityRepository maemulRegEntityRepository;
 
     public Long countAll() {
         return likedRepository.count();
@@ -26,13 +30,43 @@ public class LikedService {
         return likedRepository.findAll();
     }
 
-//    public void addLike(Member member, Long postId, String postEmail, String postTitle) {
-//        LikedEntity like = new LikedEntity();
-//        like.setMember(member);
-//        like.setPostId(postId);
-//        like.setPostEmail(postEmail);
-//        like.setPostTitle(postTitle);
-//        likeRepository.save(like);
+    public List<LikedEntity> findLikedByNickname(String nickname) {
+        return likedRepository.findLikedByNickname(nickname);
+    }
+
+    public List<MaemulRegEntity> findLikedByRoadname(String road_name) {
+        return likedRepository.findMaemulByRoadName(road_name);
+    }
+
+
+//    public List<MaemulRegEntity> findLikedByRoadname(String roadName) {
+//        List<MaemulRegEntity> likedmList = likedRepository.findMaemulByRoadName(roadName);
+//
+//        return likedRepository.findMaemulByRoadName(maemulList).stream()
+//                .map(LikedEntity::getMaemul)
+//                .collect(Collectors.toList());
 //    }
 
+//    public List<MaemulRegEntity> findMaemulByRoadNames(List<String> roadNames) {
+//        List<LikedEntity> likedEntities = likedRepository.findByMaemulRoadNameIn(roadNames);
+//
+//        // LikedEntity에서 MaemulRegEntity로 변환
+//        List<MaemulRegEntity> maemulRegEntities = likedEntities.stream()
+//                .map(LikedEntity::getMaemul)
+//                .collect(Collectors.toList());
+//
+//        return maemulRegEntities;
+//    }
+    /** 관심 매물 저장 (중복은 저장x) */
+    public Long save(LikedEntity likeEntity, String mynickname) {
+//        if(findLikedByRoadname(likeEntity.getRoad_name()) != null
+//            && findLikedByNickname(likeEntity.getNickname()) !=null) {
+//            return -1L;
+//        } else {
+//            likedRepository.save(likeEntity);
+//            return likeEntity.getId();
+//        }
+        likedRepository.save(likeEntity);
+        return likeEntity.getId();
+    }
 }

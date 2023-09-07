@@ -1,6 +1,14 @@
+buildscript {
+    ext {
+        queryDslVersion = "5.0.0"
+    }
+}
+
 plugins {
     id 'org.springframework.boot' version '2.7.14'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    //querydsl 추가
+    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
     id 'java'
 }
 
@@ -37,6 +45,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.9.0'    // gson 사용을 위해 추가
     implementation 'org.springframework.boot:spring-boot-starter-validation'    // 유효성 검사를 위해 추가(스프링부트 2.3 이상부터 의존성 추가해야 사용 가능)
     implementation 'org.springframework.boot:spring-boot-starter-security'      // 암호화 위해 추가
+    implementation 'org.springframework.boot:spring-boot-starter-mail'      // 임시비밀번호 이메일발송 위해 추가
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
 
@@ -62,10 +71,34 @@ dependencies {
     // 라이브 서버용.
     implementation 'org.springframework.boot:spring-boot-devtools'
 
-    annotationProcessor('org.projectlombok:lombok')
+    //querydsl 추가
+    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+
+    annotationProcessor(
+            'org.projectlombok:lombok',
+            "com.querydsl:querydsl-apt:${queryDslVersion}"
+    )
+
     testAnnotationProcessor('org.projectlombok:lombok')
 
 }
+
+// querydsl 세팅 시작
+def querydslDir = "$buildDir/generated/querydsl"
+querydsl {
+    jpa = true
+    querydslSourcesDir = querydslDir
+}
+sourceSets {
+    main.java.srcDir querydslDir
+}
+configurations {
+    querydsl.extendsFrom compileClasspath
+}
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
+}
+// querydsl 세팅 끝
 
 tasks.named('test') {
     useJUnitPlatform()

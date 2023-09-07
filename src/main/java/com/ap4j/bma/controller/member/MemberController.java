@@ -21,9 +21,11 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @SessionAttributes("loginMember")   // 세션 자동 설정
@@ -314,31 +316,80 @@ public class MemberController {
         return "userView/maemulManagement";
     }
 
-    /** 관심매물 페이지 매핑 */
+    /** 관심매물 등록 */
     @RequestMapping("/qLiked")
-    public String qInterest(HttpSession session, Model model, Integer maemulId) {
+    public String qLiked(HttpSession session, Model model, Integer maemulId) {
         log.info("MemberController - qLiked() 실행");
-        System.out.println("매물아이디 : " + maemulId);
+        if(!loginStatus(session)) { return "userView/loginNeed"; }
+
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
+        String nickname = memberDTO.getNickname();
+//
+//        // 매물 좋아요 클릭 시 해당 매물 정보
+//        log.info("저장한 관심매물아이디 : " + maemulId);
+        MaemulRegEntity finemm = qMemberService.findMaemulById(maemulId);
+//
+//
+//        List<LikedEntity> likedlist = likedService.findLikedByNickname(nickname);
+//        log.info("좋아요 테이블 + " + likedlist.toString());
+//
+        LikedEntity likedEntity = new LikedEntity();
+        likedEntity.setNickname(nickname);
+        likedEntity.setRoad_name(finemm.getAddress());
+//
+        likedService.save(likedEntity,nickname);
+
+        List<LikedEntity> mmLikedList = likedService.getAllList();
+        List<MaemulRegEntity> mmList = qMemberService.getAllList();
+        List<MaemulRegEntity> mmFilterList = new ArrayList<>();
+
+        for (LikedEntity likedEntityF : mmLikedList) {
+            if(likedEntityF.getNickname().equals(nickname)) {
+                for(MaemulRegEntity maemulRegEntityF : mmList) {
+                    if (likedEntityF.getRoad_name().equals(maemulRegEntityF.getAddress())) {
+                        mmFilterList.add(maemulRegEntityF);
+                    }
+                }
+            }
+        }
+
+        log.info("추가된 매물 리스트: " + mmFilterList);
+
+        return "redirect:/map/map";
+    }
+
+    /** 관심매물 페이지 매핑 */
+    @RequestMapping("/liked")
+    public String qInterest(HttpSession session, Model model, Integer maemulId) {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
         String nickname = memberDTO.getNickname();
 
         List<LikedEntity> mmLikedList = likedService.getAllList();
-
-        Long mmAllLikedCnt = likedService.countAll();
-        log.info(mmLikedList.toString());
-        log.info(String.valueOf(mmAllLikedCnt));
-
         List<MaemulRegEntity> mmList = qMemberService.getAllList();
-        log.info(mmList.toString());
+        List<MaemulRegEntity> mmFilterList = new ArrayList<>();
+
+        for (LikedEntity likedEntityF : mmLikedList) {
+            if(likedEntityF.getNickname().equals(nickname)) {
+                for(MaemulRegEntity maemulRegEntityF : mmList) {
+                    if (likedEntityF.getRoad_name().equals(maemulRegEntityF.getAddress())) {
+                        mmFilterList.add(maemulRegEntityF);
+                    }
+                }
+            }
+        }
+        log.info("추가된 매물 리스트: " + mmFilterList);
+
+        Long myLikedCnt = likedService.countAll();
 
         model.addAttribute("mmLiked",mmLikedList);
-        model.addAttribute("mmAllLikedCnt",mmAllLikedCnt);
-        model.addAttribute("mmList",mmList);
+        model.addAttribute("mmLikedCnt",myLikedCnt);
+        model.addAttribute("mmList",mmFilterList);
 
         return "userView/maemulLiked";
     }
+
 
     /** 최근매물 페이지 매핑 */
     @RequestMapping("/qRecent")
@@ -380,28 +431,20 @@ public class MemberController {
         return "redirect:/";
     }
 
-    /** 이메일 중복 체크 (js ajax 활용) */
+    /** 중복회원(이메일) 체크 (js ajax 활용) */
     @PostMapping("/qEmailCheck")
     @ResponseBody
     public int qEmailCheck(@RequestParam("email") String email) {
-        log.info("MemberController - qEmailCheck() 실행");
-
-        int cnt = 0;
         boolean emailCheck = qMemberService.existsByEmail(email);
-        cnt = emailCheck ? 1 : 0;
-        return cnt;
+        return emailCheck ? 1 : 0;
     }
 
     /** 닉네임 중복 체크 (js ajax 활용) */
     @PostMapping("/qNicknameDuplicationCheck")
     @ResponseBody
     public int NicknameDuplicationCheck(@RequestParam("nickname") String nickname) {
-        log.info("MemberController - NicknameDuplicationCheck() 실행");
-
-        int cnt = 0;
         boolean nicknameCheck = qMemberService.existsByNickname(nickname);
-        cnt = nicknameCheck ? 1 : 0;
-        return cnt;
+        return nicknameCheck ? 1 : 0;
     }
 
     /** 이메일/비밀번호 찾기 페이지 매핑 */
@@ -413,8 +456,6 @@ public class MemberController {
     /** 이메일 찾기 */
     @PostMapping("/qFindEmail")
     public String qFindEmail(@RequestParam String name, @RequestParam String tel, Model model) {
-        log.info("MemberController - qFindEmail() 실행");
-
         Optional<MemberEntity> findMember = qMemberService.findByNameAndTel(name, tel);
 
         if(findMember.isPresent()) {
@@ -426,11 +467,10 @@ public class MemberController {
     }
 
     /** 비밀번혼 찾기 */
-    @PostMapping("/qFindPwd")
+    @PostMapping("/qFindPwd")    // * 임시 비번 이메일 발급으로 수정 적용 필요 *
     public String qFindPwd(@RequestParam String emailpwd, @RequestParam String telpwd, Model model) {
-        log.info("MemberController - qFindPwd() 실행");
-
         Optional<MemberEntity> find = qMemberService.findByEmailAndTel(emailpwd, telpwd);
+
         if(find.isPresent()) {
             model.addAttribute("findPwd", find.get().getPwd());
         } else {

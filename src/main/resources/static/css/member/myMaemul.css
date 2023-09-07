@@ -35,27 +35,32 @@ padding: 14px 21px;
 color: #666;
 border-bottom: 1px solid #ddd;
 text-align: center;
+    font-size:14px;
  }
-
+/* tbody쪽만 마우스오버 */
 tbody tr:hover {
     background: #eee;
     cursor: pointer;
 }
 
-.o-d-type {
+.o-d-type, .o-d-type, .o-d-btns {
     width: 10%;
 }
 .o-d-title {
     width: 20%;
 }
 .o-d-add{
-    width: 45%;
+    width: 30%;
 }
-.o-d-area {
-
+.o-d-add div{
+    align: left%;
 }
-.o-d-btns {
-    width: 10%;
+.o-d-about {
+    width: 15%;
+}
+#o-d-load {
+    color: #26abed;
+    font-weight: 600;
 }
 .o-t-btns input, .o-t-btn input {
     font-size: 13px;
@@ -65,6 +70,22 @@ tbody tr:hover {
 }
 .o-d-btn {
     width: 7%;
+}
+/* 매물관리 페이지의 테이블 thead 영역잡기 */
+.o-md-type, .o-md-type {
+    width: 8%;
+}
+.o-md-title {
+    width: 15%;
+}
+.o-md-add {
+    width: 40%;
+}
+.o-md-area, o-md-amount {
+    width: 15%;
+}
+.o-md-btns {
+    width: 10%;
 }
 
 

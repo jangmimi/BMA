@@ -2,50 +2,49 @@ package com.ap4j.bma.service.maemulReg;
 
 import com.ap4j.bma.model.entity.meamulReg.MaeMulRegDTO;
 import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
-import com.ap4j.bma.model.repository.MaemulRegRepository;
+import com.ap4j.bma.model.repository.MaemulRegEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class MaemulRegService {
 
-    private final MaemulRegRepository maemulRegRepository;
+    private final MaemulRegEntityRepository maemulRegEntityRepository;
 
     @Autowired
-    public MaemulRegService(MaemulRegRepository maemulRegRepository) {
-        this.maemulRegRepository = maemulRegRepository;
+    public MaemulRegService(MaemulRegEntityRepository maemulRegEntityRepository) {
+        this.maemulRegEntityRepository = maemulRegEntityRepository;
     }
 
     // 매물 정보 저장
     @Transactional
     public MaemulRegEntity saveMaemulInfo(MaemulRegEntity maemulRegEntity) {
-        return maemulRegRepository.save(maemulRegEntity);
+        return maemulRegEntityRepository.save(maemulRegEntity);
     }
 
     public MaemulRegEntity getMaemulById(Integer maemulId) {
         // 매물 ID로 매물 정보를 조회
-        return maemulRegRepository.findById(maemulId).orElse(null);
+        return maemulRegEntityRepository.findById(maemulId).orElse(null);
     }
 
     // 매물 좌표값 업데이트
     public void updateMeamulReg(Integer maemulId, Double latitude, Double longitude) {
-        MaemulRegEntity updateMaemul = maemulRegRepository.findById(maemulId).orElse(null);
+        MaemulRegEntity updateMaemul = maemulRegEntityRepository.findById(maemulId).orElse(null);
         if (updateMaemul != null) {
             updateMaemul.setLatitude(latitude);
             updateMaemul.setLongitude(longitude);
-            maemulRegRepository.save(updateMaemul);
+            maemulRegEntityRepository.save(updateMaemul);
         }
     }
 
     // 좌표값에 따른 매물 리스트 (마커 찍기용)
-    public List<MaeMulRegDTO> findMaemulListBounds(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng) {
+    public List<MaeMulRegDTO> findMaemulListBounds(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng, String tradeType) {
         List<MaeMulRegDTO> maeMulRegDTOList = new ArrayList<>();
-        List<MaemulRegEntity> maemulRegEntityList = maemulRegRepository.findMaemulListBounds(southWestLat, southWestLng, northEastLat, northEastLng);
+        List<MaemulRegEntity> maemulRegEntityList = maemulRegEntityRepository.findMaemulListBounds(southWestLat, southWestLng, northEastLat, northEastLng, tradeType);
 
         for (MaemulRegEntity maemulRegEntity : maemulRegEntityList) {
             MaeMulRegDTO maeMulRegDTO = MaeMulRegDTO.builder()

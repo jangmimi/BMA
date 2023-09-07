@@ -5,7 +5,7 @@ import com.ap4j.bma.model.entity.customerCenter.QnAEntity;
 import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
-import com.ap4j.bma.model.repository.MaemulRegRepository;
+import com.ap4j.bma.model.repository.MaemulRegEntityRepository;
 import com.ap4j.bma.model.repository.MemberRepository;
 import com.ap4j.bma.model.repository.QnARepository;
 import com.google.gson.JsonElement;
@@ -13,24 +13,18 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 
-import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -49,7 +43,7 @@ public class MemberServiceImpl implements MemberService {
 	private QnARepository qnARepository;
 
 	@Autowired
-	private MaemulRegRepository maemulRegRepository;
+	private MaemulRegEntityRepository maemulRegEntityRepository;
 
 	/** 카카오 토큰 얻기 */
 	public String getAccessToken(String code) {
@@ -312,17 +306,15 @@ public class MemberServiceImpl implements MemberService {
 		return entity.getId();
 	}
 
-	/** 중복회원 체크 */
+	/** 중복회원(이메일) 체크 */
 	@Override
 	public boolean existsByEmail(String email) {
-		log.info("서비스 existsByEmail() 실행");
 		return memberRepository.existsByEmail(email);
 	}
 
 	/** 중복닉네임 체크 */
 	@Override
 	public boolean existsByNickname(String nickname) {
-		log.info("서비스 existsByNickname() 실행");
 		return memberRepository.existsByNickname(nickname);
 	}
 
@@ -468,13 +460,25 @@ public class MemberServiceImpl implements MemberService {
 
 	/** 매물 목록 전체 조회 */
 	public List<MaemulRegEntity> getAllList() {
-		return  maemulRegRepository.findAll();
+		return  maemulRegEntityRepository.findAll();
 	}
 
 	/** 매물 전체 개수 */
 	public Long getAllCnt() {
-		return maemulRegRepository.count();
+		return maemulRegEntityRepository.count();
 	}
+
+	/** 매물 id기준 조회 */
+	public MaemulRegEntity findMaemulById(Integer id) {
+		Optional<MaemulRegEntity> findMaemul = maemulRegEntityRepository.findMaemulById(id);
+		return findMaemul.orElse(null);
+	}
+
+//	public MemberEntity findMemberById(Long id) {
+//		log.info("서비스 findMemberById() 실행");
+//		Optional<MemberEntity> findMember = memberRepository.findById(id);
+//		return findMember.orElse(null);
+//	}
 
 }
 
