@@ -87,8 +87,9 @@ public class MapController {
     }
 
     @PostMapping("map")
-    public ResponseEntity<Map<String, Object>> map2(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng, Integer zoomLevel, String address, String tradeType){
+    public ResponseEntity<Map<String, Object>> map2(HttpSession session, Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng, Integer zoomLevel, String address, String tradeType){
         System.out.println("컨트롤러 address " + address);
+        log.info("로그인한 회원정보~ : " + session.getAttribute("loginMember"));
         log.info("MapController.map.execute");
 
         Map<String, Object> responseData = new HashMap<>();
