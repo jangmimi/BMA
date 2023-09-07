@@ -1,6 +1,6 @@
 package com.ap4j.bma.controller.details;
 
-import com.ap4j.bma.model.repository.MaemulRegRepository;
+import com.ap4j.bma.model.repository.MaemulRegEntityRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,10 +19,10 @@ import javax.websocket.server.PathParam;
 public class DetailController {
 
 
-	private MaemulRegRepository maemulRegRepository;
+	private MaemulRegEntityRepository maemulRegRepository;
 
 	@Autowired
-	public DetailController(MaemulRegRepository maemulRegRepository){
+	public DetailController(MaemulRegEntityRepository maemulRegRepository){
 		this.maemulRegRepository = maemulRegRepository;
 	}
 
@@ -33,7 +33,7 @@ public class DetailController {
 		log.info("DetailController.details.executed");
 
 		model.addAttribute("maemulList", maemulRegRepository.findById(id));
-		log.info("maemulList 객체 {}", maemulRegRepository.findAll());
+		log.info("maemulList 객체 {}", maemulRegRepository.findById(id));
 		return "details/details";
 	}
 

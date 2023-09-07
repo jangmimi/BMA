@@ -94,6 +94,43 @@ function createMarker(position, markerContent, responseData) {
 // 맵 최초 로드시 마커 생성 해주는 함수
 var onlyOneStart = false; // 한 번만 실행하기 위한 변수
 // 맵 로드가 완료되면 실행
+
+var tradeType = []; // 선택된 거래 유형을 담을 배열
+
+// 체크박스의 변경 이벤트를 감지하고 선택된 거래 유형을 배열에 추가 또는 제거합니다.
+$("#flexCheckAll").change(function () {
+    updateSelectedTradeTypes(null, this.checked);
+});
+
+$("#flexCheckSale").change(function () {
+    updateSelectedTradeTypes("매매", this.checked);
+});
+
+$("#flexCheckLease").change(function () {
+    updateSelectedTradeTypes("전세", this.checked);
+});
+
+$("#flexCheckMonthly").change(function () {
+    updateSelectedTradeTypes("월세", this.checked);
+});
+
+$("#flexCheckShortTerm").change(function () {
+    updateSelectedTradeTypes("단기임대", this.checked);
+});
+
+function updateSelectedTradeTypes(type, isChecked) {
+    if (isChecked) {
+        // 체크된 경우 배열에 추가
+        tradeType.push(type);
+    } else {
+        // 체크 해제된 경우 배열에서 제거
+        tradeType = tradeType.filter(item => item !== type);
+    }
+
+
+
+}
+
 kakao.maps.event.addListener(map, 'tilesloaded', function () {
     // 이미 실행된 경우 함수 종료
     if (onlyOneStart) {
@@ -101,17 +138,22 @@ kakao.maps.event.addListener(map, 'tilesloaded', function () {
     }
     onlyOneStart = true; // 변수 업데이트
 
+    var tradeTypeString = tradeType.join(",");
+
     var bounds = map.getBounds();
     var southWest = bounds.getSouthWest();
     var northEast = bounds.getNorthEast();
     var currentZoomLevel = map.getLevel(); // 현재 줌 레벨 가져오기
     console.log("실행시 줌레벨 : " + currentZoomLevel);
+    console.log(tradeType);
     var dataToSend = {
         southWestLat: southWest.getLat(),
         southWestLng: southWest.getLng(),
         northEastLat: northEast.getLat(),
         northEastLng: northEast.getLng(),
-        zoomLevel: currentZoomLevel
+        zoomLevel: currentZoomLevel,
+        tradeType: tradeTypeString
+
     };
 
     $.ajax({
@@ -150,6 +192,8 @@ kakao.maps.event.addListener(map, 'idle', function () {
     // 사이드바 초기화
     clearSidebar();
 
+    var tradeTypeString = tradeType.join(",");
+
     var bounds = map.getBounds();
     var southWest = bounds.getSouthWest();
     var northEast = bounds.getNorthEast();
@@ -160,7 +204,8 @@ kakao.maps.event.addListener(map, 'idle', function () {
         southWestLng: southWest.getLng(),
         northEastLat: northEast.getLat(),
         northEastLng: northEast.getLng(),
-        zoomLevel: currentZoomLevel
+        zoomLevel: currentZoomLevel,
+        tradeType: tradeTypeString
     };
 
 //    console.log(dataToSend);

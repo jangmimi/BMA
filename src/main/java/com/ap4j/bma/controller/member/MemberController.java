@@ -235,15 +235,14 @@ public class MemberController {
         return "redirect:/";
     }
 
-    /** 마이페이지 매핑 */
-    @RequestMapping("/qMyPage")
+    /** 마이페이지 매핑 */ 
+    @RequestMapping("/qMyPage") // 관심매물 최근매물 불러와야함
     public String qMyPage(HttpSession session, Model model) {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
         String thumImg = (String) session.getAttribute("thumbnail_image");
         model.addAttribute("thumbnail_image", thumImg);
         MemberDTO loginMember = (MemberDTO) session.getAttribute("loginMember");
-
         model.addAttribute("root", loginMember.getRoot() == 1 ? "기본회원" : loginMember.getRoot() == 2? "카카오" : "네이버");
 
         return "userView/myPage";
@@ -264,9 +263,7 @@ public class MemberController {
     /** 내정보 수정하기 */
     @PostMapping("/qUpdateMember/{id}")
     public String qUpdate(@ModelAttribute MemberDTO updatedMember, Model model, HttpSession session) {
-        log.info("MemberController - qUpdate() 실행");
         if(!loginStatus(session)) { return "userView/loginNeed"; }
-
         log.info("updatedMember : " + updatedMember);
 
         Long id =  ((MemberDTO) session.getAttribute("loginMember")).getId();
@@ -285,33 +282,28 @@ public class MemberController {
 
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
         String userEmail = memberDTO.getEmail();
-        log.info("userEmail : " + userEmail);
 
-        List<QnAEntity> qMyQnaList = qMemberService.qMyQnaList();
-        long qMyQnaCnt = qMemberService.qMyQnaCnt(userEmail);
-        log.info("qMyQnaCnt : " + qMyQnaCnt);
+        List<QnAEntity> qMyQnaList = qMemberService.qMyQnaList(userEmail);
+        long cnt = qMyQnaList.size();
+        log.info("내가쓴글수 : " + cnt);
 
         model.addAttribute("myQnaList", qMyQnaList);
-        model.addAttribute("myQnaCnt", qMyQnaCnt);
+        model.addAttribute("myQnaCnt", cnt);
         return "userView/myQnA";
     }
 
     /** 매물관리 페이지 매핑 */
     @RequestMapping("/qManagement")
     public String qManagement(HttpSession session, Model model) {
-        log.info("MemberController - qManagement() 실행");
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
+        String nickname = memberDTO.getNickname();
 
-        List<MaemulRegEntity> mmList = qMemberService.getAllList();
-        Long mmAllCnt = qMemberService.getAllCnt();
-        log.info(mmList.toString());
-        log.info(String.valueOf(mmAllCnt));
+        List<MaemulRegEntity> mmList = qMemberService.getListByNickname(memberDTO.getNickname());
 
         model.addAttribute("mmList",mmList);
-        model.addAttribute("mmAllCnt",mmAllCnt);
-
-
+        model.addAttribute("mmAllCnt",mmList.size());
 
         return "userView/maemulManagement";
     }
@@ -319,75 +311,49 @@ public class MemberController {
     /** 관심매물 등록 */
     @RequestMapping("/qLiked")
     public String qLiked(HttpSession session, Model model, Integer maemulId) {
-        log.info("MemberController - qLiked() 실행");
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
         String nickname = memberDTO.getNickname();
-//
-//        // 매물 좋아요 클릭 시 해당 매물 정보
-//        log.info("저장한 관심매물아이디 : " + maemulId);
         MaemulRegEntity finemm = qMemberService.findMaemulById(maemulId);
-//
-//
-//        List<LikedEntity> likedlist = likedService.findLikedByNickname(nickname);
-//        log.info("좋아요 테이블 + " + likedlist.toString());
-//
+
         LikedEntity likedEntity = new LikedEntity();
         likedEntity.setNickname(nickname);
         likedEntity.setRoad_name(finemm.getAddress());
-//
-        likedService.save(likedEntity,nickname);
-
-        List<LikedEntity> mmLikedList = likedService.getAllList();
-        List<MaemulRegEntity> mmList = qMemberService.getAllList();
-        List<MaemulRegEntity> mmFilterList = new ArrayList<>();
-
-        for (LikedEntity likedEntityF : mmLikedList) {
-            if(likedEntityF.getNickname().equals(nickname)) {
-                for(MaemulRegEntity maemulRegEntityF : mmList) {
-                    if (likedEntityF.getRoad_name().equals(maemulRegEntityF.getAddress())) {
-                        mmFilterList.add(maemulRegEntityF);
-                    }
-                }
-            }
-        }
-
-        log.info("추가된 매물 리스트: " + mmFilterList);
+        likedService.save(likedEntity);
 
         return "redirect:/map/map";
     }
 
     /** 관심매물 페이지 매핑 */
     @RequestMapping("/liked")
-    public String qInterest(HttpSession session, Model model, Integer maemulId) {
+    public String qInterest(HttpSession session, Model model) {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
         String nickname = memberDTO.getNickname();
 
-        List<LikedEntity> mmLikedList = likedService.getAllList();
-        List<MaemulRegEntity> mmList = qMemberService.getAllList();
-        List<MaemulRegEntity> mmFilterList = new ArrayList<>();
+        // 메소드를 사용하여 리스트를 가져오고, null인 경우 빈 리스트로 초기화
+        List<LikedEntity> mmLikedList = getListOrDefault(likedService.getAllList());
+        List<MaemulRegEntity> mmList = getListOrDefault(qMemberService.getAllList());
 
-        for (LikedEntity likedEntityF : mmLikedList) {
-            if(likedEntityF.getNickname().equals(nickname)) {
-                for(MaemulRegEntity maemulRegEntityF : mmList) {
-                    if (likedEntityF.getRoad_name().equals(maemulRegEntityF.getAddress())) {
-                        mmFilterList.add(maemulRegEntityF);
-                    }
-                }
-            }
-        }
-        log.info("추가된 매물 리스트: " + mmFilterList);
+        // mmFilterList 계산
+        List<MaemulRegEntity> mmFilterList = likedService.filterMaemulListByNickname(nickname, mmLikedList, mmList);
+        // mmFilterList의 크기(개수) 얻기
+        int mmFilterListSize = mmFilterList.size();
 
-        Long myLikedCnt = likedService.countAll();
+        // myLikedCnt 가져오고, null인 경우 0L로 초기화
+        Long myLikedCnt = (likedService.countAll() != null) ? likedService.countAll() : 0L;
 
         model.addAttribute("mmLiked",mmLikedList);
         model.addAttribute("mmLikedCnt",myLikedCnt);
+        model.addAttribute("mmFilterListSize",mmFilterListSize);
         model.addAttribute("mmList",mmFilterList);
 
         return "userView/maemulLiked";
+    }
+    private <T> List<T> getListOrDefault(List<T> list) {
+        return list != null ? list : new ArrayList<>();
     }
 
 
@@ -420,10 +386,8 @@ public class MemberController {
             return ResponseEntity.ok(0);
         }
     }
-    @PostMapping("/qLeaveMember/{id}")    // 기존 id사용해서 탈퇴처리했던 코드 남겨둠
+    @PostMapping("/qLeaveMember/{id}")    // id 사용해서 탈퇴 (sns계정 탈퇴)
     public String leaveMember(HttpSession session, SessionStatus sessionStatus) {
-        log.info("MemberController - leaveMember() 실행");
-
         Long id =  ((MemberDTO) session.getAttribute("loginMember")).getId();
         String pwd =  ((MemberDTO) session.getAttribute("loginMember")).getPwd();
         qMemberService.leaveMember(id, pwd, sessionStatus, session);

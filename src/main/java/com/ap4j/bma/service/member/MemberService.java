@@ -45,10 +45,10 @@ public interface MemberService {
 	public Optional<MemberEntity> findByEmailAndTel(String email, String tel);
 
 	// 매물 관련 qna
-	public List<QnAEntity> qMyQnaList();
+	public List<QnAEntity> qMyQnaList(String userEmail);
 	public long qMyQnaCnt(String userEmail);
-//	public long qMyQnaCnt();
 	public List<MaemulRegEntity> getAllList();
+	public List<MaemulRegEntity> getListByNickname(String nickname);
 	public Long getAllCnt();
 
 	public MaemulRegEntity findMaemulById(Integer id);
