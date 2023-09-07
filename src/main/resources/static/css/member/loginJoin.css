@@ -12,13 +12,13 @@
     color: gray;
     font-size: 14px;
 }
+#o-innerL-c, #o-innerJ-c {
+    width: 400px;
+}
 
 /* 로그인 */
 .form-check {
     width: 350px;
-}
-#oInner-container {
-    width: 400px;
 }
 #o-savefind-c {
     display: flex;
@@ -47,11 +47,11 @@
     display: flex;
     justify-content: space-between;
 }
+.o-snsBtn-c img {
+    height: 44px;
+}
 
 /* 회원가입 */
-#oInner-container-join {
-    width: 400px;
-}
 #btnEmailCheck, #btnNicknameCheck {
     width: 90px;
     margin-left: 6px;
@@ -70,12 +70,16 @@ agree {
     font-weight: 600;
     color: gray; !important
 }
-
+#j-input-c, #j-input2-c {
+    display: flex;
+    flex-wrap: wrap;
+}
 #j-input-c #email, #nickname {
     width: 254px;
 }
-#emailErr, nicknameErr {
+.o-pwd-error {
+    display: none;
     text-align: left;
+    font-size:12px;
     color: red;
-    font-size: 12px;
 }

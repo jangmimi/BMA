@@ -6,7 +6,6 @@
 <head>
     <meta charset="UTF-8">
     <title>회원가입</title>
-
     <!-- 부트스트랩 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
@@ -15,135 +14,116 @@
 </head>
 <body layout:fragment="content">
 
-<th:block th:if="${loginMember == null}">
-    <th:block th:object="${loginMember}">
-        <div class="oContainer-wrap">
-            <div class="container mt-5" id="oInner-container-join">
-                <div class="o-page-title">
-                    <h3 class="h3 fw-bold">회원가입</h3>
+    <th:block th:if="${loginMember == null}">
+        <th:block th:object="${loginMember}">
+            <div>
+                <div class="container mt-5" id="o-innerJ-c">
+                    <div class="o-page-title">
+                        <h3 class="h3 fw-bold">회원가입</h3>
+                    </div>
+                    <form th:action="@{/member/qJoinBasic}" method="POST" onsubmit="return oJoinCheck()">
+                        <div class="form-floating mb-3 mr-3" id="j-input-c">
+                            <input type="text" class="form-control" id="email" name="email"
+                                   placeholder="" autofocus="autofocus">
+                            <label th:for="email" class="o-lb-c">이메일 주소</label>
+                            <input type="button" class="btn btn-outline-dark" id="btnEmailCheck"
+                                   value="중복검사" onclick="checkEmail()" />
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="">
+                            <label th:for="name" class="o-lb-c">이름(실명)</label>
+                        </div>
+                        <div class="form-floating mb-3" id="j-input2-c">
+                            <input type="text" class="form-control" id="nickname" name="nickname" placeholder="">
+                            <label th:for="nickname" class="o-lb-c">닉네임</label>
+                            <input type="button" class="btn btn-outline-dark" id="btnNicknameCheck"
+                                   value="중복검사" onclick="checkNickname()" />
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="pwd" name="pwd" placeholder="">
+                            <div class="o-pwd-error" id="o-pwd">영문, 숫자를 조합하여 8~20자 이내로 입력해주세요.</div>
+                            <label for="pwd" class="o-lb-c">비밀번호(영문, 숫자 조합 8~20자 이내)</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="pwdCheck" name="pwdCheck" placeholder="">
+                            <div class="o-pwd-error" id="o-pwdCk">비밀번호가 일치하지 않습니다.</div>
+                            <label for="pwdCheck" class="o-lb-c">비밀번호 확인</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="tel" class="form-control" id="tel" name="tel" placeholder="숫자만 입력 '-'제외">
+                            <label th:for="tel" class="o-lb-c">연락처</label>
+                        </div>
+
+                        <div class="form-floating" align="left" style="font-size: 12px;";>
+                            <ul class="o-agree-f" style="list-style: none; padding: 0px; margin: 20px 0px 20px 0px; border-radius: 7px; border: 1px solid #dee2e6;">
+                                <li class="oAgree-li">
+                                    <div>
+                                        <h3 class="h3"></h3>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" class="oAgree" name="selectAll" onclick="checkSelectAll()">
+                                        <b>전체 동의하기</b>
+                                    </div>
+                                </li>
+                                <li class="oAgree-li">
+                                    <div>
+                                        <input type="checkbox" class="oMustAgree" name="agree" data-required>
+                                        <span class="mustch">[필수] </span>만14세 이상입니다.
+                                    </div>
+                                </li>
+                                <li class="oAgree-li">
+                                    <div>
+                                        <input type="checkbox" class="oMustAgree" name="agree" data-required>
+                                        <span class="mustch">[필수] </span>이용약관 동의
+                                    </div>
+                                </li>
+                                <li class="oAgree-li">
+                                    <div>
+                                        <input type="checkbox" class="oMustAgree" name="agree" data-required>
+                                        <span class="mustch">[필수] </span>개인정보 수집·이용 동의
+                                    </div>
+                                </li>
+                                <li class="oAgree-li">
+                                    <div>
+                                        <input type="checkbox" class="oMustAgree" name="agree" data-required>
+                                        <span class="mustch">[필수] </span>위치 기반 서비스약관 동의
+                                    </div>
+                                </li>
+                                <li class="oAgree-li">
+                                    <div>
+                                        <input type="checkbox" class="oMustAgree" name="agree" data-required>
+                                        <span class="mustch">[필수] </span>매물 관리 정책 동의
+                                    </div>
+                                </li>
+                                <li class="oAgree-li">
+                                    <div>
+                                        <input type="checkbox" class="oAgree" id="choice1" name="choice1">
+                                        <span class="selch">[선택] </span>부동산정보 및 혜택 알리미
+                                    </div>
+                                </li>
+                                <li class="oAgree-li">
+                                    <div>
+                                        <input type="checkbox" class="oAgree" id="choice2" name="choice2">
+                                        <span class="selch">[선택] </span>이메일 수신 동의(광고, 이벤트 등)
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="o-btns-c">
+                            <input type="button" class="btn btn-outline-secondary" id="oJoinCancelBtn" value="취소" />
+                            <input type="submit" class="btn btn-primary" id="oJoinBtn" value="회원가입" />
+                        </div>
+                    </form>
+
                 </div>
-                <form th:action="@{/member/qJoinBasic}" method="POST" onsubmit="return oJoinCheck()">
-                    <div class="form-floating mb-3 mr-3" id="j-input-c" style="display:flex; flex-wrap:wrap">
-                        <input type="text" class="form-control" id="email" name="email"
-                               placeholder="" autofocus="autofocus">
-                        <label th:for="email" class="o-lb-c">이메일 주소</label>
-                        <input type="button" class="btn btn-outline-dark" id="btnEmailCheck"
-                               value="중복검사" onclick="checkEmail()" />
-                        <div class="form-floating" id="emailErr"></div>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="name" name="name" placeholder="">
-                        <label th:for="name" class="o-lb-c">이름(실명)</label>
-                    </div>
-                    <div class="form-floating mb-3" style="display:flex; flex-wrap:wrap">
-                        <input type="text" class="form-control" id="nickname" name="nickname" placeholder="">
-                        <label th:for="nickname" class="o-lb-c">닉네임</label>
-                        <input type="button" class="btn btn-outline-dark" id="btnNicknameCheck"
-                               value="중복검사" onclick="checkNickname()" />
-                        <div class="form-floating" id="nicknameErr"></div>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="password" class="form-control" id="pwd" name="pwd" placeholder="">
-                        <label for="pwd" class="o-lb-c">비밀번호(영문, 숫자 조합 8~20자 이내)</label>
-                        <div id="opwdCheck2" style="display:none; text-align:left; color:red; font-size:12px;">영문, 숫자를 조합하여 8~20자 이내로 입력해주세요.</div>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="password" class="form-control" id="pwdCheck" name="pwdCheck" placeholder="">
-                        <div id="opwdCheck1" style="display:none; text-align:left; color:red; font-size:12px;">비밀번호가 일치하지 않습니다.</div>
-                        <label for="pwdCheck" class="o-lb-c">비밀번호 확인</label>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                        <input type="tel" class="form-control" id="tel" name="tel" placeholder="숫자만 입력 '-'제외">
-                        <label th:for="tel" class="o-lb-c">연락처</label>
-                    </div>
-
-                    <div class="form-floating" align="left" style="font-size: 12px;";>
-                        <ul style="list-style: none; padding: 0px; margin: 20px 0px 20px 0px; border-radius: 7px; border: 1px solid #dee2e6;">
-                            <li class="oAgree-li">
-                                <div>
-                                    <h3 class="h3"></h3>
-                                </div>
-                                <div>
-                                    <input type="checkbox" class="oAgree" name="selectAll" onclick="checkSelectAll()">
-                                    <b>전체 동의하기</b>
-                                </div>
-                            </li>
-                            <li class="oAgree-li">
-                                <div>
-                                    <input type="checkbox" class="oMustAgree" name="agree" data-required>
-                                    <span class="mustch">[필수] </span>만14세 이상입니다.
-                                </div>
-                            </li>
-                            <li class="oAgree-li">
-                                <div>
-                                    <input type="checkbox" class="oMustAgree" name="agree" data-required>
-                                    <span class="mustch">[필수] </span>이용약관 동의
-                                </div>
-                            </li>
-                            <li class="oAgree-li">
-                                <div>
-                                    <input type="checkbox" class="oMustAgree" name="agree" data-required>
-                                    <span class="mustch">[필수] </span>개인정보 수집·이용 동의
-                                </div>
-                            </li>
-                            <li class="oAgree-li">
-                                <div>
-                                    <input type="checkbox" class="oMustAgree" name="agree" data-required>
-                                    <span class="mustch">[필수] </span>위치 기반 서비스약관 동의
-                                </div>
-                            </li>
-                            <li class="oAgree-li">
-                                <div>
-                                    <input type="checkbox" class="oMustAgree" name="agree" data-required>
-                                    <span class="mustch">[필수] </span>매물 관리 정책 동의
-                                </div>
-                            </li>
-                            <li class="oAgree-li">
-                                <div>
-                                    <input type="checkbox" class="oAgree" id="choice1" name="choice1">
-                                    <span class="selch">[선택] </span>부동산정보 및 혜택 알리미
-                                </div>
-                            </li>
-                            <li class="oAgree-li">
-                                <div>
-                                    <input type="checkbox" class="oAgree" id="choice2" name="choice2">
-                                    <span class="selch">[선택] </span>이메일 수신 동의(광고, 이벤트 등)
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="o-btns-c">
-                        <input type="button" class="btn btn-outline-secondary" id="oJoinCancelBtn" value="취소" />
-                        <input type="submit" class="btn btn-primary" id="oJoinBtn" value="회원가입" />
-                    </div>
-                </form>
-
-<!--                <div class="container mt-5 mb-5" id="oJoinSns">-->
-<!--                    <p style="font-weight: bold; margin-bottom: 20px;">Join with SNS</p>-->
-<!--                    <div class="oJoinSnsBtn-container"-->
-<!--                         style="display: flex; justify-content: space-between;">-->
-<!--                        &lt;!&ndash; 카카오 회원가입 &ndash;&gt;-->
-<!--                        <a th:href="@{https://kauth.kakao.com/oauth/authorize?client_id=fae91fecfb7dbda2a80ae22881709a28&redirect_uri=http://localhost:8081/member/qLogin&response_type=code}">-->
-<!--                            <img th:src="@{/img/member/kakao_join_medium_narrow.png}" alt="kakaoJoinImg" height="44" />-->
-<!--                        </a>-->
-<!--                        &lt;!&ndash; 네이버 회원가입 &ndash;&gt;-->
-<!--                        <a th:href="@{/member/qLoginNaver}">-->
-<!--                            <img src="/img/member/btnG_완성형.png" alt="naverJoinImg" height="44" />-->
-<!--                        </a>-->
-<!--                    </div>-->
-<!--                </div>-->
-
             </div>
-        </div>
+        </th:block>
     </th:block>
-</th:block>
 
 <script th:src="@{/js/member/join.js}"></script>
 <!-- 부트스트랩 script -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </body>
 </html>
