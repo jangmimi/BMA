@@ -88,7 +88,8 @@ public class MapController {
     }
 
     @PostMapping("map")
-    public ResponseEntity<Map<String, Object>> map2(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng, Integer zoomLevel, String address){
+    public ResponseEntity<Map<String, Object>> map2(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng, Integer zoomLevel, String address, String tradeType){
+
         log.info("MapController.map.execute");
 
         Map<String, Object> responseData = new HashMap<>();
@@ -97,7 +98,7 @@ public class MapController {
         responseData.put("hjdList", hjdList);
 
         // 화면 좌표값에 따른 마커
-        List<MaeMulRegDTO> maemulList = maemulRegService.findMaemulListBounds(southWestLat, southWestLng, northEastLat, northEastLng);
+        List<MaeMulRegDTO> maemulList = maemulRegService.findMaemulListBounds(southWestLat, southWestLng, northEastLat, northEastLng, tradeType);
         responseData.put("maenulList", maemulList);
 
         // 마커 클릭시 해당 주소의 매물 리스트 가져오기
