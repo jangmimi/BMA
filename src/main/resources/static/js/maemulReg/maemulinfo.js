@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-   // HTML 요소
-=======
+
 // HTML 요소
->>>>>>> 1fb67e0993e61ebf389c27bb56c0204c842beb17
    var monthRadio = document.getElementById("month");
    var yearRadio = document.getElementById("year");
    var sellRadio = document.getElementById("sell");
@@ -19,15 +16,10 @@
            sellingSection.style.display = "none"; // 매매 섹션을 숨김
 
            // 월세 라디오 버튼을 선택한 경우, 전세와 매매 관련 필드의 값을 초기화
-<<<<<<< HEAD
            document.getElementById("depositForLease").value = "0";
            document.getElementById("d_managementFee").value = "0";
            document.getElementById("SellingPrice").value = "0";
-=======
-           document.getElementById("depositForLease").value = "";
-           document.getElementById("d_managementFee").value = "";
-           document.getElementById("SellingPrice").value = "";
->>>>>>> 1fb67e0993e61ebf389c27bb56c0204c842beb17
+
        }
    });
 
@@ -39,17 +31,11 @@
            sellingSection.style.display = "none"; // 매매 섹션을 숨김
 
            // 전세 라디오 버튼을 선택한 경우, 월세와 매매 관련 필드의 값을 초기화
-<<<<<<< HEAD
+
            document.getElementById("monthlyForRent").value = "0";
            document.getElementById("monthlyRent").value = "0";
            document.getElementById("m_managementFee").value = "0";
            document.getElementById("SellingPrice").value = "0";
-=======
-           document.getElementById("monthlyForRent").value = "";
-           document.getElementById("monthlyRent").value = "";
-           document.getElementById("m_managementFee").value = "";
-           document.getElementById("SellingPrice").value = "";
->>>>>>> 1fb67e0993e61ebf389c27bb56c0204c842beb17
        }
    });
 
@@ -61,19 +47,11 @@
            sellingSection.style.display = "table"; // 매매 섹션을 표시
 
            // 매매 라디오 버튼을 선택한 경우, 월세와 전세 관련 필드의 값을 초기화
-<<<<<<< HEAD
            document.getElementById("monthlyForRent").value = "0";
            document.getElementById("monthlyRent").value = "0";
            document.getElementById("m_managementFee").value = "0";
            document.getElementById("depositForLease").value = "0";
            document.getElementById("d_managementFee").value = "0";
-=======
-           document.getElementById("monthlyForRent").value = "";
-           document.getElementById("monthlyRent").value = "";
-           document.getElementById("m_managementFee").value = "";
-           document.getElementById("depositForLease").value = "";
-           document.getElementById("d_managementFee").value = "";
->>>>>>> 1fb67e0993e61ebf389c27bb56c0204c842beb17
        }
    });
 
@@ -154,7 +132,6 @@
           popup.style.display = "block";
       }
 
-<<<<<<< HEAD
  // 팝업 닫기
  function closePopup(event) {
      var popup = document.getElementById("helpPopup");
@@ -163,9 +140,4 @@
      // 이벤트의 기본 동작(새로고침)을 막음
      event.preventDefault();
  }
-=======
-      function closePopup() {
-          var popup = document.getElementById("helpPopup");
-          popup.style.display = "none";
-      }
->>>>>>> 1fb67e0993e61ebf389c27bb56c0204c842beb17
+

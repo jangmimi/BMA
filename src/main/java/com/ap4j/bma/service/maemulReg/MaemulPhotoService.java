@@ -6,28 +6,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.transaction.Transactional;
+import java.io.File;
 import java.io.IOException;
+
 
 @Service
 public class MaemulPhotoService {
-
     @Autowired
     private MaemulPhotoRepository maemulPhotoRepository;
 
-    @Autowired
-    private FileStorageService fileStorageService;
-
-
-    @Transactional
     public void saveImage(MultipartFile file, MaemulPhotoEntity maemulPhotoEntity) throws IOException {
-        // 이미지 파일을 업로드 폴더에 저장하고 URL을 반환
-        String imagePath = fileStorageService.storeFile(file, "photo");
+        // 파일을 저장할 경로를 지정
+        String uploadDir = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static" + File.separator + "maemulPhoto";
 
-        // 이미지 경로를 MaemulPhotoEntity에 추가
-        maemulPhotoEntity.addImagePath(imagePath);
+        // 업로드된 파일의 원래 파일 이름을 가져옴
+        String originalFileName = file.getOriginalFilename();
 
-        // 수정된 이미지 엔티티를 저장
+        // 파일을 저장할 경로와 파일 이름을 결합하여 파일 저장 경로 생성
+        String filePath = uploadDir + originalFileName;
+
+        // 이미지 파일을 저장
+        file.transferTo(new File(filePath));
+
+        // MaemulPhotoEntity에 이미지 경로 설정
+        maemulPhotoEntity.setPhotoPath(filePath);
+
+        // MaemulPhotoEntity를 데이터베이스에 저장
         maemulPhotoRepository.save(maemulPhotoEntity);
     }
 }

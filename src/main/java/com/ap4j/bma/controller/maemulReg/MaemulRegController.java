@@ -5,7 +5,7 @@ import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
 import com.ap4j.bma.model.entity.member.MemberDTO;
 
 import com.ap4j.bma.model.repository.MaemulPhotoRepository;
-import com.ap4j.bma.service.maemulReg.FileStorageService;
+//import com.ap4j.bma.service.maemulReg.FileStorageService;
 
 import com.ap4j.bma.service.maemulReg.MaemulPhotoService;
 import com.ap4j.bma.service.maemulReg.MaemulRegService;
@@ -31,8 +31,7 @@ public class MaemulRegController {
     private MaemulRegService maemulRegService;
     @Autowired
     private MaemulPhotoRepository maemulPhotoRepository;
-    @Autowired
-    private FileStorageService fileStorageService;
+
     @Autowired
     private MaemulPhotoService maemulPhotoService;
 
@@ -101,16 +100,14 @@ public class MaemulRegController {
     }
 
 
+
     // 확인 페이지
     @GetMapping("/confirmation")
     public String confirmationPage(@RequestParam("maemulId") Integer maemulId, Model model) {
         // 매물 정보를 데이터베이스에서 가져와서 확인 페이지에 표시
         MaemulRegEntity maemulRegEntity = maemulRegService.getMaemulById(maemulId);
-        // 매물사진 정보를 데이터베이스에서 가져와서 확인 페이지에 표시
-        MaemulPhotoEntity maemulPhotoEntity = maemulPhotoRepository.findByMaemulID(maemulId);
 
         model.addAttribute("maemulRegEntity", maemulRegEntity);
-        model.addAttribute("maemulPhotoEntity", maemulPhotoEntity);
         return "maemulReg/confirmation";
     }
 

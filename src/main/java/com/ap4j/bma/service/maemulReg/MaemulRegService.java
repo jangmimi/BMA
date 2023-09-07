@@ -10,10 +10,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-<<<<<<< HEAD
-
-=======
->>>>>>> 1fb67e0993e61ebf389c27bb56c0204c842beb17
 
 @Service
 public class MaemulRegService {

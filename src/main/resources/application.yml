@@ -13,14 +13,6 @@ spring:
     restart:
       enabled: true
 
-# ※파일 업로드 설정
-  servlet:
-    multipart:
-      enabled: true
-      max-file-size: 30MB
-      max-request-size: 10MB
-      location: C:/project/src/main/resources/static/maemulPhoto #각자 경로에 맞게 설정
-
   # Thymeleaf 설정
   thymeleaf:
     encoding: UTF-8
@@ -50,8 +42,18 @@ spring:
 #   데이터베이스 설정
   datasource:
     generate-unique-name: false
-    url: jdbc:mysql://18.219.34.36:3306/bma #공용
-#    url: jdbc:mysql://127.0.0.1:3306/pos #개인
+#    url: jdbc:mysql://18.219.34.36:3306/bma #공용
+    url: jdbc:mysql://127.0.0.1:3306/pos #개인
     username: root
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+  # 이메일 설정
+  mail:
+    host: smtp.naver.com
+    port: 465
+    username: alwkd920101@naver.com
+    password: wkdal1234!! # 커밋 전 주석처리 잊지말기
+    properties:
+     mail.smtp.auth: true
+     mail.smtp.ssl.enable: true
