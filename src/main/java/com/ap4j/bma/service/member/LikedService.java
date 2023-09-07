@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -33,8 +34,8 @@ public class LikedService {
     }
 
     /** 특정 닉네임이랑 매치되는 Liked 전부 조회 */
-    public List<LikedEntity> findLikedByNickname(String nickname) {
-        return likedRepository.findLikedByNickname(nickname);
+    public List<LikedEntity> findByNickname(String nickname) {
+        return likedRepository.findByNickname(nickname);
     }
 
     /** 특정 주소와 매치되는 매물 전부 조회 */
@@ -51,7 +52,6 @@ public class LikedService {
                 .collect(Collectors.toList());
     }
 
-
     /** 관심 매물 저장 (*중복 저장 안되게 작업중) */
     @Transactional
     public Long save(LikedEntity likeEntity) {
@@ -62,11 +62,27 @@ public class LikedService {
         if(!isDuplicate) {
             likedRepository.save(likeEntity); log.info("중복아니라 저장완료");
         } else {
-            log.info("중복된 매물이네요.");
+            log.info("중복된 매물이네요. 삭제 실행 - 임시로 컨트롤러에서 실행");
         }
         return likeEntity.getId();
     }
-    
+
+
+    public void deleteByNicknameAndRoadName(String nickname, String roadName) {
+        likedRepository.deleteLikedEntitiesByNicknameAndRoadName(nickname, roadName);
+    }
+
+//    @Transactional
+//    public void delete(LikedEntity likedEntity) {
+//        log.info("LikedService 관심매물 삭제 실행");
+//        likedRepository.delete(likedEntity);
+//    }
+
+//    public Optional<LikedEntity> findByNicknameAndRoad_name(String nickname, String road_name) {
+//        return likedRepository.findByNicknameAndRoad_name(nickname, road_name);
+//    }
+
+
 //    public List<MaemulRegEntity> findLikedByRoadname(String roadName) {
 //        List<MaemulRegEntity> likedmList = likedRepository.findMaemulByRoadName(roadName);
 //
