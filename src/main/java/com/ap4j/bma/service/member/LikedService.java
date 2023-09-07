@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -62,11 +63,22 @@ public class LikedService {
         if(!isDuplicate) {
             likedRepository.save(likeEntity); log.info("중복아니라 저장완료");
         } else {
-            log.info("중복된 매물이네요.");
+            log.info("중복된 매물이네요. 삭제 실행 - 임시로 컨트롤러에서 실행");
         }
         return likeEntity.getId();
     }
-    
+
+//    @Transactional
+//    public void delete(LikedEntity likedEntity) {
+//        log.info("LikedService 관심매물 삭제 실행");
+//        likedRepository.delete(likedEntity);
+//    }
+
+//    public Optional<LikedEntity> findByNicknameAndRoad_name(String nickname, String road_name) {
+//        return likedRepository.findByNicknameAndRoad_name(nickname, road_name);
+//    }
+
+
 //    public List<MaemulRegEntity> findLikedByRoadname(String roadName) {
 //        List<MaemulRegEntity> likedmList = likedRepository.findMaemulByRoadName(roadName);
 //

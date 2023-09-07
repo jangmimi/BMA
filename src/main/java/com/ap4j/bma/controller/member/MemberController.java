@@ -320,6 +320,12 @@ public class MemberController {
         LikedEntity likedEntity = new LikedEntity();
         likedEntity.setNickname(nickname);
         likedEntity.setRoad_name(finemm.getAddress());
+
+//        Optional<LikedEntity> find = likedService.findByNicknameAndRoad_name(nickname, finemm.getAddress());
+//        if(find.isPresent()) {
+//            LikedEntity entity = find.get();
+//            likedService.delete(entity);
+//        }
         likedService.save(likedEntity);
 
         return "redirect:/map/map";
