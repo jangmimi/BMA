@@ -443,24 +443,24 @@ public class MemberServiceImpl implements MemberService {
 
 	/** 내 QnA 목록 */
 	@Override
-	public List<QnAEntity> qMyQnaList() {
-		return qnARepository.findAll();
+	public List<QnAEntity> qMyQnaList(String userEmail) {
+		return qnARepository.findMaemulByMemberEmail(userEmail);
 	}
 
-	/** 내 QnA 전체 수 */
+	/** QnA 전체 수 */
 	@Override
-	public long qMyQnaCnt(String userEmail) {
-//		return qQnARepository.countByUserEmail(userEmail);
-//		return qQnARepository.countByUserEmail(userEmail);
-//		Long count = qQnARepository.findAll().stream()
-//				.filter(qna -> qna.getUser_email().equals(userEmail))
-//				.count();
+	public long qMyQnaCnt(String user_email) {
 		return qnARepository.count();
 	}
 
 	/** 매물 목록 전체 조회 */
 	public List<MaemulRegEntity> getAllList() {
 		return  maemulRegEntityRepository.findAll();
+	}
+
+	/** 내가 등록한 매물 목록 조회 */
+	public List<MaemulRegEntity> getListByNickname(String nickname) {
+		return  maemulRegRepository.findMaemulByMemberNickname(nickname);
 	}
 
 	/** 매물 전체 개수 */

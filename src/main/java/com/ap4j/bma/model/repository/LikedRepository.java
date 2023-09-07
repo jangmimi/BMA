@@ -26,7 +26,9 @@ public interface LikedRepository extends JpaRepository<LikedEntity, Long> {
             "WHERE l.road_name = :roadName")
     List<MaemulRegEntity> findMaemulByRoadName(@Param("roadName") String roadName);
 
-//    List<LikedEntity> findByMaemulRoadNameIn(List<String> roadNames);
-
-
+    // 사용자 닉네임과 도로 주소를 이용한 중복 체크 쿼리
+    @Query("SELECT CASE WHEN COUNT(l) > 0 THEN true ELSE false END " +
+            "FROM LikedEntity l " +
+            "WHERE l.nickname = :nickname AND l.road_name = :roadName")
+    boolean existsByNicknameAndRoadName(@Param("nickname") String nickname, @Param("roadName") String roadName);
 }
