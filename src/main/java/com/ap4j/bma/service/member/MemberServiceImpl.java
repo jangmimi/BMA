@@ -476,8 +476,8 @@ public class MemberServiceImpl implements MemberService {
 		return maemulRegRepository.count();
 	}
 
+	/** 매물 id기준 조회 */
 	public MaemulRegEntity findMaemulById(Integer id) {
-		log.info("서비스 findMaemulById() 실행");
 		Optional<MaemulRegEntity> findMaemul = maemulRegRepository.findMaemulById(id);
 		return findMaemul.orElse(null);
 	}

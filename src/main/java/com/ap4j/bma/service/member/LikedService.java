@@ -37,7 +37,8 @@ public class LikedService {
     public List<MaemulRegEntity> findLikedByRoadname(String road_name) {
         return likedRepository.findMaemulByRoadName(road_name);
     }
-    
+
+
 //    public List<MaemulRegEntity> findLikedByRoadname(String roadName) {
 //        List<MaemulRegEntity> likedmList = likedRepository.findMaemulByRoadName(roadName);
 //
@@ -56,8 +57,15 @@ public class LikedService {
 //
 //        return maemulRegEntities;
 //    }
-    /** 관심 매물 저장 */
-    public Long save(LikedEntity likeEntity) {
+    /** 관심 매물 저장 (중복은 저장x) */
+    public Long save(LikedEntity likeEntity, String mynickname) {
+//        if(findLikedByRoadname(likeEntity.getRoad_name()) != null
+//            && findLikedByNickname(likeEntity.getNickname()) !=null) {
+//            return -1L;
+//        } else {
+//            likedRepository.save(likeEntity);
+//            return likeEntity.getId();
+//        }
         likedRepository.save(likeEntity);
         return likeEntity.getId();
     }

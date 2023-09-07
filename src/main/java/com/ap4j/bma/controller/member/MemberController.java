@@ -316,9 +316,9 @@ public class MemberController {
         return "userView/maemulManagement";
     }
 
-    /** 관심매물 페이지 매핑 */
+    /** 관심매물 등록 */
     @RequestMapping("/qLiked")
-    public String qInterest(HttpSession session, Model model, Integer maemulId) {
+    public String qLiked(HttpSession session, Model model, Integer maemulId) {
         log.info("MemberController - qLiked() 실행");
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
@@ -327,22 +327,44 @@ public class MemberController {
 //
 //        // 매물 좋아요 클릭 시 해당 매물 정보
 //        log.info("저장한 관심매물아이디 : " + maemulId);
-//        MaemulRegEntity finemm = qMemberService.findMaemulById(maemulId);
+        MaemulRegEntity finemm = qMemberService.findMaemulById(maemulId);
 //
 //
 //        List<LikedEntity> likedlist = likedService.findLikedByNickname(nickname);
 //        log.info("좋아요 테이블 + " + likedlist.toString());
 //
-//        LikedEntity likedEntity = new LikedEntity();
-//        likedEntity.setNickname(nickname);
-//        likedEntity.setRoad_name(finemm.getAddress());
+        LikedEntity likedEntity = new LikedEntity();
+        likedEntity.setNickname(nickname);
+        likedEntity.setRoad_name(finemm.getAddress());
 //
-//        likedService.save(likedEntity);
-//        log.info("저장 후 likedEntity : " + likedEntity);
+        likedService.save(likedEntity,nickname);
 
-//        List<MaemulRegEntity> likemaemulList = likedService.findLikedByRoadname(roadname);
-//        log.info("좋아요한 매물 + " + likedlist.toString());
+        List<LikedEntity> mmLikedList = likedService.getAllList();
+        List<MaemulRegEntity> mmList = qMemberService.getAllList();
+        List<MaemulRegEntity> mmFilterList = new ArrayList<>();
 
+        for (LikedEntity likedEntityF : mmLikedList) {
+            if(likedEntityF.getNickname().equals(nickname)) {
+                for(MaemulRegEntity maemulRegEntityF : mmList) {
+                    if (likedEntityF.getRoad_name().equals(maemulRegEntityF.getAddress())) {
+                        mmFilterList.add(maemulRegEntityF);
+                    }
+                }
+            }
+        }
+
+        log.info("추가된 매물 리스트: " + mmFilterList);
+
+        return "redirect:/map/map";
+    }
+
+    /** 관심매물 페이지 매핑 */
+    @RequestMapping("/liked")
+    public String qInterest(HttpSession session, Model model, Integer maemulId) {
+        if(!loginStatus(session)) { return "userView/loginNeed"; }
+
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
+        String nickname = memberDTO.getNickname();
 
         List<LikedEntity> mmLikedList = likedService.getAllList();
         List<MaemulRegEntity> mmList = qMemberService.getAllList();
@@ -360,10 +382,6 @@ public class MemberController {
         log.info("추가된 매물 리스트: " + mmFilterList);
 
         Long myLikedCnt = likedService.countAll();
-//        log.info(mmLikedList.toString());
-//        log.info(String.valueOf(mmAllLikedCnt));
-
-//        log.info(mmList.toString());
 
         model.addAttribute("mmLiked",mmLikedList);
         model.addAttribute("mmLikedCnt",myLikedCnt);
@@ -371,6 +389,7 @@ public class MemberController {
 
         return "userView/maemulLiked";
     }
+
 
     /** 최근매물 페이지 매핑 */
     @RequestMapping("/qRecent")
