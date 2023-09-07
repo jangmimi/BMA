@@ -8,55 +8,113 @@
     <title>문의글 상세 페이지</title>
     <link rel="stylesheet" th:href="@{/css/CC/qna.css}">
     <link rel="stylesheet" th:href="@{/css/CC/CCBar.css}">
+    <link rel="stylesheet" th:href="@{/css/CC/qnainfo.css}">
+    <link rel="stylesheet" th:href="@{/css/member/myCommon.css}">
 </head>
 
 <body layout:fragment="content">
 
-    <div class="layout">
 
-        <hr/>
-            <div id="tb-box">
-                <table border="1" class="qna-tb">
+<!--        <hr/>-->
+<!--            <div id="tb-box">-->
+<!--                <table border="1" class="qna-tb">-->
+<!--                    <tr>-->
+<!--                        <th>이름<b class="boldtext">＊</b></th>-->
+<!--                        <td>-->
+<!--                            <label th:text="${qna.user_name}"></label>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th>이메일<b class="boldtext">＊</b></th>-->
+<!--                        <td>-->
+<!--                            <label th:text="${qna.user_email}"></label>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th>구분<b class="boldtext">＊</b></th>-->
+<!--                        <td>-->
+<!--                            <label th:text="${qna.category}"></label>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th>제목<b class="boldtext">＊</b></th>-->
+<!--                        <td>-->
+<!--                            <label th:text="${qna.title}"></label>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th>내용<b class="boldtext">＊</b></th>-->
+<!--                        <td>-->
+<!--                            <label th:text="${qna.content}"></label>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th>파일첨부</th>-->
+<!--                        <td>-->
+<!--                            &lt;!&ndash; 파일 첨부 관련 정보는 QnAEntity에서 가져와야 합니다. &ndash;&gt;-->
+<!--                            <label th:text="${qna.filename}"></label>-->
+<!--                            <label th:text="${qna.filepath}"></label>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                </table>-->
+<!--            </div>-->
+
+<!--        <div class="btn-group">-->
+<!--        <button>-->
+<!--            목록-->
+<!--        </button>-->
+<!--        <button>-->
+<!--            삭제-->
+<!--        </button>-->
+<!--        </div>-->
+<div id="o-content">
+    <!-- inner navbar -->
+    <div class="o-lnb">
+        <div class="o-wrapper">
+            <ul class="o-lnb-list">
+                <li class="o-lnb-item"><a th:href="@{/member/qMyPage}">내정보</a></li>
+                <li class="o-lnb-item"><a th:href="@{/member/qMyInfoUpdate}">내정보수정</a></li>
+                <li class="o-lnb-item"><a th:href="@{/member/qManagement}">매물관리</a></li>
+                <li class="o-lnb-item"><a th:href="@{/member/qLiked}">관심매물</a></li>
+                <li class="o-lnb-item"><a th:href="@{/member/qRecent}">최근본매물</a></li>
+                <li class="o-lnb-item"><a th:href="@{/member/qMyQnA}" style="color:#26ABED;">1:1문의내역</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="o-mid-wrapper">
+        <div class="o-mid-inner mt-5" id="o-tb-wrap">
+            <div id="oPageTitle">
+                <p>고객님께서 문의하신 내역입니다.</p>
+            </div>
+            <div class="oMyQnaTb">
+                <table class="s-qna-info">
                     <tr>
-                        <th>이름<b class="boldtext">＊</b></th>
-                        <td>
-                            <label th:text="${qna.user_name}"></label>
-                        </td>
+                        <td>구분</td>
+                        <td th:text="${qna.category}">기타</td>
                     </tr>
                     <tr>
-                        <th>이메일<b class="boldtext">＊</b></th>
-                        <td>
-                            <label th:text="${qna.user_email}"></label>
-                        </td>
+                        <td>이름</td>
+                        <td th:text="${qna.user_name}"></td>
                     </tr>
                     <tr>
-                        <th>구분<b class="boldtext">＊</b></th>
-                        <td>
-                            <label th:text="${qna.category}"></label>
-                        </td>
+                        <td>이메일</td>
+                        <td th:text="${qna.user_email}">기타</td>
                     </tr>
                     <tr>
-                        <th>제목<b class="boldtext">＊</b></th>
-                        <td>
-                            <label th:text="${qna.title}"></label>
-                        </td>
+                        <td>제목</td>
+                        <td th:text="${qna.title}">기타</td>
                     </tr>
                     <tr>
-                        <th>내용<b class="boldtext">＊</b></th>
-                        <td>
-                            <label th:text="${qna.content}"></label>
-                        </td>
+                        <td>문의내용</td>
+                        <td th:text="${qna.content}">기타</td>
                     </tr>
                     <tr>
-                        <th>파일첨부</th>
-                        <td>
-                            <!-- 파일 첨부 관련 정보는 QnAEntity에서 가져와야 합니다. -->
-                            <label th:text="${qna.filename}"></label>
-                            <label th:text="${qna.filepath}"></label>
-                        </td>
+                        <td>첨부파일</td>
+                        <td th:text="${qna.filename + ' ' + qna.filepath}"></td>
                     </tr>
                 </table>
             </div>
+<<<<<<< HEAD
 
         <div class="btn-group">
         <button id="go-list">
@@ -65,7 +123,15 @@
         <button id="deleteButton">
                 <a th:href="@{/deleteQnA(id=${qna.id})}">삭제</a>
         </button>
+=======
+            <div class="s-qna-buttons">
+                <button>목록</button>
+                <button>삭제</button>
+            </div>
+>>>>>>> 1fb67e0993e61ebf389c27bb56c0204c842beb17
         </div>
     </div>
+
+</div>
 </body>
 </html>

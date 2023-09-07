@@ -377,15 +377,14 @@ aside {
 
 .y-st-ptag {
 	font-size: 24px;
-	line-height: 38px;
-	letter-spacing: -0.5px;
 	color: rgb(34, 34, 34);
 	font-weight: bold;
 }
 
 .y-st-ptag2 {
+	position: relative;
+	bottom: 15px;
 	font-size: 14px;
-	line-height: 24px;
 	color: rgb(101, 101, 101);
 }
 
@@ -971,6 +970,12 @@ ul span {
 	height: 12px;
 	background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png");
 }
+
+.y-st-q a{
+	text-decoration: none;
+}
+
+
 
 .placeinfo a,
 .placeinfo a:active,

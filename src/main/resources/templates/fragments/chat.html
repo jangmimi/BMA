@@ -9,11 +9,16 @@
 
 <div th:fragment="chatModalFragment">
 
+
     <button id="s-chat-connect-button">
         <img class="s-modalImg" src="/sc/message.png" alt="">
     </button>
 
     <div class="s-chatbox">
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-spinner"></div>
+        <p>Loading...</p>
+    </div>
         <div class="s-chat-closebox">
             <div class="s-chat-closebox-text">
                 <span>아파트사조 실시간채팅</span>
@@ -39,6 +44,39 @@
         </div>
     </div>
 
+    <script>
+        // 모달 창 요소를 가져옵니다.
+        var modal = document.querySelector(".s-chatbox");
+        var modalHeader = document.querySelector(".s-chat-closebox");
+
+        var isDragging = false;
+        var offsetX, offsetY;
+
+        // 모달 헤더를 마우스 다운 이벤트에 연결합니다.
+        modalHeader.addEventListener("mousedown", function (e) {
+            isDragging = true;
+            offsetX = e.clientX - modal.getBoundingClientRect().left;
+            offsetY = e.clientY - modal.getBoundingClientRect().top;
+        });
+
+        // 문서 전체에 마우스 업 이벤트를 연결합니다.
+        document.addEventListener("mouseup", function () {
+            isDragging = false;
+        });
+
+        // 문서 전체에 마우스 이동 이벤트를 연결합니다.
+        document.addEventListener("mousemove", function (e) {
+            if (!isDragging) return;
+
+            // 새로운 모달 위치를 계산합니다.
+            var newX = e.clientX - offsetX;
+            var newY = e.clientY - offsetY;
+
+            // 모달을 새 위치로 이동합니다.
+            modal.style.left = newX + "px";
+            modal.style.top = newY + "px";
+        });
+    </script>
 
 </div>
 

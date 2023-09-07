@@ -31,3 +31,4 @@ public class MaemulPhotoService {
         maemulPhotoRepository.save(maemulPhotoEntity);
     }
 }
+

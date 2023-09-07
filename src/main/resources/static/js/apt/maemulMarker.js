@@ -68,6 +68,100 @@ function createMarker(position, markerContent, responseData) {
     }
 }
 
+// 맵 최초 로드시 마커 생성 해주는 함수
+var onlyOneStart = false; // 한 번만 실행하기 위한 변수
+// 맵 로드가 완료되면 실행
+
+var tradeType = []; // 선택된 거래 유형을 담을 배열
+
+// 체크박스의 변경 이벤트를 감지하고 선택된 거래 유형을 배열에 추가 또는 제거합니다.
+$("#flexCheckAll").change(function () {
+    updateSelectedTradeTypes(null, this.checked);
+});
+
+$("#flexCheckSale").change(function () {
+    updateSelectedTradeTypes("매매", this.checked);
+});
+
+$("#flexCheckLease").change(function () {
+    updateSelectedTradeTypes("전세", this.checked);
+});
+
+$("#flexCheckMonthly").change(function () {
+    updateSelectedTradeTypes("월세", this.checked);
+});
+
+$("#flexCheckShortTerm").change(function () {
+    updateSelectedTradeTypes("단기임대", this.checked);
+});
+
+function updateSelectedTradeTypes(type, isChecked) {
+    if (isChecked) {
+        // 체크된 경우 배열에 추가
+        tradeType.push(type);
+    } else {
+        // 체크 해제된 경우 배열에서 제거
+        tradeType = tradeType.filter(item => item !== type);
+    }
+
+
+
+}
+
+kakao.maps.event.addListener(map, 'tilesloaded', function () {
+    // 이미 실행된 경우 함수 종료
+    if (onlyOneStart) {
+        return;
+    }
+    onlyOneStart = true; // 변수 업데이트
+
+    var tradeTypeString = tradeType.join(",");
+
+    var bounds = map.getBounds();
+    var southWest = bounds.getSouthWest();
+    var northEast = bounds.getNorthEast();
+    var currentZoomLevel = map.getLevel(); // 현재 줌 레벨 가져오기
+    console.log("실행시 줌레벨 : " + currentZoomLevel);
+    console.log(tradeType);
+    var dataToSend = {
+        southWestLat: southWest.getLat(),
+        southWestLng: southWest.getLng(),
+        northEastLat: northEast.getLat(),
+        northEastLng: northEast.getLng(),
+        zoomLevel: currentZoomLevel,
+        tradeType: tradeTypeString
+
+    };
+
+    $.ajax({
+        type: 'POST',
+        url: '/map/map',
+        data: dataToSend,
+        success: function (response) {
+            if(response.maenulList) {
+               response.maenulList.forEach(function (maemul) {
+                   var markerPosition = new kakao.maps.LatLng(maemul.latitude, maemul.longitude);
+                   var markerKey = markerPosition.toString();
+                   var markerContent = "<div class='e-marker'>" +
+                       "<div class='e-markerTitle'>" +
+                       "<h3>" + maemul.apt_name + "</h3>" +
+                       "</div>" +
+                       "<div class='e-markerContent'>" +
+                       "<p>" + maemul.address + "</p>" +
+                       "</div>" +
+                       "</div>";
+
+                   if (!existingMarkers[markerKey]) {
+                       createMarker(markerPosition, markerContent, maemul);
+                   }
+
+               });
+               updateSidebar(response.maenulList);
+            }
+        }
+    });
+});
+
 
 // 맵 이동시 현재 맵의 경계를 기준으로 데이터 요청하고 그 범위에 속하는 행정동 또는 아파트 데이터의 마커 생성
 kakao.maps.event.addListener(map, 'idle', function () {
@@ -76,6 +170,8 @@ kakao.maps.event.addListener(map, 'idle', function () {
 
     // 사이드바 초기화
     clearSidebar();
+
+    var tradeTypeString = tradeType.join(",");
 
     var bounds = map.getBounds();
     var southWest = bounds.getSouthWest();
@@ -87,7 +183,8 @@ kakao.maps.event.addListener(map, 'idle', function () {
         southWestLng: southWest.getLng(),
         northEastLat: northEast.getLat(),
         northEastLng: northEast.getLng(),
-        zoomLevel: currentZoomLevel
+        zoomLevel: currentZoomLevel,
+        tradeType: tradeTypeString
     };
 
 //    console.log(dataToSend);
@@ -260,6 +357,8 @@ function updateSidebar(responseData) {
             </button>
         `;
 
+        heartButton.querySelector("button").setAttribute("data-isButton", "false");
+
         // li 요소에 a 요소와 하트 버튼 추가
         listItem.appendChild(anchor);
         listItem.appendChild(heartButton);
@@ -277,16 +376,27 @@ function clearSidebar() {
 
 // 하트 버튼을 클릭하면 매물 id 전송
 $(document).on("click", ".aHeartBtn", function() {
-    var listItem = $(this).closest("li"); // 클릭한 하트 버튼이 속한 li 요소를 찾습니다.
-    var maemulId = listItem.find(".abox").attr("href").split("/").pop(); // a 요소의 href의 maemulId를 추출합니다.
+    var listItem = $(this).closest("li"); // 클릭한 하트 버튼이 속한 li 요소 찾기
+    var maemulId = listItem.find(".abox").attr("href").split("/").pop(); // a 요소의 href의 maemulId 추출
+    var isButton = listItem.data("isButton"); // 해당 버튼의 boolean 값 가져옴
+
+    // 해당 li 내의 버튼만 스타일 변경
+    var heartBtnInList = listItem.find(".aHeartBtnInList");
+    if (!isButton) {
+        heartBtnInList.css("opacity", 1); // 불투명
+    } else {
+        heartBtnInList.css("opacity", 0.16); // 16% 투명도
+    }
 
     $.ajax({
         url: "/member/qLiked", //
         type: "POST", //
         data: { maemulId: maemulId }, //
         success: function(response) {
-            console.log("Ajax 요청 성공: " + response);
+            console.log("Ajax 요청 성공");
             console.log("매물 아이디" + maemulId);
+
+            listItem.data("isButton", !isButton);
         },
         error: function(xhr, status, error) {
             console.error("Ajax 요청 실패: " + error);

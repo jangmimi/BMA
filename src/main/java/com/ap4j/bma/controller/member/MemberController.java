@@ -21,9 +21,11 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @SessionAttributes("loginMember")   // 세션 자동 설정
@@ -233,15 +235,14 @@ public class MemberController {
         return "redirect:/";
     }
 
-    /** 마이페이지 매핑 */
-    @RequestMapping("/qMyPage")
+    /** 마이페이지 매핑 */ 
+    @RequestMapping("/qMyPage") // 관심매물 최근매물 불러와야함
     public String qMyPage(HttpSession session, Model model) {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
         String thumImg = (String) session.getAttribute("thumbnail_image");
         model.addAttribute("thumbnail_image", thumImg);
         MemberDTO loginMember = (MemberDTO) session.getAttribute("loginMember");
-
         model.addAttribute("root", loginMember.getRoot() == 1 ? "기본회원" : loginMember.getRoot() == 2? "카카오" : "네이버");
 
         return "userView/myPage";
@@ -262,9 +263,7 @@ public class MemberController {
     /** 내정보 수정하기 */
     @PostMapping("/qUpdateMember/{id}")
     public String qUpdate(@ModelAttribute MemberDTO updatedMember, Model model, HttpSession session) {
-        log.info("MemberController - qUpdate() 실행");
         if(!loginStatus(session)) { return "userView/loginNeed"; }
-
         log.info("updatedMember : " + updatedMember);
 
         Long id =  ((MemberDTO) session.getAttribute("loginMember")).getId();
@@ -283,62 +282,80 @@ public class MemberController {
 
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
         String userEmail = memberDTO.getEmail();
-        log.info("userEmail : " + userEmail);
 
-        List<QnAEntity> qMyQnaList = qMemberService.qMyQnaList();
-        long qMyQnaCnt = qMemberService.qMyQnaCnt(userEmail);
-        log.info("qMyQnaCnt : " + qMyQnaCnt);
+        List<QnAEntity> qMyQnaList = qMemberService.qMyQnaList(userEmail);
+        long cnt = qMyQnaList.size();
+        log.info("내가쓴글수 : " + cnt);
 
         model.addAttribute("myQnaList", qMyQnaList);
-        model.addAttribute("myQnaCnt", qMyQnaCnt);
+        model.addAttribute("myQnaCnt", cnt);
         return "userView/myQnA";
     }
 
     /** 매물관리 페이지 매핑 */
     @RequestMapping("/qManagement")
     public String qManagement(HttpSession session, Model model) {
-        log.info("MemberController - qManagement() 실행");
-        if(!loginStatus(session)) { return "userView/loginNeed"; }
-
-
-        List<MaemulRegEntity> mmList = qMemberService.getAllList();
-        Long mmAllCnt = qMemberService.getAllCnt();
-        log.info(mmList.toString());
-        log.info(String.valueOf(mmAllCnt));
-
-        model.addAttribute("mmList",mmList);
-        model.addAttribute("mmAllCnt",mmAllCnt);
-
-
-
-        return "userView/maemulManagement";
-    }
-
-    /** 관심매물 페이지 매핑 */
-    @RequestMapping("/qLiked")
-    public String qInterest(HttpSession session, Model model, Integer maemulId) {
-        log.info("MemberController - qLiked() 실행");
-        System.out.println("매물아이디 : " + maemulId);
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
         String nickname = memberDTO.getNickname();
 
-        List<LikedEntity> mmLikedList = likedService.getAllList();
+        List<MaemulRegEntity> mmList = qMemberService.getListByNickname(memberDTO.getNickname());
 
-        Long mmAllLikedCnt = likedService.countAll();
-        log.info(mmLikedList.toString());
-        log.info(String.valueOf(mmAllLikedCnt));
+        model.addAttribute("mmList",mmList);
+        model.addAttribute("mmAllCnt",mmList.size());
 
-        List<MaemulRegEntity> mmList = qMemberService.getAllList();
-        log.info(mmList.toString());
+        return "userView/maemulManagement";
+    }
+
+    /** 관심매물 등록 */
+    @RequestMapping("/qLiked")
+    public String qLiked(HttpSession session, Model model, Integer maemulId) {
+        if(!loginStatus(session)) { return "userView/loginNeed"; }
+
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
+        String nickname = memberDTO.getNickname();
+        MaemulRegEntity finemm = qMemberService.findMaemulById(maemulId);
+
+        LikedEntity likedEntity = new LikedEntity();
+        likedEntity.setNickname(nickname);
+        likedEntity.setRoad_name(finemm.getAddress());
+        likedService.save(likedEntity);
+
+        return "redirect:/map/map";
+    }
+
+    /** 관심매물 페이지 매핑 */
+    @RequestMapping("/liked")
+    public String qInterest(HttpSession session, Model model) {
+        if(!loginStatus(session)) { return "userView/loginNeed"; }
+
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
+        String nickname = memberDTO.getNickname();
+
+        // 메소드를 사용하여 리스트를 가져오고, null인 경우 빈 리스트로 초기화
+        List<LikedEntity> mmLikedList = getListOrDefault(likedService.getAllList());
+        List<MaemulRegEntity> mmList = getListOrDefault(qMemberService.getAllList());
+
+        // mmFilterList 계산
+        List<MaemulRegEntity> mmFilterList = likedService.filterMaemulListByNickname(nickname, mmLikedList, mmList);
+        // mmFilterList의 크기(개수) 얻기
+        int mmFilterListSize = mmFilterList.size();
+
+        // myLikedCnt 가져오고, null인 경우 0L로 초기화
+        Long myLikedCnt = (likedService.countAll() != null) ? likedService.countAll() : 0L;
 
         model.addAttribute("mmLiked",mmLikedList);
-        model.addAttribute("mmAllLikedCnt",mmAllLikedCnt);
-        model.addAttribute("mmList",mmList);
+        model.addAttribute("mmLikedCnt",myLikedCnt);
+        model.addAttribute("mmFilterListSize",mmFilterListSize);
+        model.addAttribute("mmList",mmFilterList);
 
         return "userView/maemulLiked";
     }
+    private <T> List<T> getListOrDefault(List<T> list) {
+        return list != null ? list : new ArrayList<>();
+    }
+
 
     /** 최근매물 페이지 매핑 */
     @RequestMapping("/qRecent")
@@ -369,10 +386,8 @@ public class MemberController {
             return ResponseEntity.ok(0);
         }
     }
-    @PostMapping("/qLeaveMember/{id}")    // 기존 id사용해서 탈퇴처리했던 코드 남겨둠
+    @PostMapping("/qLeaveMember/{id}")    // id 사용해서 탈퇴 (sns계정 탈퇴)
     public String leaveMember(HttpSession session, SessionStatus sessionStatus) {
-        log.info("MemberController - leaveMember() 실행");
-
         Long id =  ((MemberDTO) session.getAttribute("loginMember")).getId();
         String pwd =  ((MemberDTO) session.getAttribute("loginMember")).getPwd();
         qMemberService.leaveMember(id, pwd, sessionStatus, session);
@@ -380,28 +395,20 @@ public class MemberController {
         return "redirect:/";
     }
 
-    /** 이메일 중복 체크 (js ajax 활용) */
+    /** 중복회원(이메일) 체크 (js ajax 활용) */
     @PostMapping("/qEmailCheck")
     @ResponseBody
     public int qEmailCheck(@RequestParam("email") String email) {
-        log.info("MemberController - qEmailCheck() 실행");
-
-        int cnt = 0;
         boolean emailCheck = qMemberService.existsByEmail(email);
-        cnt = emailCheck ? 1 : 0;
-        return cnt;
+        return emailCheck ? 1 : 0;
     }
 
     /** 닉네임 중복 체크 (js ajax 활용) */
     @PostMapping("/qNicknameDuplicationCheck")
     @ResponseBody
     public int NicknameDuplicationCheck(@RequestParam("nickname") String nickname) {
-        log.info("MemberController - NicknameDuplicationCheck() 실행");
-
-        int cnt = 0;
         boolean nicknameCheck = qMemberService.existsByNickname(nickname);
-        cnt = nicknameCheck ? 1 : 0;
-        return cnt;
+        return nicknameCheck ? 1 : 0;
     }
 
     /** 이메일/비밀번호 찾기 페이지 매핑 */
@@ -413,8 +420,6 @@ public class MemberController {
     /** 이메일 찾기 */
     @PostMapping("/qFindEmail")
     public String qFindEmail(@RequestParam String name, @RequestParam String tel, Model model) {
-        log.info("MemberController - qFindEmail() 실행");
-
         Optional<MemberEntity> findMember = qMemberService.findByNameAndTel(name, tel);
 
         if(findMember.isPresent()) {
@@ -426,11 +431,10 @@ public class MemberController {
     }
 
     /** 비밀번혼 찾기 */
-    @PostMapping("/qFindPwd")
+    @PostMapping("/qFindPwd")    // * 임시 비번 이메일 발급으로 수정 적용 필요 *
     public String qFindPwd(@RequestParam String emailpwd, @RequestParam String telpwd, Model model) {
-        log.info("MemberController - qFindPwd() 실행");
-
         Optional<MemberEntity> find = qMemberService.findByEmailAndTel(emailpwd, telpwd);
+
         if(find.isPresent()) {
             model.addAttribute("findPwd", find.get().getPwd());
         } else {
