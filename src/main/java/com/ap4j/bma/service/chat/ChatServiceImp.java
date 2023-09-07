@@ -1,6 +1,7 @@
 package com.ap4j.bma.service.chat;
 
 import com.ap4j.bma.model.entity.chat.ChatMessage;
+import com.ap4j.bma.model.entity.chat.ChatMessageDTO;
 import com.ap4j.bma.model.repository.ChatRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,11 +16,10 @@ public class ChatServiceImp implements ChatService{
     private final ChatRepository chatRepository;
 
     @Override
-    public ChatMessage saveMessage(ChatMessage chatMessage) {
-        chatMessage.setChatDate(LocalDateTime.now()); // 현재 시간으로 설정
-        System.out.println("메세지저장"+chatMessage);
-        ChatMessage message = chatRepository.save(chatMessage);
-        return message;
+    public ChatMessage saveMessage(ChatMessageDTO chatMessageDTO) {
+        chatMessageDTO.toEntity();
+        System.out.println(chatMessageDTO.toEntity());
+        return chatRepository.save(chatMessageDTO.toEntity());
     }
 
     @Override

@@ -306,17 +306,15 @@ public class MemberServiceImpl implements MemberService {
 		return entity.getId();
 	}
 
-	/** 중복회원 체크 */
+	/** 중복회원(이메일) 체크 */
 	@Override
 	public boolean existsByEmail(String email) {
-		log.info("서비스 existsByEmail() 실행");
 		return memberRepository.existsByEmail(email);
 	}
 
 	/** 중복닉네임 체크 */
 	@Override
 	public boolean existsByNickname(String nickname) {
-		log.info("서비스 existsByNickname() 실행");
 		return memberRepository.existsByNickname(nickname);
 	}
 
@@ -469,6 +467,18 @@ public class MemberServiceImpl implements MemberService {
 	public Long getAllCnt() {
 		return maemulRegEntityRepository.count();
 	}
+
+	/** 매물 id기준 조회 */
+	public MaemulRegEntity findMaemulById(Integer id) {
+		Optional<MaemulRegEntity> findMaemul = maemulRegRepository.findMaemulById(id);
+		return findMaemul.orElse(null);
+	}
+
+//	public MemberEntity findMemberById(Long id) {
+//		log.info("서비스 findMemberById() 실행");
+//		Optional<MemberEntity> findMember = memberRepository.findById(id);
+//		return findMember.orElse(null);
+//	}
 
 }
 

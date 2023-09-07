@@ -34,15 +34,12 @@
 /* 상단 타이틀 */
 .o-page-title {
     text-align: center;
-    margin: 30px 0px;
+    margin: 50px 0px;
 }
-/* 이메일 비밀번호 찾기 타이틀 */
-.o-find-subTitle {
-    font-size: 15px;
-    font-weight: bold;
-    text-align: left;
-    margin-left: 20px;
+.o-page-title h3 {
+    font-size: 30px;
 }
+
 /* 테이블 */
 .faq-tb {
     width: 100%;
@@ -64,11 +61,9 @@
     margin-top: 50px;
 }
 .o-tb-btn button, .o-find-btn-c input {
-    margin: 0 auto;
-    border: none;
-    background-color: #26abed;
-    color: white;
     font-size: 16px;
+    margin: 0 auto;
+    width: 350px;
 }
 /* 게시판 전체 개수 */
 .o-cntAll {
