@@ -28,4 +28,12 @@ public interface MaemulRegEntityRepository extends JpaRepository<MaemulRegEntity
             "WHERE m.nickname = :nickname")
     List<MaemulRegEntity> findMaemulByMemberNickname(@Param("nickname") String nickname);
 
+    List<MaemulRegEntity> findByMemberEntity_Nickname(String nickname);
+
+    @Query("SELECT COUNT(m) FROM MaemulRegEntity m WHERE (m.buildingUsage = '거주용' OR m.buildingUsage = '거주/업무용') AND m.nickname = :nickname")
+    Long countResidential(@Param("nickname") String nickname);
+
+    @Query("SELECT COUNT(m) FROM MaemulRegEntity m WHERE (m.buildingUsage = '업무용' OR m.buildingUsage = '거주/업무용') AND m.nickname = :nickname")
+    Long countCommercial(@Param("nickname") String nickname);
+
 }
