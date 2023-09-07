@@ -13,10 +13,10 @@
     <link rel="stylesheet" th:href="@{/css/member/myCommon.css}">
 </head>
 <body layout:fragment="content">
-
+    <!-- 세션 객체로 로그인 여부 확인 -->
     <th:block th:if="${loginMember == null}">
         <th:block th:object="${loginMember}">
-            <div class="container mt-5" id="oInner-container">
+            <div class="container mt-5" id="o-innerL-c">
                 <div class="o-page-title">  <!-- [공통css] 상단 타이틀 -->
                     <h3 class="h3 fw-bold">이메일 로그인</h3> <!-- 부트스트랩때문에 화면크기에 따라 사이즈가 변형돼서 사이즈 고정 -->
                 </div>
@@ -61,12 +61,12 @@
                             <!-- 카카오 로그인 (공백 넣으면 에러. 한줄로)-->
 <!--                            <a th:href="@{/member/qLogin}">-->
                             <a th:href="@{https://kauth.kakao.com/oauth/authorize?client_id=fae91fecfb7dbda2a80ae22881709a28&redirect_uri=http://localhost:8081/member/qLogin&response_type=code}">
-                                <img th:src="@{/img/member/kakao_login_medium_narrow.png}" alt="카카오로그인 이미지" height="44" />
+                                <img th:src="@{/img/member/loginBtn_k.png}" alt="카카오로그인이미지" />
                             </a>
                             <!-- 네이버 로그인 (카카오 로그인과 높이만 맞춤) -->
 <!--                            <a th:href="@{/member/qLoginNaver}">-->
                             <a th:href="@{https://nid.naver.com/oauth2.0/authorize?client_id=KxGhFHZ7Xp74X_5IZ23h&redirect_uri=http://localhost:8081/member/qLoginNaver&response_type=code&state=9999}">
-                                <img th:src="@{/img/member/btnG_완성형.png}" alt="네이버로그인 이미지" height="44" />
+                                <img th:src="@{/img/member/loginBtn_n.png}" alt="네이버로그인이미지" />
                             </a>
                         </div>
                     </div>
@@ -76,8 +76,8 @@
         </th:block>
     </th:block>
 
-    <script th:src="@{/js/member/login.js}"></script>
-    <!-- 부트스트랩 script -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+<script th:src="@{/js/member/login.js}"></script>
+<!-- 부트스트랩 script -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </body>
 </html>
