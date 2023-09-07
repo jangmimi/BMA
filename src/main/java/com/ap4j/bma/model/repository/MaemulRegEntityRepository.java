@@ -22,10 +22,6 @@ public interface MaemulRegEntityRepository extends JpaRepository<MaemulRegEntity
 
     Optional<MaemulRegEntity> findMaemulById(Integer id);
 
-    /**  마커 클릭시 해당 주소값과 같은 매물 리스트 불러오기 */
-    @Query("select m from MaemulRegEntity m WHERE m.address = ?1")
-    List<MaemulRegEntity> findMaemulByAddress(String address);
-
     /** 로그인한 멤버 nickname이랑 매치되는 매물 리스트 불러오기 */
     @Query("SELECT mr FROM MaemulRegEntity mr " +
             "JOIN MemberEntity m ON mr.nickname = m.nickname " +

@@ -8,7 +8,6 @@ import io.micrometer.core.instrument.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static com.ap4j.bma.model.entity.meamulReg.QMaemulRegEntity.maemulRegEntity;
@@ -17,7 +16,6 @@ import static com.ap4j.bma.model.entity.meamulReg.QMaemulRegEntity.maemulRegEnti
 @RequiredArgsConstructor
 public class MaemulRegEntityRepositoryImpl implements MaemulRepositoryCustom{
     private final JPAQueryFactory queryFactory;
-
 
     @Override
     public List<MaemulRegEntity> findMaemulListBounds(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng, String tradeTypes) {

@@ -6,5 +6,4 @@ import java.util.List;
 
 public interface MaemulRepositoryCustom {
     List<MaemulRegEntity> findMaemulListBounds(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng, String tradeType);
-
 }

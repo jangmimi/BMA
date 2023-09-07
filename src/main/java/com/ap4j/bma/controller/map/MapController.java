@@ -30,6 +30,7 @@ public class MapController {
     @Autowired
     private ReviewService reviewService;
 
+
     @Autowired
     ApartmentServiceImpl aptServiceImpl;
 
@@ -90,6 +91,7 @@ public class MapController {
     public ResponseEntity<Map<String, Object>> map2(HttpSession session, Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng, Integer zoomLevel, String address, String tradeType){
         System.out.println("컨트롤러 address " + address);
         log.info("로그인한 회원정보~ : " + session.getAttribute("loginMember"));
+
         log.info("MapController.map.execute");
 
         Map<String, Object> responseData = new HashMap<>();
@@ -100,10 +102,7 @@ public class MapController {
         // 화면 좌표값에 따른 마커
         List<MaeMulRegDTO> maemulList = maemulRegService.findMaemulListBounds(southWestLat, southWestLng, northEastLat, northEastLng, tradeType);
         responseData.put("maenulList", maemulList);
-
-        // 마커 클릭시 해당 주소의 매물 리스트 가져오기
-        List<MaeMulRegDTO> maemulClickList = maemulRegService.findMaemulByAddress(address);
-        responseData.put("maemulClickList", maemulClickList);
+//        System.out.println("매물리스트 : " + maemulList);
 
         return ResponseEntity.ok(responseData);
     }

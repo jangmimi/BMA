@@ -315,21 +315,12 @@ public class MemberController {
 
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
         String nickname = memberDTO.getNickname();
-//
-//        // 매물 좋아요 클릭 시 해당 매물 정보
-//        log.info("저장한 관심매물아이디 : " + maemulId);
         MaemulRegEntity finemm = qMemberService.findMaemulById(maemulId);
 
-//        List<LikedEntity> likedlist = likedService.findLikedByNickname(nickname);
-//        log.info("좋아요 테이블 + " + likedlist.toString());
-//
         LikedEntity likedEntity = new LikedEntity();
         likedEntity.setNickname(nickname);
         likedEntity.setRoad_name(finemm.getAddress());
-//
         likedService.save(likedEntity);
-//        likedService.save(likedEntity,nickname);
-        log.info("결과 id : " + likedService.save(likedEntity));
 
         return "redirect:/map/map";
     }
@@ -353,7 +344,6 @@ public class MemberController {
 
         // myLikedCnt 가져오고, null인 경우 0L로 초기화
         Long myLikedCnt = (likedService.countAll() != null) ? likedService.countAll() : 0L;
-
 
         model.addAttribute("mmLiked",mmLikedList);
         model.addAttribute("mmLikedCnt",myLikedCnt);
