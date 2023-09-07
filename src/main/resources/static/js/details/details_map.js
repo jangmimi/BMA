@@ -6,17 +6,18 @@ var placeOverlay = new kakao.maps.CustomOverlay({zIndex:1}),
 
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 	mapOption = {
-		center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+		center: new kakao.maps.LatLng(maemulList.latitude, maemulList.longitude), // 지도의 중심좌표
 		level: 3 // 지도의 확대 레벨
 	};
 
+console.log(maemulList);
 // 지도를 생성합니다
 var map = new kakao.maps.Map(mapContainer, mapOption);
 
 // 원 표시 시작
 // 지도에 표시할 원을 생성합니다
 var circle = new kakao.maps.Circle({
-	center : new kakao.maps.LatLng(37.4877211596689, 126.902477085565),  // 원의 중심좌표 입니다
+	center : new kakao.maps.LatLng(maemulList.latitude, maemulList.longitude),  // 원의 중심좌표 입니다
 	radius: 50, // 미터 단위의 원의 반지름입니다
 	strokeWeight: 2, // 선의 두께입니다
 	strokeColor: '#75B8FA', // 선의 색깔입니다
@@ -31,21 +32,6 @@ circle.setMap(map);
 // 원 표시 끝
 
 
-
-
-// 마커가 표시될 위치입니다
-var markerPosition  = new kakao.maps.LatLng(37.4877211596689, 126.902477085565);
-
-// 마커를 생성합니다
-var marker = new kakao.maps.Marker({
-	position: markerPosition
-});
-
-// 마커가 지도 위에 표시되도록 설정합니다
-marker.setMap(map);
-
-
-
 // 장소 검색 객체를 생성합니다
 var ps = new kakao.maps.services.Places(map);
 
@@ -54,9 +40,8 @@ var ps = new kakao.maps.services.Places(map);
 var geocoder = new kakao.maps.services.Geocoder();
 
 
-
 // 주소로 좌표를 검색합니다
-geocoder.addressSearch('서울특별시 영등포구 대림동 992-19', function(result, status) {
+geocoder.addressSearch(maemulList.address, function(result, status) {
 
 	// 정상적으로 검색이 완료됐으면
 	if (status === kakao.maps.services.Status.OK) {
@@ -72,7 +57,7 @@ geocoder.addressSearch('서울특별시 영등포구 대림동 992-19', function
 
 		// 인포윈도우로 장소에 대한 설명을 표시합니다
 		var infowindow = new kakao.maps.InfoWindow({
-			content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+			content: '<div style="width:150px;text-align:center;padding:6px 0;">' + maemulList.apt_name + '</div>'
 		});
 		infowindow.open(map, marker);
 
@@ -145,8 +130,6 @@ function displayPlaces(places) {
 	// 이 순서는 스프라이트 이미지에서의 위치를 계산하는데 사용됩니다
 	var order = document.getElementById(currCategory).getAttribute('data-order');
 
-
-
 	for ( var i=0; i<places.length; i++ ) {
 
 		// 마커를 생성하고 지도에 표시합니다
@@ -211,7 +194,6 @@ function displayPlaceInfo (place) {
 	placeOverlay.setPosition(new kakao.maps.LatLng(place.y, place.x));
 	placeOverlay.setMap(map);
 }
-
 
 // 각 카테고리에 클릭 이벤트를 등록합니다
 function addCategoryClickEvent() {

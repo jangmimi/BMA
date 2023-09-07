@@ -47,3 +47,13 @@ spring:
     username: root
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+# 이메일 설정
+  mail:
+    host: smtp.naver.com
+    port: 465
+    username: alwkd920101@naver.com
+    password: wkdal1234!! # 커밋 전 주석처리 잊지말기
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.ssl.enable: true

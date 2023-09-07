@@ -8,32 +8,9 @@ var options = {
 };
 var map = new kakao.maps.Map(container, options);
 
-// 줌 컨트롤을 생성하고 커스텀 컨트롤로 사용할 div를 지정합니다.
-            var zoomControlContainer = document.getElementById('zoomControl');
-
-            // 줌 인 버튼을 생성하고 이벤트 핸들러를 추가합니다.
-            var zoomInButton = document.getElementById('buttonp');
-            zoomInButton.textContent = '+';
-            zoomInButton.addEventListener('click', function () {
-                map.setLevel(map.getLevel() - 1, { animate: true });
-            });
-
-            // 줌 아웃 버튼을 생성하고 이벤트 핸들러를 추가합니다.
-            var zoomOutButton = document.getElementById('buttonm');
-            zoomOutButton.textContent = '-';
-            zoomOutButton.addEventListener('click', function () {
-                map.setLevel(map.getLevel() + 1, { animate: true });
-            });
-
-            // 버튼을 컨테이너에 추가합니다.
-            zoomControlContainer.appendChild(zoomInButton);
-            zoomControlContainer.appendChild(zoomOutButton);
-
-            // 커스텀 줌 컨트롤을 생성하고 맵에 추가합니다.
-            var customZoomControl = new kakao.maps.CustomControl(zoomControlContainer, {
-                position: kakao.maps.ControlPosition.TOPLEFT
-            });
-            map.addControl(customZoomControl);
+// 줌 컨트롤러 지도에 추가
+var zoomControl = new kakao.maps.ZoomControl();
+map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
 // 클러스터
 var clusterer = new kakao.maps.MarkerClusterer({
@@ -45,6 +22,10 @@ var clusterer = new kakao.maps.MarkerClusterer({
 
 // 생성된 마커 저장 객체
 var existingMarkers = {};
+
+// 로그인 시 회원정보, 관심매물데이터 정보 가져오기위한 변수
+var loginMember = {};
+var likedEntityList = {};
 
 // 마커 생성 함수
 function createMarker(position, markerContent, responseData) {
@@ -82,8 +63,35 @@ function createMarker(position, markerContent, responseData) {
         kakao.maps.event.addListener(marker, 'click', function () {
             closeOtherOverlays(); // 다른 오버레이 닫기
             openOverlay(marker.overlay); // 오버레이 열기
-            updateSidebar(responseData); // 사이드바에 데이터 전송
-            updateTransactionTable(responseData.roadName); // 사이드바의 거래내역 테이블에 데이터 전송
+            clearSidebar(); // 사이드바 초기화
+
+            console.log(responseData.address);
+
+            var bounds = map.getBounds();
+            var southWest = bounds.getSouthWest();
+            var northEast = bounds.getNorthEast();
+            var currentZoomLevel = map.getLevel(); // 현재 줌 레벨 가져오기
+
+            var dataToSend = {
+                    southWestLat: southWest.getLat(),
+                    southWestLng: southWest.getLng(),
+                    northEastLat: northEast.getLat(),
+                    northEastLng: northEast.getLng(),
+                    zoomLevel: currentZoomLevel,
+                    address : responseData.address
+                    }
+            $.ajax({
+                    type: 'POST',
+                    url: '/map/map',
+                    data: dataToSend,
+                    success: function (response) {
+                        if(response.maemulClickList) {
+                            updateSidebar(response.maemulClickList);
+                        }
+                    }
+
+            });
+
         });
 
         clusterer.addMarker(marker); // 클러스터러에 마커 추가
@@ -94,6 +102,43 @@ function createMarker(position, markerContent, responseData) {
 // 맵 최초 로드시 마커 생성 해주는 함수
 var onlyOneStart = false; // 한 번만 실행하기 위한 변수
 // 맵 로드가 완료되면 실행
+
+var tradeType = []; // 선택된 거래 유형을 담을 배열
+
+// 체크박스의 변경 이벤트를 감지하고 선택된 거래 유형을 배열에 추가 또는 제거합니다.
+$("#flexCheckAll").change(function () {
+    updateSelectedTradeTypes(null, this.checked);
+});
+
+$("#flexCheckSale").change(function () {
+    updateSelectedTradeTypes("매매", this.checked);
+});
+
+$("#flexCheckLease").change(function () {
+    updateSelectedTradeTypes("전세", this.checked);
+});
+
+$("#flexCheckMonthly").change(function () {
+    updateSelectedTradeTypes("월세", this.checked);
+});
+
+$("#flexCheckShortTerm").change(function () {
+    updateSelectedTradeTypes("단기임대", this.checked);
+});
+
+function updateSelectedTradeTypes(type, isChecked) {
+    if (isChecked) {
+        // 체크된 경우 배열에 추가
+        tradeType.push(type);
+    } else {
+        // 체크 해제된 경우 배열에서 제거
+        tradeType = tradeType.filter(item => item !== type);
+    }
+
+
+
+}
+
 kakao.maps.event.addListener(map, 'tilesloaded', function () {
     // 이미 실행된 경우 함수 종료
     if (onlyOneStart) {
@@ -101,17 +146,22 @@ kakao.maps.event.addListener(map, 'tilesloaded', function () {
     }
     onlyOneStart = true; // 변수 업데이트
 
+    var tradeTypeString = tradeType.join(",");
+
     var bounds = map.getBounds();
     var southWest = bounds.getSouthWest();
     var northEast = bounds.getNorthEast();
     var currentZoomLevel = map.getLevel(); // 현재 줌 레벨 가져오기
     console.log("실행시 줌레벨 : " + currentZoomLevel);
+    console.log(tradeType);
     var dataToSend = {
         southWestLat: southWest.getLat(),
         southWestLng: southWest.getLng(),
         northEastLat: northEast.getLat(),
         northEastLng: northEast.getLng(),
-        zoomLevel: currentZoomLevel
+        zoomLevel: currentZoomLevel,
+        tradeType: tradeTypeString
+
     };
 
     $.ajax({
@@ -119,6 +169,11 @@ kakao.maps.event.addListener(map, 'tilesloaded', function () {
         url: '/map/map',
         data: dataToSend,
         success: function (response) {
+            loginMember = response.loginMember;
+            likedEntityList = response.likedEntityList;
+            console.log("loginMember:", loginMember);
+            console.log("likedEntityList:", likedEntityList);
+
             if(response.maenulList) {
                response.maenulList.forEach(function (maemul) {
                    var markerPosition = new kakao.maps.LatLng(maemul.latitude, maemul.longitude);
@@ -142,13 +197,18 @@ kakao.maps.event.addListener(map, 'tilesloaded', function () {
         }
     });
 });
+
+
 // 맵 이동시 현재 맵의 경계를 기준으로 데이터 요청하고 그 범위에 속하는 행정동 또는 아파트 데이터의 마커 생성
 kakao.maps.event.addListener(map, 'idle', function () {
     // 행정동 오버레이 초기화
     clearHJDOverlays();
-
+    // 마커 초기화
+    closeOtherOverlays();
     // 사이드바 초기화
     clearSidebar();
+
+    var tradeTypeString = tradeType.join(",");
 
     var bounds = map.getBounds();
     var southWest = bounds.getSouthWest();
@@ -160,7 +220,8 @@ kakao.maps.event.addListener(map, 'idle', function () {
         southWestLng: southWest.getLng(),
         northEastLat: northEast.getLat(),
         northEastLng: northEast.getLng(),
-        zoomLevel: currentZoomLevel
+        zoomLevel: currentZoomLevel,
+        tradeType: tradeTypeString
     };
 
 //    console.log(dataToSend);
@@ -170,9 +231,6 @@ kakao.maps.event.addListener(map, 'idle', function () {
         url: '/map/map',
         data: dataToSend,
         success: function (response) {
-//            console.log("줌레벨 " + currentZoomLevel);
-//            console.log("통신중(매물리스트) " + response.maenulList);
-//            console.log("통신중(행정동리스트) " + response.hjdList);
             if (response.maenulList && currentZoomLevel <= 5) {
                 response.maenulList.forEach(function (maemul) {
 
@@ -272,16 +330,84 @@ var hjdOverlays = [];
 // 사이드바 정보 업데이트
 function updateSidebar(responseData) {
 
-//    // sellingPrice를 기준으로 responseData 배열을 내림차순 정렬
-//    responseData.sort(function (a, b) {
-//        return b.sellingPrice - a.sellingPrice;
-//    });
-
     // 사이드바 컨테이너
     var sidebarContainer = document.querySelector(".sideContents ul.list-group");
 
     // responseData 배열을 순회하며 사이드바 항목 생성
     responseData.forEach(function (maemul) {
+
+        // 보증금
+        var monthlyForRent = null; // 이 변수 사용하면됨
+        var monthlyForRentString = maemul.monthlyForRent.toString();
+        var monthlyForRentSliceUk = null;
+        var monthlyForRentSliceMan = null;
+        if (monthlyForRentString.length <= 4) {
+            monthlyForRentSliceMan = monthlyForRentString.slice(0);
+        } else if (monthlyForRentString.length === 5) {
+            monthlyForRentSliceUk = monthlyForRentString.charAt(0);
+            monthlyForRentSliceMan = monthlyForRentString.slice(1);
+        }
+        if (monthlyForRentSliceUk != null) {
+            if (monthlyForRentSliceMan.charAt(0) != '0') {
+                monthlyForRent = "보증금 " + monthlyForRentSliceUk + "억 " + monthlyForRentSliceMan + "만원";
+            } else {
+                monthlyForRent = "보증금 " + monthlyForRentSliceUk + "억";
+            }
+        } else {
+            monthlyForRent = "보증금 " + monthlyForRentSliceMan + "만원";
+        }
+        // 월세
+        var monthlyRent = "월세 " + maemul.monthlyRent + "만원"; // 이 변수 사용하면됨
+
+
+        // 전세
+        var depositForLease = null; // 이 변수 사용하면됨
+        var depositForLeaseString = maemul.depositForLease.toString();
+        var depositForLeaseSliceUk = null;
+        var depositForLeaseSliceMan = null;
+        if(depositForLeaseString.length === 5) {
+            depositForLeaseSliceUk = depositForLeaseString.charAt(0);
+            depositForLeaseSliceMan = depositForLeaseString.slice(1);
+        } else if (depositForLeaseString.length === 6) {
+            depositForLeaseSliceUk = depositForLeaseString.slice(0,2);
+            depositForLeaseSliceMan = depositForLeaseString.slice(2);
+        }
+        if(depositForLeaseSliceUk != null) {
+            if(depositForLeaseSliceMan.charAt(0) != '0') {
+                depositForLease = "전세 " + depositForLeaseSliceUk + "억 " + depositForLeaseSliceMan + "만원";
+            } else {
+                depositForLease = "전세 " + depositForLeaseSliceUk + "억";
+            }
+        } else {
+            depositForLease = "전세 " + depositForLeaseSliceMan + "만원";
+        }
+
+
+        // 매매
+        var sellingPrice = null;
+        var sellingPriceString = maemul.sellingPrice.toString();
+        var sellingPriceSliceUk = null;
+        var sellingPriceSliceMan = null;
+        if(sellingPriceString.length === 5) {
+            sellingPriceSliceUk = sellingPriceString.charAt(0);
+            sellingPriceSliceMan = sellingPriceString.slice(1);
+        } else if (sellingPriceString.length === 6) {
+            sellingPriceSliceUk = sellingPriceString.slice(0,2);
+            sellingPriceSliceMan = sellingPriceString.slice(2);
+        } else if (sellingPriceString.length === 7) {
+            sellingPriceSliceUk = sellingPriceString.slice(0,3);
+            sellingPriceSliceMan = sellingPriceString.slice(3);
+        }
+        if(sellingPriceSliceUk != null) {
+            if(sellingPriceSliceMan.charAt(0) != '0') {
+                sellingPrice = "매매 " + sellingPriceSliceUk + "억 " + sellingPriceSliceMan + "만원";
+            } else {
+                sellingPrice = "매매 " + sellingPriceSliceUk + "억";
+            }
+        } else {
+            sellingPrice = "매매 " + sellingPriceSliceMan + "만원";
+        }
+
         // 새로운 li 요소 생성
         var listItem = document.createElement("li");
         listItem.className = "list-group-item a";
@@ -303,10 +429,15 @@ function updateSidebar(responseData) {
             <div class="ainfo_area">
                 <div class="in">
                     <h5 class="ii loc_title">
-                        <span class="payf_num_b">${maemul.sellingPrice}</span>
+                        <span class="payf_num_b">
+                            ${
+                              maemul.monthlyForRent != 999 ? `${monthlyForRent}<br/>${monthlyRent}` :
+                              maemul.depositForLease != 999 ? depositForLease:
+                              sellingPrice
+                            }
+                        </span>
                     </h5>
                     <div class="ii loc_ii01">
-                        <span class="type">아파트</span>
                         <span class="loc">${maemul.apt_name}</span>
                     </div>
                     <div class="ii etc_txt">
@@ -333,7 +464,17 @@ function updateSidebar(responseData) {
             </button>
         `;
 
-        heartButton.querySelector("button").setAttribute("data-isButton", "false");
+        // 로그인 시 관심매물에 등록된 데이터와 비교해서 하트색상 결정
+        if(likedEntityList != null) {
+            likedEntityList.forEach(function (liked) {
+                if(liked.road_name === maemul.address) {
+                    heartButton.querySelector("button").setAttribute("data-isButton", "true");
+                    $(".aHeartBtnInList").css("opacity", 1);
+                }
+            })
+        } else {
+            heartButton.querySelector("button").setAttribute("data-isButton", "false");
+        }
 
         // li 요소에 a 요소와 하트 버튼 추가
         listItem.appendChild(anchor);
@@ -352,32 +493,34 @@ function clearSidebar() {
 
 // 하트 버튼을 클릭하면 매물 id 전송
 $(document).on("click", ".aHeartBtn", function() {
-    var listItem = $(this).closest("li"); // 클릭한 하트 버튼이 속한 li 요소 찾기
-    var maemulId = listItem.find(".abox").attr("href").split("/").pop(); // a 요소의 href의 maemulId 추출
-    var isButton = listItem.data("isButton"); // 해당 버튼의 boolean 값 가져옴
+    if (loginMember != null) {
+        var listItem = $(this).closest("li"); // 클릭한 하트 버튼이 속한 li 요소 찾기
+        var maemulId = listItem.find(".abox").attr("href").split("/").pop(); // a 요소의 href의 maemulId 추출
+        var isButton = listItem.data("isButton"); // 해당 버튼의 boolean 값 가져옴
 
-    // 해당 li 내의 버튼만 스타일 변경
-    var heartBtnInList = listItem.find(".aHeartBtnInList");
-    if (!isButton) {
-        heartBtnInList.css("opacity", 1); // 불투명
-    } else {
-        heartBtnInList.css("opacity", 0.16); // 16% 투명도
-    }
-
-    $.ajax({
-        url: "/member/qLiked", //
-        type: "POST", //
-        data: { maemulId: maemulId }, //
-        success: function(response) {
-            console.log("Ajax 요청 성공");
-            console.log("매물 아이디" + maemulId);
-
-            listItem.data("isButton", !isButton);
-        },
-        error: function(xhr, status, error) {
-            console.error("Ajax 요청 실패: " + error);
+        // 해당 li 내의 버튼만 스타일 변경
+        var heartBtnInList = listItem.find(".aHeartBtnInList");
+        if (!isButton) {
+            heartBtnInList.css("opacity", 1); // 불투명
+        } else {
+            heartBtnInList.css("opacity", 0.16); // 16% 투명도
         }
-    });
 
+        $.ajax({
+            url: "/member/qLiked", //
+            type: "POST", //
+            data: { maemulId: maemulId }, //
+            success: function(response) {
+                console.log("Ajax 요청 성공");
+                console.log("매물 아이디" + maemulId);
 
+                listItem.data("isButton", !isButton);
+            },
+            error: function(xhr, status, error) {
+                console.error("Ajax 요청 실패: " + error);
+            }
+        });
+    } else {
+        alert("로그인 후 다시 시도해주세요.")
+    }
 });

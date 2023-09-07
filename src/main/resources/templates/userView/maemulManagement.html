@@ -27,7 +27,7 @@
                             <li class="o-lnb-item"><a th:href="@{/member/qMyPage}">내정보</a></li>
                             <li class="o-lnb-item"><a th:href="@{/member/qMyInfoUpdate}">내정보수정</a></li>
                             <li class="o-lnb-item"><a th:href="@{/member/qManagement}" style="color:#26ABED;">매물관리</a></li>
-                            <li class="o-lnb-item"><a th:href="@{/member/qLiked}">관심매물</a></li>
+                            <li class="o-lnb-item"><a th:href="@{/member/liked}">관심매물</a></li>
                             <li class="o-lnb-item"><a th:href="@{/member/qRecent}">최근본매물</a></li>
                             <li class="o-lnb-item"><a th:href="@{/member/qMyQnA}">1:1문의내역</a></li>
                         </ul>
@@ -43,12 +43,13 @@
                             <table class="faq-tb">
                                 <thead>
                                     <tr>
-                                        <th class="o-d-type">매물종류</th>
-                                        <th class="o-d-add">제목</th>
-                                        <th class="o-d-add">소재지/상세주소</th>
-                                        <th class="o-d-area">면적</th>
-                                        <th class="o-d-price">거래 및 가격</th>
-                                        <th class="o-d-btns">수정/삭제</th>
+                                        <th class="o-md-type">매물종류</th>
+                                        <th class="o-md-img">이미지</th>
+                                        <th class="o-md-type">제목</th>
+                                        <th class="o-md-add">주소</th>
+                                        <th class="o-md-area">층/면적</th>
+                                        <th class="o-md-amount">거래 및 가격</th>
+                                        <th class="o-md-btns">수정/삭제</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -58,11 +59,21 @@
                                     </th:block>
                                     <tr th:if="${mmAllCnt != 0}" th:each="mmList : ${mmList}">
                                         <input type="hidden" id="num" th:value="${mmList.id}">
-                                        <td id="종류" th:text="${mmList.monthlyForRent}">매물종류</td>
-                                        <td id="title" th:text="${mmList.title}">사진</td>
-                                        <td id="전월세매매" th:text="${mmList.address}">소재지/상세주소</td>
-                                        <td><a th:href="@{/}" th:text="${mmList.privateArea}">면적</a></td>
-                                        <td><a th:href="@{/}" th:text="${mmList.optional}">거래 및 가격</a></td>
+                                        <td id="종류" th:text="${mmList.tradeType}">매물종류</td>
+                                        <td id="o-d-photo">
+                                            <img src="https://www.bdsplanet.com/common/thumbs.ytp?filepath=/COMP_20201027000920000005/upload/realty/RCODE_20230731160156000045/&filename=1690787077205_1.jpg" width="80">
+                                        </td>
+                                        <td id="o-d-title" th:text="${mmList.title}">제목</td>
+                                        <td id="전월세매매" th:text="${mmList.address}">주소</td>
+                                        <td>
+                                            <span th:text="${mmList.totalFloors} + ' / ' + ${mmList.floorNumber}">전체/현재</span>
+                                            <span th:text="${mmList.privateArea}">공급면적</span>
+                                            <span th:text="${mmList.privateArea}">전용면적</span>
+                                        </td>
+                                        <td>
+                                            <span th:text="${mmList.optional}">월세전세매매</span>
+                                            <span th:text="${mmList.optional}">보증금/월세</span>
+                                        </td>
                                         <td class="o-t-btns">
                                             <input type="button" value="수정">
                                             <input type="button" value="삭제">

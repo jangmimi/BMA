@@ -27,7 +27,7 @@
                             <li class="o-lnb-item"><a th:href="@{/member/qMyPage}" >내정보</a></li>
                             <li class="o-lnb-item"><a th:href="@{/member/qMyInfoUpdate}">내정보수정</a></li>
                             <li class="o-lnb-item"><a th:href="@{/member/qManagement}">매물관리</a></li>
-                            <li class="o-lnb-item"><a th:href="@{/member/qLiked}">관심매물</a></li>
+                            <li class="o-lnb-item"><a th:href="@{/member/liked}">관심매물</a></li>
                             <li class="o-lnb-item"><a th:href="@{/member/qRecent}">최근본매물</a></li>
                             <li class="o-lnb-item"><a th:href="@{/member/qMyQnA}" style="color:#26ABED;">1:1문의내역</a></li>
                         </ul>
@@ -56,7 +56,7 @@
                                         <tr><td colspan="4">조회된 데이터가 없습니다.</td></tr>
                                     </th:block>
                                     <!-- 본인이 작성한 문의만 표시하는 조건문, 번호는 '플래닛 사이트'도 전체글 기준 번호 보여줌 -->
-                                    <tr th:each="myQna : ${myQnaList}" th:if="${myQna.user_email == loginMember.email}">
+                                    <tr th:each="myQna : ${myQnaList}">
                                         <td id="num" th:text="${myQna.id}">번호</td>
                                         <td id="category" th:text="${myQna.category}">분류</td>
                                         <td>

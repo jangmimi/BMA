@@ -1,6 +1,9 @@
 package com.ap4j.bma.model.entity.meamulReg;
 
+import com.ap4j.bma.model.entity.member.MemberEntity;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 
@@ -11,6 +14,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@DynamicInsert
 public class MaemulRegEntity {
 
     @Id
@@ -23,37 +27,51 @@ public class MaemulRegEntity {
     private String APT_name; //아파트 이름
 
     private String buildingUsage; //건축물 용도
-    private int numberOfRooms; //방 수
-    private int numberOfBathrooms; //욕실 수
-    private int floorNumber; //해당층
-    private int totalFloors; //건물층
+
+    private Integer numberOfRooms; //방 수
+
+    private Integer numberOfBathrooms; //욕실 수
+
+    private Integer floorNumber; //해당층
+
+    private Integer totalFloors; //건물층
     private Double privateArea; //전용면적
     private Double supplyArea; //공급면적
     private String direction; //방향
     private String heatingType;//난방종류
     private String Elevator;//엘리베이터
     private String Parking;//주차가능여부 (엘베랑 같은 이유)
-    private int totalParking;//총 주차대수
+
+
+    private Integer totalParking;//총 주차대수
     private String shortTermRental;//단기임대
     private String availableMoveInDate;//입주가능일
-    private int loanAmount;//융자금
+
+    @ColumnDefault("999")
+    private Integer loanAmount;//융자금
 
 
     //거래 유형
     private String tradeType;//거래 유형
 
     //월세
-    private int monthlyForRent; //보증금
-    private int monthlyRent; //월세
+    @ColumnDefault("999")
+    private Integer monthlyForRent; //보증금
+    @ColumnDefault("999")
+    private Integer monthlyRent; //월세
 
 
     //전세
-    private int depositForLease; //희망 전세
+    @ColumnDefault("999")
+    private Integer depositForLease; //희망 전세
 
-    private int managementFee;//전 월세 관리비
+    @ColumnDefault("999")
+    private Integer managementFee;//전 월세 관
 
     //매매
-    private int SellingPrice;//희망매매가
+    @Column(columnDefinition = "INT")
+    @ColumnDefault("'999'")
+    private Integer SellingPrice;//희망매매가
 
     //상세정보 페이지
     private String title; //제목
@@ -72,5 +90,9 @@ public class MaemulRegEntity {
 
     //등록일자
     private String createdAt;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "nickname", referencedColumnName = "nickname", insertable = false, updatable = false)
+    private MemberEntity memberEntity;
 
 }

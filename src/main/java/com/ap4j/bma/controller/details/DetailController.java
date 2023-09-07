@@ -1,6 +1,7 @@
 package com.ap4j.bma.controller.details;
 
-import com.ap4j.bma.model.repository.MaemulRegRepository;
+import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
+import com.ap4j.bma.model.repository.MaemulRegEntityRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.websocket.server.PathParam;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("details")
@@ -19,10 +22,10 @@ import javax.websocket.server.PathParam;
 public class DetailController {
 
 
-	private MaemulRegRepository maemulRegRepository;
+	private MaemulRegEntityRepository maemulRegRepository;
 
 	@Autowired
-	public DetailController(MaemulRegRepository maemulRegRepository){
+	public DetailController(MaemulRegEntityRepository maemulRegRepository){
 		this.maemulRegRepository = maemulRegRepository;
 	}
 
@@ -33,15 +36,21 @@ public class DetailController {
 		log.info("DetailController.details.executed");
 
 		model.addAttribute("maemulList", maemulRegRepository.findById(id));
-		log.info("maemulList 객체 {}", maemulRegRepository.findAll());
+		log.info("maemulList 객체 {}", maemulRegRepository.findById(id));
 		return "details/details";
 	}
 
-	
-	@GetMapping("/miniHome")
-	public String test(){
-	    log.info(">>>>> DetailController.test.executed()");
-	    return "details/miniHome";
+
+	@GetMapping("/miniHome/{nickname}")
+	public String miniHome(Model model, @PathVariable("nickname") String nickname) {
+		log.info(">>>>> DetailController.miniHome.executed() {}", nickname);
+
+		model.addAttribute("maemulList", maemulRegRepository.findMaemulByMemberNickname(nickname));
+		model.addAttribute("residentialCount", maemulRegRepository.countResidential(nickname));
+		model.addAttribute("commercialCount", maemulRegRepository.countCommercial(nickname));
+
+		log.info("maemulList 객체 {}", maemulRegRepository.findByMemberEntity_Nickname(nickname));
+		return "details/miniHome";
 	}
 
 
