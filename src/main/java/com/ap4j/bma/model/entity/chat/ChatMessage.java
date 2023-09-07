@@ -1,6 +1,7 @@
 package com.ap4j.bma.model.entity.chat;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -17,10 +18,7 @@ public class ChatMessage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long chatId;
 
-    @Column
-    private String email;
-
-    @Column(columnDefinition = "TIMESTAMP")
+    @CreationTimestamp
     private LocalDateTime chatDate;
 
     @Column
@@ -28,5 +26,9 @@ public class ChatMessage {
 
     @Column
     private String nickname;
+
+    public ChatMessageDTO toDTO(){
+        return new ChatMessageDTO(this.chatId,this.chatDate,this.chatContent,this.nickname);
+    }
 
 }

@@ -3,7 +3,6 @@ package com.ap4j.bma.controller.maemulReg;
 import com.ap4j.bma.model.entity.meamulReg.MaemulPhotoEntity;
 import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
 import com.ap4j.bma.model.entity.member.MemberDTO;
-import com.ap4j.bma.service.maemulReg.MaemulPhotoService;
 import com.ap4j.bma.service.maemulReg.MaemulRegService;
 import groovy.util.logging.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +23,8 @@ public class MaemulRegController {
 
     @Autowired
     private MaemulRegService maemulRegService;
-    @Autowired
-    private MaemulPhotoService maemulPhotoService;
+//    @Autowired
+//    private MaemulPhotoService maemulPhotoService;
 
     //약관동의 페이지
     @GetMapping("/agree")
@@ -47,7 +46,7 @@ public class MaemulRegController {
 
     //매뮬정보저장
     @PostMapping("/maemulinfo")
-    public String saveMaemulInfo(@ModelAttribute MaemulRegEntity maemulRegEntity, MaemulPhotoEntity maemulPhotoEntity, Model model) {
+    public String saveMaemulInfo(@ModelAttribute MaemulRegEntity maemulRegEntity, Model model) {
         // 매물 정보를 임시로 세션에 저장
         model.addAttribute("maemulRegEntity", maemulRegEntity);
         return "redirect:/moreinfo";
