@@ -26,7 +26,4 @@ public interface LikedRepository extends JpaRepository<LikedEntity, Long> {
             "WHERE l.road_name = :roadName")
     List<MaemulRegEntity> findMaemulByRoadName(@Param("roadName") String roadName);
 
-//    List<LikedEntity> findByMaemulRoadNameIn(List<String> roadNames);
-
-
 }

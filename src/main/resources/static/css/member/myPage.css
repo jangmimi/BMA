@@ -87,12 +87,12 @@
 .oMeamulTabLeft {
     font-size: 17px;
 }
-.oMaemulLink {
+.o-mm-link {
     font-weight: 700;
     border: none;
     background-color: white;
 }
-#oAllView {
+#o-allView {
     background-color: #26abed;
     color: white;
     padding: 5px 8px;
@@ -105,10 +105,10 @@
     text-decoration: none;
     color: black
 }
-#oInterest {
+#o-liked-link {
     color: #25AAE1;
 }
-#oRecent {
+#o-recent-link {
     color: #999999;
 }
 .oInfo-right {
