@@ -8,7 +8,7 @@
 .form-floating {
     width: 350px;
 }
-.oLabelColor {
+.o-lb-c {
     color: gray;
     font-size: 14px;
 }
@@ -20,13 +20,13 @@
 #oInner-container {
     width: 400px;
 }
-#oSaveIdContainer {
+#o-savefind-c {
     display: flex;
     justify-content: space-between;
     font-size: 13px;
-    margin: 18px 0px 18px 0px;
+    margin: 18px 0px;
 }
-.oErrorMsg {
+.o-error-msg {
     color: red;
     font-weight: 600;
     font-size: 13px;
@@ -36,6 +36,16 @@
     text-align: center;
     font-weight: bold;
     margin-bottom: 20px;
+}
+.o-findInfo {
+    color: #212529;
+}
+#o-login-btn, #o-join-btn {
+    height: 48px;
+}
+.o-snsBtn-c {
+    display: flex;
+    justify-content: space-between;
 }
 
 /* 회원가입 */
