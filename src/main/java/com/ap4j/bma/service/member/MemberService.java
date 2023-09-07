@@ -19,8 +19,6 @@ public interface MemberService {
 
 	public HashMap<String, Object> getUserInfo(String accessToken);	// HashMap -> MemberDTO로 변경 예정
 
-	public void kakaoLogout(String accessToken);
-
 	public void logout(SessionStatus sessionStatus, HttpSession session);
 
 	public String getAccessTokenNaver(String code);
@@ -44,7 +42,6 @@ public interface MemberService {
 	public boolean leaveMember(Long id, String password, SessionStatus sessionStatus, HttpSession session);
 
 	public Optional<MemberEntity> findByNameAndTel(String name, String tel);
-
 	public Optional<MemberEntity> findByEmailAndTel(String email, String tel);
 
 	// 매물 관련 qna
@@ -57,6 +54,3 @@ public interface MemberService {
 	public MaemulRegEntity findMaemulById(Integer id);
 
 }
-
-//    Map<String, String> validateHandler(Errors errors);
-//	public void validateDuplicateMember(MemberEntity pMember);
