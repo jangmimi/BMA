@@ -862,7 +862,7 @@ a:active, a:focus, a:hover, a:link, a:visited {
     border-bottom: 1px solid #eee;
 }
 .aHeartBtnInList{
-    opacity:16%;
+    opacity:100%;
 }
 .abox{
     display: flex;

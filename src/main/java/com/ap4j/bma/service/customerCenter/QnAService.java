@@ -42,7 +42,15 @@ public class QnAService {
 
     }
 
+    // 문의글 보기  - ID에 해당하는 글을 조회하고 반환
     public QnAEntity findById(Integer id) {
-        return qnARepository.findById(id).orElse(null); // ID에 해당하는 글을 조회하고 반환
+        return qnARepository.findById(id).orElse(null);
     }
+
+    // 게시글 삭제
+    public void deleteQnA(Integer id) {
+        qnARepository.deleteById(id);
+    }
+
+
 }

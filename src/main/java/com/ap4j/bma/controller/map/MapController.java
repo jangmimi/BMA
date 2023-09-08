@@ -125,8 +125,10 @@ public class MapController {
         responseData.put("maemulClickList", maemulClickList);
 
         // 검색시 해당 키워드의 매물 리스트 가져오기
-//        List<MaeMulRegDTO> maemulKeywordList = maemulRegService.findByKeyword(keyword);
-//        responseData.put("maemulKeywordList", maemulKeywordList);
+        if(keyword != null) {
+            List<MaeMulRegDTO> maemulKeywordList = maemulRegService.findByMaemulKeyword(keyword);
+            responseData.put("maemulKeywordList", maemulKeywordList);
+        }
 
         return ResponseEntity.ok(responseData);
     }

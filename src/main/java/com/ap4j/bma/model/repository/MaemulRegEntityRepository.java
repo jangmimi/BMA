@@ -33,9 +33,16 @@ public interface MaemulRegEntityRepository extends JpaRepository<MaemulRegEntity
             "WHERE m.nickname = :nickname")
     List<MaemulRegEntity> findMaemulByMemberNickname(@Param("nickname") String nickname);
 
+    List<MaemulRegEntity> findByMemberEntity_Nickname(String nickname);
+
+    @Query("SELECT COUNT(m) FROM MaemulRegEntity m WHERE (m.buildingUsage = '거주용' OR m.buildingUsage = '거주/업무용') AND m.nickname = :nickname")
+    Long countResidential(@Param("nickname") String nickname);
+
+    @Query("SELECT COUNT(m) FROM MaemulRegEntity m WHERE (m.buildingUsage = '업무용' OR m.buildingUsage = '거주/업무용') AND m.nickname = :nickname")
+    Long countCommercial(@Param("nickname") String nickname);
 
     /** 키워드 검색시 해당 주소 or 아파트 불러오기 */
-//    @Query("SELECT m FROM MaemulRegEntity m WHERE replace(m.address, ' ', '') = ?1 or replace(m.apt_name, ' ', '') = ?1")
-//    List<MaemulRegEntity> findByKeyword(String keyword);
+    @Query("SELECT m FROM MaemulRegEntity m WHERE replace(m.address, ' ', '') = ?1 or replace(m.APT_name, ' ', '') = ?1")
+    List<MaemulRegEntity> findByMaemulKeyword(String keyword);
 
 }

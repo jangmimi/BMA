@@ -669,7 +669,7 @@
                     <img style="margin-left:8px; width:20px; background-color: transparent;"
                          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvcGRzbD6HIXhyARcDnuzWTfGVeLEZHVLS9A&usqp=CAU">
                     <input type="text" name="asearch_keyword" placeholder="" class="aSearchInput"
-                           autocomplete="off">
+                           autocomplete="off" onkeyup="checkEnter(event)">
                     <script>
                             $(function () {
                                 totalSearch.fnInit("P", "map", "living");

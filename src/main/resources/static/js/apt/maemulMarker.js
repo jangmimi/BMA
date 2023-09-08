@@ -65,8 +65,6 @@ function createMarker(position, markerContent, responseData) {
             openOverlay(marker.overlay); // 오버레이 열기
             clearSidebar(); // 사이드바 초기화
 
-            console.log(responseData.address);
-
             var bounds = map.getBounds();
             var southWest = bounds.getSouthWest();
             var northEast = bounds.getNorthEast();
@@ -85,6 +83,7 @@ function createMarker(position, markerContent, responseData) {
                     url: '/map/map',
                     data: dataToSend,
                     success: function (response) {
+                        likedEntityList = response.likedEntityList;
                         if(response.maemulClickList) {
                             updateSidebar(response.maemulClickList);
                         }
@@ -224,13 +223,19 @@ kakao.maps.event.addListener(map, 'idle', function () {
         tradeType: tradeTypeString
     };
 
-//    console.log(dataToSend);
+    var likedBoolean = true;
 
     $.ajax({
         type: 'POST',
         url: '/map/map',
         data: dataToSend,
         success: function (response) {
+            if(likedBoolean) {
+                likedEntityList = response.likedEntityList;
+                likedBoolean = false;
+                console.log("화면이동시 likedEntityList :" + likedEntityList);
+            }
+
             if (response.maenulList && currentZoomLevel <= 5) {
                 response.maenulList.forEach(function (maemul) {
 
@@ -460,16 +465,20 @@ function updateSidebar(responseData) {
         heartButton.className = "aHeartBtnInList";
         heartButton.innerHTML = `
             <button class="aHeartBtn">
-                <img style="width:15px;margin-bottom:2px;" src="/img/mapDetailAndAPTList/aHeartBtn.png">
+                <img style="width:15px;margin-bottom:2px;" src="/img/mapDetailAndAPTList/aHeartBtn2.png">
             </button>
         `;
 
         // 로그인 시 관심매물에 등록된 데이터와 비교해서 하트색상 결정
-        if(likedEntityList != null) {
+        if(likedEntityList != null && likedEntityList.length > 0) {
             likedEntityList.forEach(function (liked) {
-                if(liked.road_name === maemul.address) {
+                console.log("찜" + liked.maemul_id + "매물" + maemul.id);
+
+                if(liked.maemul_id === maemul.id) {
                     heartButton.querySelector("button").setAttribute("data-isButton", "true");
-                    $(".aHeartBtnInList").css("opacity", 1);
+                    heartButton.querySelector("img").setAttribute("src", "/img/mapDetailAndAPTList/aHeartBtn.png"); // 이미지를 바꿔줌
+                } else {
+                    heartButton.querySelector("button").setAttribute("data-isButton", "false");
                 }
             })
         } else {
@@ -482,6 +491,7 @@ function updateSidebar(responseData) {
 
         // li 요소를 사이드바 컨테이너에 추가
         sidebarContainer.appendChild(listItem);
+        console.log("리스트 한개 생성 끝");
     });
 }
 
@@ -494,17 +504,8 @@ function clearSidebar() {
 // 하트 버튼을 클릭하면 매물 id 전송
 $(document).on("click", ".aHeartBtn", function() {
     if (loginMember != null) {
-        var listItem = $(this).closest("li"); // 클릭한 하트 버튼이 속한 li 요소 찾기
-        var maemulId = listItem.find(".abox").attr("href").split("/").pop(); // a 요소의 href의 maemulId 추출
-        var isButton = listItem.data("isButton"); // 해당 버튼의 boolean 값 가져옴
-
-        // 해당 li 내의 버튼만 스타일 변경
-        var heartBtnInList = listItem.find(".aHeartBtnInList");
-        if (!isButton) {
-            heartBtnInList.css("opacity", 1); // 불투명
-        } else {
-            heartBtnInList.css("opacity", 0.16); // 16% 투명도
-        }
+        var $heartButton = $(this); // 클릭한 버튼을 변수에 저장
+        var maemulId = $heartButton.closest("li").find("a").attr("href").split("/").pop();
 
         $.ajax({
             url: "/member/qLiked", //
@@ -514,16 +515,28 @@ $(document).on("click", ".aHeartBtn", function() {
                 console.log("Ajax 요청 성공");
                 console.log("매물 아이디" + maemulId);
 
-                listItem.data("isButton", !isButton);
+                 // 버튼 상태 변경
+                 if ($heartButton.attr("data-isButton") === "true") {
+                     $heartButton.attr("data-isButton", "false");
+                     $heartButton.find("img").attr("src", "/img/mapDetailAndAPTList/aHeartBtn2.png");
+                 } else if ($heartButton.attr("data-isButton") === "false") {
+                     $heartButton.attr("data-isButton", "true");
+                     $heartButton.find("img").attr("src", "/img/mapDetailAndAPTList/aHeartBtn.png");
+                 }
+                 console.log($heartButton.attr("data-isButton"));
             },
             error: function(xhr, status, error) {
                 console.error("Ajax 요청 실패: " + error);
             }
         });
+
+
+
     } else {
         alert("로그인 후 다시 시도해주세요.")
     }
 });
+
 
 // keyword 입력 후 Enter 누르면 검색되는 함수
 function checkEnter(event) {
@@ -533,15 +546,24 @@ function checkEnter(event) {
         // 입력한 키워드 공백 제거
         var keyword = document.querySelector('.aSearchInput').value.replaceAll(' ', '');
         var setZoomLevel = 5;
+        var bounds = map.getBounds();
+        var southWest = bounds.getSouthWest();
+        var northEast = bounds.getNorthEast();
+        var currentZoomLevel = map.getLevel(); // 현재 줌 레벨 가져오기
 
         $.ajax({
             type: 'POST',
             url: '/map/map',
             data: {
                 keyword: keyword,
-                zoomLevel: setZoomLevel
+                zoomLevel: setZoomLevel,
+                southWestLat: southWest.getLat(),
+                southWestLng: southWest.getLng(),
+                northEastLat: northEast.getLat(),
+                northEastLng: northEast.getLng()
             },
             success: function (response) {
+                likedEntityList = response.likedEntityList;
                 // 검색 결과에 따라 마커를 생성하고 지도에 표시하기
                 if (response.maemulKeywordList) {
                     var result = response.maemulKeywordList; // 키워드 검색후 전송받은 해당 아파트 데이터

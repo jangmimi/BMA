@@ -71,6 +71,31 @@ $(document).ready(function() {
        });
    });
 
+   // 비밀번호 임시메일 발송
+    $("#checkEmail").click(function () {
+        const userEmail = $("#userEmail").val();
+        const sendEmail = document.forms["sendEmail"];
+        $.ajax({
+            type: 'post',
+            url: 'emailDuplication',
+            data: {
+                'userEmail': userEmail
+            },
+            dataType: "text",
+            success: function (result) {
+                if(result == "no"){
+                    // 중복되는 것이 있다면 no == 일치하는 이메일이 있다!
+                    alert('임시비밀번호를 전송 했습니다.');
+                    sendEmail.submit();
+                }else {
+                    alert('가입되지 않은 이메일입니다.');
+                }
+
+            },error: function () {
+                console.log('에러 체크!!')
+            }
+        })
+    });
 });
 
 // 내정보수정 submit 전에 공백 체크
@@ -143,16 +168,16 @@ function oFindEmailCheck() {
     }
 }
 function oFindPwdCheck() {
-    let emailpwd = $('#emailpwd').val();
-    let telpwd = $('#telpwd').val();
-    if(emailpwd === '') {
+    let userEmail = $('#userEmail').val();
+//    let telpwd = $('#telpwd').val();
+    if(userEmail === '') {
         alert('이메일 입력해주세요.');
         return false;
     }
-    if(telpwd === '') {
-        alert('연락처를 입력해주세요.');
-        return false;
-    }
+//    if(telpwd === '') {
+//        alert('연락처를 입력해주세요.');
+//        return false;
+//    }
 }
 
 // 닉네임 중복검사

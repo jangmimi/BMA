@@ -1,10 +1,13 @@
 package com.ap4j.bma.model.entity.meamulReg;
 
+import com.ap4j.bma.model.entity.member.MemberEntity;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "MaemulReg")
@@ -89,5 +92,13 @@ public class MaemulRegEntity {
 
     //등록일자
     private String createdAt;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "nickname", referencedColumnName = "nickname", insertable = false, updatable = false)
+    private MemberEntity memberEntity;
+
+    //이미지 매핑
+    @OneToMany(mappedBy = "maemulID", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MaemulPhotoEntity> maemulPhotos = new ArrayList<>();
 
 }
