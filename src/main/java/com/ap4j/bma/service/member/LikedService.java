@@ -72,9 +72,16 @@ public class LikedService {
     }
 
     /*김재환작성 페이징처리*/
-    public Page<LikedEntity> getPaginatedItems(String nickname,int page, int pageSize) {
+    public Page<MaemulRegEntity> getPaginatedItems(String nickname,int page, int pageSize) {
         Pageable pageable = PageRequest.of(page - 1, pageSize);
-        return (Page<LikedEntity>) likedRepository.findLikedByNicknameAndPaging(nickname,pageable);
+        Page<MaemulRegEntity> mmpList = maemulRegEntityRepository.findLikedByNicknameAndPaging(nickname,pageable);
+        System.out.println(mmpList);
+        return mmpList;
+    }
+
+    /*김재환작성 관심매물 전체개수*/
+    public Long countLikedByNickname(String nickname) {
+        return likedRepository.countLikedByNickname(nickname);
     }
 
 //    @Transactional
