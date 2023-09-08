@@ -6,6 +6,8 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "MaemulReg")
@@ -94,5 +96,9 @@ public class MaemulRegEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "nickname", referencedColumnName = "nickname", insertable = false, updatable = false)
     private MemberEntity memberEntity;
+
+    //이미지 매핑
+    @OneToMany(mappedBy = "maemulID", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MaemulPhotoEntity> maemulPhotos = new ArrayList<>();
 
 }

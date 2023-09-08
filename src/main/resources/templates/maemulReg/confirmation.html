@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{fragments/layouts/include_footer_layout}">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layouts/no_footer_layout}">
 
 <head>
     <meta charset="UTF-8">
@@ -63,9 +65,12 @@
 <p>title, 제목: <span th:text="${maemulRegEntity.title}"></span></p>
 <p>content, 상세내용: <span th:text="${maemulRegEntity.content}"></span></p>
 
-<!--<p>features, 특징: <span th:text="${maemulRegEntity.features}"></span></p>-->
-<!--<p>optional, 옵션: <span th:text="${maemulRegEntity.optional}"></span></p>-->
-<!--<p>security, 보안: <span th:text="${maemulRegEntity.security}"></span></p>-->
+<p>features, 특징: <span th:text="${maemulRegEntity.features}"></span></p>
+<p>optional, 옵션: <span th:text="${maemulRegEntity.optional}"></span></p>
+<p>security, 보안: <span th:text="${maemulRegEntity.security}"></span></p>
+
+<p>latitude, 위도: <span th:text="${maemulRegEntity.latitude}"></span></p>
+<p>longitude, 경도: <span th:text="${maemulRegEntity.longitude}"></span></p>
 
 <!--<p>사진파일</p>-->
 <!--<p>대표사진: <span th:text="${maemulPhotoEntity.primePhoto}"></span></p>-->
@@ -74,9 +79,7 @@
 <!--<p>4: <span th:text="${maemulPhotoEntity.photoFour}"></span></p>-->
 <!--<p>5 <span th:text="${maemulPhotoEntity.photoFive}"></span></p>-->
 
-<!-- 나머지 필드들을 출력... -->
-<p>latitude, 위도: <span th:text="${maemulRegEntity.latitude}"></span></p>
-<p>longitude, 경도: <span th:text="${maemulRegEntity.longitude}"></span></p>
+
 
 
 </body>
