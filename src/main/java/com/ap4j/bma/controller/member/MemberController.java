@@ -324,12 +324,6 @@ public class MemberController {
 
         likedService.save(likedEntity);
 
-//        Optional<LikedEntity> find = likedService.findByNicknameAndRoad_name(nickname, finemm.getAddress());
-//        if(find.isPresent()) {
-//            LikedEntity entity = find.get();
-//            likedService.delete(entity);
-//        }
-
         return "redirect:/map/map";
     }
     /** 삭제 */
@@ -351,21 +345,29 @@ public class MemberController {
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
         String nickname = memberDTO.getNickname();
 
-        // 메소드를 사용하여 리스트를 가져오고, null인 경우 빈 리스트로 초기화
+        // 로그인한 사람의 관심매물 불러오기
+        List<LikedEntity> myLikedList = likedService.findByNickname(nickname);
+        log.info("내 관심매물 : " + myLikedList);
+        log.info("개수 : " + myLikedList.size());
+
+//        List<MaemulRegEntity> myLikedMMList = likedService.myLikedList(nickname);
+//        log.info("내 관심매물정보 : " + myLikedMMList);
+
+//         메소드를 사용하여 리스트를 가져오고, null인 경우 빈 리스트로 초기화
         List<LikedEntity> mmLikedList = getListOrDefault(likedService.getAllList());
         List<MaemulRegEntity> mmList = getListOrDefault(qMemberService.getAllList());
 
         // mmFilterList 계산
         List<MaemulRegEntity> mmFilterList = likedService.filterMaemulListByNickname(nickname, mmLikedList, mmList);
         // mmFilterList의 크기(개수) 얻기
-        int mmFilterListSize = mmFilterList.size();
+//        int mmFilterListSize = mmFilterList.size();
 
-        // myLikedCnt 가져오고, null인 경우 0L로 초기화
-        Long myLikedCnt = (likedService.countAll() != null) ? likedService.countAll() : 0L;
-
-        model.addAttribute("mmLiked",mmLikedList);
-        model.addAttribute("mmLikedCnt",myLikedCnt);
-        model.addAttribute("mmFilterListSize",mmFilterListSize);
+//        // myLikedCnt 가져오고, null인 경우 0L로 초기화
+//        Long myLikedCnt = (likedService.countAll() != null) ? likedService.countAll() : 0L;
+//
+//        model.addAttribute("mmLiked",mmLikedList);
+        model.addAttribute("mmLikedCnt",myLikedList.size());
+//        model.addAttribute("mmFilterListSize",mmFilterListSize);
         model.addAttribute("mmList",mmFilterList);
 
         return "userView/maemulLiked";

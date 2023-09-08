@@ -61,11 +61,11 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <p>전체 <span class="o-cntAll" th:text="${mmFilterListSize}"></span>건</p>
-                                        <th:block th:if="${mmFilterListSize == 0}">
+                                        <p>전체 <span class="o-cntAll" th:text="${mmLikedCnt}"></span>건</p>
+                                        <th:block th:if="${mmLikedCnt == 0}">
                                             <tr><td colspan="6">조회된 데이터가 없습니다.</td></tr>
                                         </th:block>
-                                        <tr th:if="${mmFilterListSize != 0}" th:each="mmList : ${mmList}">
+                                        <tr th:each="mmList : ${myLikedMMList}">
                                             <input type="hidden" th:name="maemul_id" th:value="${mmList.id}">
                                             <td id="tradeType" th:text="${mmList.tradeType}">거래유형</td>
                                             <td id="o-d-photo">

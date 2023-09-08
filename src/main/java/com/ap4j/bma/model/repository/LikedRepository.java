@@ -23,12 +23,6 @@ public interface LikedRepository extends JpaRepository<LikedEntity, Long> {
             "WHERE l.nickname = :nickname")
     List<LikedEntity> findLikedByNickname(@Param("nickname") String nickname);
 
-//    @Query("SELECT mr FROM MaemulRegEntity mr " +
-//            "JOIN LikedEntity l ON mr.nickname = l.nickname " +
-//            "JOIN MemberEntity m ON mr.nickname = m.nickname " +
-//            "WHERE l. = :roadName")
-//    List<MaemulRegEntity> findMaemulByRoadName(@Param("roadName") String roadName);
-
     /** 사용자 닉네임과 매물id를 이용한 중복 체크 쿼리 */
     @Query("SELECT CASE WHEN COUNT(l) > 0 THEN true ELSE false END " +
             "FROM LikedEntity l " +
@@ -45,5 +39,13 @@ public interface LikedRepository extends JpaRepository<LikedEntity, Long> {
 
     /** nickname으로 관심매물 조회 */
     List<LikedEntity> findByNickname(String nickname);
+
+    /** 내 관심매물 조회 */
+    @Query("SELECT mr FROM MaemulRegEntity mr " +
+            "WHERE mr.id IN " +
+            "(SELECT l.maemul_id FROM LikedEntity l " +
+            "WHERE l.nickname = :nickname)")
+    List<MaemulRegEntity> findMaemulByUserNickname(@Param("nickname") String nickname);
+
 
 }

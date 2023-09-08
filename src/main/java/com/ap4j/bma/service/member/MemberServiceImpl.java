@@ -187,8 +187,6 @@ public class MemberServiceImpl implements MemberService {
 		String accessToken = "";
 		String reqURL = "https://nid.naver.com/oauth2.0/token";	// 인증 코드로 토큰 요청
 
-//		SecureRandom random = new SecureRandom();
-//		String state = new BigInteger(130, random).toString(32);
 		String state = "9999";
 
 		try {
@@ -318,13 +316,6 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepository.existsByNickname(nickname);
 	}
 
-	/** 회원전체 조회 */
-	@Override
-	public List<MemberEntity> findMembers() {
-		log.info("서비스 findMember() 실행");
-		return memberRepository.findAll();
-	}
-
 	/** 기본 로그인 */
 	@Override
 	public MemberDTO login(MemberDTO memberDTO) {
@@ -435,22 +426,10 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepository.findByNameAndTel(name, tel);
 	}
 
-	/** pwd 찾기 */
-	@Override
-	public Optional<MemberEntity> findByEmailAndTel(String email, String tel) {
-		return memberRepository.findByEmailAndTel(email, tel);
-	}
-
 	/** 내 QnA 목록 */
 	@Override
 	public List<QnAEntity> qMyQnaList(String userEmail) {
 		return qnARepository.findMaemulByMemberEmail(userEmail);
-	}
-
-	/** QnA 전체 수 */
-	@Override
-	public long qMyQnaCnt(String user_email) {
-		return qnARepository.count();
 	}
 
 	/** 매물 목록 전체 조회 */
@@ -474,26 +453,4 @@ public class MemberServiceImpl implements MemberService {
 		return findMaemul.orElse(null);
 	}
 
-//	public MemberEntity findMemberById(Long id) {
-//		log.info("서비스 findMemberById() 실행");
-//		Optional<MemberEntity> findMember = memberRepository.findById(id);
-//		return findMember.orElse(null);
-//	}
-
 }
-
-//	/** 회원 탈퇴 id 기준 */
-//	public void leaveMemberById(Long id) {
-//		memberRepository.deleteById(id);
-//	}
-//	/** 회원가입 유효성 검사 */
-//	@Override
-//	public Map<String, String> validateHandler(Errors errors) {
-//		Map<String, String> validatorResult = new HashMap<>();
-//
-//		for(FieldError error : errors.getFieldErrors()) {
-//			String validKeyName = String .format("valid_%s", error.getField());
-//			validatorResult.put(validKeyName, error.getDefaultMessage());
-//		}
-//		return validatorResult;
-//	}
