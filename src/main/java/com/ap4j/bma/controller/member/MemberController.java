@@ -339,7 +339,7 @@ public class MemberController {
     public String qDeleteLiked(@RequestParam("maemul_id") Integer maemul_id, String nickname, HttpSession session) {
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
         nickname = memberDTO.getNickname();
-
+        log.info("삭제확인"+maemul_id);
         likedService.deleteByMaemulIdAndNickname(maemul_id, nickname);
         return "redirect:/member/liked";
     }

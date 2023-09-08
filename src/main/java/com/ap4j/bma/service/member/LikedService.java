@@ -41,10 +41,10 @@ public class LikedService {
         return likedRepository.findLikedByNickname(nickname);
     }
 
-    /** 특정 주소와 매치되는 매물 전부 조회 */
-    public List<MaemulRegEntity> findLikedByRoadname(String road_name) {
-        return likedRepository.findMaemulByRoadName(road_name);
-    }
+//    /** 특정 주소와 매치되는 매물 전부 조회 */
+//    public List<MaemulRegEntity> findLikedByRoadname(String road_name) {
+//        return likedRepository.findMaemulByRoadName(road_name);
+//    }
 
     /** 로그인한 멤버가 관심등록한 매물만 조회 */
     public List<MaemulRegEntity> filterMaemulListByNickname(String nickname, List<LikedEntity> likedList, List<MaemulRegEntity> maemulList) {
