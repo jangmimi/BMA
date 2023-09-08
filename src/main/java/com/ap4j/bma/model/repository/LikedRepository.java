@@ -29,27 +29,21 @@ public interface LikedRepository extends JpaRepository<LikedEntity, Long> {
             "WHERE l.road_name = :roadName")
     List<MaemulRegEntity> findMaemulByRoadName(@Param("roadName") String roadName);
 
-    // 사용자 닉네임과 도로 주소를 이용한 중복 체크 쿼리
+    /** 사용자 닉네임과 도로 주소를 이용한 중복 체크 쿼리 */
     @Query("SELECT CASE WHEN COUNT(l) > 0 THEN true ELSE false END " +
             "FROM LikedEntity l " +
             "WHERE l.nickname = :nickname AND l.road_name = :roadName")
     boolean existsByNicknameAndRoadName(@Param("nickname") String nickname, @Param("roadName") String roadName);
 
+    /** 관심매물 삭제 (로그인중닉네임 == 관심매물닉네임 && 관심매물maemul_id == 매물id */ //  이거 성공!!!
     @Modifying
-    @Query("DELETE FROM LikedEntity l WHERE l.nickname = :nickname AND l.road_name IN (SELECT mr.address FROM MaemulRegEntity mr WHERE mr.nickname = :nickname)")
-    void deleteLikedEntitiesByNicknameAndRoadName(@Param("nickname") String nickname);
+    @Query("DELETE FROM LikedEntity l " +
+            "WHERE l.maemul_id = :maemul_id " +
+            "AND l.nickname = :nickname " +
+            "AND l.maemul_id IN (SELECT m.id FROM MaemulRegEntity m WHERE m.id = :maemul_id)")
+    void deleteByMaemulIdAndNickname(@Param("maemul_id") Integer maemul_id, @Param("nickname") String nickname);
 
-    /** 관심매물 삭제 */
-//    @Override
-//    void delete(LikedEntity entity);
-
-    /** nickname과 road_name으로 이미 있는 관심매물인지 조회 */
-//    Optional<LikedEntity> findByNicknameAndRoad_name(String nickname, String road_name);
-
-    @Modifying
-    @Query("DELETE FROM LikedEntity l WHERE l.nickname = :nickname AND l.road_name = :roadName")
-    void deleteLikedEntitiesByNicknameAndRoadName(@Param("nickname") String nickname, @Param("roadName") String roadName);
-
+    /** nickname으로 관심매물 조회 */
     List<LikedEntity> findByNickname(String nickname);
 
 }

@@ -127,7 +127,7 @@
                         <div th:if="${loginMember.root == 1}">
                             <button type="button" class="btn btn-outline-secondary" id="leaveBtn">회원탈퇴</button>
                         </div>
-                        <div th:else>
+                        <div th:if="${loginMember.root != 1}">
                             <!-- id 기준 단순 탈퇴 처리 -->
                             <form th:action="@{/member/qLeaveMember/__${id}__}" method="POST" onsubmit="return oDeleteCheck()">
                                 <input type="submit" class="btn btn-outline-secondary mt-5" id="oDeleteMemberBtn" value="회원탈퇴" />

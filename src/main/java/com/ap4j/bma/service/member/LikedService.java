@@ -67,38 +67,10 @@ public class LikedService {
         return likeEntity.getId();
     }
 
-
-    public void deleteByNicknameAndRoadName(String nickname, String roadName) {
-        likedRepository.deleteLikedEntitiesByNicknameAndRoadName(nickname, roadName);
+    /** 관심매물 삭제 */
+    @Transactional
+    public void deleteById(Integer maemul_id, String nickname) {
+        likedRepository.deleteByMaemulIdAndNickname(maemul_id,nickname);
     }
 
-//    @Transactional
-//    public void delete(LikedEntity likedEntity) {
-//        log.info("LikedService 관심매물 삭제 실행");
-//        likedRepository.delete(likedEntity);
-//    }
-
-//    public Optional<LikedEntity> findByNicknameAndRoad_name(String nickname, String road_name) {
-//        return likedRepository.findByNicknameAndRoad_name(nickname, road_name);
-//    }
-
-
-//    public List<MaemulRegEntity> findLikedByRoadname(String roadName) {
-//        List<MaemulRegEntity> likedmList = likedRepository.findMaemulByRoadName(roadName);
-//
-//        return likedRepository.findMaemulByRoadName(maemulList).stream()
-//                .map(LikedEntity::getMaemul)
-//                .collect(Collectors.toList());
-//    }
-
-//    public List<MaemulRegEntity> findMaemulByRoadNames(List<String> roadNames) {
-//        List<LikedEntity> likedEntities = likedRepository.findByMaemulRoadNameIn(roadNames);
-//
-//        // LikedEntity에서 MaemulRegEntity로 변환
-//        List<MaemulRegEntity> maemulRegEntities = likedEntities.stream()
-//                .map(LikedEntity::getMaemul)
-//                .collect(Collectors.toList());
-//
-//        return maemulRegEntities;
-//    }
 }
