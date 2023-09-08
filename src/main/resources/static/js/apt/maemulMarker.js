@@ -524,3 +524,50 @@ $(document).on("click", ".aHeartBtn", function() {
         alert("로그인 후 다시 시도해주세요.")
     }
 });
+
+// keyword 입력 후 Enter 누르면 검색되는 함수
+function checkEnter(event) {
+    if (event.key === 'Enter') {
+        clearHJDOverlays(); // 행정동 오버레이 닫기
+        closeOtherOverlays(); // 열려있는 매물 오버레이 닫기
+        // 입력한 키워드 공백 제거
+        var keyword = document.querySelector('.aSearchInput').value.replaceAll(' ', '');
+        var setZoomLevel = 5;
+
+        $.ajax({
+            type: 'POST',
+            url: '/map/map',
+            data: {
+                keyword: keyword,
+                zoomLevel: setZoomLevel
+            },
+            success: function (response) {
+                // 검색 결과에 따라 마커를 생성하고 지도에 표시하기
+                if (response.maemulKeywordList) {
+                    var result = response.maemulKeywordList; // 키워드 검색후 전송받은 해당 아파트 데이터
+                    var newCenter = new kakao.maps.LatLng(result.latitude, result.longitude);
+
+                    map.setLevel(setZoomLevel); // 줌레벨 변경
+                    map.setCenter(newCenter); // 해당 아파트 위치로 센터 변경
+                    var currentZoomLevel = map.getLevel(); // 이동시 줌레벨 5로 설정 (줌레벨 안바뀐채로 이동되는 경우 있어서 방지차원)
+
+                    var markerPosition = new kakao.maps.LatLng(result.latitude, result.longitude);
+                    var markerKey = markerPosition.toString();
+                    var markerContent = "<div class='e-marker'>" +
+                        "<div class='e-markerTitle'>" +
+                        "<h3>" + result.APT_name + "</h3>" +
+                        "</div>" +
+                        "<div class='e-markerContent'>" +
+                        "<p>" + result.address + "</p>" +
+                        "</div>" +
+                        "</div>";
+                    createMarker(markerPosition, markerContent, result);
+                    var marker = existingMarkers[markerKey];
+                    openOverlay(marker.overlay);
+                    updateSidebar(result);
+                    console.log("클릭시 마커생성");
+                }
+            }
+        });
+    }
+}

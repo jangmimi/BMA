@@ -94,7 +94,7 @@ public class MapController {
     }
 
     @PostMapping("map")
-    public ResponseEntity<Map<String, Object>> map2(HttpSession session, Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng, Integer zoomLevel, String address, String tradeType){
+    public ResponseEntity<Map<String, Object>> map2(HttpSession session, Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng, Integer zoomLevel, String address, String tradeType, String keyword){
         System.out.println("컨트롤러 address " + address);
 
         Map<String, Object> responseData = new HashMap<>();
@@ -123,6 +123,10 @@ public class MapController {
         // 마커 클릭시 해당 주소의 매물 리스트 가져오기
         List<MaeMulRegDTO> maemulClickList = maemulRegService.findMaemulByAddress(address);
         responseData.put("maemulClickList", maemulClickList);
+
+        // 검색시 해당 키워드의 매물 리스트 가져오기
+//        List<MaeMulRegDTO> maemulKeywordList = maemulRegService.findByKeyword(keyword);
+//        responseData.put("maemulKeywordList", maemulKeywordList);
 
         return ResponseEntity.ok(responseData);
     }
