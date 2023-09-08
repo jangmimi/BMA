@@ -186,6 +186,39 @@ public class CommunityController {
         return "community/message";
 
     }
+
+
+    //게시글 정렬
+    @GetMapping("/community/list/{sortType}")
+    public String communityListSorted(Model model, @RequestParam(name = "page", defaultValue = "1") int page, @PathVariable("sortType") String sortType) {
+        int pageSize = 10; // 한 페이지당 보여줄 게시글 개수
+        Pageable pageable;
+
+        // 정렬 유형에 따라 Pageable 설정
+        if ("new".equals(sortType)) {
+            pageable = PageRequest.of(page - 1, pageSize, Sort.by("createdAt").descending());
+        } else if ("old".equals(sortType)) {
+            pageable = PageRequest.of(page - 1, pageSize, Sort.by("createdAt").ascending());
+        } else if ("view".equals(sortType)) {
+            pageable = PageRequest.of(page - 1, pageSize, Sort.by("view").ascending());
+        } else if ("comment".equals(sortType)) {
+            // 댓글 개수가 많은 순서
+            pageable = PageRequest.of(page - 1, pageSize, Sort.by("commentCount").ascending());
+        } else {
+            pageable = PageRequest.of(page - 1, pageSize, Sort.by("createdAt").descending());
+        }
+
+        Page<CommunityEntity> communityPage = communityService.getCommunityPage(pageable);
+
+        model.addAttribute("list", communityPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", communityPage.getTotalPages());
+        model.addAttribute("totalCommunityCount", communityPage.getTotalElements());
+
+        model.addAttribute("sortType", sortType);
+
+        return "community/communityList";
+    }
 }
 
 

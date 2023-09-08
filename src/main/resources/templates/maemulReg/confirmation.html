@@ -30,6 +30,7 @@
 <h2>Maemul Registration Details</h2>
 
 <p>createdAt, 등록일자: <span th:text="${maemulRegEntity.createdAt}"></span></p>
+<p>createdAt, 등록일자(시간 뺴고):  <span th:text="${#temporals.format(maemulRegEntity.createdAt, 'yyyy-MM-dd')}">yyyy-MM-dd</span></p>
 
 <p>ID, 식별번호: <span th:text="${maemulRegEntity.id}"></span></p>
 <p>address, 주소: <span th:text="${maemulRegEntity.address}"></span></p>
