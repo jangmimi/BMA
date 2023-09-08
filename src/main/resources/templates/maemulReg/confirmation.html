@@ -29,6 +29,9 @@
 
 <h2>Maemul Registration Details</h2>
 
+<p> nickname, 작성자 닉네임 :
+    <span th:text="${maemulRegEntity.nickname}"></span></p>
+</p>
 <p>createdAt, 등록일자: <span th:text="${maemulRegEntity.createdAt}"></span></p>
 <p>createdAt, 등록일자(시간 뺴고):  <span th:text="${#temporals.format(maemulRegEntity.createdAt, 'yyyy-MM-dd')}">yyyy-MM-dd</span></p>
 
