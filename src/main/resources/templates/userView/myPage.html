@@ -52,11 +52,11 @@
                             <div class="oInfo-right">
                                 <div class="oMaemulCnt-inner">
                                     <div class="oMaemulCnt">
-                                        <a th:href="@{/member/liked}">1건</a><!--개수연동예정-->
+                                        <a th:href="@{/member/liked}" th:text="${likedCnt + '건'}"></a>
                                         <span>관심매물</span>
                                     </div>
                                     <div class="oMaemulCnt">
-                                        <a th:href="@{/member/qRecent}">2건</a><!--개수연동예정-->
+                                        <a th:href="@{/member/qRecent}" >몇건</a>
                                         <span>최근 본 매물</span>
                                     </div>
                                 </div>
