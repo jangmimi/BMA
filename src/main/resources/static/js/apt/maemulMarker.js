@@ -562,8 +562,8 @@ function updateSidebar(responseData) {
                     <h5 class="ii loc_title">
                         <span class="payf_num_b">
                             ${
-                              maemul.monthlyForRent != 999 ? `${monthlyForRent}<br/>${monthlyRent}` :
-                              maemul.depositForLease != 999 ? depositForLease:
+                              maemul.monthlyForRent != 999 && maemul.monthlyForRent != 0 ? `${monthlyForRent}<br/>${monthlyRent}` :
+                              maemul.depositForLease != 999 && maemul.monthlyForRent != 0 ? depositForLease:
                               sellingPrice
                             }
                         </span>
@@ -598,7 +598,6 @@ function updateSidebar(responseData) {
         // 로그인 시 관심매물에 등록된 데이터와 비교해서 하트색상 결정
         if(likedEntityList != null && likedEntityList.length > 0) {
             likedEntityList.forEach(function (liked) {
-                console.log("찜" + liked.maemul_id + "매물" + maemul.id);
 
                 if(liked.maemul_id === maemul.id) {
                     heartButton.querySelector("button").setAttribute("data-isButton", "true");
