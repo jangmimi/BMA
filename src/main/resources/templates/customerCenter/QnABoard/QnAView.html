@@ -67,7 +67,12 @@
                     </tr>
                     <tr>
                         <td>첨부파일</td>
-                        <td th:text="${qna.filename + ' ' + qna.filepath}"></td>
+                        <td>
+                             <span th:if="${qna.filename} != null">
+                                 <a th:href="@{'/downloadFile/' + ${qna.filename}}" th:text="${qna.filename}" download="${qna.filename}"></a>
+                             </span>
+                            <span th:if="${qna.filename} == null">첨부파일 없음</span>
+                        </td>
                     </tr>
                 </table>
             </div>
