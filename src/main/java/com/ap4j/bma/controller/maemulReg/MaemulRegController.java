@@ -114,6 +114,7 @@ public class MaemulRegController {
         // 매물 정보를 데이터베이스에서 가져와서 확인 페이지에 표시
         MaemulRegEntity maemulRegEntity = maemulRegService.getMaemulById(maemulId);
 
+
         model.addAttribute("maemulRegEntity", maemulRegEntity);
         return "maemulReg/confirmation";
     }
