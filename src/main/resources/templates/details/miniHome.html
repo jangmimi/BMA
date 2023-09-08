@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/layouts/include_footer_layout}">
 
 <head>
 	<meta charset="UTF-8">
-	<title></title>
+	<title>아파트사조 프로필</title>
 	<!--여기에 적용하실 css 나 js 작성하시면 됩니다. 아래는 예시들 입니다. -->
 
 	<!-- <link rel="stylesheet" th:href="@{/css/파일이름.css}"> -->
@@ -26,19 +28,20 @@
 						<div class="z-top-img">
 							<img src="https://www.bdsplanet.com/images/img_none_user_big.png" alt="이미지">
 						</div>
-						<div class="z-top-text">
-							<div class="z-top-title">리빌딩부동산중개</div>
+
+						<div th:with="maemul=${maemulList[0]}" class="z-top-text">
+							<div th:text="${maemul.nickname}" class="z-top-title"></div>
 							<div class="z-boss">
 								<span class="z-category">대표 : </span>
-								<span class="z-category2">김현규</span>
+								<span th:text="${maemul.memberEntity.name}" class="z-category2"></span>
 							</div>
 							<div class="z-addr">
 								<span class="z-category">주소 : </span>
-								<span class="z-category2">서울 강남구 언주로 712 (논현동)</span>
+								<span th:text="${maemul.address}" class="z-category2"></span>
 							</div>
 							<div class="z-tel">
 								<span class="z-category">대표번호 : </span>
-								<span class="z-category2">070-4348-5625</span>
+								<span th:text="${maemul.memberEntity.tel}" class="z-category2"></span>
 							</div>
 						</div>
 					</div>
@@ -49,14 +52,14 @@
 			<div class="z-top-wrap">
 				<div class="z-top-seperate1">
 					<button class="z-top-btn">
-						주거용
-						<span class="z-count">13</span>
+						거주용
+						<span th:text="${residentialCount}" class="z-count"></span>
 					</button>
 				</div>
 				<div class="z-top-seperate2">
 					<button class="z-top-btn">
-						상업용
-						<span class="z-count">125</span>
+						업무용
+						<span th:text="${commercialCount}" class="z-count">125</span>
 					</button>
 
 
@@ -76,143 +79,67 @@
 		<div class="z-bottom-container">
 			<div class="z-bottom-wrap">
 				<!-- 매물 1개 -->
-				<a href="#" class="z-content-wrap">
-					<div class="z-img-wrap">
-						<img src="/img/details/t.jpeg" alt="이미지" class="z-img">
-					</div>
-					<div class="z-text-wrap">
-						<div class="z-bottom-text">
-							<div class="z-text-title">매매 100억</div>
-							<div class="z-text-contents">
-								<div class="z-text-content1">
-									<span class="z-t">상가주택</span>
-									<span class="z-text-content2">서초동 상가주택</span>
-								</div>
-								<div class="z-text-content1">
-									851.7/851.71㎡
-									<span class="z-text-content2">지하-/지상2층</span>
-								</div>
-								<div class="z-text-content3">서초역 역세권 업무주거배후세대 풍부</div>
-							</div>
-							<!-- z-text-contents 끝 -->
-							<div class="z-text-hash-wrap">
-								<!-- 이건 마지막값 한개만 가져오는 것. -->
-								<button class="z-text-hash">#역세권</button>
-							</div>
-							<!-- z-text-hash-wrap 끝 -->
+					<a th:each="m : ${maemulList}" th:href="@{/details/{id}(id=${m.id})}"  class="z-content-wrap">
+						<div class="z-img-wrap">
+							<img src="/img/details/t.jpeg" alt="이미지" class="z-img">
 						</div>
-						<!-- z-bottom-text 끝 -->
-					</div>
-					<!-- z-text-wrap 끝 -->
-				</a>
+						<div class="z-text-wrap">
+							<div class="z-bottom-text">
+								<div class="z-text-title">
+									<span th:if="${m.tradeType == '매매'}"
+									   th:with="sp_djr=${m.sellingPrice / 10000}, sp_aks=${m.sellingPrice % 10000}"
+									   th:text="${'매매 ' + #strings.concat(sp_djr > 0 ? sp_djr + '억 ' : '', sp_aks > 0 ? sp_aks + '만원' : '')}">
+									</span>
+									<span th:if="${m.tradeType == '전세'}"
+									   th:with="dp_djr=${m.depositForLease / 10000}, dp_aks=${m.depositForLease % 10000}"
+									   th:text="${'전세 ' + #strings.concat(dp_djr > 0 ? dp_djr + '억 ' : '', dp_aks > 0 ? dp_aks + '만원' : '')}">
+									</span>
+									<span th:if="${m.tradeType == '월세'}"
+									   th:text="${'월세 ' + m.monthlyRent + '/' + m.monthlyForRent}">
+									</span>
 
-				<!-- 매물 1개 -->
-				<a href="#" class="z-content-wrap">
-					<div class="z-img-wrap">
-						<img src="/img/details/t.jpeg" alt="이미지" class="z-img">
-					</div>
-					<div class="z-text-wrap">
-						<div class="z-bottom-text">
-							<div class="z-text-title">매매 100억</div>
-							<div class="z-text-contents">
-								<div class="z-text-content1">
-									<span class="z-t">상가주택</span>
-									<span class="z-text-content2">서초동 상가주택</span>
 								</div>
-								<div class="z-text-content1">
-									851.7/851.71㎡
-									<span class="z-text-content2">지하-/지상2층</span>
+								<div class="z-text-contents">
+									<div class="z-text-content1">
+										<span th:text="${m.buildingUsage}" class="z-t">상가주택</span>
+										<span th:text="${m.address}" class="z-text-content2"></span>
+									</div>
+									<div class="z-text-content1">
+										<span th:text="${m.privateArea} + '/' + ${m.supplyArea} + '㎡'"></span>
+										<span th:text="${m.floorNumber} + '층/' + ${m.totalFloors} + '층'" class="z-text-content2"></span>
+									</div>
+									<div th:text="${m.title}" class="z-text-content3"></div>
 								</div>
-								<div class="z-text-content3">서초역 역세권 업무주거배후세대 풍부</div>
+								<!-- z-text-contents 끝 -->
+								<div class="z-text-hash-wrap">
+									<!-- 이건 마지막값 한개만 가져오는 것. -->
+									<button class="z-text-hash">#역세권</button>
+								</div>
+								<!-- z-text-hash-wrap 끝 -->
 							</div>
-							<!-- z-text-contents 끝 -->
-							<div class="z-text-hash-wrap">
-								<!-- 이건 마지막값 한개만 가져오는 것. -->
-								<button class="z-text-hash">#역세권</button>
-							</div>
-							<!-- z-text-hash-wrap 끝 -->
+							<!-- z-bottom-text 끝 -->
 						</div>
-						<!-- z-bottom-text 끝 -->
-					</div>
-					<!-- z-text-wrap 끝 -->
-				</a>
+						<!-- z-text-wrap 끝 -->
+					</a>
 
-				<!-- 매물 1개 -->
-				<a href="#" class="z-content-wrap">
+				<!-- 비어 있는 곳 채우기 용 이미지 -->
+				<div th:if="${maemulList.size() == 1}" class="z-content-wrap">
 					<div class="z-img-wrap">
-						<img src="/img/details/t.jpeg" alt="이미지" class="z-img">
+						<img src="https://www.bdsplanet.com/images/none_mae.png" alt="채우기용 이미지">
 					</div>
-					<div class="z-text-wrap">
-						<div class="z-bottom-text">
-							<div class="z-text-title">매매 100억</div>
-							<div class="z-text-contents">
-								<div class="z-text-content1">
-									<span class="z-t">상가주택</span>
-									<span class="z-text-content2">서초동 상가주택</span>
-								</div>
-								<div class="z-text-content1">
-									851.7/851.71㎡
-									<span class="z-text-content2">지하-/지상2층</span>
-								</div>
-								<div class="z-text-content3">서초역 역세권 업무주거배후세대 풍부</div>
-							</div>
-							<!-- z-text-contents 끝 -->
-							<div class="z-text-hash-wrap">
-								<!-- 이건 마지막값 한개만 가져오는 것. -->
-								<button class="z-text-hash">#역세권</button>
-							</div>
-							<!-- z-text-hash-wrap 끝 -->
-						</div>
-						<!-- z-bottom-text 끝 -->
-					</div>
-					<!-- z-text-wrap 끝 -->
-				</a>
-
-				<!-- 매물 1개 -->
-				<a href="#" class="z-content-wrap">
+				</div>
+				<div th:if="${maemulList.size() == 1}" class="z-content-wrap">
 					<div class="z-img-wrap">
-						<img src="/img/details/t.jpeg" alt="이미지" class="z-img">
-					</div>
-					<div class="z-text-wrap">
-						<div class="z-bottom-text">
-							<div class="z-text-title">매매 100억</div>
-							<div class="z-text-contents">
-								<div class="z-text-content1">
-									<span class="z-t">상가주택</span>
-									<span class="z-text-content2">서초동 상가주택</span>
-								</div>
-								<div class="z-text-content1">
-									851.7/851.71㎡
-									<span class="z-text-content2">지하-/지상2층</span>
-								</div>
-								<div class="z-text-content3">서초역 역세권 업무주거배후세대 풍부</div>
-							</div>
-							<!-- z-text-contents 끝 -->
-							<div class="z-text-hash-wrap">
-								<!-- 이건 마지막값 한개만 가져오는 것. -->
-								<button class="z-text-hash">#역세권</button>
-							</div>
-							<!-- z-text-hash-wrap 끝 -->
-						</div>
-						<!-- z-bottom-text 끝 -->
-					</div>
-					<!-- z-text-wrap 끝 -->
-				</a>
-
-				<!-- 매물 1개 -->
-				<div href="#" class="z-content-wrap">
-					<div class="z-img-wrap">
-						<img src="https://www.bdsplanet.com/images/none_mae.png" alt="이미지" class="z-none-img">
+						<img src="https://www.bdsplanet.com/images/none_mae.png" alt="채우기용 이미지">
 					</div>
 				</div>
 
-				<!-- 매물 1개 -->
-				<div href="#" class="z-content-wrap">
+				<div th:if="${maemulList.size() == 2}" class="z-content-wrap">
 					<div class="z-img-wrap">
-						<img src="https://www.bdsplanet.com/images/none_mae.png" alt="이미지" class="z-none-img">
+						<img src="https://www.bdsplanet.com/images/none_mae.png" alt="채우기용 이미지">
 					</div>
 				</div>
-
+				<!-- z-content-wrap 끝 -->
 
 
 			</div>

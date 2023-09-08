@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,6 +76,8 @@ public class CommunityService {
     public Object getNextArticle(Integer id) {
         return communityRepository.findTopByIdGreaterThanOrderByIdAsc(id);
     }
+
+    //게시글 삭제
     public void communityDelete(Integer id) {
         communityRepository.deleteById(id);
         updateTotalCommunityCount(); //총 게시글 개수 업데이트
@@ -87,4 +90,14 @@ public class CommunityService {
         return communityRepository.findByTitleContaining(keyword, pageable);
     }
 
+    //조회수 처리
+    @Transactional
+    public void updateViewCount(Integer id) {
+        CommunityEntity communityEntity = communityRepository.findById(id).orElse(null);
+        if (communityEntity != null) {
+            // 조회수 증가
+            communityEntity.setView(communityEntity.getView() + 1);
+            communityRepository.save(communityEntity);
+        }
+    }
 }

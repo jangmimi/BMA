@@ -13,6 +13,7 @@ import com.ap4j.bma.service.member.MemberService;
 import com.ap4j.bma.service.member.RecentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -320,35 +321,57 @@ public class MemberController {
         LikedEntity likedEntity = new LikedEntity();
         likedEntity.setNickname(nickname);
         likedEntity.setRoad_name(finemm.getAddress());
+        likedEntity.setMaemul_id(maemulId);
+
         likedService.save(likedEntity);
 
+//        Optional<LikedEntity> find = likedService.findByNicknameAndRoad_name(nickname, finemm.getAddress());
+//        if(find.isPresent()) {
+//            LikedEntity entity = find.get();
+//            likedService.delete(entity);
+//        }
+
         return "redirect:/map/map";
+    }
+    /** 삭제 */
+//    @DeleteMapping("/delete")
+    @PostMapping("/qDeleteLiked")
+    public String qDeleteLiked(@RequestParam("maemul_id") Integer maemul_id, String nickname, HttpSession session) {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
+        nickname = memberDTO.getNickname();
+        log.info("삭제확인"+maemul_id);
+        likedService.deleteByMaemulIdAndNickname(maemul_id, nickname);
+        return "redirect:/member/liked";
     }
 
     /** 관심매물 페이지 매핑 */
     @RequestMapping("/liked")
-    public String qInterest(HttpSession session, Model model) {
+    public String qInterest(@RequestParam(name = "page", defaultValue = "1") int page,
+                            @RequestParam(name = "pageSize", defaultValue = "2") int pageSize,HttpSession session, Model model) {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
         String nickname = memberDTO.getNickname();
 
         // 메소드를 사용하여 리스트를 가져오고, null인 경우 빈 리스트로 초기화
-        List<LikedEntity> mmLikedList = getListOrDefault(likedService.getAllList());
-        List<MaemulRegEntity> mmList = getListOrDefault(qMemberService.getAllList());
+//        List<LikedEntity> mmLikedList = getListOrDefault(likedService.getAllList());
+//        List<MaemulRegEntity> mmList = getListOrDefault(qMemberService.getAllList());
 
         // mmFilterList 계산
-        List<MaemulRegEntity> mmFilterList = likedService.filterMaemulListByNickname(nickname, mmLikedList, mmList);
+//        List<MaemulRegEntity> mmFilterList = likedService.filterMaemulListByNickname(nickname, mmLikedList, mmList);
         // mmFilterList의 크기(개수) 얻기
-        int mmFilterListSize = mmFilterList.size();
+//        int mmFilterListSize = mmFilterList.size();
 
         // myLikedCnt 가져오고, null인 경우 0L로 초기화
-        Long myLikedCnt = (likedService.countAll() != null) ? likedService.countAll() : 0L;
-
-        model.addAttribute("mmLiked",mmLikedList);
-        model.addAttribute("mmLikedCnt",myLikedCnt);
-        model.addAttribute("mmFilterListSize",mmFilterListSize);
-        model.addAttribute("mmList",mmFilterList);
+//        Long myLikedCnt = (likedService.countAll() != null) ? likedService.countAll() : 0L;
+        Page<MaemulRegEntity> mmpList = likedService.getPaginatedItems(nickname,page,pageSize);
+        Long totalCount = likedService.countLikedByNickname(nickname);
+        model.addAttribute("totalCount",totalCount);
+        model.addAttribute("mmpList",mmpList);
+//        model.addAttribute("mmLiked",mmLikedList);
+//        model.addAttribute("mmLikedCnt",myLikedCnt);
+//        model.addAttribute("mmFilterListSize",mmFilterListSize);
+//        model.addAttribute("mmList",mmFilterList);
 
         return "userView/maemulLiked";
     }
@@ -430,17 +453,17 @@ public class MemberController {
         return "userView/findMemberInfo";
     }
 
-    /** 비밀번혼 찾기 */
-    @PostMapping("/qFindPwd")    // * 임시 비번 이메일 발급으로 수정 적용 필요 *
-    public String qFindPwd(@RequestParam String emailpwd, @RequestParam String telpwd, Model model) {
-        Optional<MemberEntity> find = qMemberService.findByEmailAndTel(emailpwd, telpwd);
-
-        if(find.isPresent()) {
-            model.addAttribute("findPwd", find.get().getPwd());
-        } else {
-            model.addAttribute("findPwdFailed", "일치하는 회원정보가 없습니다.");
-        }
-        return "userView/findMemberInfo";
-    }
+//    /** 비밀번혼 찾기 */
+//    @PostMapping("/qFindPwd")    // * 임시 비번 이메일 발급으로 수정 적용 필요 *
+//    public String qFindPwd(@RequestParam String emailpwd, @RequestParam String telpwd, Model model) {
+//        Optional<MemberEntity> find = qMemberService.findByEmailAndTel(emailpwd, telpwd);
+//
+//        if(find.isPresent()) {
+//            model.addAttribute("findPwd", find.get().getPwd());
+//        } else {
+//            model.addAttribute("findPwdFailed", "일치하는 회원정보가 없습니다.");
+//        }
+//        return "userView/findMemberInfo";
+//    }
 }
 

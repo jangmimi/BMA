@@ -1,0 +1,33 @@
+.s-paging {
+    display: flex;
+    justify-content: center;
+}
+
+.s-paging ul{
+    list-style: none;
+}
+
+.s-paging li{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height:35px;
+    text-align: center;
+    float: left;
+    margin: 5px;
+}
+
+.s-active-page {
+    color: #26A9E0;
+    font-weight: bold;
+    border-bottom: 3px solid #26A9E0;
+}
+
+.s-next a, .s-pre a {
+    width: 40px;
+    background: #26A9E0;
+    border-radius: 5px;
+    padding: 2px;
+    color: white;
+}

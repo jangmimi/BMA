@@ -8,18 +8,18 @@
 	<!--여기에 적용하실 css 나 js 작성하시면 됩니다. 아래는 예시들 입니다. -->
 
 	<!-- <link rel="stylesheet" th:href="@{/css/파일이름.css}"> -->
+	<link rel="stylesheet" th:href="@{/css/details.css}">
 
 	<!-- <script type="text/javascript" th:src="@{/js/search/search.js}"></script>-->
 	<script type="text/javascript" th:src="@{/js/details/details.js}"></script>
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
 	      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-	<link rel="stylesheet" th:href="@{/css/details.css}">
-
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
 	        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
 	        crossorigin="anonymous"></script>
+
 
 </head>
 
@@ -189,8 +189,8 @@
 							<p>융자금</p>
 						</div>
 						<div class="y-list-content">
-							<p th:if="${maemulList.get().loanAmount == 999}">-</p>
-							<p th:unless="${maemulList.get().loanAmount == 999}">[[${maemulList.get().loanAmount}]]</p>
+							<p th:if="${maemulList.get().loanAmount == 999 || maemulList.get().loanAmount == 0}">-</p>
+							<p th:unless="${maemulList.get().loanAmount == 999 || maemulList.get().loanAmount == 0}">[[${maemulList.get().loanAmount}]]</p>
 						</div>
 					</li>
 					<li>
@@ -198,9 +198,9 @@
 							<p>관리비</p>
 						</div>
 						<div class="y-list-content">
-							<p th:unless="${maemulList.get().managementFee == 999}">매월
+							<p th:unless="${maemulList.get().managementFee == 999 || maemulList.get().managementFee == 0}">매월
 								[[${maemulList.get().managementFee}]] 만원</p>
-							<p th:if="${maemulList.get().managementFee == 999}">-</p>
+							<p th:if="${maemulList.get().managementFee == 999 || maemulList.get().managementFee == 0}">-</p>
 						</div>
 					</li>
 					<li>
@@ -217,11 +217,11 @@
 							<p>단기임대</p>
 						</div>
 						<div class="y-list-content">
-							<p th:if="${maemulList.get().shortTermRental.contains('가능')}">가능</p>
-							<p th:if="${maemulList.get().shortTermRental.contains('불가능')}">불가능</p>
+							<p th:if="${maemulList.get().shortTermRental.equals('가능')}">가능</p>
+							<p th:if="${maemulList.get().shortTermRental.equals('불가능')}">불가능</p>
 						</div>
 					</li>
-					<li th:unless="${maemulList.get().monthlyRent == 999}">
+					<li th:unless="${maemulList.get().monthlyRent == 999 || maemulList.get().monthlyRent == 0}">
 						<div class="y-list-title">
 							<p>한달 예상 주거비용</p>
 						</div>
@@ -319,8 +319,8 @@
 									      fill="#222222"></path>
 								</svg>
 								<span>
-									<p th:if="${maemulList.get().managementFee == 999}" th:text="없음"></p>
-									<p th:if="${maemulList.get().managementFee != 999}" th:text="${maemulList.get().managementFee + '만원'}"</p>
+									<p th:if="${maemulList.get().managementFee == 999 || maemulList.get().managementFee == 0}" th:text="없음"></p>
+									<p th:if="${maemulList.get().managementFee != 999 && maemulList.get().managementFee != 0}" th:text="${maemulList.get().managementFee + '만원'}"></p>
 								</span>
 
 							</div>
@@ -348,8 +348,8 @@
 					</div>
 					<div class="y-st-btns">
 						<div class="y-st-q">
-							<a href="test" class="y-st-rr">
-								<span>더 많은 매물 보기</span>
+							<a th:href="@{/details/miniHome/{nickname}(nickname=${maemulList.get().nickname})}" class="y-st-rr">
+								<span>프로필 보기</span>
 							</a>
 						</div>
 						<div class="y-st-w">
