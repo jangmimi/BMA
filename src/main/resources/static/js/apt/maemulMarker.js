@@ -103,9 +103,9 @@ function createMarker(position, markerContent, responseData) {
 var onlyOneStart = false; // 한 번만 실행하기 위한 변수
 // 맵 로드가 완료되면 실행
 
-var tradeType = []; // 선택된 거래 유형을 담을 배열
+/* 거래유형 옵션 */
+var tradeType = [];
 
-// 체크박스의 변경 이벤트를 감지하고 선택된 거래 유형을 배열에 추가 또는 제거합니다.
 $("#flexCheckAll").change(function () {
     updateSelectedTradeTypes(null, this.checked);
 });
@@ -135,9 +135,100 @@ function updateSelectedTradeTypes(type, isChecked) {
         tradeType = tradeType.filter(item => item !== type);
     }
 
+}
 
+/* 방개수 옵션 */
+var roomCount;
+
+$('input[name="searchRoomCount"]').on('change', function () {
+    roomCount = $(this).val();
+});
+
+/* 욕실 수 옵션 */
+var bathRoomCount;
+$('input[name="searchBathRoomCount"]').on('change', function () {
+    bathRoomCount = $(this).val();
+});
+
+/* 층 수 옵션 */
+var floorCount;
+$('input[name="searchFloorCount"]').on('change', function () {
+    floorCount = $(this).val();
+});
+
+/* 관리비 옵션 */
+var manageFee;
+$('input[name="searchMaintenance"]').on('change', function () {
+    manageFee = $(this).val();
+});
+
+/* 엘리베이터 옵션 */
+var elevator;
+$('input[name="searchElevator"]').on('change', function () {
+    var selectedValue = $(this).val();
+    elevator = selectedValue === '' ? null : selectedValue;
+});
+
+/* 방향 옵션 */
+var direction = [];
+
+$("#searchDirectionAll").change(function () {
+    updateSelectedDirection(null, this.checked);
+});
+
+$("#maesearchDirection_C00702").change(function () {
+    updateSelectedDirection("동향", this.checked);
+});
+
+$("#maesearchDirection_C00703").change(function () {
+    updateSelectedDirection("서향", this.checked);
+});
+
+$("#maesearchDirection_C00704").change(function () {
+    updateSelectedDirection("남향", this.checked);
+});
+
+$("#maesearchDirection_C00705").change(function () {
+    updateSelectedDirection("북향", this.checked);
+});
+
+$("#maesearchDirection_C00706").change(function () {
+    updateSelectedDirection("남동향", this.checked);
+});
+$("#maesearchDirection_C00707").change(function () {
+    updateSelectedDirection("남서향", this.checked);
+});
+$("#maesearchDirection_C00708").change(function () {
+    updateSelectedDirection("북동향", this.checked);
+});
+$("#maesearchDirection_C00709").change(function () {
+    updateSelectedDirection("북서향", this.checked);
+});
+function updateSelectedDirection(type, isChecked) {
+    if (isChecked) {
+        // 체크된 경우 배열에 추가
+        direction.push(type);
+    } else {
+        // 체크 해제된 경우 배열에서 제거
+        direction = direction.filter(item => item !== type);
+    }
 
 }
+
+/* 주차가능 옵션 */
+var parking;
+$('input[name="searchParkCount"]').on('change', function () {
+    var selectedValue = $(this).val();
+    parking = selectedValue === '' ? null : selectedValue;
+});
+
+/* 단기임대 옵션 */
+var rental;
+$('input[name="rentalCount"]').on('change', function () {
+    var selectedValue = $(this).val();
+    rental = selectedValue === '' ? null : selectedValue;
+});
+
 
 kakao.maps.event.addListener(map, 'tilesloaded', function () {
     // 이미 실행된 경우 함수 종료
@@ -147,6 +238,8 @@ kakao.maps.event.addListener(map, 'tilesloaded', function () {
     onlyOneStart = true; // 변수 업데이트
 
     var tradeTypeString = tradeType.join(",");
+    var directionString = direction.join(",");
+
 
     var bounds = map.getBounds();
     var southWest = bounds.getSouthWest();
@@ -160,7 +253,15 @@ kakao.maps.event.addListener(map, 'tilesloaded', function () {
         northEastLat: northEast.getLat(),
         northEastLng: northEast.getLng(),
         zoomLevel: currentZoomLevel,
-        tradeType: tradeTypeString
+        tradeType: tradeTypeString,
+        numberOfRooms: roomCount,
+        numberOfBathrooms: bathRoomCount,
+        floorNumber: floorCount,
+        managementFee: manageFee,
+        Elevator: elevator,
+        direction: directionString,
+        Parking: parking,
+        shortTermRental: rental
 
     };
 
@@ -209,6 +310,7 @@ kakao.maps.event.addListener(map, 'idle', function () {
     clearSidebar();
 
     var tradeTypeString = tradeType.join(",");
+    var directionString = direction.join(",");
 
     var bounds = map.getBounds();
     var southWest = bounds.getSouthWest();
@@ -221,7 +323,15 @@ kakao.maps.event.addListener(map, 'idle', function () {
         northEastLat: northEast.getLat(),
         northEastLng: northEast.getLng(),
         zoomLevel: currentZoomLevel,
-        tradeType: tradeTypeString
+        tradeType: tradeTypeString,
+        numberOfRooms: roomCount,
+        numberOfBathrooms: bathRoomCount,
+        floorNumber: floorCount,
+        managementFee: manageFee,
+        Elevator: elevator,
+        direction: directionString,
+        Parking: parking,
+        shortTermRental: rental
     };
 
 //    console.log(dataToSend);
