@@ -9,7 +9,9 @@ import com.ap4j.bma.model.repository.MaemulPhotoRepository;
 
 import com.ap4j.bma.service.maemulReg.MaemulPhotoService;
 import com.ap4j.bma.service.maemulReg.MaemulRegService;
-import groovy.util.logging.Slf4j;
+
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
+import java.util.logging.Logger;
 
 
 @SessionAttributes({"loginMember", "maemulRegEntity"})
@@ -31,7 +34,6 @@ public class MaemulRegController {
     private MaemulRegService maemulRegService;
     @Autowired
     private MaemulPhotoRepository maemulPhotoRepository;
-
     @Autowired
     private MaemulPhotoService maemulPhotoService;
 
@@ -78,18 +80,26 @@ public class MaemulRegController {
         // 매물 정보를 데이터베이스에 저장
         MaemulRegEntity savedEntity = maemulRegService.saveMaemulInfo(maemulRegEntity);
 
-        for (int i = 0; i < imageFiles.length; i++) {
-            MultipartFile file = imageFiles[i];
-
+        for (MultipartFile file : imageFiles) {
             if (!file.isEmpty()) {
-                // 이미지를 MaemulPhotoEntity에 저장
+                // 새로운 MaemulPhotoEntity 인스턴스 생성
                 MaemulPhotoEntity maemulPhotoEntity = new MaemulPhotoEntity();
+
+                // 매물 ID 설정 및 엔티티 저장
                 maemulPhotoEntity.setMaemulID(savedEntity.getId());
 
-                // 이미지를 저장하고 이미지 경로를 MaemulPhotoEntity에 추가
+                log.info(String.valueOf(savedEntity.getId()));
+                log.info("**************");
+                log.info(String.valueOf(maemulPhotoEntity));
+                log.info("**************");
+                log.info(String.valueOf(file));
+                log.info("**************");
+                // 이미지를 서버로 업로드하고 데이터베이스에 저장하는 로직 추가
                 maemulPhotoService.saveImage(file, maemulPhotoEntity);
 
-                // 이미지 정보를 데이터베이스에 저장할 필요 없음 (이미 MaemulPhotoService 내에서 처리)
+
+                // 데이터베이스에 저장
+                maemulPhotoRepository.save(maemulPhotoEntity);
             }
         }
 
@@ -98,9 +108,6 @@ public class MaemulRegController {
 
         return "redirect:/confirmation";
     }
-
-
-
     // 확인 페이지
     @GetMapping("/confirmation")
     public String confirmationPage(@RequestParam("maemulId") Integer maemulId, Model model) {
