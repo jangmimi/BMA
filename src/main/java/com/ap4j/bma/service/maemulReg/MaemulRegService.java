@@ -1,6 +1,7 @@
 package com.ap4j.bma.service.maemulReg;
 
 import com.ap4j.bma.model.entity.meamulReg.MaeMulRegDTO;
+import com.ap4j.bma.model.entity.meamulReg.MaemulPhotoEntity;
 import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
 import com.ap4j.bma.model.repository.MaemulRegEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ public class MaemulRegService {
         // 매물 ID로 매물 정보를 조회
         return maemulRegEntityRepository.findById(maemulId).orElse(null);
     }
+
 
     // 매물 좌표값 업데이트
     public void updateMeamulReg(Integer maemulId, Double latitude, Double longitude) {

@@ -3,8 +3,15 @@ package com.ap4j.bma.controller.maemulReg;
 import com.ap4j.bma.model.entity.meamulReg.MaemulPhotoEntity;
 import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
 import com.ap4j.bma.model.entity.member.MemberDTO;
+
+import com.ap4j.bma.model.repository.MaemulPhotoRepository;
+//import com.ap4j.bma.service.maemulReg.FileStorageService;
+
+import com.ap4j.bma.service.maemulReg.MaemulPhotoService;
 import com.ap4j.bma.service.maemulReg.MaemulRegService;
-import groovy.util.logging.Slf4j;
+
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -15,6 +22,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
+import java.util.logging.Logger;
+
 
 @SessionAttributes({"loginMember", "maemulRegEntity"})
 @Controller
@@ -23,8 +32,10 @@ public class MaemulRegController {
 
     @Autowired
     private MaemulRegService maemulRegService;
-//    @Autowired
-//    private MaemulPhotoService maemulPhotoService;
+    @Autowired
+    private MaemulPhotoRepository maemulPhotoRepository;
+    @Autowired
+    private MaemulPhotoService maemulPhotoService;
 
     //약관동의 페이지
     @GetMapping("/agree")
@@ -61,26 +72,49 @@ public class MaemulRegController {
         return "maemulReg/moreinfo";
     }
 
-    // 상세 정보 저장
-    @PostMapping("/moreinfo")
     @Transactional
+    @PostMapping("/moreinfo")
     public String saveMoreInfo(@ModelAttribute MaemulRegEntity maemulRegEntity,
-                               @RequestParam("imageFiles") MultipartFile file,
-                               RedirectAttributes redirectAttributes) throws Exception{
-            // 매물 정보를 데이터베이스에 저장
-            MaemulRegEntity savedEntity = maemulRegService.saveMaemulInfo(maemulRegEntity);
+                               @RequestParam("imageFiles") MultipartFile[] imageFiles,
+                               RedirectAttributes redirectAttributes) throws Exception {
+        // 매물 정보를 데이터베이스에 저장
+        MaemulRegEntity savedEntity = maemulRegService.saveMaemulInfo(maemulRegEntity);
 
-            // 저장된 매물 정보의 ID를 리다이렉트 시에 전달
-            redirectAttributes.addAttribute("maemulId", savedEntity.getId());
+        for (MultipartFile file : imageFiles) {
+            if (!file.isEmpty()) {
+                // 새로운 MaemulPhotoEntity 인스턴스 생성
+                MaemulPhotoEntity maemulPhotoEntity = new MaemulPhotoEntity();
 
-            return "redirect:/confirmation";
+                // 매물 ID 설정 및 엔티티 저장
+                maemulPhotoEntity.setMaemulID(savedEntity.getId());
 
+                log.info(String.valueOf(savedEntity.getId()));
+                log.info("**************");
+                log.info(String.valueOf(maemulPhotoEntity));
+                log.info("**************");
+                log.info(String.valueOf(file));
+                log.info("**************");
+                // 이미지를 서버로 업로드하고 데이터베이스에 저장하는 로직 추가
+                maemulPhotoService.saveImage(file, maemulPhotoEntity);
+
+
+                // 데이터베이스에 저장
+                maemulPhotoRepository.save(maemulPhotoEntity);
+            }
+        }
+
+        // 저장된 매물 정보의 ID를 리다이렉트 시에 전달
+        redirectAttributes.addAttribute("maemulId", savedEntity.getId());
+
+        return "redirect:/confirmation";
     }
     // 확인 페이지
     @GetMapping("/confirmation")
     public String confirmationPage(@RequestParam("maemulId") Integer maemulId, Model model) {
         // 매물 정보를 데이터베이스에서 가져와서 확인 페이지에 표시
         MaemulRegEntity maemulRegEntity = maemulRegService.getMaemulById(maemulId);
+
+
         model.addAttribute("maemulRegEntity", maemulRegEntity);
         return "maemulReg/confirmation";
     }

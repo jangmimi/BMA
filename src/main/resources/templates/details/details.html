@@ -189,8 +189,8 @@
 							<p>융자금</p>
 						</div>
 						<div class="y-list-content">
-							<p th:if="${maemulList.get().loanAmount == 999}">-</p>
-							<p th:unless="${maemulList.get().loanAmount == 999}">[[${maemulList.get().loanAmount}]]</p>
+							<p th:if="${maemulList.get().loanAmount == 999 || maemulList.get().loanAmount == 0}">-</p>
+							<p th:unless="${maemulList.get().loanAmount == 999 || maemulList.get().loanAmount == 0}">[[${maemulList.get().loanAmount}]]</p>
 						</div>
 					</li>
 					<li>
@@ -198,9 +198,9 @@
 							<p>관리비</p>
 						</div>
 						<div class="y-list-content">
-							<p th:unless="${maemulList.get().managementFee == 999}">매월
+							<p th:unless="${maemulList.get().managementFee == 999 || maemulList.get().managementFee == 0}">매월
 								[[${maemulList.get().managementFee}]] 만원</p>
-							<p th:if="${maemulList.get().managementFee == 999}">-</p>
+							<p th:if="${maemulList.get().managementFee == 999 || maemulList.get().managementFee == 0}">-</p>
 						</div>
 					</li>
 					<li>
@@ -221,7 +221,7 @@
 							<p th:if="${maemulList.get().shortTermRental.equals('불가능')}">불가능</p>
 						</div>
 					</li>
-					<li th:unless="${maemulList.get().monthlyRent == 999}">
+					<li th:unless="${maemulList.get().monthlyRent == 999 || maemulList.get().monthlyRent == 0}">
 						<div class="y-list-title">
 							<p>한달 예상 주거비용</p>
 						</div>
@@ -319,8 +319,8 @@
 									      fill="#222222"></path>
 								</svg>
 								<span>
-									<p th:if="${maemulList.get().managementFee == 999}" th:text="없음"></p>
-									<p th:if="${maemulList.get().managementFee != 999}" th:text="${maemulList.get().managementFee + '만원'}"</p>
+									<p th:if="${maemulList.get().managementFee == 999 || maemulList.get().managementFee == 0}" th:text="없음"></p>
+									<p th:if="${maemulList.get().managementFee != 999 && maemulList.get().managementFee != 0}" th:text="${maemulList.get().managementFee + '만원'}"></p>
 								</span>
 
 							</div>
