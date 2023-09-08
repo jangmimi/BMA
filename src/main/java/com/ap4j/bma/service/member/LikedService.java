@@ -38,10 +38,10 @@ public class LikedService {
         return likedRepository.findByNickname(nickname);
     }
 
-    /** 특정 주소와 매치되는 매물 전부 조회 */
-    public List<MaemulRegEntity> findLikedByRoadname(String road_name) {
-        return likedRepository.findMaemulByRoadName(road_name);
-    }
+//    /** 특정 주소와 매치되는 매물 전부 조회 */
+//    public List<MaemulRegEntity> findLikedByRoadname(String road_name) {
+//        return likedRepository.findMaemulByRoadName(road_name);
+//    }
 
     /** 로그인한 멤버가 관심등록한 매물만 조회 */
     public List<MaemulRegEntity> filterMaemulListByNickname(String nickname, List<LikedEntity> likedList, List<MaemulRegEntity> maemulList) {
@@ -56,20 +56,21 @@ public class LikedService {
     @Transactional
     public Long save(LikedEntity likeEntity) {
         String nickname = likeEntity.getNickname();
-        String roadName = likeEntity.getRoad_name();
-        boolean isDuplicate = likedRepository.existsByNicknameAndRoadName(nickname, roadName);
+        Integer maemul_id = likeEntity.getMaemul_id();
+        boolean isDuplicate = likedRepository.existsByNicknameAndMaemulId(nickname, maemul_id);
 
         if(!isDuplicate) {
             likedRepository.save(likeEntity); log.info("중복아니라 저장완료");
         } else {
             log.info("중복된 매물이네요. 삭제 실행 - 임시로 컨트롤러에서 실행");
+            deleteByMaemulIdAndNickname(maemul_id, nickname);
         }
         return likeEntity.getId();
     }
 
     /** 관심매물 삭제 */
     @Transactional
-    public void deleteById(Integer maemul_id, String nickname) {
+    public void deleteByMaemulIdAndNickname(Integer maemul_id, String nickname) {
         likedRepository.deleteByMaemulIdAndNickname(maemul_id,nickname);
     }
 
