@@ -430,7 +430,9 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 </head>
 
 <body layout:fragment="content">
-<form action="/update-maemul" method="POST" id="maemulForm">
+<!-- 로그인중일때만 접근 가능 -->
+<th:block th:if="${loginMember != null}">                     <!--세션 받아와서 저장-->
+<form action="/update-maemul" method="POST" id="maemulForm" th:object="${loginMember}">
     <div class="layout">
 
         <h2 class="category"><b class="number">01 </b>주소 정보</h2>
