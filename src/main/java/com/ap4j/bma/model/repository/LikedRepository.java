@@ -40,6 +40,17 @@ public interface LikedRepository extends JpaRepository<LikedEntity, Long> {
     /** nickname으로 관심매물 조회 */
     List<LikedEntity> findByNickname(String nickname);
 
+    /*김재환작성 관심매물 전체개수*/
+    @Query(value = "SELECT COUNT(l.id) FROM liked l WHERE l.nickname = :nickname", nativeQuery = true)
+    Long countLikedByNickname(@Param("nickname") String nickname);
+
+    /** 관심매물 삭제 */
+//    @Override
+//    void delete(LikedEntity entity);
+
+    /** nickname과 road_name으로 이미 있는 관심매물인지 조회 */
+//    Optional<LikedEntity> findByNicknameAndRoad_name(String nickname, String road_name);
+
     /** 내 관심매물 조회 */
     @Query("SELECT mr FROM MaemulRegEntity mr " +
             "WHERE mr.id IN " +

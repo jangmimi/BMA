@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layouts/main_include_footer_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>매물 정보 수정</title>
+
+    <style>
+        .layout{
+    width : 80%;
+    margin : auto;
+    margin-top: 40px;
+    }
+
+  hr {
+  border-bottom : 2px solid #26A9E0;
+  margin-bottom : 30px;
+  }
+
+  .number{
+  color: #26A9E0;
+  }
+
+       table th {
+       padding: 15px;
+       background: #fafafa;
+       font-size: 15px;
+
+       }
+
+
+        h2{
+        margin-left : 3%;
+        }
+
+         .btn-group  {
+        display: flex;
+        justify-content: center;
+         }
+
+        .btn-group:after {
+        content: "";
+        clear: both;
+        display: table;
+        }
+
+        .info{
+         width : 95%;
+         margin-top:70px;
+         margin : auto;
+         border-collapse: collapse;
+         border: 1px solid #ddd;
+        }
+
+        .num{
+        text-align : right;
+        width : 40px;
+        height : 18px;
+        }
+
+        .won{
+        text-align : right;
+        width : 130px;
+        height : 18px;
+        }
+
+        .combo{
+        margin-left :5px;
+        width : 120px;
+        height : 18px;
+        }
+
+        input {
+        margin-left: 5px;
+        padding: 5px;
+        border: 1px solid #ccc;
+        transition: all 0.3s ease; /* 입력 필드 크기 변경에 부드러운 애니메이션 추가 */
+    }
+
+    input:focus {
+        border-color: #26A9E0;
+        outline: none;
+        transform: scale(1.05); /* 포커스를 얻을 때 크기가 조금 더 커지도록 설정 */
+    }
+
+        #addressInput{
+        margin-left :5px;
+        width : 250px;
+        height : 18px;
+        }
+
+        #apt-name{
+        margin-left :5px;
+        width : 160px;
+        height : 18px;
+        }
+
+        .hidden {
+         display: none;
+         border-collapse: collapse;
+    }
+
+        #monthRentSection{
+        border-collapse: collapse;
+        border: 1px solid #ddd;
+        width : 33%;
+        }
+
+        #leaseSection{
+        margin-left : 33.5%;
+        border-collapse: collapse;
+        border: 1px solid #ddd;
+        width : 33%;
+        }
+
+        #sellingSection{
+        margin-left : 67%;
+        border-collapse: collapse;
+        border: 1px solid #ddd;
+        width : 33%;
+        }
+
+        .address-btn{
+        border : none;
+        background-color : white;
+        }
+
+        table th{padding:20px;}
+
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border: 2px solid #26A9E0;
+            padding: 20px;
+            z-index: 9999;
+            max-width: 80%;
+            max-height: 80%;
+            overflow: auto;
+            width: 600px;
+            height: 600px;
+            border-radius :5px;
+        }
+
+        .x-btn{
+        float : right;
+        border : none;
+        background-color :white;
+        }
+
+        .ximg{
+        width : 50px;
+        height: 50px;
+
+        }
+
+        .pop-content{
+        margin-top : 40px;
+        }
+
+        #helpLink{
+        color : #26A9E0;
+        }
+
+
+
+        /*거래유형 라디오*/
+                .form_radio_btn {
+        			width: 47%;
+        			height : 55px;
+            		border: 1px solid #26A9E0;;
+            		border-radius: 10px;
+        		}
+        		.form_radio_btn input[type=radio] {
+        			display: none;
+        		}
+        		.form_radio_btn label {
+        			display: block;
+            		border-radius: 10px;
+           			margin: 0 auto;
+            		text-align: center;
+            		height: -webkit-fill-available;
+            		line-height: 50px;
+        		}
+
+        		/* Checked */
+        		.form_radio_btn input[type=radio]:checked + label {
+        			background: #26A9E0;
+        			color: #fff;
+        		}
+
+        		/* Hover */
+        		.form_radio_btn label:hover {
+        			color: #666;
+        		}
+
+        		/* Disabled */
+        		.form_radio_btn input[type=radio] + label {
+        			background: #F9FAFC;
+        			color: #666;
+        		}
+
+
+
+        input, textarea{
+        margin-left: 5px;
+        padding: 5px;
+        border: 1px solid #ccc;
+        transition: all 0.3s ease; /* 입력 필드 크기 변경에 부드러운 애니메이션 추가 */
+    }
+
+    input:focus, textarea:focus {
+        border-color: #26A9E0;
+        outline: none;
+        transform: scale(1.005); /* 포커스를 얻을 때 크기가 조금 더 커지도록 설정 */
+    }
+
+
+      table{
+      width : 95%;
+      margin-top:70px;
+      margin : auto;
+      border-collapse: collapse;
+      border: 1px solid #ddd;
+     }
+
+
+    .coment-t{
+    width : 95%;
+    border: #ddd 1px solid;
+    margin:10px;
+    height : 30px;
+    border-radius : 5px;
+    }
+    .back{
+    margin-left : 60px;
+    }
+    .coment{
+        width : 95%;
+        height: 200px;
+        border: #ddd 1px solid;
+        resize: none;
+        margin:10px;
+        border-radius : 5px;
+  }
+    .count{
+    float: right;
+    color : gray;
+    margin-right : 50px;
+    }
+
+   .pic-box{
+   width : 90%;
+   height: 200px;
+   background-color : #fafafa;
+   border : 1px solid #26A9E0;
+   text-align : center;
+   margin: auto;
+   display: flex;
+   align-items: center;
+   }
+
+    /*
+       .pic-btn{
+       color : white;
+       background-color : #26A9E0;
+       border : 1px solid #26A9E0;
+       border-radius : 5px;
+       width : 120px;
+       height : 35px;
+       }
+    */
+
+    #previewContainer {
+        display: inline-block; /* 이미지 컨테이너를 인라인 블록 요소로 설정 */
+        vertical-align: top; /* 이미지 컨테이너를 상단 정렬 */
+        margin-right : 10px;
+    }
+
+    /*삽입되는 이미지*/
+    .preview-image{
+    border: 3px solid black;
+    width : 180px;
+    height: 150px;
+    margin-right : 10px;
+    margin-left : 10px;
+
+    }
+
+         /* 이미지 미리보기 스타일
+                #previewContainer img {
+                    max-width: 120px;
+                    max-height: 200px;
+                }
+        */
+
+    /*대표사진*/
+        .representative-label {
+            position: absolute;
+            top: 8px;
+            left: 12px;
+            height:20px;
+            background-color: rgba(36, 168, 224, 0.62);
+            color: white;
+            padding: 5px;
+            font-size: 14px;
+        }
+
+  /* 이미지 컨테이너 스타일 */
+        .image-container {
+            position: relative;
+            display: inline-block;
+            margin-right: 10px; /* 이미지 간 간격 조절 */
+        }
+
+    /* X 버튼 스타일 */
+      .delete-button {
+          position: absolute;
+          top: 8px; /* 위쪽 여백 조절 */
+          right: 15px; /* 오른쪽 여백 조절 */
+          background-color: #26A9E0;
+          color: white;
+          border: 3px solid #26A9E0;
+          border-radius: 50%;
+          width: 25px;
+          height: 25px;
+          cursor: pointer;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+      }
+
+/*옵션, 특징 선택 */
+.container {
+    font-size: 13px;
+}
+
+.container table th{
+width :15%;
+}
+
+ul.ks-cboxtags {
+    list-style: none;
+    padding: 20px;
+}
+ul.ks-cboxtags li{
+  display: inline;
+}
+ul.ks-cboxtags li label{
+    display: inline-block;
+    background-color: rgba(255, 255, 255, .9);
+    border: 2px solid rgba(139, 139, 139, .3);
+    border-radius: 25px;
+    white-space: nowrap;
+    margin: 3px 0px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: all .2s;
+}
+
+ul.ks-cboxtags li label {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+ul.ks-cboxtags li label::before {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    font-size: 12px;
+    padding: 2px 6px 2px 2px;
+    content: "\f067";
+    transition: transform .3s ease-in-out;
+}
+
+ul.ks-cboxtags li input[type="checkbox"]:checked + label::before {
+    content: "\f00c";
+    transform: rotate(-360deg);
+    transition: transform .3s ease-in-out;
+}
+
+ul.ks-cboxtags li input[type="checkbox"]:checked + label {
+    border: 2px solid #1bdbf8;
+    background-color: #12bbd4;
+    color: #fff;
+    transition: all .2s;
+}
+
+ul.ks-cboxtags li input[type="checkbox"] {
+  display: absolute;
+}
+ul.ks-cboxtags li input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+}
+ul.ks-cboxtags li input[type="checkbox"]:focus + label {
+  border: 2px solid #ddd; /*e9a1ff*/
+}
+
+
+        .update-btn{
+        background-color: #26A9E0;
+        padding: 10px;
+        width: 20%;
+        color : white;
+        height : 50px;
+        border : none;
+        border-radius : 10px;
+        display: flow;
+        margin: auto;
+        margin-top: 50px;
+        margin-bottom: 250px;
+        }
+
+
+
+    </style>
+</head>
+
+<body layout:fragment="content">
+<!-- 로그인중일때만 접근 가능 -->
+<th:block th:if="${loginMember != null}">                     <!--세션 받아와서 저장-->
+<form action="/update-maemul" method="POST" id="maemulForm" th:object="${loginMember}">
+    <div class="layout">
+
+        <h2 class="category"><b class="number">01 </b>주소 정보</h2>
+        <hr>
+        <div id="addressSection">
+            <table border="1" class="info">
+                <tr >
+                    <th>주소<b class="number"> *</b></th>
+                    <td colspan="3">
+                        <input id="addressInput" name="address" type="text" readonly>
+                        <button type="button" onclick="openKakaoAddressSearch()" class="address-btn"><img src="/img/maemulReg/search-address.png" style="width:40px; height:40px;" alt="도로명 주소" ></button>
+                        <button onclick="getCurrentLocation()" class="address-btn"><img src="/img/maemulReg/mygps.png" style="width:40px; height:40px;" alt="내 위치" ></button>
+                    </td>
+                </tr>
+                <tr>
+                    <th>단지명</th>
+                    <td colspan="3"><input id="APT_name" name="APT_name" onblur="showBuildingInfo();" type="text"></td>
+                </tr>
+            </table>
+            <br>
+        </div>
+
+        <div id="buildingSection">
+            <h2 class="category"><b class="number">02 </b>건물 정보</h2>
+            <hr>
+            <table border="1" class="info">
+                <tr>
+                    <th>건축물 용도</th>
+                    <td colspan="4">
+                        <input type="radio" name="buildingUsage" value="거주용">주거용
+                        <input type="radio" name="buildingUsage" value="업무용">상업용
+                        <input type="radio" name="buildingUsage" value="거주/업무용">주거/상업용
+                    </td>
+                </tr>
+                <tr>
+                    <th>방 수<b class="number"> *</b></th>
+                    <td><input class="num" type="text" id = "useInput" name="numberOfRooms" placeholder="0"> 개</td>
+                    <th>욕실 수<b class="number"> *</b></th>
+                    <td colspan="2"><input class="num" type="text" name="numberOfBathrooms" placeholder="0"> 개</td>
+                </tr>
+                <tr>
+                    <th>해당 층 수<b class="number"> *</b></th>
+                    <td><input class="num" type="text" name="floorNumber" placeholder="1"> 층</td>
+                    <th>건물 층 수<b class="number"> *</b></th>
+                    <td colspan="2"><input class="num" type="text" name="totalFloors" placeholder="1"> 층</td>
+                </tr>
+                <tr>
+                    <th>전용 면적<b class="number"> *</b></th>
+                    <td><input class="num" type="text" name="privateArea" placeholder="0"> m²</td>
+                    <th>공급 면적<b class="number"> *</b></th>
+                    <td><input class="num" type="text" name="supplyArea" placeholder="0"> m²</td>
+                    <th><a href="javascript:void(0);" id="helpLink" onclick="showPopup()">도움말</a></th>
+                </tr>
+                <tr>
+                    <th>방향</th>
+                    <td colspan="4">
+                        <select class="combo" name="direction">
+                            <option value="none">=== 선택 ===</option>
+                            <option value="동향">동향</option>
+                            <option value="서향">서향</option>
+                            <option value="남향">남향</option>
+                            <option value="북향">북향</option>
+                            <option value="남동향">남동향</option>
+                            <option value="남서향">남서향</option>
+                            <option value="북동향">북동향</option>
+                            <option value="북서향">북서향</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>난방 종류</th>
+                    <td colspan="4">
+                        <select class="combo" name="heatingType">
+                            <option value="none">=== 선택 ===</option>
+                            <option value="지역난방">지역난방</option>
+                            <option value="중앙난방">중앙난방</option>
+                            <option value="개별난방">개별난방</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>엘리베이터</th>
+                    <td colspan="4">
+                        <input type="radio" name="elevator" value="유">유
+                        <input type="radio" name="elevator" value="무">무
+                    </td>
+                </tr>
+                <tr>
+                    <th>주차가능여부<b class="number"> *</b></th>
+                    <td>
+                        <input type="radio" name="parking" value="가능">가능
+                        <input type="radio" name="parking" value="불가능">불가능
+                    </td>
+                    <th>총 주차대수</th>
+                    <td colspan="2"><input class="num" type="text" name="totalParking" placeholder="0"> 대</td>
+                </tr>
+                <tr>
+                    <th>단기임대</th>
+                    <td colspan="4">
+                        <input type="radio" name="shortTermRental" value="가능">가능
+                        <input type="radio" name="shortTermRental" value="불가능">불가능
+                    </td>
+                </tr>
+                <tr>
+                    <th>입주가능일<b class="number"> *</b></th>
+                    <td colspan="4">
+                        <input type="date"
+                               id="comedate"
+                               name="availableMoveInDate"
+                               max="2030-12-31"
+                               min="2023-01-01"
+                               value="2023-09-13">
+                </tr>
+                <tr>
+                    <th>융자금 여부<b class="number"> *</b></th>
+                    <td colspan="4"><input class="won" name="loanAmount" type="text" placeholder="0"  onblur = "showPriceInfo();"> 만원</td>
+                </tr>
+            </table>
+            <br>
+        </div>
+
+        <div id="priceSection">
+            <h2 class="category"><b class="number">03 </b>가격 정보</h2>
+            <hr>
+
+            <div class="btn-group">
+                <!--버튼-->
+                <div class="form_radio_btn radio_male">
+                    <input id="month" type="radio" name="tradeType" value="월세">
+                    <label for="month">월세</label>
+                </div>
+
+                <div class="form_radio_btn">
+                    <input id="year" type="radio" name="tradeType" value="전세">
+                    <label for="year">전세</label>
+                </div>
+
+                <div class="form_radio_btn radio_male">
+                    <input id="sell" type="radio" name="tradeType" value="매매">
+                    <label for="sell">매매</label>
+                </div>
+            </div>
+
+            <!--가격 입력 창-->
+            <table id="monthRentSection" class="hidden">
+                <tr>
+                    <th>보증금<b class="number"> *</b></th>
+                    <td><input class="won" name="monthlyForRent" id="monthlyForRent" type="text" placeholder="0"> 만원</td>
+                </tr>
+                <tr>
+                    <th>월세<b class="number"> *</b></th>
+                    <td><input class="won" name="monthlyRent" id="monthlyRent" type="text"  placeholder="0"> 만원</td>
+                </tr>
+                <tr>
+                    <th>관리비<b class="number"> *</b></th>
+                    <td><input class="won" name="managementFee"  id="m_managementFee" type="text" placeholder="0"> 원</td>
+                </tr>
+            </table>
+
+            <table id="leaseSection" class="hidden">
+                <tr>
+                    <th>전세가<b class="number"> *</b></th>
+                    <td colspan="3"><input class="won" name="depositForLease" id="depositForLease" type="text" placeholder="0"> 만원</td>
+                </tr>
+                <tr>
+                    <th>관리비<b class="number"> *</b></th>
+                    <td><input class="won" name="managementFee" id="d_managementFee" type="text" placeholder="0"> 원</td>
+                </tr>
+            </table>
+
+            <table  id="sellingSection" class="hidden">
+                <tr>
+                    <th>매매가<b class="number"> *</b></th>
+                    <td colspan="5"><input class="won" name="SellingPrice" id="SellingPrice" type="text" placeholder="0"> 만원</td>
+                </tr>
+            </table>
+        </div>
+
+    <h2 class="category"><b class="number">04 </b>상세 정보</h2>
+    <hr>
+    <div class="coment-box">
+        <table border="1">
+            <tr>
+                <th>제목 <b class="number">*</b></th>
+                <td> <input class="coment-t" name="title" type="text" placeholder="ex) 강남역 도보 10분이내, 3층 투룸 전세" oninput="countCharacters(this, 'titleCount', 20)"><br>
+                    <p class="count" id="titleCount">0/20</p> </td>
+            </tr>
+            <tr>
+                <th>상세설명</th>
+                <td> <textarea class="coment" name="content" placeholder="해당 방에 대한 상세정보를 입력해주세요." oninput="countCharacters(this, 'descriptionCount', 500)"></textarea>
+                    <p class="count" id="descriptionCount">0/500</p></td>
+            </tr>
+        </table>
+
+        <br>
+        <div class="container">
+            <table border="1">
+                <tr class="property-features">
+                    <th>특징</th>
+                    <td>
+                        <ul class="ks-cboxtags">
+                            <li><input type="checkbox" name="features" id="short_term" value="단기"><label for="short_term">단기</label></li>
+                            <li><input type="checkbox" name="features" id="new_build" value="신축"><label for="new_build">신축</label></li>
+                            <li><input type="checkbox" name="features" id="investigation" value="투자"><label for="investigation">투자</label></li>
+                            <li><input type="checkbox" name="features" id="full_option" value="풀옵션"><label for="full_option">풀옵션</label></li>
+                            <li><input type="checkbox" name="features" id="elevator" value="엘리베이터"><label for="elevator">엘리베이터</label></li>
+                            <li><input type="checkbox" name="features" id="safety" value="보안/안전"><label for="safety">보안/안전</label></li>
+                            <li><input type="checkbox" name="features" id="separate" value="분리형"><label for="separate">분리형</label></li>
+                            <li><input type="checkbox" name="features" id="parking" value="주차"><label for="parking">주차</label></li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr class="property-options">
+                    <th>옵션</th>
+                    <td>
+                        <ul class="ks-cboxtags">
+                            <li><input type="checkbox" name="optional" id="wall_hanging" value="벽걸이형"><label for="wall_hanging">벽걸이형</label></li>
+                            <li><input type="checkbox" name="optional" id="bed" value="침대"><label for="bed">침대</label></li>
+                            <li><input type="checkbox" name="optional" id="desk" value="책상"><label for="desk">책상</label></li>
+                            <li><input type="checkbox" name="optional" id="closet" value="옷장"><label for="closet">옷장</label></li>
+                            <li><input type="checkbox" name="optional" id="shoe_closet" value="신발장"><label for="shoe_closet">신발장</label></li>
+                            <li><input type="checkbox" name="optional" id="built_in_closet" value="붙박이장"><label for="built_in_closet">붙박이장</label></li>
+                            <li><input type="checkbox" name="optional" id="eating_table" value="식탁"><label for="eating_table">식탁</label></li>
+                            <li><input type="checkbox" name="optional" id="sofa" value="소파"><label for="sofa">소파</label></li>
+                            <li><input type="checkbox" name="optional" id="ceiling_air_conditioner" value="천장형 에어컨"><label for="ceiling_air_conditioner">천장형 에어컨</label></li>
+                            <li><input type="checkbox" name="optional" id="manless_delivery_box" value="무인택배함"><label for="manless_delivery_box">무인택배함</label></li>
+                            <li><input type="checkbox" name="optional" id="bidet" value="비데"><label for="bidet">비데</label></li>
+                            <li><input type="checkbox" name="optional" id="refrigerator" value="냉장고"><label for="refrigerator">냉장고</label></li>
+                            <li><input type="checkbox" name="optional" id="washing_machine" value="세탁기"><label for="washing_machine">세탁기</label></li>
+                            <li><input type="checkbox" name="optional" id="shower_booth" value="샤워부스"><label for="shower_booth">샤워부스</label></li>
+                            <li><input type="checkbox" name="optional" id="sink" value="싱크대"><label for="sink">싱크대</label></li>
+                            <li><input type="checkbox" name="optional" id="induction" value="인덕션"><label for="induction">인덕션</label></li>
+                            <li><input type="checkbox" name="optional" id="microwave" value="전자레인지"><label for="microwave">전자레인지</label></li>
+                            <li><input type="checkbox" name="optional" id="tv" value="TV"><label for="tv">TV</label></li>
+                            <li><input type="checkbox" name="optional" id="air_conditioner" value="에어컨"><label for="air_conditioner">에어컨</label></li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr class="security-options">
+                    <th>보안/안전시설</th>
+                    <td>
+                        <ul class="ks-cboxtags">
+                            <li><input type="checkbox" name="security" id="security_entrance" value="현관보안"><label for="security_entrance">현관보안</label></li>
+                            <li><input type="checkbox" name="security" id="cctv" value="CCTV"><label for="cctv">CCTV</label></li>
+                            <li><input type="checkbox" name="security" id="security_bars" value="방범창"><label for="security_bars">방범창</label></li>
+                            <li><input type="checkbox" name="security" id="security_guard" value="경비원"><label for="security_guard">경비원</label></li>
+                            <li><input type="checkbox" name="security" id="fire_alarm" value="화재경보기"><label for="fire_alarm">화재경보기</label></li>
+                            <li><input type="checkbox" name="security" id="video_phone" value="비디오폰"><label for="video_phone">비디오폰</label></li>
+                            <li><input type="checkbox" name="security" id="intercom" value="인터폰"><label for="intercom">인터폰</label></li>
+                            <li><input type="checkbox" name="security" id="key_card" value="카드키"><label for="key_card">카드키</label></li>
+                            <li><input type="checkbox" name="security" id="private_security" value="사설경비"><label for="private_security">사설경비</label></li>
+                            <li><input type="checkbox" name="security" id="digital_door_lock" value="전자도어락"><label for="digital_door_lock">전자도어락</label></li>
+                        </ul>
+
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <h2 class="category"><b class="number">05 </b>사진등록</h2>
+        <hr>
+        <ul class="back">
+            <li>최소 1장 이상의 사진을 등록해야 하며 최대 5장까지 등록이 가능합니다.</li>
+            <li>첫 번째 사진이 대표 이미지로 보여집니다.</li>
+            <li>워터마크, 상호, 전화번호 등이 포함된 사진이나 관련없는 사진을 등록할 경우 서비스 이용이 제한됩니다.</li>
+        </ul>
+        <br>
+        <div class="pic-box">
+            <!-- 미리보기 이미지를 표시할 div -->
+            <div id="previewContainer"></div>
+
+            <!-- 이미지 선택 버튼 -->
+            <input type="file" id="imageInput" name="imageFiles" style="display: none;" accept="image/*" multiple>
+            <button type="button" onclick="chooseImages()"><img src="/img/maemulReg/image.png" style="width : 150px;" height="150px"></button><br>
+            <!--                <button class="pic-btn" type="button" onclick="chooseImages()">+ 사진 등록</button>-->
+        </div>
+
+                <button type="submit" class="update-btn">수정</button>
+
+    </div>
+    </div>
+</form>
+
+<!-- 필요한 스크립트 파일을 여기에 추가 -->
+</body>
+</html>

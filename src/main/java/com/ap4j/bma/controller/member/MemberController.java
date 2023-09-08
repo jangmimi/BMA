@@ -13,6 +13,7 @@ import com.ap4j.bma.service.member.MemberService;
 import com.ap4j.bma.service.member.RecentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -332,43 +333,39 @@ public class MemberController {
     public String qDeleteLiked(@RequestParam("maemul_id") Integer maemul_id, String nickname, HttpSession session) {
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
         nickname = memberDTO.getNickname();
-
+        log.info("삭제확인"+maemul_id);
         likedService.deleteByMaemulIdAndNickname(maemul_id, nickname);
         return "redirect:/member/liked";
     }
 
     /** 관심매물 페이지 매핑 */
     @RequestMapping("/liked")
-    public String qInterest(HttpSession session, Model model) {
+    public String qInterest(@RequestParam(name = "page", defaultValue = "1") int page,
+                            @RequestParam(name = "pageSize", defaultValue = "2") int pageSize,HttpSession session, Model model) {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
         String nickname = memberDTO.getNickname();
 
-        // 로그인한 사람의 관심매물 불러오기
-        List<LikedEntity> myLikedList = likedService.findByNickname(nickname);
-        log.info("내 관심매물 : " + myLikedList);
-        log.info("개수 : " + myLikedList.size());
-
-//        List<MaemulRegEntity> myLikedMMList = likedService.myLikedList(nickname);
-//        log.info("내 관심매물정보 : " + myLikedMMList);
-
-//         메소드를 사용하여 리스트를 가져오고, null인 경우 빈 리스트로 초기화
-        List<LikedEntity> mmLikedList = getListOrDefault(likedService.getAllList());
-        List<MaemulRegEntity> mmList = getListOrDefault(qMemberService.getAllList());
+        // 메소드를 사용하여 리스트를 가져오고, null인 경우 빈 리스트로 초기화
+//        List<LikedEntity> mmLikedList = getListOrDefault(likedService.getAllList());
+//        List<MaemulRegEntity> mmList = getListOrDefault(qMemberService.getAllList());
 
         // mmFilterList 계산
-        List<MaemulRegEntity> mmFilterList = likedService.filterMaemulListByNickname(nickname, mmLikedList, mmList);
+//        List<MaemulRegEntity> mmFilterList = likedService.filterMaemulListByNickname(nickname, mmLikedList, mmList);
         // mmFilterList의 크기(개수) 얻기
 //        int mmFilterListSize = mmFilterList.size();
 
-//        // myLikedCnt 가져오고, null인 경우 0L로 초기화
+        // myLikedCnt 가져오고, null인 경우 0L로 초기화
 //        Long myLikedCnt = (likedService.countAll() != null) ? likedService.countAll() : 0L;
-//
+        Page<MaemulRegEntity> mmpList = likedService.getPaginatedItems(nickname,page,pageSize);
+        Long totalCount = likedService.countLikedByNickname(nickname);
+        model.addAttribute("totalCount",totalCount);
+        model.addAttribute("mmpList",mmpList);
 //        model.addAttribute("mmLiked",mmLikedList);
-        model.addAttribute("mmLikedCnt",myLikedList.size());
+//        model.addAttribute("mmLikedCnt",myLikedCnt);
 //        model.addAttribute("mmFilterListSize",mmFilterListSize);
-        model.addAttribute("mmList",mmFilterList);
+//        model.addAttribute("mmList",mmFilterList);
 
         return "userView/maemulLiked";
     }
