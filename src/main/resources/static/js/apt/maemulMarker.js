@@ -480,15 +480,15 @@ function updateSidebar(responseData) {
         }
         if (monthlyForRentSliceUk != null) {
             if (monthlyForRentSliceMan.charAt(0) != '0') {
-                monthlyForRent = "보증금 " + monthlyForRentSliceUk + "억 " + monthlyForRentSliceMan + "만원";
+                monthlyForRent = "월세 " + monthlyForRentSliceUk + "억 " + monthlyForRentSliceMan + "/";
             } else {
-                monthlyForRent = "보증금 " + monthlyForRentSliceUk + "억";
+                monthlyForRent = "월세 " + monthlyForRentSliceUk + "/";
             }
         } else {
-            monthlyForRent = "보증금 " + monthlyForRentSliceMan + "만원";
+            monthlyForRent = "월세 " + monthlyForRentSliceMan + "/";
         }
         // 월세
-        var monthlyRent = "월세 " + maemul.monthlyRent + "만원"; // 이 변수 사용하면됨
+        var monthlyRent = maemul.monthlyRent + "만원"; // 이 변수 사용하면됨
 
 
         // 전세
@@ -562,8 +562,8 @@ function updateSidebar(responseData) {
                     <h5 class="ii loc_title">
                         <span class="payf_num_b">
                             ${
-                              maemul.monthlyForRent != 999 && maemul.monthlyForRent != 0 ? `${monthlyForRent}<br/>${monthlyRent}` :
-                              maemul.depositForLease != 999 && maemul.monthlyForRent != 0 ? depositForLease:
+                              maemul.monthlyForRent != 0 ? `${monthlyForRent}${monthlyRent}` :
+                              maemul.depositForLease != 0 ? depositForLease :
                               sellingPrice
                             }
                         </span>
@@ -577,7 +577,7 @@ function updateSidebar(responseData) {
                         <span class="txt01">방${maemul.numberOfRooms}/욕실${maemul.numberOfBathrooms}</span>
                     </div>
                     <div class="ii etc_info">
-                        <span class="txt01">${maemul.additionalInfo}</span>
+                        <span class="txt01">${maemul.title}</span>
                     </div>
                 </div>
                 <div class="bd_hashtag">
@@ -676,6 +676,12 @@ function checkEnter(event) {
         var northEast = bounds.getNorthEast();
         var currentZoomLevel = map.getLevel(); // 현재 줌 레벨 가져오기
 
+
+        var southWestLat = southWest.getLat();
+        var southWestLng = southWest.getLng();
+        var northEastLat = northEast.getLat();
+        var northEastLng = northEast.getLng();
+        console.log("통신전" + southWestLat + " " + southWestLng + " " + northEastLat  + " " + northEastLng);
         $.ajax({
             type: 'POST',
             url: '/map/map',
@@ -685,22 +691,23 @@ function checkEnter(event) {
                 southWestLat: southWest.getLat(),
                 southWestLng: southWest.getLng(),
                 northEastLat: northEast.getLat(),
-                northEastLng: northEast.getLng(),
-                numberOfRooms: roomCount,
-                numberOfBathrooms: bathRoomCount,
-                floorNumber: floorCount,
-                managementFee: manageFee,
-                Elevator: elevator,
-                Parking: parking,
-                shortTermRental: rental
+                northEastLng: northEast.getLng()
             },
             success: function (response) {
+                bounds = map.getBounds();
+                southWestLat = southWest.getLat();
+                southWestLng = southWest.getLng();
+                northEastLat = northEast.getLat();
+                northEastLng = northEast.getLng();
+                console.log("통신후" + southWestLat + " " + southWestLng + " " + northEastLat  + " " + northEastLng);
                 likedEntityList = response.likedEntityList;
                 // 검색 결과에 따라 마커를 생성하고 지도에 표시하기
                 if (response.maemulKeywordList) {
                     var result = response.maemulKeywordList; // 키워드 검색후 전송받은 해당 아파트 데이터
-                    var newCenter = new kakao.maps.LatLng(result.latitude, result.longitude);
-
+                    var newCenter = new kakao.maps.LatLng(result[0].latitude, result[0].longitude);
+                    console.log(result);
+                    console.log(result[0].latitude);
+                    console.log(result[0].longitude);
                     map.setLevel(setZoomLevel); // 줌레벨 변경
                     map.setCenter(newCenter); // 해당 아파트 위치로 센터 변경
                     var currentZoomLevel = map.getLevel(); // 이동시 줌레벨 5로 설정 (줌레벨 안바뀐채로 이동되는 경우 있어서 방지차원)
