@@ -442,6 +442,12 @@ public class MemberServiceImpl implements MemberService {
 		return  maemulRegEntityRepository.findMaemulByMemberNickname(nickname);
 	}
 
+	/** 내가 등록한 매물 삭제 */
+	@Transactional
+	public int deleteMaemul(Integer id, String nickname) {
+		return maemulRegEntityRepository.deleteMByIdAndNickname(id, nickname);
+	}
+
 	/** 매물 전체 개수 */
 	public Long getAllCnt() {
 		return maemulRegEntityRepository.count();

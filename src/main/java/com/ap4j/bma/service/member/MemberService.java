@@ -46,5 +46,6 @@ public interface MemberService {
 	public List<MaemulRegEntity> getAllList();
 	public List<MaemulRegEntity> getListByNickname(String nickname);
 	public MaemulRegEntity findMaemulById(Integer id);
+	public int deleteMaemul(Integer id, String nickname);
 
 }

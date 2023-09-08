@@ -308,6 +308,16 @@ public class MemberController {
 
         return "userView/maemulManagement";
     }
+    /** 매물 삭제 */
+    @PostMapping("/qDeleteMaemul")
+    public String qDeleteMaemul(@RequestParam("id") Integer id, String nickname, HttpSession session) {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
+        nickname = memberDTO.getNickname();
+        log.info("삭제매물id확인 : "+id);
+        int result = qMemberService.deleteMaemul(id, nickname);
+        log.info("삭제결과 : " + result);
+        return "redirect:/member/qManagement";
+    }
 
     /** 관심매물 등록 */
     @RequestMapping("/qLiked")
@@ -328,7 +338,6 @@ public class MemberController {
         return "redirect:/map/map";
     }
     /** 삭제 */
-//    @DeleteMapping("/delete")
     @PostMapping("/qDeleteLiked")
     public String qDeleteLiked(@RequestParam("maemul_id") Integer maemul_id, String nickname, HttpSession session) {
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");

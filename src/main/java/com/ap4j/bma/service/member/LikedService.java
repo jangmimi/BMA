@@ -54,7 +54,6 @@ public class LikedService {
         return likedRepository.findMaemulByUserNickname(nickname);
     }
 
-
     /** 관심 매물 저장 (*중복 저장 안되게 작업중) */
     @Transactional
     public Long save(LikedEntity likeEntity) {
