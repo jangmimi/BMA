@@ -8,9 +8,27 @@ var options = {
 };
 var map = new kakao.maps.Map(container, options);
 
-// 줌 컨트롤러 지도에 추가
-var zoomControl = new kakao.maps.ZoomControl();
-map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+// 새로운 div 엘리먼트를 생성하여 줌 컨트롤 역할을 할 컨테이너를 만듭니다
+var zoomControlContainer = document.getElementById('zoomControl');
+
+var zoomInButton = document.getElementById('buttonp');
+zoomInButton.textContent = '+';
+zoomInButton.addEventListener('click', function () {
+  map.setLevel(map.getLevel() - 1, { animate: true });
+});
+
+// 줌 아웃 버튼을 만듭니다
+var zoomOutButton = document.getElementById('buttonm');
+zoomOutButton.textContent = '-';
+zoomOutButton.addEventListener('click', function () {
+  map.setLevel(map.getLevel() + 1, { animate: true });
+});
+
+
+// 컨테이너에 버튼을 추가합니다
+zoomControlContainer.appendChild(zoomInButton);
+zoomControlContainer.appendChild(zoomOutButton);
+
 
 // 클러스터
 var clusterer = new kakao.maps.MarkerClusterer({
@@ -102,9 +120,9 @@ function createMarker(position, markerContent, responseData) {
 var onlyOneStart = false; // 한 번만 실행하기 위한 변수
 // 맵 로드가 완료되면 실행
 
-var tradeType = []; // 선택된 거래 유형을 담을 배열
+/* 거래유형 옵션 */
+var tradeType = [];
 
-// 체크박스의 변경 이벤트를 감지하고 선택된 거래 유형을 배열에 추가 또는 제거합니다.
 $("#flexCheckAll").change(function () {
     updateSelectedTradeTypes(null, this.checked);
 });
@@ -134,9 +152,100 @@ function updateSelectedTradeTypes(type, isChecked) {
         tradeType = tradeType.filter(item => item !== type);
     }
 
+}
 
+/* 방개수 옵션 */
+var roomCount;
+
+$('input[name="searchRoomCount"]').on('change', function () {
+    roomCount = $(this).val();
+});
+
+/* 욕실 수 옵션 */
+var bathRoomCount;
+$('input[name="searchBathRoomCount"]').on('change', function () {
+    bathRoomCount = $(this).val();
+});
+
+/* 층 수 옵션 */
+var floorCount;
+$('input[name="searchFloorCount"]').on('change', function () {
+    floorCount = $(this).val();
+});
+
+/* 관리비 옵션 */
+var manageFee;
+$('input[name="searchMaintenance"]').on('change', function () {
+    manageFee = $(this).val();
+});
+
+/* 엘리베이터 옵션 */
+var elevator;
+$('input[name="searchElevator"]').on('change', function () {
+    var selectedValue = $(this).val();
+    elevator = selectedValue === '' ? null : selectedValue;
+});
+
+/* 방향 옵션 */
+var direction = [];
+
+$("#searchDirectionAll").change(function () {
+    updateSelectedDirection(null, this.checked);
+});
+
+$("#maesearchDirection_C00702").change(function () {
+    updateSelectedDirection("동향", this.checked);
+});
+
+$("#maesearchDirection_C00703").change(function () {
+    updateSelectedDirection("서향", this.checked);
+});
+
+$("#maesearchDirection_C00704").change(function () {
+    updateSelectedDirection("남향", this.checked);
+});
+
+$("#maesearchDirection_C00705").change(function () {
+    updateSelectedDirection("북향", this.checked);
+});
+
+$("#maesearchDirection_C00706").change(function () {
+    updateSelectedDirection("남동향", this.checked);
+});
+$("#maesearchDirection_C00707").change(function () {
+    updateSelectedDirection("남서향", this.checked);
+});
+$("#maesearchDirection_C00708").change(function () {
+    updateSelectedDirection("북동향", this.checked);
+});
+$("#maesearchDirection_C00709").change(function () {
+    updateSelectedDirection("북서향", this.checked);
+});
+function updateSelectedDirection(type, isChecked) {
+    if (isChecked) {
+        // 체크된 경우 배열에 추가
+        direction.push(type);
+    } else {
+        // 체크 해제된 경우 배열에서 제거
+        direction = direction.filter(item => item !== type);
+    }
 
 }
+
+/* 주차가능 옵션 */
+var parking;
+$('input[name="searchParkCount"]').on('change', function () {
+    var selectedValue = $(this).val();
+    parking = selectedValue === '' ? null : selectedValue;
+});
+
+/* 단기임대 옵션 */
+var rental;
+$('input[name="rentalCount"]').on('change', function () {
+    var selectedValue = $(this).val();
+    rental = selectedValue === '' ? null : selectedValue;
+});
+
 
 kakao.maps.event.addListener(map, 'tilesloaded', function () {
     // 이미 실행된 경우 함수 종료
@@ -146,6 +255,8 @@ kakao.maps.event.addListener(map, 'tilesloaded', function () {
     onlyOneStart = true; // 변수 업데이트
 
     var tradeTypeString = tradeType.join(",");
+    var directionString = direction.join(",");
+
 
     var bounds = map.getBounds();
     var southWest = bounds.getSouthWest();
@@ -159,7 +270,15 @@ kakao.maps.event.addListener(map, 'tilesloaded', function () {
         northEastLat: northEast.getLat(),
         northEastLng: northEast.getLng(),
         zoomLevel: currentZoomLevel,
-        tradeType: tradeTypeString
+        tradeType: tradeTypeString,
+        numberOfRooms: roomCount,
+        numberOfBathrooms: bathRoomCount,
+        floorNumber: floorCount,
+        managementFee: manageFee,
+        Elevator: elevator,
+        direction: directionString,
+        Parking: parking,
+        shortTermRental: rental
 
     };
 
@@ -196,8 +315,6 @@ kakao.maps.event.addListener(map, 'tilesloaded', function () {
         }
     });
 });
-
-
 // 맵 이동시 현재 맵의 경계를 기준으로 데이터 요청하고 그 범위에 속하는 행정동 또는 아파트 데이터의 마커 생성
 kakao.maps.event.addListener(map, 'idle', function () {
     // 행정동 오버레이 초기화
@@ -208,6 +325,7 @@ kakao.maps.event.addListener(map, 'idle', function () {
     clearSidebar();
 
     var tradeTypeString = tradeType.join(",");
+    var directionString = direction.join(",");
 
     var bounds = map.getBounds();
     var southWest = bounds.getSouthWest();
@@ -220,7 +338,15 @@ kakao.maps.event.addListener(map, 'idle', function () {
         northEastLat: northEast.getLat(),
         northEastLng: northEast.getLng(),
         zoomLevel: currentZoomLevel,
-        tradeType: tradeTypeString
+        tradeType: tradeTypeString,
+        numberOfRooms: roomCount,
+        numberOfBathrooms: bathRoomCount,
+        floorNumber: floorCount,
+        managementFee: manageFee,
+        Elevator: elevator,
+        direction: directionString,
+        Parking: parking,
+        shortTermRental: rental
     };
 
     var likedBoolean = true;
@@ -560,7 +686,14 @@ function checkEnter(event) {
                 southWestLat: southWest.getLat(),
                 southWestLng: southWest.getLng(),
                 northEastLat: northEast.getLat(),
-                northEastLng: northEast.getLng()
+                northEastLng: northEast.getLng(),
+                numberOfRooms: roomCount,
+                numberOfBathrooms: bathRoomCount,
+                floorNumber: floorCount,
+                managementFee: manageFee,
+                Elevator: elevator,
+                Parking: parking,
+                shortTermRental: rental
             },
             success: function (response) {
                 likedEntityList = response.likedEntityList;

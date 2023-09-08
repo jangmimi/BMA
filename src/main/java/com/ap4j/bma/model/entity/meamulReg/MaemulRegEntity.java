@@ -3,9 +3,11 @@ package com.ap4j.bma.model.entity.meamulReg;
 import com.ap4j.bma.model.entity.member.MemberEntity;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,7 +93,8 @@ public class MaemulRegEntity {
     private Double latitude; //위도
 
     //등록일자
-    private String createdAt;
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "nickname", referencedColumnName = "nickname", insertable = false, updatable = false)

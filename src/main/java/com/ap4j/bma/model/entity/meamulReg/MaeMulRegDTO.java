@@ -4,6 +4,8 @@ package com.ap4j.bma.model.entity.meamulReg;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Component
 @Getter
 @Builder
@@ -67,5 +69,5 @@ public class MaeMulRegDTO {
     private Double latitude; //위도
 
     //등록일자
-    private String createdAt;
+    private LocalDateTime createdAt;
 }

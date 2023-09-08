@@ -181,12 +181,14 @@
 
 
     <div class="middle">
-        <select id="sort">
-            <option value="new">최신순</option>
-            <option value="old">오래된순</option>
-            <option value="view">조회순</option>
-            <option value="coment">댓글순</option>
-        </select>
+        <form method="get">
+            <select id="sort" name="sortType" onchange="this.form.submit()">
+                <option value="new" th:selected="${sortType == 'new'}">최신순</option>
+                <option value="old" th:selected="${sortType == 'old'}">오래된순</option>
+                <option value="view" th:selected="${sortType == 'view'}">조회순</option>
+                <option value="comment" th:selected="${sortType == 'comment'}">댓글순</option>
+            </select>
+        </form>
         <b class="count"><span id ="count-color" th:text="${totalCommunityCount}"></span> 건</b> <!--게시글 개수-->
     </div>
 

@@ -1,6 +1,8 @@
 package com.ap4j.bma.model.repository;
 
 import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -41,8 +43,17 @@ public interface MaemulRegEntityRepository extends JpaRepository<MaemulRegEntity
     @Query("SELECT COUNT(m) FROM MaemulRegEntity m WHERE (m.buildingUsage = '업무용' OR m.buildingUsage = '거주/업무용') AND m.nickname = :nickname")
     Long countCommercial(@Param("nickname") String nickname);
 
+    /** 김재환작성*/
+    @Query(value = "SELECT mr.id, mr.APT_name, mr.elevator, mr.parking, mr.selling_price, mr.address, mr.available_move_in_date, mr.building_usage, mr.content, mr.created_at, mr.deposit_for_lease, mr.direction, mr.features, mr.floor_number, mr.heating_type, mr.latitude, mr.loan_amount, mr.longitude, mr.management_fee, mr.monthly_for_rent, mr.monthly_rent, l.nickname, mr.number_of_bathrooms, mr.number_of_rooms, mr.optional, mr.private_area, mr.security, mr.short_term_rental, mr.supply_area, mr.title, mr.total_floors, mr.total_parking, mr.trade_type, mr.d_management_fee, mr.m_management_fee, mr.adress " +
+            "FROM liked l " +
+            "JOIN maemul_reg mr ON l.road_name = mr.address " +
+            "WHERE l.nickname = :nickname", nativeQuery = true)
+    Page<MaemulRegEntity> findLikedByNicknameAndPaging(@Param("nickname") String nickname, Pageable pageable);
+
     /** 키워드 검색시 해당 주소 or 아파트 불러오기 */
     @Query("SELECT m FROM MaemulRegEntity m WHERE replace(m.address, ' ', '') = ?1 or replace(m.APT_name, ' ', '') = ?1")
     List<MaemulRegEntity> findByMaemulKeyword(String keyword);
 
 }
+
+

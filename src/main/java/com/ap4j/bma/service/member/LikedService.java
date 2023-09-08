@@ -7,6 +7,9 @@ import com.ap4j.bma.model.repository.LikedRepository;
 import com.ap4j.bma.model.repository.MaemulRegEntityRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -34,8 +37,8 @@ public class LikedService {
     }
 
     /** 특정 닉네임이랑 매치되는 Liked 전부 조회 */
-    public List<LikedEntity> findByNickname(String nickname) {
-        return likedRepository.findByNickname(nickname);
+    public List<LikedEntity> findLikedByNickname(String nickname) {
+        return likedRepository.findLikedByNickname(nickname);
     }
 
 //    /** 특정 주소와 매치되는 매물 전부 조회 */
@@ -51,6 +54,7 @@ public class LikedService {
                         .filter(maemulRegEntity -> likedEntity.getRoad_name().equals(maemulRegEntity.getAddress())))
                 .collect(Collectors.toList());
     }
+
 
     /** 관심 매물 저장 (*중복 저장 안되게 작업중) */
     @Transactional
@@ -73,5 +77,27 @@ public class LikedService {
     public void deleteByMaemulIdAndNickname(Integer maemul_id, String nickname) {
         likedRepository.deleteByMaemulIdAndNickname(maemul_id,nickname);
     }
+    /*김재환작성 페이징처리*/
+    public Page<MaemulRegEntity> getPaginatedItems(String nickname, int page, int pageSize) {
+        Pageable pageable = PageRequest.of(page - 1, pageSize);
+        Page<MaemulRegEntity> mmpList = maemulRegEntityRepository.findLikedByNicknameAndPaging(nickname,pageable);
+        System.out.println(mmpList);
+        return mmpList;
+    }
+
+    /*김재환작성 관심매물 전체개수*/
+    public Long countLikedByNickname(String nickname) {
+        return likedRepository.countLikedByNickname(nickname);
+    }
+
+//    @Transactional
+//    public void delete(LikedEntity likedEntity) {
+//        log.info("LikedService 관심매물 삭제 실행");
+//        likedRepository.delete(likedEntity);
+//    }
+
+//    public Optional<LikedEntity> findByNicknameAndRoad_name(String nickname, String road_name) {
+//        return likedRepository.findByNicknameAndRoad_name(nickname, road_name);
+//    }
 
 }
