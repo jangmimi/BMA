@@ -322,12 +322,13 @@ public class MemberController {
         likedEntity.setRoad_name(finemm.getAddress());
         likedEntity.setMaemul_id(maemulId);
 
+        likedService.save(likedEntity);
+
 //        Optional<LikedEntity> find = likedService.findByNicknameAndRoad_name(nickname, finemm.getAddress());
 //        if(find.isPresent()) {
 //            LikedEntity entity = find.get();
 //            likedService.delete(entity);
 //        }
-        likedService.save(likedEntity);
 
         return "redirect:/map/map";
     }
@@ -338,7 +339,7 @@ public class MemberController {
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
         nickname = memberDTO.getNickname();
 
-        likedService.deleteById(maemul_id, nickname);
+        likedService.deleteByMaemulIdAndNickname(maemul_id, nickname);
         return "redirect:/member/liked";
     }
 

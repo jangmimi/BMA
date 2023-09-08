@@ -23,17 +23,17 @@ public interface LikedRepository extends JpaRepository<LikedEntity, Long> {
             "WHERE l.nickname = :nickname")
     List<LikedEntity> findLikedByNickname(@Param("nickname") String nickname);
 
-    @Query("SELECT mr FROM MaemulRegEntity mr " +
-            "JOIN LikedEntity l ON mr.nickname = l.nickname " +
-            "JOIN MemberEntity m ON mr.nickname = m.nickname " +
-            "WHERE l.road_name = :roadName")
-    List<MaemulRegEntity> findMaemulByRoadName(@Param("roadName") String roadName);
+//    @Query("SELECT mr FROM MaemulRegEntity mr " +
+//            "JOIN LikedEntity l ON mr.nickname = l.nickname " +
+//            "JOIN MemberEntity m ON mr.nickname = m.nickname " +
+//            "WHERE l. = :roadName")
+//    List<MaemulRegEntity> findMaemulByRoadName(@Param("roadName") String roadName);
 
-    /** 사용자 닉네임과 도로 주소를 이용한 중복 체크 쿼리 */
+    /** 사용자 닉네임과 매물id를 이용한 중복 체크 쿼리 */
     @Query("SELECT CASE WHEN COUNT(l) > 0 THEN true ELSE false END " +
             "FROM LikedEntity l " +
-            "WHERE l.nickname = :nickname AND l.road_name = :roadName")
-    boolean existsByNicknameAndRoadName(@Param("nickname") String nickname, @Param("roadName") String roadName);
+            "WHERE l.nickname = :nickname AND l.maemul_id = :maemulId")
+    boolean existsByNicknameAndMaemulId(@Param("nickname") String nickname, @Param("maemulId") Integer maemulId);
 
     /** 관심매물 삭제 (로그인중닉네임 == 관심매물닉네임 && 관심매물maemul_id == 매물id */ //  이거 성공!!!
     @Modifying
