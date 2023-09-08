@@ -321,8 +321,6 @@ public class MemberController {
         likedEntity.setNickname(nickname);
         likedEntity.setRoad_name(finemm.getAddress());
 
-
-
 //        Optional<LikedEntity> find = likedService.findByNicknameAndRoad_name(nickname, finemm.getAddress());
 //        if(find.isPresent()) {
 //            LikedEntity entity = find.get();
@@ -338,26 +336,6 @@ public class MemberController {
         public String qDeleteLiked(@PathVariable("id") Long id) {
             likedService.deleteById(id);
             return "redirect:/member/liked";
-//        if (id == null || id.isEmpty()) {
-//            // id가 null 또는 빈 문자열인 경우 처리
-//            log.error("ID가 null 또는 빈 문자열입니다.");
-//            return "redirect:/"; // 에러 페이지로 리디렉션 또는 다른 처리
-//        }
-//
-//        try {
-//            Long longId = Long.valueOf(id);
-//            log.info("컨트롤러의 삭제메서드 실행, ID: " + longId);
-//            likedService.deleteById(longId);
-//            return "redirect:/member/liked";
-//        } catch (NumberFormatException e) {
-//            // 문자열을 Long으로 변환할 수 없는 경우 처리
-//            log.error("ID를 Long으로 변환할 수 없습니다.");
-//            return "redirect:/"; // 에러 페이지로 리디렉션 또는 다른 처리
-//        }
-//        return "redirect:/";
-//    public ResponseEntity<String> deleteLikedEntity(@RequestParam("nickname") String nickname, @RequestParam("roadName") String roadName) {
-//        likedService.deleteLikedEntitiesByNicknameAndRoadName(nickname, roadName);
-//        return ResponseEntity.ok("관심 매물이 삭제되었습니다.");
     }
 
     /** 관심매물 페이지 매핑 */

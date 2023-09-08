@@ -47,7 +47,7 @@
                             </div>
                         </div>
                         <div class="oMyQnaTb">
-                            <form th:action="@{/member/qDeleteLiked}" method="POST" th:object="${mmList}">
+                            <form th:action="@{/member/qDeleteLiked}" method="POST">
                                 <table class="faq-tb">
                                     <thead>
                                         <tr>
@@ -64,7 +64,7 @@
                                         <p>전체 <span class="o-cntAll" th:text="${mmFilterListSize}"></span>건</p>
 
                                         <tr th:each="mmList : ${mmList}">
-                                            <input type="hidden" name="id" th:value="${mmList.id}">
+                                            <input type="hidden" th:name="${mmList.id}" th:value="${mmList.id}">
                                             <td id="tradeType" th:text="${mmList.tradeType}">거래유형</td>
                                             <td id="o-d-photo">
                                                 <img src="https://www.bdsplanet.com/common/thumbs.ytp?filepath=/COMP_20201027000920000005/upload/realty/RCODE_20230731160156000045/&filename=1690787077205_1.jpg" width="80">

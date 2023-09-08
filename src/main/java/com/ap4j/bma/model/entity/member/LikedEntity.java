@@ -31,11 +31,8 @@ public class LikedEntity {
         this.road_name = road_name;
     }
 
-    public LikedDTO toDTO() {
-        return LikedDTO.builder()
-                .id(id)
-                .nickname (nickname)
-                .road_name(road_name)
-                .build();
-    }
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "nickname", referencedColumnName = "nickname", insertable = false, updatable = false)
+    private MemberEntity memberEntity;
+
 }
