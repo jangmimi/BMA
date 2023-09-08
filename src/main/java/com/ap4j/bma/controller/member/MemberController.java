@@ -321,15 +321,27 @@ public class MemberController {
         LikedEntity likedEntity = new LikedEntity();
         likedEntity.setNickname(nickname);
         likedEntity.setRoad_name(finemm.getAddress());
+        likedEntity.setMaemul_id(maemulId);
+
+        likedService.save(likedEntity);
 
 //        Optional<LikedEntity> find = likedService.findByNicknameAndRoad_name(nickname, finemm.getAddress());
 //        if(find.isPresent()) {
 //            LikedEntity entity = find.get();
 //            likedService.delete(entity);
 //        }
-        likedService.save(likedEntity);
 
         return "redirect:/map/map";
+    }
+    /** 삭제 */
+//    @DeleteMapping("/delete")
+    @PostMapping("/qDeleteLiked")
+    public String qDeleteLiked(@RequestParam("maemul_id") Integer maemul_id, String nickname, HttpSession session) {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
+        nickname = memberDTO.getNickname();
+
+        likedService.deleteByMaemulIdAndNickname(maemul_id, nickname);
+        return "redirect:/member/liked";
     }
 
     /** 관심매물 페이지 매핑 */
@@ -441,17 +453,17 @@ public class MemberController {
         return "userView/findMemberInfo";
     }
 
-    /** 비밀번혼 찾기 */
-    @PostMapping("/qFindPwd")    // * 임시 비번 이메일 발급으로 수정 적용 필요 *
-    public String qFindPwd(@RequestParam String emailpwd, @RequestParam String telpwd, Model model) {
-        Optional<MemberEntity> find = qMemberService.findByEmailAndTel(emailpwd, telpwd);
-
-        if(find.isPresent()) {
-            model.addAttribute("findPwd", find.get().getPwd());
-        } else {
-            model.addAttribute("findPwdFailed", "일치하는 회원정보가 없습니다.");
-        }
-        return "userView/findMemberInfo";
-    }
+//    /** 비밀번혼 찾기 */
+//    @PostMapping("/qFindPwd")    // * 임시 비번 이메일 발급으로 수정 적용 필요 *
+//    public String qFindPwd(@RequestParam String emailpwd, @RequestParam String telpwd, Model model) {
+//        Optional<MemberEntity> find = qMemberService.findByEmailAndTel(emailpwd, telpwd);
+//
+//        if(find.isPresent()) {
+//            model.addAttribute("findPwd", find.get().getPwd());
+//        } else {
+//            model.addAttribute("findPwdFailed", "일치하는 회원정보가 없습니다.");
+//        }
+//        return "userView/findMemberInfo";
+//    }
 }
 

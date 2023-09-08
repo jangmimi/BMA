@@ -60,19 +60,25 @@ public class LikedService {
     @Transactional
     public Long save(LikedEntity likeEntity) {
         String nickname = likeEntity.getNickname();
-        String roadName = likeEntity.getRoad_name();
-        boolean isDuplicate = likedRepository.existsByNicknameAndRoadName(nickname, roadName);
+        Integer maemul_id = likeEntity.getMaemul_id();
+        boolean isDuplicate = likedRepository.existsByNicknameAndMaemulId(nickname, maemul_id);
 
         if(!isDuplicate) {
             likedRepository.save(likeEntity); log.info("중복아니라 저장완료");
         } else {
             log.info("중복된 매물이네요. 삭제 실행 - 임시로 컨트롤러에서 실행");
+            deleteByMaemulIdAndNickname(maemul_id, nickname);
         }
         return likeEntity.getId();
     }
 
+    /** 관심매물 삭제 */
+    @Transactional
+    public void deleteByMaemulIdAndNickname(Integer maemul_id, String nickname) {
+        likedRepository.deleteByMaemulIdAndNickname(maemul_id,nickname);
+    }
     /*김재환작성 페이징처리*/
-    public Page<MaemulRegEntity> getPaginatedItems(String nickname,int page, int pageSize) {
+    public Page<MaemulRegEntity> getPaginatedItems(String nickname, int page, int pageSize) {
         Pageable pageable = PageRequest.of(page - 1, pageSize);
         Page<MaemulRegEntity> mmpList = maemulRegEntityRepository.findLikedByNicknameAndPaging(nickname,pageable);
         System.out.println(mmpList);
@@ -94,23 +100,4 @@ public class LikedService {
 //        return likedRepository.findByNicknameAndRoad_name(nickname, road_name);
 //    }
 
-
-//    public List<MaemulRegEntity> findLikedByRoadname(String roadName) {
-//        List<MaemulRegEntity> likedmList = likedRepository.findMaemulByRoadName(roadName);
-//
-//        return likedRepository.findMaemulByRoadName(maemulList).stream()
-//                .map(LikedEntity::getMaemul)
-//                .collect(Collectors.toList());
-//    }
-
-//    public List<MaemulRegEntity> findMaemulByRoadNames(List<String> roadNames) {
-//        List<LikedEntity> likedEntities = likedRepository.findByMaemulRoadNameIn(roadNames);
-//
-//        // LikedEntity에서 MaemulRegEntity로 변환
-//        List<MaemulRegEntity> maemulRegEntities = likedEntities.stream()
-//                .map(LikedEntity::getMaemul)
-//                .collect(Collectors.toList());
-//
-//        return maemulRegEntities;
-//    }
 }

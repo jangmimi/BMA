@@ -4,6 +4,7 @@ import com.ap4j.bma.model.entity.customerCenter.QnAEntity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Table(name="member") // DB 테이블 이름 지정
@@ -13,7 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class MemberEntity {
+public class MemberEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	// Idx 자동 증가
 	private Long id;	// 기본 키(DB PK)

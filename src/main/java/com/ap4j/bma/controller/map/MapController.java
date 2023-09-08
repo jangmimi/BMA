@@ -5,6 +5,9 @@ import com.ap4j.bma.model.entity.apt.AptDTO;
 import com.ap4j.bma.model.entity.apt.AptRealTradeDTO;
 import com.ap4j.bma.model.entity.apt.HangJeongDongDTO;
 import com.ap4j.bma.model.entity.meamulReg.MaeMulRegDTO;
+import com.ap4j.bma.model.entity.member.LikedEntity;
+import com.ap4j.bma.model.entity.member.MemberDTO;
+import com.ap4j.bma.model.repository.LikedRepository;
 import com.ap4j.bma.service.apartment.ApartmentServiceImpl;
 import com.ap4j.bma.service.maemulReg.MaemulRegService;
 import com.ap4j.bma.service.talktalk.ReviewService;
@@ -36,6 +39,9 @@ public class MapController {
 
     @Autowired
     MaemulRegService maemulRegService;
+
+    @Autowired
+    LikedRepository likedRepository;
 
     /** 화면 좌표 범위의 DB값 데이터 보내주기 (클라이언트가 사용할 페이지)*/
     @PostMapping("/main")
@@ -88,10 +94,24 @@ public class MapController {
     }
 
     @PostMapping("map")
-    public ResponseEntity<Map<String, Object>> map2(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng, Integer zoomLevel, String tradeType){
-        log.info("MapController.map.execute");
+    public ResponseEntity<Map<String, Object>> map2(HttpSession session, Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng, Integer zoomLevel, String address, String tradeType){
+        System.out.println("컨트롤러 address " + address);
 
         Map<String, Object> responseData = new HashMap<>();
+
+        // 로그인 값 넘기기
+        String nickName = null;
+        if((session.getAttribute("loginMember") != null )) {
+            MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
+            nickName = memberDTO.getNickname();
+        }
+        responseData.put("loginMember", session.getAttribute("loginMember"));
+
+        // Liked 테이블에서 로그인한 회원의 데이터 있는지 확인
+        List<LikedEntity> likedEntityList = likedRepository.findByNickname(nickName);
+        System.out.println("likedEntityList = " + likedEntityList);
+        responseData.put("likedEntityList", likedEntityList);
+
         // 화면 좌표값에 따른 행정동 리스트
         List<HangJeongDongDTO> hjdList = aptServiceImpl.findHJDListBounds(southWestLat, southWestLng, northEastLat, northEastLng, zoomLevel);
         responseData.put("hjdList", hjdList);
@@ -99,7 +119,10 @@ public class MapController {
         // 화면 좌표값에 따른 마커
         List<MaeMulRegDTO> maemulList = maemulRegService.findMaemulListBounds(southWestLat, southWestLng, northEastLat, northEastLng, tradeType);
         responseData.put("maenulList", maemulList);
-//        System.out.println("매물리스트 : " + maemulList);
+
+        // 마커 클릭시 해당 주소의 매물 리스트 가져오기
+        List<MaeMulRegDTO> maemulClickList = maemulRegService.findMaemulByAddress(address);
+        responseData.put("maemulClickList", maemulClickList);
 
         return ResponseEntity.ok(responseData);
     }

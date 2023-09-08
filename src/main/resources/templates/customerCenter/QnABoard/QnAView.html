@@ -114,10 +114,12 @@
                     </tr>
                 </table>
             </div>
+
             <div class="s-qna-buttons">
-                <button>목록</button>
-                <button>삭제</button>
+                <button><a href="/member/qMyQnA">목록</a></button>
+                <button><a th:href="@{/deleteQnA(id=${qna.id})}">삭제</a></button>
             </div>
+
         </div>
     </div>
 
