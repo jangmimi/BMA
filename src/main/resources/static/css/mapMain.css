@@ -123,7 +123,7 @@ border: none;
 /*사이드바 속 세부 조정들*/
 .asideBarAll{
 position: absolute;
-    top: 111px;
+    top: 110px;
     width: 400px;
     z-index: 1100;
     height: calc(100% - 60px);
@@ -203,6 +203,7 @@ top: 31px;
 
 }
 #exampleModalToggle2 {
+top:26%;
 }
 .aPostcontent{
 border: 2px solid #26abed62;

@@ -1,4 +1,4 @@
-html,body{
+body{
     position: absolute;
     top: 0px;
     left: 0px;
@@ -193,7 +193,7 @@ html,body{
   position: absolute;
   top: 130px;
   width: 400px;
-  z-index: 1050;
+  z-index: 1051;
   height: calc(100% - 60px);
   line-height: 1;
 }
@@ -854,15 +854,15 @@ a:active, a:focus, a:hover, a:link, a:visited {
     margin-right:2px;
 }
 .list-group-item.a{
-    display: flex;
-    align-items: flex-start;
-
+display: flex;
+    align-items: center;
     position: relative;
     height: 131px;
     border-bottom: 1px solid #eee;
+    justify-content: space-between;
 }
 .aHeartBtnInList{
-    opacity:16%;
+    opacity:100%;
 }
 .abox{
     display: flex;

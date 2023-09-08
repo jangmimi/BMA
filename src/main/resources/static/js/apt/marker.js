@@ -9,9 +9,31 @@ var options = {
 };
 var map = new kakao.maps.Map(container, options);
 
-// 줌 컨트롤러 지도에 추가
-var zoomControl = new kakao.maps.ZoomControl();
-map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+// 새로운 div 엘리먼트를 생성하여 줌 컨트롤 역할을 할 컨테이너를 만듭니다
+var zoomControlContainer = document.getElementById('zoomControl');
+
+var zoomInButton = document.getElementById('buttonp');
+zoomInButton.textContent = '+';
+zoomInButton.addEventListener('click', function () {
+  map.setLevel(map.getLevel() - 1, { animate: true });
+});
+
+// 줌 아웃 버튼을 만듭니다
+var zoomOutButton = document.getElementById('buttonm');
+zoomOutButton.textContent = '-';
+zoomOutButton.addEventListener('click', function () {
+  map.setLevel(map.getLevel() + 1, { animate: true });
+});
+
+
+// 컨테이너에 버튼을 추가합니다
+zoomControlContainer.appendChild(zoomInButton);
+zoomControlContainer.appendChild(zoomOutButton);
+
+
+
+
+
 
 // 클러스터
 var clusterer = new kakao.maps.MarkerClusterer({
