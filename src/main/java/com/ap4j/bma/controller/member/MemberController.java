@@ -238,12 +238,21 @@ public class MemberController {
 
     /** 마이페이지 매핑 */ 
     @RequestMapping("/qMyPage") // 관심매물 최근매물 불러와야함
-    public String qMyPage(HttpSession session, Model model) {
+    public String qMyPage(@RequestParam(name = "page", defaultValue = "1") int page,
+                          @RequestParam(name = "pageSize", defaultValue = "2") int pageSize,
+                          HttpSession session, Model model) {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
+        MemberDTO loginMember = (MemberDTO) session.getAttribute("loginMember");
+        String nickname = loginMember.getNickname();
         String thumImg = (String) session.getAttribute("thumbnail_image");
         model.addAttribute("thumbnail_image", thumImg);
-        MemberDTO loginMember = (MemberDTO) session.getAttribute("loginMember");
+
+        Page<MaemulRegEntity> mmpList = likedService.getPaginatedItems(nickname,page,pageSize);
+        Long totalCount = likedService.countLikedByNickname(nickname);
+
+        model.addAttribute("totalCount",totalCount);
+        model.addAttribute("mmpList",mmpList);
         model.addAttribute("root", loginMember.getRoot() == 1 ? "기본회원" : loginMember.getRoot() == 2? "카카오" : "네이버");
 
         return "userView/myPage";
