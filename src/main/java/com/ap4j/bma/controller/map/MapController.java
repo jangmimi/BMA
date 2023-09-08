@@ -15,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -94,7 +93,10 @@ public class MapController {
     }
 
     @PostMapping("map")
-    public ResponseEntity<Map<String, Object>> map2(HttpSession session, Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng, Integer zoomLevel, String address, String tradeType){
+
+    public ResponseEntity<Map<String, Object>> map2(HttpSession session, Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng, Integer zoomLevel, String address, String tradeType
+                                                    ,Integer numberOfRooms, Integer numberOfBathrooms, Integer floorNumber, Integer managementFee, String Elevator
+                                                    ,String direction, String Parking, String shortTermRental,  String keyword){
         System.out.println("컨트롤러 address " + address);
 
         Map<String, Object> responseData = new HashMap<>();
@@ -117,12 +119,19 @@ public class MapController {
         responseData.put("hjdList", hjdList);
 
         // 화면 좌표값에 따른 마커
-        List<MaeMulRegDTO> maemulList = maemulRegService.findMaemulListBounds(southWestLat, southWestLng, northEastLat, northEastLng, tradeType);
+        List<MaeMulRegDTO> maemulList = maemulRegService.findMaemulListBounds(southWestLat, southWestLng, northEastLat, northEastLng, tradeType
+                , numberOfRooms, numberOfBathrooms, floorNumber, managementFee, Elevator, direction, Parking, shortTermRental);
         responseData.put("maenulList", maemulList);
 
         // 마커 클릭시 해당 주소의 매물 리스트 가져오기
         List<MaeMulRegDTO> maemulClickList = maemulRegService.findMaemulByAddress(address);
         responseData.put("maemulClickList", maemulClickList);
+
+        // 검색시 해당 키워드의 매물 리스트 가져오기
+        if(keyword != null) {
+            List<MaeMulRegDTO> maemulKeywordList = maemulRegService.findByMaemulKeyword(keyword);
+            responseData.put("maemulKeywordList", maemulKeywordList);
+        }
 
         return ResponseEntity.ok(responseData);
     }
