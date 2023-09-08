@@ -257,6 +257,7 @@ kakao.maps.event.addListener(map, 'tilesloaded', function () {
     var tradeTypeString = tradeType.join(",");
     var directionString = direction.join(",");
 
+    var keyword = document.querySelector('.aSearchInput').value.replaceAll(' ', '');
 
     var bounds = map.getBounds();
     var southWest = bounds.getSouthWest();
@@ -278,7 +279,8 @@ kakao.maps.event.addListener(map, 'tilesloaded', function () {
         Elevator: elevator,
         direction: directionString,
         Parking: parking,
-        shortTermRental: rental
+        shortTermRental: rental,
+        keyword: keyword
 
     };
 
@@ -327,6 +329,8 @@ kakao.maps.event.addListener(map, 'idle', function () {
     var tradeTypeString = tradeType.join(",");
     var directionString = direction.join(",");
 
+    var keyword = document.querySelector('.aSearchInput').value.replaceAll(' ', '');
+
     var bounds = map.getBounds();
     var southWest = bounds.getSouthWest();
     var northEast = bounds.getNorthEast();
@@ -346,7 +350,8 @@ kakao.maps.event.addListener(map, 'idle', function () {
         Elevator: elevator,
         direction: directionString,
         Parking: parking,
-        shortTermRental: rental
+        shortTermRental: rental,
+        keyword: keyword
     };
 
     var likedBoolean = true;
@@ -699,27 +704,27 @@ function checkEnter(event) {
                 // 검색 결과에 따라 마커를 생성하고 지도에 표시하기
                 if (response.maemulKeywordList) {
                     var result = response.maemulKeywordList; // 키워드 검색후 전송받은 해당 아파트 데이터
-                    var newCenter = new kakao.maps.LatLng(result.latitude, result.longitude);
+                    var newCenter = new kakao.maps.LatLng(result[0].latitude, result[0].longitude);
 
                     map.setLevel(setZoomLevel); // 줌레벨 변경
                     map.setCenter(newCenter); // 해당 아파트 위치로 센터 변경
                     var currentZoomLevel = map.getLevel(); // 이동시 줌레벨 5로 설정 (줌레벨 안바뀐채로 이동되는 경우 있어서 방지차원)
 
-                    var markerPosition = new kakao.maps.LatLng(result.latitude, result.longitude);
-                    var markerKey = markerPosition.toString();
-                    var markerContent = "<div class='e-marker'>" +
-                        "<div class='e-markerTitle'>" +
-                        "<h3>" + result.APT_name + "</h3>" +
-                        "</div>" +
-                        "<div class='e-markerContent'>" +
-                        "<p>" + result.address + "</p>" +
-                        "</div>" +
-                        "</div>";
-                    createMarker(markerPosition, markerContent, result);
-                    var marker = existingMarkers[markerKey];
-                    openOverlay(marker.overlay);
-                    updateSidebar(result);
-                    console.log("클릭시 마커생성");
+                    // var markerPosition = new kakao.maps.LatLng(result.latitude, result.longitude);
+                    // var markerKey = markerPosition.toString();
+                    // var markerContent = "<div class='e-marker'>" +
+                    //     "<div class='e-markerTitle'>" +
+                    //     "<h3>" + result.APT_name + "</h3>" +
+                    //     "</div>" +
+                    //     "<div class='e-markerContent'>" +
+                    //     "<p>" + result.address + "</p>" +
+                    //     "</div>" +
+                    //     "</div>";
+                    // createMarker(markerPosition, markerContent, result);
+                    // var marker = existingMarkers[markerKey];
+                    // openOverlay(marker.overlay);
+                    // updateSidebar(result);
+                    // console.log("클릭시 마커생성");
                 }
             }
         });

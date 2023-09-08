@@ -120,7 +120,7 @@ public class MapController {
 
         // 화면 좌표값에 따른 마커
         List<MaeMulRegDTO> maemulList = maemulRegService.findMaemulListBounds(southWestLat, southWestLng, northEastLat, northEastLng, tradeType
-                , numberOfRooms, numberOfBathrooms, floorNumber, managementFee, Elevator, direction, Parking, shortTermRental);
+                , numberOfRooms, numberOfBathrooms, floorNumber, managementFee, Elevator, direction, Parking, shortTermRental, keyword);
         responseData.put("maenulList", maemulList);
 
         // 마커 클릭시 해당 주소의 매물 리스트 가져오기
