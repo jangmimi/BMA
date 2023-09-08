@@ -18,7 +18,7 @@
 .e-modalContent {
     position: fixed;
     width: 360px;
-    height: 400px;
+    height: 420px;
     border: 1px solid lightgray;
     padding: 15px;
     display: flex;
@@ -73,7 +73,7 @@
 .e-resultContainer {
     position: absolute;
     width: 100%;
-    top: 68%;
+    top: 64%;
     margin-left: 5px;
 }
 

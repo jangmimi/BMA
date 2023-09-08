@@ -50,4 +50,5 @@ public interface LikedRepository extends JpaRepository<LikedEntity, Long> {
 
     /** nickname으로 관심매물 조회 */
     List<LikedEntity> findByNickname(String nickname);
+
 }
