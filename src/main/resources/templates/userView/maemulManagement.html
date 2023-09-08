@@ -11,7 +11,6 @@
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/member/myPage.css}">
     <link rel="stylesheet" th:href="@{/css/member/myCommon.css}">
-    <link rel="stylesheet" th:href="@{/css/member/myQna.css}">
     <link rel="stylesheet" th:href="@{/css/member/myMaemul.css}">
 </head>
 <body layout:fragment="content">
@@ -41,45 +40,50 @@
                         </div>
                         <div class="oMyQnaTb">
                             <table class="faq-tb">
-                                <thead>
-                                    <tr>
-                                        <th class="o-md-type">매물종류</th>
-                                        <th class="o-md-img">이미지</th>
-                                        <th class="o-md-type">제목</th>
-                                        <th class="o-md-add">주소</th>
-                                        <th class="o-md-area">층/면적</th>
-                                        <th class="o-md-amount">거래 및 가격</th>
-                                        <th class="o-md-btns">수정/삭제</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <p>전체 <span class="o-cntAll" th:text="${mmAllCnt}"></span>건</p>
-                                    <th:block th:if="${mmAllCnt == 0}">
-                                        <tr><td colspan="6">조회된 데이터가 없습니다.</td></tr>
-                                    </th:block>
-                                    <tr th:if="${mmAllCnt != 0}" th:each="mmList : ${mmList}">
-                                        <input type="hidden" id="num" th:value="${mmList.id}">
-                                        <td id="종류" th:text="${mmList.tradeType}">매물종류</td>
-                                        <td id="o-d-photo">
-                                            <img src="https://www.bdsplanet.com/common/thumbs.ytp?filepath=/COMP_20201027000920000005/upload/realty/RCODE_20230731160156000045/&filename=1690787077205_1.jpg" width="80">
-                                        </td>
-                                        <td id="o-d-title" th:text="${mmList.title}">제목</td>
-                                        <td id="전월세매매" th:text="${mmList.address}">주소</td>
-                                        <td>
-                                            <span th:text="${mmList.totalFloors} + ' / ' + ${mmList.floorNumber}">전체/현재</span>
-                                            <span th:text="${mmList.privateArea}">공급면적</span>
-                                            <span th:text="${mmList.privateArea}">전용면적</span>
-                                        </td>
-                                        <td>
-                                            <span th:text="${mmList.optional}">월세전세매매</span>
-                                            <span th:text="${mmList.optional}">보증금/월세</span>
-                                        </td>
-                                        <td class="o-t-btns">
-                                            <input type="button" value="수정">
-                                            <input type="button" value="삭제">
-                                        </td>
-                                    </tr>
-                                </tbody>
+                                <form action="#" method="POST">
+                                    <thead>
+                                        <tr>
+                                            <th class="o-md-type">매물종류</th>
+                                            <th class="o-md-img">이미지</th>
+                                            <th class="o-md-title">제목</th>
+                                            <th class="o-md-add">주소</th>
+                                            <th class="o-md-area">층/면적</th>
+                                            <th class="o-md-amount">거래 및 가격</th>
+                                            <th class="o-md-btns">삭제</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <p>총<span class="o-cntAll" th:text="${mmAllCnt}"></span>개</p>
+                                        <th:block th:if="${mmAllCnt == 0}">
+                                            <tr><td colspan="6">조회된 데이터가 없습니다.</td></tr>
+                                        </th:block>
+                                        <tr th:if="${mmAllCnt != 0}" th:each="mmList : ${mmList}">
+                                            <input type="hidden" id="num" th:value="${mmList.id}">
+                                            <td id="종류" th:text="${mmList.tradeType}">매물종류</td>
+                                            <td id="o-d-photo">
+                                                <img src="https://www.bdsplanet.com/common/thumbs.ytp?filepath=/COMP_20201027000920000005/upload/realty/RCODE_20230731160156000045/&filename=1690787077205_1.jpg" width="80">
+                                            </td>
+                                            <td class="o-link-td">
+                                                <a th:text="${mmList.title}" th:href="@{/details/{id}(id=${mmList.id})}">매물링크</a>
+                                            </td>
+                                            <td class="o-link-td">
+                                                <a th:text="${mmList.address}" th:href="@{/details/{id}(id=${mmList.id})}">주소</a>
+                                            </td>
+                                            <td>
+                                                <div th:text="${mmList.totalFloors} + '/' + ${mmList.floorNumber} + '층'">엘리베이터 전체/현재</div>
+                                                <div th:text="${'공급' + mmList.privateArea + '㎡'}">공급면적</div>
+                                                <div th:text="${'전용' + mmList.supplyArea + '㎡'}">전용면적</div>
+                                            </td>
+                                            <td>
+                                                <div th:text="${mmList.tradeType}">월세전세매매</div>
+                                                <div id="o-md-load" th:text="${mmList.monthlyForRent + '만 / ' + mmList.monthlyRent + '만'}">보증금/월세</div>
+                                            </td>
+                                            <td class="o-t-btns">
+                                                <input type="submit" value="삭제">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </form>
                             </table>
                         </div>
                     </div>
