@@ -75,28 +75,35 @@
     margin: 0 auto;
 }
 .oMaemul-c-inner {
-    padding: 40px 0px 50px;
-}
-.oMeamulTitleContainer {
     display: flex;
     justify-content: space-between;
-    border-bottom: 2px solid black;
-    margin-bottom: 20px;
-    padding: 0px 0px 10px;
+    align-items: center;
+    padding: 50px 0px;
 }
-.oMeamulTabLeft {
-    font-size: 17px;
+.o-tab-c {
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid black;
+    padding: 0px 0px 10px;
+    width: 100%;
+}
+.o-tab-l {
+    font-size: 18px;
+    margin-right: 10px;
+}
+.o-tab-r {
+    margin-left: auto;
 }
 .o-mm-link {
     font-weight: 700;
-    border: none;
     background-color: white;
+    text-decoration: none;
 }
 #o-allView {
     background-color: #26abed;
     color: white;
     padding: 5px 8px;
-    font-size: 15px;
+    font-size: 14px;
 }
 .oUpdateLinkBtn{
     width: 150px;
@@ -110,6 +117,11 @@
 }
 #o-recent-link {
     color: #999999;
+}
+#o-division {
+    margin: 0px 15px;
+    color: #222222;
+    font-weight: 300;
 }
 .oInfo-right {
     height: 100%;
