@@ -579,9 +579,15 @@ function updateSidebar(responseData) {
         listItem.className = "list-group-item a";
         listItem.style = "";
 
+        // details 페이지에 넘겨줄 닉네임
+        var nickname = null;
+        if (loginMember) {
+            nickname = loginMember.nickname;
+        }
+
         // 새로운 a 요소 생성
         var anchor = document.createElement("a");
-        anchor.href = "/details/" + maemul.id + "?nickname=" + maemul.nickname;
+        anchor.href = "/details/" + maemul.id + "?nickname=" + nickname;
         anchor.className = "abox";
         anchor.target = "";
 

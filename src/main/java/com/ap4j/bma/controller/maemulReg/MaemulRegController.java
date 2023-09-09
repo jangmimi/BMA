@@ -124,6 +124,19 @@ public class MaemulRegController {
         maemulRegService.updateMeamulReg(maemulId, latitude, longitude);
     }
 
+    @PostMapping("/update-maemul")
+    public String setUpdateMaemul() {
+        return "redirect:/updatePage_maemul";
+    }
+
+    @GetMapping("/updatePage_maemul")
+    public String updateMaemul(Model model, Integer maemul_id) {
+        System.out.println("maemul_id = " + maemul_id);
+        MaemulRegEntity maemulRegEntity = maemulRegService.getMaemulById(maemul_id);
+        model.addAttribute("maemul", maemulRegEntity);
+        return "maemulReg/MaemulUpdate";
+    }
+
 }
 
 

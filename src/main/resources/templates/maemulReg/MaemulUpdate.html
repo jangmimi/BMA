@@ -433,8 +433,9 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 <!-- 로그인중일때만 접근 가능 -->
 <th:block th:if="${loginMember != null}">                     <!--세션 받아와서 저장-->
 <form action="/update-maemul" method="POST" id="maemulForm" th:object="${loginMember}">
-    <div class="layout">
 
+    <div class="layout">
+        <span th:text="${maemul}"></span>
         <h2 class="category"><b class="number">01 </b>주소 정보</h2>
         <hr>
         <div id="addressSection">
@@ -442,14 +443,12 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
                 <tr >
                     <th>주소<b class="number"> *</b></th>
                     <td colspan="3">
-                        <input id="addressInput" name="address" type="text" readonly>
-                        <button type="button" onclick="openKakaoAddressSearch()" class="address-btn"><img src="/img/maemulReg/search-address.png" style="width:40px; height:40px;" alt="도로명 주소" ></button>
-                        <button onclick="getCurrentLocation()" class="address-btn"><img src="/img/maemulReg/mygps.png" style="width:40px; height:40px;" alt="내 위치" ></button>
+                        <input id="addressInput" name="address" type="text" th:value="${maemul.address}" readonly>
                     </td>
                 </tr>
                 <tr>
                     <th>단지명</th>
-                    <td colspan="3"><input id="APT_name" name="APT_name" onblur="showBuildingInfo();" type="text"></td>
+                    <td colspan="3"><input id="APT_name" name="APT_name" onblur="showBuildingInfo();" type="text" th:value="${maemul.APT_name}"></td>
                 </tr>
             </table>
             <br>
@@ -462,16 +461,16 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
                 <tr>
                     <th>건축물 용도</th>
                     <td colspan="4">
-                        <input type="radio" name="buildingUsage" value="거주용">주거용
-                        <input type="radio" name="buildingUsage" value="업무용">상업용
-                        <input type="radio" name="buildingUsage" value="거주/업무용">주거/상업용
+                        <input type="radio" name="buildingUsage" value="거주용" th:checked="${maemul.buildingUsage == '거주용'}">주거용
+                        <input type="radio" name="buildingUsage" value="업무용" th:checked="${maemul.buildingUsage == '업무용'}">상업용
+                        <input type="radio" name="buildingUsage" value="거주/업무용" th:checked="${maemul.buildingUsage == '거주/업무용'}">주거/상업용
                     </td>
                 </tr>
                 <tr>
                     <th>방 수<b class="number"> *</b></th>
-                    <td><input class="num" type="text" id = "useInput" name="numberOfRooms" placeholder="0"> 개</td>
+                    <td><input class="num" type="text" id="useInput" name="numberOfRooms" th:value="${maemul.numberOfRooms}"> 개</td>
                     <th>욕실 수<b class="number"> *</b></th>
-                    <td colspan="2"><input class="num" type="text" name="numberOfBathrooms" placeholder="0"> 개</td>
+                    <td colspan="2"><input class="num" type="text" name="numberOfBathrooms" th:value="${maemul.numberOfBathrooms}"> 개</td>
                 </tr>
                 <tr>
                     <th>해당 층 수<b class="number"> *</b></th>
