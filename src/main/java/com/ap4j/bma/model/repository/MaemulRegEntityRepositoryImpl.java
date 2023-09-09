@@ -2,13 +2,11 @@ package com.ap4j.bma.model.repository;
 
 import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.micrometer.core.instrument.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.ap4j.bma.model.entity.meamulReg.QMaemulRegEntity.maemulRegEntity;

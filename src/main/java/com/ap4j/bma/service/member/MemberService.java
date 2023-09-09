@@ -5,7 +5,6 @@ import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 
 import javax.servlet.http.HttpSession;
@@ -28,6 +27,8 @@ public interface MemberService {
 	public Long joinBasic(@ModelAttribute MemberDTO memberDTO);
 
 	public boolean existsByEmail(String email);
+
+	public Optional<MemberEntity> findByEmail(String email);
 
 	public boolean existsByNickname(String nickname);
 

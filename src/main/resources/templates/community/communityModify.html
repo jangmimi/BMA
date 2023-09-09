@@ -19,12 +19,12 @@
             <tr>
                 <th>작성자</th>
                 <td>
-                    <input type="hidden" class="read" name="author" th:text="${loginMember.name}" th:value="${loginMember.name}">
+                    <label type="hidden" class="read" name="author" th:text="${loginMember.nickname}" th:value="${loginMember.nickname}"></label>
                 </td>
             </tr>
             <tr>
                 <th>수정일</th>
-                <td><p th:text="${#temporals.format(update.modifiedAt, 'yyyy-MM-dd')}">yyyy-MM-dd</p>
+                <td><label th:text="${#temporals.format(update.modifiedAt, 'yyyy-MM-dd')}">yyyy-MM-dd</label>
             </tr>
             <tr>
                 <th>내용</th>

@@ -1,20 +1,12 @@
 package com.ap4j.bma.model.entity.TalkTalk;
 
-import lombok.*;
-
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 //Entity란? Entity는 데이터베이스에 테이블과 같은 의미로 쓰이며 자바에서는 테이블을 엔티티라고 한다.
 

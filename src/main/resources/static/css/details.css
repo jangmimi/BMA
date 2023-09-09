@@ -93,7 +93,9 @@ li p {
 }
 
 aside {
-	position: sticky;
+	/*position: sticky;*/
+	top: 10px;
+	left: 50px;
 }
 
 /* 오른쪽에 정보 보여주는 컨테이너 */
@@ -479,7 +481,7 @@ ul span {
 	border: 0;
 }
 
-.y-st-q a{
+.y-st-q a {
 	text-decoration: none;
 }
 
@@ -863,17 +865,17 @@ ul span {
 	height: 440px;
 }
 
-#category {
-	position: absolute;
-	top: 10px;
-	left: 10px;
-	border-radius: 5px;
-	border: 1px solid #909090;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
-	background: #fff;
-	overflow: hidden;
-	z-index: 2;
-}
+/*#category {*/
+/*	position: absolute;*/
+/*	top: 10px;*/
+/*	left: 10px;*/
+/*	border-radius: 5px;*/
+/*	border: 1px solid #909090;*/
+/*	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);*/
+/*	background: #fff;*/
+/*	overflow: hidden;*/
+/*	z-index: 2;*/
+/*}*/
 
 #category li {
 	float: left;
@@ -971,10 +973,9 @@ ul span {
 	background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png");
 }
 
-.y-st-q a{
+.y-st-q a {
 	text-decoration: none;
 }
-
 
 
 .placeinfo a,
@@ -1017,6 +1018,22 @@ ul span {
 	color: #999;
 	font-size: 11px;
 	margin-top: 0;
+}
+
+.y-fa {
+	width: 44px;
+	height: 44px;
+	border: none;
+	border-radius: 50%;
+	display: flex !important;
+	justify-content: center;
+	text-align: center;
+	align-items: center;
+}
+
+
+.y-gas-station {
+	background-color: #A78E62;
 }
 
 /* 위치 및 주변 시설  CSS 끝 */

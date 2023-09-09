@@ -15,11 +15,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
-import javax.servlet.http.*;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,9 +98,9 @@ public class MapController {
 
     public ResponseEntity<Map<String, Object>> map2(HttpSession session, Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng, Integer zoomLevel, String address, String tradeType
                                                     ,Integer numberOfRooms, Integer numberOfBathrooms, Integer floorNumber, Integer managementFee, String Elevator
-                                                    ,String direction, String Parking, String shortTermRental,  String keyword){
+                                                    ,String direction, String Parking, String shortTermRental,  String keyword, String value){
         System.out.println("컨트롤러 address " + address);
-
+        System.out.println("컨트롤러 value = " + value);
         Map<String, Object> responseData = new HashMap<>();
 
         // 로그인 값 넘기기
@@ -132,6 +134,13 @@ public class MapController {
             List<MaeMulRegDTO> maemulKeywordList = maemulRegService.findByMaemulKeyword(keyword);
             responseData.put("maemulKeywordList", maemulKeywordList);
         }
+
+        if(value != null){
+            // 주거용 상업용 버튼 클릭시 매물 리스트 가져오기
+            List<MaeMulRegDTO> maemulButtonList = maemulRegService.findByMaemulButton(value);
+            responseData.put("maemulButtonList", maemulButtonList);
+        }
+
 
         return ResponseEntity.ok(responseData);
     }

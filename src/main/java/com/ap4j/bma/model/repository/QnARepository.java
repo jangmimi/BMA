@@ -7,8 +7,6 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-import org.springframework.data.repository.query.Param;
-
 public interface QnARepository extends JpaRepository<QnAEntity, Integer> {
     // 전체 게시글 개수를 조회하는 메서드 추가
     @Query("SELECT COUNT(q) FROM QnAEntity q")
@@ -20,7 +18,7 @@ public interface QnARepository extends JpaRepository<QnAEntity, Integer> {
         @Query("SELECT mr FROM QnAEntity mr " +
                 "JOIN MemberEntity m ON mr.user_email = m.email " +
                 "WHERE m.email = :user_email " +
-                "ORDER BY mr.createdAt DESC")  // 최근글부터 나오게 정렬 추가")
-        List<QnAEntity> findMaemulByMemberEmail(@Param("user_email") String email);
+                "ORDER BY mr.createdAt DESC")  // 최근글부터 나오게 정렬 추가
+        List<QnAEntity> findQnaByEmail(@Param("user_email") String email);
 
     }

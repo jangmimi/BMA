@@ -6,24 +6,30 @@ import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
 import com.ap4j.bma.model.entity.member.LikedEntity;
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
-import com.ap4j.bma.model.entity.recentView.RecentEntity;
+import com.ap4j.bma.model.entity.member.RecentEntity;
+import com.ap4j.bma.service.maemulReg.MaemulRegService;
 import com.ap4j.bma.service.member.LikedService;
 import com.ap4j.bma.service.member.MemberService;
 import com.ap4j.bma.service.member.RecentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.*;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @SessionAttributes("loginMember")   // 세션 자동 설정
@@ -36,7 +42,6 @@ public class MemberController {
 
     @Autowired
     private LikedService likedService;
-
 
     @Autowired
     private RecentService recentService;
@@ -238,6 +243,11 @@ public class MemberController {
         Page<MaemulRegEntity> mmpList = likedService.getPaginatedItems(nickname,page,pageSize);
         Long likedCnt = likedService.countLikedByNickname(nickname);
 
+        /* 매물목록으로 테스트중*/
+        List<MaemulRegEntity> mRecentList = qMemberService.getListByNickname(loginMember.getNickname());
+        model.addAttribute("mRecentList",mRecentList);
+        /**/
+
         model.addAttribute("root", root);
         model.addAttribute("thumbnail_image", thumImg);
         model.addAttribute("likedCnt",likedCnt);
@@ -341,7 +351,7 @@ public class MemberController {
     /** 관심매물 페이지 매핑 */
     @RequestMapping("/liked")   // pageSize 10으로 수정필요
     public String qInterest(@RequestParam(name = "page", defaultValue = "1") int page,
-                            @RequestParam(name = "pageSize", defaultValue = "10") int pageSize,HttpSession session, Model model) {
+                            @RequestParam(name = "pageSize", defaultValue = "5") int pageSize,HttpSession session, Model model) {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
@@ -366,7 +376,7 @@ public class MemberController {
     @GetMapping("/searchl")
     public String searchl(  String keyword,
                             @RequestParam(name = "page", defaultValue = "1") int page,
-                            @RequestParam(name = "pageSize", defaultValue = "10") int pageSize, HttpSession session, Model model) {
+                            @RequestParam(name = "pageSize", defaultValue = "2") int pageSize, HttpSession session, Model model) {
         if (!loginStatus(session)) {
             return "userView/loginNeed";
         }
@@ -378,25 +388,25 @@ public class MemberController {
         model.addAttribute("totalCount", totalCount);
         model.addAttribute("mmpList", mmpList);
 
-
         return "userView/searchMaemulLiked";
     }
 
-//    /** 최근매물 페이지 매핑 */
-//    @RequestMapping("/qRecent")
-//    public String qRecent(@RequestParam(name = "page", defaultValue = "1") int page,
-//                          @RequestParam(name = "pageSize", defaultValue = "10") int pageSize,HttpSession session, Model model) {
-//        log.info("MemberController - qRecent() 실행");
-//        if(!loginStatus(session)) { return "userView/loginNeed"; }
-//        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
-//
-//        Page<RecentEntity> mmpList = recentService.getPaginatedItems(memberDTO,page,pageSize);
-////        Long totalCount = recentService.countLikedByNickname(nickname);
-////        model.addAttribute("totalCount",totalCount);
-//        model.addAttribute("mmpList",mmpList);
-//
-//        return "userView/maemulRecent";
-//    }
+    /** 최근매물 페이지 매핑 */
+    @RequestMapping("/qRecent")
+    public String qRecent(HttpSession session, Model model) {
+        log.info("MemberController - qRecent() 실행");
+        if(!loginStatus(session)) { return "userView/loginNeed"; }
+
+        List<RecentEntity> mmRecentList = recentServiceImpl.getAllList();
+        Long mmAllRecentCnt = recentServiceImpl.countAll();
+        log.info(mmRecentList.toString());
+        log.info(String.valueOf(mmAllRecentCnt));
+
+        model.addAttribute("mmRecentList",mmRecentList);
+        model.addAttribute("mmAllRecentCnt",mmAllRecentCnt);
+
+        return "userView/maemulRecent";
+    }
 
     /** 기본 회원탈퇴 (js ajax 활용) */   // sns 탈퇴 시 로그인 별도 처리 필요
     @PostMapping("/qLeaveMember2")

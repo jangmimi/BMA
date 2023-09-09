@@ -36,18 +36,24 @@
                     <div class="oInfo-top">
                         <div class="oInfo-top-wrapper">
                             <div class="oInfo-left">
-                                <div class="oThumbnailImg"> <!-- sns로그인 시 model에서 프로필링크 가져옴, 없으면 default img -->
-                                    <img class="myImg" th:if="${thumbnail_image!=null}" th:src="${thumbnail_image}" alt="썸네일이미지">
-                                    <img class="myImg" th:if="${thumbnail_image==null}" th:src="@{/img/defaultProfile.jpg}" alt="썸네일이미지">
-                                </div>
-                                <div class="oInfoMember">
-                                    <div class="oInfoMemberContain">
-                                        <input type="hidden" id="id" name="id" th:value="*{id}" />
-                                        <span th:text="*{name}" id="oInfoMemberName"></span>님<br/>
-                                        <span th:text="${root}" id="oInfoMemberRoot"></span>
+                                <div class="aThumMem">
+                                    <div class="oThumbnailImg"> <!-- sns로그인 시 model에서 프로필링크 가져옴, 없으면 default img -->
+                                        <img class="myImg" th:if="${thumbnail_image!=null}" th:src="${thumbnail_image}" alt="썸네일이미지">
+                                        <img class="myImg" th:if="${thumbnail_image==null}" th:src="@{/img/defaultProfile.jpg}" alt="썸네일이미지">
                                     </div>
-                                    <span th:text="*{email}" id="oInfoMemberEmail"></span>
+                                    <div class="oInfoMember">
+                                        <div class="oInfoMemberContain">
+                                            <input type="hidden" id="id" name="id" th:value="*{id}" />
+                                            <span th:text="*{name}" id="oInfoMemberName"></span>님<br/>
+                                            <span th:text="${root}" id="oInfoMemberRoot"></span>
+                                        </div>
+                                        <span th:text="*{email}" id="oInfoMemberEmail"></span>
+                                    </div>
                                 </div>
+                                <button onclick="" class="aAddPic">
+                                    <img class="aAddPicImg"src="https://cdn-icons-png.flaticon.com/512/1829/1829371.png">
+                                    <p class="aAddPicP">사진등록</p>
+                                </button>
                             </div>
                             <div class="oInfo-right">
                                 <div class="oMaemulCnt-inner">
@@ -60,171 +66,172 @@
                                         <span>최근 본 매물</span>
                                     </div>
                                 </div>
+                                <div class="a_myInEditAndServiceInfoBtn">
+                                    <a th:href="@{/member/qMyInfoUpdate}" class="a_Btns">내 정보 수정</a>
+                                    <a href="/guide" class="a_Btns">서비스 이용안내</a>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="oMeamulContainer">
                         <div class="oMaemul-c-inner">
-                            <div class="oMeamulTitleContainer">
-                                <div class="oMeamulTabLeft">
-                                    <button type="button" class="o-mm-link" id="o-liked-link"
-                                            th:onclick="|location.href='@{/member/liked}'|">관심매물</button> |
-                                    <button type="button" class="o-mm-link" id="o-recent-link"
-                                            th:onclick="|location.href='@{/member/qRecent}'|">최근본매물</button>
+                            <div class="o-tab-c">
+                                <div class="o-tab-l" id="o-liked-link2"><!--th:href="@{/member/liked} th:href="@{/member/qRecent}""-->
+                                    <a href="#" class="o-tab o-mm-link" id="o-liked-link">관심매물</a>
                                 </div>
-                                <div>
-                                    <button type="button" class="o-mm-link" id="o-allView"
-                                            th:onclick="|location.href='@{/member/liked}'|">전체보기</button>
+                                <span id="o-division">|</span>
+                                <div class="o-tab-l" id="o-recent-link2" >
+                                    <a href="#" class="o-tab o-mm-link" id="o-recent-link">최근본매물</a>
+                                </div>
+                                <div class="o-tab-r">
+                                    <a class="o-mm-link" id="o-allView" th:href="@{/member/liked}">
+                                        <img class="aAddPicImg2" src="https://cdn.pixabay.com/photo/2013/07/13/12/30/page-159746_1280.png">
+                                        <p class="aSeeAll">전체보기</p>
+                                    </a>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="z-bottom-container">
-                            <div class="z-bottom-wrap">
-                                <!-- 매물 시작 -->
-                                <a th:each="mmList : ${mmpList}" th:href="@{/details/{id}(id=${mmList.id})}">
-                                    <div class="s-mamulbox">
-                                        <div class="s-mamul-img">
-                                            <img src="/img/details/apt.jpeg" alt="이미지">
-                                        </div>
-                                        <div class="s-mamul-text">
-                                            <div class="s-mamul-text-wrap">
-                                                <span class="s-mamul-text-title" th:text="${mmList.tradeType}"></span>
-                                                <div class="s-mamul-text-1">
-                                                    <p th:text="${mmList.buildingUsage}">용도</p>
-                                                    <p th:text="${mmList.address}">주소</p>
-                                                </div>
-                                                <div class="s-mamul-text-2">
-                                                    <p th:text="${mmList.privateArea} + '/' + ${mmList.supplyArea} + '㎡'">면적</p>
-                                                    <p th:text="${mmList.floorNumber} + '층/' + ${mmList.totalFloors} + '층'">층수</p>
-                                                </div>
-                                                <div>
-                                                    <p>설명</p>
-                                                </div>
-                                            </div>
-                                            <div class="s-mamul-tag">
-                                                <span>#반려동물</span>
-                                                <span>#역세권</span>
-                                                <span>#주변환경 우수</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </a>
-                                <!-- 매물 끝 -->
-
-<!--                                <div class="s-mamulbox">-->
-<!--                                    <div class="s-mamul-img">-->
-<!--                                        <img src="/img/details/apt.jpeg" alt="이미지">-->
-<!--                                    </div>-->
-<!--                                    <div class="s-mamul-text">-->
-<!--                                        <div class="s-mamul-text-wrap">-->
-<!--                                            <span class="s-mamul-text-title">전세 1억 6,500만</span>-->
-<!--                                            <div class="s-mamul-text-1">-->
-<!--                                                <p>다세대(빌라/연립)</p>-->
-<!--                                                <p>ㆍ서초동 상가주택</p>-->
-<!--                                            </div>-->
-<!--                                            <div class="s-mamul-text-2">-->
-<!--                                                <p>851.7/851.71㎡</p>-->
-<!--                                                <p>ㆍ지하-/지상2층</p>-->
-<!--                                            </div>-->
-<!--                                            <div>-->
-<!--                                                <p>서초역 역세권 업무주거배후세대 풍부ssssssssssssssssssssssssss</p>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                        <div class="s-mamul-tag">-->
-<!--                                            <span>#반려동물</span>-->
-<!--                                            <span>#역세권</span>-->
-<!--                                            <span>#주변환경 우수</span>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <div class="s-mamulbox">-->
-<!--                                    <div class="s-mamul-img">-->
-<!--                                        <img src="/img/details/apt.jpeg" alt="이미지">-->
-<!--                                    </div>-->
-<!--                                    <div class="s-mamul-text">-->
-<!--                                        <div class="s-mamul-text-wrap">-->
-<!--                                            <span class="s-mamul-text-title">전세 1억 6,500만</span>-->
-<!--                                            <div class="s-mamul-text-1">-->
-<!--                                                <p>다세대(빌라/연립)</p>-->
-<!--                                                <p>ㆍ서초동 상가주택</p>-->
-<!--                                            </div>-->
-<!--                                            <div class="s-mamul-text-2">-->
-<!--                                                <p>851.7/851.71㎡</p>-->
-<!--                                                <p>ㆍ지하-/지상2층</p>-->
-<!--                                            </div>-->
-<!--                                            <div>-->
-<!--                                                <p>서초역 역세권 업무주거배후세대 풍부ssssssssssssssssssssssssss</p>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                        <div class="s-mamul-tag">-->
-<!--                                            <span>#반려동물</span>-->
-<!--                                            <span>#역세권</span>-->
-<!--                                            <span>#주변환경 우수</span>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-
-<!--                                <div class="s-mamulbox">-->
-<!--                                    <div class="s-mamul-img">-->
-<!--                                        <img src="/img/details/apt.jpeg" alt="이미지">-->
-<!--                                    </div>-->
-<!--                                    <div class="s-mamul-text">-->
-<!--                                        <div class="s-mamul-text-wrap">-->
-<!--                                            <span class="s-mamul-text-title">전세 1억 6,500만</span>-->
-<!--                                            <div class="s-mamul-text-1">-->
-<!--                                                <p>다세대(빌라/연립)</p>-->
-<!--                                                <p>ㆍ서초동 상가주택</p>-->
-<!--                                            </div>-->
-<!--                                            <div class="s-mamul-text-2">-->
-<!--                                                <p>851.7/851.71㎡</p>-->
-<!--                                                <p>ㆍ지하-/지상2층</p>-->
-<!--                                            </div>-->
-<!--                                            <div>-->
-<!--                                                <p>서초역 역세권 업무주거배후세대 풍부ssssssssssssssssssssssssss</p>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                        <div class="s-mamul-tag">-->
-<!--                                            <span>#반려동물</span>-->
-<!--                                            <span>#역세권</span>-->
-<!--                                            <span>#주변환경 우수</span>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <div class="s-mamulbox">-->
-<!--                                    <div class="s-mamul-img">-->
-<!--                                        <img src="/img/details/apt.jpeg" alt="이미지">-->
-<!--                                    </div>-->
-<!--                                    <div class="s-mamul-text">-->
-<!--                                        <div class="s-mamul-text-wrap">-->
-<!--                                            <span class="s-mamul-text-title">전세 1억 6,500만</span>-->
-<!--                                            <div class="s-mamul-text-1">-->
-<!--                                                <p>다세대(빌라/연립)</p>-->
-<!--                                                <p>ㆍ서초동 상가주택</p>-->
-<!--                                            </div>-->
-<!--                                            <div class="s-mamul-text-2">-->
-<!--                                                <p>851.7/851.71㎡</p>-->
-<!--                                                <p>ㆍ지하-/지상2층</p>-->
-<!--                                            </div>-->
-<!--                                            <div>-->
-<!--                                                <p>서초역 역세권 업무주거배후세대 풍부ssssssssssssssssssssssssss</p>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                        <div class="s-mamul-tag">-->
-<!--                                            <span>#반려동물</span>-->
-<!--                                            <span>#역세권</span>-->
-<!--                                            <span>#주변환경 우수</span>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-
-
+                        <div id="o-tab-content1" class="o-tab-content">
+                            <!-- 관심매물 0개 일때 -->
+                            <div th:if="${likedCnt == 0}" id="o-noCnt">
+                                관심매물을 등록해주세요.
                             </div>
-                            <!-- z-bottom-wrap 끝 -->
+                            <!-- 관심매물 영역 -->
+                            <div class="z-bottom-container">
+                                <div class="z-bottom-wrap">
+                                    <!-- 매물 시작 (통으로 링크) -->
+                                    <a th:each="mmList, iterStat : ${mmpList}" th:href="@{/details/{id}(id=${mmList.id})}">
+                                        <div class="s-mamulbox">
+                                            <div class="s-mamul-img">
+                                                <img src="/img/details/apt.jpeg" alt="이미지">
+                                            </div>
+                                            <div class="s-mamul-text">
+                                                <div class="s-mamul-text-wrap">
+                                                    <div class="s-mamul-text-title">
+                                                        <span th:if="${mmList.tradeType == '매매'}"
+                                                              th:with="sp_djr=${mmList.sellingPrice / 10000}, sp_aks=${mmList.sellingPrice % 10000}"
+                                                              th:text="${'매매 ' + #strings.concat(sp_djr > 0 ? sp_djr + '억 ' : '', sp_aks > 0 ? sp_aks + '만원' : '')}">
+                                                        </span>
+                                                        <span th:if="${mmList.tradeType == '전세'}"
+                                                              th:with="dp_djr=${mmList.depositForLease / 10000}, dp_aks=${mmList.depositForLease % 10000}"
+                                                              th:text="${'전세 ' + #strings.concat(dp_djr > 0 ? dp_djr + '억 ' : '', dp_aks > 0 ? dp_aks + '만원' : '')}">
+                                                        </span>
+                                                        <span th:if="${mmList.tradeType == '월세'}"
+                                                              th:text="${'월세 ' + mmList.monthlyForRent + '/' + mmList.monthlyRent}">
+                                                        </span>
+                                                    </div>
+                                                    <div class="s-mamul-text-1">
+                                                        <p th:text="${mmList.buildingUsage}">용도</p>
+                                                        <p th:text="${' · ' + mmList.address}">주소</p>
+                                                    </div>
+                                                    <div class="s-mamul-text-2">
+                                                        <p th:text="${mmList.privateArea} + '/' + ${mmList.supplyArea} + '㎡ · '">면적</p>
+                                                        <p th:text="${mmList.floorNumber} + '층/' + ${mmList.totalFloors} + '층'">층수</p>
+                                                    </div>
+                                                    <div>
+                                                        <p th:text="${mmList.title}" ></p>
+                                                    </div>
+                                                </div>
+                                                <div class="s-mamul-tag">
+                                                    <span>#반려동물</span>
+                                                    <span>#역세권</span>
+                                                    <span>#주변환경 우수</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- 비어 있는 곳 채우기 용 이미지 -->
+    <!--                                    <div th:if="${likedCnt != 0}">-->
+    <!--                                        <div th:if="${iterStat.index % 3 == 1 and iterStat.index + 1 < likedCnt}">-->
+    <!--                                            <div class="z-img-wrap">-->
+    <!--                                                <img src="https://www.bdsplanet.com/images/none_mae.png" alt="채우기용 이미지">-->
+    <!--                                            </div>-->
+    <!--                                        </div>-->
+    <!--                                        <div th:if="${iterStat.index % 3 == 2 and iterStat.index + 1 < likedCnt}">-->
+    <!--                                            <div class="z-img-wrap">-->
+    <!--                                                <img src="https://www.bdsplanet.com/images/none_mae.png" alt="채우기용 이미지">-->
+    <!--                                                <img src="https://www.bdsplanet.com/images/none_mae.png" alt="채우기용 이미지">-->
+    <!--                                            </div>-->
+    <!--                                        </div>-->
+    <!--                                    </div>-->
+                                    </a>
+                                    <!-- 매물 끝 -->
+                                </div>
+                                <!-- z-bottom-wrap 끝 -->
+                            </div>
+                            <!-- z-bottom-container 끝 -->
                         </div>
-                        <!-- z-bottom-container 끝 -->
+
+                        <div id="o-tab-content2" class="o-tab-content" style="display: none;">
+                            <!-- 최근본매물 0개 일때 -->
+<!--                            <div th:if="${recentCnt == 0}">-->
+<!--                                관심매물을 등록해주세요.-->
+<!--                            </div>-->
+                            <!-- 최근매물 영역 -->
+                            <div class="z-bottom-container">
+                                <div class="z-bottom-wrap">
+                                    <!-- 매물 시작 (통으로 링크) -->
+                                    <a th:each="mRecentList, iterStat : ${mRecentList}" th:href="@{/details/{id}(id=${mRecentList.id})}">
+                                        <div class="s-mamulbox">
+                                            <div class="s-mamul-img">
+                                                <img src="/img/details/apt.jpeg" alt="이미지">
+                                            </div>
+                                            <div class="s-mamul-text">
+                                                <div class="s-mamul-text-wrap">
+                                                    <div class="s-mamul-text-title">
+                                                        <span th:if="${mRecentList.tradeType == '매매'}"
+                                                              th:with="sp_djr=${mRecentList.sellingPrice / 10000}, sp_aks=${mRecentList.sellingPrice % 10000}"
+                                                              th:text="${'매매 ' + #strings.concat(sp_djr > 0 ? sp_djr + '억 ' : '', sp_aks > 0 ? sp_aks + '만원' : '')}">
+                                                        </span>
+                                                        <span th:if="${mRecentList.tradeType == '전세'}"
+                                                              th:with="dp_djr=${mRecentList.depositForLease / 10000}, dp_aks=${mRecentList.depositForLease % 10000}"
+                                                              th:text="${'전세 ' + #strings.concat(dp_djr > 0 ? dp_djr + '억 ' : '', dp_aks > 0 ? dp_aks + '만원' : '')}">
+                                                        </span>
+                                                        <span th:if="${mRecentList.tradeType == '월세'}"
+                                                              th:text="${'월세 ' + mRecentList.monthlyForRent + '/' + mRecentList.monthlyRent}">
+                                                        </span>
+                                                    </div>
+                                                    <div class="s-mamul-text-1">
+                                                        <p th:text="${mRecentList.buildingUsage}">용도</p>
+                                                        <p th:text="${' · ' + mRecentList.address}">주소</p>
+                                                    </div>
+                                                    <div class="s-mamul-text-2">
+                                                        <p th:text="${mRecentList.privateArea} + '/' + ${mRecentList.supplyArea} + '㎡ · '">면적</p>
+                                                        <p th:text="${mRecentList.floorNumber} + '층/' + ${mRecentList.totalFloors} + '층'">층수</p>
+                                                    </div>
+                                                    <div>
+                                                        <p th:text="${mRecentList.title}" ></p>
+                                                    </div>
+                                                </div>
+                                                <div class="s-mamul-tag">
+                                                    <span>#반려동물</span>
+                                                    <span>#역세권</span>
+                                                    <span>#최근본매물이요</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- 비어 있는 곳 채우기 용 이미지 -->
+                                        <!--                                    <div th:if="${likedCnt != 0}">-->
+                                        <!--                                        <div th:if="${iterStat.index % 3 == 1 and iterStat.index + 1 < likedCnt}">-->
+                                        <!--                                            <div class="z-img-wrap">-->
+                                        <!--                                                <img src="https://www.bdsplanet.com/images/none_mae.png" alt="채우기용 이미지">-->
+                                        <!--                                            </div>-->
+                                        <!--                                        </div>-->
+                                        <!--                                        <div th:if="${iterStat.index % 3 == 2 and iterStat.index + 1 < likedCnt}">-->
+                                        <!--                                            <div class="z-img-wrap">-->
+                                        <!--                                                <img src="https://www.bdsplanet.com/images/none_mae.png" alt="채우기용 이미지">-->
+                                        <!--                                                <img src="https://www.bdsplanet.com/images/none_mae.png" alt="채우기용 이미지">-->
+                                        <!--                                            </div>-->
+                                        <!--                                        </div>-->
+                                        <!--                                    </div>-->
+                                    </a>
+                                    <!-- 매물 끝 -->
+                                </div>
+                                <!-- z-bottom-wrap 끝 -->
+                            </div>
+                            <!-- z-bottom-container 끝 -->
+                        </div>
                     </div>
                 </div>
 
@@ -232,6 +239,8 @@
         </div>
     </th:block>
 </th:block>
+
+<script th:src="@{/js/member/myPageMain.js}"></script>
 <!-- 부트스트랩 script -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </body>
