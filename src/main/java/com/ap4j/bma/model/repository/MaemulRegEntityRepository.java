@@ -60,9 +60,15 @@ public interface MaemulRegEntityRepository extends JpaRepository<MaemulRegEntity
     @Query("SELECT m FROM MaemulRegEntity m WHERE replace(m.address, ' ', '') = ?1 or replace(m.APT_name, ' ', '') = ?1")
     List<MaemulRegEntity> findByMaemulKeyword(String keyword);
 
+    /** 주거용 산업용 버튼 클릭시 해당되는 데이터 불러오기 **/
+    @Query("SELECT m FROM MaemulRegEntity m WHERE m.buildingUsage like CONCAT('%', ?1, '%')")
+    List<MaemulRegEntity> findByMaemulButton(String value);
+
     /** 김재환작성 검색한 관심매물 조회*/
     @Query("SELECT mr FROM LikedEntity l JOIN MaemulRegEntity mr ON l.maemul_id = mr.id WHERE (mr.address LIKE %:keyword% OR mr.tradeType LIKE %:keyword%) AND l.nickname = :nickname")
     Page<MaemulRegEntity> findSearchMaemul(@Param("keyword") String keyword,@Param("nickname") String nickname, Pageable pageable);
+
+
 
 //    /*김재환작성 검색한 관심매물 전체개수*/
 //    @Query("SELECT count(mr.id) FROM LikedEntity l JOIN MaemulRegEntity mr ON l.maemul_id = mr.id AND (mr.address LIKE %:keyword% OR mr.tradeType LIKE %:keyword%)")

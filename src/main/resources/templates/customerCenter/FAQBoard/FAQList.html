@@ -21,11 +21,13 @@
         <button type="button" class="menu" id="guide" onclick="location.href = '/guide'" >서비스 이용안내</button>
     </div>
 
+    <form action="/faq/list" method="get">
     <div class = "headrow">
-        <div class = "headrowL">
-            <input type="text" class = "searchbox" placeholder="검색어 입력">
-            <button class = "searchbtn">검색</button>
-        </div>
+            <div class = "headrowL">
+            <input type="text" class="searchbox" placeholder="검색어 입력" name="searchText">
+            <button type="submit" class="searchbtn">검색</button>
+            </div>
+
         <div class="hashtag">
             <a th:href="@{/faq/list(page=1, category='회원')}">회원</a>
             <a th:href="@{/faq/list(page=1, category='실거래가')}">실거래가</a>
@@ -34,6 +36,7 @@
             <a th:href="@{/faq/list(page=1, category='기타')}">기타</a>
         </div>
     </div>
+    </form>
     <hr/>
     <table class="faq-tb">
         <tr>
