@@ -28,6 +28,8 @@ public interface MemberService {
 
 	public boolean existsByEmail(String email);
 
+	public Optional<MemberEntity> findByEmail(String email);
+
 	public boolean existsByNickname(String nickname);
 
 	public MemberDTO login(MemberDTO memberDTO);

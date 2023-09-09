@@ -103,7 +103,7 @@ content:'';position: absolute; margin-left: -11px; left: 50%; bottom: -12px; wid
 
 
 .list-group{
-width:400px;
+width:490px;
 height:100%;
 }
 
@@ -797,7 +797,7 @@ color: #323232;
         z-index: 1100;
         top: 0px;
         left: 0px;
-        width: 348px;
+        width: 439px;
         height: 25px;
         border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         display: flex;

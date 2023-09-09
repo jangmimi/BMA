@@ -18,7 +18,12 @@ public class FAQService {
 
         return faqRepository.findAll();
     }
-
+    
+    //검색
+    public Page<FAQEntity> searchFaqByKeyword(String keyword, Pageable pageable) {
+        return faqRepository.findByTitleContainingIgnoreCaseOrContentContainingIgnoreCase(keyword, keyword, pageable);
+    }
+    
     public FAQEntity faqView(Integer id) {
         return faqRepository.findById(id).get();
     }

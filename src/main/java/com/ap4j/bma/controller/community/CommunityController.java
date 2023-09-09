@@ -27,52 +27,8 @@ public class CommunityController {
     @Autowired
     private CommunityRepository communityRepository;
 
-    //커뮤니티 리스트 출력 + 검색 기능
-    @GetMapping("/community/list")
-    public String communityList(Model model, @RequestParam(name = "page", defaultValue = "1") int page) {
-        int pageSize = 10; // 한 페이지당 보여줄 게시글 개수
-        Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by("id").descending());
-        Page<CommunityEntity> communityPage = communityService.getCommunityPage(pageable);
 
-        model.addAttribute("list", communityPage.getContent());
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", communityPage.getTotalPages());
-
-        Long totalCommunityCount = communityService.updateTotalCommunityCount();
-        model.addAttribute("totalCommunityCount", totalCommunityCount); // 총 게시글 개수 추가
-
-        return "community/communityList";
-    }
-
-
-    //커뮤니티 리스트 검색 결과 페이지
-    @GetMapping("/community/list/search")
-    public String communitySearchList(Model model,
-                                      @RequestParam(name = "page", defaultValue = "1") int page,
-                                      @RequestParam(value = "keyword", required = false) String keyword) {
-        int pageSize = 10; // 한 페이지당 보여줄 게시글 개수
-        Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by("id").descending()); //내림차순 정렬, 최근 등록된 게시물 순
-
-        Page<CommunityEntity> communityPage;
-
-        if (keyword != null && !keyword.isEmpty()) {
-            communityPage = communityService.searchByTitle(keyword, page, pageSize);
-            model.addAttribute("searchKeyword", keyword);
-        } else {
-            // 검색어가 없을 경우 전체 리스트를 가져오도록 수정
-            communityPage = communityService.getCommunityPage(pageable);
-        }
-
-        model.addAttribute("list", communityPage.getContent());
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", communityPage.getTotalPages());
-
-        // 검색 결과의 게시글 개수를 totalCommunityCount에 설정
-        model.addAttribute("totalCommunityCount", communityPage.getTotalElements());
-        return "community/communitySearchList";
-    }
-
-    //글작성
+    //글작성(Create)
     @GetMapping("/community/write")
     public String communityWriteForm(HttpSession session) {
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
@@ -94,7 +50,7 @@ public class CommunityController {
 
     }
 
-    // 글 상세 보기
+    // 글 상세 보기(Read)
     @GetMapping("/community/view")
     public String communityView(Model model, Integer id, HttpSession session) {
         // 게시글 ID를 세션에 저장
@@ -131,37 +87,7 @@ public class CommunityController {
         return "community/communityView";
     }
 
-    //댓글삭제
-    @PostMapping("/comment/delete")
-    public String commentDelete(Integer id, String a, Integer articleId, Model model) {
-        System.out.println("코멘트아이디" + id + " 아티클아이디" + articleId);
-        communityService.communityCommentDelete(id);
-        return "redirect:/community/view?id=" + articleId;
-    }
-
-    //댓글작성
-    @PostMapping("/community/comment")
-    public String commentWrite(@ModelAttribute("communityComment") CommunityCommentEntity communityCommentEntity, Integer articleId,
-                               HttpSession session, Model model) {
-        model.addAttribute("loginMember", session.getAttribute("loginMember"));
-        CommunityEntity communityEntity = communityService.communityView(articleId); // 커뮤니티 조회 메소드를 호출하여 커뮤니티 엔티티를 가져옴
-        communityCommentEntity.setCommunityEntity(communityEntity); // communityEntity 필드 설정
-        communityService.CommentWrite(communityCommentEntity);
-
-        return "redirect:/community/view?id=" + articleId;
-    }
-
-    //게시글 삭제
-    @GetMapping("/community/delete")
-    public String communityDelete(Integer id) {
-
-        communityService.communityDelete(id);
-
-        return "redirect:/community/list";
-    }
-
-
-    //게시글 업로드
+    //게시글 업로드(Update)
     @GetMapping("/community/modify/{id}")
     public String communityModify(@PathVariable("id") Integer id, Model model) {
 
@@ -185,38 +111,95 @@ public class CommunityController {
 
     }
 
+    //게시글 삭제(Delete)
+    @GetMapping("/community/delete")
+    public String communityDelete(Integer id) {
 
-    //게시글 정렬
-    @GetMapping("/community/list/{sortType}")
-    public String communityListSorted(Model model, @RequestParam(name = "page", defaultValue = "1") int page, @PathVariable("sortType") String sortType) {
+        communityService.communityDelete(id);
+
+        return "redirect:/community/list";
+    }
+
+    // 커뮤니티 리스트 출력 및 검색
+    @GetMapping("/community/list")
+    public String communityList(Model model,
+                                @RequestParam(name = "page", defaultValue = "1") int page,
+                                @RequestParam(name = "searchType", required = false) String searchType,
+                                @RequestParam(name = "keyword", required = false) String keyword,
+                                @RequestParam(name = "sortType", defaultValue = "new") String sortType) {
+
         int pageSize = 10; // 한 페이지당 보여줄 게시글 개수
-        Pageable pageable;
+        Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by("id").descending());
 
-        // 정렬 유형에 따라 Pageable 설정
-        if ("new".equals(sortType)) {
-            pageable = PageRequest.of(page - 1, pageSize, Sort.by("createdAt").descending());
-        } else if ("old".equals(sortType)) {
-            pageable = PageRequest.of(page - 1, pageSize, Sort.by("createdAt").ascending());
-        } else if ("view".equals(sortType)) {
-            pageable = PageRequest.of(page - 1, pageSize, Sort.by("view").ascending());
-        } else if ("comment".equals(sortType)) {
-            // 댓글 개수가 많은 순서
-            pageable = PageRequest.of(page - 1, pageSize, Sort.by("commentCount").ascending());
-        } else {
-            pageable = PageRequest.of(page - 1, pageSize, Sort.by("createdAt").descending());
+        switch (sortType) {
+            case "old":
+                pageable = PageRequest.of(page - 1, pageSize, Sort.by("createdAt").ascending());
+                break;
+            case "view":
+                pageable = PageRequest.of(page - 1, pageSize, Sort.by("view").descending());
+                break;
+            default:
+                pageable = PageRequest.of(page - 1, pageSize, Sort.by("createdAt").descending());
         }
 
-        Page<CommunityEntity> communityPage = communityService.getCommunityPage(pageable);
+        Long totalCommunityCount;
+        Page<CommunityEntity> communityPage;
+
+        if (searchType != null && keyword != null && !keyword.isEmpty()) {
+            // 검색 조건이 존재하는 경우
+            switch (searchType) {
+                case "title":
+                    communityPage = communityService.searchByTitle(keyword, page, pageSize);
+                    break;
+                case "content":
+                    communityPage = communityService.searchByContent(keyword, page, pageSize);
+                    break;
+                case "author":
+                    communityPage = communityService.searchByAuthor(keyword, page, pageSize);
+                    break;
+                case "all": // "전체" 옵션 추가
+                    communityPage = communityService.searchByAll(keyword, page, pageSize);
+                    break;
+                default:
+                    communityPage = communityService.getCommunityPage(pageable);
+            }
+            totalCommunityCount = communityPage.getTotalElements(); // 검색 결과 개수
+        } else {
+            // 검색 조건이 없는 경우
+            communityPage = communityService.getCommunityPage(pageable);
+            totalCommunityCount = communityService.updateTotalCommunityCount();
+        }
 
         model.addAttribute("list", communityPage.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", communityPage.getTotalPages());
-        model.addAttribute("totalCommunityCount", communityPage.getTotalElements());
-
+        model.addAttribute("totalCommunityCount", totalCommunityCount);
         model.addAttribute("sortType", sortType);
 
         return "community/communityList";
     }
+
+
+    //댓글작성
+    @PostMapping("/community/comment")
+    public String commentWrite(@ModelAttribute("communityComment") CommunityCommentEntity communityCommentEntity, Integer articleId,
+                               HttpSession session, Model model) {
+        model.addAttribute("loginMember", session.getAttribute("loginMember"));
+        CommunityEntity communityEntity = communityService.communityView(articleId); // 커뮤니티 조회 메소드를 호출하여 커뮤니티 엔티티를 가져옴
+        communityCommentEntity.setCommunityEntity(communityEntity); // communityEntity 필드 설정
+        communityService.CommentWrite(communityCommentEntity);
+
+        return "redirect:/community/view?id=" + articleId;
+    }
+
+    //댓글삭제
+    @PostMapping("/comment/delete")
+    public String commentDelete(Integer id, String a, Integer articleId, Model model) {
+        System.out.println("코멘트아이디" + id + " 아티클아이디" + articleId);
+        communityService.communityCommentDelete(id);
+        return "redirect:/community/view?id=" + articleId;
+    }
+
 }
 
 

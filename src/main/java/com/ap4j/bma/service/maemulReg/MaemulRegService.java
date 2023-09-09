@@ -182,4 +182,49 @@ public class MaemulRegService {
     }
 
 
+    // 주거용 산업용 버튼 클릭시 리스트 출력
+    public List<MaeMulRegDTO> findByMaemulButton (String value) {
+        List<MaeMulRegDTO> maeMulRegDTOList = new ArrayList<>();
+        List<MaemulRegEntity> maemulRegEntityList = maemulRegEntityRepository.findByMaemulButton(value);
+        for (MaemulRegEntity maemulRegEntity : maemulRegEntityList) {
+            MaeMulRegDTO maeMulRegDTO = MaeMulRegDTO.builder()
+                    .id(maemulRegEntity.getId())
+                    .nickname(maemulRegEntity.getNickname())
+                    .address(maemulRegEntity.getAddress())
+                    .APT_name(maemulRegEntity.getAPT_name())
+                    .buildingUsage(maemulRegEntity.getBuildingUsage())
+                    .numberOfRooms(maemulRegEntity.getNumberOfRooms())
+                    .numberOfBathrooms(maemulRegEntity.getNumberOfBathrooms())
+                    .floorNumber(maemulRegEntity.getFloorNumber())
+                    .totalFloors(maemulRegEntity.getTotalFloors())
+                    .privateArea(maemulRegEntity.getPrivateArea())
+                    .supplyArea(maemulRegEntity.getSupplyArea())
+                    .direction(maemulRegEntity.getDirection())
+                    .heatingType(maemulRegEntity.getHeatingType())
+                    .Elevator(maemulRegEntity.getElevator())
+                    .Parking(maemulRegEntity.getParking())
+                    .totalParking(maemulRegEntity.getTotalParking())
+                    .shortTermRental(maemulRegEntity.getShortTermRental())
+                    .availableMoveInDate(maemulRegEntity.getAvailableMoveInDate())
+                    .loanAmount(maemulRegEntity.getLoanAmount())
+                    .tradeType(maemulRegEntity.getTradeType())
+                    .monthlyForRent(maemulRegEntity.getMonthlyForRent())
+                    .monthlyRent(maemulRegEntity.getMonthlyRent())
+                    .depositForLease(maemulRegEntity.getDepositForLease())
+                    .managementFee(maemulRegEntity.getManagementFee())
+                    .SellingPrice(maemulRegEntity.getSellingPrice())
+                    .title(maemulRegEntity.getTitle())
+                    .content(maemulRegEntity.getContent())
+                    .features(maemulRegEntity.getFeatures())
+                    .optional(maemulRegEntity.getOptional())
+                    .security(maemulRegEntity.getSecurity())
+                    .longitude(maemulRegEntity.getLongitude())
+                    .latitude(maemulRegEntity.getLatitude())
+                    .createdAt(maemulRegEntity.getCreatedAt())
+                    .build();
+            maeMulRegDTOList.add(maeMulRegDTO);
+        }
+        return maeMulRegDTOList;
+    }
+
 }
