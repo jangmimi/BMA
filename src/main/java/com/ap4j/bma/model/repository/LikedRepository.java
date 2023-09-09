@@ -5,6 +5,8 @@ import com.ap4j.bma.model.entity.member.LikedEntity;
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -49,6 +51,10 @@ public interface LikedRepository extends JpaRepository<LikedEntity, Long> {
     /*김재환작성 관심매물 전체개수*/
     @Query(value = "SELECT COUNT(l.id) FROM liked l WHERE l.nickname = :nickname", nativeQuery = true)
     Long countLikedByNickname(@Param("nickname") String nickname);
+
+    /*김재환작성 키워드관심매물 전체개수*/
+    @Query("SELECT count(mr.id) FROM LikedEntity l JOIN MaemulRegEntity mr ON l.maemul_id = mr.id WHERE (mr.address LIKE %:keyword% OR mr.tradeType LIKE %:keyword%) AND l.nickname = :nickname")
+    Long countFindLikedByNickname(@Param("keyword") String keyword, @Param("nickname") String nickname);
 
     /** 관심매물 삭제 */
 //    @Override

@@ -43,12 +43,19 @@ public interface MaemulRegEntityRepository extends JpaRepository<MaemulRegEntity
     @Query("SELECT COUNT(m) FROM MaemulRegEntity m WHERE (m.buildingUsage = '업무용' OR m.buildingUsage = '거주/업무용') AND m.nickname = :nickname")
     Long countCommercial(@Param("nickname") String nickname);
 
-    /** 김재환작성*/
-    @Query(value = "SELECT mr.id, mr.APT_name, mr.elevator, mr.parking, mr.selling_price, mr.address, mr.available_move_in_date, mr.building_usage, mr.content, mr.created_at, mr.deposit_for_lease, mr.direction, mr.features, mr.floor_number, mr.heating_type, mr.latitude, mr.loan_amount, mr.longitude, mr.management_fee, mr.monthly_for_rent, mr.monthly_rent, l.nickname, mr.number_of_bathrooms, mr.number_of_rooms, mr.optional, mr.private_area, mr.security, mr.short_term_rental, mr.supply_area, mr.title, mr.total_floors, mr.total_parking, mr.trade_type, mr.d_management_fee, mr.m_management_fee, mr.adress " +
-            "FROM liked l " +
-            "JOIN maemul_reg mr ON l.road_name = mr.address " +
-            "WHERE l.nickname = :nickname", nativeQuery = true)
+    /** 김재환작성  관심매물 조회*/
+    @Query("SELECT mr FROM LikedEntity l JOIN MaemulRegEntity mr ON l.maemul_id = mr.id WHERE l.nickname = :nickname")
     Page<MaemulRegEntity> findLikedByNicknameAndPaging(@Param("nickname") String nickname, Pageable pageable);
+
+    /** 김재환작성 검색한 관심매물 조회*/
+    @Query("SELECT mr FROM LikedEntity l JOIN MaemulRegEntity mr ON l.maemul_id = mr.id WHERE (mr.address LIKE %:keyword% OR mr.tradeType LIKE %:keyword%) AND l.nickname = :nickname")
+    Page<MaemulRegEntity> findSearchMaemul(@Param("keyword") String keyword,@Param("nickname") String nickname, Pageable pageable);
+
+//    /*김재환작성 검색한 관심매물 전체개수*/
+//    @Query("SELECT count(mr.id) FROM LikedEntity l JOIN MaemulRegEntity mr ON l.maemul_id = mr.id AND (mr.address LIKE %:keyword% OR mr.tradeType LIKE %:keyword%)")
+//    Long searchCountLikedByNickname(@Param("nickname") String nickname,@Param("keyword") String keyword);
+
+
 
 }
 
