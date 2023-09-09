@@ -1,5 +1,6 @@
 package com.ap4j.bma.controller.custmerCenter;
 
+import com.ap4j.bma.model.entity.customerCenter.AnswerEntity;
 import com.ap4j.bma.model.entity.customerCenter.QnAEntity;
 import com.ap4j.bma.model.repository.QnARepository;
 import com.ap4j.bma.service.customerCenter.QnAService;

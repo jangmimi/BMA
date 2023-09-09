@@ -257,6 +257,7 @@ kakao.maps.event.addListener(map, 'tilesloaded', function () {
     var tradeTypeString = tradeType.join(",");
     var directionString = direction.join(",");
 
+    var keyword = document.querySelector('.aSearchInput').value.replaceAll(' ', '');
 
     var bounds = map.getBounds();
     var southWest = bounds.getSouthWest();
@@ -278,7 +279,8 @@ kakao.maps.event.addListener(map, 'tilesloaded', function () {
         Elevator: elevator,
         direction: directionString,
         Parking: parking,
-        shortTermRental: rental
+        shortTermRental: rental,
+        keyword: keyword
 
     };
 
@@ -327,6 +329,8 @@ kakao.maps.event.addListener(map, 'idle', function () {
     var tradeTypeString = tradeType.join(",");
     var directionString = direction.join(",");
 
+    var keyword = document.querySelector('.aSearchInput').value.replaceAll(' ', '');
+
     var bounds = map.getBounds();
     var southWest = bounds.getSouthWest();
     var northEast = bounds.getNorthEast();
@@ -346,7 +350,8 @@ kakao.maps.event.addListener(map, 'idle', function () {
         Elevator: elevator,
         direction: directionString,
         Parking: parking,
-        shortTermRental: rental
+        shortTermRental: rental,
+        keyword: keyword
     };
 
     var likedBoolean = true;
@@ -477,18 +482,24 @@ function updateSidebar(responseData) {
         } else if (monthlyForRentString.length === 5) {
             monthlyForRentSliceUk = monthlyForRentString.charAt(0);
             monthlyForRentSliceMan = monthlyForRentString.slice(1);
+        } else if (monthlyForRentString.length === 6) {
+            monthlyForRentSliceUk = monthlyForRentString.slice(0,2);
+            monthlyForRentSliceMan = monthlyForRentString.slice(2);
+        } else if (monthlyForRentString.length === 7) {
+            monthlyForRentSliceUk = monthlyForRentString.charAt(0,3);
+            monthlyForRentSliceMan = monthlyForRentString.slice(3);
         }
         if (monthlyForRentSliceUk != null) {
             if (monthlyForRentSliceMan.charAt(0) != '0') {
-                monthlyForRent = "보증금 " + monthlyForRentSliceUk + "억 " + monthlyForRentSliceMan + "만원";
+                monthlyForRent = "월세 " + monthlyForRentSliceUk + "억 " + monthlyForRentSliceMan + "/";
             } else {
-                monthlyForRent = "보증금 " + monthlyForRentSliceUk + "억";
+                monthlyForRent = "월세 " + monthlyForRentSliceUk + "억/";
             }
         } else {
-            monthlyForRent = "보증금 " + monthlyForRentSliceMan + "만원";
+            monthlyForRent = "월세 " + monthlyForRentSliceMan + "/";
         }
         // 월세
-        var monthlyRent = "월세 " + maemul.monthlyRent + "만원"; // 이 변수 사용하면됨
+        var monthlyRent = maemul.monthlyRent + "만원"; // 이 변수 사용하면됨
 
 
         // 전세
@@ -502,6 +513,9 @@ function updateSidebar(responseData) {
         } else if (depositForLeaseString.length === 6) {
             depositForLeaseSliceUk = depositForLeaseString.slice(0,2);
             depositForLeaseSliceMan = depositForLeaseString.slice(2);
+        } else if (depositForLeaseString.length === 7) {
+            depositForLeaseSliceUk = depositForLeaseString.slice(0,3);
+            depositForLeaseSliceMan = depositForLeaseString.slice(3);
         }
         if(depositForLeaseSliceUk != null) {
             if(depositForLeaseSliceMan.charAt(0) != '0') {
@@ -528,6 +542,9 @@ function updateSidebar(responseData) {
         } else if (sellingPriceString.length === 7) {
             sellingPriceSliceUk = sellingPriceString.slice(0,3);
             sellingPriceSliceMan = sellingPriceString.slice(3);
+        } else if (sellingPriceString.length === 8) {
+            sellingPriceSliceUk = sellingPriceString.slice(0,4);
+            sellingPriceSliceMan = sellingPriceString.slice(4);
         }
         if(sellingPriceSliceUk != null) {
             if(sellingPriceSliceMan.charAt(0) != '0') {
@@ -562,8 +579,8 @@ function updateSidebar(responseData) {
                     <h5 class="ii loc_title">
                         <span class="payf_num_b">
                             ${
-                              maemul.monthlyForRent != 999 && maemul.monthlyForRent != 0 ? `${monthlyForRent}<br/>${monthlyRent}` :
-                              maemul.depositForLease != 999 && maemul.monthlyForRent != 0 ? depositForLease:
+                              maemul.monthlyForRent != 0 ? `${monthlyForRent}${monthlyRent}` :
+                              maemul.depositForLease != 0 ? depositForLease :
                               sellingPrice
                             }
                         </span>
@@ -577,7 +594,7 @@ function updateSidebar(responseData) {
                         <span class="txt01">방${maemul.numberOfRooms}/욕실${maemul.numberOfBathrooms}</span>
                     </div>
                     <div class="ii etc_info">
-                        <span class="txt01">${maemul.additionalInfo}</span>
+                        <span class="txt01">${maemul.title}</span>
                     </div>
                 </div>
                 <div class="bd_hashtag">
@@ -685,41 +702,34 @@ function checkEnter(event) {
                 southWestLat: southWest.getLat(),
                 southWestLng: southWest.getLng(),
                 northEastLat: northEast.getLat(),
-                northEastLng: northEast.getLng(),
-                numberOfRooms: roomCount,
-                numberOfBathrooms: bathRoomCount,
-                floorNumber: floorCount,
-                managementFee: manageFee,
-                Elevator: elevator,
-                Parking: parking,
-                shortTermRental: rental
+                northEastLng: northEast.getLng()
             },
             success: function (response) {
                 likedEntityList = response.likedEntityList;
                 // 검색 결과에 따라 마커를 생성하고 지도에 표시하기
                 if (response.maemulKeywordList) {
                     var result = response.maemulKeywordList; // 키워드 검색후 전송받은 해당 아파트 데이터
-                    var newCenter = new kakao.maps.LatLng(result.latitude, result.longitude);
+                    var newCenter = new kakao.maps.LatLng(result[0].latitude, result[0].longitude);
 
                     map.setLevel(setZoomLevel); // 줌레벨 변경
                     map.setCenter(newCenter); // 해당 아파트 위치로 센터 변경
                     var currentZoomLevel = map.getLevel(); // 이동시 줌레벨 5로 설정 (줌레벨 안바뀐채로 이동되는 경우 있어서 방지차원)
 
-                    var markerPosition = new kakao.maps.LatLng(result.latitude, result.longitude);
-                    var markerKey = markerPosition.toString();
-                    var markerContent = "<div class='e-marker'>" +
-                        "<div class='e-markerTitle'>" +
-                        "<h3>" + result.APT_name + "</h3>" +
-                        "</div>" +
-                        "<div class='e-markerContent'>" +
-                        "<p>" + result.address + "</p>" +
-                        "</div>" +
-                        "</div>";
-                    createMarker(markerPosition, markerContent, result);
-                    var marker = existingMarkers[markerKey];
-                    openOverlay(marker.overlay);
-                    updateSidebar(result);
-                    console.log("클릭시 마커생성");
+                    // var markerPosition = new kakao.maps.LatLng(result.latitude, result.longitude);
+                    // var markerKey = markerPosition.toString();
+                    // var markerContent = "<div class='e-marker'>" +
+                    //     "<div class='e-markerTitle'>" +
+                    //     "<h3>" + result.APT_name + "</h3>" +
+                    //     "</div>" +
+                    //     "<div class='e-markerContent'>" +
+                    //     "<p>" + result.address + "</p>" +
+                    //     "</div>" +
+                    //     "</div>";
+                    // createMarker(markerPosition, markerContent, result);
+                    // var marker = existingMarkers[markerKey];
+                    // openOverlay(marker.overlay);
+                    // updateSidebar(result);
+                    // console.log("클릭시 마커생성");
                 }
             }
         });

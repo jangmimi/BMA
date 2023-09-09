@@ -46,10 +46,10 @@ public class MaemulRegService {
     // 좌표값에 따른 매물 리스트 (마커 찍기용)
     public List<MaeMulRegDTO> findMaemulListBounds(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng, String tradeType
             , Integer roomNumber, Integer numberBathrooms, Integer floorNumber, Integer managementFee, String Elevator, String direction, String Parking
-            , String shortTermRental) {
+            , String shortTermRental, String keyword) {
         List<MaeMulRegDTO> maeMulRegDTOList = new ArrayList<>();
         List<MaemulRegEntity> maemulRegEntityList = maemulRegEntityRepository.findMaemulListBounds(southWestLat, southWestLng, northEastLat, northEastLng, tradeType
-                , roomNumber, numberBathrooms, floorNumber, managementFee, Elevator, direction, Parking, shortTermRental);
+                , roomNumber, numberBathrooms, floorNumber, managementFee, Elevator, direction, Parking, shortTermRental, keyword);
 
         for (MaemulRegEntity maemulRegEntity : maemulRegEntityList) {
             MaeMulRegDTO maeMulRegDTO = MaeMulRegDTO.builder()

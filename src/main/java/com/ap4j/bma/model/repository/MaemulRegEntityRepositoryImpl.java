@@ -21,7 +21,7 @@ public class MaemulRegEntityRepositoryImpl implements MaemulRepositoryCustom{
     @Override
     public List<MaemulRegEntity> findMaemulListBounds(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng, String tradeTypes
             , Integer numberOfRooms, Integer numberOfBathrooms, Integer floorNumber, Integer managementFee, String Elevator, String direction, String Parking
-            , String shortTermRental) {
+            , String shortTermRental, String keyword) {
 
         BooleanExpression tradeTypeCondition = null;        // 거래종류
         BooleanExpression roomCountCondition = null;        // 방개수
@@ -32,6 +32,7 @@ public class MaemulRegEntityRepositoryImpl implements MaemulRepositoryCustom{
         BooleanExpression directionCondition = null;        // 방향
         BooleanExpression parkingCondition = null;          // 주차가능
         BooleanExpression rentalCondition = null;          // 단기임대
+        BooleanExpression keywordCondition = null;          // 키워드
 
         /* 거래종류 필터 */
         if (!StringUtils.isEmpty(tradeTypes)) {
@@ -138,6 +139,12 @@ public class MaemulRegEntityRepositoryImpl implements MaemulRepositoryCustom{
             }
         }
 
+        /* 키워드 없을 때*/
+        if(!StringUtils.isEmpty(keyword)){
+            keywordCondition = maemulRegEntity.APT_name.like("%" + keyword + "%")
+                    .or(maemulRegEntity.address.like("%" + keyword + "%"));
+        }
+
         return queryFactory
                 .selectFrom(maemulRegEntity)
                 .where(
@@ -153,7 +160,8 @@ public class MaemulRegEntityRepositoryImpl implements MaemulRepositoryCustom{
                         elevatorCondition,
                         directionCondition,
                         parkingCondition,
-                        rentalCondition
+                        rentalCondition,
+                        keywordCondition
                 )
                 .fetch();
     }
