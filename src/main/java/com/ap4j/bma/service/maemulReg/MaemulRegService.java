@@ -229,4 +229,48 @@ public class MaemulRegService {
         return maeMulRegDTOList;
     }
 
+    // 매물 수정
+    @Transactional
+    public MaemulRegEntity updateMaemul(MaemulRegEntity updatedMaemul) {
+        // 업데이트할 매물 엔티티를 찾아옵니다.
+        MaemulRegEntity existingMaemul = maemulRegEntityRepository.findMaemulById(updatedMaemul.getId()).orElse(null);
+
+        if (existingMaemul != null) {
+            existingMaemul.setAddress(updatedMaemul.getAddress());
+            existingMaemul.setAPT_name(updatedMaemul.getAPT_name());
+            existingMaemul.setBuildingUsage(updatedMaemul.getBuildingUsage());
+            existingMaemul.setNumberOfRooms(updatedMaemul.getNumberOfRooms());
+            existingMaemul.setNumberOfBathrooms(updatedMaemul.getNumberOfBathrooms());
+            existingMaemul.setFloorNumber(updatedMaemul.getFloorNumber());
+            existingMaemul.setTotalFloors(updatedMaemul.getTotalFloors());
+            existingMaemul.setPrivateArea(updatedMaemul.getPrivateArea());
+            existingMaemul.setSupplyArea(updatedMaemul.getSupplyArea());
+            existingMaemul.setDirection(updatedMaemul.getDirection());
+            existingMaemul.setHeatingType(updatedMaemul.getHeatingType());
+            existingMaemul.setElevator(updatedMaemul.getElevator());
+            existingMaemul.setParking(updatedMaemul.getParking());
+            existingMaemul.setTotalParking(updatedMaemul.getTotalParking());
+            existingMaemul.setShortTermRental(updatedMaemul.getShortTermRental());
+            existingMaemul.setAvailableMoveInDate(updatedMaemul.getAvailableMoveInDate());
+            existingMaemul.setLoanAmount(updatedMaemul.getLoanAmount());
+            existingMaemul.setTradeType(updatedMaemul.getTradeType());
+            existingMaemul.setMonthlyForRent(updatedMaemul.getMonthlyForRent());
+            existingMaemul.setMonthlyRent(updatedMaemul.getMonthlyRent());
+            existingMaemul.setDepositForLease(updatedMaemul.getDepositForLease());
+            existingMaemul.setManagementFee(updatedMaemul.getManagementFee());
+            existingMaemul.setSellingPrice(updatedMaemul.getSellingPrice());
+            existingMaemul.setTitle(updatedMaemul.getTitle());
+            existingMaemul.setContent(updatedMaemul.getContent());
+            existingMaemul.setFeatures(updatedMaemul.getFeatures());
+            existingMaemul.setOptional(updatedMaemul.getOptional());
+            existingMaemul.setSecurity(updatedMaemul.getSecurity());
+            existingMaemul.setLongitude(updatedMaemul.getLongitude());
+            existingMaemul.setLatitude(updatedMaemul.getLatitude());
+
+            return maemulRegEntityRepository.save(existingMaemul);
+        } else {
+            return null;
+        }
+    }
+
 }

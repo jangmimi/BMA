@@ -117,6 +117,28 @@ public class MaemulRegController {
         maemulRegService.updateMeamulReg(maemulId, latitude, longitude);
     }
 
+    @PostMapping("/update-maemul")
+    public String setUpdateMaemul(@ModelAttribute MaemulRegEntity maemulRegEntity) {
+        System.out.println("maemulRegEntity = " + maemulRegEntity);
+        MaemulRegEntity updateMaemul = maemulRegService.updateMaemul(maemulRegEntity);
+        if (updateMaemul != null) {
+            // 업데이트 성공한 경우
+            System.out.println("updateMaemul = " + updateMaemul);
+        } else {
+            // 업데이트 실패한 경우
+            System.out.println("업데이트 실패");
+        }
+        return "redirect:/member/qManagement";
+    }
+
+    @GetMapping("/updatePage_maemul")
+    public String updateMaemul(Model model, Integer maemul_id) {
+        System.out.println("maemul_id = " + maemul_id);
+        MaemulRegEntity maemulRegEntity = maemulRegService.getMaemulById(maemul_id);
+        model.addAttribute("maemulRegEntity", maemulRegEntity);
+        return "maemulReg/MaemulUpdate";
+    }
+
 }
 
 
