@@ -67,7 +67,7 @@
                                     <p>전체 <span class="o-cntAll" th:text="${totalCount}"></span>건</p>
                                     <th:block th:if="${totalCount == 0}">
                                         <tr>
-                                            <td colspan="6">조회된 데이터가 없습니다.</td>
+                                            <td colspan="7">조회된 데이터가 없습니다.</td>
                                         </tr>
                                     </th:block>
                                     <tr th:each="mmpList : ${mmpList}">
@@ -113,12 +113,9 @@
                                 <li class="s-pre" th:if="${mmpList.hasPrevious()}">
                                     <a th:href="@{/member/liked(page=${mmpList.number - 1}, size=${mmpList.size})}">이전</a>
                                 </li>
-                                <li th:each="pageNo : ${#numbers.sequence(0, mmpList.totalPages - 1)}">
-                                    <span th:if="${mmpList.number == pageNo}" th:text="${pageNo + 1}"
-                                          class="s-active-page"></span>
-                                    <a th:unless="${mmpList.number == pageNo}"
-                                       th:href="@{/member/liked(page=${pageNo+1}, size=${mmpList.size})}"
-                                       th:text="${pageNo + 1}"></a>
+                                <li th:if="${mmpList.totalPages > 0}" th:each="pageNo : ${#numbers.sequence(0, mmpList.totalPages - 1)}">
+                                    <span th:if="${mmpList.number == pageNo}" th:text="${pageNo + 1}" class="s-active-page"></span>
+                                    <a th:unless="${mmpList.number == pageNo}" th:href="@{/member/liked(page=${pageNo+1}, size=${mmpList.size})}" th:text="${pageNo + 1}"></a>
                                 </li>
                                 <li class="s-next" th:if="${mmpList.hasNext()}">
                                     <a th:href="@{/member/liked(page=${mmpList.number + 1}, size=${mmpList.size})}">다음</a>
