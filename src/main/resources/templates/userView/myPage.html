@@ -36,18 +36,24 @@
                     <div class="oInfo-top">
                         <div class="oInfo-top-wrapper">
                             <div class="oInfo-left">
-                                <div class="oThumbnailImg"> <!-- sns로그인 시 model에서 프로필링크 가져옴, 없으면 default img -->
-                                    <img class="myImg" th:if="${thumbnail_image!=null}" th:src="${thumbnail_image}" alt="썸네일이미지">
-                                    <img class="myImg" th:if="${thumbnail_image==null}" th:src="@{/img/defaultProfile.jpg}" alt="썸네일이미지">
-                                </div>
-                                <div class="oInfoMember">
-                                    <div class="oInfoMemberContain">
-                                        <input type="hidden" id="id" name="id" th:value="*{id}" />
-                                        <span th:text="*{name}" id="oInfoMemberName"></span>님<br/>
-                                        <span th:text="${root}" id="oInfoMemberRoot"></span>
+                                <div class="aThumMem">
+                                    <div class="oThumbnailImg"> <!-- sns로그인 시 model에서 프로필링크 가져옴, 없으면 default img -->
+                                        <img class="myImg" th:if="${thumbnail_image!=null}" th:src="${thumbnail_image}" alt="썸네일이미지">
+                                        <img class="myImg" th:if="${thumbnail_image==null}" th:src="@{/img/defaultProfile.jpg}" alt="썸네일이미지">
                                     </div>
-                                    <span th:text="*{email}" id="oInfoMemberEmail"></span>
+                                    <div class="oInfoMember">
+                                        <div class="oInfoMemberContain">
+                                            <input type="hidden" id="id" name="id" th:value="*{id}" />
+                                            <span th:text="*{name}" id="oInfoMemberName"></span>님<br/>
+                                            <span th:text="${root}" id="oInfoMemberRoot"></span>
+                                        </div>
+                                        <span th:text="*{email}" id="oInfoMemberEmail"></span>
+                                    </div>
                                 </div>
+                                <button onclick="" class="aAddPic">
+                                    <img class="aAddPicImg"src="https://cdn-icons-png.flaticon.com/512/1829/1829371.png">
+                                    <p class="aAddPicP">사진등록</p>
+                                </button>
                             </div>
                             <div class="oInfo-right">
                                 <div class="oMaemulCnt-inner">
@@ -59,6 +65,10 @@
                                         <a th:href="@{/member/qRecent}" >몇건</a>
                                         <span>최근 본 매물</span>
                                     </div>
+                                </div>
+                                <div class="a_myInEditAndServiceInfoBtn">
+                                    <a th:href="@{/member/qMyInfoUpdate}" class="a_Btns">내 정보 수정</a>
+                                    <a href="/guide" class="a_Btns">서비스 이용안내</a>
                                 </div>
                             </div>
                         </div>
@@ -75,7 +85,10 @@
                                     <a href="#" class="o-tab o-mm-link" id="o-recent-link">최근본매물</a>
                                 </div>
                                 <div class="o-tab-r">
-                                    <a class="o-mm-link" id="o-allView" th:href="@{/member/liked}">전체보기</a>
+                                    <a class="o-mm-link" id="o-allView" th:href="@{/member/liked}">
+                                        <img class="aAddPicImg2" src="https://cdn.pixabay.com/photo/2013/07/13/12/30/page-159746_1280.png">
+                                        <p class="aSeeAll">전체보기</p>
+                                    </a>
                                 </div>
                             </div>
                         </div>

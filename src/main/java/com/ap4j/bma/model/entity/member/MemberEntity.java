@@ -1,11 +1,9 @@
 package com.ap4j.bma.model.entity.member;
 
-import com.ap4j.bma.model.entity.customerCenter.QnAEntity;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Table(name="member") // DB 테이블 이름 지정
 @Entity

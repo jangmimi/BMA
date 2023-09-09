@@ -7,8 +7,6 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-import org.springframework.data.repository.query.Param;
-
 public interface QnARepository extends JpaRepository<QnAEntity, Integer> {
     // 전체 게시글 개수를 조회하는 메서드 추가
     @Query("SELECT COUNT(q) FROM QnAEntity q")

@@ -51,7 +51,7 @@ public class MaemulRegEntity {
     private String shortTermRental;//단기임대
     private String availableMoveInDate;//입주가능일
 
-    @ColumnDefault("999")
+    @ColumnDefault("0")
     private Integer loanAmount;//융자금
 
 
@@ -59,22 +59,22 @@ public class MaemulRegEntity {
     private String tradeType;//거래 유형
 
     //월세
-    @ColumnDefault("999")
+    @ColumnDefault("0")
     private Integer monthlyForRent; //보증금
-    @ColumnDefault("999")
+    @ColumnDefault("0")
     private Integer monthlyRent; //월세
 
 
     //전세
-    @ColumnDefault("999")
+    @ColumnDefault("0")
     private Integer depositForLease; //희망 전세
 
-    @ColumnDefault("999")
+    @ColumnDefault("0")
     private Integer managementFee;//전 월세 관
 
     //매매
     @Column(columnDefinition = "INT")
-    @ColumnDefault("'999'")
+    @ColumnDefault("0")
     private Integer SellingPrice;//희망매매가
 
     //상세정보 페이지
