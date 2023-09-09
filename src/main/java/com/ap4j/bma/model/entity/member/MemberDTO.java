@@ -1,6 +1,5 @@
 package com.ap4j.bma.model.entity.member;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;

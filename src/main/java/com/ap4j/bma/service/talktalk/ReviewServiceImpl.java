@@ -3,9 +3,6 @@ package com.ap4j.bma.service.talktalk;
 import com.ap4j.bma.model.entity.TalkTalk.TalkTalkReviewDto;
 import com.ap4j.bma.model.repository.TalkTalkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -85,8 +85,13 @@ $(document).ready(function(){
 // 이메일 중복 체크
 function checkEmail() {
     let email = $('#email').val();
+    let reg = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
     if(email.trim() === '') {
         alert('이메일을 입력해주세요.');
+        return;
+    }
+    if(!reg.test(email)) {
+        alert('이메일 형식으로 입력해주세요.');
         return;
     }
     $.ajax({

@@ -2,9 +2,6 @@ package com.ap4j.bma.model.repository;
 
 import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
 import com.ap4j.bma.model.entity.member.LikedEntity;
-import com.ap4j.bma.model.entity.member.MemberDTO;
-import com.ap4j.bma.model.entity.member.MemberEntity;
-import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,7 +9,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface LikedRepository extends JpaRepository<LikedEntity, Long> {

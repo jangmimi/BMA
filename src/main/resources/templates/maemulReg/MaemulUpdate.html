@@ -98,7 +98,7 @@
         }
 
         .hidden {
-         display: none;
+<!--         display: none;-->
          border-collapse: collapse;
     }
 
@@ -435,20 +435,20 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 <form action="/update-maemul" method="POST" id="maemulForm" th:object="${loginMember}">
 
     <div class="layout">
-        <span th:text="${maemul}"></span>
         <h2 class="category"><b class="number">01 </b>주소 정보</h2>
+        <span th:text="${maemulRegEntity}"></span>
         <hr>
         <div id="addressSection">
             <table border="1" class="info">
                 <tr >
                     <th>주소<b class="number"> *</b></th>
                     <td colspan="3">
-                        <input id="addressInput" name="address" type="text" th:value="${maemul.address}" readonly>
+                        <input id="addressInput" name="address" type="text" th:value="${maemulRegEntity.address}" readonly>
                     </td>
                 </tr>
                 <tr>
                     <th>단지명</th>
-                    <td colspan="3"><input id="APT_name" name="APT_name" onblur="showBuildingInfo();" type="text" th:value="${maemul.APT_name}"></td>
+                    <td colspan="3"><input id="APT_name" name="APT_name" onblur="showBuildingInfo();" type="text" th:value="${maemulRegEntity.APT_name}"></td>
                 </tr>
             </table>
             <br>
@@ -461,28 +461,28 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
                 <tr>
                     <th>건축물 용도</th>
                     <td colspan="4">
-                        <input type="radio" name="buildingUsage" value="거주용" th:checked="${maemul.buildingUsage == '거주용'}">주거용
-                        <input type="radio" name="buildingUsage" value="업무용" th:checked="${maemul.buildingUsage == '업무용'}">상업용
-                        <input type="radio" name="buildingUsage" value="거주/업무용" th:checked="${maemul.buildingUsage == '거주/업무용'}">주거/상업용
+                        <input type="radio" name="buildingUsage" value="거주용" th:checked="${maemulRegEntity.buildingUsage == '거주용'}">주거용
+                        <input type="radio" name="buildingUsage" value="업무용" th:checked="${maemulRegEntity.buildingUsage == '업무용'}">상업용
+                        <input type="radio" name="buildingUsage" value="거주/업무용" th:checked="${maemulRegEntity.buildingUsage == '거주/업무용'}">주거/상업용
                     </td>
                 </tr>
                 <tr>
                     <th>방 수<b class="number"> *</b></th>
-                    <td><input class="num" type="text" id="useInput" name="numberOfRooms" th:value="${maemul.numberOfRooms}"> 개</td>
+                    <td><input class="num" type="text" id="useInput" name="numberOfRooms" th:value="${maemulRegEntity.numberOfRooms}"> 개</td>
                     <th>욕실 수<b class="number"> *</b></th>
-                    <td colspan="2"><input class="num" type="text" name="numberOfBathrooms" th:value="${maemul.numberOfBathrooms}"> 개</td>
+                    <td colspan="2"><input class="num" type="text" name="numberOfBathrooms" th:value="${maemulRegEntity.numberOfBathrooms}"> 개</td>
                 </tr>
                 <tr>
                     <th>해당 층 수<b class="number"> *</b></th>
-                    <td><input class="num" type="text" name="floorNumber" th:value="${maemul.floorNumber}"> 층</td>
+                    <td><input class="num" type="text" name="floorNumber" th:value="${maemulRegEntity.floorNumber}"> 층</td>
                     <th>건물 층 수<b class="number"> *</b></th>
-                    <td colspan="2"><input class="num" type="text" name="totalFloors" th:value="${maemul.totalFloors}"> 층</td>
+                    <td colspan="2"><input class="num" type="text" name="totalFloors" th:value="${maemulRegEntity.totalFloors}"> 층</td>
                 </tr>
                 <tr>
                     <th>전용 면적<b class="number"> *</b></th>
-                    <td><input class="num" type="text" name="privateArea" th:value="${maemul.privateArea}"> m²</td>
+                    <td><input class="num" type="text" name="privateArea" th:value="${maemulRegEntity.privateArea}"> m²</td>
                     <th>공급 면적<b class="number"> *</b></th>
-                    <td><input class="num" type="text" name="supplyArea" th:value="${maemul.supplyArea}"> m²</td>
+                    <td><input class="num" type="text" name="supplyArea" th:value="${maemulRegEntity.supplyArea}"> m²</td>
                     <th><a href="javascript:void(0);" id="helpLink" onclick="showPopup()">도움말</a></th>
                 </tr>
                 <tr>
@@ -490,14 +490,14 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
                     <td colspan="4">
                         <select class="combo" name="direction">
                             <option value="none">=== 선택 ===</option>
-                            <option value="동향" th:selected="${maemul.direction == '동향'}">동향</option>
-                            <option value="서향" th:selected="${maemul.direction == '서향'}">서향</option>
-                            <option value="남향" th:selected="${maemul.direction == '남향'}">남향</option>
-                            <option value="북향" th:selected="${maemul.direction == '북향'}">북향</option>
-                            <option value="남동향" th:selected="${maemul.direction == '남동향'}">남동향</option>
-                            <option value="남서향" th:selected="${maemul.direction == '남서향'}">남서향</option>
-                            <option value="북동향" th:selected="${maemul.direction == '북동향'}">북동향</option>
-                            <option value="북서향" th:selected="${maemul.direction == '북서향'}">북서향</option>
+                            <option value="동향" th:selected="${maemulRegEntity.direction == '동향'}">동향</option>
+                            <option value="서향" th:selected="${maemulRegEntity.direction == '서향'}">서향</option>
+                            <option value="남향" th:selected="${maemulRegEntity.direction == '남향'}">남향</option>
+                            <option value="북향" th:selected="${maemulRegEntity.direction == '북향'}">북향</option>
+                            <option value="남동향" th:selected="${maemulRegEntity.direction == '남동향'}">남동향</option>
+                            <option value="남서향" th:selected="${maemulRegEntity.direction == '남서향'}">남서향</option>
+                            <option value="북동향" th:selected="${maemulRegEntity.direction == '북동향'}">북동향</option>
+                            <option value="북서향" th:selected="${maemulRegEntity.direction == '북서향'}">북서향</option>
                         </select>
                     </td>
                 </tr>
@@ -506,48 +506,51 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
                     <td colspan="4">
                         <select class="combo" name="heatingType">
                             <option value="none">=== 선택 ===</option>
-                            <option value="지역난방" th:selected="${maemul.heatingType == '지역난방'}">지역난방</option>
-                            <option value="중앙난방" th:selected="${maemul.heatingType == '중앙난방'}">중앙난방</option>
-                            <option value="개별난방" th:selected="${maemul.heatingType == '개별난방'}">개별난방</option>
+                            <option value="지역난방" th:selected="${maemulRegEntity.heatingType == '지역난방'}">지역난방</option>
+                            <option value="중앙난방" th:selected="${maemulRegEntity.heatingType == '중앙난방'}">중앙난방</option>
+                            <option value="개별난방" th:selected="${maemulRegEntity.heatingType == '개별난방'}">개별난방</option>
                         </select>
                     </td>
                 </tr>
                 <tr>
                     <th>엘리베이터</th>
                     <td colspan="4">
-                        <input type="radio" name="elevator" value="유">유
-                        <input type="radio" name="elevator" value="무">무
+                        <input type="radio" name="elevator" value="유" th:checked="${maemulRegEntity.elevator == '유'}">유
+                        <input type="radio" name="elevator" value="무" th:checked="${maemulRegEntity.elevator == '무'}">무
                     </td>
                 </tr>
                 <tr>
-                    <th>주차가능여부<b class="number"> *</b></th>
+                    <th>주차 가능 여부<b class="number"> *</b></th>
                     <td>
-                        <input type="radio" name="parking" value="가능">가능
-                        <input type="radio" name="parking" value="불가능">불가능
+                        <input type="radio" name="parking" value="가능" th:checked="${maemulRegEntity.parking == '가능'}">가능
+                        <input type="radio" name="parking" value="불가능" th:checked="${maemulRegEntity.parking == '불가능'}">불가능
                     </td>
                     <th>총 주차대수</th>
-                    <td colspan="2"><input class="num" type="text" name="totalParking" placeholder="0"> 대</td>
+                    <td colspan="2"><input class="num" type="text" name="totalParking" th:value="${maemulRegEntity.totalParking}"> 대</td>
                 </tr>
                 <tr>
                     <th>단기임대</th>
                     <td colspan="4">
-                        <input type="radio" name="shortTermRental" value="가능">가능
-                        <input type="radio" name="shortTermRental" value="불가능">불가능
+                        <input type="radio" name="shortTermRental" value="가능" th:checked="${maemulRegEntity.shortTermRental == '가능'}">가능
+                        <input type="radio" name="shortTermRental" value="불가능" th:checked="${maemulRegEntity.shortTermRental == '불가능'}">불가능
                     </td>
                 </tr>
                 <tr>
-                    <th>입주가능일<b class="number"> *</b></th>
+                    <th>입주 가능일<b class="number"> *</b></th>
                     <td colspan="4">
                         <input type="date"
                                id="comedate"
                                name="availableMoveInDate"
                                max="2030-12-31"
                                min="2023-01-01"
-                               value="2023-09-13">
+                               th:value="${maemulRegEntity.availableMoveInDate}">
+                    </td>
                 </tr>
                 <tr>
                     <th>융자금 여부<b class="number"> *</b></th>
-                    <td colspan="4"><input class="won" name="loanAmount" type="text" placeholder="0"  onblur = "showPriceInfo();"> 만원</td>
+                    <td colspan="4">
+                        <input class="won" name="loanAmount" type="text" placeholder="0" th:value="${maemulRegEntity.loanAmount}"> 만원
+                    </td>
                 </tr>
             </table>
             <br>
@@ -579,33 +582,33 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
             <table id="monthRentSection" class="hidden">
                 <tr>
                     <th>보증금<b class="number"> *</b></th>
-                    <td><input class="won" name="monthlyForRent" id="monthlyForRent" type="text" placeholder="0"> 만원</td>
+                    <td><input class="won" name="monthlyForRent" id="monthlyForRent" type="text" placeholder="0" th:value="${maemulRegEntity.monthlyForRent}"> 만원</td>
                 </tr>
                 <tr>
                     <th>월세<b class="number"> *</b></th>
-                    <td><input class="won" name="monthlyRent" id="monthlyRent" type="text"  placeholder="0"> 만원</td>
+                    <td><input class="won" name="monthlyRent" id="monthlyRent" type="text"  placeholder="0" th:value="${maemulRegEntity.monthlyRent}"> 만원</td>
                 </tr>
                 <tr>
                     <th>관리비<b class="number"> *</b></th>
-                    <td><input class="won" name="managementFee"  id="m_managementFee" type="text" placeholder="0"> 원</td>
+                    <td><input class="won" name="managementFee"  id="m_managementFee" type="text" placeholder="0" th:value="${maemulRegEntity.managementFee}"> 원</td>
                 </tr>
             </table>
 
             <table id="leaseSection" class="hidden">
                 <tr>
                     <th>전세가<b class="number"> *</b></th>
-                    <td colspan="3"><input class="won" name="depositForLease" id="depositForLease" type="text" placeholder="0"> 만원</td>
+                    <td colspan="3"><input class="won" name="depositForLease" id="depositForLease" type="text" placeholder="0" th:value="${maemulRegEntity.depositForLease}"> 만원</td>
                 </tr>
                 <tr>
                     <th>관리비<b class="number"> *</b></th>
-                    <td><input class="won" name="managementFee" id="d_managementFee" type="text" placeholder="0"> 원</td>
+                    <td><input class="won" name="managementFee" id="d_managementFee" type="text" placeholder="0" th:value="${maemulRegEntity.managementFee}"> 원</td>
                 </tr>
             </table>
 
             <table  id="sellingSection" class="hidden">
                 <tr>
                     <th>매매가<b class="number"> *</b></th>
-                    <td colspan="5"><input class="won" name="SellingPrice" id="SellingPrice" type="text" placeholder="0"> 만원</td>
+                    <td colspan="5"><input class="won" name="SellingPrice" id="SellingPrice" type="text" placeholder="0" th:value="${maemulRegEntity.sellingPrice}"> 만원</td>
                 </tr>
             </table>
         </div>
@@ -616,12 +619,12 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
         <table border="1">
             <tr>
                 <th>제목 <b class="number">*</b></th>
-                <td> <input class="coment-t" name="title" type="text" placeholder="ex) 강남역 도보 10분이내, 3층 투룸 전세" oninput="countCharacters(this, 'titleCount', 20)"><br>
+                <td> <input class="coment-t" name="title" type="text" placeholder="ex) 강남역 도보 10분이내, 3층 투룸 전세" oninput="countCharacters(this, 'titleCount', 20)" th:value="${maemulRegEntity.title}"><br>
                     <p class="count" id="titleCount">0/20</p> </td>
             </tr>
             <tr>
                 <th>상세설명</th>
-                <td> <textarea class="coment" name="content" placeholder="해당 방에 대한 상세정보를 입력해주세요." oninput="countCharacters(this, 'descriptionCount', 500)"></textarea>
+                <td> <textarea class="coment" name="content" placeholder="해당 방에 대한 상세정보를 입력해주세요." oninput="countCharacters(this, 'descriptionCount', 500)" th:text="${maemulRegEntity.content}"></textarea>
                     <p class="count" id="descriptionCount">0/500</p></td>
             </tr>
         </table>
@@ -633,14 +636,14 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
                     <th>특징</th>
                     <td>
                         <ul class="ks-cboxtags">
-                            <li><input type="checkbox" name="features" id="short_term" value="단기"><label for="short_term">단기</label></li>
-                            <li><input type="checkbox" name="features" id="new_build" value="신축"><label for="new_build">신축</label></li>
-                            <li><input type="checkbox" name="features" id="investigation" value="투자"><label for="investigation">투자</label></li>
-                            <li><input type="checkbox" name="features" id="full_option" value="풀옵션"><label for="full_option">풀옵션</label></li>
-                            <li><input type="checkbox" name="features" id="elevator" value="엘리베이터"><label for="elevator">엘리베이터</label></li>
-                            <li><input type="checkbox" name="features" id="safety" value="보안/안전"><label for="safety">보안/안전</label></li>
-                            <li><input type="checkbox" name="features" id="separate" value="분리형"><label for="separate">분리형</label></li>
-                            <li><input type="checkbox" name="features" id="parking" value="주차"><label for="parking">주차</label></li>
+                            <li><input type="checkbox" name="features" id="short_term" value="단기" th:checked="${maemulRegEntity.features.contains('단기')}"><label for="short_term">단기</label></li>
+                            <li><input type="checkbox" name="features" id="new_build" value="신축" th:checked="${maemulRegEntity.features.contains('신축')}"><label for="new_build">신축</label></li>
+                            <li><input type="checkbox" name="features" id="investigation" value="투자" th:checked="${maemulRegEntity.features.contains('투자')}"><label for="investigation">투자</label></li>
+                            <li><input type="checkbox" name="features" id="full_option" value="풀옵션" th:checked="${maemulRegEntity.features.contains('풀옵션')}"><label for="full_option">풀옵션</label></li>
+                            <li><input type="checkbox" name="features" id="elevator" value="엘리베이터" th:checked="${maemulRegEntity.features.contains('엘리베이터')}"><label for="elevator">엘리베이터</label></li>
+                            <li><input type="checkbox" name="features" id="safety" value="보안/안전" th:checked="${maemulRegEntity.features.contains('보안/안전')}"><label for="safety">보안/안전</label></li>
+                            <li><input type="checkbox" name="features" id="separate" value="분리형" th:checked="${maemulRegEntity.features.contains('분리형')}"><label for="separate">분리형</label></li>
+                            <li><input type="checkbox" name="features" id="parking" value="주차" th:checked="${maemulRegEntity.features.contains('주차')}"><label for="parking">주차</label></li>
                         </ul>
                     </td>
                 </tr>
@@ -648,25 +651,25 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
                     <th>옵션</th>
                     <td>
                         <ul class="ks-cboxtags">
-                            <li><input type="checkbox" name="optional" id="wall_hanging" value="벽걸이형"><label for="wall_hanging">벽걸이형</label></li>
-                            <li><input type="checkbox" name="optional" id="bed" value="침대"><label for="bed">침대</label></li>
-                            <li><input type="checkbox" name="optional" id="desk" value="책상"><label for="desk">책상</label></li>
-                            <li><input type="checkbox" name="optional" id="closet" value="옷장"><label for="closet">옷장</label></li>
-                            <li><input type="checkbox" name="optional" id="shoe_closet" value="신발장"><label for="shoe_closet">신발장</label></li>
-                            <li><input type="checkbox" name="optional" id="built_in_closet" value="붙박이장"><label for="built_in_closet">붙박이장</label></li>
-                            <li><input type="checkbox" name="optional" id="eating_table" value="식탁"><label for="eating_table">식탁</label></li>
-                            <li><input type="checkbox" name="optional" id="sofa" value="소파"><label for="sofa">소파</label></li>
-                            <li><input type="checkbox" name="optional" id="ceiling_air_conditioner" value="천장형 에어컨"><label for="ceiling_air_conditioner">천장형 에어컨</label></li>
-                            <li><input type="checkbox" name="optional" id="manless_delivery_box" value="무인택배함"><label for="manless_delivery_box">무인택배함</label></li>
-                            <li><input type="checkbox" name="optional" id="bidet" value="비데"><label for="bidet">비데</label></li>
-                            <li><input type="checkbox" name="optional" id="refrigerator" value="냉장고"><label for="refrigerator">냉장고</label></li>
-                            <li><input type="checkbox" name="optional" id="washing_machine" value="세탁기"><label for="washing_machine">세탁기</label></li>
-                            <li><input type="checkbox" name="optional" id="shower_booth" value="샤워부스"><label for="shower_booth">샤워부스</label></li>
-                            <li><input type="checkbox" name="optional" id="sink" value="싱크대"><label for="sink">싱크대</label></li>
-                            <li><input type="checkbox" name="optional" id="induction" value="인덕션"><label for="induction">인덕션</label></li>
-                            <li><input type="checkbox" name="optional" id="microwave" value="전자레인지"><label for="microwave">전자레인지</label></li>
-                            <li><input type="checkbox" name="optional" id="tv" value="TV"><label for="tv">TV</label></li>
-                            <li><input type="checkbox" name="optional" id="air_conditioner" value="에어컨"><label for="air_conditioner">에어컨</label></li>
+                            <li><input type="checkbox" name="optional" id="wall_hanging" value="벽걸이형" th:checked="${maemulRegEntity.optional.contains('벽걸이형')}"><label for="wall_hanging">벽걸이형</label></li>
+                            <li><input type="checkbox" name="optional" id="bed" value="침대" th:checked="${maemulRegEntity.optional.contains('침대')}"><label for="bed">침대</label></li>
+                            <li><input type="checkbox" name="optional" id="desk" value="책상" th:checked="${maemulRegEntity.optional.contains('책상')}"><label for="desk">책상</label></li>
+                            <li><input type="checkbox" name="optional" id="closet" value="옷장" th:checked="${maemulRegEntity.optional.contains('옷장')}"><label for="closet">옷장</label></li>
+                            <li><input type="checkbox" name="optional" id="shoe_closet" value="신발장" th:checked="${maemulRegEntity.optional.contains('신발장')}"><label for="shoe_closet">신발장</label></li>
+                            <li><input type="checkbox" name="optional" id="built_in_closet" value="붙박이장" th:checked="${maemulRegEntity.optional.contains('붙박이장')}"><label for="built_in_closet">붙박이장</label></li>
+                            <li><input type="checkbox" name="optional" id="eating_table" value="식탁" th:checked="${maemulRegEntity.optional.contains('식탁')}"><label for="eating_table">식탁</label></li>
+                            <li><input type="checkbox" name="optional" id="sofa" value="소파" th:checked="${maemulRegEntity.optional.contains('소파')}"><label for="sofa">소파</label></li>
+                            <li><input type="checkbox" name="optional" id="ceiling_air_conditioner" value="천장형 에어컨" th:checked="${maemulRegEntity.optional.contains('천장형 에어컨')}"><label for="ceiling_air_conditioner">천장형 에어컨</label></li>
+                            <li><input type="checkbox" name="optional" id="manless_delivery_box" value="무인택배함" th:checked="${maemulRegEntity.optional.contains('무인택배함')}"><label for="manless_delivery_box">무인택배함</label></li>
+                            <li><input type="checkbox" name="optional" id="bidet" value="비데" th:checked="${maemulRegEntity.optional.contains('비데')}"><label for="bidet">비데</label></li>
+                            <li><input type="checkbox" name="optional" id="refrigerator" value="냉장고" th:checked="${maemulRegEntity.optional.contains('냉장고')}"><label for="refrigerator">냉장고</label></li>
+                            <li><input type="checkbox" name="optional" id="washing_machine" value="세탁기" th:checked="${maemulRegEntity.optional.contains('세탁기')}"><label for="washing_machine">세탁기</label></li>
+                            <li><input type="checkbox" name="optional" id="shower_booth" value="샤워부스" th:checked="${maemulRegEntity.optional.contains('샤워부스')}"><label for="shower_booth">샤워부스</label></li>
+                            <li><input type="checkbox" name="optional" id="sink" value="싱크대" th:checked="${maemulRegEntity.optional.contains('싱크대')}"><label for="sink">싱크대</label></li>
+                            <li><input type="checkbox" name="optional" id="induction" value="인덕션" th:checked="${maemulRegEntity.optional.contains('인덕션')}"><label for="induction">인덕션</label></li>
+                            <li><input type="checkbox" name="optional" id="microwave" value="전자레인지" th:checked="${maemulRegEntity.optional.contains('전자레인지')}"><label for="microwave">전자레인지</label></li>
+                            <li><input type="checkbox" name="optional" id="tv" value="TV" th:checked="${maemulRegEntity.optional.contains('TV')}"><label for="tv">TV</label></li>
+                            <li><input type="checkbox" name="optional" id="air_conditioner" value="에어컨" th:checked="${maemulRegEntity.optional.contains('에어컨')}"><label for="air_conditioner">에어컨</label></li>
                         </ul>
                     </td>
                 </tr>
@@ -674,18 +677,17 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
                     <th>보안/안전시설</th>
                     <td>
                         <ul class="ks-cboxtags">
-                            <li><input type="checkbox" name="security" id="security_entrance" value="현관보안"><label for="security_entrance">현관보안</label></li>
-                            <li><input type="checkbox" name="security" id="cctv" value="CCTV"><label for="cctv">CCTV</label></li>
-                            <li><input type="checkbox" name="security" id="security_bars" value="방범창"><label for="security_bars">방범창</label></li>
-                            <li><input type="checkbox" name="security" id="security_guard" value="경비원"><label for="security_guard">경비원</label></li>
-                            <li><input type="checkbox" name="security" id="fire_alarm" value="화재경보기"><label for="fire_alarm">화재경보기</label></li>
-                            <li><input type="checkbox" name="security" id="video_phone" value="비디오폰"><label for="video_phone">비디오폰</label></li>
-                            <li><input type="checkbox" name="security" id="intercom" value="인터폰"><label for="intercom">인터폰</label></li>
-                            <li><input type="checkbox" name="security" id="key_card" value="카드키"><label for="key_card">카드키</label></li>
-                            <li><input type="checkbox" name="security" id="private_security" value="사설경비"><label for="private_security">사설경비</label></li>
-                            <li><input type="checkbox" name="security" id="digital_door_lock" value="전자도어락"><label for="digital_door_lock">전자도어락</label></li>
+                            <li><input type="checkbox" name="security" id="security_entrance" value="현관보안" th:checked="${maemulRegEntity.security.contains('현관보안')}"><label for="security_entrance">현관보안</label></li>
+                            <li><input type="checkbox" name="security" id="cctv" value="CCTV" th:checked="${maemulRegEntity.security.contains('CCTV')}"><label for="cctv">CCTV</label></li>
+                            <li><input type="checkbox" name="security" id="security_bars" value="방범창" th:checked="${maemulRegEntity.security.contains('방범창')}"><label for="security_bars">방범창</label></li>
+                            <li><input type="checkbox" name="security" id="security_guard" value="경비원" th:checked="${maemulRegEntity.security.contains('경비원')}"><label for="security_guard">경비원</label></li>
+                            <li><input type="checkbox" name="security" id="fire_alarm" value="화재경보기" th:checked="${maemulRegEntity.security.contains('화재경보기')}"><label for="fire_alarm">화재경보기</label></li>
+                            <li><input type="checkbox" name="security" id="video_phone" value="비디오폰" th:checked="${maemulRegEntity.security.contains('비디오폰')}"><label for="video_phone">비디오폰</label></li>
+                            <li><input type="checkbox" name="security" id="intercom" value="인터폰" th:checked="${maemulRegEntity.security.contains('인터폰')}"><label for="intercom">인터폰</label></li>
+                            <li><input type="checkbox" name="security" id="key_card" value="카드키" th:checked="${maemulRegEntity.security.contains('카드키')}"><label for="key_card">카드키</label></li>
+                            <li><input type="checkbox" name="security" id="private_security" value="사설경비" th:checked="${maemulRegEntity.security.contains('사설경비')}"><label for="private_security">사설경비</label></li>
+                            <li><input type="checkbox" name="security" id="digital_door_lock" value="전자도어락" th:checked="${maemulRegEntity.security.contains('전자도어락')}"><label for="digital_door_lock">전자도어락</label></li>
                         </ul>
-
                     </td>
                 </tr>
             </table>

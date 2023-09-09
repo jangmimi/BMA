@@ -11,11 +11,17 @@
         input {
         width : 98%;
         height: 40px;
-        padding-left: 10px;
-        border: 1px solid #ddd;
+        padding: 5px;
+        border: 1px solid #ccc;
+        transition: all 0.3s ease; /* 입력 필드 크기 변경에 부드러운 애니메이션 추가 */
         margin: auto;
+        margin-left : 5px;
+        }
 
-
+       input:focus {
+            border-color: #26A9E0;
+            outline: none;
+            transform: scale(1.005); /* 포커스를 얻을 때 크기가 조금 더 커지도록 설정 */
         }
 
         table{
@@ -36,12 +42,23 @@
         }
 
 
-        textarea {
+       textarea {
         width : 99%;
         margin-top : 10px;
         min-height :350px;
-        border: 1px solid #ddd;
+        padding: 5px;
+        border: 1px solid #ccc;
+        transition: all 0.3s ease; /* 입력 필드 크기 변경에 부드러운 애니메이션 추가 */
+        resize: none;
+        margin-left : 5px;
         }
+
+
+      textarea:focus {
+                border-color: #26A9E0;
+                outline: none;
+                transform: scale(1.005); /* 포커스를 얻을 때 크기가 조금 더 커지도록 설정 */
+      }
 
         .write-box{
         width : 95%;
@@ -72,4 +89,5 @@
 
         .read{
         backgroud: #ddd;
+        margin-left : 10px;
         }
