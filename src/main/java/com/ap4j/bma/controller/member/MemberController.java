@@ -236,13 +236,14 @@ public class MemberController {
     /** 마이페이지 매핑 */ 
     @RequestMapping("/qMyPage") // 관심매물 최근매물 불러와야함
     public String qMyPage(@RequestParam(name = "page", defaultValue = "1") int page,
-                          @RequestParam(name = "pageSize", defaultValue = "2") int pageSize,
+                          @RequestParam(name = "pageSize", defaultValue = "9") int pageSize,
                           HttpSession session, Model model) {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
         MemberDTO loginMember = (MemberDTO) session.getAttribute("loginMember");
         String nickname = loginMember.getNickname();
-        String root = loginMember.getRoot() == 1 ? "기본회원" : loginMember.getRoot() == 2? "카카오" : "네이버";
+        String root = getMemberRoot(loginMember.getRoot());
+
         String thumImg = (String) session.getAttribute("thumbnail_image");
 
         Page<MaemulRegEntity> mmpList = likedService.getPaginatedItems(nickname,page,pageSize);
@@ -258,10 +259,9 @@ public class MemberController {
 
     /** 내정보 수정페이지 매핑 */
     @GetMapping("/qMyInfoUpdate")
-    public String qMyInfoUpdate(HttpSession session) {
+    public String qMyInfoUpdate(HttpSession session, Model model) {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
         MemberDTO loginMember = (MemberDTO) session.getAttribute("loginMember");
-
         return "userView/oMyInfoUpdate";
     }
 
@@ -269,7 +269,6 @@ public class MemberController {
     @PostMapping("/qUpdateMember/{id}")
     public String qUpdate(@ModelAttribute MemberDTO updatedMember, Model model, HttpSession session) {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
-        log.info("updatedMember : " + updatedMember);
 
         Long id =  ((MemberDTO) session.getAttribute("loginMember")).getId();
 
@@ -280,7 +279,7 @@ public class MemberController {
         return "redirect:/member/qMyPage";
     }
 
-    /** 1:1 문의내역 페이지 매핑 */ 
+    /** 1:1 문의내역 페이지 매핑 */
     @GetMapping("/qMyQnA")
     public String qMyQnA(Model model, HttpSession session) {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
@@ -442,6 +441,19 @@ public class MemberController {
             model.addAttribute("findEmailFailed", "일치하는 회원정보가 없습니다.");
         }
         return "userView/findMemberInfo";
+    }
+
+
+    // 중복코드 메서드화
+
+    /** 로그인멤버 가입경로 */
+    public String getMemberRoot(int root) {
+        return root == 1 ? "기본회원" : root == 2 ? "카카오" : "네이버";
+    }
+    /** 로그인멤버 이메일 */
+    public String getMemberEmail(HttpSession session) {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
+        return memberDTO != null ? memberDTO.getEmail() : null;
     }
 }
 

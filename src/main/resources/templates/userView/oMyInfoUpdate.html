@@ -37,8 +37,9 @@
                         <h3 class="h3 fw-bold">내 정보 수정</h3>
                     </div>
                     <form th:action="@{/member/qUpdateMember/__${id}__}" method="POST" onsubmit="return oUpdateCheck()">
-                        <div class="form-floating mb-3 mr-3" style="display:flex; flex-wrap:wrap">
-                            <input type="text" class="form-control" id="email" th:value="*{email}" name="email" disabled="disabled" />
+                        <div class="form-floating mb-3 mr-3" id="o-email-c">
+                            <input type="text" class="form-control" id="email" th:value="*{email + ' (' + (root == 1 ? '기본회원' : (root == 2 ? '카카오' : (root == 3 ? '네이버' : '관리자'))) + ')'}"
+                               name="email" disabled="disabled" />
                             <label th:for="email">이메일 주소</label>
                         </div>
                         <input type="hidden" id="id" name="id" th:value="*{id}" />
@@ -46,7 +47,7 @@
                             <input type="text" class="form-control" id="name" name="name" th:value="*{name}" autofocus="autofocus" />
                             <label th:for="name">이름(실명)</label>
                         </div>
-                        <div class="form-floating mb-3" style="display:flex; flex-wrap:wrap">
+                        <div class="form-floating mb-3" id="o-nickname-c">
                             <input type="text" class="form-control" id="nickname" name="nickname" th:value="*{nickname}" />
                             <label th:for="nickname">닉네임</label>
                             <input type="button" class="btn btn-outline-dark" id="btnNicknameCheck"
