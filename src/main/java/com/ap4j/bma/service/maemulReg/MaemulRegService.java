@@ -44,10 +44,58 @@ public class MaemulRegService {
     }
 
     // 좌표값에 따른 매물 리스트 (마커 찍기용)
-    public List<MaeMulRegDTO> findMaemulListBounds(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng, String tradeType) {
+    public List<MaeMulRegDTO> findMaemulListBounds(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng, String tradeType
+            , Integer roomNumber, Integer numberBathrooms, Integer floorNumber, Integer managementFee, String Elevator, String direction, String Parking
+            , String shortTermRental, String keyword) {
         List<MaeMulRegDTO> maeMulRegDTOList = new ArrayList<>();
-        List<MaemulRegEntity> maemulRegEntityList = maemulRegEntityRepository.findMaemulListBounds(southWestLat, southWestLng, northEastLat, northEastLng, tradeType);
+        List<MaemulRegEntity> maemulRegEntityList = maemulRegEntityRepository.findMaemulListBounds(southWestLat, southWestLng, northEastLat, northEastLng, tradeType
+                , roomNumber, numberBathrooms, floorNumber, managementFee, Elevator, direction, Parking, shortTermRental, keyword);
 
+        for (MaemulRegEntity maemulRegEntity : maemulRegEntityList) {
+            MaeMulRegDTO maeMulRegDTO = MaeMulRegDTO.builder()
+                    .id(maemulRegEntity.getId())
+                    .nickname(maemulRegEntity.getNickname())
+                    .address(maemulRegEntity.getAddress())
+                    .APT_name(maemulRegEntity.getAPT_name())
+                    .buildingUsage(maemulRegEntity.getBuildingUsage())
+                    .numberOfRooms(maemulRegEntity.getNumberOfRooms())
+                    .numberOfBathrooms(maemulRegEntity.getNumberOfBathrooms())
+                    .floorNumber(maemulRegEntity.getFloorNumber())
+                    .totalFloors(maemulRegEntity.getTotalFloors())
+                    .privateArea(maemulRegEntity.getPrivateArea())
+                    .supplyArea(maemulRegEntity.getSupplyArea())
+                    .direction(maemulRegEntity.getDirection())
+                    .heatingType(maemulRegEntity.getHeatingType())
+                    .Elevator(maemulRegEntity.getElevator())
+                    .Parking(maemulRegEntity.getParking())
+                    .totalParking(maemulRegEntity.getTotalParking())
+                    .shortTermRental(maemulRegEntity.getShortTermRental())
+                    .availableMoveInDate(maemulRegEntity.getAvailableMoveInDate())
+                    .loanAmount(maemulRegEntity.getLoanAmount())
+                    .tradeType(maemulRegEntity.getTradeType())
+                    .monthlyForRent(maemulRegEntity.getMonthlyForRent())
+                    .monthlyRent(maemulRegEntity.getMonthlyRent())
+                    .depositForLease(maemulRegEntity.getDepositForLease())
+                    .managementFee(maemulRegEntity.getManagementFee())
+                    .SellingPrice(maemulRegEntity.getSellingPrice())
+                    .title(maemulRegEntity.getTitle())
+                    .content(maemulRegEntity.getContent())
+                    .features(maemulRegEntity.getFeatures())
+                    .optional(maemulRegEntity.getOptional())
+                    .security(maemulRegEntity.getSecurity())
+                    .longitude(maemulRegEntity.getLongitude())
+                    .latitude(maemulRegEntity.getLatitude())
+                    .build();
+            maeMulRegDTOList.add(maeMulRegDTO);
+        }
+        return maeMulRegDTOList;
+    }
+
+    // 마커 클릭시 해당 주소값과 같은 매물 리스트 불러오기
+    public List<MaeMulRegDTO> findMaemulByAddress(String address) {
+        System.out.println("서비스 address" + address);
+        List<MaeMulRegDTO> maeMulRegDTOList = new ArrayList<>();
+        List<MaemulRegEntity> maemulRegEntityList = maemulRegEntityRepository.findMaemulByAddress(address);
         for (MaemulRegEntity maemulRegEntity : maemulRegEntityList) {
             MaeMulRegDTO maeMulRegDTO = MaeMulRegDTO.builder()
                     .id(maemulRegEntity.getId())
@@ -89,11 +137,10 @@ public class MaemulRegService {
         return maeMulRegDTOList;
     }
 
-    // 마커 클릭시 해당 주소값과 같은 매물 리스트 불러오기
-    public List<MaeMulRegDTO> findMaemulByAddress(String address) {
-        System.out.println("서비스 address" + address);
+    // 키워드 검색시 해당 주소 or 아파트 불러오기
+    public List<MaeMulRegDTO> findByMaemulKeyword (String keyword) {
         List<MaeMulRegDTO> maeMulRegDTOList = new ArrayList<>();
-        List<MaemulRegEntity> maemulRegEntityList = maemulRegEntityRepository.findMaemulByAddress(address);
+        List<MaemulRegEntity> maemulRegEntityList = maemulRegEntityRepository.findByMaemulKeyword(keyword);
         for (MaemulRegEntity maemulRegEntity : maemulRegEntityList) {
             MaeMulRegDTO maeMulRegDTO = MaeMulRegDTO.builder()
                     .id(maemulRegEntity.getId())

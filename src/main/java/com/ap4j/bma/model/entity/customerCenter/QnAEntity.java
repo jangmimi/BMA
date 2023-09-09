@@ -31,4 +31,8 @@ public class QnAEntity {
 
     private String filename;
     private String filepath;
+
+    @OneToOne(mappedBy = "qnAEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private AnswerEntity answerEntity;
+
 }

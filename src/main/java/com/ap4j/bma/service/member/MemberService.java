@@ -17,7 +17,7 @@ public interface MemberService {
 
 	public String getAccessToken(String code);
 
-	public HashMap<String, Object> getUserInfo(String accessToken);	// HashMap -> MemberDTO로 변경 예정
+	public HashMap<String, Object> getUserInfo(String accessToken);
 
 	public void logout(SessionStatus sessionStatus, HttpSession session);
 
@@ -31,8 +31,6 @@ public interface MemberService {
 
 	public boolean existsByNickname(String nickname);
 
-	public List<MemberEntity> findMembers();
-
 	public MemberDTO login(MemberDTO memberDTO);
 
 	public MemberEntity findMemberById(Long id);
@@ -42,15 +40,12 @@ public interface MemberService {
 	public boolean leaveMember(Long id, String password, SessionStatus sessionStatus, HttpSession session);
 
 	public Optional<MemberEntity> findByNameAndTel(String name, String tel);
-	public Optional<MemberEntity> findByEmailAndTel(String email, String tel);
 
 	// 매물 관련 qna
 	public List<QnAEntity> qMyQnaList(String userEmail);
-	public long qMyQnaCnt(String userEmail);
 	public List<MaemulRegEntity> getAllList();
 	public List<MaemulRegEntity> getListByNickname(String nickname);
-	public Long getAllCnt();
-
 	public MaemulRegEntity findMaemulById(Integer id);
+	public int deleteMaemul(Integer id, String nickname);
 
 }

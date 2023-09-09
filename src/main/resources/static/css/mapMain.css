@@ -123,7 +123,7 @@ border: none;
 /*사이드바 속 세부 조정들*/
 .asideBarAll{
 position: absolute;
-    top: 111px;
+    top: 110px;
     width: 400px;
     z-index: 1100;
     height: calc(100% - 60px);
@@ -199,7 +199,6 @@ top: 31px;
 .modal.fade.aTalkTalkWrite{
 width: 300px;
 left: 399px;
-top: 31px;
 
 }
 #exampleModalToggle2 {
@@ -207,6 +206,7 @@ top: 31px;
 .aPostcontent{
 border: 2px solid #26abed62;
 width: 93%;
+resize: none;
 height: 150px;
 
 font-size: 13px;
@@ -238,13 +238,20 @@ font-size: 13px;
 display: flex;
 justify-content: flex-end;
 }
+.userinfo {
+    margin-bottom: 30px;
+}
+span.aemail {
+    color: #26abed;
+    font-size: 19px;
+}
 .auploadDate{
+text-align: right;
 -webkit-font-smoothing: antialiased;
-margin-left: 91px;
 }
 .acontent{
 margin-top: 10px;
-padding: 10px;
+padding: 18px;
 height: 137px;
 border: 1px solid #26abed33;
 border-radius: 10px;

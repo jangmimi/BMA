@@ -4,6 +4,7 @@ import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -46,6 +47,17 @@ public interface MaemulRegEntityRepository extends JpaRepository<MaemulRegEntity
     /** 김재환작성  관심매물 조회*/
     @Query("SELECT mr FROM LikedEntity l JOIN MaemulRegEntity mr ON l.maemul_id = mr.id WHERE l.nickname = :nickname")
     Page<MaemulRegEntity> findLikedByNicknameAndPaging(@Param("nickname") String nickname, Pageable pageable);
+
+    /** 매물관리 페이지에서 매물 삭제 */
+    @Modifying
+    @Query("DELETE FROM MaemulRegEntity l " +
+            "WHERE l.id = :id " +
+            "AND l.nickname = :nickname")
+    int deleteMByIdAndNickname(@Param("id") Integer id, @Param("nickname") String nickname);
+
+    /** 키워드 검색시 해당 주소 or 아파트 불러오기 */
+    @Query("SELECT m FROM MaemulRegEntity m WHERE replace(m.address, ' ', '') = ?1 or replace(m.APT_name, ' ', '') = ?1")
+    List<MaemulRegEntity> findByMaemulKeyword(String keyword);
 
     /** 김재환작성 검색한 관심매물 조회*/
     @Query("SELECT mr FROM LikedEntity l JOIN MaemulRegEntity mr ON l.maemul_id = mr.id WHERE (mr.address LIKE %:keyword% OR mr.tradeType LIKE %:keyword%) AND l.nickname = :nickname")
