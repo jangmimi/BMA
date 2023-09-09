@@ -1,5 +1,5 @@
 package com.ap4j.bma.controller.member;
-
+// pjm - use m o p q
 import com.ap4j.bma.config.PasswordEncoderConfig;
 import com.ap4j.bma.model.entity.customerCenter.QnAEntity;
 import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
@@ -7,12 +7,14 @@ import com.ap4j.bma.model.entity.member.LikedEntity;
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
 import com.ap4j.bma.model.entity.member.RecentEntity;
+import com.ap4j.bma.service.maemulReg.MaemulRegService;
 import com.ap4j.bma.service.member.LikedService;
 import com.ap4j.bma.service.member.MemberService;
 import com.ap4j.bma.service.member.RecentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,9 +23,11 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @SessionAttributes("loginMember")   // 세션 자동 설정
@@ -356,6 +360,28 @@ public class MemberController {
         model.addAttribute("mmpList",mmpList);
 
         return "userView/maemulLiked";
+    }
+
+    private <T> List<T> getListOrDefault(List<T> list) {
+        return list != null ? list : new ArrayList<>();
+    }
+
+    @GetMapping("/searchl")
+    public String searchl(  String keyword,
+                            @RequestParam(name = "page", defaultValue = "1") int page,
+                            @RequestParam(name = "pageSize", defaultValue = "2") int pageSize, HttpSession session, Model model) {
+        if (!loginStatus(session)) {
+            return "userView/loginNeed";
+        }
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
+        String nickname = memberDTO.getNickname();
+        Page<MaemulRegEntity> mmpList = likedService.getSearchPaginatedItems(nickname,keyword,page,pageSize);
+        log.info(mmpList.toString());
+        Long totalCount = likedService.countFindLikedByNickname(nickname,keyword);
+        model.addAttribute("totalCount", totalCount);
+        model.addAttribute("mmpList", mmpList);
+
+        return "userView/searchMaemulLiked";
     }
 
     /** 최근매물 페이지 매핑 */

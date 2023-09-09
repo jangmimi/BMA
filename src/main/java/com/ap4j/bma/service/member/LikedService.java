@@ -76,10 +76,18 @@ public class LikedService {
         log.info("서비스에서 삭제 시행");
         likedRepository.deleteByMaemulIdAndNickname(maemul_id,nickname);
     }
-    /*김재환작성 페이징처리*/
+    /*김재환작성 관심매물 페이징처리*/
     public Page<MaemulRegEntity> getPaginatedItems(String nickname, int page, int pageSize) {
         Pageable pageable = PageRequest.of(page - 1, pageSize);
         Page<MaemulRegEntity> mmpList = maemulRegEntityRepository.findLikedByNicknameAndPaging(nickname,pageable);
+        System.out.println(mmpList);
+        return mmpList;
+    }
+
+    /*김재환작성 검색한 관심매물 페이징처리*/
+    public Page<MaemulRegEntity> getSearchPaginatedItems(String keyword, String nickname, int page, int pageSize) {
+        Pageable pageable = PageRequest.of(page - 1, pageSize);
+        Page<MaemulRegEntity> mmpList = maemulRegEntityRepository.findSearchMaemul(nickname,keyword,pageable);
         System.out.println(mmpList);
         return mmpList;
     }
@@ -88,6 +96,14 @@ public class LikedService {
     public Long countLikedByNickname(String nickname) {
         return likedRepository.countLikedByNickname(nickname);
     }
+
+    /*김재환작성 검색한 관심매물 전체개수*/
+    public Long countFindLikedByNickname(String nickname,String keyword){
+        return likedRepository.countFindLikedByNickname(keyword,nickname);
+    }
+//    public Long searchCountLikedByNickname(String nickname,String keyword) {
+//        return maemulRegEntityRepository.searchCountLikedByNickname(nickname,keyword);
+//    }
 
 //    @Transactional
 //    public void delete(LikedEntity likedEntity) {
