@@ -55,15 +55,18 @@
                 <div>
                     <p class="o-find-subTitle">비밀번호 찾기</p>
                 </div>
-                <form th:action="@{/member/qFindPwd}" method="POST" onsubmit="return oFindPwdCheck()">
+                <div>
+                    <p style="font-size: 12px; color: gray;">가입하신 이메일 주소로 임시 비밀번호를 발송합니다.</p>
+                </div>
+                <form role="form" name="sendEmail" th:action="@{/sendEmail}" method="POST" onsubmit="return oFindPwdCheck()">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="emailpwd" name="emailpwd" placeholder="" />
+                        <input type="text" class="form-control" id="userEmail" name="userEmail" placeholder="" />
                         <label th:for="emailpwd" class="oLabelColor">이메일 주소</label>
                     </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="telpwd" name="telpwd" placeholder="" />
-                        <label th:for="telpwd" class="oLabelColor">연락처</label>
-                    </div>
+<!--                    <div class="form-floating mb-3">-->
+<!--                        <input type="text" class="form-control" id="telpwd" name="telpwd" placeholder="" />-->
+<!--                        <label th:for="telpwd" class="oLabelColor">연락처</label>-->
+<!--                    </div>-->
                     <span>
                         <div class="ofindResult">
                             <p th:if="${findPwd != null}" th:text="${findPwd}"></p>
@@ -71,86 +74,12 @@
                         </div>
                     </span>
                     <div class="o-find-btn-c">
-                        <input type="submit" class="btn btn-dark mb-3 mt-3" value="비밀번호 찾기" />
+                        <input type="submit" id="checkEmail" class="btn btn-dark mb-3 mt-3" value="비밀번호 찾기" />
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <form id="sendForm" th:action="@{/member/findPwdE}" th:method="POST">
-        <div>
-            <span>이메일을 입력해주세요.</span>
-            <input type="email" id="addr" name="addr" />
-        </div>
-        <button type="submit" >임시 비밀번호 전송</button>
-    </form>
-
-
-    <!--임시 비번 모달-->
-    <div id="findPw" class="modal fade">
-        <div class="modal-dialog modal-dialog-centered modal-login">
-            <div class="modal-content">
-                <div class="modal-body">
-
-                    <div class="container my-auto">
-                        <div class="row">
-                            <div class="card z-index-0 fadeIn3 fadeInBottom">
-                                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                                    <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
-                                        <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">비밀번호 찾기</h4>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <form role="form" class="text-start" action="/sendEmail" method="post" name="sendEmail">
-                                        <p>입력한 이메일로 임시 비밀번호가 전송됩니다.</p>
-                                        <div class="input-group input-group-outline my-3">
-                                            <label class="form-label">Email</label>
-                                            <input type="email" id="userEmail" name="userEmail" class="form-control" required>
-                                        </div>
-                                        <div class="text-center">
-                                            <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2"
-                                                    id="checkEmail">비밀번호 발송</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <button type="button" class="btn btn-link" data-bs-toggle="modal"
-            data-bs-target="#findPw">비밀번호를 잊으셨나요?</button>
-    <script>
-        $("#checkEmail").click(function () {
-            const userEmail = $("#userEmail").val();
-            const sendEmail = document.forms["sendEmail"];
-            $.ajax({
-                type: 'post',
-                url: 'emailDuplication',
-                data: {
-                    'userEmail': userEmail
-                },
-                dataType: "text",
-                success: function (result) {
-                    if(result == "no"){
-                        // 중복되는 것이 있다면 no == 일치하는 이메일이 있다!
-                        alert('임시비밀번호를 전송 했습니다.');
-                        sendEmail.submit();
-                    }else {
-                        alert('가입되지 않은 이메일입니다.');
-                    }
-
-                },error: function () {
-                    console.log('에러 체크!!')
-                }
-            })
-        });
-    </script>
-
-
 
     <script th:src="@{/js/member/myPage.js}"></script>
     <!-- 부트스트랩 script -->

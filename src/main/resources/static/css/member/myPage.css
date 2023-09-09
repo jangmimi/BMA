@@ -133,6 +133,10 @@
 .form-floating {
    width: 350px;
 }
+#o-email-c, #o-nickname-c {
+    display: flex;
+    flex-wrap:wrap;
+}
 #nickname {
     width: 254px;
 }
@@ -339,9 +343,14 @@
 }
 
 .z-bottom-wrap {
-	display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(calc(33.33% - 10px), 1fr)); /* 각 열의 크기 설정 */
+    grid-gap: 10px; /* 열 간격 설정 */
+    grid-row-gap: 10px; /* 행 간격 설정 */
+}
+.z-bottom-wrap  a {
+    text-decoration: none;
+    color: black;
 }
 
 .z-text-content3 {
@@ -460,3 +469,72 @@
 	border-bottom: 2px solid #000;
 	color: #000;
 }
+
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+.s-mamulbox {
+    display: flex;
+    flex-wrap: wrap;
+    width: 320px;
+    height: 375px;
+    font-family: 'Pretendard-Regular';
+}
+
+.s-mamul-img img{
+    width: 320px;
+    height: 180px;
+}
+
+.s-mamul-text {
+    width: 320px;
+    height: 195px;
+    border: 1px solid #d1dae4;
+    padding: 30px;
+    font-size: 15px;
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.s-mamul-text p {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; /* 넘치는 텍스트에 '...' 표시 */
+}
+
+.s-mamul-text-title {
+    color: #129ded;
+    font-size: 22px;
+    font-weight: 900;
+}
+
+.s-mamul-text-1 {
+    margin-top: 10px;
+    display: flex;
+}
+
+.s-mamul-text-2 {
+    display: flex;
+}
+
+.s-mamul-tag {
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.s-mamul-tag span{
+    padding: 5px;
+    gap: 5px;
+    border-radius: 15px;
+    background-color: #e5e5e5;
+}
+

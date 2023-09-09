@@ -7,11 +7,20 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface QnARepository extends JpaRepository<QnAEntity, Integer> {
+import org.springframework.data.repository.query.Param;
 
-    /** 로그인한 멤버 email이랑 매치되는 qna 리스트 불러오기 */
-    @Query("SELECT mr FROM QnAEntity mr " +
-            "JOIN MemberEntity m ON mr.user_email = m.email " +
-            "WHERE m.email = :user_email")
-    List<QnAEntity> findMaemulByMemberEmail(@Param("user_email") String email);
-}
+public interface QnARepository extends JpaRepository<QnAEntity, Integer> {
+    // 전체 게시글 개수를 조회하는 메서드 추가
+    @Query("SELECT COUNT(q) FROM QnAEntity q")
+    int countAllQnA();
+
+        /**
+         * 로그인한 멤버 email이랑 매치되는 qna 리스트 불러오기
+         */
+        @Query("SELECT mr FROM QnAEntity mr " +
+                "JOIN MemberEntity m ON mr.user_email = m.email " +
+                "WHERE m.email = :user_email " +
+                "ORDER BY mr.createdAt DESC")  // 최근글부터 나오게 정렬 추가")
+        List<QnAEntity> findMaemulByMemberEmail(@Param("user_email") String email);
+
+    }

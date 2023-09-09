@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{fragments/layouts/no_footer_layout}" xmlns="http://www.w3.org/1999/html">
+      layout:decorate="~{fragments/layouts/no_footer_layout}">
 <head>
     <meta charset="UTF-8">
     <title>매물 정보</title>
@@ -25,14 +25,17 @@
 
 
 <body layout:fragment="content">
+<!-- 로그인중일때만 접근 가능 -->
+<th:block th:if="${loginMember != null}">
 <div style="text-align : center;">
     <img src="/img/maemulReg/maemulinfo.jpg" style="width:100%; height:100%;">
 </div>
-
-<form action="/maemulinfo" method="POST" id="maemulForm"><!--폼 추가-->
+                                                        <!--세션 받아와서 저장!-->
+<form action="/maemulinfo" method="POST" id="maemulForm" th:object="${loginMember}"><!--폼 추가-->
 
     <div class="layout">
-
+        <!--닉네임 저장-->
+        <input type="hidden" id="nickname" name="nickname" th:value="*{nickname}">
         <h2 class="category"><b class="number">01 </b>주소 정보 입력</h2>
         <hr>
         <div id="addressSection">
@@ -60,9 +63,9 @@
                 <tr>
                     <th>건축물 용도</th>
                     <td colspan="4">
-                        <input type="radio" name="buildingUsage" value="거주용">거주용
-                        <input type="radio" name="buildingUsage" value="업무용">업무용
-                        <input type="radio" name="buildingUsage" value="거주/업무용">거주/업무용
+                        <input type="radio" name="buildingUsage" value="거주용">주거용
+                        <input type="radio" name="buildingUsage" value="업무용">상업용
+                        <input type="radio" name="buildingUsage" value="거주/업무용">주거/상업용
                     </td>
                 </tr>
                 <tr>
@@ -146,7 +149,7 @@
                 </tr>
                 <tr>
                     <th>융자금 여부<b class="number"> *</b></th>
-                    <td colspan="4"><input class="won" name="loanAmount" type="text" placeholder="0"  onblur = "showPriceInfo();"> 원</td>
+                    <td colspan="4"><input class="won" name="loanAmount" type="text" placeholder="0"  onblur = "showPriceInfo();"> 만원</td>
                 </tr>
             </table>
             <br>
@@ -178,11 +181,11 @@
             <table id="monthRentSection" class="hidden">
                 <tr>
                     <th>보증금<b class="number"> *</b></th>
-                    <td><input class="won" name="monthlyForRent" id="monthlyForRent" type="text" placeholder="0"> 원</td>
+                    <td><input class="won" name="monthlyForRent" id="monthlyForRent" type="text" placeholder="0"> 만원</td>
                 </tr>
                 <tr>
                     <th>월세<b class="number"> *</b></th>
-                    <td><input class="won" name="monthlyRent" id="monthlyRent" type="text"  placeholder="0"> 원</td>
+                    <td><input class="won" name="monthlyRent" id="monthlyRent" type="text"  placeholder="0"> 만원</td>
                 </tr>
                 <tr>
                     <th>관리비<b class="number"> *</b></th>
@@ -193,7 +196,7 @@
             <table id="leaseSection" class="hidden">
                 <tr>
                     <th>전세가<b class="number"> *</b></th>
-                    <td colspan="3"><input class="won" name="depositForLease" id="depositForLease" type="text" placeholder="0"> 원</td>
+                    <td colspan="3"><input class="won" name="depositForLease" id="depositForLease" type="text" placeholder="0"> 만원</td>
                 </tr>
                 <tr>
                     <th>관리비<b class="number"> *</b></th>
@@ -204,23 +207,23 @@
             <table  id="sellingSection" class="hidden">
                 <tr>
                     <th>매매가<b class="number"> *</b></th>
-                    <td colspan="5"><input class="won" name="SellingPrice" id="SellingPrice" type="text" placeholder="0"> 원</td>
+                    <td colspan="5"><input class="won" name="SellingPrice" id="SellingPrice" type="text" placeholder="0"> 만원</td>
                 </tr>
             </table>
         </div>
 
     </div>
 
-    <div id="helpPopup" class="popup" style="display:none;">
-        <button onclick="closePopup()" class="x-btn"><img src="/img/maemulReg/x.png" class="ximg"></button>
-        <h3 >전용면적과 공급면적이란?</h3>
-        <hr>
-        <!-- 팝업 -->
-        <p class="pop-content"><b>전용면적</b><br><br>
-            전용면적은 현관부터 방과 욕실, 주방 등 실제 사용할 수 있는 모든 공간을 합한 면적을 말합니다.<br>
-            <br><br>
-            <b>공급면적</b><br><br>
-            공급면적은 자신의 집과 밀접하게 붙어있는 복도, 엘리베이터 , 계단 등을 전용 면적에 더한 면적입니다.</p>
+<div id="helpPopup" class="popup" style="display:none;">
+    <button onclick="closePopup(event)" class="x-btn"><img src="/img/maemulReg/x.png" class="ximg"></button>
+    <h3 >전용면적과 공급면적이란?</h3>
+    <hr>
+    <!-- 팝업 -->
+    <p class="pop-content"><b>전용면적</b><br><br>
+        전용면적은 현관부터 방과 욕실, 주방 등 실제 사용할 수 있는 모든 공간을 합한 면적을 말합니다.<br>
+        <br><br>
+        <b>공급면적</b><br><br>
+        공급면적은 자신의 집과 밀접하게 붙어있는 복도, 엘리베이터 , 계단 등을 전용 면적에 더한 면적입니다.</p>
 
         <br><br>
         <img src="/img/maemulReg/popupimg.png" style="width: 600px; height:500px;" >

@@ -34,4 +34,5 @@ public class CommunityEntity {
     @Column(columnDefinition = "integer default 0", nullable = false)
     private Long view = 0L;; //초기값 0으로 설정
 
+
 }

@@ -45,6 +45,7 @@
 
     .s-qna-buttons {
         margin-top: 30px;
+        text-align: center;
     }
 
     .s-qna-buttons button{
@@ -64,3 +65,22 @@
         align-items: center;
         flex-direction: column;
    }
+
+       .bt-text{
+       text-decoration: none;
+       color: white;
+           }
+
+       .QnA-answer{
+       margin-top : 20px;
+       }
+
+       .completed {
+           color: #26A9E0; /* 답변 완료일 때 글자색을 파란색으로 지정 */
+           text-decoration:bold;
+       }
+
+       .waiting {
+           color: #808080; /* 대기 중일 때 글자색을 회색으로 지정 */
+           text-decoration:bold;
+       }
