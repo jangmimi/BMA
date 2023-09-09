@@ -208,10 +208,11 @@
 .ofindResult {
     display: block;
     text-align: center;
-    text-weight: 700;
+    font-weight: 600;
     color: red;
     font-size: 14px;
     margin-top: 20px;
+    width: 350px;
 }
 /* 이메일 비밀번호 찾기 타이틀 */
 .o-find-subTitle {

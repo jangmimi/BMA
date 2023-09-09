@@ -2,8 +2,8 @@
 $(document).ready(function() {
     // 비밀번호 일치 여부, 형식 체크 함수
     function checkPassword() {
-        const pwdValue = $('#pwd').val();
-        const pwdCheckValue = $('#pwdCheck').val();
+        const pwdValue = $('#pwd').val().trim();
+        const pwdCheckValue = $('#pwdCheck').val().trim();
         const pwdreg = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
 
         // 비밀번호 일치 여부 체크
@@ -28,7 +28,7 @@ $(document).ready(function() {
 
     // 연락처 입력 창 형식
     $("#tel").keyup(function(){
-        let telValue = $("#tel").val();
+        let telValue = $("#tel").val().trim();
         telValue = telValue.replace(/[a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]|[^\w\s-]/g, "").replace(/-/g, "");
         $("#tel").val(telValue);
     });
@@ -51,8 +51,8 @@ $(document).ready(function() {
 
        // 확인 버튼 클릭 시
       $('#confirmBtn').click(function() {
-           var password = $('#pwdLeave').val();
-           if(password === null || password === '') {
+           var password = $('#pwdLeave').val().trim();
+           if(password === '') {
                 alert('비밀번호를 입력해주세요.');
                 return;
            }
@@ -78,14 +78,16 @@ $(document).ready(function() {
            // 모달 창 닫기
            $('#pwdCheckModal').modal('hide');
        });
-
-
    });
 
    // 비밀번호 임시메일 발송
     $("#checkEmail").click(function () {
-        const userEmail = $("#userEmail").val();
+        const userEmail = $("#userEmail").val().trim();
         const sendEmail = document.forms["sendEmail"];
+        if(userEmail === '') {
+            alert('이메일을 입력해주세요.');
+            return false;
+        }
         $.ajax({
             type: 'post',
             url: 'emailDuplication',
@@ -109,10 +111,10 @@ $(document).ready(function() {
 });
 
 // 닉네임 중복검사
-let previousNickname = $('#nickname').val();    // 기존 닉네임 저장
+let previousNickname = $('#nickname').val().trim();    // 기존 닉네임 저장
 function checkNickname() {
-    let nickname = $('#nickname').val();
-    if(nickname.trim() === '') {
+    let nickname = $('#nickname').val().trim() ;
+    if(nickname === '') {
         alert('닉네임을 입력해주세요.');
         return;
     }
@@ -145,9 +147,9 @@ function checkNickname() {
 
 // 내정보수정 submit 전에 공백 및 유효성 체크
 function oUpdateCheck() {
-    let name = $('#name').val();
-    let nickname = $('#nickname').val();
-    let tel = $('#tel').val();
+    let name = $('#name').val().trim();
+    let nickname = $('#nickname').val().trim();
+    let tel = $('#tel').val().trim();
     const pwdValue = $('#pwd').val();
     const pwdreg = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
 
@@ -163,7 +165,7 @@ function oUpdateCheck() {
         alert('연락처를 입력해주세요.');
         return false;
     }
-    if(pwdValue.trim() !== '') {    /* 비밀번호창 입력이 있을 경우에만 체크 */
+    if(pwdValue !== '') {    /* 비밀번호창 입력이 있을 경우에만 체크 */
         if (pwdValue.length < 8 || pwdValue.length > 20) {
             alert('비밀번호는 8자 이상, 20자 이하로 입력해주세요.');
             return false;
@@ -180,16 +182,23 @@ function oUpdateCheck() {
 
 // SNS계정회원 탈퇴 submit 전 확인 취소
 function oDeleteCheck() {
-   let answer = confirm('정말 탈퇴하시겠습니까?');
+   let answer = confirm('정말 탈퇴하시겠습니까?\nSNS계정은 즉시 탈퇴처리됩니다.');
    return answer;
 }
 
 // oFindMemberInfo.html
 // 이메일찾기 ajax 구현
 function findEmail() {
-    let name = $('#name').value;
-    let tel = $('#tel').value;
-
+    let name = $('#name').value.trim();
+    let tel = $('#tel').value.trim();
+    if(name === '') {
+        alert('이름을 입력해주세요.');
+        return false;
+    }
+    if(tel === '') {
+        alert('연락처를 입력해주세요.');
+        return false;
+    }
     fetch('/qFindEmail', {
         method: 'POST',
         headers: {
@@ -213,8 +222,8 @@ function findEmail() {
 
 // 이메일찾기 submit 전에 공백 체크
 function oFindEmailCheck() {
-    let name = $('#name').val();
-    let tel = $('#tel').val();
+    let name = $('#name').val().trim();
+    let tel = $('#tel').val().trim();
     if(name === '') {
         alert('이름을 입력해주세요.');
         return false;

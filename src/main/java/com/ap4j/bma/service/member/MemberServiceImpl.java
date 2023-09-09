@@ -303,6 +303,10 @@ public class MemberServiceImpl implements MemberService {
 		memberRepository.save(entity);
 		return entity.getId();
 	}
+	@Override
+	public Optional<MemberEntity> findByEmail(String email) {
+		return memberRepository.findByEmail(email);
+	}
 
 	/** 중복회원(이메일) 체크 */
 	@Override
