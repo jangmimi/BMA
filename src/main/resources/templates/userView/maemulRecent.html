@@ -48,26 +48,60 @@
                         </div>
                         <div class="oMyQnaTb">
                             <table class="faq-tb">
-                                <thead>
-                                <tr>
-                                    <th class="b-n">번호</th>
-                                    <th class="b-n">분류</th>
-                                    <th class="b-t">제목</th>
-                                    <th class="b-t">등록일</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <p>전체 <span class="o-cntAll" th:text="${mmAllRecentCnt}"></span>건</p>
-                                <th:block th:if="${mmAllRecentCnt == 0}">
-                                    <tr><td colspan="4">조회된 데이터가 없습니다.</td></tr>
-                                </th:block>
-                                <tr th:each="mmRecent : ${mmRecentList}" th:if="${myQna.user_email == loginMember.email}">
-                                    <td id="num" th:text="${myQna.id}">번호</td>
-                                    <td id="category" th:text="${myQna.category}">분류</td>
-                                    <td><a th:href="@{/faq/view(id=${myQna.id})}" th:text="${myQna.title}">제목</a></td>
-                                    <td><a th:href="@{/faq/view(id=${myQna.id})}" th:text="${#temporals.format(myQna.createdAt, 'yyyy-MM-dd')}">yyyy-MM-dd</a></td>
-                                </tr>
-                                </tbody>
+                                <form th:action="@{/member/qDeleteLiked}" method="POST">
+                                    <thead>
+                                    <tr>
+                                        <th class="o-d-type">거래종류 매물종류</th>
+                                        <th class="o-d-img">이미지</th>
+                                        <th class="o-d-add">소재지/상세주소</th>
+                                        <th class="o-d-about">매물설명</th>
+                                        <th class="o-d-area">면적</th>
+                                        <th class="o-d-price">가격(만원)</th>
+                                        <th class="o-d-btn">삭제</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <p>전체 <span class="o-cntAll" th:text="${totalCount}"></span>건</p>
+                                    <th:block th:if="${totalCount == 0}">
+                                        <tr>
+                                            <td colspan="7">조회된 데이터가 없습니다.</td>
+                                        </tr>
+                                    </th:block>
+                                    <tr th:each="mmpList : ${mmpList}">
+                                        <input type="hidden" id="num" th:name="maemul_id" th:value="${mmpList.id}">
+                                        <td id="tradeType" th:text="${mmpList.tradeType}">거래유형</td>
+                                        <td id="o-d-photo">
+                                            <img th:src="@{/img/thumbs.jpg}" width="80">
+                                        </td>
+                                        <td>
+                                            <div th:text="${mmpList.address}">주소</div>
+                                            <div th:text="${mmpList.APT_name}">아파트이름</div>
+                                        </td>
+                                        <td>
+                                            <div th:text="${mmpList.floorNumber + '층/' + mmpList.totalFloors + '층'}">
+                                                층수
+                                            </div>
+                                            <div th:text="${mmpList.features}">매물설명</div>
+                                        </td>
+                                        <td>
+                                            <div th:text="${'계약' + mmpList.privateArea + '㎡'}">면적</div>
+                                            <div th:text="${'전용' + mmpList.supplyArea + '㎡'}">공용면적</div>
+                                        </td>
+                                        <td>
+                                            <div id="o-d-load"
+                                                 th:text="${mmpList.monthlyForRent != null ? '보증금' + mmpList.monthlyForRent : '보증금 없음'}">
+                                                보증금
+                                            </div>
+                                            <div th:text="${mmpList.monthlyRent != null ? '관리비' + mmpList.monthlyRent : '관리비 없음'}">
+                                                관리비
+                                            </div>
+                                        </td>
+                                        <td class="o-t-btn">
+                                            <input type="submit" value="삭제">
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </form>
                             </table>
                         </div>
                     </div>
