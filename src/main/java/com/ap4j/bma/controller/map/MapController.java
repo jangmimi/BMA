@@ -98,7 +98,7 @@ public class MapController {
                                                     ,Integer numberOfRooms, Integer numberOfBathrooms, Integer floorNumber, Integer managementFee, String Elevator
                                                     ,String direction, String Parking, String shortTermRental,  String keyword, String value){
         System.out.println("컨트롤러 address " + address);
-
+        System.out.println("컨트롤러 value = " + value);
         Map<String, Object> responseData = new HashMap<>();
 
         // 로그인 값 넘기기

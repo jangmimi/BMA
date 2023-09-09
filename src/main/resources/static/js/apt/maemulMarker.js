@@ -125,22 +125,27 @@ var tradeType = [];
 
 $("#flexCheckAll").change(function () {
     updateSelectedTradeTypes(null, this.checked);
+    sendToServer();
 });
 
 $("#flexCheckSale").change(function () {
     updateSelectedTradeTypes("매매", this.checked);
+    sendToServer();
 });
 
 $("#flexCheckLease").change(function () {
     updateSelectedTradeTypes("전세", this.checked);
+    sendToServer();
 });
 
 $("#flexCheckMonthly").change(function () {
     updateSelectedTradeTypes("월세", this.checked);
+    sendToServer();
 });
 
 $("#flexCheckShortTerm").change(function () {
     updateSelectedTradeTypes("단기임대", this.checked);
+    sendToServer();
 });
 
 function updateSelectedTradeTypes(type, isChecked) {
@@ -159,24 +164,28 @@ var roomCount;
 
 $('input[name="searchRoomCount"]').on('change', function () {
     roomCount = $(this).val();
+    sendToServer();
 });
 
 /* 욕실 수 옵션 */
 var bathRoomCount;
 $('input[name="searchBathRoomCount"]').on('change', function () {
     bathRoomCount = $(this).val();
+    sendToServer();
 });
 
 /* 층 수 옵션 */
 var floorCount;
 $('input[name="searchFloorCount"]').on('change', function () {
     floorCount = $(this).val();
+    sendToServer();
 });
 
 /* 관리비 옵션 */
 var manageFee;
 $('input[name="searchMaintenance"]').on('change', function () {
     manageFee = $(this).val();
+    sendToServer();
 });
 
 /* 엘리베이터 옵션 */
@@ -184,6 +193,7 @@ var elevator;
 $('input[name="searchElevator"]').on('change', function () {
     var selectedValue = $(this).val();
     elevator = selectedValue === '' ? null : selectedValue;
+    sendToServer();
 });
 
 /* 방향 옵션 */
@@ -191,35 +201,44 @@ var direction = [];
 
 $("#searchDirectionAll").change(function () {
     updateSelectedDirection(null, this.checked);
+    sendToServer();
 });
 
 $("#maesearchDirection_C00702").change(function () {
     updateSelectedDirection("동향", this.checked);
+    sendToServer();
 });
 
 $("#maesearchDirection_C00703").change(function () {
     updateSelectedDirection("서향", this.checked);
+    sendToServer();
 });
 
 $("#maesearchDirection_C00704").change(function () {
     updateSelectedDirection("남향", this.checked);
+    sendToServer();
 });
 
 $("#maesearchDirection_C00705").change(function () {
     updateSelectedDirection("북향", this.checked);
+    sendToServer();
 });
 
 $("#maesearchDirection_C00706").change(function () {
     updateSelectedDirection("남동향", this.checked);
+    sendToServer();
 });
 $("#maesearchDirection_C00707").change(function () {
     updateSelectedDirection("남서향", this.checked);
+    sendToServer();
 });
 $("#maesearchDirection_C00708").change(function () {
     updateSelectedDirection("북동향", this.checked);
+    sendToServer();
 });
 $("#maesearchDirection_C00709").change(function () {
     updateSelectedDirection("북서향", this.checked);
+    sendToServer();
 });
 function updateSelectedDirection(type, isChecked) {
     if (isChecked) {
@@ -237,6 +256,7 @@ var parking;
 $('input[name="searchParkCount"]').on('change', function () {
     var selectedValue = $(this).val();
     parking = selectedValue === '' ? null : selectedValue;
+    sendToServer();
 });
 
 /* 단기임대 옵션 */
@@ -244,6 +264,7 @@ var rental;
 $('input[name="rentalCount"]').on('change', function () {
     var selectedValue = $(this).val();
     rental = selectedValue === '' ? null : selectedValue;
+    sendToServer();
 });
 
 
@@ -739,7 +760,7 @@ function checkEnter(event) {
 /* 주거용 상업용 필터*/
 
 function showValue(value) {
-
+        console.log("전송할 데이터: ", value);
         clearHJDOverlays(); // 행정동 오버레이 닫기
         closeOtherOverlays(); // 열려있는 매물 오버레이 닫기
 
@@ -753,7 +774,7 @@ function showValue(value) {
             type: 'POST',
             url: '/map/map',
             data: {
-                buildingUsage: value,
+                value: value,
                 zoomLevel: setZoomLevel,
                 southWestLat: southWest.getLat(),
                 southWestLng: southWest.getLng(),
@@ -782,4 +803,71 @@ function showValue(value) {
             }
         });
 
+}
+
+/** 필터 라디오버튼 클릭시 실시간 통신 */
+function sendToServer() {
+    // 행정동 오버레이 초기화
+    clearHJDOverlays();
+    // 마커 초기화
+    closeOtherOverlays();
+    // 사이드바 초기화
+    clearSidebar();
+
+    var tradeTypeString = tradeType.join(",");
+    var directionString = direction.join(",");
+
+    var keyword = document.querySelector('.aSearchInput').value.replaceAll(' ', '');
+
+    var bounds = map.getBounds();
+    var southWest = bounds.getSouthWest();
+    var northEast = bounds.getNorthEast();
+    var currentZoomLevel = map.getLevel();
+
+    var data = {
+        southWestLat: southWest.getLat(),
+        southWestLng: southWest.getLng(),
+        northEastLat: northEast.getLat(),
+        northEastLng: northEast.getLng(),
+        zoomLevel: currentZoomLevel,
+        tradeType: tradeTypeString,
+        numberOfRooms: roomCount,
+        numberOfBathrooms: bathRoomCount,
+        floorNumber: floorCount,
+        managementFee: manageFee,
+        Elevator: elevator,
+        direction: directionString,
+        Parking: parking,
+        shortTermRental: rental,
+        keyword: keyword
+    };
+
+    $.ajax({
+        type: "POST",
+        url: "/map/map",
+        data: data,
+        success: function(response) {
+            if (response.maenulList) {
+                response.maenulList.forEach(function (maemul) {
+
+                    var markerPosition = new kakao.maps.LatLng(maemul.latitude, maemul.longitude);
+                    var markerKey = markerPosition.toString();
+                    var markerContent = "<div class='e-marker'>" +
+                        "<div class='e-markerTitle'>" +
+                        "<h3>" + maemul.apt_name + "</h3>" +
+                        "</div>" +
+                        "<div class='e-markerContent'>" +
+                        "<p>" + maemul.address + "</p>" +
+                        "</div>" +
+                        "</div>";
+
+                    if (!existingMarkers[markerKey]) {
+                        createMarker(markerPosition, markerContent, maemul);
+                    }
+
+                });
+                updateSidebar(response.maenulList);
+            }
+        }
+    });
 }
