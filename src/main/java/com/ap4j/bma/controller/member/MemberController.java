@@ -246,6 +246,7 @@ public class MemberController {
         model.addAttribute("likedCnt",likedCnt);
         model.addAttribute("mmpList",mmpList);
 
+
         return "userView/myPage";
     }
 
