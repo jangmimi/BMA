@@ -19,22 +19,27 @@ public class MaemulRegEntityRepositoryImpl implements MaemulRepositoryCustom{
     @Override
     public List<MaemulRegEntity> findMaemulListBounds(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng, String tradeTypes
             , Integer numberOfRooms, Integer numberOfBathrooms, Integer floorNumber, Integer managementFee, String Elevator, String direction, String Parking
-            , String shortTermRental, String keyword, Integer rowSellingPrice, Integer highSellingPrice, Integer rowDepositForLease, Integer highDepositForLease) {
+            , String shortTermRental, String keyword, Integer rowSellingPrice, Integer highSellingPrice, Integer rowDepositForLease, Integer highDepositForLease
+            , Integer rowMonthlyForRent, Integer highMonthlyForRent, Double minPrivateArea, Double maxPrivateArea) {
 
-        BooleanExpression tradeTypeCondition = null;        // 거래종류
-        BooleanExpression roomCountCondition = null;        // 방개수
-        BooleanExpression bathroomCountCondition = null;    // 욕실수
-        BooleanExpression floorNumberCondition = null;      // 층수
-        BooleanExpression managementFeeCondition = null;    // 관리비
-        BooleanExpression elevatorCondition = null;         // 엘리베이터
-        BooleanExpression directionCondition = null;        // 방향
-        BooleanExpression parkingCondition = null;          // 주차가능
-        BooleanExpression rentalCondition = null;          // 단기임대
-        BooleanExpression keywordCondition = null;          // 키워드
+        BooleanExpression tradeTypeCondition = null;            // 거래종류
+        BooleanExpression roomCountCondition = null;            // 방개수
+        BooleanExpression bathroomCountCondition = null;        // 욕실수
+        BooleanExpression floorNumberCondition = null;          // 층수
+        BooleanExpression managementFeeCondition = null;        // 관리비
+        BooleanExpression elevatorCondition = null;             // 엘리베이터
+        BooleanExpression directionCondition = null;            // 방향
+        BooleanExpression parkingCondition = null;              // 주차가능
+        BooleanExpression rentalCondition = null;               // 단기임대
+        BooleanExpression keywordCondition = null;              // 키워드
         BooleanExpression maemulStartCondition = null;          // 매매 시작값
-        BooleanExpression maemulEndCondition = null;          // 매매 끝값
+        BooleanExpression maemulEndCondition = null;            // 매매 끝값
         BooleanExpression jeonseStartCondition = null;          // 전세 시작값
-        BooleanExpression jeonseEndCondition = null;          // 전세 끝값
+        BooleanExpression jeonseEndCondition = null;            // 전세 끝값
+        BooleanExpression bozugStartCondition = null;           // 보증금 시작값
+        BooleanExpression bozugEndCondition = null;             // 보증금 끝값
+        BooleanExpression valueCondition = null;                // 면적
+
         /* 거래종류 필터 */
         if (!StringUtils.isEmpty(tradeTypes)) {
             // tradeTypes 문자열을 쉼표로 분리하여 배열로 변환
@@ -166,6 +171,25 @@ public class MaemulRegEntityRepositoryImpl implements MaemulRepositoryCustom{
             jeonseEndCondition = maemulRegEntity.depositForLease.loe(highDepositForLease);
         }
 
+        /* 보증금 시작 값이 음수이거나 없을 때 */
+        if(rowMonthlyForRent != null && rowMonthlyForRent >= 0){
+            bozugStartCondition = maemulRegEntity.monthlyForRent.goe(rowMonthlyForRent);
+        }
+
+        /* 보증금 끝 값이 음수이거나 없을 때 */
+        if(highMonthlyForRent != null && highMonthlyForRent >= 0){
+            bozugEndCondition = maemulRegEntity.monthlyForRent.loe(highMonthlyForRent);
+        }
+
+        /* 면적 */
+        if (minPrivateArea != null && maxPrivateArea != null) {
+            valueCondition = maemulRegEntity.privateArea.goe(minPrivateArea).and(maemulRegEntity.privateArea.loe(maxPrivateArea));  // 2개이상 선택되었을 때
+        } else if (minPrivateArea == null && maxPrivateArea != null) {
+            valueCondition = maemulRegEntity.privateArea.loe(maxPrivateArea);       // 1개만 선택되었을 때
+        }else{
+            valueCondition = maemulRegEntity.privateArea.goe(0);       // 0개 선택되었을 때
+        }
+
         return queryFactory
                 .selectFrom(maemulRegEntity)
                 .where(
@@ -186,7 +210,10 @@ public class MaemulRegEntityRepositoryImpl implements MaemulRepositoryCustom{
                         maemulStartCondition,
                         maemulEndCondition,
                         jeonseStartCondition,
-                        jeonseEndCondition
+                        jeonseEndCondition,
+                        bozugStartCondition,
+                        bozugEndCondition,
+                        valueCondition
                 )
                 .fetch();
     }

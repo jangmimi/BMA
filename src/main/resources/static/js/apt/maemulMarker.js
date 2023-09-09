@@ -283,8 +283,8 @@ var jeonseStart;
 var jeonseEnd;
 $(".searchJeonseButton").click(function() {
 
-    var jeonseStart = $("input[name='jeonseStart']").val();
-    var jeonseEnd = $("input[name='jeonseEnd']").val();
+    jeonseStart = $("input[name='jeonseStart']").val();
+    jeonseEnd = $("input[name='jeonseEnd']").val();
 
     sendToServer();
 
@@ -298,14 +298,49 @@ var bozugStart;
 var bozugEnd;
 $(".searchBozugButton").click(function() {
 
-    var bozugStart = $("input[name='bozugStart']").val();
-    var bozugEnd = $("input[name='bozugEnd']").val();
+    bozugStart = $("input[name='bozugStart']").val();
+    bozugEnd = $("input[name='bozugEnd']").val();
 
     sendToServer();
 
     bozugStart = null;
     bozugEnd = null;
 
+});
+
+
+/* 면적 옵션 */
+var selectedValues = [];
+var minValue;
+var maxValue;
+$('.btn-check').on('change', function() {
+    if (this.checked) {
+        selectedValues.push(Number(this.value)); // 선택된 값을 배열에 추가
+    } else {
+        // 체크가 해제된 경우 배열에서 제거
+        var index = selectedValues.indexOf(Number(this.value));
+        if (index !== -1) {
+            selectedValues.splice(index, 1);
+        }
+    }
+
+    if (selectedValues.length === 1) {
+        // 1개 선택된 경우, 선택된 값 서버로 전송
+        maxValue = selectedValues[0];
+        sendToServer();
+        maxValue = null;
+
+    } else if (selectedValues.length >= 2) {
+        // 2개 이상 선택된 경우, 최솟값과 최댓값 찾아서 서버로 전송
+        minValue = Math.min.apply(null, selectedValues);
+        maxValue = Math.max.apply(null, selectedValues);
+        sendToServer();
+        minValue = null;
+        maxValue = null;
+    } else if(selectedValues.length === 0){
+        sendToServer();
+
+    }
 });
 
 // 맵 최초 로드시 마커 생성 해주는 함수
@@ -348,8 +383,11 @@ kakao.maps.event.addListener(map, 'tilesloaded', function () {
         rowSellingPrice: maemaeStart,
         highSellingPrice: maemaeEnd,
         rowDepositForLease: jeonseStart,
-        highDepositForLease: jeonseEnd
-
+        highDepositForLease: jeonseEnd,
+        rowMonthlyForRent: bozugStart,
+        highMonthlyForRent: bozugEnd,
+        minPrivateArea: minValue,
+        maxPrivateArea: maxValue
     };
 
     $.ajax({
@@ -421,9 +459,16 @@ kakao.maps.event.addListener(map, 'idle', function () {
         rowSellingPrice: maemaeStart,
         highSellingPrice: maemaeEnd,
         rowDepositForLease: jeonseStart,
-        highDepositForLease: jeonseEnd
+        highDepositForLease: jeonseEnd,
+        rowMonthlyForRent: bozugStart,
+        highMonthlyForRent: bozugEnd,
+        minPrivateArea: minValue,
+        maxPrivateArea: maxValue
     };
-
+    console.log("*****");
+    console.log(dataToSend.minPrivateArea);
+    console.log(dataToSend.maxPrivateArea);
+    console.log("*****");
     var likedBoolean = true;
 
     $.ajax({
@@ -912,9 +957,13 @@ function sendToServer() {
         rowSellingPrice: maemaeStart,
         highSellingPrice: maemaeEnd,
         rowDepositForLease: jeonseStart,
-        highDepositForLease: jeonseEnd
+        highDepositForLease: jeonseEnd,
+        rowMonthlyForRent: bozugStart,
+        highMonthlyForRent: bozugEnd,
+        minPrivateArea: minValue,
+        maxPrivateArea: maxValue
     };
-
+    console.log(data);
     $.ajax({
         type: "POST",
         url: "/map/map",
