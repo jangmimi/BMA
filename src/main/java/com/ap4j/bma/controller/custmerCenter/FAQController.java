@@ -49,6 +49,8 @@ public class FAQController {
     public String faqView(Model model, Integer id) {
 
         model.addAttribute("article", faqService.faqView(id));
+        model.addAttribute("prevArticle", faqService.getPreArticle(id));
+        model.addAttribute("nextArticle", faqService.getNextArticle(id));
         return "customerCenter/FAQBoard/FAQView";
     }
 }

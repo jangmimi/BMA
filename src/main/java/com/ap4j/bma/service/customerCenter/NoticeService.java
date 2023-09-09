@@ -26,4 +26,14 @@ public class NoticeService {
     public Page<NoticeEntity> getNoticePage(Pageable pageable) {
         return noticeRepository.findAll(pageable);
     }
+
+    //이전글
+    public Object getPreArticle(Integer id) {
+        return noticeRepository.findTopByIdLessThanOrderByIdDesc(id);
+    }
+    //다음글
+    public Object getNextArticle(Integer id) {
+        return noticeRepository.findTopByIdGreaterThanOrderByIdAsc(id);
+    }
+
 }
