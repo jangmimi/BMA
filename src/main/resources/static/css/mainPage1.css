@@ -219,9 +219,7 @@ body {
 
 .n-main-3-slide-img{
     width: 50%;
-    height: 50%;
-    border: 1px solid #dfdfdf;
-    border-radius: 20px;
+    height: 100%;
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -229,7 +227,8 @@ body {
 }
 
 .n-main-3-slide-img img{
-
+    width: fit-content;
+    height: 90%;
 }
 
 .n-main-3-slides {
