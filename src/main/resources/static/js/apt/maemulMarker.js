@@ -14,14 +14,14 @@ var zoomControlContainer = document.getElementById('zoomControl');
 var zoomInButton = document.getElementById('buttonp');
 zoomInButton.textContent = '+';
 zoomInButton.addEventListener('click', function () {
-  map.setLevel(map.getLevel() - 1, { animate: true });
+    map.setLevel(map.getLevel() - 1, { animate: true });
 });
 
 // 줌 아웃 버튼을 만듭니다
 var zoomOutButton = document.getElementById('buttonm');
 zoomOutButton.textContent = '-';
 zoomOutButton.addEventListener('click', function () {
-  map.setLevel(map.getLevel() + 1, { animate: true });
+    map.setLevel(map.getLevel() + 1, { animate: true });
 });
 
 
@@ -89,23 +89,23 @@ function createMarker(position, markerContent, responseData) {
             var currentZoomLevel = map.getLevel(); // 현재 줌 레벨 가져오기
 
             var dataToSend = {
-                    southWestLat: southWest.getLat(),
-                    southWestLng: southWest.getLng(),
-                    northEastLat: northEast.getLat(),
-                    northEastLng: northEast.getLng(),
-                    zoomLevel: currentZoomLevel,
-                    address : responseData.address
-                    }
+                southWestLat: southWest.getLat(),
+                southWestLng: southWest.getLng(),
+                northEastLat: northEast.getLat(),
+                northEastLng: northEast.getLng(),
+                zoomLevel: currentZoomLevel,
+                address : responseData.address
+            }
             $.ajax({
-                    type: 'POST',
-                    url: '/map/map',
-                    data: dataToSend,
-                    success: function (response) {
-                        likedEntityList = response.likedEntityList;
-                        if(response.maemulClickList) {
-                            updateSidebar(response.maemulClickList);
-                        }
+                type: 'POST',
+                url: '/map/map',
+                data: dataToSend,
+                success: function (response) {
+                    likedEntityList = response.likedEntityList;
+                    if(response.maemulClickList) {
+                        updateSidebar(response.maemulClickList);
                     }
+                }
 
             });
 
@@ -313,24 +313,24 @@ kakao.maps.event.addListener(map, 'tilesloaded', function () {
             likedEntityList = response.likedEntityList;
 
             if(response.maenulList) {
-               response.maenulList.forEach(function (maemul) {
-                   var markerPosition = new kakao.maps.LatLng(maemul.latitude, maemul.longitude);
-                   var markerKey = markerPosition.toString();
-                   var markerContent = "<div class='e-marker'>" +
-                       "<div class='e-markerTitle'>" +
-                       "<h3>" + maemul.apt_name + "</h3>" +
-                       "</div>" +
-                       "<div class='e-markerContent'>" +
-                       "<p>" + maemul.address + "</p>" +
-                       "</div>" +
-                       "</div>";
+                response.maenulList.forEach(function (maemul) {
+                    var markerPosition = new kakao.maps.LatLng(maemul.latitude, maemul.longitude);
+                    var markerKey = markerPosition.toString();
+                    var markerContent = "<div class='e-marker'>" +
+                        "<div class='e-markerTitle'>" +
+                        "<h3>" + maemul.apt_name + "</h3>" +
+                        "</div>" +
+                        "<div class='e-markerContent'>" +
+                        "<p>" + maemul.address + "</p>" +
+                        "</div>" +
+                        "</div>";
 
-                   if (!existingMarkers[markerKey]) {
-                       createMarker(markerPosition, markerContent, maemul);
-                   }
+                    if (!existingMarkers[markerKey]) {
+                        createMarker(markerPosition, markerContent, maemul);
+                    }
 
-               });
-               updateSidebar(response.maenulList);
+                });
+                updateSidebar(response.maenulList);
             }
         }
     });
@@ -429,10 +429,10 @@ kakao.maps.event.addListener(map, 'idle', function () {
                         overlayContent += "<p>" + hjd.eupMyeonDong + "</p>";
                     } else if (hjd.siDo && hjd.siGunGu) {
                         overlayContent = "<div class='e-hdjOverlaySiGunGu'>" +
-                                            "<p>" + hjd.siGunGu + "</p>";
+                            "<p>" + hjd.siGunGu + "</p>";
                     } else if (hjd.siDo) {
                         overlayContent = "<div class='e-hdjOverlaySiDo'>" +
-                                         "<p>" + hjd.siDo + "</p>";
+                            "<p>" + hjd.siDo + "</p>";
                     }
                     overlayContent += "</div>";
 
@@ -579,9 +579,15 @@ function updateSidebar(responseData) {
         listItem.className = "list-group-item a";
         listItem.style = "";
 
+        // details 페이지에 넘겨줄 닉네임
+        var nickname = null;
+        if (loginMember) {
+            nickname = loginMember.nickname;
+        }
+
         // 새로운 a 요소 생성
         var anchor = document.createElement("a");
-        anchor.href = "/details/" + maemul.id ;
+        anchor.href = "/details/" + maemul.id + "?nickname=" + nickname;
         anchor.className = "abox";
         anchor.target = "";
 
@@ -597,10 +603,10 @@ function updateSidebar(responseData) {
                     <h5 class="ii loc_title">
                         <span class="payf_num_b">
                             ${
-                              maemul.monthlyForRent != 0 ? `${monthlyForRent}${monthlyRent}` :
-                              maemul.depositForLease != 0 ? depositForLease :
-                              sellingPrice
-                            }
+            maemul.monthlyForRent != 0 ? `${monthlyForRent}${monthlyRent}` :
+                maemul.depositForLease != 0 ? depositForLease :
+                    sellingPrice
+        }
                         </span>
                     </h5>
                     <div class="ii loc_ii01">
@@ -778,48 +784,48 @@ function checkEnter(event) {
 /* 주거용 상업용 필터*/
 
 function showValue(value) {
-        console.log("전송할 데이터: ", value);
-        clearHJDOverlays(); // 행정동 오버레이 닫기
-        closeOtherOverlays(); // 열려있는 매물 오버레이 닫기
+    console.log("전송할 데이터: ", value);
+    clearHJDOverlays(); // 행정동 오버레이 닫기
+    closeOtherOverlays(); // 열려있는 매물 오버레이 닫기
 
-        var setZoomLevel = 5;
-        var bounds = map.getBounds();
-        var southWest = bounds.getSouthWest();
-        var northEast = bounds.getNorthEast();
-        var currentZoomLevel = map.getLevel(); // 현재 줌 레벨 가져오기
+    var setZoomLevel = 5;
+    var bounds = map.getBounds();
+    var southWest = bounds.getSouthWest();
+    var northEast = bounds.getNorthEast();
+    var currentZoomLevel = map.getLevel(); // 현재 줌 레벨 가져오기
 
-        $.ajax({
-            type: 'POST',
-            url: '/map/map',
-            data: {
-                value: value,
-                zoomLevel: setZoomLevel,
-                southWestLat: southWest.getLat(),
-                southWestLng: southWest.getLng(),
-                northEastLat: northEast.getLat(),
-                northEastLng: northEast.getLng()
-            },
+    $.ajax({
+        type: 'POST',
+        url: '/map/map',
+        data: {
+            value: value,
+            zoomLevel: setZoomLevel,
+            southWestLat: southWest.getLat(),
+            southWestLng: southWest.getLng(),
+            northEastLat: northEast.getLat(),
+            northEastLng: northEast.getLng()
+        },
 
-            success: function (response) {
-                likedEntityList = response.likedEntityList;
+        success: function (response) {
+            likedEntityList = response.likedEntityList;
 
-                console.log("전송된 데이터: ", value); // 보낸 파라미터 확인
-                console.log("서버 응답: ", response);
+            console.log("전송된 데이터: ", value); // 보낸 파라미터 확인
+            console.log("서버 응답: ", response);
 
-                console.log(response.maemulButtonList);
-                // 검색 결과에 따라 마커를 생성하고 지도에 표시하기
-                if (response.maemulButtonList) {
-                    var result = response.maemulButtonList; // 키워드 검색후 전송받은 해당 아파트 데이터
-                    console.log(result);
-                    var newCenter = new kakao.maps.LatLng(result[0].latitude, result[0].longitude);
+            console.log(response.maemulButtonList);
+            // 검색 결과에 따라 마커를 생성하고 지도에 표시하기
+            if (response.maemulButtonList) {
+                var result = response.maemulButtonList; // 키워드 검색후 전송받은 해당 아파트 데이터
+                console.log(result);
+                var newCenter = new kakao.maps.LatLng(result[0].latitude, result[0].longitude);
 
-                    map.setLevel(setZoomLevel); // 줌레벨 변경
-                    map.setCenter(newCenter); // 해당 아파트 위치로 센터 변경
-                    var currentZoomLevel = map.getLevel(); // 이동시 줌레벨 5로 설정 (줌레벨 안바뀐채로 이동되는 경우 있어서 방지차원)
+                map.setLevel(setZoomLevel); // 줌레벨 변경
+                map.setCenter(newCenter); // 해당 아파트 위치로 센터 변경
+                var currentZoomLevel = map.getLevel(); // 이동시 줌레벨 5로 설정 (줌레벨 안바뀐채로 이동되는 경우 있어서 방지차원)
 
-                }
             }
-        });
+        }
+    });
 
 }
 

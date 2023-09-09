@@ -1,7 +1,6 @@
 package com.ap4j.bma.controller.custmerCenter;
 
 import com.ap4j.bma.model.entity.customerCenter.FAQEntity;
-import com.ap4j.bma.model.entity.customerCenter.NoticeEntity;
 import com.ap4j.bma.service.customerCenter.FAQService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,11 +10,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
-
-import java.util.List;
 
 @SessionAttributes("loginMember")
 @Controller

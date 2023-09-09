@@ -69,35 +69,35 @@
 			<div class="y-text-big-con">
 				<div class="y-text-con">
 					<div class="y-mamuel-number">
-						매물번호:[[${maemulList.get().id}]]
+						매물번호:[[${maemulList.id}]]
 
 					</div>
 					<br>
 
 					<div class="y-price">
-						<p th:if="${maemulList.get().tradeType == '매매'}"
-						   th:with="sp_djr=${maemulList.get().sellingPrice / 10000}, sp_aks=${maemulList.get().sellingPrice % 10000}"
+						<p th:if="${maemulList.tradeType == '매매'}"
+						   th:with="sp_djr=${maemulList.sellingPrice / 10000}, sp_aks=${maemulList.sellingPrice % 10000}"
 						   th:text="${'매매 ' + #strings.concat(sp_djr > 0 ? sp_djr + '억 ' : '', sp_aks > 0 ? sp_aks + '만원' : '')}">
 						</p>
-						<p th:if="${maemulList.get().tradeType == '전세'}"
-						   th:with="dp_djr=${maemulList.get().depositForLease / 10000}, dp_aks=${maemulList.get().depositForLease % 10000}"
+						<p th:if="${maemulList.tradeType == '전세'}"
+						   th:with="dp_djr=${maemulList.depositForLease / 10000}, dp_aks=${maemulList.depositForLease % 10000}"
 						   th:text="${'전세 ' + #strings.concat(dp_djr > 0 ? dp_djr + '억 ' : '', dp_aks > 0 ? dp_aks + '만원' : '')}">
 						</p>
-						<p th:if="${maemulList.get().tradeType == '월세'}"
-						   th:with="mr_djr=${maemulList.get().monthlyRent / 10000}, mr_aks=${maemulList.get().monthlyRent % 10000}, mfr_djr=${maemulList.get().monthlyForRent / 10000}, mfr_aks=${maemulList.get().monthlyForRent % 10000}"
+						<p th:if="${maemulList.tradeType == '월세'}"
+						   th:with="mr_djr=${maemulList.monthlyRent / 10000}, mr_aks=${maemulList.monthlyRent % 10000}, mfr_djr=${maemulList.monthlyForRent / 10000}, mfr_aks=${maemulList.monthlyForRent % 10000}"
 						   th:text="${'월세 ' + #strings.concat(mfr_djr > 0 ? mfr_djr + '억 ' : '', mfr_aks > 0 ? mfr_aks + '/' : '')} + ${#strings.concat(mr_djr > 0 ? mr_djr + '억 ' : '', mr_aks > 0 ? mr_aks : '')}">
 
 						</p>
 					</div>
-					<!--					<div th:with="result=${maemulList.get().supplyArea} * 0.3025"-->
-					<!--					     th:text="${maemulList.get().sellingPrice} / result + '만원(3.3㎡)'" class="y-price-area"> 계산 해야됨.</div>-->
+					<!--					<div th:with="result=${maemulList.supplyArea} * 0.3025"-->
+					<!--					     th:text="${maemulList.sellingPrice} / result + '만원(3.3㎡)'" class="y-price-area"> 계산 해야됨.</div>-->
 
-					<div th:with="result=${maemulList.get().sellingPrice} / (${maemulList.get().supplyArea} * 0.3025)"
+					<div th:with="result=${maemulList.sellingPrice} / (${maemulList.supplyArea} * 0.3025)"
 					     th:text="${#numbers.formatInteger(result, 0, 'COMMA')} + '만원(3.3㎡)'" class="y-price-area"> 계산 해야됨.</div>
 
 					<div class="y-sub-text-con">
-						<div class="y-dong">[[${maemulList.get().address}]]</div>
-						<div class="y-house-hold">[[${maemulList.get().APT_name}]]</div>
+						<div class="y-dong">[[${maemulList.address}]]</div>
+						<div class="y-house-hold">[[${maemulList.APT_name}]]</div>
 						<!--					<div class="y-location">고려대역 도보 8분</div>-->
 					</div>
 					<div class="y-button-con">
@@ -127,41 +127,41 @@
 						      d="M11.5081 13.0899C11.5504 13.3231 11.7546 13.5 12 13.5C12.2762 13.5 12.5 13.2761 12.5 13V8.5L12.492 8.41012C12.4496 8.17688 12.2455 8 12 8C11.7239 8 11.5 8.22386 11.5 8.5V13L11.5081 13.0899ZM12 16.2C12.3314 16.2 12.6 15.9314 12.6 15.6C12.6 15.2686 12.3314 15 12 15C11.6687 15 11.4 15.2686 11.4 15.6C11.4 15.9314 11.6687 16.2 12 16.2Z"
 						      fill="#222222"></path>
 					</svg>
-					<div th:if="${maemulList.get().features != null}" class="y-this-text">이런 특징이 있어요</div>
+					<div th:if="${maemulList.features != null}" class="y-this-text">이런 특징이 있어요</div>
 
-					<div th:if="${maemulList == null or maemulList.get().features == null or maemulList.get().features.isEmpty()}"
+					<div th:if="${maemulList == null or maemulList.features == null or maemulList.features.isEmpty()}"
 					     class="y-this-text">
 						등록된 특징이 없어요
 					</div>
 
 					<div class="y-characters">
-						<div th:if="${maemulList == null or maemulList.get().features == null or maemulList.get().features.isEmpty()}"
+						<div th:if="${maemulList == null or maemulList.features == null or maemulList.features.isEmpty()}"
 						     class="y-c-list">
 							<span>X</span>
 						</div>
 					</div>
 
-					<div th:if="${maemulList != null and maemulList.get().features != null and not maemulList.get().features.isEmpty()}"
+					<div th:if="${maemulList != null and maemulList.features != null and not maemulList.features.isEmpty()}"
 					     class="y-characters">
-						<div th:if="${maemulList.get().features.contains('단기')}" class="y-c-list">
+						<div th:if="${maemulList.features.contains('단기')}" class="y-c-list">
 							<span>단기</span>
 						</div>
-						<div th:if="${maemulList.get().features.contains('신축')}" class="y-c-list">
+						<div th:if="${maemulList.features.contains('신축')}" class="y-c-list">
 							<span>신축</span>
 						</div>
-						<div th:if="${maemulList.get().features.contains('투자')}" class="y-c-list">
+						<div th:if="${maemulList.features.contains('투자')}" class="y-c-list">
 							<span>투자</span>
 						</div>
-						<div th:if="${maemulList.get().features.contains('풀옵션')}" class="y-c-list">
+						<div th:if="${maemulList.features.contains('풀옵션')}" class="y-c-list">
 							<span>풀옵션</span>
 						</div>
-						<div th:if="${maemulList.get().features.contains('엘리베이터')}" class="y-c-list">
+						<div th:if="${maemulList.features.contains('엘리베이터')}" class="y-c-list">
 							<span>엘리베이터</span>
 						</div>
-						<div th:if="${maemulList.get().features.contains('보안/안전')}" class="y-c-list">
+						<div th:if="${maemulList.features.contains('보안/안전')}" class="y-c-list">
 							<span>보안/안전</span>
 						</div>
-						<div th:if="${maemulList.get().features.contains('분리형')}" class="y-c-list">
+						<div th:if="${maemulList.features.contains('분리형')}" class="y-c-list">
 							<span>분리형</span>
 						</div>
 					</div>
@@ -176,19 +176,19 @@
 					<ul class="y-lists">
 						<li>
 							<div class="y-list-title">
-								<p th:text="${maemulList.get().tradeType}"></p>
+								<p th:text="${maemulList.tradeType}"></p>
 							</div>
 							<div class="y-list-content">
-								<p th:if="${maemulList.get().tradeType == '매매'}"
-								   th:with="sp_djr=${maemulList.get().sellingPrice / 10000}, sp_aks=${maemulList.get().sellingPrice % 10000}"
+								<p th:if="${maemulList.tradeType == '매매'}"
+								   th:with="sp_djr=${maemulList.sellingPrice / 10000}, sp_aks=${maemulList.sellingPrice % 10000}"
 								   th:text="${#strings.concat(sp_djr > 0 ? sp_djr + '억 ' : '', sp_aks > 0 ? sp_aks + '만원' : '')}">
 								</p>
-								<p th:if="${maemulList.get().tradeType == '전세'}"
-								   th:with="dp_djr=${maemulList.get().depositForLease / 10000}, dp_aks=${maemulList.get().depositForLease % 10000}"
+								<p th:if="${maemulList.tradeType == '전세'}"
+								   th:with="dp_djr=${maemulList.depositForLease / 10000}, dp_aks=${maemulList.depositForLease % 10000}"
 								   th:text="${#strings.concat(dp_djr > 0 ? dp_djr + '억 ' : '', dp_aks > 0 ? dp_aks + '만원' : '')}">
 								</p>
-								<p th:if="${maemulList.get().tradeType == '월세'}"
-								   th:with="mr_djr=${maemulList.get().monthlyRent / 10000}, mr_aks=${maemulList.get().monthlyRent % 10000}, mfr_djr=${maemulList.get().monthlyForRent / 10000}, mfr_aks=${maemulList.get().monthlyForRent % 10000}"
+								<p th:if="${maemulList.tradeType == '월세'}"
+								   th:with="mr_djr=${maemulList.monthlyRent / 10000}, mr_aks=${maemulList.monthlyRent % 10000}, mfr_djr=${maemulList.monthlyForRent / 10000}, mfr_aks=${maemulList.monthlyForRent % 10000}"
 								   th:text="${'월세 ' + #strings.concat(mfr_djr > 0 ? mfr_djr + '억 ' : '', mfr_aks > 0 ? mfr_aks + '/' : '')} + ${#strings.concat(mr_djr > 0 ? mr_djr + '억 ' : '', mr_aks > 0 ? mr_aks : '')}">
 
 								</p>
@@ -199,8 +199,8 @@
 								<p>융자금</p>
 							</div>
 							<div class="y-list-content">
-								<p th:if="${maemulList.get().loanAmount == 0}">-</p>
-								<p th:unless="${maemulList.get().loanAmount == 0}">[[${maemulList.get().loanAmount}]]</p>
+								<p th:if="${maemulList.loanAmount == 0}">-</p>
+								<p th:unless="${maemulList.loanAmount == 0}">[[${maemulList.loanAmount}]]</p>
 							</div>
 						</li>
 						<li>
@@ -208,9 +208,9 @@
 								<p>관리비</p>
 							</div>
 							<div class="y-list-content">
-								<p th:unless="${maemulList.get().managementFee == 0}">매월
-									[[${maemulList.get().managementFee}]] 만원</p>
-								<p th:if="${maemulList.get().managementFee == 0}">-</p>
+								<p th:unless="${maemulList.managementFee == 0}">매월
+									[[${maemulList.managementFee}]] 만원</p>
+								<p th:if="${maemulList.managementFee == 0}">-</p>
 							</div>
 						</li>
 						<li>
@@ -218,8 +218,8 @@
 								<p>주차가능여부</p>
 							</div>
 							<div class="y-list-content">
-								<p th:if="${maemulList.get().totalParking != 0}">가능</p>
-								<p th:if="${maemulList.get().totalParking == 0}">불가능</p>
+								<p th:if="${maemulList.totalParking != 0}">가능</p>
+								<p th:if="${maemulList.totalParking == 0}">불가능</p>
 							</div>
 						</li>
 						<li>
@@ -227,17 +227,17 @@
 								<p>단기임대</p>
 							</div>
 							<div class="y-list-content">
-								<p th:if="${maemulList.get().shortTermRental.equals('가능')}">가능</p>
-								<p th:if="${maemulList.get().shortTermRental.equals('불가능')}">불가능</p>
+								<p th:if="${maemulList.shortTermRental.equals('가능')}">가능</p>
+								<p th:if="${maemulList.shortTermRental.equals('불가능')}">불가능</p>
 							</div>
 						</li>
-						<li th:unless="${maemulList.get().monthlyRent == 0}">
+						<li th:unless="${maemulList.monthlyRent == 0}">
 							<div class="y-list-title">
 								<p>한달 예상 주거비용</p>
 							</div>
 							<div class="y-list-content">
 								<div class="y-blue-text">
-									<strong>[[${maemulList.get().monthlyRent + maemulList.get().managementFee}]]만원
+									<strong>[[${maemulList.monthlyRent + maemulList.managementFee}]]만원
 										+a</strong>
 								</div>
 								<div class="y-monthly-pay">
@@ -260,25 +260,25 @@
 							<div>
 								<div class="y-st-num-text">
 									<p>
-										매물번호 [[${maemulList.get().id}]]
+										매물번호 [[${maemulList.id}]]
 									</p>
 								</div>
 							</div>
 						</div>
 
 						<div class="y-st-price">
-							<p th:if="${maemulList.get().tradeType == '매매'}"
-							   th:with="sp_djr=${maemulList.get().sellingPrice / 10000}, sp_aks=${maemulList.get().sellingPrice % 10000}"
+							<p th:if="${maemulList.tradeType == '매매'}"
+							   th:with="sp_djr=${maemulList.sellingPrice / 10000}, sp_aks=${maemulList.sellingPrice % 10000}"
 							   th:text="${'매매 ' + #strings.concat(sp_djr > 0 ? sp_djr + '억 ' : '', sp_aks > 0 ? sp_aks + '만원' : '')}"
 							   class="y-st-ptag">
 							</p>
-							<p th:if="${maemulList.get().tradeType == '전세'}"
-							   th:with="dp_djr=${maemulList.get().depositForLease / 10000}, dp_aks=${maemulList.get().depositForLease % 10000}"
+							<p th:if="${maemulList.tradeType == '전세'}"
+							   th:with="dp_djr=${maemulList.depositForLease / 10000}, dp_aks=${maemulList.depositForLease % 10000}"
 							   th:text="${'전세 ' + #strings.concat(dp_djr > 0 ? dp_djr + '억 ' : '', dp_aks > 0 ? dp_aks + '만원' : '')}"
 							   class="y-st-ptag">
 							</p>
-							<p th:if="${maemulList.get().tradeType == '월세'}"
-							   th:with="mr_djr=${maemulList.get().monthlyRent / 10000}, mr_aks=${maemulList.get().monthlyRent % 10000}, mfr_djr=${maemulList.get().monthlyForRent / 10000}, mfr_aks=${maemulList.get().monthlyForRent % 10000}"
+							<p th:if="${maemulList.tradeType == '월세'}"
+							   th:with="mr_djr=${maemulList.monthlyRent / 10000}, mr_aks=${maemulList.monthlyRent % 10000}, mfr_djr=${maemulList.monthlyForRent / 10000}, mfr_aks=${maemulList.monthlyForRent % 10000}"
 							   th:text="${'월세 ' + #strings.concat(mfr_djr > 0 ? mfr_djr + '억 ' : '', mfr_aks > 0 ? mfr_aks + '/' : '')} + ${#strings.concat(mr_djr > 0 ? mr_djr + '억 ' : '', mr_aks > 0 ? mr_aks : '')}"
 							   class="y-st-ptag"></p>
 							<div class="y-st-ptag2">
@@ -307,7 +307,7 @@
 										      fill="#222222"></path>
 									</svg>
 									<span>
-                                        [[${maemulList.get().privateArea}]]㎡
+                                        [[${maemulList.privateArea}]]㎡
 								</span>
 								</div>
 							</li>
@@ -319,7 +319,7 @@
 										      d="M16 1C16.5128 1 16.9355 1.38604 16.9933 1.88338L17 2V22C17 22.5128 16.614 22.9355 16.1166 22.9933L16 23H1C0.487164 23 0.0644928 22.614 0.00672773 22.1166L0 22V2C0 1.48716 0.38604 1.06449 0.883379 1.00673L1 1H16ZM8 2H1V22H8V2ZM9 2H16V22H9V2ZM19.7843 13.5886L19.8536 13.6464L21.25 15.043L22.6464 13.6464C22.82 13.4729 23.0894 13.4536 23.2843 13.5886L23.3536 13.6464C23.5271 13.82 23.5464 14.0894 23.4114 14.2843L23.3536 14.3536L21.25 16.4571L19.1464 14.3536C18.9512 14.1583 18.9512 13.8417 19.1464 13.6464C19.32 13.4729 19.5894 13.4536 19.7843 13.5886ZM23.3585 9.45146L21.25 7.28272L19.1415 9.45146L19.0846 9.52152C18.9524 9.71827 18.9755 9.98739 19.1515 10.1585L19.2215 10.2154C19.4183 10.3476 19.6874 10.3245 19.8585 10.1485L21.25 8.717L22.6415 10.1485L22.7099 10.2074C22.9029 10.3451 23.1725 10.3296 23.3485 10.1585C23.5465 9.966 23.551 9.64945 23.3585 9.45146Z"
 										      fill="#222222"></path>
 									</svg>
-									<span>[[${maemulList.get().floorNumber}]]층/[[${maemulList.get().totalFloors}]]층</span>
+									<span>[[${maemulList.floorNumber}]]층/[[${maemulList.totalFloors}]]층</span>
 
 								</div>
 								<div class="y-icon-list">
@@ -330,8 +330,8 @@
 										      fill="#222222"></path>
 									</svg>
 									<span>
-									<p th:if="${maemulList.get().managementFee == 0}" th:text="없음"></p>
-									<p th:if="${maemulList.get().managementFee != 0}" th:text="${maemulList.get().managementFee + '만원'}"></p>
+									<p th:if="${maemulList.managementFee == 0}" th:text="없음"></p>
+									<p th:if="${maemulList.managementFee != 0}" th:text="${maemulList.managementFee + '만원'}"></p>
 								</span>
 
 								</div>
@@ -340,13 +340,13 @@
 								<div>
 									<p class="y-la-title">방/욕실</p>
 									<p class="y-la-content">
-										[[${maemulList.get().numberOfRooms}]]개 / [[${maemulList.get().numberOfBathrooms}]]개
+										[[${maemulList.numberOfRooms}]]개 / [[${maemulList.numberOfBathrooms}]]개
 									</p>
 								</div>
 								<div>
 									<p class="y-la-title">위치</p>
 									<p class="y-la-content">
-										[[${maemulList.get().address}]]
+										[[${maemulList.address}]]
 									</p>
 								</div>
 							</li>
@@ -354,12 +354,12 @@
 						</ul>
 						<div class="y-st-real-estate-title">
 							<div class="y-st-r">
-								[[${maemulList.get().nickname}]]
+								[[${maemulList.nickname}]]
 							</div>
 						</div>
 						<div class="y-st-btns">
 							<div class="y-st-q">
-								<a th:href="@{/details/miniHome/{nickname}(nickname=${maemulList.get().nickname})}" class="y-st-rr">
+								<a th:href="@{/details/miniHome/{nickname}(nickname=${maemulList.nickname})}" class="y-st-rr">
 									<span>프로필 보기</span>
 								</a>
 							</div>
@@ -418,7 +418,7 @@
 							<p>해당층/건물층</p>
 						</div>
 						<div class="y-list-content">
-							<p>[[${maemulList.get().floorNumber}]]층/[[${maemulList.get().totalFloors}]]층</p>
+							<p>[[${maemulList.floorNumber}]]층/[[${maemulList.totalFloors}]]층</p>
 						</div>
 					</li>
 					<li>
@@ -426,7 +426,7 @@
 							<p>전용/공급면적</p>
 						</div>
 						<div class="y-list-content">
-							<p>[[${maemulList.get().privateArea}]]㎡/[[${maemulList.get().supplyArea}]]㎡</p>
+							<p>[[${maemulList.privateArea}]]㎡/[[${maemulList.supplyArea}]]㎡</p>
 						</div>
 					</li>
 					<li>
@@ -434,7 +434,7 @@
 							<p>방 수/욕실 수</p>
 						</div>
 						<div class="y-list-content">
-							<p>[[${maemulList.get().numberOfRooms}]]개/[[${maemulList.get().numberOfBathrooms}]]개</p>
+							<p>[[${maemulList.numberOfRooms}]]개/[[${maemulList.numberOfBathrooms}]]개</p>
 						</div>
 					</li>
 					<li>
@@ -443,7 +443,7 @@
 						</div>
 						<div class="y-list-content y-yt">
 							<p>
-								[[${maemulList.get().direction}]]
+								[[${maemulList.direction}]]
 							</p>
 							<p class=" y-rjtlf">거실 기준</p>
 						</div>
@@ -453,7 +453,7 @@
 							<p>난방종류</p>
 						</div>
 						<div class="y-list-content">
-							<p>[[${maemulList.get().heatingType}]]</p>
+							<p>[[${maemulList.heatingType}]]</p>
 						</div>
 					</li>
 					<li>
@@ -461,16 +461,16 @@
 							<p>엘리베이터</p>
 						</div>
 						<div class="y-list-content">
-							<p th:if="${maemulList.get().elevator.contains('유')}">있음</p>
-							<p th:if="${maemulList.get().elevator.contains('무')}">있음</p>
+							<p th:if="${maemulList.elevator.contains('유')}">있음</p>
+							<p th:if="${maemulList.elevator.contains('무')}">있음</p>
 						</div>
 					</li>
-					<li th:if="${maemulList.get().totalParking != 0}">
+					<li th:if="${maemulList.totalParking != 0}">
 						<div class="y-list-title">
 							<p>총 주차대수</p>
 						</div>
 						<div class="y-list-content">
-							<p>총 [[${maemulList.get().totalParking}]]대</p>
+							<p>총 [[${maemulList.totalParking}]]대</p>
 						</div>
 					</li>
 					<li>
@@ -479,7 +479,7 @@
 						</div>
 						<div class="y-list-content">
 							<!-- <p>즉시 입주</p>-->
-							<p>[[${maemulList.get().availableMoveInDate}]]</p>
+							<p>[[${maemulList.availableMoveInDate}]]</p>
 						</div>
 					</li>
 					<li>
@@ -487,7 +487,7 @@
 							<p>건축물용도</p>
 						</div>
 						<div class="y-list-content">
-							<p>[[${maemulList.get().buildingUsage}]]</p>
+							<p>[[${maemulList.buildingUsage}]]</p>
 						</div>
 					</li>
 					<li>
@@ -495,7 +495,7 @@
 							<p>매물등록일</p>
 						</div>
 						<div class="y-list-content">
-							<td th:text="${#temporals.format(maemulList.get().createdAt, 'yyyy-MM-dd')}">yyyy-MM-dd</td>
+							<td th:text="${#temporals.format(maemulList.createdAt, 'yyyy-MM-dd')}">yyyy-MM-dd</td>
 						</div>
 					</li>
 				</ul>
@@ -510,14 +510,14 @@
 				<div class="y-info-header">
 					<p>옵션</p>
 				</div>
-				<div th:if="${maemulList == null or maemulList.get()?.optional == null or maemulList.get().optional.isEmpty()}"
+				<div th:if="${maemulList == null or maemulList?.optional == null or maemulList.optional.isEmpty()}"
 				     class="">
 					등록되어 있는 옵션이 없어요!
 				</div>
-				<ul th:if="${maemulList != null and maemulList.get().optional != null and not maemulList.get().optional.isEmpty()}"
+				<ul th:if="${maemulList != null and maemulList.optional != null and not maemulList.optional.isEmpty()}"
 				    class="y-lists y-option">
 					<!-- 벽걸이형 -->
-					<li th:if="${maemulList.get().optional.contains('벽걸이형')}">
+					<li th:if="${maemulList.optional.contains('벽걸이형')}">
 						<div class="y-z-option-list">
 							<div class="y-z-option-list2">
 								<svg width="48" height="48" viewbox="0 0 48 48" fill="none"
@@ -542,7 +542,7 @@
 					<!-- 벽걸이형 끝 -->
 
 					<!-- 침대 -->
-					<li th:if="${maemulList.get().optional.contains('침대')}">
+					<li th:if="${maemulList.optional.contains('침대')}">
 						<div class="y-z-option-list">
 							<div class="y-z-option-list2">
 								<svg width="48" height="48" viewbox="0 0 48 48" fill="none"
@@ -558,7 +558,7 @@
 					<!-- 침대 끝 -->
 
 					<!-- 책상 -->
-					<li th:if="${maemulList.get().optional.contains('책상')}">
+					<li th:if="${maemulList.optional.contains('책상')}">
 						<div class="y-z-option-list">
 							<div class="y-z-option-list2">
 								<svg width="48" height="48" viewbox="0 0 48 48" fill="none"
@@ -576,7 +576,7 @@
 					<!-- 책상 끝 -->
 
 					<!-- 옷장 -->
-					<li th:if="${maemulList.get().optional.contains('옷장')}">
+					<li th:if="${maemulList.optional.contains('옷장')}">
 						<div class="y-z-option-list">
 							<div class="y-z-option-list2">
 								<svg width="48" height="48" viewbox="0 0 48 48" fill="none"
@@ -593,7 +593,7 @@
 					<!-- 옷장 끝 -->
 
 					<!-- 식탁 -->
-					<li th:if="${maemulList.get().optional.contains('식탁')}">
+					<li th:if="${maemulList.optional.contains('식탁')}">
 						<div class="y-z-option-list">
 							<div class="y-z-option-list2">
 								<svg width="48" height="48" viewbox="0 0 48 48" fill="none"
@@ -609,7 +609,7 @@
 					<!-- 식탁 끝 -->
 
 					<!-- 소파 -->
-					<li th:if="${maemulList.get().optional.contains('소파')}">
+					<li th:if="${maemulList.optional.contains('소파')}">
 						<div class="y-z-option-list">
 							<div class="y-z-option-list2">
 								<svg width="48" height="48" viewbox="0 0 48 48" fill="none"
@@ -625,7 +625,7 @@
 					<!-- 소파 끝 -->
 
 					<!-- 천장형에어컨 -->
-					<li th:if="${maemulList.get().optional.contains('천장형에어컨')}">
+					<li th:if="${maemulList.optional.contains('천장형에어컨')}">
 						<div class="y-z-option-list">
 							<div class="y-z-option-list2">
 								<svg width="48" height="48" viewbox="0 0 48 48" fill="none"
@@ -654,7 +654,7 @@
 					<!-- 천장형에어컨 끝 -->
 
 					<!-- 무인택배함 -->
-					<li th:if="${maemulList.get().optional.contains('무인택배함')}">
+					<li th:if="${maemulList.optional.contains('무인택배함')}">
 						<div class="y-z-option-list">
 							<div class="y-z-option-list2">
 								<svg width="48" height="48" viewbox="0 0 48 48" fill="none"
@@ -674,7 +674,7 @@
 					<!-- 무인택배함 끝 -->
 
 					<!-- 비데 -->
-					<li th:if="${maemulList.get().optional.contains('비데')}">
+					<li th:if="${maemulList.optional.contains('비데')}">
 						<div class="y-z-option-list">
 							<div class="y-z-option-list2">
 								<svg width="48" height="48" viewbox="0 0 48 48" fill="none"
@@ -690,7 +690,7 @@
 					<!-- 비데 끝 -->
 
 					<!-- 신발장 -->
-					<li th:if="${maemulList.get().optional.contains('신발장')}">
+					<li th:if="${maemulList.optional.contains('신발장')}">
 						<div class="y-z-option-list">
 							<div class="y-z-option-list2">
 								<svg width="48" height="48" viewbox="0 0 48 48" fill="none"
@@ -706,7 +706,7 @@
 					<!-- 신발장 끝 -->
 
 					<!-- 냉장고 -->
-					<li th:if="${maemulList.get().optional.contains('냉장고')}">
+					<li th:if="${maemulList.optional.contains('냉장고')}">
 						<div class="y-z-option-list">
 							<div class="y-z-option-list2">
 								<svg width="48" height="48" viewbox="0 0 48 48" fill="none"
@@ -724,7 +724,7 @@
 					<!-- 냉장고 끝 -->
 
 					<!-- 세탁기 -->
-					<li th:if="${maemulList.get().optional.contains('세탁기')}">
+					<li th:if="${maemulList.optional.contains('세탁기')}">
 						<div class="y-z-option-list">
 							<div class="y-z-option-list2">
 								<svg width="48" height="48" viewbox="0 0 48 48" fill="none"
@@ -746,7 +746,7 @@
 					<!-- 세탁기 끝 -->
 
 					<!-- 샤워부스 -->
-					<li th:if="${maemulList.get().optional.contains('샤워부스')}">
+					<li th:if="${maemulList.optional.contains('샤워부스')}">
 						<div class="y-z-option-list">
 							<div class="y-z-option-list2">
 								<svg width="48" height="48" viewbox="0 0 48 48" fill="none"
@@ -772,7 +772,7 @@
 					<!-- 샤워부스 끝 -->
 
 					<!-- 싱크대 -->
-					<li th:if="${maemulList.get().optional.contains('싱크대')}">
+					<li th:if="${maemulList.optional.contains('싱크대')}">
 						<div class="y-z-option-list">
 							<div class="y-z-option-list2">
 								<svg width="48" height="48" viewbox="0 0 48 48" fill="none"
@@ -794,7 +794,7 @@
 					<!-- 싱크대 끝 -->
 
 					<!-- 인덕션 -->
-					<li th:if="${maemulList.get().optional.contains('인덕션')}">
+					<li th:if="${maemulList.optional.contains('인덕션')}">
 						<div class="y-z-option-list">
 							<div class="y-z-option-list2">
 								<svg width="48" height="48" viewbox="0 0 48 48" fill="none"
@@ -818,7 +818,7 @@
 					<!-- 인덕션 끝 -->
 
 					<!-- 전자레인지 -->
-					<li th:if="${maemulList.get().optional.contains('전자레인지')}">
+					<li th:if="${maemulList.optional.contains('전자레인지')}">
 						<div class="y-z-option-list">
 							<div class="y-z-option-list2">
 								<svg width="48" height="48" viewbox="0 0 48 48" fill="none"
@@ -839,7 +839,7 @@
 					<!-- 전자레인지 끝 -->
 
 					<!-- TV -->
-					<li th:if="${maemulList.get().optional.contains('TV')}">
+					<li th:if="${maemulList.optional.contains('TV')}">
 						<div class="y-z-option-list">
 							<div class="y-z-option-list2">
 								<svg width="48" height="48" viewbox="0 0 48 48" fill="none"
@@ -858,7 +858,7 @@
 					<!-- TV 끝 -->
 
 					<!-- 붙박이장 -->
-					<li th:if="${maemulList.get().optional.contains('붙박이장')}">
+					<li th:if="${maemulList.optional.contains('붙박이장')}">
 						<div class="y-z-option-list">
 							<div class="y-z-option-list2">
 								<svg width="48" height="48" viewbox="0 0 48 48" fill="none"
@@ -875,7 +875,7 @@
 					<!-- 붙박이장 끝 -->
 
 					<!-- 에어컨 -->
-					<li th:if="${maemulList.get().optional.contains('에어컨')}">
+					<li th:if="${maemulList.optional.contains('에어컨')}">
 						<div class="y-z-option-list">
 							<div class="y-z-option-list2">
 								<svg width="48" height="48" viewbox="0 0 48 48" fill="none"
@@ -906,15 +906,15 @@
 				<div class="y-info-header">
 					<p>보안/안전시설</p>
 				</div>
-				<div th:if="${maemulList == null or maemulList.get()?.security == null or maemulList.get().security.isEmpty()}"
+				<div th:if="${maemulList == null or maemulList?.security == null or maemulList.security.isEmpty()}"
 				     class="">
 					등록되어 있는 보안/안전시설이 없어요!
 				</div>
-				<ul th:if="${maemulList != null and maemulList.get().security != null and not maemulList.get().security.isEmpty()}"
+				<ul th:if="${maemulList != null and maemulList.security != null and not maemulList.security.isEmpty()}"
 				    class="y-lists y-option">
 
 					<!-- 현관보안 -->
-					<li th:if="${maemulList.get().security.contains('현관보안')}">
+					<li th:if="${maemulList.security.contains('현관보안')}">
 						<div class="y-z-option-list">
 							<div class="y-z-option-list2">
 								<svg width="48" height="48" viewbox="0 0 48 48" fill="none"
@@ -945,7 +945,7 @@
 					<!-- 현관보안 끝 -->
 
 					<!-- CCTV -->
-					<li th:if="${maemulList.get().security.contains('CCTV')}">
+					<li th:if="${maemulList.security.contains('CCTV')}">
 						<div class="y-z-option-list">
 							<div class="y-z-option-list2">
 								<svg width="48" height="48" viewbox="0 0 48 48" fill="none"
@@ -966,7 +966,7 @@
 					<!-- CCTV 끝 -->
 
 					<!-- 방범창 -->
-					<li th:if="${maemulList.get().security.contains('방범창')}">
+					<li th:if="${maemulList.security.contains('방범창')}">
 						<div class="y-z-option-list">
 							<div class="y-z-option-list2">
 								<svg width="48" height="48" viewbox="0 0 48 48" fill="none"
@@ -982,7 +982,7 @@
 					<!-- 방범창 끝 -->
 
 					<!-- 경비원 -->
-					<li th:if="${maemulList.get().security.contains('경비원')}">
+					<li th:if="${maemulList.security.contains('경비원')}">
 						<div class="y-z-option-list">
 							<div class="y-z-option-list2">
 								<svg width="48" height="48" viewbox="0 0 48 48" fill="none"
@@ -1006,7 +1006,7 @@
 					<!-- 경비원 끝 -->
 
 					<!-- 화재경보기 -->
-					<li th:if="${maemulList.get().security.contains('화재경보기')}">
+					<li th:if="${maemulList.security.contains('화재경보기')}">
 						<div class="y-z-option-list">
 							<div class="y-z-option-list2">
 								<svg width="48" height="48" viewbox="0 0 48 48" fill="none"
@@ -1031,7 +1031,7 @@
 					<!-- 화재경보기 끝 -->
 
 					<!-- 비디오폰 -->
-					<li th:if="${maemulList.get().security.contains('비디오폰')}">
+					<li th:if="${maemulList.security.contains('비디오폰')}">
 						<div class="y-z-option-list">
 							<div class="y-z-option-list2">
 								<svg width="48" height="48" viewbox="0 0 48 48" fill="none"
@@ -1058,7 +1058,7 @@
 					<!-- 비디오폰 끝 -->
 
 					<!-- 인터폰 -->
-					<li th:if="${maemulList.get().security.contains('인터폰')}">
+					<li th:if="${maemulList.security.contains('인터폰')}">
 						<div class="y-z-option-list">
 							<div class="y-z-option-list2">
 								<svg width="48" height="48" viewbox="0 0 48 48" fill="none"
@@ -1084,7 +1084,7 @@
 					<!-- 인터폰 끝 -->
 
 					<!-- 카드키 -->
-					<li th:if="${maemulList.get().security.contains('카드키')}">
+					<li th:if="${maemulList.security.contains('카드키')}">
 						<div class="y-z-option-list">
 							<div class="y-z-option-list2">
 								<svg width="48" height="48" viewbox="0 0 48 48" fill="none"
@@ -1109,7 +1109,7 @@
 					<!-- 카드키 끝 -->
 
 					<!-- 사설경비 -->
-					<li th:if="${maemulList.get().security.contains('사설경비')}">
+					<li th:if="${maemulList.security.contains('사설경비')}">
 						<div class="y-z-option-list">
 							<div class="y-z-option-list2">
 								<svg width="48" height="48" viewbox="0 0 48 48" fill="none"
@@ -1128,7 +1128,7 @@
 					<!-- 사설경비 끝 -->
 
 					<!-- 전자도어락 -->
-					<li th:if="${maemulList.get().security.contains('전자도어락')}">
+					<li th:if="${maemulList.security.contains('전자도어락')}">
 						<div class="y-z-option-list">
 							<div class="y-z-option-list2">
 								<svg width="48" height="48" viewbox="0 0 48 48" fill="none"
@@ -1161,7 +1161,7 @@
 					<p>위치 및 주변 시설</p>
 				</div>
 				<div class="y-ar-title">
-					<p>위치 : [[${maemulList.get().address}]]</p>
+					<p>위치 : [[${maemulList.address}]]</p>
 				</div>
 				<!--			<div class="y-map" id="map"></div>-->
 				<div class="map_wrap">
@@ -1326,9 +1326,9 @@
 				<div class="y-text-cont">
                     <pre>
 <p>
-<strong>[[${maemulList.get().title}]]</strong>
+<strong>[[${maemulList.title}]]</strong>
 
-[[${maemulList.get().content}]]
+[[${maemulList.content}]]
 </p>
                     </pre>
 				</div>
@@ -1395,7 +1395,7 @@
 	        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9a3ebc8549eeffd6c970f997b9f91c0c&libraries=services"></script>
 	<script th:inline="javascript">
 		/*<![CDATA[*/
-		var maemulList = [[${maemulList.get()}]]
+		var maemulList = [[${maemulList}]]
 		/*]]>*/</script>
 	<script type="text/javascript" th:src="@{/js/details/details_map.js}"></script>
 </body>

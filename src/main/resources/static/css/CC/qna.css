@@ -12,11 +12,18 @@
     #notice-box{
     height : 100px;
     background : #f8f8f8;
-    width : 90%;
+    width : 95%;
     margin: auto;
     margin-top: 105px;
     margin-bottom: 10px;
     border: 1px solid #ddd;
+    }
+    .a_infoP{
+        padding: 0px 15px 0px 15px;
+    }
+    hr{
+        width: 95%;
+            margin-top: 31px
     }
 
 
@@ -41,7 +48,7 @@
 
     .qna-tb{
     border-collapse: collapse;
-    width:90%;
+    width:95%;
     margin:auto;
     margin-top: 30px;
     }
@@ -57,8 +64,21 @@
     }
 
     #title{
-    height: 30px;
-    width : 90%;
+   height: 30px;
+       width: 90%;
+       border: 1px solid lightgray;
+    }
+
+    select{
+    height: 32px;
+        width: 9%;
+        border: 1px solid lightgray;
+    }
+
+    textarea{
+    height: 200px;
+        width: 95%;
+        border: 1px solid lightgray;
     }
 
     .boldtext{

@@ -15,7 +15,7 @@
 .oInfo-top {
     display: flex;
     justify-content: center;
-    height: 250px;
+    height: 296px;
     padding: 30px 0;
     background-color: #fafafa;
 }
@@ -24,8 +24,9 @@
     display: flex;
     justify-content: space-between;
     margin: 30px 0px;
+    height:200px;
 }
-.oInfo-left {
+.aThumMem {
    display: flex;
 }
 .oInfoMember {
@@ -47,6 +48,30 @@
 #oInfoMemberEmail {
    font-size: 15px;
    font-weight:bold;
+}
+.aAddPic{
+    margin-top: 9px;
+        margin-left: 7px;
+        border: 1px solid #d9d9d9;
+        background-color: transparent;
+        height: 31px;
+        width: 139px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+}
+.aAddPicImg{
+    width: 14px;
+        opacity: 48%;
+}
+.aAddPicImg2{
+    width:14px;
+}
+.aAddPicP{
+    color: #4a4a4a;
+        margin-left: 8px;
+        font-size: 14px;
+        margin-bottom: 0px;
 }
 .oMaemulCnt {
     text-align: center;
@@ -75,28 +100,42 @@
     margin: 0 auto;
 }
 .oMaemul-c-inner {
-    padding: 40px 0px 50px;
-}
-.oMeamulTitleContainer {
     display: flex;
     justify-content: space-between;
-    border-bottom: 2px solid black;
-    margin-bottom: 20px;
-    padding: 0px 0px 10px;
+    align-items: center;
+    padding: 50px 0px;
 }
-.oMeamulTabLeft {
-    font-size: 17px;
+.o-tab-c {
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid black;
+    padding: 0px 0px 10px;
+    width: 100%;
+}
+.o-tab-l {
+    font-size: 18px;
+    margin-right: 10px;
+}
+.o-tab-r {
+    margin-left: auto;
 }
 .o-mm-link {
     font-weight: 700;
-    border: none;
     background-color: white;
+    text-decoration: none;
 }
 #o-allView {
-    background-color: #26abed;
-    color: white;
-    padding: 5px 8px;
-    font-size: 15px;
+    width: 101px;
+        background-color: #26abed;
+        color: white;
+        padding: 5px 8px;
+        font-size: 14px;
+        display: flex;
+        height: 29px;
+        justify-content: space-between;
+}
+.aSeeAll{
+    margin-right: 4px;
 }
 .oUpdateLinkBtn{
     width: 150px;
@@ -111,15 +150,35 @@
 #o-recent-link {
     color: #999999;
 }
+#o-division {
+    margin: 0px 15px;
+    color: #222222;
+    font-weight: 300;
+}
 .oInfo-right {
     height: 100%;
 }
 .oMaemulCnt-inner {
     display:flex;
-    height: 100%;
 }
 .oMaemulCnt-inner > .oMaemulCnt:first-child {
     border-right: none;
+}
+.a_myInEditAndServiceInfoBtn{
+   display: flex;
+       justify-content: space-between;
+}
+.a_Btns{
+    display: flex;
+        text-align: center;
+        height: 31px;
+        margin-top: 10px;
+        color: white;
+        width: 49%;
+        background-color: #2aa1dc;
+        align-items: center;
+        justify-content: center;
+            text-decoration: none;
 }
 .oMaemulContainer {
     display: flex;
@@ -128,6 +187,17 @@
 .myImg {
     width: 150px;
 }
+#o-noCnt {
+    height: 200px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #222222;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
 
 /*oMyInfoUpdate css*/
 .form-floating {
@@ -197,10 +267,11 @@
 .ofindResult {
     display: block;
     text-align: center;
-    text-weight: 700;
+    font-weight: 600;
     color: red;
     font-size: 14px;
     margin-top: 20px;
+    width: 350px;
 }
 /* 이메일 비밀번호 찾기 타이틀 */
 .o-find-subTitle {
@@ -333,7 +404,8 @@
 }
 
 .z-img-wrap,
-.z-img {
+.z-img,
+.z-img-wrap img {
 	width: 300px;
 	height: 191.25px;
 }
