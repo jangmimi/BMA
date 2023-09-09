@@ -116,10 +116,6 @@ function createMarker(position, markerContent, responseData) {
     }
 }
 
-// 맵 최초 로드시 마커 생성 해주는 함수
-var onlyOneStart = false; // 한 번만 실행하기 위한 변수
-// 맵 로드가 완료되면 실행
-
 /* 거래유형 옵션 */
 var tradeType = [];
 
@@ -268,6 +264,9 @@ $('input[name="rentalCount"]').on('change', function () {
 });
 
 
+// 맵 최초 로드시 마커 생성 해주는 함수
+var onlyOneStart = false; // 한 번만 실행하기 위한 변수
+// 맵 로드가 완료되면 실행
 kakao.maps.event.addListener(map, 'tilesloaded', function () {
     // 이미 실행된 경우 함수 종료
     if (onlyOneStart) {
@@ -342,7 +341,7 @@ kakao.maps.event.addListener(map, 'tilesloaded', function () {
 kakao.maps.event.addListener(map, 'idle', function () {
     // 행정동 오버레이 초기화
     clearHJDOverlays();
-    // 마커 초기화
+    // 마커 오버레이 초기화
     closeOtherOverlays();
     // 사이드바 초기화
     clearSidebar();
@@ -807,13 +806,6 @@ function showValue(value) {
 
 /** 필터 라디오버튼 클릭시 실시간 통신 */
 function sendToServer() {
-    // 행정동 오버레이 초기화
-    clearHJDOverlays();
-    // 마커 초기화
-    closeOtherOverlays();
-    // 사이드바 초기화
-    clearSidebar();
-
     var tradeTypeString = tradeType.join(",");
     var directionString = direction.join(",");
 
@@ -848,8 +840,25 @@ function sendToServer() {
         data: data,
         success: function(response) {
             if (response.maenulList) {
-                response.maenulList.forEach(function (maemul) {
 
+                clusterer.clear();
+                for (var key in existingMarkers) {
+                    if (existingMarkers.hasOwnProperty(key)) {
+                        var marker = existingMarkers[key];
+                        if (marker.overlay) {
+                            marker.overlay.setMap(null);
+                        }
+                    }
+                }
+                existingMarkers = {};
+
+                response.maenulList.forEach(function (maemul) {
+                    // 행정동 오버레이 초기화
+                    clearHJDOverlays();
+                    // 마커 오버레이 초기화
+                    closeOtherOverlays();
+                    // 사이드바 초기화
+                    clearSidebar();
                     var markerPosition = new kakao.maps.LatLng(maemul.latitude, maemul.longitude);
                     var markerKey = markerPosition.toString();
                     var markerContent = "<div class='e-marker'>" +
