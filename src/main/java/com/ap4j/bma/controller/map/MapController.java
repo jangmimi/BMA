@@ -98,7 +98,8 @@ public class MapController {
 
     public ResponseEntity<Map<String, Object>> map2(HttpSession session, Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng, Integer zoomLevel, String address, String tradeType
                                                     ,Integer numberOfRooms, Integer numberOfBathrooms, Integer floorNumber, Integer managementFee, String Elevator
-                                                    ,String direction, String Parking, String shortTermRental,  String keyword, String value){
+                                                    ,String direction, String Parking, String shortTermRental,  String keyword, String value, Integer rowSellingPrice, Integer highSellingPrice
+                                                    , Integer rowDepositForLease, Integer highDepositForLease, Integer rowMonthlyForRent, Integer highMonthlyForRent,  Double minPrivateArea, Double maxPrivateArea){
         System.out.println("컨트롤러 address " + address);
         System.out.println("컨트롤러 value = " + value);
         Map<String, Object> responseData = new HashMap<>();
@@ -122,7 +123,8 @@ public class MapController {
 
         // 화면 좌표값에 따른 마커
         List<MaeMulRegDTO> maemulList = maemulRegService.findMaemulListBounds(southWestLat, southWestLng, northEastLat, northEastLng, tradeType
-                , numberOfRooms, numberOfBathrooms, floorNumber, managementFee, Elevator, direction, Parking, shortTermRental, keyword);
+                , numberOfRooms, numberOfBathrooms, floorNumber, managementFee, Elevator, direction, Parking, shortTermRental, keyword, rowSellingPrice, highSellingPrice
+                , rowDepositForLease, highDepositForLease, rowMonthlyForRent, highMonthlyForRent, minPrivateArea, maxPrivateArea);
         responseData.put("maenulList", maemulList);
 
         // 마커 클릭시 해당 주소의 매물 리스트 가져오기
