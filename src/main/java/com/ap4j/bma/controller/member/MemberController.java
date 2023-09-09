@@ -116,7 +116,6 @@ public class MemberController {
     @RequestMapping("/qLogout")
     public String qLogout(SessionStatus sessionStatus, HttpSession session) {
         qMemberService.logout(sessionStatus, session);
-
         return "redirect:/";
     }
 
@@ -124,15 +123,11 @@ public class MemberController {
     @PostMapping("/qLoginBasic")
     public String qBasicLogin(@ModelAttribute MemberDTO memberDTO,
                               @RequestParam(required = false) boolean oSaveId,
-                              Model model, HttpSession session, HttpServletResponse response,
-                              RedirectAttributes redirectAttributes) {
-        log.info("MemberController - qBasicLogin() 실행");
-        log.info("memberDTO : " + memberDTO);
+                              Model model, HttpSession session, HttpServletResponse response) {
         MemberDTO loginMember = qMemberService.login(memberDTO);
 
         if(loginMember != null && !loginMember.getMember_leave()) {
             session.setAttribute("errorMsg", null);
-            log.info(loginMember.toString());
             log.info("로그인 성공");
 
             loginMember.toEntity();
@@ -153,8 +148,6 @@ public class MemberController {
 
         } else {
             model.addAttribute("errorMsg","이메일 또는 패스워드를 다시 확인해주세요.");
-//            redirectAttributes.addFlashAttribute("rememberedEmail", memberDTO.getEmail());
-//            redirectAttributes.addFlashAttribute("oSaveId", oSaveId);
             return "userView/oLoginForm";
         }
     }
@@ -162,7 +155,6 @@ public class MemberController {
     /** 기본 회원가입 폼 */
     @RequestMapping("/qJoinForm")
     public String qJoinForm(HttpSession session) {
-
         if(loginStatus(session)) {
             return "userView/loginAlready";
         }
@@ -172,12 +164,8 @@ public class MemberController {
     /** 기본 회원가입 */
     @PostMapping("/qJoinBasic")
     public String qJoinBasic(@ModelAttribute MemberDTO memberDTO, HttpSession session) {
-        log.info("MemberController - qJoinBasic() 실행");
         if(loginStatus(session)) { return "userView/loginAlready"; }
-
-        log.info("회원가입 memberDTO : " + memberDTO);
         memberDTO.setRoot(1);
-
         qMemberService.joinBasic(memberDTO);
         return "redirect:/member/qLoginForm";
     }

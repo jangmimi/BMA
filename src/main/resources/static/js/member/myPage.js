@@ -54,6 +54,7 @@ $(document).ready(function() {
            var password = $('#pwdLeave').val();
            if(password === null || password === '') {
                 alert('비밀번호를 입력해주세요.');
+                return;
            }
            // AJAX를 사용하여 비밀번호를 컨트롤러로 전송
            $.ajax({
@@ -68,7 +69,6 @@ $(document).ready(function() {
                        window.location.href = '/';
                    } else {
                        alert('아이디 또는 비밀번호를 다시 확인해주세요.');
-                       window.location.href=window.location.href;
                    }
                },
                error: function() {
@@ -78,14 +78,9 @@ $(document).ready(function() {
            // 모달 창 닫기
            $('#pwdCheckModal').modal('hide');
        });
-   });
 
-    // SNS계정회원 탈퇴 submit 전 확인 취소
-    function oDeleteCheck() {
-        let answer = confirm('정말 탈퇴하시겠습니까?');
-        if(answer) { return true; }
-        else { return false; }
-    }
+
+   });
 
    // 비밀번호 임시메일 발송
     $("#checkEmail").click(function () {
@@ -179,6 +174,12 @@ function oUpdateCheck() {
     }
     let confirmUpdate = confirm('입력한 정보로 수정하시겠습니까?');
     if(!confirmUpdate) return false;
+}
+
+// SNS계정회원 탈퇴 submit 전 확인 취소
+function oDeleteCheck() {
+   let answer = confirm('정말 탈퇴하시겠습니까?');
+   return answer;
 }
 
 // oFindMemberInfo.html

@@ -177,7 +177,7 @@ function oJoinCheck() {
         errorMessage = '연락처 형식으로 입력해주세요.';
     } else if(checkedboxes.length !== $(".oMustAgree").length) {
         errorMessage = '필수항목을 모두 체크해주세요.';
-    } else if(emailCheckOk == '중복검사' || '사용불가' ||
+    } else if(emailCheckOk == '중복검사' || emailCheckOk == '사용불가' ||
                 nicknameCheckOk == '중복검사'|| nicknameCheckOk == '사용불가' ) {
         errorMessage = '중복체크를 확인해주세요.';
     }
