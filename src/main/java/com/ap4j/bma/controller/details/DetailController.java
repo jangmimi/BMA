@@ -50,7 +50,7 @@ public class DetailController {
 		MaemulRegEntity maemul = maemulRegRepository.findById(id).orElse(null);
 
 		// 로그인 한 회원일 경우에만 최근 본 매물 테이블에 등록.
-		if(nickname != null) {
+		if(nickname != null && !nickname.equals("null")) {
 			recentService.recentCheck(id, nickname);
 		}
 
