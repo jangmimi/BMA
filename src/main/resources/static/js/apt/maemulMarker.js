@@ -263,6 +263,50 @@ $('input[name="rentalCount"]').on('change', function () {
     sendToServer();
 });
 
+/* 매매가 옵션 */
+var maemaeStart;
+var maemaeEnd;
+$(".searchMaemaeButton").click(function() {
+
+    maemaeStart = $("input[name='maemaeStart']").val();
+    maemaeEnd = $("input[name='maemaeEnd']").val();
+
+    sendToServer();
+
+    maemaeStart = null;
+    maemaeEnd = null;
+
+});
+
+/* 전세가 옵션 */
+var jeonseStart;
+var jeonseEnd;
+$(".searchJeonseButton").click(function() {
+
+    var jeonseStart = $("input[name='jeonseStart']").val();
+    var jeonseEnd = $("input[name='jeonseEnd']").val();
+
+    sendToServer();
+
+    jeonseStart = null;
+    jeonseEnd = null;
+
+});
+
+/* 보증금 옵션 */
+var bozugStart;
+var bozugEnd;
+$(".searchBozugButton").click(function() {
+
+    var bozugStart = $("input[name='bozugStart']").val();
+    var bozugEnd = $("input[name='bozugEnd']").val();
+
+    sendToServer();
+
+    bozugStart = null;
+    bozugEnd = null;
+
+});
 
 // 맵 최초 로드시 마커 생성 해주는 함수
 var onlyOneStart = false; // 한 번만 실행하기 위한 변수
@@ -300,7 +344,11 @@ kakao.maps.event.addListener(map, 'tilesloaded', function () {
         direction: directionString,
         Parking: parking,
         shortTermRental: rental,
-        keyword: keyword
+        keyword: keyword,
+        rowSellingPrice: maemaeStart,
+        highSellingPrice: maemaeEnd,
+        rowDepositForLease: jeonseStart,
+        highDepositForLease: jeonseEnd
 
     };
 
@@ -369,7 +417,11 @@ kakao.maps.event.addListener(map, 'idle', function () {
         direction: directionString,
         Parking: parking,
         shortTermRental: rental,
-        keyword: keyword
+        keyword: keyword,
+        rowSellingPrice: maemaeStart,
+        highSellingPrice: maemaeEnd,
+        rowDepositForLease: jeonseStart,
+        highDepositForLease: jeonseEnd
     };
 
     var likedBoolean = true;
@@ -850,7 +902,11 @@ function sendToServer() {
         direction: directionString,
         Parking: parking,
         shortTermRental: rental,
-        keyword: keyword
+        keyword: keyword,
+        rowSellingPrice: maemaeStart,
+        highSellingPrice: maemaeEnd,
+        rowDepositForLease: jeonseStart,
+        highDepositForLease: jeonseEnd
     };
 
     $.ajax({

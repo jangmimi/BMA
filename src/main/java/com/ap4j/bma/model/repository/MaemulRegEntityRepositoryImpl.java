@@ -21,7 +21,7 @@ public class MaemulRegEntityRepositoryImpl implements MaemulRepositoryCustom{
     @Override
     public List<MaemulRegEntity> findMaemulListBounds(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng, String tradeTypes
             , Integer numberOfRooms, Integer numberOfBathrooms, Integer floorNumber, Integer managementFee, String Elevator, String direction, String Parking
-            , String shortTermRental, String keyword) {
+            , String shortTermRental, String keyword, Integer rowSellingPrice, Integer highSellingPrice, Integer rowDepositForLease, Integer highDepositForLease) {
 
         BooleanExpression tradeTypeCondition = null;        // 거래종류
         BooleanExpression roomCountCondition = null;        // 방개수
@@ -33,7 +33,10 @@ public class MaemulRegEntityRepositoryImpl implements MaemulRepositoryCustom{
         BooleanExpression parkingCondition = null;          // 주차가능
         BooleanExpression rentalCondition = null;          // 단기임대
         BooleanExpression keywordCondition = null;          // 키워드
-
+        BooleanExpression maemulStartCondition = null;          // 매매 시작값
+        BooleanExpression maemulEndCondition = null;          // 매매 끝값
+        BooleanExpression jeonseStartCondition = null;          // 전세 시작값
+        BooleanExpression jeonseEndCondition = null;          // 전세 끝값
         /* 거래종류 필터 */
         if (!StringUtils.isEmpty(tradeTypes)) {
             // tradeTypes 문자열을 쉼표로 분리하여 배열로 변환
@@ -145,6 +148,26 @@ public class MaemulRegEntityRepositoryImpl implements MaemulRepositoryCustom{
                     .or(maemulRegEntity.address.like("%" + keyword + "%"));
         }
 
+        /* 매매가 시작 값이 음수이거나 없을 때 */
+        if(rowSellingPrice != null && rowSellingPrice >= 0){
+            maemulStartCondition = maemulRegEntity.SellingPrice.goe(rowSellingPrice);
+        }
+
+        /* 매매가 끝 값이 음수이거나 없을 때 */
+        if(highSellingPrice != null && highSellingPrice >= 0){
+            maemulEndCondition = maemulRegEntity.SellingPrice.loe(highSellingPrice);
+        }
+
+        /* 전세가 시작 값이 음수이거나 없을 때 */
+        if(rowDepositForLease != null && rowDepositForLease >= 0){
+            jeonseStartCondition = maemulRegEntity.depositForLease.goe(rowDepositForLease);
+        }
+
+        /* 전세가 끝 값이 음수이거나 없을 때 */
+        if(highDepositForLease != null && highDepositForLease >= 0){
+            jeonseEndCondition = maemulRegEntity.depositForLease.loe(highDepositForLease);
+        }
+
         return queryFactory
                 .selectFrom(maemulRegEntity)
                 .where(
@@ -161,7 +184,11 @@ public class MaemulRegEntityRepositoryImpl implements MaemulRepositoryCustom{
                         directionCondition,
                         parkingCondition,
                         rentalCondition,
-                        keywordCondition
+                        keywordCondition,
+                        maemulStartCondition,
+                        maemulEndCondition,
+                        jeonseStartCondition,
+                        jeonseEndCondition
                 )
                 .fetch();
     }
