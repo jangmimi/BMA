@@ -1,5 +1,4 @@
 package com.ap4j.bma.controller.member;
-// pjm - use m o p q
 import com.ap4j.bma.config.PasswordEncoderConfig;
 import com.ap4j.bma.model.entity.customerCenter.QnAEntity;
 import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
@@ -236,7 +235,6 @@ public class MemberController {
         /* 매물목록으로 테스트중*/
         List<MaemulRegEntity> mRecentList = qMemberService.getListByNickname(loginMember.getNickname());
         model.addAttribute("mRecentList",mRecentList);
-        /**/
 
         model.addAttribute("root", root);
         model.addAttribute("thumbnail_image", thumImg);
