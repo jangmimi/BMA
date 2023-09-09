@@ -291,8 +291,6 @@ kakao.maps.event.addListener(map, 'tilesloaded', function () {
         success: function (response) {
             loginMember = response.loginMember;
             likedEntityList = response.likedEntityList;
-            console.log("loginMember:", loginMember);
-            console.log("likedEntityList:", likedEntityList);
 
             if(response.maenulList) {
                response.maenulList.forEach(function (maemul) {
@@ -491,15 +489,15 @@ function updateSidebar(responseData) {
         }
         if (monthlyForRentSliceUk != null) {
             if (monthlyForRentSliceMan.charAt(0) != '0') {
-                monthlyForRent = "월세 " + monthlyForRentSliceUk + "억 " + monthlyForRentSliceMan + "/";
+                monthlyForRent = "월세 " + monthlyForRentSliceUk + "억 " + monthlyForRentSliceMan + " / ";
             } else {
-                monthlyForRent = "월세 " + monthlyForRentSliceUk + "억/";
+                monthlyForRent = "월세 " + monthlyForRentSliceUk + "억 / ";
             }
         } else {
-            monthlyForRent = "월세 " + monthlyForRentSliceMan + "/";
+            monthlyForRent = "월세 " + monthlyForRentSliceMan + " / ";
         }
         // 월세
-        var monthlyRent = maemul.monthlyRent + "만원"; // 이 변수 사용하면됨
+        var monthlyRent = maemul.monthlyRent; // 이 변수 사용하면됨
 
 
         // 전세
@@ -614,6 +612,9 @@ function updateSidebar(responseData) {
 
         // 로그인 시 관심매물에 등록된 데이터와 비교해서 하트색상 결정
         if(likedEntityList != null && likedEntityList.length > 0) {
+            // 해당 회원 관심매물 갯수 카운팅
+            likedCount(likedEntityList);
+
             likedEntityList.forEach(function (liked) {
 
                 if(liked.maemul_id === maemul.id) {
@@ -648,32 +649,50 @@ $(document).on("click", ".aHeartBtn", function() {
     if (loginMember != null) {
         var $heartButton = $(this); // 클릭한 버튼을 변수에 저장
         var maemulId = $heartButton.closest("li").find("a").attr("href").split("/").pop();
-
         $.ajax({
             url: "/member/qLiked", //
             type: "POST", //
             data: { maemulId: maemulId }, //
             success: function(response) {
-                console.log("Ajax 요청 성공");
                 console.log("매물 아이디" + maemulId);
+                // 버튼 상태 변경
+                if ($heartButton.attr("data-isButton") === "true") {
+                    $heartButton.attr("data-isButton", "false");
+                    $heartButton.find("img").attr("src", "/img/mapDetailAndAPTList/aHeartBtn2.png");
+                } else if ($heartButton.attr("data-isButton") === "false") {
+                    $heartButton.attr("data-isButton", "true");
+                    $heartButton.find("img").attr("src", "/img/mapDetailAndAPTList/aHeartBtn.png");
+                }
 
-                 // 버튼 상태 변경
-                 if ($heartButton.attr("data-isButton") === "true") {
-                     $heartButton.attr("data-isButton", "false");
-                     $heartButton.find("img").attr("src", "/img/mapDetailAndAPTList/aHeartBtn2.png");
-                 } else if ($heartButton.attr("data-isButton") === "false") {
-                     $heartButton.attr("data-isButton", "true");
-                     $heartButton.find("img").attr("src", "/img/mapDetailAndAPTList/aHeartBtn.png");
-                 }
-                 console.log($heartButton.attr("data-isButton"));
+                // 관심매물 갯수 최신화
+                var bounds = map.getBounds();
+                var southWest = bounds.getSouthWest();
+                var northEast = bounds.getNorthEast();
+                var currentZoomLevel = map.getLevel(); // 현재 줌 레벨 가져오기
+                var dataToSend = {
+                    southWestLat: southWest.getLat(),
+                    southWestLng: southWest.getLng(),
+                    northEastLat: northEast.getLat(),
+                    northEastLng: northEast.getLng(),
+                    zoomLevel: currentZoomLevel
+                }
+                $.ajax({
+                    url: "/map/map",
+                    type: "POST",
+                    data: dataToSend,
+                    success: function(response) {
+                        likedEntityList = response.likedEntityList;
+                        likedCount(likedEntityList); // 관심매물 갯수 카운팅
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Ajax 요청 실패: " + error);
+                    }
+                });
             },
             error: function(xhr, status, error) {
                 console.error("Ajax 요청 실패: " + error);
             }
         });
-
-
-
     } else {
         alert("로그인 후 다시 시도해주세요.")
     }
@@ -734,4 +753,10 @@ function checkEnter(event) {
             }
         });
     }
+}
+
+function likedCount(likedEntityList) {
+    var favorityCountElement = document.getElementById("rFavorityCount");
+    var newFavorityCount = likedEntityList.length;
+    favorityCountElement.textContent = newFavorityCount;
 }
