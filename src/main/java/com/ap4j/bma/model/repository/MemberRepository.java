@@ -22,4 +22,7 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {   
     Optional<MemberEntity> findByNameAndTel(String name, String tel);   // email 찾기
     Optional<MemberEntity> findByEmailAndTel(String email, String tel);   // pwd 찾기
 
+    Optional<MemberEntity> findByNickname(String nickname); // 닉네임 찾기
+
+
 }

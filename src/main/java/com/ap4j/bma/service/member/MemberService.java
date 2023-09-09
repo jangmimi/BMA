@@ -5,7 +5,6 @@ import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 
 import javax.servlet.http.HttpSession;

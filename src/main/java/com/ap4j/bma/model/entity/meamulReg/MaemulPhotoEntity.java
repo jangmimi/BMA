@@ -1,6 +1,8 @@
 package com.ap4j.bma.model.entity.meamulReg;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 

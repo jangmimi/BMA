@@ -1,11 +1,8 @@
 package com.ap4j.bma.model.entity.customerCenter;
 
-import com.ap4j.bma.model.entity.community.CommunityEntity;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter

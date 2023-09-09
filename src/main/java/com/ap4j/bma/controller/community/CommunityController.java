@@ -2,9 +2,7 @@ package com.ap4j.bma.controller.community;
 
 import com.ap4j.bma.model.entity.community.CommunityCommentEntity;
 import com.ap4j.bma.model.entity.community.CommunityEntity;
-
 import com.ap4j.bma.model.entity.member.MemberDTO;
-
 import com.ap4j.bma.model.repository.CommunityRepository;
 import com.ap4j.bma.service.community.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
