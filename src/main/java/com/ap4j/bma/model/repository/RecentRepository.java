@@ -16,5 +16,16 @@ public interface RecentRepository extends JpaRepository<RecentEntity, String> {
 
 	boolean existsByMaemulEntityAndMemberEntity_Nickname(MaemulRegEntity maemulEntity, String nickname);
 
+	@Query("SELECT r.maemulEntity FROM RecentEntity r WHERE r.memberEntity.nickname = :nickname")
+	Page<MaemulRegEntity> findMaemulEntitiesByMemberNickname(String nickname, Pageable pageable);
+
+	Long countByMemberEntity_Nickname(String nickname);
+
+	@Query("SELECT r.maemulEntity FROM RecentEntity r WHERE r.memberEntity.nickname = :nickname " +
+			"AND (r.maemulEntity.address LIKE %:keyword% OR r.maemulEntity.tradeType LIKE %:keyword%)")
+	Page<MaemulRegEntity> findMaemulEntitiesByMemberNicknameAndKeyword(String nickname, String keyword, Pageable pageable);
+
+	Long countByMemberEntity_NicknameAndMaemulEntity_AddressContainingOrMaemulEntity_TradeTypeContaining(
+			String nickname,String addressKeyword, String tradeTypeKeyword);
 
 }
