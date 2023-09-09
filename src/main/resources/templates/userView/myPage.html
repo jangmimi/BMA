@@ -159,7 +159,7 @@
                             <div class="z-bottom-container">
                                 <div class="z-bottom-wrap">
                                     <!-- 매물 시작 (통으로 링크) -->
-                                    <a th:each="testList, iterStat : ${testList}" th:href="@{/details/{id}(id=${testList.id})}">
+                                    <a th:each="mRecentList, iterStat : ${mRecentList}" th:href="@{/details/{id}(id=${mRecentList.id})}">
                                         <div class="s-mamulbox">
                                             <div class="s-mamul-img">
                                                 <img src="/img/details/apt.jpeg" alt="이미지">
@@ -167,28 +167,28 @@
                                             <div class="s-mamul-text">
                                                 <div class="s-mamul-text-wrap">
                                                     <div class="s-mamul-text-title">
-                                                        <span th:if="${testList.tradeType == '매매'}"
-                                                              th:with="sp_djr=${testList.sellingPrice / 10000}, sp_aks=${testList.sellingPrice % 10000}"
+                                                        <span th:if="${mRecentList.tradeType == '매매'}"
+                                                              th:with="sp_djr=${mRecentList.sellingPrice / 10000}, sp_aks=${mRecentList.sellingPrice % 10000}"
                                                               th:text="${'매매 ' + #strings.concat(sp_djr > 0 ? sp_djr + '억 ' : '', sp_aks > 0 ? sp_aks + '만원' : '')}">
                                                         </span>
-                                                        <span th:if="${testList.tradeType == '전세'}"
-                                                              th:with="dp_djr=${testList.depositForLease / 10000}, dp_aks=${testList.depositForLease % 10000}"
+                                                        <span th:if="${mRecentList.tradeType == '전세'}"
+                                                              th:with="dp_djr=${mRecentList.depositForLease / 10000}, dp_aks=${mRecentList.depositForLease % 10000}"
                                                               th:text="${'전세 ' + #strings.concat(dp_djr > 0 ? dp_djr + '억 ' : '', dp_aks > 0 ? dp_aks + '만원' : '')}">
                                                         </span>
-                                                        <span th:if="${testList.tradeType == '월세'}"
-                                                              th:text="${'월세 ' + testList.monthlyForRent + '/' + testList.monthlyRent}">
+                                                        <span th:if="${mRecentList.tradeType == '월세'}"
+                                                              th:text="${'월세 ' + mRecentList.monthlyForRent + '/' + mRecentList.monthlyRent}">
                                                         </span>
                                                     </div>
                                                     <div class="s-mamul-text-1">
-                                                        <p th:text="${testList.buildingUsage}">용도</p>
-                                                        <p th:text="${' · ' + testList.address}">주소</p>
+                                                        <p th:text="${mRecentList.buildingUsage}">용도</p>
+                                                        <p th:text="${' · ' + mRecentList.address}">주소</p>
                                                     </div>
                                                     <div class="s-mamul-text-2">
-                                                        <p th:text="${testList.privateArea} + '/' + ${testList.supplyArea} + '㎡ · '">면적</p>
-                                                        <p th:text="${testList.floorNumber} + '층/' + ${testList.totalFloors} + '층'">층수</p>
+                                                        <p th:text="${mRecentList.privateArea} + '/' + ${mRecentList.supplyArea} + '㎡ · '">면적</p>
+                                                        <p th:text="${mRecentList.floorNumber} + '층/' + ${mRecentList.totalFloors} + '층'">층수</p>
                                                     </div>
                                                     <div>
-                                                        <p th:text="${testList.title}" ></p>
+                                                        <p th:text="${mRecentList.title}" ></p>
                                                     </div>
                                                 </div>
                                                 <div class="s-mamul-tag">
