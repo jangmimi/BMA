@@ -163,14 +163,16 @@ function oUpdateCheck() {
         alert('연락처를 입력해주세요.');
         return false;
     }
-    if (pwdValue.length < 8 || pwdValue.length > 20) {
-        alert('비밀번호는 8자 이상, 20자 이하로 입력해주세요.');
-        return false;
-    }
-    // 비밀번호 형식 체크 - 숫자와 영문 조합
-    if (!pwdreg.test(pwdValue)) {
-        alert('비밀번호는 숫자와 영문 조합으로 입력해주세요.');
-        return false;
+    if(pwdValue.trim() !== '') {    /* 비밀번호창 입력이 있을 경우에만 체크 */
+        if (pwdValue.length < 8 || pwdValue.length > 20) {
+            alert('비밀번호는 8자 이상, 20자 이하로 입력해주세요.');
+            return false;
+        }
+        // 비밀번호 형식 체크 - 숫자와 영문 조합
+        if (!pwdreg.test(pwdValue)) {
+            alert('비밀번호는 숫자와 영문 조합으로 입력해주세요.');
+            return false;
+        }
     }
     let confirmUpdate = confirm('입력한 정보로 수정하시겠습니까?');
     if(!confirmUpdate) return false;

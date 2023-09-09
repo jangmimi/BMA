@@ -128,6 +128,17 @@
 .myImg {
     width: 150px;
 }
+#o-noCnt {
+    height: 200px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #222222;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
 
 /*oMyInfoUpdate css*/
 .form-floating {
@@ -333,7 +344,8 @@
 }
 
 .z-img-wrap,
-.z-img {
+.z-img,
+.z-img-wrap img {
 	width: 300px;
 	height: 191.25px;
 }

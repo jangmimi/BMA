@@ -79,28 +79,44 @@
                                 </div>
                             </div>
                         </div>
-
+                        <!-- 관심매물 0개 일때 -->
+                        <div th:if="${likedCnt == 0}" id="o-noCnt">
+                            관심매물을 등록해주세요.
+                        </div>
+                        <!-- 관심매물 영역 -->
                         <div class="z-bottom-container">
                             <div class="z-bottom-wrap">
-                                <!-- 매물 시작 -->
-                                <a th:each="mmList : ${mmpList}" th:href="@{/details/{id}(id=${mmList.id})}">
+                                <!-- 매물 시작 (통으로 링크) -->
+                                <a th:each="mmList, iterStat : ${mmpList}" th:href="@{/details/{id}(id=${mmList.id})}">
                                     <div class="s-mamulbox">
                                         <div class="s-mamul-img">
                                             <img src="/img/details/apt.jpeg" alt="이미지">
                                         </div>
                                         <div class="s-mamul-text">
                                             <div class="s-mamul-text-wrap">
-                                                <span class="s-mamul-text-title" th:text="${mmList.tradeType}"></span>
+                                                <div class="s-mamul-text-title">
+                                                    <span th:if="${mmList.tradeType == '매매'}"
+                                                          th:with="sp_djr=${mmList.sellingPrice / 10000}, sp_aks=${mmList.sellingPrice % 10000}"
+                                                          th:text="${'매매 ' + #strings.concat(sp_djr > 0 ? sp_djr + '억 ' : '', sp_aks > 0 ? sp_aks + '만원' : '')}">
+                                                    </span>
+                                                    <span th:if="${mmList.tradeType == '전세'}"
+                                                          th:with="dp_djr=${mmList.depositForLease / 10000}, dp_aks=${mmList.depositForLease % 10000}"
+                                                          th:text="${'전세 ' + #strings.concat(dp_djr > 0 ? dp_djr + '억 ' : '', dp_aks > 0 ? dp_aks + '만원' : '')}">
+									                </span>
+                                                    <span th:if="${mmList.tradeType == '월세'}"
+                                                          th:text="${'월세 ' + mmList.monthlyForRent + '/' + mmList.monthlyRent}">
+                                                    </span>
+                                                </div>
                                                 <div class="s-mamul-text-1">
                                                     <p th:text="${mmList.buildingUsage}">용도</p>
-                                                    <p th:text="${mmList.address}">주소</p>
+                                                    <p th:text="${' · ' + mmList.address}">주소</p>
                                                 </div>
                                                 <div class="s-mamul-text-2">
-                                                    <p th:text="${mmList.privateArea} + '/' + ${mmList.supplyArea} + '㎡'">면적</p>
+                                                    <p th:text="${mmList.privateArea} + '/' + ${mmList.supplyArea} + '㎡ · '">면적</p>
                                                     <p th:text="${mmList.floorNumber} + '층/' + ${mmList.totalFloors} + '층'">층수</p>
                                                 </div>
                                                 <div>
-                                                    <p>설명</p>
+                                                    <p th:text="${mmList.title}" ></p>
                                                 </div>
                                             </div>
                                             <div class="s-mamul-tag">
@@ -110,117 +126,22 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    <!-- 비어 있는 곳 채우기 용 이미지 -->
+<!--                                    <div th:if="${likedCnt != 0}">-->
+<!--                                        <div th:if="${iterStat.index % 3 == 1 and iterStat.index + 1 < likedCnt}">-->
+<!--                                            <div class="z-img-wrap">-->
+<!--                                                <img src="https://www.bdsplanet.com/images/none_mae.png" alt="채우기용 이미지">-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                        <div th:if="${iterStat.index % 3 == 2 and iterStat.index + 1 < likedCnt}">-->
+<!--                                            <div class="z-img-wrap">-->
+<!--                                                <img src="https://www.bdsplanet.com/images/none_mae.png" alt="채우기용 이미지">-->
+<!--                                                <img src="https://www.bdsplanet.com/images/none_mae.png" alt="채우기용 이미지">-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
                                 </a>
                                 <!-- 매물 끝 -->
-
-<!--                                <div class="s-mamulbox">-->
-<!--                                    <div class="s-mamul-img">-->
-<!--                                        <img src="/img/details/apt.jpeg" alt="이미지">-->
-<!--                                    </div>-->
-<!--                                    <div class="s-mamul-text">-->
-<!--                                        <div class="s-mamul-text-wrap">-->
-<!--                                            <span class="s-mamul-text-title">전세 1억 6,500만</span>-->
-<!--                                            <div class="s-mamul-text-1">-->
-<!--                                                <p>다세대(빌라/연립)</p>-->
-<!--                                                <p>ㆍ서초동 상가주택</p>-->
-<!--                                            </div>-->
-<!--                                            <div class="s-mamul-text-2">-->
-<!--                                                <p>851.7/851.71㎡</p>-->
-<!--                                                <p>ㆍ지하-/지상2층</p>-->
-<!--                                            </div>-->
-<!--                                            <div>-->
-<!--                                                <p>서초역 역세권 업무주거배후세대 풍부ssssssssssssssssssssssssss</p>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                        <div class="s-mamul-tag">-->
-<!--                                            <span>#반려동물</span>-->
-<!--                                            <span>#역세권</span>-->
-<!--                                            <span>#주변환경 우수</span>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <div class="s-mamulbox">-->
-<!--                                    <div class="s-mamul-img">-->
-<!--                                        <img src="/img/details/apt.jpeg" alt="이미지">-->
-<!--                                    </div>-->
-<!--                                    <div class="s-mamul-text">-->
-<!--                                        <div class="s-mamul-text-wrap">-->
-<!--                                            <span class="s-mamul-text-title">전세 1억 6,500만</span>-->
-<!--                                            <div class="s-mamul-text-1">-->
-<!--                                                <p>다세대(빌라/연립)</p>-->
-<!--                                                <p>ㆍ서초동 상가주택</p>-->
-<!--                                            </div>-->
-<!--                                            <div class="s-mamul-text-2">-->
-<!--                                                <p>851.7/851.71㎡</p>-->
-<!--                                                <p>ㆍ지하-/지상2층</p>-->
-<!--                                            </div>-->
-<!--                                            <div>-->
-<!--                                                <p>서초역 역세권 업무주거배후세대 풍부ssssssssssssssssssssssssss</p>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                        <div class="s-mamul-tag">-->
-<!--                                            <span>#반려동물</span>-->
-<!--                                            <span>#역세권</span>-->
-<!--                                            <span>#주변환경 우수</span>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-
-<!--                                <div class="s-mamulbox">-->
-<!--                                    <div class="s-mamul-img">-->
-<!--                                        <img src="/img/details/apt.jpeg" alt="이미지">-->
-<!--                                    </div>-->
-<!--                                    <div class="s-mamul-text">-->
-<!--                                        <div class="s-mamul-text-wrap">-->
-<!--                                            <span class="s-mamul-text-title">전세 1억 6,500만</span>-->
-<!--                                            <div class="s-mamul-text-1">-->
-<!--                                                <p>다세대(빌라/연립)</p>-->
-<!--                                                <p>ㆍ서초동 상가주택</p>-->
-<!--                                            </div>-->
-<!--                                            <div class="s-mamul-text-2">-->
-<!--                                                <p>851.7/851.71㎡</p>-->
-<!--                                                <p>ㆍ지하-/지상2층</p>-->
-<!--                                            </div>-->
-<!--                                            <div>-->
-<!--                                                <p>서초역 역세권 업무주거배후세대 풍부ssssssssssssssssssssssssss</p>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                        <div class="s-mamul-tag">-->
-<!--                                            <span>#반려동물</span>-->
-<!--                                            <span>#역세권</span>-->
-<!--                                            <span>#주변환경 우수</span>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <div class="s-mamulbox">-->
-<!--                                    <div class="s-mamul-img">-->
-<!--                                        <img src="/img/details/apt.jpeg" alt="이미지">-->
-<!--                                    </div>-->
-<!--                                    <div class="s-mamul-text">-->
-<!--                                        <div class="s-mamul-text-wrap">-->
-<!--                                            <span class="s-mamul-text-title">전세 1억 6,500만</span>-->
-<!--                                            <div class="s-mamul-text-1">-->
-<!--                                                <p>다세대(빌라/연립)</p>-->
-<!--                                                <p>ㆍ서초동 상가주택</p>-->
-<!--                                            </div>-->
-<!--                                            <div class="s-mamul-text-2">-->
-<!--                                                <p>851.7/851.71㎡</p>-->
-<!--                                                <p>ㆍ지하-/지상2층</p>-->
-<!--                                            </div>-->
-<!--                                            <div>-->
-<!--                                                <p>서초역 역세권 업무주거배후세대 풍부ssssssssssssssssssssssssss</p>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                        <div class="s-mamul-tag">-->
-<!--                                            <span>#반려동물</span>-->
-<!--                                            <span>#역세권</span>-->
-<!--                                            <span>#주변환경 우수</span>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-
-
                             </div>
                             <!-- z-bottom-wrap 끝 -->
                         </div>
