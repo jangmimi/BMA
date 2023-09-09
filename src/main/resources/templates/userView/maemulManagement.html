@@ -66,7 +66,7 @@
                                             </td>
                                             <td id="o-d-type" th:text="${mmList.tradeType}">매물종류</td>
                                             <td id="o-d-photo">
-                                                <img src="https://www.bdsplanet.com/common/thumbs.ytp?filepath=/COMP_20201027000920000005/upload/realty/RCODE_20230731160156000045/&filename=1690787077205_1.jpg" width="80">
+                                                <img th:src="@{/img/thumbs.jpg}" width="80">
                                             </td>
                                             <td class="o-link-td">
                                                 <a th:text="${mmList.title}" th:href="@{/details/{id}(id=${mmList.id})}">매물링크</a>
