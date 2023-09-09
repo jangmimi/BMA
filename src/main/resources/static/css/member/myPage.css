@@ -133,6 +133,10 @@
 .form-floating {
    width: 350px;
 }
+#o-email-c, #o-nickname-c {
+    display: flex;
+    flex-wrap:wrap;
+}
 #nickname {
     width: 254px;
 }
@@ -344,6 +348,10 @@
     grid-gap: 10px; /* 열 간격 설정 */
     grid-row-gap: 10px; /* 행 간격 설정 */
 }
+.z-bottom-wrap  a {
+    text-decoration: none;
+    color: black;
+}
 
 .z-text-content3 {
 	color: #888888;
@@ -484,6 +492,7 @@
 }
 
 .s-mamul-text {
+    width: 320px;
     height: 195px;
     border: 1px solid #d1dae4;
     padding: 30px;
@@ -528,3 +537,4 @@
     border-radius: 15px;
     background-color: #e5e5e5;
 }
+
