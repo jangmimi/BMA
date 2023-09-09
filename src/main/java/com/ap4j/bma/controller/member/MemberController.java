@@ -241,6 +241,11 @@ public class MemberController {
         Page<MaemulRegEntity> mmpList = likedService.getPaginatedItems(nickname,page,pageSize);
         Long likedCnt = likedService.countLikedByNickname(nickname);
 
+        /* 매물목록으로 테스트중*/
+        List<MaemulRegEntity> mRecentList = qMemberService.getListByNickname(loginMember.getNickname());
+        model.addAttribute("mRecentList",mRecentList);
+        /**/
+
         model.addAttribute("root", root);
         model.addAttribute("thumbnail_image", thumImg);
         model.addAttribute("likedCnt",likedCnt);
