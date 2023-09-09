@@ -474,15 +474,15 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
                 </tr>
                 <tr>
                     <th>해당 층 수<b class="number"> *</b></th>
-                    <td><input class="num" type="text" name="floorNumber" placeholder="1"> 층</td>
+                    <td><input class="num" type="text" name="floorNumber" th:value="${maemul.floorNumber}"> 층</td>
                     <th>건물 층 수<b class="number"> *</b></th>
-                    <td colspan="2"><input class="num" type="text" name="totalFloors" placeholder="1"> 층</td>
+                    <td colspan="2"><input class="num" type="text" name="totalFloors" th:value="${maemul.totalFloors}"> 층</td>
                 </tr>
                 <tr>
                     <th>전용 면적<b class="number"> *</b></th>
-                    <td><input class="num" type="text" name="privateArea" placeholder="0"> m²</td>
+                    <td><input class="num" type="text" name="privateArea" th:value="${maemul.privateArea}"> m²</td>
                     <th>공급 면적<b class="number"> *</b></th>
-                    <td><input class="num" type="text" name="supplyArea" placeholder="0"> m²</td>
+                    <td><input class="num" type="text" name="supplyArea" th:value="${maemul.supplyArea}"> m²</td>
                     <th><a href="javascript:void(0);" id="helpLink" onclick="showPopup()">도움말</a></th>
                 </tr>
                 <tr>
@@ -490,14 +490,14 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
                     <td colspan="4">
                         <select class="combo" name="direction">
                             <option value="none">=== 선택 ===</option>
-                            <option value="동향">동향</option>
-                            <option value="서향">서향</option>
-                            <option value="남향">남향</option>
-                            <option value="북향">북향</option>
-                            <option value="남동향">남동향</option>
-                            <option value="남서향">남서향</option>
-                            <option value="북동향">북동향</option>
-                            <option value="북서향">북서향</option>
+                            <option value="동향" th:selected="${maemul.direction == '동향'}">동향</option>
+                            <option value="서향" th:selected="${maemul.direction == '서향'}">서향</option>
+                            <option value="남향" th:selected="${maemul.direction == '남향'}">남향</option>
+                            <option value="북향" th:selected="${maemul.direction == '북향'}">북향</option>
+                            <option value="남동향" th:selected="${maemul.direction == '남동향'}">남동향</option>
+                            <option value="남서향" th:selected="${maemul.direction == '남서향'}">남서향</option>
+                            <option value="북동향" th:selected="${maemul.direction == '북동향'}">북동향</option>
+                            <option value="북서향" th:selected="${maemul.direction == '북서향'}">북서향</option>
                         </select>
                     </td>
                 </tr>
@@ -506,9 +506,9 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
                     <td colspan="4">
                         <select class="combo" name="heatingType">
                             <option value="none">=== 선택 ===</option>
-                            <option value="지역난방">지역난방</option>
-                            <option value="중앙난방">중앙난방</option>
-                            <option value="개별난방">개별난방</option>
+                            <option value="지역난방" th:selected="${maemul.heatingType == '지역난방'}">지역난방</option>
+                            <option value="중앙난방" th:selected="${maemul.heatingType == '중앙난방'}">중앙난방</option>
+                            <option value="개별난방" th:selected="${maemul.heatingType == '개별난방'}">개별난방</option>
                         </select>
                     </td>
                 </tr>
