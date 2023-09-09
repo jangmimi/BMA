@@ -20,7 +20,7 @@ public interface QnARepository extends JpaRepository<QnAEntity, Integer> {
         @Query("SELECT mr FROM QnAEntity mr " +
                 "JOIN MemberEntity m ON mr.user_email = m.email " +
                 "WHERE m.email = :user_email " +
-                "ORDER BY mr.createdAt DESC")  // 최근글부터 나오게 정렬 추가")
-        List<QnAEntity> findMaemulByMemberEmail(@Param("user_email") String email);
+                "ORDER BY mr.createdAt DESC")  // 최근글부터 나오게 정렬 추가
+        List<QnAEntity> findQnaByEmail(@Param("user_email") String email);
 
     }

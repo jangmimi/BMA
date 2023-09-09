@@ -392,10 +392,8 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public MemberEntity updateMember(Long id, MemberDTO memberDTO) {
 		log.info("서비스 updateMember() 실행");
-		log.info("updatedMember : " + memberDTO);
 
 		Optional<MemberEntity> member = memberRepository.findById(id);
-		log.info("조회된 member : " + member);
 
 		if(member.isPresent()) {
 			MemberEntity memberEntity = member.get();
@@ -408,7 +406,6 @@ public class MemberServiceImpl implements MemberService {
 			memberDTO.setChoice2(Boolean.TRUE.equals(memberDTO.getChoice2()));
 			memberDTO.updateEntity(memberEntity);
 
-			log.info("수정된 정보 : " + memberEntity);
 			return memberRepository.save(memberEntity);
 
 		} else {
@@ -425,7 +422,7 @@ public class MemberServiceImpl implements MemberService {
 	/** 내 QnA 목록 */
 	@Override
 	public List<QnAEntity> qMyQnaList(String userEmail) {
-		return qnARepository.findMaemulByMemberEmail(userEmail);
+		return qnARepository.findQnaByEmail(userEmail);
 	}
 
 	/** 매물 목록 전체 조회 */
