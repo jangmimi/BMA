@@ -581,7 +581,7 @@ function updateSidebar(responseData) {
 
         // 새로운 a 요소 생성
         var anchor = document.createElement("a");
-        anchor.href = "/details/" + maemul.id ;
+        anchor.href = "/details/" + maemul.id + "?nickname=" + maemul.nickname;
         anchor.className = "abox";
         anchor.target = "";
 
