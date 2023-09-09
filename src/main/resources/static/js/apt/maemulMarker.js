@@ -735,3 +735,51 @@ function checkEnter(event) {
         });
     }
 }
+
+/* 주거용 상업용 필터*/
+
+function showValue(value) {
+
+        clearHJDOverlays(); // 행정동 오버레이 닫기
+        closeOtherOverlays(); // 열려있는 매물 오버레이 닫기
+
+        var setZoomLevel = 5;
+        var bounds = map.getBounds();
+        var southWest = bounds.getSouthWest();
+        var northEast = bounds.getNorthEast();
+        var currentZoomLevel = map.getLevel(); // 현재 줌 레벨 가져오기
+
+        $.ajax({
+            type: 'POST',
+            url: '/map/map',
+            data: {
+                buildingUsage: value,
+                zoomLevel: setZoomLevel,
+                southWestLat: southWest.getLat(),
+                southWestLng: southWest.getLng(),
+                northEastLat: northEast.getLat(),
+                northEastLng: northEast.getLng()
+            },
+
+            success: function (response) {
+                likedEntityList = response.likedEntityList;
+
+                console.log("전송된 데이터: ", value); // 보낸 파라미터 확인
+                console.log("서버 응답: ", response);
+
+                console.log(response.maemulButtonList);
+                // 검색 결과에 따라 마커를 생성하고 지도에 표시하기
+                if (response.maemulButtonList) {
+                    var result = response.maemulButtonList; // 키워드 검색후 전송받은 해당 아파트 데이터
+                    console.log(result);
+                    var newCenter = new kakao.maps.LatLng(result[0].latitude, result[0].longitude);
+
+                    map.setLevel(setZoomLevel); // 줌레벨 변경
+                    map.setCenter(newCenter); // 해당 아파트 위치로 센터 변경
+                    var currentZoomLevel = map.getLevel(); // 이동시 줌레벨 5로 설정 (줌레벨 안바뀐채로 이동되는 경우 있어서 방지차원)
+
+                }
+            }
+        });
+
+}
