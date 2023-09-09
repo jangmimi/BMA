@@ -33,7 +33,8 @@ public interface MaemulRegEntityRepository extends JpaRepository<MaemulRegEntity
     /** 로그인한 멤버 nickname이랑 매치되는 매물 리스트 불러오기 */
     @Query("SELECT mr FROM MaemulRegEntity mr " +
             "JOIN MemberEntity m ON mr.nickname = m.nickname " +
-            "WHERE m.nickname = :nickname")
+            "WHERE m.nickname = :nickname " +
+            "ORDER BY mr.createdAt DESC")  // 최근글부터 나오게 정렬 추가
     List<MaemulRegEntity> findMaemulByMemberNickname(@Param("nickname") String nickname);
 
     List<MaemulRegEntity> findByMemberEntity_Nickname(String nickname);

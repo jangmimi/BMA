@@ -75,20 +75,23 @@ tbody tr:hover {
     width: 7%;
 }
 /* 매물관리 페이지의 테이블 thead 영역잡기 */
-.o-md-type, .o-md-type {
-    width: 8%;
+.o-md-date {
+    width: 130px
+}
+.o-md-type, .o-md-img {
+    width: 100px;
 }
 .o-md-title {
-    width: 15%;
+    width: 230px;
 }
 .o-md-add {
-    width: 40%;
+    width: 310px;
 }
 .o-md-area, .o-md-amount {
-    width: 13%;
+    width: 160px;
 }
 .o-md-btns {
-    width: 10%;
+    width: 50px;
 }
 
 

@@ -280,7 +280,7 @@ public class MemberController {
         return "redirect:/member/qMyPage";
     }
 
-    /** 1:1 문의내역 페이지 매핑 */  // 필요한 것 : list / login email 기준 cnt // test 추가
+    /** 1:1 문의내역 페이지 매핑 */ 
     @GetMapping("/qMyQnA")
     public String qMyQnA(Model model, HttpSession session) {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
@@ -290,7 +290,6 @@ public class MemberController {
 
         List<QnAEntity> qMyQnaList = qMemberService.qMyQnaList(userEmail);
         long cnt = qMyQnaList.size();
-        log.info("내가쓴글수 : " + cnt);
 
         model.addAttribute("myQnaList", qMyQnaList);
         model.addAttribute("myQnaCnt", cnt);
