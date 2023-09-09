@@ -839,6 +839,8 @@ function sendToServer() {
         url: "/map/map",
         data: data,
         success: function(response) {
+            clearSidebar();
+
             if (response.maenulList) {
 
                 clusterer.clear();
