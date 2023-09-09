@@ -44,7 +44,7 @@ public class RecentServiceImpl implements RecentService{
         MaemulRegEntity maemul = maemulRegRepository.findById(id).orElse(null);
         MemberEntity member = memberRepository.findByNickname(nickname).orElse(null);
 
-        if (maemul != null && nickname != null && nickname.equals(null) && nickname.equals("null")) {
+        if (maemul != null && nickname != null || nickname.equals(null)) {
             boolean isDuplicate = recentRepository.existsByMaemulEntityAndMemberEntity_Nickname(maemul, nickname);
 
             if (!isDuplicate) {
