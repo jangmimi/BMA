@@ -1,6 +1,5 @@
 package com.ap4j.bma.controller.custmerCenter;
 
-import com.ap4j.bma.model.entity.customerCenter.AnswerEntity;
 import com.ap4j.bma.model.entity.customerCenter.QnAEntity;
 import com.ap4j.bma.model.repository.QnARepository;
 import com.ap4j.bma.service.customerCenter.QnAService;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 @Slf4j
 @SessionAttributes("loginMember")

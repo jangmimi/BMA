@@ -1,14 +1,15 @@
 package com.ap4j.bma.controller.member;
+// pjm - use m o p q
 import com.ap4j.bma.config.PasswordEncoderConfig;
 import com.ap4j.bma.model.entity.customerCenter.QnAEntity;
 import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
 import com.ap4j.bma.model.entity.member.LikedEntity;
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
-import com.ap4j.bma.model.entity.member.RecentEntity;
+import com.ap4j.bma.model.entity.recent.RecentEntity;
 import com.ap4j.bma.service.member.LikedService;
 import com.ap4j.bma.service.member.MemberService;
-import com.ap4j.bma.service.member.RecentService;
+import com.ap4j.bma.service.member.RecentServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,8 +18,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.*;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,7 +41,7 @@ public class MemberController {
     private LikedService likedService;
 
     @Autowired
-    private RecentService recentService;
+    private RecentServiceImpl recentServiceImpl;
 
     @Autowired
     private PasswordEncoderConfig pwdConfig;
@@ -386,8 +390,8 @@ public class MemberController {
         log.info("MemberController - qRecent() 실행");
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
-        List<RecentEntity> mmRecentList = recentService.getAllList();
-        Long mmAllRecentCnt = recentService.countAll();
+        List<RecentEntity> mmRecentList = recentServiceImpl.getAllList();
+        Long mmAllRecentCnt = recentServiceImpl.countAll();
         log.info(mmRecentList.toString());
         log.info(String.valueOf(mmAllRecentCnt));
 

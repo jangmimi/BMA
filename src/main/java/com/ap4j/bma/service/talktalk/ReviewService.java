@@ -2,18 +2,14 @@ package com.ap4j.bma.service.talktalk;
 
 //import com.ap4j.bma.model.entity.TalkTalk.TalkTalkReplyDto;
 //import com.ap4j.bma.model.entity.TalkTalk.TalkTalkReviewDto;
-import com.ap4j.bma.model.entity.TalkTalk.TalkTalkReviewDto;
+
 import com.ap4j.bma.model.entity.TalkTalk.TalkTalkReviewEntity;
-import com.ap4j.bma.model.entity.apt.AptDTO;
 import com.ap4j.bma.model.repository.TalkTalkRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Slf4j
 //서비스 -> 컨트롤러에서 이용

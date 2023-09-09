@@ -3,17 +3,11 @@ package com.ap4j.bma.controller.maemulReg;
 import com.ap4j.bma.model.entity.meamulReg.MaemulPhotoEntity;
 import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
 import com.ap4j.bma.model.entity.member.MemberDTO;
-
 import com.ap4j.bma.model.repository.MaemulPhotoRepository;
-//import com.ap4j.bma.service.maemulReg.FileStorageService;
-
 import com.ap4j.bma.service.maemulReg.MaemulPhotoService;
 import com.ap4j.bma.service.maemulReg.MaemulRegService;
-
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +16,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
-import java.util.logging.Logger;
 
 
 @SessionAttributes({"loginMember", "maemulRegEntity"})

@@ -1,9 +1,11 @@
 package com.ap4j.bma.model.entity.TalkTalk;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * 게시글 정보를 리턴할 응답(Response) 클래스
