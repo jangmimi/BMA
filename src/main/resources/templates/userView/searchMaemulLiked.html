@@ -44,7 +44,7 @@
                                 <div class="headrow">
                                     <div class="headrowL">
                                         <input type="text" name="keyword" class="searchbox" placeholder="검색어 입력">
-                                        <button class="searchbtn">검색</button>
+                                        <button class="searchbtn" type="submit">검색</button>
                                     </div>
                                 </div>
                             </div>
@@ -74,7 +74,8 @@
                                         <input type="hidden" id="num" th:name="maemul_id" th:value="${mmpList.id}">
                                         <td id="tradeType" th:text="${mmpList.tradeType}">거래유형</td>
                                         <td id="o-d-photo">
-                                            <img th:src="@{/img/thumbs.jpg}" width="80">
+                                            <img src="https://www.bdsplanet.com/common/thumbs.ytp?filepath=/COMP_20201027000920000005/upload/realty/RCODE_20230731160156000045/&filename=1690787077205_1.jpg"
+                                                 width="80">
                                         </td>
                                         <td>
                                             <div th:text="${mmpList.address}">주소</div>

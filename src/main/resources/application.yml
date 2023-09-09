@@ -27,16 +27,16 @@ spring:
     hibernate:
       ddl-auto: update
     properties:
-     hibernate:
-      format_sql: true
-      org:
       hibernate:
-      SQL: DEBUG
-      type:
-      descriptor:
-      sql:
-      BasicBinder: TRACE
-      show_sql: true
+        format_sql: true
+        org:
+          hibernate:
+            SQL: DEBUG
+            type:
+              descriptor:
+                sql:
+                  BasicBinder: TRACE
+        show_sql: true
     defer-datasource-initialization: true
 
 #   데이터베이스 설정

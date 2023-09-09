@@ -319,7 +319,6 @@ public class MemberServiceImpl implements MemberService {
 	/** 기본 로그인 */
 	@Override
 	public MemberDTO login(MemberDTO memberDTO) {
-		log.info("서비스 login() 실행");
 		Optional<MemberEntity> findMember = memberRepository.findByEmail(memberDTO.getEmail());
 		if (findMember.isPresent()) {
 			log.info("로그인 시도하는 email DB에 존재!");
@@ -327,19 +326,12 @@ public class MemberServiceImpl implements MemberService {
 			if(memberEntity.getMember_leave()) { log.info("탈퇴한 회원"); return null; }
 
 			if(memberEntity.getRoot() == 2) {	// 카카오네이버는 pwd 체크 없이 로그인 진행
-				MemberDTO dto = memberEntity.toDTO();
-				log.info("entity를 toDTO : " +  dto);
-				return dto;
+                return memberEntity.toDTO();
 
 			} else {
 				if(pwdConfig.passwordEncoder().matches(memberDTO.getPwd(),memberEntity.getPwd())) {
 					log.info("id pw 모두 일치! 로그인 성공!");
-					log.info("entity : " +  memberEntity);
-
-					MemberDTO dto = memberEntity.toDTO();
-					log.info("entity를 toDTO : " +  dto);
-
-					return dto;
+                    return memberEntity.toDTO();
 
 				} else {
 					log.info("id일치, pw 불일치합니다.");

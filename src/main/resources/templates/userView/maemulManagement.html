@@ -43,13 +43,14 @@
                                 <form th:action="@{/member/qDeleteMaemul}" method="POST">
                                     <thead>
                                         <tr>
+                                            <th class="o-md-date">등록일시</th>
                                             <th class="o-md-type">매물종류</th>
                                             <th class="o-md-img">이미지</th>
                                             <th class="o-md-title">제목</th>
                                             <th class="o-md-add">주소</th>
                                             <th class="o-md-area">층/면적</th>
                                             <th class="o-md-amount">거래 및 가격</th>
-                                            <th class="o-md-btns">삭제</th>
+                                            <th class="o-md-btns">수정<br/>삭제</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -59,9 +60,13 @@
                                         </th:block>
                                         <tr th:if="${mmAllCnt != 0}" th:each="mmList : ${mmList}">
                                             <input type="hidden" id="num" th:name="id" th:value="${mmList.id}">
-                                            <td id="종류" th:text="${mmList.tradeType}">매물종류</td>
+                                            <td>
+                                                <span th:text="${#temporals.format(mmList.createdAt, 'yyyy-MM-dd')}">yyyy-MM-dd</span><br>
+                                                <span th:text="${#temporals.format(mmList.createdAt, 'HH:mm:ss')}">HH:mm:ss</span>
+                                            </td>
+                                            <td id="o-d-type" th:text="${mmList.tradeType}">매물종류</td>
                                             <td id="o-d-photo">
-                                                <img src="https://www.bdsplanet.com/common/thumbs.ytp?filepath=/COMP_20201027000920000005/upload/realty/RCODE_20230731160156000045/&filename=1690787077205_1.jpg" width="80">
+                                                <img th:src="@{/img/thumbs.jpg}" width="80">
                                             </td>
                                             <td class="o-link-td">
                                                 <a th:text="${mmList.title}" th:href="@{/details/{id}(id=${mmList.id})}">매물링크</a>
@@ -71,14 +76,15 @@
                                             </td>
                                             <td>
                                                 <div th:text="${mmList.totalFloors} + '/' + ${mmList.floorNumber} + '층'">엘리베이터 전체/현재</div>
-                                                <div th:text="${'공급' + mmList.privateArea + '㎡'}">공급면적</div>
-                                                <div th:text="${'전용' + mmList.supplyArea + '㎡'}">전용면적</div>
+                                                <div th:text="${'공급 : ' + mmList.privateArea + '㎡'}">공급면적</div>
+                                                <div th:text="${'전용 : ' + mmList.supplyArea + '㎡'}">전용면적</div>
                                             </td>
                                             <td>
                                                 <div th:text="${mmList.tradeType}">월세전세매매</div>
                                                 <div id="o-md-load" th:text="${mmList.monthlyForRent + '만 / ' + mmList.monthlyRent + '만'}">보증금/월세</div>
                                             </td>
                                             <td class="o-t-btns">
+                                                <input type="button" value="수정" th:href="@{/}">
                                                 <input type="submit" value="삭제">
                                             </td>
                                         </tr>
