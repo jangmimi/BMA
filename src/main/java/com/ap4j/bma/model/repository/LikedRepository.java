@@ -31,7 +31,7 @@ public interface LikedRepository extends JpaRepository<LikedEntity, Long> {
             "WHERE l.nickname = :nickname AND l.maemul_id = :maemulId")
     boolean existsByNicknameAndMaemulId(@Param("nickname") String nickname, @Param("maemulId") Integer maemulId);
 
-    /** 관심매물 삭제 (로그인중닉네임 == 관심매물닉네임 && 관심매물maemul_id == 매물id */ //  이거 성공!!!
+    /** 관심매물 삭제 */
     @Modifying
     @Query("DELETE FROM LikedEntity l " +
             "WHERE l.maemul_id = :maemul_id " +

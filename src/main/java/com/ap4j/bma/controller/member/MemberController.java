@@ -335,7 +335,7 @@ public class MemberController {
 
         return "redirect:/map/map";
     }
-    /** 삭제 */
+    /** 관심매물 삭제 */
     @PostMapping("/qDeleteLiked")
     public String qDeleteLiked(@RequestParam("maemul_id") Integer maemul_id, String nickname, HttpSession session) {
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
@@ -438,18 +438,23 @@ public class MemberController {
         return "userView/searchMaemulRecent";
     }
 
+    /** 최근본매물 삭제 */
+    @PostMapping("/qDeleteRecent")
+    public String qDeleteRecent(@RequestParam("maemul_id") Integer maemul_id, String nickname, HttpSession session) {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
+        nickname = memberDTO.getNickname();
+        recentServiceImpl.recentDelete(maemul_id, nickname);
+        return "redirect:/member/qRecent";
+    }
+
     /** 기본 회원탈퇴 (js ajax 활용) */   // sns 탈퇴 시 로그인 별도 처리 필요
     @PostMapping("/qLeaveMember2")
     public ResponseEntity<Integer> qLeaveMember2(@RequestParam(required = false) String password, HttpSession session, SessionStatus sessionStatus) {
         Long id =  ((MemberDTO) session.getAttribute("loginMember")).getId();
         boolean success = qMemberService.leaveMember(id, password, sessionStatus, session);
-
-        if (success) {
-            return ResponseEntity.ok(1);
-        } else {
-            return ResponseEntity.ok(0);
-        }
+        return ResponseEntity.ok(success ? 1 : 0);
     }
+
     @PostMapping("/qLeaveMember/{id}")    // id 사용해서 탈퇴 (sns계정 탈퇴)
     public String leaveMember(HttpSession session, SessionStatus sessionStatus) {
         Long id =  ((MemberDTO) session.getAttribute("loginMember")).getId();

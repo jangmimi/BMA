@@ -35,18 +35,32 @@ padding: 14px 21px;
 color: #666;
 border-bottom: 1px solid #ddd;
 text-align: center;
-    font-size:14px;
+font-size:14px;
  }
+
 /* tbody쪽만 마우스오버 */
 tbody tr:hover {
     background: #eee;
+}
+.o-link-td:hover {
+    font-color: #26ABED;
+    color: #26ABED;
 }
 .o-link-td a:hover {
     font-color: #26ABED;
     color: #26ABED;
     border-bottom: 1px solid #26ABED;
 }
-.o-d-type, .o-d-type, .o-d-btns {
+.o-link-td,
+.o-link-td a{
+    color: #666
+}
+.o-d-type,
+.o-md-btns {
+    white-space: normal; /* 줄바꿈 허용 */
+    word-wrap: break-word; /* 긴 단어 줄바꿈 */
+}
+.o-d-type, .o-d-btns {
     width: 10%;
 }
 .o-d-title {
@@ -61,11 +75,13 @@ tbody tr:hover {
 .o-d-about {
     width: 15%;
 }
-#o-d-load, #o-md-load {
+.o-md-load {
     color: #26abed;
     font-weight: 600;
 }
-.o-t-btns input, .o-t-btn input {
+.o-t-btns input,
+.o-t-btns a,
+.o-t-btn input {
     font-size: 13px;
     border: 1px solid lightgray;
     margin: 5px 0px;
@@ -88,10 +104,10 @@ tbody tr:hover {
     width: 310px;
 }
 .o-md-area, .o-md-amount {
-    width: 160px;
+    width: 150px;
 }
 .o-md-btns {
-    width: 50px;
+    width: 65px;
 }
 
 

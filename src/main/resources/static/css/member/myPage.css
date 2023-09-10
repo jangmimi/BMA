@@ -287,7 +287,10 @@
     position: absolute;
     opacity: 2%;
 }
-
+#o-find-info {
+    font-size: 12px;
+    color: gray;
+}
 
 .oThumbnailImg img{
     border-radius: 50%;
