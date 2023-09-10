@@ -23,6 +23,7 @@ padding:0;
     display: flex;
     transition: 0.5s;
     justify-content: space-between;
+    border-bottom: 1px solid #ededed;
 }
 
 /*flex 정렬을 위해 오른쪽 왼쪽 나뉨*/
