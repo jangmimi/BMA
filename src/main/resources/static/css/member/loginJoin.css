@@ -83,3 +83,11 @@ agree {
     font-size:12px;
     color: red;
 }
+/* 비밀번호 표시하는 i */
+i{
+    position: absolute;
+    left: 290px;
+    top: 20px;
+    color: silver;
+    font-size: 14px;
+}

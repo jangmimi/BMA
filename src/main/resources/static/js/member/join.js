@@ -194,3 +194,15 @@ function oJoinCheck() {
      alert('회원가입이 완료되었습니다!');
     return true; // 모든 조건 통과
 }
+$(document).ready(function(){
+    $('.form-floating i').on('click',function(){
+        $('#pwd').toggleClass('active');
+        if($('#pwd').hasClass('active')){
+            $(this).attr('class',"fa fa-eye-slash fa-lg")
+            .prev('#pwd').attr('type',"text");
+        }else{
+            $(this).attr('class',"fa fa-eye fa-lg")
+            .prev('#pwd').attr('type','password');
+        }
+    });
+});
