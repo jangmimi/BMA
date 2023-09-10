@@ -13,6 +13,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -421,8 +424,15 @@ public class MemberServiceImpl implements MemberService {
 
 	/** 내 QnA 목록 */
 	@Override
-	public List<QnAEntity> qMyQnaList(String userEmail) {
-		return qnARepository.findQnaByEmail(userEmail);
+	public Page<QnAEntity> qMyQnaList(String userEmail, int page, int pageSize) {
+		Pageable pageable = PageRequest.of(page - 1, pageSize);
+		Page<QnAEntity> qMyQnaList = qnARepository.findQnaByEmail(userEmail,pageable);
+		return qMyQnaList;
+	}
+
+	/* 내 QnA 목록 카운트*/
+	public Long qMyQnaListCount(String usarEmail){
+		return qnARepository.findQnaByEmai0lCount(usarEmail);
 	}
 
 	/** 매물 목록 전체 조회 */

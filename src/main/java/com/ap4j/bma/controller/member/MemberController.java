@@ -221,7 +221,7 @@ public class MemberController {
     /** 마이페이지 매핑 */ 
     @RequestMapping("/qMyPage")
     public String qMyPage(@RequestParam(name = "page", defaultValue = "1") int page,
-                          @RequestParam(name = "pageSize", defaultValue = "9") int pageSize,
+                          @RequestParam(name = "pageSize", defaultValue = "10") int pageSize,
                           HttpSession session, Model model) {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
@@ -271,14 +271,20 @@ public class MemberController {
 
     /** 1:1 문의내역 페이지 매핑 */
     @GetMapping("/qMyQnA")
-    public String qMyQnA(Model model, HttpSession session) {
+    public String qMyQnA(@RequestParam(name = "page", defaultValue = "1") int page,
+                         @RequestParam(name = "pageSize", defaultValue = "10") int pageSize,Model model, HttpSession session) {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
         String userEmail = memberDTO.getEmail();
 
-        List<QnAEntity> qMyQnaList = qMemberService.qMyQnaList(userEmail);
-        long cnt = qMyQnaList.size();
+        if (page < 1) {
+            page = 1;
+        }
+
+        Page<QnAEntity> qMyQnaList = qMemberService.qMyQnaList(userEmail,page,pageSize);
+        long cnt = qMemberService.qMyQnaListCount(userEmail);
+        //long cnt = qMyQnaList.size();
 
         model.addAttribute("myQnaList", qMyQnaList);
         model.addAttribute("myQnaCnt", cnt);
@@ -322,14 +328,13 @@ public class MemberController {
 
         LikedEntity likedEntity = new LikedEntity();
         likedEntity.setNickname(nickname);
-        likedEntity.setRoad_name(finemm.getAddress());
         likedEntity.setMaemul_id(maemulId);
 
         likedService.save(likedEntity);
 
         return "redirect:/map/map";
     }
-    /** 삭제 */
+    /** 관심매물 삭제 */
     @PostMapping("/qDeleteLiked")
     public String qDeleteLiked(@RequestParam("maemul_id") Integer maemul_id, String nickname, HttpSession session) {
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
@@ -342,11 +347,15 @@ public class MemberController {
     /** 관심매물 페이지 매핑 */
     @RequestMapping("/liked")   // pageSize 10으로 수정필요
     public String qInterest(@RequestParam(name = "page", defaultValue = "1") int page,
-                            @RequestParam(name = "pageSize", defaultValue = "5") int pageSize,HttpSession session, Model model) {
+                            @RequestParam(name = "pageSize", defaultValue = "10") int pageSize,HttpSession session, Model model) {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
         String nickname = memberDTO.getNickname();
+
+        if (page < 1) {
+            page = 1;
+        }
 
         Page<MaemulRegEntity> mmpList = likedService.getPaginatedItems(nickname,page,pageSize);
         Long totalCount = likedService.countLikedByNickname(nickname);
@@ -363,12 +372,17 @@ public class MemberController {
     @GetMapping("/searchl")
     public String searchl(  String keyword,
                             @RequestParam(name = "page", defaultValue = "1") int page,
-                            @RequestParam(name = "pageSize", defaultValue = "2") int pageSize, HttpSession session, Model model) {
+                            @RequestParam(name = "pageSize", defaultValue = "10") int pageSize, HttpSession session, Model model) {
         if (!loginStatus(session)) {
             return "userView/loginNeed";
         }
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
         String nickname = memberDTO.getNickname();
+
+        if (page < 1) {
+            page = 1;
+        }
+
         Page<MaemulRegEntity> mmpList = likedService.getSearchPaginatedItems(nickname,keyword,page,pageSize);
         log.info(mmpList.toString());
         Long totalCount = likedService.countFindLikedByNickname(nickname,keyword);
@@ -381,11 +395,15 @@ public class MemberController {
     /** 최근매물 페이지 매핑 */
     @RequestMapping("/qRecent")
     public String qRecent(@RequestParam(name = "page", defaultValue = "1") int page,
-                          @RequestParam(name = "pageSize", defaultValue = "2") int pageSize,HttpSession session, Model model) {
+                          @RequestParam(name = "pageSize", defaultValue = "10") int pageSize,HttpSession session, Model model) {
         log.info("MemberController - qRecent() 실행");
         if(!loginStatus(session)) { return "userView/loginNeed"; }
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
         String nickname = memberDTO.getNickname();
+
+        if (page < 1) {
+            page = 1;
+        }
 
         Page<MaemulRegEntity> mmpList = recentServiceImpl.recentMaemulList(nickname,page,pageSize);
         Long totalCount = recentServiceImpl.recentMamulListCount(nickname);
@@ -399,12 +417,17 @@ public class MemberController {
     @GetMapping("/searchr")
     public String searchr(  String keyword,
                             @RequestParam(name = "page", defaultValue = "1") int page,
-                            @RequestParam(name = "pageSize", defaultValue = "2") int pageSize, HttpSession session, Model model) {
+                            @RequestParam(name = "pageSize", defaultValue = "10") int pageSize, HttpSession session, Model model) {
         if (!loginStatus(session)) {
             return "userView/loginNeed";
         }
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
         String nickname = memberDTO.getNickname();
+
+        if (page < 1) {
+            page = 1;
+        }
+
         Page<MaemulRegEntity> mmpList = recentServiceImpl.searchRecentMaemulList(nickname,keyword,page,pageSize);
         log.info(mmpList.toString());
         Long totalCount = recentServiceImpl.searchRecentMaemulListCount(nickname,keyword);
@@ -414,18 +437,23 @@ public class MemberController {
         return "userView/searchMaemulRecent";
     }
 
+    /** 최근본매물 삭제 */
+    @PostMapping("/qDeleteRecent")
+    public String qDeleteRecent(@RequestParam("maemul_id") Integer maemul_id, String nickname, HttpSession session) {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
+        nickname = memberDTO.getNickname();
+        recentServiceImpl.recentDelete(maemul_id, nickname);
+        return "redirect:/member/qRecent";
+    }
+
     /** 기본 회원탈퇴 (js ajax 활용) */   // sns 탈퇴 시 로그인 별도 처리 필요
     @PostMapping("/qLeaveMember2")
     public ResponseEntity<Integer> qLeaveMember2(@RequestParam(required = false) String password, HttpSession session, SessionStatus sessionStatus) {
         Long id =  ((MemberDTO) session.getAttribute("loginMember")).getId();
         boolean success = qMemberService.leaveMember(id, password, sessionStatus, session);
-
-        if (success) {
-            return ResponseEntity.ok(1);
-        } else {
-            return ResponseEntity.ok(0);
-        }
+        return ResponseEntity.ok(success ? 1 : 0);
     }
+
     @PostMapping("/qLeaveMember/{id}")    // id 사용해서 탈퇴 (sns계정 탈퇴)
     public String leaveMember(HttpSession session, SessionStatus sessionStatus) {
         Long id =  ((MemberDTO) session.getAttribute("loginMember")).getId();
