@@ -565,7 +565,7 @@ body{
 }
 .dropdown-menu.aOption{
   width: 872px;
-  height: 415px;
+  height: 339px;
   padding: 18px;
   font-size:14px;
 }
@@ -580,7 +580,13 @@ body{
 .aOptionsDown{
     margin-top:18px;
     display: flex;
-    justify-content: space-around;
+    padding-left: 23px;
+}
+.tcon.pl.park {
+     width: 131px;
+}
+.tcon.pl.rental {
+    width: 134px;
 }
 .btn.btn-primary.aTheme{
   display: initial;
@@ -617,12 +623,12 @@ body{
 }
 .dropdown-menu.aPrice{
   padding: 22px;
-  width: 403px;
+  width: 495px;
   position: absolute;
   inset: 0px auto auto 0px;
   margin: 0px;
   transform: translate3d(504px, 55.5px, 0px);
-  height: 234px;
+  height: 256px;
 }
 .abox_maemae{
   display: flex;
@@ -652,6 +658,12 @@ span.dash {
 
 .price_input{
     display:flex;
+    height:100%;
+}
+.searchMaemaeButton,.searchJeonseButton,.searchBozugButton{
+    border: 1px solid #c2c2c2;
+        width: 44px;
+        margin-left: 15px;
 }
 .aTtang.top,.nav-item.aTtangSize{
   display: flex;
@@ -677,16 +689,24 @@ span.dash {
     width:164px;
 }
 .aDirListAll{
-    width:147px;
+    width:203px;
+}
+#directionUL{
+    padding-left: 0px;
+        display: flex;
+        justify-content: flex-start;
+}
+.adirright{
+    margin-left: 37px;
 }
 .aBathListAll{
   width: 80px;
 }
 .aMainTenanceAll{
-    width:115px;
+    width:121px;
 }
 .aEleListAll{
-  width: 282px;
+  width: 193px;
 }
 .aThemeList{
   display: flex;

@@ -37,9 +37,9 @@
                 <div class="o-mid-wrapper">
                     <div class="o-mid-inner mt-5" id="o-tb-wrap">
                         <div class="o-page-title">
-                            <h3 class="h3 fw-bold">관심 매물</h3>
+                            <h3 class="h3 fw-bold">최근본매물</h3>
                         </div>
-                        <form action="/member/searchl" method="get">
+                        <form action="/member/searchr" method="get">
                             <div class="oSearch-c">
                                 <div class="headrow">
                                     <div class="headrowL">
@@ -112,14 +112,14 @@
                         <div class="s-paging">
                             <ul>
                                 <li class="s-pre" th:if="${mmpList.hasPrevious()}">
-                                    <a th:href="@{/member/liked(page=${mmpList.number - 1}, size=${mmpList.size})}">이전</a>
+                                    <a th:href="@{/member/qRecent(page=${mmpList.number - 1}, size=${mmpList.size})}">이전</a>
                                 </li>
                                 <li th:if="${mmpList.totalPages > 0}" th:each="pageNo : ${#numbers.sequence(0, mmpList.totalPages - 1)}">
                                     <span th:if="${mmpList.number == pageNo}" th:text="${pageNo + 1}" class="s-active-page"></span>
-                                    <a th:unless="${mmpList.number == pageNo}" th:href="@{/member/liked(page=${pageNo+1}, size=${mmpList.size})}" th:text="${pageNo + 1}"></a>
+                                    <a th:unless="${mmpList.number == pageNo}" th:href="@{/member/qRecent(page=${pageNo+1}, size=${mmpList.size})}" th:text="${pageNo + 1}"></a>
                                 </li>
                                 <li class="s-next" th:if="${mmpList.hasNext()}">
-                                    <a th:href="@{/member/liked(page=${mmpList.number + 2}, size=${mmpList.size})}">다음</a>
+                                    <a th:href="@{/member/qRecent(page=${mmpList.number + 2}, size=${mmpList.size})}">다음</a>
                                 </li>
                             </ul>
                         </div>

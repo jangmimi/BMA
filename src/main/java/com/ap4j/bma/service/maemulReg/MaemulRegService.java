@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -45,10 +46,12 @@ public class MaemulRegService {
     // 좌표값에 따른 매물 리스트 (마커 찍기용)
     public List<MaeMulRegDTO> findMaemulListBounds(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng, String tradeType
             , Integer roomNumber, Integer numberBathrooms, Integer floorNumber, Integer managementFee, String Elevator, String direction, String Parking
-            , String shortTermRental, String keyword) {
+            , String shortTermRental, String keyword, Integer rowSellingPrice, Integer highSellingPrice, Integer rowDepositForLease, Integer highDepositForLease
+            , Integer rowMonthlyForRent, Integer highMonthlyForRent,  Double minPrivateArea, Double maxPrivateArea, String orderType) {
         List<MaeMulRegDTO> maeMulRegDTOList = new ArrayList<>();
         List<MaemulRegEntity> maemulRegEntityList = maemulRegEntityRepository.findMaemulListBounds(southWestLat, southWestLng, northEastLat, northEastLng, tradeType
-                , roomNumber, numberBathrooms, floorNumber, managementFee, Elevator, direction, Parking, shortTermRental, keyword);
+                , roomNumber, numberBathrooms, floorNumber, managementFee, Elevator, direction, Parking, shortTermRental, keyword, rowSellingPrice, highSellingPrice
+                , rowDepositForLease, highDepositForLease, rowMonthlyForRent, highMonthlyForRent, minPrivateArea, maxPrivateArea, orderType);
 
         for (MaemulRegEntity maemulRegEntity : maemulRegEntityList) {
             MaeMulRegDTO maeMulRegDTO = MaeMulRegDTO.builder()
@@ -226,5 +229,50 @@ public class MaemulRegService {
         }
         return maeMulRegDTOList;
     }
+
+    // 매물 수정
+    @Transactional
+    public MaemulRegEntity updateMaemul(MaemulRegEntity updatedMaemul) {
+        // 업데이트할 매물 엔티티를 찾아옵니다.
+        MaemulRegEntity existingMaemul = maemulRegEntityRepository.findMaemulById(updatedMaemul.getId()).orElse(null);
+
+        if (existingMaemul != null) {
+            existingMaemul.setAddress(updatedMaemul.getAddress());
+            existingMaemul.setAPT_name(updatedMaemul.getAPT_name());
+            existingMaemul.setBuildingUsage(updatedMaemul.getBuildingUsage());
+            existingMaemul.setNumberOfRooms(updatedMaemul.getNumberOfRooms());
+            existingMaemul.setNumberOfBathrooms(updatedMaemul.getNumberOfBathrooms());
+            existingMaemul.setFloorNumber(updatedMaemul.getFloorNumber());
+            existingMaemul.setTotalFloors(updatedMaemul.getTotalFloors());
+            existingMaemul.setPrivateArea(updatedMaemul.getPrivateArea());
+            existingMaemul.setSupplyArea(updatedMaemul.getSupplyArea());
+            existingMaemul.setDirection(updatedMaemul.getDirection());
+            existingMaemul.setHeatingType(updatedMaemul.getHeatingType());
+            existingMaemul.setElevator(updatedMaemul.getElevator());
+            existingMaemul.setParking(updatedMaemul.getParking());
+            existingMaemul.setTotalParking(updatedMaemul.getTotalParking());
+            existingMaemul.setShortTermRental(updatedMaemul.getShortTermRental());
+            existingMaemul.setAvailableMoveInDate(updatedMaemul.getAvailableMoveInDate());
+            existingMaemul.setLoanAmount(updatedMaemul.getLoanAmount());
+            existingMaemul.setTradeType(updatedMaemul.getTradeType());
+            existingMaemul.setMonthlyForRent(updatedMaemul.getMonthlyForRent());
+            existingMaemul.setMonthlyRent(updatedMaemul.getMonthlyRent());
+            existingMaemul.setDepositForLease(updatedMaemul.getDepositForLease());
+            existingMaemul.setManagementFee(updatedMaemul.getManagementFee());
+            existingMaemul.setSellingPrice(updatedMaemul.getSellingPrice());
+            existingMaemul.setTitle(updatedMaemul.getTitle());
+            existingMaemul.setContent(updatedMaemul.getContent());
+            existingMaemul.setFeatures(updatedMaemul.getFeatures());
+            existingMaemul.setOptional(updatedMaemul.getOptional());
+            existingMaemul.setSecurity(updatedMaemul.getSecurity());
+            existingMaemul.setLongitude(updatedMaemul.getLongitude());
+            existingMaemul.setLatitude(updatedMaemul.getLatitude());
+
+            return maemulRegEntityRepository.save(existingMaemul);
+        } else {
+            return null;
+        }
+    }
+
 
 }

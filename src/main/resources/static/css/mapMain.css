@@ -146,6 +146,7 @@ justify-content: space-between;
 /*위치명,위치세부,뒤로가기,끄기,공유*/
 .titlearea,.left ,.right{
 display: flex;
+justify-content: space-between;
 }
 .left{
 margin-top: 10px;

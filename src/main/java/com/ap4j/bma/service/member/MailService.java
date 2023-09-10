@@ -36,14 +36,13 @@ public class MailService {
     }
 
     //임시 비밀번호로 업데이트
-    public void updatePassword(String str, String userEmail){
-        String memberPassword = str;
+    public void updatePassword(String userPwd, String userEmail){
         Optional<MemberEntity> member = memberRepository.findByEmail(userEmail);
 
         if(member.isPresent()) {
             MemberEntity memberEntity = member.get();
 
-            memberEntity.setPwd(pwdConfig.passwordEncoder().encode(str));
+            memberEntity.setPwd(pwdConfig.passwordEncoder().encode(userPwd));
             MemberDTO memberDTO = memberEntity.toDTO();
             memberDTO.updateEntity(memberEntity);
 

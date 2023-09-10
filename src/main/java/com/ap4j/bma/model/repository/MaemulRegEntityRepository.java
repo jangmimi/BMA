@@ -75,6 +75,5 @@ public interface MaemulRegEntityRepository extends JpaRepository<MaemulRegEntity
 //    Long searchCountLikedByNickname(@Param("nickname") String nickname,@Param("keyword") String keyword);
 
 
-
 }
 
