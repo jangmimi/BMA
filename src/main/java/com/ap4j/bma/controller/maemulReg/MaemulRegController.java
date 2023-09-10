@@ -99,7 +99,7 @@ public class MaemulRegController {
         // 저장된 매물 정보의 ID를 리다이렉트 시에 전달
         redirectAttributes.addAttribute("maemulId", savedEntity.getId());
 
-        return "redirect:/confirmation";
+        return "redirect:/member/qManagement";
     }
     // 확인 페이지
     @GetMapping("/confirmation")
@@ -109,7 +109,7 @@ public class MaemulRegController {
 
 
         model.addAttribute("maemulRegEntity", maemulRegEntity);
-        return "maemulReg/confirmation";
+        return "/member/qManagement";
     }
 
     @PostMapping("/confirmation")
