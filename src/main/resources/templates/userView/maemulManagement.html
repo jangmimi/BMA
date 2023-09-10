@@ -40,70 +40,70 @@
                         </div>
                         <div class="oMyQnaTb">
                             <table class="faq-tb">
-                                <form th:action="@{/member/qDeleteMaemul}" method="POST">
-                                    <thead>
-                                        <tr>
-                                            <th class="o-md-date">등록일시</th>
-                                            <th class="o-md-img">이미지</th>
-                                            <th class="o-md-type">매물종류</th>
-                                            <th class="o-md-title">제목</th>
-                                            <th class="o-md-add">주소</th>
-                                            <th class="o-md-area">층/면적</th>
-                                            <th class="o-md-amount">거래 및 가격</th>
-                                            <th class="o-md-btns">수정<br/>삭제</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <p>총<span class="o-cntAll" th:text="${mmAllCnt}"></span>개</p>
-                                        <th:block th:if="${mmAllCnt == 0}">
-                                            <tr><td colspan="8">조회된 데이터가 없습니다.</td></tr>
-                                        </th:block>
-                                        <tr th:if="${mmAllCnt != 0}" th:each="mmList : ${mmList}">
-                                            <input type="hidden" id="num" th:name="id" th:value="${mmList.id}">
-                                            <td>
-                                                <span th:text="${#temporals.format(mmList.createdAt, 'yyyy-MM-dd')}">yyyy-MM-dd</span><br>
-                                                <span th:text="${#temporals.format(mmList.createdAt, 'HH:mm:ss')}">HH:mm:ss</span>
-                                            </td>
-                                            <td id="o-d-photo">
-                                                <img th:src="@{/img/thumbs.jpg}" width="80">
-                                            </td>
-                                            <td id="o-d-type" th:text="${mmList.tradeType}"></td>
-                                            <td class="o-link-td">
-                                                <a th:text="${mmList.title}" th:href="@{/details/{id}(id=${mmList.id},nickname=${loginMember.nickname})}"></a>
-                                            </td>
-                                            <td class="o-link-td">
-                                                <a th:text="${mmList.address}" th:href="@{/details/{id}(id=${mmList.id},nickname=${loginMember.nickname})}"></a>
-                                            </td>
-                                            <td>
-                                                <div th:text="${mmList.floorNumber} + '/' + ${mmList.totalFloors} + '층'"></div>
-                                                <div th:text="${'공급 : ' + mmList.privateArea + '㎡'}"></div>
-                                                <div th:text="${'전용 : ' + mmList.supplyArea + '㎡'}"></div>
-                                            </td>
-                                            <td>
-                                                <div>
-                                                    <div th:if="${mmList.tradeType == '매매'}">
-                                                        <div th:text="매매"></div>
-                                                        <span class="o-md-load" th:with="sp_djr=${mmList.sellingPrice / 10000}, sp_aks=${mmList.sellingPrice % 10000}"
-                                                              th:text="${#strings.concat(sp_djr > 0 ? sp_djr + '억 ' : '', sp_aks > 0 ? sp_aks + '만원' : '')}"></span>
-                                                    </div>
-                                                    <div th:if="${mmList.tradeType == '전세'}">
-                                                        <div th:text="전세"></div>
-                                                        <span class="o-md-load"  th:with="dp_djr=${mmList.depositForLease / 10000}, dp_aks=${mmList.depositForLease % 10000}"
-                                                              th:text="${ #strings.concat(dp_djr > 0 ? dp_djr + '억 ' : '', dp_aks > 0 ? dp_aks + '만원' : '')}"></span>
-                                                    </div>
-                                                    <div th:if="${mmList.tradeType == '월세'}">
-                                                        <div th:text="월세"></div>
-                                                        <span class="o-md-load" th:text="${mmList.monthlyForRent + '/' + mmList.monthlyRent}"></span>
-                                                    </div>
+                                <thead>
+                                    <tr>
+                                        <th class="o-md-date">등록일시</th>
+                                        <th class="o-md-img">이미지</th>
+                                        <th class="o-md-type">매물종류</th>
+                                        <th class="o-md-title">제목</th>
+                                        <th class="o-md-add">주소</th>
+                                        <th class="o-md-area">층/면적</th>
+                                        <th class="o-md-amount">거래 및 가격</th>
+                                        <th class="o-md-btns">수정<br/>삭제</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <p>총<span class="o-cntAll" th:text="${mmAllCnt}"></span>개</p>
+                                    <th:block th:if="${mmAllCnt == 0}">
+                                        <tr><td colspan="8">조회된 데이터가 없습니다.</td></tr>
+                                    </th:block>
+                                    <tr th:if="${mmAllCnt != 0}" th:each="mmList : ${mmList}">
+                                        <td>
+                                            <span th:text="${#temporals.format(mmList.createdAt, 'yyyy-MM-dd')}">yyyy-MM-dd</span><br>
+                                            <span th:text="${#temporals.format(mmList.createdAt, 'HH:mm:ss')}">HH:mm:ss</span>
+                                        </td>
+                                        <td id="o-d-photo">
+                                            <img th:src="@{/img/thumbs.jpg}" width="80">
+                                        </td>
+                                        <td id="o-d-type" th:text="${mmList.tradeType}"></td>
+                                        <td class="o-link-td">
+                                            <a th:text="${mmList.title}" th:href="@{/details/{id}(id=${mmList.id},nickname=${loginMember.nickname})}"></a>
+                                        </td>
+                                        <td class="o-link-td">
+                                            <a th:text="${mmList.address}" th:href="@{/details/{id}(id=${mmList.id},nickname=${loginMember.nickname})}"></a>
+                                        </td>
+                                        <td>
+                                            <div th:text="${mmList.floorNumber} + '/' + ${mmList.totalFloors} + '층'"></div>
+                                            <div th:text="${'공급 : ' + mmList.privateArea + '㎡'}"></div>
+                                            <div th:text="${'전용 : ' + mmList.supplyArea + '㎡'}"></div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <div th:if="${mmList.tradeType == '매매'}">
+                                                    <div th:text="매매"></div>
+                                                    <span class="o-md-load" th:with="sp_djr=${mmList.sellingPrice / 10000}, sp_aks=${mmList.sellingPrice % 10000}"
+                                                          th:text="${#strings.concat(sp_djr > 0 ? sp_djr + '억 ' : '', sp_aks > 0 ? sp_aks + '만원' : '')}"></span>
                                                 </div>
-                                            </td>
-                                            <td class="o-t-btns">
+                                                <div th:if="${mmList.tradeType == '전세'}">
+                                                    <div th:text="전세"></div>
+                                                    <span class="o-md-load"  th:with="dp_djr=${mmList.depositForLease / 10000}, dp_aks=${mmList.depositForLease % 10000}"
+                                                          th:text="${ #strings.concat(dp_djr > 0 ? dp_djr + '억 ' : '', dp_aks > 0 ? dp_aks + '만원' : '')}"></span>
+                                                </div>
+                                                <div th:if="${mmList.tradeType == '월세'}">
+                                                    <div th:text="월세"></div>
+                                                    <span class="o-md-load" th:text="${mmList.monthlyForRent + '/' + mmList.monthlyRent}"></span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="o-t-btns">
+                                            <form th:action="@{/member/qDeleteMaemul}" method="POST" onsubmit="return deleteMMCheck()">
+                                                <input type="hidden" id="num" th:name="id" th:value="${mmList.id}">
                                                 <a th:href="@{/updatePage_maemul(maemul_id=${mmList.id})}">수정</a>
                                                 <input type="submit" value="삭제">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </form>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </div>
                     </div>

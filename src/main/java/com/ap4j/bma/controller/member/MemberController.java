@@ -5,7 +5,6 @@ import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
 import com.ap4j.bma.model.entity.member.LikedEntity;
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
-import com.ap4j.bma.model.entity.recent.RecentEntity;
 import com.ap4j.bma.service.member.LikedService;
 import com.ap4j.bma.service.member.MemberService;
 import com.ap4j.bma.service.member.RecentServiceImpl;
@@ -345,7 +344,7 @@ public class MemberController {
     }
 
     /** 관심매물 페이지 매핑 */
-    @RequestMapping("/liked")   // pageSize 10으로 수정필요
+    @RequestMapping("/liked")
     public String qInterest(@RequestParam(name = "page", defaultValue = "1") int page,
                             @RequestParam(name = "pageSize", defaultValue = "10") int pageSize,HttpSession session, Model model) {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
@@ -490,14 +489,11 @@ public class MemberController {
     public String qFindEmail(@RequestParam String name, @RequestParam String tel, Model model) {
         Optional<MemberEntity> findMember = qMemberService.findByNameAndTel(name, tel);
 
-        if(findMember.isPresent()) {
-            model.addAttribute("findEmail", findMember.get().getEmail());
-        } else {
-            model.addAttribute("findEmailFailed", "일치하는 회원정보가 없습니다.");
-        }
+        model.addAttribute("findEmail", findMember.map(MemberEntity::getEmail).orElse(null));
+        model.addAttribute("findEmailFailed", findMember.isEmpty() ? "일치하는 회원정보가 없습니다." : null);
+
         return "userView/findMemberInfo";
     }
-
 
     // 중복코드 메서드화
 
