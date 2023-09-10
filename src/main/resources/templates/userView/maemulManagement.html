@@ -84,7 +84,7 @@
                                                 <div id="o-md-load" th:text="${mmList.monthlyForRent + '만 / ' + mmList.monthlyRent + '만'}">보증금/월세</div>
                                             </td>
                                             <td class="o-t-btns">
-                                                <a th:href="@{/}">수정</a>
+                                                <a th:href="@{/updatePage_maemul(maemul_id=${mmList.id})}">수정</a>
                                                 <input type="submit" value="삭제">
                                             </td>
                                         </tr>
