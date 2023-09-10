@@ -343,6 +343,16 @@ $('.btn-check').on('change', function() {
     }
 });
 
+/* 리스트 상단 최신순 가격순 면적순 필터 */
+
+var orderType;
+$(".nav-link").click(function () {
+    // 선택한 버튼의 data-order 속성 값을 가져옴
+    orderType = $(this).data("order");
+    sendToServer();
+
+});
+
 // 맵 최초 로드시 마커 생성 해주는 함수
 var onlyOneStart = false; // 한 번만 실행하기 위한 변수
 // 맵 로드가 완료되면 실행
@@ -387,7 +397,8 @@ kakao.maps.event.addListener(map, 'tilesloaded', function () {
         rowMonthlyForRent: bozugStart,
         highMonthlyForRent: bozugEnd,
         minPrivateArea: minValue,
-        maxPrivateArea: maxValue
+        maxPrivateArea: maxValue,
+        orderType: orderType
     };
 
     $.ajax({
@@ -463,12 +474,10 @@ kakao.maps.event.addListener(map, 'idle', function () {
         rowMonthlyForRent: bozugStart,
         highMonthlyForRent: bozugEnd,
         minPrivateArea: minValue,
-        maxPrivateArea: maxValue
+        maxPrivateArea: maxValue,
+        orderType: orderType
     };
-    console.log("*****");
-    console.log(dataToSend.minPrivateArea);
-    console.log(dataToSend.maxPrivateArea);
-    console.log("*****");
+
     var likedBoolean = true;
 
     $.ajax({
@@ -963,9 +972,10 @@ function sendToServer() {
         rowMonthlyForRent: bozugStart,
         highMonthlyForRent: bozugEnd,
         minPrivateArea: minValue,
-        maxPrivateArea: maxValue
+        maxPrivateArea: maxValue,
+        orderType: orderType
     };
-    console.log(data);
+
     $.ajax({
         type: "POST",
         url: "/map/map",
@@ -993,7 +1003,7 @@ function sendToServer() {
                     closeOtherOverlays();
                     // 사이드바 초기화
                     clearSidebar();
-                    console.log(maemul.apt_name);
+
                     var markerPosition = new kakao.maps.LatLng(maemul.latitude, maemul.longitude);
                     var markerKey = markerPosition.toString();
                     var markerContent = "<div class='e-marker'>" +
