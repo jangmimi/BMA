@@ -739,7 +739,7 @@ function updateSidebar(responseData) {
             likedCount(likedEntityList);
 
             likedEntityList.forEach(function (liked) {
-
+                console.log(liked.maemul_id === maemul.id);
                 if(liked.maemul_id === maemul.id) {
                     heartButton.querySelector("button").setAttribute("data-isButton", "true");
                     heartButton.querySelector("img").setAttribute("src", "/img/mapDetailAndAPTList/aHeartBtn.png"); // 이미지를 바꿔줌
@@ -779,7 +779,7 @@ $(document).on("click", ".aHeartBtn", function() {
             type: "POST", //
             data: { maemulId: maemulId }, //
             success: function(response) {
-
+                console.log("통신후 버튼상태 변경전 : " + $heartButton.attr("data-isButton"));
                 // 버튼 상태 변경
                 if ($heartButton.attr("data-isButton") === "true") {
                     $heartButton.attr("data-isButton", "false");
@@ -788,7 +788,7 @@ $(document).on("click", ".aHeartBtn", function() {
                     $heartButton.attr("data-isButton", "true");
                     $heartButton.find("img").attr("src", "/img/mapDetailAndAPTList/aHeartBtn.png");
                 }
-
+                console.log("통신후 버튼상태 변경후 : " + $heartButton.attr("data-isButton"));
                 // 관심매물 갯수 최신화
                 var bounds = map.getBounds();
                 var southWest = bounds.getSouthWest();
