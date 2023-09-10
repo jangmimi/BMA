@@ -86,6 +86,7 @@ a태그 기본값인 색,밑줄 설정제거, 폰트, 사이즈조정
     flex-direction: column;
     align-items: center;
     padding: 0;
+    border-top:1px solid #ededed;
 }
 
 .n-footer-align {
