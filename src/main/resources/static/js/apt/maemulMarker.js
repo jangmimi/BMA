@@ -675,12 +675,14 @@ $(document).on("click", ".aHeartBtn", function() {
     if (loginMember != null) {
         var $heartButton = $(this); // 클릭한 버튼을 변수에 저장
         var maemulId = $heartButton.closest("li").find("a").attr("href").split("/").pop();
+        maemulId = maemulId.split("?")[0];
+        console.log("매물 아이디" + maemulId);
         $.ajax({
             url: "/member/qLiked", //
             type: "POST", //
             data: { maemulId: maemulId }, //
             success: function(response) {
-                console.log("매물 아이디" + maemulId);
+
                 // 버튼 상태 변경
                 if ($heartButton.attr("data-isButton") === "true") {
                     $heartButton.attr("data-isButton", "false");
