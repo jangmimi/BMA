@@ -84,8 +84,14 @@ $(document).ready(function() {
     $("#checkEmail").click(function () {
         const userEmail = $("#userEmail").val().trim();
         const sendEmail = document.forms["sendEmail"];
+        const emailreg = /^[A-Za-z0-9_\.]+@[A-Za-z0-9]+\.[A-Za-z0-9]+/;
+
         if(userEmail === '') {
             alert('이메일을 입력해주세요.');
+            return false;
+        }
+        if(!emailreg.test(userEmail)) {
+            alert('이메일 형식으로 입력해주세요.');
             return false;
         }
         $.ajax({
@@ -187,49 +193,58 @@ function oDeleteCheck() {
 }
 
 // oFindMemberInfo.html
-// 이메일찾기 ajax 구현
-function findEmail() {
-    let name = $('#name').value.trim();
-    let tel = $('#tel').value.trim();
-    if(name === '') {
+
+// 이메일찾기 submit 전에 공백, 형식 체크
+function oFindEmailCheck() {
+    const name = $('#name').val().trim();
+    const tel = $('#tel').val().trim();
+    const telreg = /^\d{10,11}$/;
+
+    if (name === '') {
         alert('이름을 입력해주세요.');
         return false;
     }
-    if(tel === '') {
-        alert('연락처를 입력해주세요.');
+    if (tel === '' || !telreg.test(tel)) {
+        alert('올바른 연락처 형식으로 입력해주세요.');
         return false;
     }
-    fetch('/qFindEmail', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: 'name=' + encodeURIComponent(name) + '&tel=' + encodeURIComponent(tel),
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.cnt === 1) {
-            alert('이메일: ' + data.findEmail);
-        } else {
-            alert('일치하는 회원이 없습니다.');
-        }
-    })
-    .catch(error => {
-        console.error('에러 발생:', error);
-    });
-    return false; // 폼 제출 방지
 }
 
-// 이메일찾기 submit 전에 공백 체크
-function oFindEmailCheck() {
-    let name = $('#name').val().trim();
-    let tel = $('#tel').val().trim();
-    if(name === '') {
-        alert('이름을 입력해주세요.');
-        return false;
-    }
-    if(tel === '') {
-        alert('연락처를 입력해주세요.');
-        return false;
-    }
-}
+// 이메일찾기 ajax 구현
+//function findEmail() {
+//    let name = $('#name').value.trim();
+//    let tel = $('#tel').value.trim();
+//    const telreg = /^\d{10,11}$/;
+//
+//    if(name === '') {
+//        alert('이름을 입력해주세요.');
+//        return false;
+//    }
+//    if(tel === '') {
+//        alert('연락처를 입력해주세요.');
+//        return false;
+//    }
+//  if(!telreg.test(tel) {
+//        alert('연락처 형식으로 입력해주세요.');
+//        return false;
+//    }
+//    fetch('/qFindEmail', {
+//        method: 'POST',
+//        headers: {
+//            'Content-Type': 'application/x-www-form-urlencoded',
+//        },
+//        body: 'name=' + encodeURIComponent(name) + '&tel=' + encodeURIComponent(tel),
+//    })
+//    .then(response => response.json())
+//    .then(data => {
+//        if (data.cnt === 1) {
+//            alert('이메일: ' + data.findEmail);
+//        } else {
+//            alert('일치하는 회원이 없습니다.');
+//        }
+//    })
+//    .catch(error => {
+//        console.error('에러 발생:', error);
+//    });
+//    return false; // 폼 제출 방지
+//}
