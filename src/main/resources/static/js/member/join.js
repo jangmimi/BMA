@@ -200,9 +200,11 @@ $(document).ready(function(){
         if($('#pwd').hasClass('active')){
             $(this).attr('class',"fa fa-eye-slash fa-lg")
             .prev('#pwd').attr('type',"text");
+            $(".form-floating i").css("color","#26ABED");
         }else{
             $(this).attr('class',"fa fa-eye fa-lg")
             .prev('#pwd').attr('type','password');
+            $(".form-floating i").css("color","silver");
         }
     });
 });

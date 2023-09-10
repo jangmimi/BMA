@@ -118,6 +118,7 @@ $(document).ready(function() {
 
 // 닉네임 중복검사
 let previousNickname = $('#nickname').val().trim();    // 기존 닉네임 저장
+function checkNickname() {
     let nickname = $('#nickname').val().trim() ;
     if(nickname === '') {
         alert('닉네임을 입력해주세요.');
