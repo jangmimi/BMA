@@ -196,7 +196,7 @@ public class MaemulRegEntityRepositoryImpl implements MaemulRepositoryCustom{
         if(orderType != null){
             switch (orderType) {
                 case "latest":
-                    orderTypeCondition = maemulRegEntity.availableMoveInDate.desc();
+                    orderTypeCondition = maemulRegEntity.createdAt.desc();
                     break;
 
                 case "price":
