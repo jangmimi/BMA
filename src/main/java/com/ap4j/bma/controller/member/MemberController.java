@@ -441,6 +441,7 @@ public class MemberController {
     public String qDeleteRecent(@RequestParam("maemul_id") Integer maemul_id, String nickname, HttpSession session) {
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
         nickname = memberDTO.getNickname();
+        log.info("삭제할 최근본매물 : " + maemul_id);
         recentServiceImpl.recentDelete(maemul_id, nickname);
         return "redirect:/member/qRecent";
     }
