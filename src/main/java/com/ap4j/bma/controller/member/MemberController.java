@@ -328,7 +328,6 @@ public class MemberController {
 
         LikedEntity likedEntity = new LikedEntity();
         likedEntity.setNickname(nickname);
-        likedEntity.setRoad_name(finemm.getAddress());
         likedEntity.setMaemul_id(maemulId);
 
         likedService.save(likedEntity);
