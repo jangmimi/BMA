@@ -36,7 +36,9 @@ border-bottom: 1px solid #ddd;
 text-align: center;
 font-size:14px;
 }
-
+.o-link-fc {
+    color: #666;
+}
 tbody tr:hover {
     background: #eee;
 }

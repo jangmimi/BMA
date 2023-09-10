@@ -422,6 +422,7 @@
     grid-template-columns: repeat(auto-fill, minmax(calc(33.33% - 10px), 1fr)); /* 각 열의 크기 설정 */
     grid-gap: 10px; /* 열 간격 설정 */
     grid-row-gap: 10px; /* 행 간격 설정 */
+    margin-bottom: 80px;
 }
 .z-bottom-wrap  a {
     text-decoration: none;

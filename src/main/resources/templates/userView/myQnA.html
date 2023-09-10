@@ -62,9 +62,9 @@
                                         <td id="category" th:text="${myQna.category}">분류</td>
                                         <td>
                                             <!-- 작성한 글의 상세보기 페이지로 링크 -->
-                                            <a th:href="@{/qnaview(id=${myQna.id})}" th:text="${myQna.title}">제목</a>
+                                            <a class="o-link-fc" th:href="@{/qnaview(id=${myQna.id})}" th:text="${myQna.title}">제목</a>
                                         </td>
-                                        <td><a th:text="${#temporals.format(myQna.createdAt, 'yyyy-MM-dd')}">yyyy-MM-dd</a></td>
+                                        <td><span th:text="${#temporals.format(myQna.createdAt, 'yyyy-MM-dd')}">yyyy-MM-dd</span></td>
                                         <td>
                                             <!-- 답변 상태에 따라 다른 클래스와 텍스트 표시 -->
                                             <span th:if="${myQna.answerEntity != null}" th:class="completed">답변완료</span>
