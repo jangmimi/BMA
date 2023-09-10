@@ -12,6 +12,7 @@
     <link rel="stylesheet" th:href="@{/css/member/myPage.css}">
     <link rel="stylesheet" th:href="@{/css/member/myCommon.css}">
     <link rel="stylesheet" th:href="@{/css/member/myQna.css}">
+    <link rel="stylesheet" th:href="@{/css/member/pagination.css}">
 </head>
 <body layout:fragment="content">
 
@@ -73,6 +74,23 @@
                                 </tbody>
                             </table>
                         </div>
+
+                        <div class="s-paging">
+                            <ul>
+                                <li class="s-pre" th:if="${myQnaList.hasPrevious()}">
+                                    <a th:href="@{/member/qMyQnA(page=${myQnaList.number - 1}, size=${myQnaList.size})}">이전</a>
+                                </li>
+                                <li th:if="${myQnaList.totalPages > 0}" th:each="pageNo : ${#numbers.sequence(0, myQnaList.totalPages - 1)}">
+                                    <span th:if="${myQnaList.number == pageNo}" th:text="${pageNo + 1}" class="s-active-page"></span>
+                                    <a th:unless="${myQnaList.number == pageNo}" th:href="@{/member/qMyQnA(page=${pageNo+1}, size=${myQnaList.size})}" th:text="${pageNo + 1}"></a>
+                                </li>
+                                <li class="s-next" th:if="${myQnaList.hasNext()}">
+                                    <a th:href="@{/member/qMyQnA(page=${myQnaList.number + 2}, size=${myQnaList.size})}">다음</a>
+                                </li>
+                            </ul>
+                        </div>
+
+
                         <div class="o-tb-btn">
                             <button class="btn btn-primary" id="myQnaBtn" th:onclick="|location.href='@{/qna}'|">문의하기</button>
                         </div>

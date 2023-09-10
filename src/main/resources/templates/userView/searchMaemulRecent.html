@@ -119,7 +119,7 @@
                                     <a th:unless="${mmpList.number == pageNo}" th:href="@{/member/qRecent(page=${pageNo+1}, size=${mmpList.size})}" th:text="${pageNo + 1}"></a>
                                 </li>
                                 <li class="s-next" th:if="${mmpList.hasNext()}">
-                                    <a th:href="@{/member/qRecent(page=${mmpList.number + 1}, size=${mmpList.size})}">다음</a>
+                                    <a th:href="@{/member/qRecent(page=${mmpList.number + 2}, size=${mmpList.size})}">다음</a>
                                 </li>
                             </ul>
                         </div>
