@@ -1,6 +1,7 @@
 package com.ap4j.bma.model.repository;
 
 import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.micrometer.core.instrument.util.StringUtils;
@@ -20,7 +21,7 @@ public class MaemulRegEntityRepositoryImpl implements MaemulRepositoryCustom{
     public List<MaemulRegEntity> findMaemulListBounds(Double southWestLat, Double southWestLng, Double northEastLat, Double northEastLng, String tradeTypes
             , Integer numberOfRooms, Integer numberOfBathrooms, Integer floorNumber, Integer managementFee, String Elevator, String direction, String Parking
             , String shortTermRental, String keyword, Integer rowSellingPrice, Integer highSellingPrice, Integer rowDepositForLease, Integer highDepositForLease
-            , Integer rowMonthlyForRent, Integer highMonthlyForRent, Double minPrivateArea, Double maxPrivateArea) {
+            , Integer rowMonthlyForRent, Integer highMonthlyForRent, Double minPrivateArea, Double maxPrivateArea, String orderType) {
 
         BooleanExpression tradeTypeCondition = null;            // 거래종류
         BooleanExpression roomCountCondition = null;            // 방개수
@@ -39,6 +40,7 @@ public class MaemulRegEntityRepositoryImpl implements MaemulRepositoryCustom{
         BooleanExpression bozugStartCondition = null;           // 보증금 시작값
         BooleanExpression bozugEndCondition = null;             // 보증금 끝값
         BooleanExpression valueCondition = null;                // 면적
+        OrderSpecifier<?> orderTypeCondition = maemulRegEntity.id.asc();                // 최신순, 면적순, 가격순
 
         /* 거래종류 필터 */
         if (!StringUtils.isEmpty(tradeTypes)) {
@@ -190,6 +192,25 @@ public class MaemulRegEntityRepositoryImpl implements MaemulRepositoryCustom{
             valueCondition = maemulRegEntity.privateArea.goe(0);       // 0개 선택되었을 때
         }
 
+        /* 최신순, 가격순, 면적순 */
+        if(orderType != null){
+            switch (orderType) {
+                case "latest":
+                    orderTypeCondition = maemulRegEntity.availableMoveInDate.desc();
+                    break;
+
+                case "price":
+                    orderTypeCondition = maemulRegEntity.SellingPrice.desc();
+                    break;
+
+                case "area":
+                    orderTypeCondition = maemulRegEntity.privateArea.desc();
+                    break;
+
+                default:
+                    break;
+            }
+        }
         return queryFactory
                 .selectFrom(maemulRegEntity)
                 .where(
@@ -215,6 +236,7 @@ public class MaemulRegEntityRepositoryImpl implements MaemulRepositoryCustom{
                         bozugEndCondition,
                         valueCondition
                 )
+                .orderBy(orderTypeCondition)
                 .fetch();
     }
 

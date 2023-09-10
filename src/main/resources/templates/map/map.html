@@ -44,17 +44,10 @@
                          tabindex="0" style="height: 93%;">
                         <!-- 최신순, 가격순, 면적순, 사진 많은 순 시작 -->
                         <ul class="nav aAPTListTab">
-                            <div style="display:flex;">
-                                <li class="nav-item">
-                                    <a class="nav-link" aria-current="page" href="#" id="latestSort">최신순</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#" id="priceSort">가격순</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#" id="areaSort">면적순</a>
-                                </li>
-
+                            <div style="display: flex;">
+                                <button class="nav-link" aria-current="page" id="latestSort" data-order="latest">최신순</button>
+                                <button class="nav-link" id="priceSort" data-order="price">가격순</button>
+                                <button class="nav-link" id="areaSort" data-order="area">면적순</button>
                             </div>
                             <div class="aHeartBtnInTab">
                                 <button class="aHeartBtn" type="button" data-bs-toggle="modal"
