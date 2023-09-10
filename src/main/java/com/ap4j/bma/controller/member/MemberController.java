@@ -228,20 +228,21 @@ public class MemberController {
         MemberDTO loginMember = (MemberDTO) session.getAttribute("loginMember");
         String nickname = loginMember.getNickname();
         String root = getMemberRoot(loginMember.getRoot());
-
         String thumImg = (String) session.getAttribute("thumbnail_image");
 
         Page<MaemulRegEntity> mmpList = likedService.getPaginatedItems(nickname,page,pageSize);
         Long likedCnt = likedService.countLikedByNickname(nickname);
 
-        /* 매물목록으로 테스트중*/
-        List<MaemulRegEntity> mRecentList = qMemberService.getListByNickname(loginMember.getNickname());
-        model.addAttribute("mRecentList",mRecentList);
+        Page<MaemulRegEntity> recentList = recentServiceImpl.recentMaemulList(nickname,page,pageSize);
+        Long recentListCnt = recentServiceImpl.recentMamulListCount(nickname);
+        log.info("최근본리스트: " + recentList);
 
         model.addAttribute("root", root);
         model.addAttribute("thumbnail_image", thumImg);
         model.addAttribute("likedCnt",likedCnt);
         model.addAttribute("mmpList",mmpList);
+        model.addAttribute("recentList",recentList);
+        model.addAttribute("recentListCnt",recentListCnt);
 
         return "userView/myPage";
     }
@@ -347,10 +348,6 @@ public class MemberController {
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
         String nickname = memberDTO.getNickname();
 
-//        List<LikedEntity> mmLikedList = getListOrDefault(likedService.getAllList());
-//        List<MaemulRegEntity> mmList = getListOrDefault(qMemberService.getAllList());
-//        List<MaemulRegEntity> mmFilterList = likedService.filterMaemulListByNickname(nickname, mmLikedList, mmList);
-
         Page<MaemulRegEntity> mmpList = likedService.getPaginatedItems(nickname,page,pageSize);
         Long totalCount = likedService.countLikedByNickname(nickname);
         model.addAttribute("totalCount",totalCount);
@@ -389,10 +386,6 @@ public class MemberController {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
         String nickname = memberDTO.getNickname();
-//        List<RecentEntity> mmRecentList = recentServiceImpl.getAllList();
-//        Long mmAllRecentCnt = recentServiceImpl.countAll();
-//        log.info(mmRecentList.toString());
-//        log.info(String.valueOf(mmAllRecentCnt));
 
         Page<MaemulRegEntity> mmpList = recentServiceImpl.recentMaemulList(nickname,page,pageSize);
         Long totalCount = recentServiceImpl.recentMamulListCount(nickname);
