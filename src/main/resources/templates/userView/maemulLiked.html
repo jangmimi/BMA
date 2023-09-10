@@ -53,60 +53,63 @@
                             <table class="faq-tb">
                                 <form th:action="@{/member/qDeleteLiked}" method="POST">
                                     <thead>
-                                    <tr>
-                                        <th class="o-d-type">거래종류 매물종류</th>
-                                        <th class="o-d-img">이미지</th>
-                                        <th class="o-d-add">소재지/상세주소</th>
-                                        <th class="o-d-about">매물설명</th>
-                                        <th class="o-d-area">면적</th>
-                                        <th class="o-d-price">가격(만원)</th>
-                                        <th class="o-d-btn">삭제</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <p>전체 <span class="o-cntAll" th:text="${totalCount}"></span>건</p>
-                                    <th:block th:if="${totalCount == 0}">
                                         <tr>
-                                            <td colspan="7">조회된 데이터가 없습니다.</td>
+                                            <th class="o-d-type">거래종류<br>매물종류</th>
+                                            <th class="o-d-img">이미지</th>
+                                            <th class="o-d-add">소재지/상세주소</th>
+                                            <th class="o-d-about">매물설명</th>
+                                            <th class="o-d-area">면적</th>
+                                            <th class="o-d-price">가격(만원)</th>
+                                            <th class="o-d-btn">삭제</th>
                                         </tr>
-                                    </th:block>
-                                    <tr th:each="mmpList : ${mmpList}">
-                                        <input type="hidden" id="num" th:name="maemul_id" th:value="${mmpList.id}">
-                                        <td id="tradeType" th:text="${mmpList.tradeType}">거래유형</td>
-                                        <td id="o-d-photo">
-                                            <img th:src="@{/img/thumbs.jpg}" width="80">
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <a th:text="${mmpList.address}" th:href="@{/details/{id}(id=${mmpList.id},nickname=${mmpList.nickname})}"></a>
-                                            </div>
-                                            <div >
-                                                <a th:text="${mmpList.APT_name}" th:href="@{/details/{id}(id=${mmpList.id},nickname=${mmpList.nickname})}"></a>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div th:text="${mmpList.floorNumber + '층/' + mmpList.totalFloors + '층'}">
-                                                층수
-                                            </div>
-                                            <div th:text="${mmpList.features}">매물설명</div>
-                                        </td>
-                                        <td>
-                                            <div th:text="${'계약' + mmpList.privateArea + '㎡'}">면적</div>
-                                            <div th:text="${'전용' + mmpList.supplyArea + '㎡'}">공용면적</div>
-                                        </td>
-                                        <td>
-                                            <div id="o-d-load"
-                                                 th:text="${mmpList.monthlyForRent != null ? '보증금' + mmpList.monthlyForRent : '보증금 없음'}">
-                                                보증금
-                                            </div>
-                                            <div th:text="${mmpList.monthlyRent != null ? '관리비' + mmpList.monthlyRent : '관리비 없음'}">
-                                                관리비
-                                            </div>
-                                        </td>
-                                        <td class="o-t-btn">
-                                            <input type="submit" value="삭제">
-                                        </td>
-                                    </tr>
+                                        </thead>
+                                        <tbody>
+                                        <p>전체 <span class="o-cntAll" th:text="${totalCount}"></span>건</p>
+                                        <th:block th:if="${totalCount == 0}">
+                                            <tr>
+                                                <td colspan="7">조회된 데이터가 없습니다.</td>
+                                            </tr>
+                                        </th:block>
+                                        <tr th:each="mmpList : ${mmpList}">
+                                            <input type="hidden" id="num" th:name="maemul_id" th:value="${mmpList.id}">
+                                            <td id="tradeType" th:text="${mmpList.tradeType}"></td>
+                                            <td id="o-d-photo">
+                                                <img th:src="@{/img/thumbs.jpg}" width="80">
+                                            </td>
+                                            <td>
+                                                <a th:href="@{/details/{id}(id=${mmpList.id},nickname=${loginMember.nickname})}">
+                                                    <div class="o-link-td"  th:text="${mmpList.address}"></div>
+                                                    <div class="o-link-td" th:text="${mmpList.APT_name}"></div>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <div th:text="${mmpList.floorNumber + '층/' + mmpList.totalFloors + '층'}"></div>
+                                                <div th:text="${mmpList.features}"></div>
+                                            </td>
+                                            <td>
+                                                <div th:text="${'공급 ' + mmpList.supplyArea + '㎡'}"></div>
+                                                <div th:text="${'전용 ' + mmpList.privateArea + '㎡'}"></div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <div th:if="${mmpList.tradeType == '매매'}">
+                                                        <span class="o-md-load" th:text="${'보증금 ' + mmpList.sellingPrice}"></span>
+                                                        <div th:text="${mmpList.monthlyRent != 0 ? '관리비' + mmpList.monthlyRent : '관리비 없음'}"></div>
+                                                    </div>
+                                                    <div th:if="${mmpList.tradeType == '전세'}">
+                                                        <span class="o-md-load"  th:text="${'보증금 ' + mmpList.depositForLease}"></span>
+                                                        <div th:text="${mmpList.monthlyRent != 0 ? '관리비' + mmpList.monthlyRent : '관리비 없음'}"></div>
+                                                    </div>
+                                                    <div th:if="${mmpList.tradeType == '월세'}">
+                                                        <span class="o-md-load" th:text="${mmpList.monthlyForRent + '/' + mmpList.monthlyRent}"></span>
+                                                        <div th:text="${mmpList.monthlyRent != 0 ? '관리비' + mmpList.monthlyRent : '관리비 없음'}"></div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="o-t-btn">
+                                                <input type="submit" value="삭제">
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </form>
                             </table>
