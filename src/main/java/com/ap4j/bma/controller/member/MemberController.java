@@ -224,7 +224,7 @@ public class MemberController {
         return "redirect:/";
     }
 
-    /** 마이페이지 매핑 */ 
+    /** 마이페이지 매핑 */
     @RequestMapping("/qMyPage") // 관심매물 최근매물 불러와야함
     public String qMyPage(@RequestParam(name = "page", defaultValue = "1") int page,
                           @RequestParam(name = "pageSize", defaultValue = "9") int pageSize,
@@ -391,19 +391,42 @@ public class MemberController {
 
     /** 최근매물 페이지 매핑 */
     @RequestMapping("/qRecent")
-    public String qRecent(HttpSession session, Model model) {
+    public String qRecent(@RequestParam(name = "page", defaultValue = "1") int page,
+                          @RequestParam(name = "pageSize", defaultValue = "2") int pageSize,HttpSession session, Model model) {
         log.info("MemberController - qRecent() 실행");
         if(!loginStatus(session)) { return "userView/loginNeed"; }
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
+        String nickname = memberDTO.getNickname();
+//        List<RecentEntity> mmRecentList = recentServiceImpl.getAllList();
+//        Long mmAllRecentCnt = recentServiceImpl.countAll();
+//        log.info(mmRecentList.toString());
+//        log.info(String.valueOf(mmAllRecentCnt));
 
-        List<RecentEntity> mmRecentList = recentServiceImpl.getAllList();
-        Long mmAllRecentCnt = recentServiceImpl.countAll();
-        log.info(mmRecentList.toString());
-        log.info(String.valueOf(mmAllRecentCnt));
+        Page<MaemulRegEntity> mmpList = recentServiceImpl.recentMaemulList(nickname,page,pageSize);
+        Long totalCount = recentServiceImpl.recentMamulListCount(nickname);
 
-        model.addAttribute("mmRecentList",mmRecentList);
-        model.addAttribute("mmAllRecentCnt",mmAllRecentCnt);
+        model.addAttribute("mmpList",mmpList);
+        model.addAttribute("totalCount",totalCount);
 
         return "userView/maemulRecent";
+    }
+
+    @GetMapping("/searchr")
+    public String searchr(  String keyword,
+                            @RequestParam(name = "page", defaultValue = "1") int page,
+                            @RequestParam(name = "pageSize", defaultValue = "2") int pageSize, HttpSession session, Model model) {
+        if (!loginStatus(session)) {
+            return "userView/loginNeed";
+        }
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
+        String nickname = memberDTO.getNickname();
+        Page<MaemulRegEntity> mmpList = recentServiceImpl.searchRecentMaemulList(nickname,keyword,page,pageSize);
+        log.info(mmpList.toString());
+        Long totalCount = recentServiceImpl.searchRecentMaemulListCount(nickname,keyword);
+        model.addAttribute("totalCount", totalCount);
+        model.addAttribute("mmpList", mmpList);
+
+        return "userView/searchMaemulRecent";
     }
 
     /** 기본 회원탈퇴 (js ajax 활용) */   // sns 탈퇴 시 로그인 별도 처리 필요
