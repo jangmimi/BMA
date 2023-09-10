@@ -3,62 +3,350 @@
 $(document).ready(function() {
 
 	// 초기에는 "편의시설" wrap만 표시되도록 설정
-	$('.y-convenience').css('display', 'inline-block');
-	$('.y-map-btn.y-safety-district, .y-map-btn.y-school-district').css('display', 'none');
+	$('.y-station').css('background', 'url("/img/details/station.png") center center / cover no-repeat transparent'); // 클릭된 이미지
+	$('.y-store').css('background', 'url("/img/details/store_n.png") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+	$('.y-cafe').css('background', 'url("/img/details/cafe_n.png") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+	$('.y-bank').css('background', 'url("/img/details/bank_n.png") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+	$('.y-hospital').css('background-color', '#ECECEC'); // 클릭 안 된 색상
+	$('.y-hospital').css('color', '#979797'); // 클릭 안 된 색상
+	$('.y-gas-station').css('background-color', '#ECECEC'); // 클릭 안 된 색상
+	$('.y-gas-station').css('color', '#979797'); // 클릭 안 된 색상
 
-	// 편의시설 버튼 클릭 시
-	$('.y-qq').click(function() {
-		// 편의시설 wrap 표시, 나머지 숨김
-		$('.y-convenience').css('display', 'inline-block');
-		$('.y-map-btn.y-safety-district, .y-map-btn.y-school-district').css('display', 'none');
+
+	var isSubwayClicked = false;
+	var isConvenienceClicked = false;
+	var isCafeClicked = false;
+	var isBankClicked = false;
+	var isHospitalClicked = false;
+	var isGasStationClicked = false;
+
+
+	// 지하철 버튼 클릭 시
+	$('.y-j-subway').click(function() {
+		if(isSubwayClicked){
+			$('.y-station').css('background', 'url("/img/details/station_n.png") center center / cover no-repeat transparent');
+			$('.y-store').css('background', 'url("/img/details/store_n.png") center center / cover no-repeat transparent');
+			$('.y-cafe').css('background', 'url("/img/details/cafe_n.png") center center / cover no-repeat transparent');
+			$('.y-bank').css('background', 'url("/img/details/bank_n.png") center center / cover no-repeat transparent');
+			$('.y-hospital').css('background-color', '#ECECEC');
+			$('.y-gas-station').css('background-color', '#ECECEC');
+			isSubwayClicked = false;
+			isConvenienceClicked = false;
+			isCafeClicked = false;
+			isBankClicked =false;
+			isHospitalClicked = false;
+			isGasStationClicked = false;
+		} else {
+			$('.y-station').css('background', 'url("/img/details/station.png") center center / cover no-repeat transparent');
+			$('.y-store').css('background', 'url("/img/details/store_n.png") center center / cover no-repeat transparent');
+			$('.y-cafe').css('background', 'url("/img/details/cafe_n.png") center center / cover no-repeat transparent');
+			$('.y-bank').css('background', 'url("/img/details/bank_n.png") center center / cover no-repeat transparent');
+			$('.y-hospital').css('background-color', '#ECECEC');
+			$('.y-hospital').css('color', '#979797');
+			$('.y-gas-station').css('background-color', '#ECECEC');
+			$('.y-gas-station').css('color', '#979797');
+			isSubwayClicked = true;
+		}
 	});
 
-	// 안전시설 버튼 클릭 시
-	$('.y-qw').click(function() {
-		// 안전시설 wrap 표시, 나머지 숨김
-		$('.y-map-btn.y-safety-district').css('display', 'inline-block');
-		$('.y-convenience, .y-map-btn.y-school-district').css('display', 'none');
+	// 편의점 버튼 클릭 시
+	$('.y-j-convenience').click(function() {
+		if(isConvenienceClicked){
+			$('.y-station').css('background', 'url("/img/details/station_n.png") center center / cover no-repeat transparent');
+			$('.y-store').css('background', 'url("/img/details/store_n.png") center center / cover no-repeat transparent');
+			$('.y-cafe').css('background', 'url("/img/details/cafe_n.png") center center / cover no-repeat transparent');
+			$('.y-bank').css('background', 'url("/img/details/bank_n.png") center center / cover no-repeat transparent');
+			$('.y-hospital').css('background-color', '#ECECEC');
+			$('.y-gas-station').css('background-color', '#ECECEC');
+			isSubwayClicked = false;
+			isConvenienceClicked = true;
+			isCafeClicked = false;
+			isBankClicked =false;
+			isHospitalClicked = false;
+			isGasStationClicked = false;
+		} else {
+			$('.y-store').css('background', 'url("/img/details/store.png") center center / cover no-repeat transparent');
+			$('.y-station').css('background', 'url("/img/details/station_n.png") center center / cover no-repeat transparent');
+			$('.y-cafe').css('background', 'url("/img/details/cafe_n.png") center center / cover no-repeat transparent');
+			$('.y-bank').css('background', 'url("/img/details/bank_n.png") center center / cover no-repeat transparent');
+			$('.y-hospital').css('background-color', '#ECECEC');
+			$('.y-hospital').css('color', '#979797');
+			$('.y-gas-station').css('background-color', '#ECECEC');
+			$('.y-gas-station').css('color', '#979797');
+			isConvenienceClicked = false;
+		}
 	});
 
-	// 학군정보 버튼 클릭 시
-	$('.y-qe').click(function() {
-		// 학군정보 wrap 표시, 나머지 숨김
-		$('.y-map-btn.y-school-district').css('display', 'inline-block');
-		$('.y-convenience, .y-map-btn.y-safety-district').css('display', 'none');
+	// 카페 버튼 클릭 시
+	$('.y-j-cafe').click(function() {
+		if(isConvenienceClicked){
+			$('.y-station').css('background', 'url("/img/details/station_n.png") center center / cover no-repeat transparent');
+			$('.y-store').css('background', 'url("/img/details/store_n.png") center center / cover no-repeat transparent');
+			$('.y-cafe').css('background', 'url("/img/details/cafe_n.png") center center / cover no-repeat transparent');
+			$('.y-bank').css('background', 'url("/img/details/bank_n.png") center center / cover no-repeat transparent');
+			$('.y-hospital').css('background-color', '#ECECEC');
+			$('.y-gas-station').css('background-color', '#ECECEC');
+			isSubwayClicked = false;
+			isConvenienceClicked = false;
+			isCafeClicked = true;
+			isBankClicked =false;
+			isHospitalClicked = false;
+			isGasStationClicked = false;
+		} else {
+			$('.y-store').css('background', 'url("/img/details/store_n.png") center center / cover no-repeat transparent');
+			$('.y-station').css('background', 'url("/img/details/station_n.png") center center / cover no-repeat transparent');
+			$('.y-cafe').css('background', 'url("/img/details/cafe.png") center center / cover no-repeat transparent');
+			$('.y-bank').css('background', 'url("/img/details/bank_n.png") center center / cover no-repeat transparent');
+			$('.y-hospital').css('background-color', '#ECECEC');
+			$('.y-hospital').css('color', '#979797');
+			$('.y-gas-station').css('background-color', '#ECECEC');
+			$('.y-gas-station').css('color', '#979797');
+			isCafeClicked = false;
+		}
 	});
-	// 편의시설 버튼을 초기 클릭 상태로 설정
-	$('.y-map-list.y-qq button').css({
-		'color': 'black',
-		'font-weight': 'bold',
-		'font-size': '16px',
-		'border-bottom': '2px solid #000'
+
+	// 은행 버튼 클릭 시
+	$('.y-j-bank').click(function() {
+		if(isConvenienceClicked){
+			$('.y-station').css('background', 'url("/img/details/station_n.png") center center / cover no-repeat transparent');
+			$('.y-store').css('background', 'url("/img/details/store_n.png") center center / cover no-repeat transparent');
+			$('.y-cafe').css('background', 'url("/img/details/cafe_n.png") center center / cover no-repeat transparent');
+			$('.y-bank').css('background', 'url("/img/details/bank_n.png") center center / cover no-repeat transparent');
+			$('.y-hospital').css('background-color', '#ECECEC');
+			$('.y-gas-station').css('background-color', '#ECECEC');
+			isSubwayClicked = false;
+			isConvenienceClicked = false;
+			isCafeClicked = false;
+			isBankClicked =true;
+			isHospitalClicked = false;
+			isGasStationClicked = false;
+		} else {
+			$('.y-store').css('background', 'url("/img/details/store_n.png") center center / cover no-repeat transparent');
+			$('.y-station').css('background', 'url("/img/details/station_n.png") center center / cover no-repeat transparent');
+			$('.y-cafe').css('background', 'url("/img/details/cafe_n.png") center center / cover no-repeat transparent');
+			$('.y-bank').css('background', 'url("/img/details/bank.png") center center / cover no-repeat transparent');
+			$('.y-hospital').css('background-color', '#ECECEC');
+			$('.y-hospital').css('color', '#979797');
+			$('.y-gas-station').css('background-color', '#ECECEC');
+			$('.y-gas-station').css('color', '#979797');
+			isBankClicked = false;
+		}
 	});
 
-	// 나머지 버튼을 초기 클릭 상태로 설정
-	$('.y-map-list.y-qw button, .y-map-list.y-qe button').css({
-		'color': '#AEAEAE',
+	// 병원 버튼 클릭 시
+	$('.y-j-hospital').click(function() {
+		if(isConvenienceClicked){
+			$('.y-station').css('background', 'url("/img/details/station_n.png") center center / cover no-repeat transparent');
+			$('.y-store').css('background', 'url("/img/details/store_n.png") center center / cover no-repeat transparent');
+			$('.y-cafe').css('background', 'url("/img/details/cafe_n.png") center center / cover no-repeat transparent');
+			$('.y-bank').css('background', 'url("/img/details/bank_n.png") center center / cover no-repeat transparent');
+			$('.y-hospital').css('background-color', '#ECECEC');
+			$('.y-gas-station').css('background-color', '#ECECEC');
+			isSubwayClicked = false;
+			isConvenienceClicked = false;
+			isCafeClicked = false;
+			isBankClicked =false;
+			isHospitalClicked = true;
+			isGasStationClicked = false;
+		} else {
+			$('.y-store').css('background', 'url("/img/details/store_n.png") center center / cover no-repeat transparent');
+			$('.y-station').css('background', 'url("/img/details/station_n.png") center center / cover no-repeat transparent');
+			$('.y-cafe').css('background', 'url("/img/details/cafe_n.png") center center / cover no-repeat transparent');
+			$('.y-bank').css('background', 'url("/img/details/bank_n.png") center center / cover no-repeat transparent');
+			$('.y-hospital').css('background-color', '#854141');
+			$('.y-hospital').css('color', 'white');
+			$('.y-gas-station').css('background-color', '#ECECEC');
+			$('.y-gas-station').css('color', '#979797');
+
+			isHospitalClicked = false;
+		}
 	});
 
-
-	// 모든 버튼 요소에 대한 클릭 이벤트 리스너
-	$('.y-map-list button').click(function() {
-		// 클릭한 버튼의 스타일을 저장
-		const clickedButtonStyle = {
-			'color': 'black',
-			'font-weight': 'bold',
-			'font-size': '16px',
-			'border-bottom': '2px solid #000'
-		};
-
-		// 모든 버튼의 스타일 초기화
-		$('.y-map-list button').css({
-			'color': '#AEAEAE',
-			'font-weight': 'normal',
-			'font-size': 'inherit',
-			'border-bottom': 'none'
-		});
-
-		// 클릭한 버튼에 스타일 적용
-		$(this).css(clickedButtonStyle);
+	// 주유소 버튼 클릭 시
+	$('.y-j-gas-staion').click(function() {
+		if(isConvenienceClicked){
+			$('.y-station').css('background', 'url("/img/details/station_n.png") center center / cover no-repeat transparent');
+			$('.y-store').css('background', 'url("/img/details/store_n.png") center center / cover no-repeat transparent');
+			$('.y-cafe').css('background', 'url("/img/details/cafe_n.png") center center / cover no-repeat transparent');
+			$('.y-bank').css('background', 'url("/img/details/bank_n.png") center center / cover no-repeat transparent');
+			$('.y-hospital').css('background-color', '#ECECEC');
+			$('.y-gas-station').css('background-color', '#ECECEC');
+			isSubwayClicked = false;
+			isConvenienceClicked = false;
+			isCafeClicked = false;
+			isBankClicked =false;
+			isHospitalClicked = false;
+			isGasStationClicked = true;
+		} else {
+			$('.y-store').css('background', 'url("/img/details/store_n.png") center center / cover no-repeat transparent');
+			$('.y-station').css('background', 'url("/img/details/station_n.png") center center / cover no-repeat transparent');
+			$('.y-cafe').css('background', 'url("/img/details/cafe_n.png") center center / cover no-repeat transparent');
+			$('.y-bank').css('background', 'url("/img/details/bank_n.png") center center / cover no-repeat transparent');
+			$('.y-hospital').css('background-color', '#ECECEC');
+			$('.y-hospital').css('color', '#979797');
+			$('.y-gas-station').css('background-color', '#A78E62');
+			$('.y-gas-station').css('color', 'white');
+			isGasStationClicked = false;
+		}
 	});
+
 });
+
+
+// --------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// $(document).ready(function() {
+// 	// 초기에 "지하철" 버튼 클릭된 상태로 설정
+// 	$('.y-j-subway').addClass('clicked');
+//
+// 	// 버튼 클릭 시
+// 	$('.y-map-btn').click(function() {
+// 		// 다른 버튼들의 클릭 상태를 해제
+// 		$('.y-map-btn').removeClass('clicked');
+//
+// 		// 클릭된 버튼만 클릭 상태 설정
+// 		$(this).addClass('clicked');
+//
+// 		// 버튼에 따라 배경 이미지 변경
+// 		if ($(this).hasClass('y-j-subway')) {
+// 			$('.y-station').css('background', 'url("/img/details/station.png") center center / cover no-repeat transparent');
+// 			$('.y-store').css('background', 'url("/img/details/store_n.png") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-cafe').css('background', 'url("/img/details/cafe_n.png") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-bank').css('background', 'url("/img/details/bank_n.png") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-hospital').css('background-color', '#ECECEC'); // 클릭 안 된 색상
+// 			$('.y-hospital').css('color', '#979797'); // 클릭 안 된 색상
+// 			$('.y-gas-station').css('background-color', '#ECECEC'); // 클릭 안 된 색상
+// 			$('.y-gas-station').css('color', '#979797'); // 클릭 안 된 색상
+//
+// 		} else if ($(this).hasClass('y-j-convenience')) { // 편의점 버튼이 눌렸을 경우
+// 			$('.y-station').css('background', 'url("/img/details/station_n.png") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-store').css('background', 'url("/img/details/store") center center / cover no-repeat transparent'); // 클릭 된 이미지
+// 			$('.y-cafe').css('background', 'url("/img/details/cafe_n.png") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-bank').css('background', 'url("/img/details/bank_n.png") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-hospital').css('background-color', '#ECECEC'); // 클릭 안 된 색상
+// 			$('.y-hospital').css('color', '#979797'); // 클릭 안 된 색상
+// 			$('.y-gas-station').css('background-color', '#ECECEC'); // 클릭 안 된 색상
+// 			$('.y-gas-station').css('color', '#979797'); // 클릭 안 된 색상
+//
+// 		} else if ($(this).hasClass('y-j-cafe')) { // 카페 버튼이 눌렸을 경우
+// 			$('.y-station').css('background', 'url("/img/details/station_n.png") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-store').css('background', 'url("/img/details/store_n.png") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-cafe').css('background', 'url("/img/details/cafe") center center / cover no-repeat transparent'); // 클릭 된 이미지
+// 			$('.y-bank').css('background', 'url("/img/details/bank_n.png") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-hospital').css('background-color', '#ECECEC'); // 클릭 안 된 색상
+// 			$('.y-hospital').css('color', '#979797'); // 클릭 안 된 색상
+// 			$('.y-gas-station').css('background-color', '#ECECEC'); // 클릭 안 된 색상
+// 			$('.y-gas-station').css('color', '#979797'); // 클릭 안 된 색상
+// 		} else if ($(this).hasClass('y-j-bank')) { // 은행 버튼이 눌렸을 경우
+// 			$('.y-station').css('background', 'url("/img/details/station_n.png") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-store').css('background', 'url("/img/details/store_n.png") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-cafe').css('background', 'url("/img/details/cafe_n.png") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-bank').css('background', 'url("/img/details/bank") center center / cover no-repeat transparent'); // 클릭 된 이미지
+//
+// 			$('.y-hospital').css('background-color', '#ECECEC'); // 클릭 안 된 색상
+// 			$('.y-hospital').css('color', '#979797'); // 클릭 안 된 색상
+// 			$('.y-gas-station').css('background-color', '#ECECEC'); // 클릭 안 된 색상
+// 			$('.y-gas-station').css('color', '#979797'); // 클릭 안 된 색상
+//
+// 		} else if ($(this).hasClass('y-j-hospital')) { // 병원 버튼이 눌렸을 경우
+// 			$('.y-station').css('background', 'url("/img/details/station_n.png") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-store').css('background', 'url("/img/details/store_n.png") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-cafe').css('background', 'url("/img/details/cafe_n.png") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-bank').css('background', 'url("/img/details/bank_n.png") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-hospital').css('background-color', '#854141'); // 클릭 안 된 색상
+// 			$('.y-hospital').css('color', '#ffffff'); // 클릭 안 된 색상
+// 			$('.y-gas-station').css('background-color', '#ECECEC'); // 클릭 안 된 색상
+// 			$('.y-gas-station').css('color', '#979797'); // 클릭 안 된 색상
+//
+// 		} else if ($(this).hasClass('y-j-gas-staion')) { // 주유소 버튼이 눌렸을 경우
+// 			$('.y-station').css('background', 'url("/img/details/station_n.png") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-store').css('background', 'url("/img/details/store_n.png") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-cafe').css('background', 'url("/img/details/cafe_n.png") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-bank').css('background', 'url("/img/details/bank_n.png") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-hospital').css('background-color', '#ECECEC'); // 클릭 안 된 색상
+// 			$('.y-hospital').css('color', '#979797'); // 클릭 안 된 색상
+// 			$('.y-gas-station').css('background-color', '#A78E62'); // 클릭 된 색상
+// 			$('.y-gas-station').css('color', '#ffffff'); // 클릭 안 된 색상
+// 		}
+// 	});
+// });
+
+
+// -----------------------------------------------------------------------------------------------
+
+
+
+// $(document).ready(function() {
+// 	// 초기에 "지하철" 버튼 클릭된 상태로 설정
+// 	$('.y-j-subway').addClass('clicked');
+//
+// 	// 버튼 클릭 시
+// 	$('.y-map-btn').click(function() {
+// 		// 다른 버튼들의 클릭 상태를 해제
+// 		$('.y-map-btn').removeClass('clicked');
+//
+// 		// 클릭된 버튼만 클릭 상태 설정
+// 		$(this).addClass('clicked');
+//
+// 		// 버튼에 따라 배경 이미지 변경
+// 		if ($(this).hasClass('y-j-subway')) {
+// 			$('.y-station').css('background', 'url("/img/details/station.png") center center / cover no-repeat transparent');
+// 			$('.y-store').css('background', 'url("클릭 안 된 이미지") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-cafe').css('background', 'url("클릭 안 된 이미지") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-bank').css('background', 'url("클릭 안 된 이미지") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-hospital').css('background-color', '#ECECEC'); // 클릭 안 된 색상
+// 			$('.y-hospital').css('color', '#979797'); // 클릭 안 된 색상
+// 			$('.y-gas-station').css('background-color', '#ECECEC'); // 클릭 안 된 색상
+// 			$('.y-gas-station').css('color', '#979797'); // 클릭 안 된 색상
+//
+// 		} else if ($(this).hasClass('y-j-convenience')) { // 편의점 버튼이 눌렸을 경우
+// 			$('.y-station').css('background', 'url("클릭 안 된 이미지") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-store').css('background', 'url("/img/details/store") center center / cover no-repeat transparent'); // 클릭 된 이미지
+// 			$('.y-cafe').css('background', 'url("클릭 안 된 이미지") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-bank').css('background', 'url("클릭 안 된 이미지") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-hospital').css('background-color', '#ECECEC'); // 클릭 안 된 색상
+// 			$('.y-hospital').css('color', '#979797'); // 클릭 안 된 색상
+// 			$('.y-gas-station').css('background-color', '#ECECEC'); // 클릭 안 된 색상
+// 			$('.y-gas-station').css('color', '#979797'); // 클릭 안 된 색상
+//
+// 		} else if ($(this).hasClass('y-j-cafe')) { // 카페 버튼이 눌렸을 경우
+// 			$('.y-station').css('background', 'url("클릭 안 된 이미지") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-store').css('background', 'url("클릭 안 된 이미지") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-cafe').css('background', 'url("/img/details/cafe") center center / cover no-repeat transparent'); // 클릭 된 이미지
+// 			$('.y-bank').css('background', 'url("클릭 안 된 이미지") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-hospital').css('background-color', '#ECECEC'); // 클릭 안 된 색상
+// 			$('.y-hospital').css('color', '#979797'); // 클릭 안 된 색상
+// 			$('.y-gas-station').css('background-color', '#ECECEC'); // 클릭 안 된 색상
+// 			$('.y-gas-station').css('color', '#979797'); // 클릭 안 된 색상
+// 		} else if ($(this).hasClass('y-j-bank')) { // 은행 버튼이 눌렸을 경우
+// 			$('.y-station').css('background', 'url("클릭 안 된 이미지") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-store').css('background', 'url("클릭 안 된 이미지") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-cafe').css('background', 'url("클릭 안 된 이미지") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-bank').css('background', 'url("/img/details/bank") center center / cover no-repeat transparent'); // 클릭 된 이미지
+// 			$('.y-hospital').css('background-color', '#ECECEC'); // 클릭 안 된 색상
+// 			$('.y-hospital').css('color', '#979797'); // 클릭 안 된 색상
+// 			$('.y-gas-station').css('background-color', '#ECECEC'); // 클릭 안 된 색상
+// 			$('.y-gas-station').css('color', '#979797'); // 클릭 안 된 색상
+//
+// 		} else if ($(this).hasClass('y-j-hospital')) { // 병원 버튼이 눌렸을 경우
+// 			$('.y-station').css('background', 'url("클릭 안 된 이미지") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-store').css('background', 'url("클릭 안 된 이미지") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-cafe').css('background', 'url("클릭 안 된 이미지") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-bank').css('background', 'url("클릭 안 된 이미지") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-hospital').css('background-color', '#854141'); // 클릭 안 된 색상
+// 			$('.y-hospital').css('color', '#ffffff'); // 클릭 안 된 색상
+// 			$('.y-gas-station').css('background-color', '#ECECEC'); // 클릭 안 된 색상
+// 			$('.y-gas-station').css('color', '#979797'); // 클릭 안 된 색상
+//
+// 		} else if ($(this).hasClass('y-j-gas-staion')) { // 주유소 버튼이 눌렸을 경우
+// 			$('.y-station').css('background', 'url("클릭 안 된 이미지") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-store').css('background', 'url("클릭 안 된 이미지") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-cafe').css('background', 'url("클릭 안 된 이미지") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-bank').css('background', 'url("클릭 안 된 이미지") center center / cover no-repeat transparent'); // 클릭 안 된 이미지
+// 			$('.y-hospital').css('background-color', '#ECECEC'); // 클릭 안 된 색상
+// 			$('.y-hospital').css('color', '#979797'); // 클릭 안 된 색상
+// 			$('.y-gas-station').css('background-color', '#A78E62'); // 클릭 된 색상
+// 			$('.y-gas-station').css('color', '#ffffff'); // 클릭 안 된 색상
+// 		}
+// 	});
+// });

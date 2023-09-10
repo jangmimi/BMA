@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RecentRepository extends JpaRepository<RecentEntity, String> {
 
+	/** 최근 본 매물 유저 중복체크 확인 */
 	boolean existsByMaemulEntityAndMemberEntity_Nickname(MaemulRegEntity maemulEntity, String nickname);
 
 	@Query("SELECT r.maemulEntity FROM RecentEntity r WHERE r.memberEntity.nickname = :nickname")

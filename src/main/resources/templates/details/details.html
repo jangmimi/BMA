@@ -16,7 +16,7 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
 	      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
 	        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
@@ -331,7 +331,8 @@
 									</svg>
 									<span>
 									<p th:if="${maemulList.managementFee == 0}" th:text="없음"></p>
-									<p th:if="${maemulList.managementFee != 0}" th:text="${maemulList.managementFee + '만원'}"></p>
+									<p th:if="${maemulList.managementFee != 0}"
+									   th:text="${maemulList.managementFee + '만원'}"></p>
 								</span>
 
 								</div>
@@ -359,7 +360,8 @@
 						</div>
 						<div class="y-st-btns">
 							<div class="y-st-q">
-								<a th:href="@{/details/miniHome/{nickname}(nickname=${maemulList.nickname})}" class="y-st-rr">
+								<a th:href="@{/details/miniHome/{nickname}(nickname=${maemulList.nickname})}"
+								   class="y-st-rr">
 									<span>프로필 보기</span>
 								</a>
 							</div>
@@ -1180,27 +1182,13 @@
 							</p>
 						</button>
 					</div>
-					<div class="y-map-list y-qw">
-						<button>
-							<p class="y-not">
-								안전시설
-							</p>
-						</button>
-					</div>
-					<div class="y-map-list y-qe">
-						<button>
-							<p class="y-not">
-								학군정보
-							</p>
-						</button>
-					</div>
 				</div>
 				<!-- 편의시설 안전시설 학군정보 nav 끝 -->
 
 				<div class="y-map-icon-con" id="category">
 					<!-- 편의 시설 wrap -->
 					<!-- 지하철역 시작 -->
-					<div class="y-map-btn y-convenience" id="SW8" data-order="0">
+					<div class="y-map-btn y-j-subway" id="SW8" data-order="0">
 						<button class="y-ibtn">
 							<i data-testid="IconComponent" class="y-station"></i>
 							<span class="category_bg bank"></span>
@@ -1210,7 +1198,7 @@
 					<!-- 지하철역 끝 -->
 
 					<!-- 편의점 시작 -->
-					<div class="y-map-btn y-convenience" id="CS2" data-order="1">
+					<div class="y-map-btn y-j-convenience" id="CS2" data-order="5">
 						<button class="y-ibtn">
 							<i data-testid="IconComponent" class="y-store"></i>
 							<p>편의점</p>
@@ -1219,7 +1207,7 @@
 					<!-- 편의점 끝 -->
 
 					<!-- 카페 시작 -->
-					<div class="y-map-btn y-convenience" id="CE7" data-order="2">
+					<div class="y-map-btn y-j-cafe" id="CE7" data-order="4">
 						<button class="y-ibtn">
 							<i data-testid="IconComponent" class="y-cafe"></i>
 							<p>카페</p>
@@ -1228,7 +1216,7 @@
 					<!-- 카페 끝 -->
 
 					<!-- 은행 시작 -->
-					<div class="y-map-btn y-convenience" id="BK9" data-order="3">
+					<div class="y-map-btn y-j-bank" id="BK9" data-order="0">
 						<button class="y-ibtn">
 							<i data-testid="IconComponent" class="y-bank"></i>
 							<p>은행</p>
@@ -1236,82 +1224,93 @@
 					</div>
 					<!-- 은행 끝 -->
 
-					<!-- 관공서 시작 -->
-					<div class="y-map-btn y-convenience" id="OL7" data-order="4">
+<!--					&lt;!&ndash; 어린이집 시작 &ndash;&gt;-->
+<!--					<div class="y-map-btn y-school-district" id="PS3" data-order="2">-->
+<!--						<button class="y-ibtn" >-->
+<!--							<i data-testid="IconComponent" class="y-daycare"></i>-->
+<!--							<p>어린이집 / 유치원</p>-->
+<!--						</button>-->
+<!--					</div>-->
+<!--					&lt;!&ndash; 어린이집 끝 &ndash;&gt;-->
+
+					<!-- 병원 시작 -->
+					<div class="y-map-btn y-j-hospital" id="HP8" data-order="2">
+						<button class="y-ibtn">
+							<i class="fa-regular fa-hospital fa-lg y-fa y-hospital" style="color: #ffffff;"></i>
+							<p>병원</p>
+						</button>
+					</div>
+					<!-- 병원 끝 -->
+
+					<!-- 주유소 시작 -->
+					<div class="y-map-btn y-j-gas-staion" id="OL7" data-order="3">
 						<button class="y-ibtn">
 							<i class="fa-solid fa-gas-pump fa-lg y-fa y-gas-station" style="color: #ffffff;"></i>
 							<p>주유소</p>
 						</button>
 					</div>
-					<!-- 관공서 끝 -->
+					<!-- 주유소 끝 -->
 					<!-- 편의 시설 wrap끝 -->
 
-					<!-- 안전 시설 wrap 시작 -->
-					<!-- 치안 시작 -->
-					<div class="y-map-btn y-no-active y-safety-district">
-						<button class="y-ibtn">
-							<i data-testid="IconComponent" class="y-safety"></i>
-							<p>치안</p>
-						</button>
-					</div>
-					<!-- 치안 끝 -->
+<!--					&lt;!&ndash; 안전 시설 wrap 시작 &ndash;&gt;-->
+<!--					&lt;!&ndash; 치안 시작 &ndash;&gt;-->
+<!--					<div class="y-map-btn y-no-active y-safety-district">-->
+<!--						<button class="y-ibtn">-->
+<!--							<i data-testid="IconComponent" class="y-safety"></i>-->
+<!--							<p>치안</p>-->
+<!--						</button>-->
+<!--					</div>-->
+<!--					&lt;!&ndash; 치안 끝 &ndash;&gt;-->
 
-					<!-- CCTV 시작 -->
-					<div class="y-map-btn y-no-active y-safety-district">
-						<button class="y-ibtn">
-							<i data-testid="IconComponent" class="y-cctv"></i>
-							<p>CCTV</p>
-						</button>
-					</div>
-					<!-- CCTV 끝 -->
-					<!-- 안전 시설 wrap 끝 -->
+<!--					&lt;!&ndash; CCTV 시작 &ndash;&gt;-->
+<!--					<div class="y-map-btn y-no-active y-safety-district">-->
+<!--						<button class="y-ibtn">-->
+<!--							<i data-testid="IconComponent" class="y-cctv"></i>-->
+<!--							<p>CCTV</p>-->
+<!--						</button>-->
+<!--					</div>-->
+<!--					&lt;!&ndash; CCTV 끝 &ndash;&gt;-->
+<!--					&lt;!&ndash; 안전 시설 wrap 끝 &ndash;&gt;-->
 
-					<!-- 학군 정보 wrap 시작 -->
-					<!-- 어린이집 시작 -->
-					<div class="y-map-btn y-no-active y-school-district">
-						<button class="y-ibtn" id="PS3">
-							<i data-testid="IconComponent" class="y-daycare"></i>
-							<p>어린이집</p>
-						</button>
-					</div>
-					<!-- 어린이집 끝 -->
+<!--					&lt;!&ndash; 학군 정보 wrap 시작 &ndash;&gt;-->
 
-					<!-- 유치원 시작 -->
-					<div class="y-map-btn y-no-active y-school-district">
-						<button class="y-ibtn">
-							<i data-testid="IconComponent" class="y-kinder-garden"></i>
-							<p>유치원</p>
-						</button>
-					</div>
-					<!-- 유치원 끝 -->
 
-					<!-- 초등학교 시작 -->
-					<div class="y-map-btn y-no-active y-school-district">
-						<button class="y-ibtn">
-							<i data-testid="IconComponent" class="y-elementary"></i>
-							<p>초등학교</p>
-						</button>
-					</div>
-					<!-- 초등학교 끝 -->
+<!--					&lt;!&ndash; 유치원 시작 &ndash;&gt;-->
+<!--					<div class="y-map-btn y-no-active y-school-district">-->
+<!--						<button class="y-ibtn">-->
+<!--							<i data-testid="IconComponent" class="y-kinder-garden"></i>-->
+<!--							<p>유치원</p>-->
+<!--						</button>-->
+<!--					</div>-->
+<!--					&lt;!&ndash; 유치원 끝 &ndash;&gt;-->
 
-					<!-- 중학교 시작 -->
-					<div class="y-map-btn y-no-active y-school-district">
-						<button class="y-ibtn">
-							<i data-testid="IconComponent" class="y-middle"></i>
-							<p>중학교</p>
-						</button>
-					</div>
-					<!-- 중학교 끝 -->
+<!--					&lt;!&ndash; 초등학교 시작 &ndash;&gt;-->
+<!--					<div class="y-map-btn y-no-active y-school-district">-->
+<!--						<button class="y-ibtn">-->
+<!--							<i data-testid="IconComponent" class="y-elementary"></i>-->
+<!--							<p>초등학교</p>-->
+<!--						</button>-->
+<!--					</div>-->
+<!--					&lt;!&ndash; 초등학교 끝 &ndash;&gt;-->
 
-					<!-- 고등학교 시작 -->
-					<div class="y-map-btn y-no-active y-school-district">
-						<button class="y-ibtn">
-							<i data-testid="IconComponent" class="y-high"></i>
-							<p>고등학교</p>
-						</button>
-					</div>
-					<!-- 고등학교 끝 -->
-					<!-- 학군 정보 wrap 끝 -->
+<!--					&lt;!&ndash; 중학교 시작 &ndash;&gt;-->
+<!--					<div class="y-map-btn y-no-active y-school-district">-->
+<!--						<button class="y-ibtn">-->
+<!--							<i data-testid="IconComponent" class="y-middle"></i>-->
+<!--							<p>중학교</p>-->
+<!--						</button>-->
+<!--					</div>-->
+<!--					&lt;!&ndash; 중학교 끝 &ndash;&gt;-->
+
+<!--					&lt;!&ndash; 고등학교 시작 &ndash;&gt;-->
+<!--					<div class="y-map-btn y-no-active y-school-district">-->
+<!--						<button class="y-ibtn">-->
+<!--							<i data-testid="IconComponent" class="y-high"></i>-->
+<!--							<p>고등학교</p>-->
+<!--						</button>-->
+<!--					</div>-->
+<!--					&lt;!&ndash; 고등학교 끝 &ndash;&gt;-->
+<!--					&lt;!&ndash; 학군 정보 wrap 끝 &ndash;&gt;-->
 
 				</div>
 			</div>
