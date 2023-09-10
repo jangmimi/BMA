@@ -743,19 +743,20 @@ function updateSidebar(responseData) {
         `;
 
         // 로그인 시 관심매물에 등록된 데이터와 비교해서 하트색상 결정
-        if(likedEntityList != null && likedEntityList.length > 0) {
+        if(likedEntityList != null) {
             // 해당 회원 관심매물 갯수 카운팅
             likedCount(likedEntityList);
-
-            likedEntityList.forEach(function (liked) {
-                console.log(liked.maemul_id === maemul.id);
-                if(liked.maemul_id === maemul.id) {
-                    heartButton.querySelector("button").setAttribute("data-isButton", "true");
-                    heartButton.querySelector("img").setAttribute("src", "/img/mapDetailAndAPTList/aHeartBtn.png"); // 이미지를 바꿔줌
-                } else {
-                    heartButton.querySelector("button").setAttribute("data-isButton", "false");
+            for (let i = 0; i < likedEntityList.length; i++) {
+                    const liked = likedEntityList[i];
+                    console.log(liked.maemul_id === maemul.id);
+                    if (liked.maemul_id === maemul.id) {
+                        heartButton.querySelector("button").setAttribute("data-isButton", "true");
+                        heartButton.querySelector("img").setAttribute("src", "/img/mapDetailAndAPTList/aHeartBtn.png"); // 이미지를 바꿔줌
+                        break; // 조건이 만족되면 반복문을 종료합니다.
+                    } else {
+                        heartButton.querySelector("button").setAttribute("data-isButton", "false");
+                    }
                 }
-            })
         } else {
             heartButton.querySelector("button").setAttribute("data-isButton", "false");
         }
