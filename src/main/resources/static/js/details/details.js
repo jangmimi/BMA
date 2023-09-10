@@ -30,7 +30,7 @@ $(document).ready(function() {
 			$('.y-bank').css('background', 'url("/img/details/bank_n.png") center center / cover no-repeat transparent');
 			$('.y-hospital').css('background-color', '#ECECEC');
 			$('.y-gas-station').css('background-color', '#ECECEC');
-			isSubwayClicked = false;
+			isSubwayClicked = true;
 			isConvenienceClicked = false;
 			isCafeClicked = false;
 			isBankClicked =false;
@@ -45,7 +45,7 @@ $(document).ready(function() {
 			$('.y-hospital').css('color', '#979797');
 			$('.y-gas-station').css('background-color', '#ECECEC');
 			$('.y-gas-station').css('color', '#979797');
-			isSubwayClicked = true;
+			isSubwayClicked = false;
 		}
 	});
 
