@@ -77,8 +77,12 @@
                                             <img th:src="@{/img/thumbs.jpg}" width="80">
                                         </td>
                                         <td>
-                                            <div th:text="${mmpList.address}">주소</div>
-                                            <div th:text="${mmpList.APT_name}">아파트이름</div>
+                                            <div>
+                                                <a th:text="${mmpList.address}" th:href="@{/details/{id}(id=${mmpList.id},nickname=${mmpList.nickname})}"></a>
+                                            </div>
+                                            <div >
+                                                <a th:text="${mmpList.APT_name}" th:href="@{/details/{id}(id=${mmpList.id},nickname=${mmpList.nickname})}"></a>
+                                            </div>
                                         </td>
                                         <td>
                                             <div th:text="${mmpList.floorNumber + '층/' + mmpList.totalFloors + '층'}">

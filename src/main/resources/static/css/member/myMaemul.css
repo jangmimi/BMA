@@ -65,7 +65,9 @@ tbody tr:hover {
     color: #26abed;
     font-weight: 600;
 }
-.o-t-btns input, .o-t-btn input {
+.o-t-btns input,
+.o-t-btns a,
+.o-t-btn input {
     font-size: 13px;
     border: 1px solid lightgray;
     margin: 5px 0px;
