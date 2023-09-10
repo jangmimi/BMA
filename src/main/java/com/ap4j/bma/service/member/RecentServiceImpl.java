@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -81,5 +82,12 @@ public class RecentServiceImpl implements RecentService{
 
     public Long searchRecentMaemulListCount(String nickname,String keyword){
         return recentRepository.countByMemberEntity_NicknameAndMaemulEntity_AddressContainingOrMaemulEntity_TradeTypeContaining(nickname,keyword,keyword);
+    }
+
+    /** 최근매물 삭제 */
+    @Transactional
+    @Override
+    public int recentDelete(Integer id, String nickname) {
+        return recentRepository.deleteByMaemulIdAndNickname(id, nickname);
     }
 }
