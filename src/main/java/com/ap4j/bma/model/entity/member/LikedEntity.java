@@ -16,15 +16,13 @@ public class LikedEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "nickname", referencedColumnName = "nickname")
     @NotNull
     private String nickname;
 
     private Integer maemul_id;
 
     @Builder
-    public LikedEntity(Long id, String nickname, String road_name, Integer maemul_id) {
+    public LikedEntity(Long id, String nickname, Integer maemul_id) {
         this.id = id;
         this.nickname = nickname;
         this.maemul_id = maemul_id;
