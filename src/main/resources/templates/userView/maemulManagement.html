@@ -69,10 +69,10 @@
                                                 <img th:src="@{/img/thumbs.jpg}" width="80">
                                             </td>
                                             <td class="o-link-td">
-                                                <a th:text="${mmList.title}" th:href="@{/details/{id}(id=${mmList.id})}">매물링크</a>
+                                                <a th:text="${mmList.title}" th:href="@{/details/{id}(id=${mmList.id},nickname=${mmList.nickname})}">매물링크</a>
                                             </td>
                                             <td class="o-link-td">
-                                                <a th:text="${mmList.address}" th:href="@{/details/{id}(id=${mmList.id})}">주소</a>
+                                                <a th:text="${mmList.address}" th:href="@{/details/{id}(id=${mmList.id},nickname=${mmList.nickname})}">주소</a>
                                             </td>
                                             <td>
                                                 <div th:text="${mmList.totalFloors} + '/' + ${mmList.floorNumber} + '층'">엘리베이터 전체/현재</div>

@@ -10,6 +10,9 @@ import com.ap4j.bma.model.repository.RecentRepository;
 import com.ap4j.bma.service.maemulReg.MaemulRegService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -55,5 +58,28 @@ public class RecentServiceImpl implements RecentService{
                 recentRepository.save(recentEntity);
             }
         }
+    }
+
+    /*페이징처리가 된 최근본매물리스트*/
+    public Page<MaemulRegEntity> recentMaemulList(String nickname,int page,int pageSize){
+        Pageable pageable = PageRequest.of(page - 1, pageSize);
+        Page<MaemulRegEntity> mmpList = recentRepository.findMaemulEntitiesByMemberNickname(nickname,pageable);
+        return mmpList;
+    }
+
+    /*최근본매물리스트 카운트*/
+    public Long recentMamulListCount(String nickname) {
+        return recentRepository.countByMemberEntity_Nickname(nickname);
+    }
+
+    /*페이징처리가 되고, 검색한 결과의 최근본매물리스트*/
+    public Page<MaemulRegEntity> searchRecentMaemulList(String nickname,String keyword,int page,int pageSize) {
+        Pageable pageable = PageRequest.of(page - 1,pageSize);
+        Page<MaemulRegEntity> mmpList = recentRepository.findMaemulEntitiesByMemberNicknameAndKeyword(nickname,keyword,pageable);
+        return mmpList;
+    }
+
+    public Long searchRecentMaemulListCount(String nickname,String keyword){
+        return recentRepository.countByMemberEntity_NicknameAndMaemulEntity_AddressContainingOrMaemulEntity_TradeTypeContaining(nickname,keyword,keyword);
     }
 }

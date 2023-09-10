@@ -263,6 +263,95 @@ $('input[name="rentalCount"]').on('change', function () {
     sendToServer();
 });
 
+/* 매매가 옵션 */
+var maemaeStart;
+var maemaeEnd;
+$(".searchMaemaeButton").click(function() {
+
+    maemaeStart = $("input[name='maemaeStart']").val();
+    maemaeEnd = $("input[name='maemaeEnd']").val();
+
+    sendToServer();
+
+    maemaeStart = null;
+    maemaeEnd = null;
+
+});
+
+/* 전세가 옵션 */
+var jeonseStart;
+var jeonseEnd;
+$(".searchJeonseButton").click(function() {
+
+    jeonseStart = $("input[name='jeonseStart']").val();
+    jeonseEnd = $("input[name='jeonseEnd']").val();
+
+    sendToServer();
+
+    jeonseStart = null;
+    jeonseEnd = null;
+
+});
+
+/* 보증금 옵션 */
+var bozugStart;
+var bozugEnd;
+$(".searchBozugButton").click(function() {
+
+    bozugStart = $("input[name='bozugStart']").val();
+    bozugEnd = $("input[name='bozugEnd']").val();
+
+    sendToServer();
+
+    bozugStart = null;
+    bozugEnd = null;
+
+});
+
+
+/* 면적 옵션 */
+var selectedValues = [];
+var minValue;
+var maxValue;
+$('.btn-check').on('change', function() {
+    if (this.checked) {
+        selectedValues.push(Number(this.value)); // 선택된 값을 배열에 추가
+    } else {
+        // 체크가 해제된 경우 배열에서 제거
+        var index = selectedValues.indexOf(Number(this.value));
+        if (index !== -1) {
+            selectedValues.splice(index, 1);
+        }
+    }
+
+    if (selectedValues.length === 1) {
+        // 1개 선택된 경우, 선택된 값 서버로 전송
+        maxValue = selectedValues[0];
+        sendToServer();
+        maxValue = null;
+
+    } else if (selectedValues.length >= 2) {
+        // 2개 이상 선택된 경우, 최솟값과 최댓값 찾아서 서버로 전송
+        minValue = Math.min.apply(null, selectedValues);
+        maxValue = Math.max.apply(null, selectedValues);
+        sendToServer();
+        minValue = null;
+        maxValue = null;
+    } else if(selectedValues.length === 0){
+        sendToServer();
+
+    }
+});
+
+/* 리스트 상단 최신순 가격순 면적순 필터 */
+
+var orderType;
+$(".nav-link").click(function () {
+    // 선택한 버튼의 data-order 속성 값을 가져옴
+    orderType = $(this).data("order");
+    sendToServer();
+
+});
 
 // 맵 최초 로드시 마커 생성 해주는 함수
 var onlyOneStart = false; // 한 번만 실행하기 위한 변수
@@ -300,8 +389,16 @@ kakao.maps.event.addListener(map, 'tilesloaded', function () {
         direction: directionString,
         Parking: parking,
         shortTermRental: rental,
-        keyword: keyword
-
+        keyword: keyword,
+        rowSellingPrice: maemaeStart,
+        highSellingPrice: maemaeEnd,
+        rowDepositForLease: jeonseStart,
+        highDepositForLease: jeonseEnd,
+        rowMonthlyForRent: bozugStart,
+        highMonthlyForRent: bozugEnd,
+        minPrivateArea: minValue,
+        maxPrivateArea: maxValue,
+        orderType: orderType
     };
 
     $.ajax({
@@ -369,7 +466,16 @@ kakao.maps.event.addListener(map, 'idle', function () {
         direction: directionString,
         Parking: parking,
         shortTermRental: rental,
-        keyword: keyword
+        keyword: keyword,
+        rowSellingPrice: maemaeStart,
+        highSellingPrice: maemaeEnd,
+        rowDepositForLease: jeonseStart,
+        highDepositForLease: jeonseEnd,
+        rowMonthlyForRent: bozugStart,
+        highMonthlyForRent: bozugEnd,
+        minPrivateArea: minValue,
+        maxPrivateArea: maxValue,
+        orderType: orderType
     };
 
     var likedBoolean = true;
@@ -637,19 +743,20 @@ function updateSidebar(responseData) {
         `;
 
         // 로그인 시 관심매물에 등록된 데이터와 비교해서 하트색상 결정
-        if(likedEntityList != null && likedEntityList.length > 0) {
+        if(likedEntityList != null) {
             // 해당 회원 관심매물 갯수 카운팅
             likedCount(likedEntityList);
-
-            likedEntityList.forEach(function (liked) {
-
-                if(liked.maemul_id === maemul.id) {
-                    heartButton.querySelector("button").setAttribute("data-isButton", "true");
-                    heartButton.querySelector("img").setAttribute("src", "/img/mapDetailAndAPTList/aHeartBtn.png"); // 이미지를 바꿔줌
-                } else {
-                    heartButton.querySelector("button").setAttribute("data-isButton", "false");
+            for (let i = 0; i < likedEntityList.length; i++) {
+                    const liked = likedEntityList[i];
+                    console.log(liked.maemul_id === maemul.id);
+                    if (liked.maemul_id === maemul.id) {
+                        heartButton.querySelector("button").setAttribute("data-isButton", "true");
+                        heartButton.querySelector("img").setAttribute("src", "/img/mapDetailAndAPTList/aHeartBtn.png"); // 이미지를 바꿔줌
+                        break; // 조건이 만족되면 반복문을 종료합니다.
+                    } else {
+                        heartButton.querySelector("button").setAttribute("data-isButton", "false");
+                    }
                 }
-            })
         } else {
             heartButton.querySelector("button").setAttribute("data-isButton", "false");
         }
@@ -675,12 +782,14 @@ $(document).on("click", ".aHeartBtn", function() {
     if (loginMember != null) {
         var $heartButton = $(this); // 클릭한 버튼을 변수에 저장
         var maemulId = $heartButton.closest("li").find("a").attr("href").split("/").pop();
+        maemulId = maemulId.split("?")[0];
+        console.log("매물 아이디" + maemulId);
         $.ajax({
             url: "/member/qLiked", //
             type: "POST", //
             data: { maemulId: maemulId }, //
             success: function(response) {
-                console.log("매물 아이디" + maemulId);
+                console.log("통신후 버튼상태 변경전 : " + $heartButton.attr("data-isButton"));
                 // 버튼 상태 변경
                 if ($heartButton.attr("data-isButton") === "true") {
                     $heartButton.attr("data-isButton", "false");
@@ -689,7 +798,7 @@ $(document).on("click", ".aHeartBtn", function() {
                     $heartButton.attr("data-isButton", "true");
                     $heartButton.find("img").attr("src", "/img/mapDetailAndAPTList/aHeartBtn.png");
                 }
-
+                console.log("통신후 버튼상태 변경후 : " + $heartButton.attr("data-isButton"));
                 // 관심매물 갯수 최신화
                 var bounds = map.getBounds();
                 var southWest = bounds.getSouthWest();
@@ -856,7 +965,16 @@ function sendToServer() {
         direction: directionString,
         Parking: parking,
         shortTermRental: rental,
-        keyword: keyword
+        keyword: keyword,
+        rowSellingPrice: maemaeStart,
+        highSellingPrice: maemaeEnd,
+        rowDepositForLease: jeonseStart,
+        highDepositForLease: jeonseEnd,
+        rowMonthlyForRent: bozugStart,
+        highMonthlyForRent: bozugEnd,
+        minPrivateArea: minValue,
+        maxPrivateArea: maxValue,
+        orderType: orderType
     };
 
     $.ajax({
@@ -886,7 +1004,7 @@ function sendToServer() {
                     closeOtherOverlays();
                     // 사이드바 초기화
                     clearSidebar();
-                    console.log(maemul.apt_name);
+
                     var markerPosition = new kakao.maps.LatLng(maemul.latitude, maemul.longitude);
                     var markerKey = markerPosition.toString();
                     var markerContent = "<div class='e-marker'>" +

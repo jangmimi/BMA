@@ -62,7 +62,7 @@
                                         <span>관심매물</span>
                                     </div>
                                     <div class="oMaemulCnt">
-                                        <a th:href="@{/member/qRecent}" >몇건</a>
+                                        <a th:href="@{/member/qRecent}" th:text="${recentListCnt} + '건'"></a>
                                         <span>최근 본 매물</span>
                                     </div>
                                 </div>
@@ -77,15 +77,15 @@
                     <div class="oMeamulContainer">
                         <div class="oMaemul-c-inner">
                             <div class="o-tab-c">
-                                <div class="o-tab-l" id="o-liked-link2"><!--th:href="@{/member/liked} th:href="@{/member/qRecent}""-->
+                                <div class="o-tab-l">
                                     <a href="#" class="o-tab o-mm-link" id="o-liked-link">관심매물</a>
                                 </div>
                                 <span id="o-division">|</span>
-                                <div class="o-tab-l" id="o-recent-link2" >
+                                <div class="o-tab-l">
                                     <a href="#" class="o-tab o-mm-link" id="o-recent-link">최근본매물</a>
                                 </div>
                                 <div class="o-tab-r">
-                                    <a class="o-mm-link" id="o-allView" th:href="@{/member/liked}">
+                                    <a class="o-mm-link" id="o-allView" href="#">
                                         <img class="aAddPicImg2" src="https://cdn.pixabay.com/photo/2013/07/13/12/30/page-159746_1280.png">
                                         <p class="aSeeAll">전체보기</p>
                                     </a>
@@ -93,16 +93,16 @@
                             </div>
                         </div>
 
-                        <div id="o-tab-content1" class="o-tab-content">
+                        <div id="o-tab-left" class="o-tab-content">
                             <!-- 관심매물 0개 일때 -->
-                            <div th:if="${likedCnt == 0}" id="o-noCnt">
+                            <div th:if="${likedCnt == 0}" class="o-noCnt">
                                 관심매물을 등록해주세요.
                             </div>
                             <!-- 관심매물 영역 -->
                             <div class="z-bottom-container">
                                 <div class="z-bottom-wrap">
                                     <!-- 매물 시작 (통으로 링크) -->
-                                    <a th:each="mmList, iterStat : ${mmpList}" th:href="@{/details/{id}(id=${mmList.id})}">
+                                    <a th:each="mmList, iterStat : ${mmpList}" th:href="@{/details/{id}(id=${mmList.id}, nickname=${loginMember.nickname})}">
                                         <div class="s-mamulbox">
                                             <div class="s-mamul-img">
                                                 <img src="/img/details/apt.jpeg" alt="이미지">
@@ -141,20 +141,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- 비어 있는 곳 채우기 용 이미지 -->
-    <!--                                    <div th:if="${likedCnt != 0}">-->
-    <!--                                        <div th:if="${iterStat.index % 3 == 1 and iterStat.index + 1 < likedCnt}">-->
-    <!--                                            <div class="z-img-wrap">-->
-    <!--                                                <img src="https://www.bdsplanet.com/images/none_mae.png" alt="채우기용 이미지">-->
-    <!--                                            </div>-->
-    <!--                                        </div>-->
-    <!--                                        <div th:if="${iterStat.index % 3 == 2 and iterStat.index + 1 < likedCnt}">-->
-    <!--                                            <div class="z-img-wrap">-->
-    <!--                                                <img src="https://www.bdsplanet.com/images/none_mae.png" alt="채우기용 이미지">-->
-    <!--                                                <img src="https://www.bdsplanet.com/images/none_mae.png" alt="채우기용 이미지">-->
-    <!--                                            </div>-->
-    <!--                                        </div>-->
-    <!--                                    </div>-->
                                     </a>
                                     <!-- 매물 끝 -->
                                 </div>
@@ -163,16 +149,16 @@
                             <!-- z-bottom-container 끝 -->
                         </div>
 
-                        <div id="o-tab-content2" class="o-tab-content" style="display: none;">
+                        <div id="o-tab-right" class="o-tab-content" style="display: none;">
                             <!-- 최근본매물 0개 일때 -->
-<!--                            <div th:if="${recentCnt == 0}">-->
-<!--                                관심매물을 등록해주세요.-->
-<!--                            </div>-->
+                            <div th:if="${recentListCnt == 0}" class="o-noCnt">
+                                최근 본 매물이 없습니다.
+                            </div>
                             <!-- 최근매물 영역 -->
                             <div class="z-bottom-container">
                                 <div class="z-bottom-wrap">
                                     <!-- 매물 시작 (통으로 링크) -->
-                                    <a th:each="mRecentList, iterStat : ${mRecentList}" th:href="@{/details/{id}(id=${mRecentList.id})}">
+                                    <a th:each="recentList, iterStat : ${recentList}" th:href="@{/details/{id}(id=${recentList.id}, nickname=${loginMember.nickname})}">
                                         <div class="s-mamulbox">
                                             <div class="s-mamul-img">
                                                 <img src="/img/details/apt.jpeg" alt="이미지">
@@ -180,28 +166,28 @@
                                             <div class="s-mamul-text">
                                                 <div class="s-mamul-text-wrap">
                                                     <div class="s-mamul-text-title">
-                                                        <span th:if="${mRecentList.tradeType == '매매'}"
-                                                              th:with="sp_djr=${mRecentList.sellingPrice / 10000}, sp_aks=${mRecentList.sellingPrice % 10000}"
+                                                        <span th:if="${recentList.tradeType == '매매'}"
+                                                              th:with="sp_djr=${recentList.sellingPrice / 10000}, sp_aks=${recentList.sellingPrice % 10000}"
                                                               th:text="${'매매 ' + #strings.concat(sp_djr > 0 ? sp_djr + '억 ' : '', sp_aks > 0 ? sp_aks + '만원' : '')}">
                                                         </span>
-                                                        <span th:if="${mRecentList.tradeType == '전세'}"
-                                                              th:with="dp_djr=${mRecentList.depositForLease / 10000}, dp_aks=${mRecentList.depositForLease % 10000}"
+                                                        <span th:if="${recentList.tradeType == '전세'}"
+                                                              th:with="dp_djr=${recentList.depositForLease / 10000}, dp_aks=${recentList.depositForLease % 10000}"
                                                               th:text="${'전세 ' + #strings.concat(dp_djr > 0 ? dp_djr + '억 ' : '', dp_aks > 0 ? dp_aks + '만원' : '')}">
                                                         </span>
-                                                        <span th:if="${mRecentList.tradeType == '월세'}"
-                                                              th:text="${'월세 ' + mRecentList.monthlyForRent + '/' + mRecentList.monthlyRent}">
+                                                        <span th:if="${recentList.tradeType == '월세'}"
+                                                              th:text="${'월세 ' + recentList.monthlyForRent + '/' + recentList.monthlyRent}">
                                                         </span>
                                                     </div>
                                                     <div class="s-mamul-text-1">
-                                                        <p th:text="${mRecentList.buildingUsage}">용도</p>
-                                                        <p th:text="${' · ' + mRecentList.address}">주소</p>
+                                                        <p th:text="${recentList.buildingUsage}">용도</p>
+                                                        <p th:text="${' · ' + recentList.address}">주소</p>
                                                     </div>
                                                     <div class="s-mamul-text-2">
-                                                        <p th:text="${mRecentList.privateArea} + '/' + ${mRecentList.supplyArea} + '㎡ · '">면적</p>
-                                                        <p th:text="${mRecentList.floorNumber} + '층/' + ${mRecentList.totalFloors} + '층'">층수</p>
+                                                        <p th:text="${recentList.privateArea} + '/' + ${recentList.supplyArea} + '㎡ · '">면적</p>
+                                                        <p th:text="${recentList.floorNumber} + '층/' + ${recentList.totalFloors} + '층'">층수</p>
                                                     </div>
                                                     <div>
-                                                        <p th:text="${mRecentList.title}" ></p>
+                                                        <p th:text="${recentList.title}" ></p>
                                                     </div>
                                                 </div>
                                                 <div class="s-mamul-tag">
@@ -211,20 +197,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- 비어 있는 곳 채우기 용 이미지 -->
-                                        <!--                                    <div th:if="${likedCnt != 0}">-->
-                                        <!--                                        <div th:if="${iterStat.index % 3 == 1 and iterStat.index + 1 < likedCnt}">-->
-                                        <!--                                            <div class="z-img-wrap">-->
-                                        <!--                                                <img src="https://www.bdsplanet.com/images/none_mae.png" alt="채우기용 이미지">-->
-                                        <!--                                            </div>-->
-                                        <!--                                        </div>-->
-                                        <!--                                        <div th:if="${iterStat.index % 3 == 2 and iterStat.index + 1 < likedCnt}">-->
-                                        <!--                                            <div class="z-img-wrap">-->
-                                        <!--                                                <img src="https://www.bdsplanet.com/images/none_mae.png" alt="채우기용 이미지">-->
-                                        <!--                                                <img src="https://www.bdsplanet.com/images/none_mae.png" alt="채우기용 이미지">-->
-                                        <!--                                            </div>-->
-                                        <!--                                        </div>-->
-                                        <!--                                    </div>-->
                                     </a>
                                     <!-- 매물 끝 -->
                                 </div>
