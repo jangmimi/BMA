@@ -151,18 +151,19 @@ public class MemberController {
     /** 기본 회원가입 폼 */
     @RequestMapping("/qJoinForm")
     public String qJoinForm(HttpSession session) {
-        if(loginStatus(session)) {
-            return "userView/loginAlready";
-        }
+        if(loginStatus(session)) { return "userView/loginAlready"; }
         return "userView/oJoinForm";
     }
 
     /** 기본 회원가입 */
     @PostMapping("/qJoinBasic")
     public String qJoinBasic(@ModelAttribute MemberDTO memberDTO, HttpSession session) {
-        if(loginStatus(session)) { return "userView/loginAlready"; }
         memberDTO.setRoot(1);
-        qMemberService.joinBasic(memberDTO);
+        Long joinId = qMemberService.joinBasic(memberDTO);
+        if(joinId == 0) {
+            session.setAttribute("faileDTO", memberDTO);
+            return "redirect:/member/qJoinForm";
+        }
         return "redirect:/member/qLoginForm";
     }
 
@@ -250,7 +251,6 @@ public class MemberController {
     @GetMapping("/qMyInfoUpdate")
     public String qMyInfoUpdate(HttpSession session, Model model) {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
-        MemberDTO loginMember = (MemberDTO) session.getAttribute("loginMember");
         return "userView/oMyInfoUpdate";
     }
 
@@ -262,8 +262,11 @@ public class MemberController {
         Long id =  ((MemberDTO) session.getAttribute("loginMember")).getId();
 
         MemberEntity memberEntity = qMemberService.updateMember(id, updatedMember);
-        model.addAttribute("loginMember", memberEntity.toDTO());   // 수정 객체 지정
-        log.info("회원정보 수정 완료 (수정 후) : " + memberEntity);
+        if(memberEntity == null) {
+            session.setAttribute("faileDTO", updatedMember);
+            return "redirect:/member/qMyPage";
+        }
+        model.addAttribute("loginMember", memberEntity.toDTO());
 
         return "redirect:/member/qMyPage";
     }
