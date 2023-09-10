@@ -35,7 +35,7 @@ padding: 14px 21px;
 color: #666;
 border-bottom: 1px solid #ddd;
 text-align: center;
-    font-size:14px;
+font-size:14px;
  }
 /* tbody쪽만 마우스오버 */
 tbody tr:hover {

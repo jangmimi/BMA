@@ -34,8 +34,8 @@
                 </div>
                 <div class="o-mid-wrapper">
                     <div class="o-mid-inner mt-5" id="o-tb-wrap">
-                        <div id="oPageTitle">
-                            <h2 class="h3 fw-bold">1:1 문의내역</h2>
+                        <div class="o-page-title" id="o-qna-title">
+                            <h3 class="h3 fw-bold">1:1 문의내역</h3>
                             <p>고객님께서 문의하신 내역입니다.</p>
                         </div>
                         <div class="oMyQnaTb">
@@ -53,7 +53,7 @@
                                     <!-- 총 나의 문의 갯수 출력 -->
                                     <p>전체 <span class="o-cntAll" th:text="${myQnaCnt}"></span>건</p>
                                     <th:block th:if="${myQnaCnt == 0}">
-                                        <tr><td colspan="4">조회된 데이터가 없습니다.</td></tr>
+                                        <tr><td colspan="5">조회된 데이터가 없습니다.</td></tr>
                                     </th:block>
                                     <!-- 본인이 작성한 문의만 표시하는 조건문, 번호는 '플래닛 사이트'도 전체글 기준 번호 보여줌 -->
                                     <tr th:each="myQna : ${myQnaList}" th:sort="${myQna.id}">
@@ -66,8 +66,8 @@
                                         <td><a th:text="${#temporals.format(myQna.createdAt, 'yyyy-MM-dd')}">yyyy-MM-dd</a></td>
                                         <td>
                                             <!-- 답변 상태에 따라 다른 클래스와 텍스트 표시 -->
-                                            <span th:if="${myQna.answerEntity != null}" th:class="completed" style="color: #26A9E0;">답변완료</span>
-                                            <span th:if="${myQna.answerEntity == null}" th:class="waiting" style="color: gray;">답변대기</span>
+                                            <span th:if="${myQna.answerEntity != null}" th:class="completed">답변완료</span>
+                                            <span th:if="${myQna.answerEntity == null}" th:class="waiting">답변대기</span>
                                         </td>
                                     </tr>
                                 </tbody>

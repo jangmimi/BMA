@@ -53,13 +53,6 @@
 .o-btns-c input {
     width: 45%;
 }
-/* 1:1문의내역 버튼 */
-.o-tb-btn {
-    text-align: center;
-}
-#myQnaBtn {
-    margin-top: 50px;
-}
 .o-tb-btn button, .o-find-btn-c input {
     font-size: 16px;
     margin: 0 auto;
