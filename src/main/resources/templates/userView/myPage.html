@@ -96,13 +96,13 @@
                         <div id="o-tab-content1" class="o-tab-content">
                             <!-- 관심매물 0개 일때 -->
                             <div th:if="${likedCnt == 0}" id="o-noCnt">
-                                관심매물을 등록해주세요.
+                                최근 본 매물이 없습니다.
                             </div>
                             <!-- 관심매물 영역 -->
                             <div class="z-bottom-container">
                                 <div class="z-bottom-wrap">
                                     <!-- 매물 시작 (통으로 링크) -->
-                                    <a th:each="mmList, iterStat : ${mmpList}" th:href="@{/details/{id}(id=${mmList.id})}">
+                                    <a th:each="mmList, iterStat : ${mmpList}" th:href="@{/details/{id}(id=${mmList.id}, nickname=${loginMember.nickname})}">
                                         <div class="s-mamulbox">
                                             <div class="s-mamul-img">
                                                 <img src="/img/details/apt.jpeg" alt="이미지">
@@ -141,20 +141,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- 비어 있는 곳 채우기 용 이미지 -->
-    <!--                                    <div th:if="${likedCnt != 0}">-->
-    <!--                                        <div th:if="${iterStat.index % 3 == 1 and iterStat.index + 1 < likedCnt}">-->
-    <!--                                            <div class="z-img-wrap">-->
-    <!--                                                <img src="https://www.bdsplanet.com/images/none_mae.png" alt="채우기용 이미지">-->
-    <!--                                            </div>-->
-    <!--                                        </div>-->
-    <!--                                        <div th:if="${iterStat.index % 3 == 2 and iterStat.index + 1 < likedCnt}">-->
-    <!--                                            <div class="z-img-wrap">-->
-    <!--                                                <img src="https://www.bdsplanet.com/images/none_mae.png" alt="채우기용 이미지">-->
-    <!--                                                <img src="https://www.bdsplanet.com/images/none_mae.png" alt="채우기용 이미지">-->
-    <!--                                            </div>-->
-    <!--                                        </div>-->
-    <!--                                    </div>-->
+
                                     </a>
                                     <!-- 매물 끝 -->
                                 </div>
@@ -172,7 +159,8 @@
                             <div class="z-bottom-container">
                                 <div class="z-bottom-wrap">
                                     <!-- 매물 시작 (통으로 링크) -->
-                                    <a th:each="mRecentList, iterStat : ${mRecentList}" th:href="@{/details/{id}(id=${mRecentList.id})}">
+                                    <a th:each="mRecentList, iterStat : ${mRecentList}" th:href="@{/details/{id}(id=${mRecentList.id}?nickname=${loginMember.nickname})}">
+                                        <!-- 매물 시작 (통으로 링크) -->
                                         <div class="s-mamulbox">
                                             <div class="s-mamul-img">
                                                 <img src="/img/details/apt.jpeg" alt="이미지">
@@ -211,20 +199,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- 비어 있는 곳 채우기 용 이미지 -->
-                                        <!--                                    <div th:if="${likedCnt != 0}">-->
-                                        <!--                                        <div th:if="${iterStat.index % 3 == 1 and iterStat.index + 1 < likedCnt}">-->
-                                        <!--                                            <div class="z-img-wrap">-->
-                                        <!--                                                <img src="https://www.bdsplanet.com/images/none_mae.png" alt="채우기용 이미지">-->
-                                        <!--                                            </div>-->
-                                        <!--                                        </div>-->
-                                        <!--                                        <div th:if="${iterStat.index % 3 == 2 and iterStat.index + 1 < likedCnt}">-->
-                                        <!--                                            <div class="z-img-wrap">-->
-                                        <!--                                                <img src="https://www.bdsplanet.com/images/none_mae.png" alt="채우기용 이미지">-->
-                                        <!--                                                <img src="https://www.bdsplanet.com/images/none_mae.png" alt="채우기용 이미지">-->
-                                        <!--                                            </div>-->
-                                        <!--                                        </div>-->
-                                        <!--                                    </div>-->
                                     </a>
                                     <!-- 매물 끝 -->
                                 </div>

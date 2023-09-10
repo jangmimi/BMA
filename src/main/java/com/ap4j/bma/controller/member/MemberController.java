@@ -1,5 +1,4 @@
 package com.ap4j.bma.controller.member;
-// pjm - use m o p q
 import com.ap4j.bma.config.PasswordEncoderConfig;
 import com.ap4j.bma.model.entity.customerCenter.QnAEntity;
 import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -221,7 +219,7 @@ public class MemberController {
     }
 
     /** 마이페이지 매핑 */ 
-    @RequestMapping("/qMyPage") // 관심매물 최근매물 불러와야함
+    @RequestMapping("/qMyPage")
     public String qMyPage(@RequestParam(name = "page", defaultValue = "1") int page,
                           @RequestParam(name = "pageSize", defaultValue = "9") int pageSize,
                           HttpSession session, Model model) {
@@ -244,7 +242,6 @@ public class MemberController {
         model.addAttribute("thumbnail_image", thumImg);
         model.addAttribute("likedCnt",likedCnt);
         model.addAttribute("mmpList",mmpList);
-
 
         return "userView/myPage";
     }
