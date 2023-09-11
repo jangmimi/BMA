@@ -102,9 +102,9 @@
 					</div>
 					<div class="y-button-con">
 						<a href="#" class="y-interest-maemul-btn fav">관심매물</a>
-						<a href="#" class="y-share-btn">공유버튼</a>
-						<a href="#" class="y-inquiry-btn">문의하기 버튼</a>
-						<a href="#" class="y-report-btn">신고하기 버튼</a>
+<!--						<a href="#" class="y-share-btn">공유버튼</a>-->
+						<a href="/qna" class="y-inquiry-btn fav">문의하기</a>
+<!--						<a href="#" class="y-report-btn">신고하기 버튼</a>-->
 					</div>
 				</div>
 				<!-- y-text-big-con 오른쪽에 정보 보여주는 컨테이너 끝 -->
@@ -282,7 +282,7 @@
 							   th:text="${'월세 ' + #strings.concat(mfr_djr > 0 ? mfr_djr + '억 ' : '', mfr_aks > 0 ? mfr_aks + '/' : '')} + ${#strings.concat(mr_djr > 0 ? mr_djr + '억 ' : '', mr_aks > 0 ? mr_aks : '')}"
 							   class="y-st-ptag"></p>
 							<div class="y-st-ptag2">
-								최근 7일 매물 조회수 289 회
+								최근 7일 매물 조회수 <span th:text="${maemulList.viewCount}"/> 회
 							</div>
 
 						</div>
@@ -1352,7 +1352,7 @@
 						</div>
 						<strong>매물확인</strong>
 						<p>
-							<b>72</b>
+							<b><span th:text="${maemulList.viewCount}"/></b>
 							명
 						</p>
 					</div>

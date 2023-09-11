@@ -220,8 +220,8 @@ public class MemberController {
 
     /** 마이페이지 매핑 */ 
     @RequestMapping("/qMyPage")
-    public String qMyPage(@RequestParam(name = "page", defaultValue = "1") int page,
-                          @RequestParam(name = "pageSize", defaultValue = "10") int pageSize,
+    public String qMyPage(@RequestParam(name = "page", defaultValue = "1", required = false) int page,
+                          @RequestParam(name = "pageSize", defaultValue = "10", required= false ) int pageSize,
                           HttpSession session, Model model) {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
