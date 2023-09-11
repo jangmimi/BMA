@@ -295,15 +295,20 @@ public class MemberController {
 
     /** 매물관리 페이지 매핑 */
     @RequestMapping("/qManagement")
-    public String qManagement(HttpSession session, Model model) {
+    public String qManagement(@RequestParam(name = "page", defaultValue = "1") int page,
+                              @RequestParam(name = "pageSize", defaultValue = "10") int pageSize,HttpSession session, Model model) {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
         String nickname = memberDTO.getNickname();
-
+        if (page < 1) {
+            page = 1;
+        }
         List<MaemulRegEntity> mmList = qMemberService.getListByNickname(memberDTO.getNickname());
 
-        model.addAttribute("mmList",mmList);
+        Page<MaemulRegEntity> mmpList = qMemberService.getPageByNickname(nickname,page,pageSize);
+
+        model.addAttribute("mmList",mmpList);
         model.addAttribute("mmAllCnt",mmList.size());
 
         return "userView/maemulManagement";

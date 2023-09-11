@@ -12,6 +12,7 @@
     <link rel="stylesheet" th:href="@{/css/member/myPage.css}">
     <link rel="stylesheet" th:href="@{/css/member/myCommon.css}">
     <link rel="stylesheet" th:href="@{/css/member/myMaemul.css}">
+    <link rel="stylesheet" th:href="@{/css/member/pagination.css}">
 </head>
 <body layout:fragment="content">
     <th:block th:if="${loginMember != null}">
@@ -104,6 +105,20 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                            </div>
+                            <div class="s-paging">
+                                <ul>
+                                    <li class="s-pre" th:if="${mmList.hasPrevious()}">
+                                        <a th:href="@{/member/qManagement(page=${mmList.number}, size=${mmList.size})}">이전</a>
+                                    </li>
+                                    <li th:if="${mmList.totalPages > 0}" th:each="pageNo : ${#numbers.sequence(0, mmList.totalPages - 1)}">
+                                        <span th:if="${mmList.number == pageNo}" th:text="${pageNo + 1}" class="s-active-page"></span>
+                                        <a th:unless="${mmList.number == pageNo}" th:href="@{/member/qManagement(page=${pageNo+1}, size=${mmList.size})}" th:text="${pageNo + 1}"></a>
+                                    </li>
+                                    <li class="s-next" th:if="${mmList.hasNext()}">
+                                        <a th:href="@{/member/qManagement(page=${mmList.number + 2}, size=${mmList.size})}">다음</a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>

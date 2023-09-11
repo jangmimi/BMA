@@ -455,4 +455,10 @@ public class MemberServiceImpl implements MemberService {
 		return findMaemul.orElse(null);
 	}
 
+	@Override
+	public Page<MaemulRegEntity> getPageByNickname(String nickname, int page, int pageSize) {
+		Pageable pageable = PageRequest.of(page - 1, pageSize);
+		Page<MaemulRegEntity> mmpList = maemulRegEntityRepository.findMaemulByMemberNicknameMy(nickname,pageable);
+		return mmpList;
+	}
 }

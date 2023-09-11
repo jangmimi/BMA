@@ -64,6 +64,13 @@ public interface MaemulRegEntityRepository extends JpaRepository<MaemulRegEntity
     @Query("SELECT mr FROM LikedEntity l JOIN MaemulRegEntity mr ON l.maemul_id = mr.id WHERE (mr.address LIKE %:keyword% OR mr.tradeType LIKE %:keyword%) AND l.nickname = :nickname")
     Page<MaemulRegEntity> findSearchMaemul(@Param("keyword") String keyword,@Param("nickname") String nickname, Pageable pageable);
 
+    /*김재환작성 마이페이지 매물관리 페이징*/
+    @Query("SELECT mr FROM MaemulRegEntity mr " +
+            "JOIN MemberEntity m ON mr.nickname = m.nickname " +
+            "WHERE m.nickname = :nickname " +
+            "ORDER BY mr.createdAt DESC")  // 최근 순 정렬
+    Page<MaemulRegEntity> findMaemulByMemberNicknameMy(@Param("nickname") String nickname,Pageable pageable);
+
 //    /*김재환작성 검색한 관심매물 전체개수*/
 //    @Query("SELECT count(mr.id) FROM LikedEntity l JOIN MaemulRegEntity mr ON l.maemul_id = mr.id AND (mr.address LIKE %:keyword% OR mr.tradeType LIKE %:keyword%)")
 //    Long searchCountLikedByNickname(@Param("nickname") String nickname,@Param("keyword") String keyword);

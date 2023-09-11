@@ -112,7 +112,7 @@
                         <div class="s-paging">
                             <ul>
                                 <li class="s-pre" th:if="${mmpList.hasPrevious()}">
-                                    <a th:href="@{/member/liked(page=${mmpList.number - 1}, size=${mmpList.size})}">이전</a>
+                                    <a th:href="@{/member/liked(page=${mmpList.number}, size=${mmpList.size})}">이전</a>
                                 </li>
                                 <li th:if="${mmpList.totalPages > 0}" th:each="pageNo : ${#numbers.sequence(0, mmpList.totalPages - 1)}">
                                     <span th:if="${mmpList.number == pageNo}" th:text="${pageNo + 1}" class="s-active-page"></span>
