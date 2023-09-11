@@ -25,7 +25,7 @@
     <div class="table-box">
     <table>
         <tr>
-            <th class="b-n , bold"><p th:text = "${article.category}">카테고리</th>
+            <th class="b-n"><p th:text = "${article.category}">카테고리</th>
             <th class="b-t"><p th:text = "${article.title}">제목</p></th>
         </tr>
         <tr>
@@ -35,11 +35,24 @@
         </tr>
     </table>
 
+        <div id="pre-next">
+            <a th:if="${prevArticle != null}" th:href="@{/faq/view?id={id}(id=${prevArticle.id})}">
+                <button class="pre-next">이전글</button>
+            </a>
+            <a th:if="${nextArticle != null}" th:href="@{/faq/view?id={id}(id=${nextArticle.id})}">
+                <button class="pre-next">다음글</button>
+            </a>
+        </div>
+
     <div class="list-btn-outer">
         <button class="list-btn" onclick="location.href = '/faq/list'">목록으로</button>
     </div>
     </div>
+
+
 </div>
+
+
 
 </body>
 </html>

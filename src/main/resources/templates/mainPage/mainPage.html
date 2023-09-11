@@ -16,6 +16,7 @@
 	<link rel="stylesheet" th:href="@{/css/mainpage_header_footer.css}">
 	<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 	<script src="https://kit.fontawesome.com/5b1091f816.js" crossorigin="anonymous"></script>
+	<script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script><!--타이핑 효과-->
 </head>
 <body layout:fragment="content">
 <!--<div class="r-main">-->
@@ -77,7 +78,19 @@
 			<div class="n-main-1-submenu">
 				<a href="/map/main">
 					<div class="n-main-1-submenu-searchbody">
-						<span>단지명, 동이름, 지하철로 검색</span>
+						<span id="typing-text"></span>
+						<script>
+							var options = {
+                                strings: [
+                                        "단지명, 동이름, 지하철로 검색",
+                                    ],
+                              typeSpeed: 70, // 한 글자당 타이핑 속도 (밀리초)
+                              backSpeed: 60, // 한 글자당 삭제 속도 (밀리초)
+                              loop: true, // 반복 여부
+                            };
+
+                            var typed = new Typed('#typing-text', options);
+						</script>
 						<i class="fa-solid fa-magnifying-glass"></i>
 					</div>
 				</a>

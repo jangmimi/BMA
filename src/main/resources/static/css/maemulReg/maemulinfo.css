@@ -171,3 +171,9 @@
         			background: #F9FAFC;
         			color: #666;
         		}
+
+        		/*주소 입력 박스*/
+        		.adress-box{
+        		display: flex;
+                align-items: center;
+                    }
