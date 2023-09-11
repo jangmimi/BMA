@@ -110,4 +110,6 @@ i{
     top: 20px;
     color: silver;
     font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
 }

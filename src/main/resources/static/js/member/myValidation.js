@@ -88,6 +88,12 @@ $(document).ready(function(){
         }
     });
 
+    // 이메일 입력값 변경 체크
+    $("#email").on("input", function() {
+        $('#btnEmailCheck').attr('class','btn btn-outline-dark');
+        $('#btnEmailCheck').val("중복검사");
+    });
+
     // 닉네임 입력값 변경 체크
     $("#nickname").on("input", function() {
         $('#btnNicknameCheck').attr('class','btn btn-outline-dark');
