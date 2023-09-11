@@ -69,7 +69,8 @@ public class MaemulRegController {
     @PostMapping("/moreinfo")
     public String saveMoreInfo(@ModelAttribute MaemulRegEntity maemulRegEntity,
                                @RequestParam("imageFiles") MultipartFile[] imageFiles,
-                               RedirectAttributes redirectAttributes) throws Exception {
+                               RedirectAttributes redirectAttributes,
+                               Model model) throws Exception {
         // 매물 정보를 데이터베이스에 저장
         MaemulRegEntity savedEntity = maemulRegService.saveMaemulInfo(maemulRegEntity);
 
@@ -99,17 +100,18 @@ public class MaemulRegController {
         // 저장된 매물 정보의 ID를 리다이렉트 시에 전달
         redirectAttributes.addAttribute("maemulId", savedEntity.getId());
 
-        return "redirect:/member/qManagement";
+
+        return "redirect:/confirmation";
     }
     // 확인 페이지
     @GetMapping("/confirmation")
-    public String confirmationPage(@RequestParam("maemulId") Integer maemulId, Model model) {
+    public String confirmationPage(@RequestParam("maemulId") Integer maemulId, HttpSession session) {
         // 매물 정보를 데이터베이스에서 가져와서 확인 페이지에 표시
+        System.out.println("maemulId = " + maemulId);
         MaemulRegEntity maemulRegEntity = maemulRegService.getMaemulById(maemulId);
-
-
-        model.addAttribute("maemulRegEntity", maemulRegEntity);
-        return "/member/qManagement";
+        System.out.println("maemulRegEntity = " + maemulRegEntity);
+        session.setAttribute("maemulRegEntity", maemulRegEntity);
+        return "redirect:/member/qManagement";
     }
 
     @PostMapping("/confirmation")
