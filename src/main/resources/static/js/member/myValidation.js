@@ -158,6 +158,7 @@ function checkNickname() {
     });
 };
 
+// 회원가입 전 전체 유효성 검사
 function oJoinCheck() {
     const reg = /^[A-Za-z0-9_\.]+@[A-Za-z0-9]+\.[A-Za-z0-9]+/;
     const telreg = /^\d{10,11}$/;

@@ -61,6 +61,12 @@ function oDeleteCheck() {
    return answer;
 }
 
+// 매물삭제 확인
+function deleteMMCheck() {
+   let answer = confirm('정말 삭제하시겠습니까?');
+   return answer;
+}
+
 // 로그인 페이지
 // 로그인 및 유효성(공백) 체크 (form 태그에서 onsubmit으로 호출해 submit 하기 전 체크)
 function oLoginCheck() {

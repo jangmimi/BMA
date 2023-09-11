@@ -1,4 +1,3 @@
-/* oMyInfoUpdate */
 $(document).ready(function() {
      // 비밀번호/비밀번호 확인 일치 여부 체크
     function checkPassword() {
@@ -33,49 +32,11 @@ $(document).ready(function() {
         $("#tel").val(telValue);
     });
 
-
-
-
-
-   // 비밀번호 임시메일 발송
-    $("#checkEmail").click(function () {
-        const userEmail = $("#userEmail").val().trim();
-        const sendEmail = document.forms["sendEmail"];
-        const emailreg = /^[A-Za-z0-9_\.]+@[A-Za-z0-9]+\.[A-Za-z0-9]+/;
-
-        if(userEmail === '') {
-            alert('이메일을 입력해주세요.');
-            return false;
-        }
-        if(!emailreg.test(userEmail)) {
-            alert('이메일 형식으로 입력해주세요.');
-            return false;
-        }
-        $.ajax({
-            type: 'post',
-            url: 'emailDuplication',
-            data: {
-                'userEmail': userEmail
-            },
-            dataType: "text",
-            success: function (result) {
-                if(result == "no"){
-                    // 중복되는 것이 있다면 no == 일치하는 이메일이 있다!
-                    alert('임시비밀번호를 전송 했습니다.');
-                    sendEmail.submit();
-                }else {
-                    alert('가입되지 않은 이메일입니다.');
-                }
-            },error: function () {
-                console.log('에러 체크!!')
-            }
-        })
+    // 닉네임 입력값 변경 체크
+    $("#nickname").on("input", function() {
+        $('#btnNicknameCheck').attr('class','btn btn-outline-dark');
+        $('#btnNicknameCheck').val("중복검사");
     });
-
-    function deleteMMCheck() {
-       let answer = confirm('정말 삭제하시겠습니까?');
-       return answer;
-    }
 });
 
 // 닉네임 중복검사
@@ -123,7 +84,6 @@ function oUpdateCheck() {
     let pwdValue = $('#pwd').val();
     let nicknameCheckOk = $("#btnNicknameCheck").val() === '사용가능';
 
-
     if(name === '') {
         alert('이름을 입력해주세요.');
         return false;
@@ -140,7 +100,7 @@ function oUpdateCheck() {
         alert('연락처 형식으로 입력해주세요.');
         return false;
     }
-    if(pwdValue !== '') {    /* 비밀번호창 입력이 있을 경우에만 체크 */
+    if(pwdValue !== '') {    // 비밀번호창 입력이 있을 경우에만 체크
         if (pwdValue.length < 8 || pwdValue.length > 20) {
             alert('비밀번호는 8자 이상, 20자 이하로 입력해주세요.');
             return false;
@@ -158,60 +118,3 @@ function oUpdateCheck() {
     let confirmUpdate = confirm('입력한 정보로 수정하시겠습니까?');
     if(!confirmUpdate) return false;
 }
-
-// oFindMemberInfo.html
-
-// 이메일찾기 submit 전에 공백, 형식 체크
-function oFindEmailCheck() {
-    const name = $('#name').val().trim();
-    const tel = $('#tel').val().trim();
-    const telreg = /^\d{10,11}$/;
-
-    if (name === '') {
-        alert('이름을 입력해주세요.');
-        return false;
-    }
-    if (tel === '' || !telreg.test(tel)) {
-        alert('올바른 연락처 형식으로 입력해주세요.');
-        return false;
-    }
-}
-
-// 이메일찾기 ajax 구현
-//function findEmail() {
-//    let name = $('#name').value.trim();
-//    let tel = $('#tel').value.trim();
-//    const telreg = /^\d{10,11}$/;
-//
-//    if(name === '') {
-//        alert('이름을 입력해주세요.');
-//        return false;
-//    }
-//    if(tel === '') {
-//        alert('연락처를 입력해주세요.');
-//        return false;
-//    }
-//  if(!telreg.test(tel) {
-//        alert('연락처 형식으로 입력해주세요.');
-//        return false;
-//    }
-//    fetch('/qFindEmail', {
-//        method: 'POST',
-//        headers: {
-//            'Content-Type': 'application/x-www-form-urlencoded',
-//        },
-//        body: 'name=' + encodeURIComponent(name) + '&tel=' + encodeURIComponent(tel),
-//    })
-//    .then(response => response.json())
-//    .then(data => {
-//        if (data.cnt === 1) {
-//            alert('이메일: ' + data.findEmail);
-//        } else {
-//            alert('일치하는 회원이 없습니다.');
-//        }
-//    })
-//    .catch(error => {
-//        console.error('에러 발생:', error);
-//    });
-//    return false; // 폼 제출 방지
-//}
