@@ -408,6 +408,8 @@ function updateTransactionTable(roadName) {
         success: function (response) {
             var tableBody = $(".tbl tbody");
             tableBody.empty();
+            var tableBody2 = $(".tbl2 tbody");
+            tableBody2.empty();
 
             if (response.aptRealTradeDTOList) {
                 /* 실거래정보 차트 */
