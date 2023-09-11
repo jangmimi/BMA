@@ -285,11 +285,10 @@ public class MemberController {
     /** 1:1 문의내역 페이지 매핑 */
     @GetMapping("/qMyQnA")
     public String qMyQnA(@RequestParam(name = "page", defaultValue = "1") int page,
-                         @RequestParam(name = "pageSize", defaultValue = "10") int pageSize,Model model, HttpSession session) {
+                         @RequestParam(name = "pageSize", defaultValue = "10") int pageSize, Model model, HttpSession session) {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
-        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
-        String userEmail = memberDTO.getEmail();
+        String userEmail = getMemberEmail(session);
 
         if (page < 1) {
             page = 1;
@@ -306,7 +305,8 @@ public class MemberController {
 
     /** 기본 회원탈퇴 (js ajax 활용) */   // sns 탈퇴 시 로그인 별도 처리 필요
     @PostMapping("/qLeaveMember2")
-    public ResponseEntity<Integer> qLeaveMember2(@RequestParam(required = false) String password, HttpSession session, SessionStatus sessionStatus) {
+    public ResponseEntity<Integer> qLeaveMember2(@RequestParam(required = false) String password,
+                                                 HttpSession session, SessionStatus sessionStatus) {
         Long id =  ((MemberDTO) session.getAttribute("loginMember")).getId();
         boolean success = qMemberService.leaveMember(id, password, sessionStatus, session);
         return ResponseEntity.ok(success ? 1 : 0);
