@@ -11,7 +11,13 @@
 	<link rel="stylesheet" th:href="@{/css/details.css}">
 
 	<!-- <script type="text/javascript" th:src="@{/js/search/search.js}"></script>-->
+
+	<script th:inline="javascript">
+		let member = [[${member}]];
+		</script>
 	<script type="text/javascript" th:src="@{/js/details/details.js}"></script>
+
+
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
 		  integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
@@ -100,11 +106,32 @@
 						<div class="y-house-hold">[[${maemulList.APT_name}]]</div>
 						<!--					<div class="y-location">고려대역 도보 8분</div>-->
 					</div>
+
 					<div class="y-button-con">
-						<a href="#" class="y-interest-maemul-btn fav">관심매물</a>
-						<a href="#" class="y-share-btn">공유버튼</a>
-						<a href="#" class="y-inquiry-btn">문의하기 버튼</a>
-						<a href="#" class="y-report-btn">신고하기 버튼</a>
+						<div class="y-zmrl">
+							<button class="y-st-ww fav">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+									<g fill="none" fill-rule="evenodd">
+										<g stroke="#222" stroke-width="1.5">
+											<g>
+												<g>
+													<g>
+														<path
+																d="M12.945 3.518c2.096-2.028 5.423-2.028 7.518 0l.117.117c1.945 2.01 1.892 5.215-.117 7.16h0l-3.768 3.646-4.699 4.548-3.752-3.631-.016-.015-4.699-4.548c-2.009-1.945-2.061-5.15-.116-7.16l.116-.117h0c2.096-2.028 5.423-2.028 7.518 0l.949.92z"
+																transform="translate(-250 -216) translate(250 121) translate(0 92) translate(0 3)">
+														</path>
+													</g>
+												</g>
+											</g>
+										</g>
+									</g>
+								</svg>
+								<span class="y-another-likes">관심 매물</span>
+							</button>
+						</div>
+<!--						<a href="#" class="y-share-btn">공유버튼</a>-->
+						<a href="/qna" class="y-inquiry-btn fav t-asc">문의하기</a>
+<!--						<a href="#" class="y-report-btn">신고하기 버튼</a>-->
 					</div>
 				</div>
 				<!-- y-text-big-con 오른쪽에 정보 보여주는 컨테이너 끝 -->
@@ -1207,7 +1234,9 @@
 								</div>
 								<strong>매물확인</strong>
 								<p>
-									<b>72</b>
+									<b>
+										<span th:text="${maemulList.viewCount}"/>
+									</b>
 									명
 								</p>
 							</div>
@@ -1272,7 +1301,7 @@
 							   th:text="${'월세 ' + #strings.concat(mfr_djr > 0 ? mfr_djr + '억 ' : '', mfr_aks > 0 ? mfr_aks + '/' : '')} + ${#strings.concat(mr_djr > 0 ? mr_djr + '억 ' : '', mr_aks > 0 ? mr_aks : '')}"
 							   class="y-st-ptag"></p>
 							<div class="y-st-ptag2">
-								최근 7일 매물 조회수 289 회
+								최근 7일 매물 조회수 <span th:text="${maemulList.viewCount}"/> 회
 							</div>
 
 						</div>
@@ -1356,7 +1385,7 @@
 								</a>
 							</div>
 							<div class="y-st-w">
-								<button class="y-st-ww">
+								<button class="y-st-ww fav" onclick="like()">
 									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
 										<g fill="none" fill-rule="evenodd">
 											<g stroke="#222" stroke-width="1.5">
@@ -1398,10 +1427,10 @@
 	<script type="text/javascript"
 			src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9a3ebc8549eeffd6c970f997b9f91c0c&libraries=services"></script>
 	<script th:inline="javascript">
-		/*<![CDATA[*/
-		var maemulList = [[${maemulList}]]
-		/*]]>*/</script>
+		var maemulList = [[${maemulList}]];
+		</script>
 	<script type="text/javascript" th:src="@{/js/details/details_map.js}"></script>
+
 </body>
 
 </html>

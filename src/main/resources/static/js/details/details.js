@@ -199,8 +199,79 @@ $(document).ready(function() {
 			isGasStationClicked = false;
 		}
 	});
+	// view 전용 js 끝
 
+	console.log("멤버는 밑에");
+	if (member) {
+		console.log("1번 ", member.name);
+		console.log('2번', member);
+		console.log("3번", member.nickname);
+		console.log('4번', maemulList.id);
+	} else {
+		console.log("멤버 데이터가 없습니다.");
+	}
 
 
 });
 
+
+function like() {
+	console.log("like() 실행");
+	if (member && member.nickname !== null) {
+		// 클라이언트에서 즉시 버튼 색상 변경
+		toggleHeartIcon();
+
+		$.ajax({
+			url: "/details/like",
+			type: "POST",
+			data: { 'id': maemulList.id, 'nickname': member.nickname },
+			success: function (response) {
+				console.log("성공");
+				// 서버 응답 후 아이콘 변경은 필요하지 않음
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				console.log("에러");
+				alert('로그인 후 이용 가능합니다.');
+				// 에러 발생 시 버튼 색상 원래대로 되돌리기
+				toggleHeartIcon();
+			}
+		});
+	} else {
+		alert('로그인 후 이용 가능합니다.');
+	}
+}
+
+function toggleHeartIcon() {
+	// 현재 하트 아이콘의 fill 속성 값을 확인합니다.
+	var heartIcon = $('.fav').find('svg');
+	var currentFill = heartIcon.find('path').css('fill');
+
+	// 클라이언트에서는 좋아요 여부에 따라 fill 속성을 변경합니다.
+	if (currentFill === 'red' || currentFill === 'rgb(255, 0, 0)') {
+		// 빨간색 -> 기본색 (복원)
+		heartIcon.find('path').css('fill', 'none');
+		heartIcon.find('path').css('stroke', 'black');
+	} else {
+		// 기본색 -> 빨간색
+		heartIcon.find('path').css('fill', 'red');
+		heartIcon.find('path').css('stroke', 'red');
+	}
+}
+
+// 페이지 로드 시 좋아요 여부에 따라 아이콘 색상 설정
+$(document).ready(function () {
+	// 좋아요 여부를 서버에서 가져옴
+	$.get("/details/like", { 'id': maemulList.id, 'nickname': member.nickname }, function (response) {
+		if (response.liked) {
+			console.log(response.liked);
+			console.log(response);
+			// 좋아요한 경우, 아이콘을 빨간색으로 설정
+
+			$('.fav').find('svg').find('path').css('fill', 'none');
+			$('.fav').find('svg').find('path').css('stroke', 'black');
+		} else{
+			$('.fav').find('svg').find('path').css('fill', 'red');
+			$('.fav').find('svg').find('path').css('stroke', 'red');
+		}
+	});
+});
