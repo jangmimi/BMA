@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    // 회원가입 페이지
     // 회원가입 취소 버튼
     $("#oJoinCancelBtn").click(function() {
         let cancelA = confirm('회원가입을 취소하시겠습니까? 메인화면으로 이동합니다.');
@@ -60,7 +61,7 @@ function oDeleteCheck() {
    return answer;
 }
 
-/* 로그인 페이지 */
+// 로그인 페이지
 // 로그인 및 유효성(공백) 체크 (form 태그에서 onsubmit으로 호출해 submit 하기 전 체크)
 function oLoginCheck() {
     let email = $('#email').val();
