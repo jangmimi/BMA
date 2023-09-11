@@ -55,40 +55,45 @@ public class MyMaemulController {
 
         return "userView/maemulManagement";
     }
+
     /** 매물 삭제 */
     @PostMapping("/qDeleteMaemul")
-    public String qDeleteMaemul(@RequestParam("id") Integer id, String nickname, HttpSession session) {
+    public String qDeleteMaemul(@RequestParam("id") Integer id, HttpSession session) {
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
-        nickname = memberDTO.getNickname();
-        log.info("삭제매물id확인 : "+id);
+        String nickname = memberDTO.getNickname();
+
         int result = qMemberService.deleteMaemul(id, nickname);
-        log.info("삭제결과 : " + result);
+
         return "redirect:/member/qManagement";
     }
 
     /** 관심매물 등록 */
     @RequestMapping("/qLiked")
-    public String qLiked(HttpSession session, Model model, Integer maemulId) {
+    public String qLiked(@RequestParam("maemulId") Integer maemulId, HttpSession session, Model model) {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
         String nickname = memberDTO.getNickname();
-        MaemulRegEntity finemm = qMemberService.findMaemulById(maemulId);
+        MaemulRegEntity findMaemul = qMemberService.findMaemulById(maemulId);
 
-        LikedEntity likedEntity = new LikedEntity();
-        likedEntity.setNickname(nickname);
-        likedEntity.setMaemul_id(maemulId);
+        if(findMaemul != null) {
+            LikedEntity likedEntity = new LikedEntity();
+            likedEntity.setNickname(nickname);
+            likedEntity.setMaemul_id(maemulId);
 
-        likedService.save(likedEntity);
-
+            likedService.save(likedEntity);
+        } else {
+            log.info("매물 아이디 : " + maemulId + " : 에 매물이 존재하지 않습니다.");
+        }
         return "redirect:/map/map";
     }
+
     /** 관심매물 삭제 */
     @PostMapping("/qDeleteLiked")
-    public String qDeleteLiked(@RequestParam("maemul_id") Integer maemul_id, String nickname, HttpSession session) {
+    public String qDeleteLiked(@RequestParam("maemul_id") Integer maemul_id, HttpSession session) {
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
-        nickname = memberDTO.getNickname();
-        log.info("삭제확인"+maemul_id);
+        String nickname = memberDTO.getNickname();
+
         likedService.deleteByMaemulIdAndNickname(maemul_id, nickname);
         return "redirect:/member/liked";
     }
@@ -141,7 +146,6 @@ public class MyMaemulController {
     @RequestMapping("/qRecent")
     public String qRecent(@RequestParam(name = "page", defaultValue = "1") int page,
                           @RequestParam(name = "pageSize", defaultValue = "10") int pageSize,HttpSession session, Model model) {
-        log.info("MemberController - qRecent() 실행");
         if(!loginStatus(session)) { return "userView/loginNeed"; }
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
         String nickname = memberDTO.getNickname();
@@ -184,11 +188,12 @@ public class MyMaemulController {
 
     /** 최근본매물 삭제 */
     @PostMapping("/qDeleteRecent")
-    public String qDeleteRecent(@RequestParam("maemul_id") Integer maemul_id, String nickname, HttpSession session) {
+    public String qDeleteRecent(@RequestParam("maemul_id") Integer maemul_id, HttpSession session) {
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
-        nickname = memberDTO.getNickname();
-        log.info("삭제할 최근본매물 : " + maemul_id);
+        String nickname = memberDTO.getNickname();
+
         recentServiceImpl.recentDelete(maemul_id, nickname);
+
         return "redirect:/member/qRecent";
     }
 }

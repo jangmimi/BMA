@@ -62,7 +62,6 @@ public class MemberController {
     /** 로그인 페이지 매핑 */
     @RequestMapping("/qLoginForm")
     public String qLoginForm(@CookieValue(value = "rememberedEmail", required = false) String rememberedEmail, Model model, HttpSession session) {
-        log.info("MemberController - qLoginForm() 실행");
         if(loginStatus(session)) { return "userView/loginAlready"; }
 
         model.addAttribute("rememberedEmail", rememberedEmail); // 쿠키가 있는 경우, 저장 이메일 표시
@@ -317,6 +316,7 @@ public class MemberController {
     public String leaveMember(HttpSession session, SessionStatus sessionStatus) {
         Long id =  ((MemberDTO) session.getAttribute("loginMember")).getId();
         String pwd =  ((MemberDTO) session.getAttribute("loginMember")).getPwd();
+
         qMemberService.leaveMember(id, pwd, sessionStatus, session);
 
         return "redirect:/";
