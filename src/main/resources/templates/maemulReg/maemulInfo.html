@@ -43,14 +43,16 @@
                 <tr >
                     <th>주소<b class="number"> *</b></th>
                     <td colspan="3">
-                        <input id="addressInput" name="address" type="text" readonly>
+                        <div class="adress-box">
+                        <input id="addressInput" name="address" type="text" readonly required>
                         <button type="button" onclick="openKakaoAddressSearch()" class="address-btn"><img src="/img/maemulReg/search-address.png" style="width:40px; height:40px;" alt="도로명 주소" ></button>
-                        <button onclick="getCurrentLocation()" class="address-btn"><img src="/img/maemulReg/mygps.png" style="width:40px; height:40px;" alt="내 위치" ></button>
+                        <!--<button onclick="getCurrentLocation()" class="address-btn"><img src="/img/maemulReg/mygps.png" style="width:40px; height:40px;" alt="내 위치" ></button>-->
+                        </div>
                     </td>
                 </tr>
                 <tr>
                     <th>단지명</th>
-                    <td colspan="3"><input id="APT_name" name="APT_name" onblur="showBuildingInfo();" type="text"></td>
+                    <td colspan="3"><input id="APT_name" name="APT_name" type="text" onblur="showBuildingInfo();"></td>
                 </tr>
             </table>
             <br>
@@ -61,30 +63,30 @@
             <hr>
             <table border="1" class="info">
                 <tr>
-                    <th>건축물 용도</th>
+                    <th>건축물 용도<b class="number"> *</b></th>
                     <td colspan="4">
-                        <input type="radio" name="buildingUsage" value="거주용">주거용
-                        <input type="radio" name="buildingUsage" value="업무용">상업용
-                        <input type="radio" name="buildingUsage" value="거주/업무용">주거/상업용
+                        <input type="radio" name="buildingUsage" value="거주용" required>주거용
+                        <input type="radio" name="buildingUsage" value="업무용" required>상업용
+                        <input type="radio" name="buildingUsage" value="거주/업무용" required>주거/상업용
                     </td>
                 </tr>
                 <tr>
                     <th>방 수<b class="number"> *</b></th>
-                    <td><input class="num" type="text" id = "useInput" name="numberOfRooms" placeholder="0"> 개</td>
+                    <td><input class="num" type="text" id = "useInput" name="numberOfRooms" placeholder="0" required> 개</td>
                     <th>욕실 수<b class="number"> *</b></th>
-                    <td colspan="2"><input class="num" type="text" name="numberOfBathrooms" placeholder="0"> 개</td>
+                    <td colspan="2"><input class="num" type="text" name="numberOfBathrooms" placeholder="0" required> 개</td>
                 </tr>
                 <tr>
                     <th>해당 층 수<b class="number"> *</b></th>
-                    <td><input class="num" type="text" name="floorNumber" placeholder="1"> 층</td>
+                    <td><input class="num" type="text" name="floorNumber" placeholder="1" required> 층</td>
                     <th>건물 층 수<b class="number"> *</b></th>
-                    <td colspan="2"><input class="num" type="text" name="totalFloors" placeholder="1"> 층</td>
+                    <td colspan="2"><input class="num" type="text" name="totalFloors" placeholder="1" required> 층</td>
                 </tr>
                 <tr>
                     <th>전용 면적<b class="number"> *</b></th>
-                    <td><input class="num" type="text" name="privateArea" placeholder="0"> m²</td>
+                    <td><input class="num" type="text" name="privateArea" placeholder="0" required> m²</td>
                     <th>공급 면적<b class="number"> *</b></th>
-                    <td><input class="num" type="text" name="supplyArea" placeholder="0"> m²</td>
+                    <td><input class="num" type="text" name="supplyArea" placeholder="0" required> m²</td>
                     <th><a href="javascript:void(0);" id="helpLink" onclick="showPopup()">도움말</a></th>
                 </tr>
                 <tr>
@@ -124,8 +126,8 @@
                 <tr>
                     <th>주차가능여부<b class="number"> *</b></th>
                     <td>
-                        <input type="radio" name="parking" value="가능">가능
-                        <input type="radio" name="parking" value="불가능">불가능
+                        <input type="radio" name="parking" value="가능" required>가능
+                        <input type="radio" name="parking" value="불가능" required>불가능
                     </td>
                     <th>총 주차대수</th>
                     <td colspan="2"><input class="num" type="text" name="totalParking" placeholder="0"> 대</td>
@@ -149,7 +151,7 @@
                 </tr>
                 <tr>
                     <th>융자금 여부<b class="number"> *</b></th>
-                    <td colspan="4"><input class="won" name="loanAmount" type="text" placeholder="0"  onblur = "showPriceInfo();"> 만원</td>
+                    <td colspan="4"><input class="won" name="loanAmount" type="text" placeholder="0"  onblur = "showPriceInfo();" required> 만원</td>
                 </tr>
             </table>
             <br>
@@ -162,17 +164,17 @@
             <div class="btn-group">
                 <!--버튼-->
                 <div class="form_radio_btn radio_male">
-                    <input id="month" type="radio" name="tradeType" value="월세">
+                    <input id="month" type="radio" name="tradeType" value="월세" required>
                     <label for="month">월세</label>
                 </div>
 
                 <div class="form_radio_btn">
-                    <input id="year" type="radio" name="tradeType" value="전세">
+                    <input id="year" type="radio" name="tradeType" value="전세" required>
                     <label for="year">전세</label>
                 </div>
 
                 <div class="form_radio_btn radio_male">
-                    <input id="sell" type="radio" name="tradeType" value="매매">
+                    <input id="sell" type="radio" name="tradeType" value="매매" required>
                     <label for="sell">매매</label>
                 </div>
             </div>
@@ -234,14 +236,14 @@
         <div class="pre">
             <div class="predetails">
                 <ul>
-                    <li><a href="/agree">이전</a></li>
+                    <li><button type="button" class="pre-btn" onclick="location.href='/agree';">이전</button></li>
                 </ul>
             </div>
         </div>
         <div class="next">
             <div class="nextdetails">
                 <ul>
-                    <li><button type="submit">다음</button></li>
+                    <li><button class="next-btn" type="submit">다음</button></li>
                 </ul>
             </div>
 
@@ -249,7 +251,7 @@
         </div>
     </div>
 </form>
-
+</th:block>
 </body>
 
 
