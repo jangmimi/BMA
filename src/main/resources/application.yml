@@ -25,7 +25,7 @@ spring:
   # Hibernate 설정
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none   #update는 삭제한 컬럼 자동생성으로 인한 에러 발생해서 변경
     properties:
       hibernate:
         format_sql: true

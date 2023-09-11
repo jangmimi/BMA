@@ -19,7 +19,7 @@ public interface RecentRepository extends JpaRepository<RecentEntity, String> {
 	boolean existsByMaemulEntityAndMemberEntity_Nickname(MaemulRegEntity maemulEntity, String nickname);
 
 	@Query("SELECT r.maemulEntity FROM RecentEntity r WHERE r.memberEntity.nickname = :nickname ORDER BY r.id DESC") // 최근 순 정렬 추가
-	Page<MaemulRegEntity> findMaemulEntitiesByMemberNickname(String nickname, Pageable pageable);
+	Page<MaemulRegEntity> findMaemulEntitiesByMemberNickname(@Param("nickname") String nickname, Pageable pageable);
 
 	Long countByMemberEntity_Nickname(String nickname);
 
