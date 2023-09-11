@@ -58,6 +58,13 @@ public class MyMaemulController {
         model.addAttribute("mmList",mmpList);
         model.addAttribute("mmAllCnt",mmList.size());
 
+        // 세션에서 maemulRegEntity 데이터 가져오기 (세션에 값 있을 경우에만)
+        MaemulRegEntity maemulRegEntity = null;
+        if (session.getAttribute("maemulRegEntity") != null) {
+            maemulRegEntity = (MaemulRegEntity) session.getAttribute("maemulRegEntity");
+            model.addAttribute("maemulRegEntity", maemulRegEntity);
+        }
+
         return "userView/maemulManagement";
     }
 
