@@ -124,14 +124,14 @@
     text-decoration: none;
 }
 #o-allView {
-    width: 83px;
-        background-color: #26abed;
-        color: white;
-        padding: 5px 8px;
-        font-size: 14px;
-        display: flex;
-        height: 29px;
-        justify-content: center;
+    width: 95px;
+    background-color: #26abed;
+    color: white;
+    padding: 5px 8px;
+    font-size: 14px;
+    display: flex;
+    height: 30px;
+    justify-content: center;
 }
 .aSeeAll{
     margin-right: 4px;
@@ -165,19 +165,20 @@
 }
 .a_myInEditAndServiceInfoBtn{
    display: flex;
-       justify-content: space-between;
+   justify-content: space-between;
 }
 .a_Btns{
     display: flex;
-        text-align: center;
-        height: 31px;
-        margin-top: 10px;
-        color: white;
-        width: 49%;
-        background-color: #2aa1dc;
-        align-items: center;
-        justify-content: center;
-            text-decoration: none;
+    text-align: center;
+    font-weight: 600;
+    height: 31px;
+    margin-top: 10px;
+    color: white;
+    width: 49%;
+    background-color: #2aa1dc;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
 }
 .oMaemulContainer {
     display: flex;

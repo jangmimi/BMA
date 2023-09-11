@@ -2,7 +2,6 @@ package com.ap4j.bma.controller.member;
 import com.ap4j.bma.config.PasswordEncoderConfig;
 import com.ap4j.bma.model.entity.customerCenter.QnAEntity;
 import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
-import com.ap4j.bma.model.entity.member.LikedEntity;
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
 import com.ap4j.bma.service.member.LikedService;
@@ -20,9 +19,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -296,14 +293,13 @@ public class MemberController {
 
         Page<QnAEntity> qMyQnaList = qMemberService.qMyQnaList(userEmail,page,pageSize);
         long cnt = qMemberService.qMyQnaListCount(userEmail);
-        //long cnt = qMyQnaList.size();
 
         model.addAttribute("myQnaList", qMyQnaList);
         model.addAttribute("myQnaCnt", cnt);
         return "userView/myQnA";
     }
 
-    /** 기본 회원탈퇴 (js ajax 활용) */   // sns 탈퇴 시 로그인 별도 처리 필요
+    /** 기본 회원탈퇴 (js ajax 활용) */
     @PostMapping("/qLeaveMember2")
     public ResponseEntity<Integer> qLeaveMember2(@RequestParam(required = false) String password,
                                                  HttpSession session, SessionStatus sessionStatus) {
