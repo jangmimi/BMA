@@ -119,39 +119,39 @@ $(document).ready(function() {
             }
         })
     });
-});
 
-// 닉네임 중복검사
-let previousNickname = $('#nickname').val().trim();    // 기존 닉네임 저장
-function checkNickname() {
-    let nickname = $('#nickname').val().trim();
-        if (nickname === '') {
-            alert('닉네임을 입력해주세요.');
-            return;
-        }
-        performNicknameCheck(nickname);
-    }
-    // 이전 닉네임과 새로운 닉네임을 비교하여 변경 여부 확인
-    if (previousNickname !== nickname) {
-        $.ajax({
-            url: '/member/qNicknameDuplicationCheck',
-            type: 'post',
-            data: {nickname:nickname},
-            success: function (cnt) {
-                if (cnt === 0) {
-                    handleNicknameAvailable();
-                } else {
-                    handleNicknameUnavailable();
-                }
-            },
-            error: function () {
-                alert("에러입니다.");
+    // 닉네임 중복검사
+    let previousNickname = $('#nickname').val().trim();    // 기존 닉네임 저장
+    function checkNickname() {
+        let nickname = $('#nickname').val().trim();
+            if (nickname === '') {
+                alert('닉네임을 입력해주세요.');
+                return;
             }
-        });
-    } else {
-        alert('변경사항이 없습니다.');
+            performNicknameCheck(nickname);
+        }
+        // 이전 닉네임과 새로운 닉네임을 비교하여 변경 여부 확인
+        if (previousNickname !== nickname) {
+            $.ajax({
+                url: '/member/qNicknameDuplicationCheck',
+                type: 'post',
+                data: {nickname:nickname},
+                success: function (cnt) {
+                    if (cnt === 0) {
+                        handleNicknameAvailable();
+                    } else {
+                        handleNicknameUnavailable();
+                    }
+                },
+                error: function () {
+                    alert("에러입니다.");
+                }
+            });
+        } else {
+            alert('변경사항이 없습니다.');
+        }
     }
-}
+});
 
 function handleNicknameAvailable() {
     $('#btnNicknameCheck').attr('class', 'btn btn-primary');
