@@ -108,7 +108,7 @@
                                             <td class="o-t-btns">
                                                 <form th:action="@{/member/qDeleteMaemul}" method="POST" onsubmit="return deleteMMCheck()">
                                                     <input type="hidden" id="num" th:name="id" th:value="${mmList.id}">
-                                                    <a th:href="@{/updatePage_maemul(maemul_id=${mmList.id})}">수정</a>
+                                                    <a th:href="@{/maemul/updatePage_maemul(maemul_id=${mmList.id})}">수정</a>
                                                     <input type="submit" value="삭제">
                                                 </form>
                                             </td>
