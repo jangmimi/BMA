@@ -27,7 +27,7 @@
         <tr>
             <th class="b-n">[공지]</th>
             <th class="b-t"><p th:text = "${article.title}">제목</p></th>
-            <th class="b-d"><p th:text = "${article.createdAt}">yyyy-mm-dd</p></th>
+            <th class="b-d"><span th:text="${#temporals.format(article.createdAt, 'yyyy-MM-dd')}"></span></th>
         </tr>
         <tr>
             <td colspan="3" class="content">
@@ -36,10 +36,20 @@
         </tr>
     </table>
 
+        <div id="pre-next">
+            <a th:if="${prevArticle != null}" th:href="@{/notice/view?id={id}(id=${prevArticle.id})}">
+                <button class="pre-next">이전글</button>
+            </a>
+            <a th:if="${nextArticle != null}" th:href="@{/notice/view?id={id}(id=${nextArticle.id})}">
+                <button class="pre-next">다음글</button>
+            </a>
+        </div>
+
     <div class="list-btn-outer">
         <button class="list-btn"  onclick="location.href = '/notice/list'">목록으로</button>
     </div>
     </div>
+
 </div>
 
 </body>

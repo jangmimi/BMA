@@ -141,3 +141,36 @@
      event.preventDefault();
  }
 
+  // 숫자를 입력하는 곳에 음수를 입력할 때 경고 메시지를 표시하는 함수
+     function checkNonNegativeInput(inputElement, fieldName) {
+         const inputValue = parseFloat(inputElement.value);
+         if (isNaN(inputValue) || inputValue < 0) {
+             alert(fieldName + "에는 음수를 입력할 수 없습니다.");
+             inputElement.value = ''; // 입력 값을 비웁니다.
+         }
+     }
+
+     // 방 수 입력 필드
+     const numberOfRoomsInput = document.getElementById('useInput');
+     numberOfRoomsInput.addEventListener('blur', function () {
+         checkNonNegativeInput(numberOfRoomsInput, '방 수');
+     });
+
+     // 욕실 수 입력 필드
+     const numberOfBathroomsInput = document.getElementsByName('numberOfBathrooms')[0];
+     numberOfBathroomsInput.addEventListener('blur', function () {
+         checkNonNegativeInput(numberOfBathroomsInput, '욕실 수');
+     });
+
+     // 해당 층 수 입력 필드
+     const floorNumberInput = document.getElementsByName('floorNumber')[0];
+     floorNumberInput.addEventListener('blur', function () {
+         checkNonNegativeInput(floorNumberInput, '해당 층 수');
+     });
+
+     // 건물 층 수 입력 필드
+     const totalFloorsInput = document.getElementsByName('totalFloors')[0];
+     totalFloorsInput.addEventListener('blur', function () {
+         checkNonNegativeInput(totalFloorsInput, '건물 층 수');
+     });
+

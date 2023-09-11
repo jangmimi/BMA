@@ -38,6 +38,9 @@ public class NoticeController {
     public String noticeView(Model model , Integer id){
 
         model.addAttribute("article",noticeService.noticeView(id));
+        model.addAttribute("prevArticle", noticeService.getPreArticle(id));
+        model.addAttribute("nextArticle", noticeService.getNextArticle(id));
+
         return "customerCenter/noticeBoard/noticeView";
     }
 

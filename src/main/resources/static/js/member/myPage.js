@@ -1,6 +1,6 @@
 /* oMyInfoUpdate */
 $(document).ready(function() {
-    // 비밀번호 일치 여부, 형식 체크 함수
+     // 비밀번호/비밀번호 확인 일치 여부 체크
     function checkPassword() {
         const pwdValue = $('#pwd').val().trim();
         const pwdCheckValue = $('#pwdCheck').val().trim();
@@ -33,52 +33,9 @@ $(document).ready(function() {
         $("#tel").val(telValue);
     });
 
-    // 취소버튼 클릭 시 확인창
-    $('#oCancelBtn').click(function() {
-        let result = confirm('내정보를 수정을 취소하시겠습니까?\n내정보화면으로 이동합니다.');
-        if(result) {
-            location.href = '/member/qMyPage';
-            return true;
-        } else { return false; }
-    });
 
-   // 회원탈퇴 버튼 클릭 시 모달 열기
-      $(document).ready(function() {
-          $('#leaveBtn').click(function() {
-              $('#pwdLeave').val(''); // 모달 열 때 입력한 비밀번호 초기화
-              $('#pwdCheckModal').modal('show');
-          });
 
-       // 확인 버튼 클릭 시
-      $('#confirmBtn').click(function() {
-           var password = $('#pwdLeave').val().trim();
-           if(password === '') {
-                alert('비밀번호를 입력해주세요.');
-                return;
-           }
-           // AJAX를 사용하여 비밀번호를 컨트롤러로 전송
-           $.ajax({
-               type: 'POST',
-               url: '/member/qLeaveMember2',
-               data: {
-                   password: password
-               },
-               success: function(result) {
-                   if (result === 1) {
-                       alert('탈퇴가 완료되었습니다.');
-                       window.location.href = '/';
-                   } else {
-                       alert('아이디 또는 비밀번호를 다시 확인해주세요.');
-                   }
-               },
-               error: function() {
-                   alert('오류');
-               }
-           });
-           // 모달 창 닫기
-           $('#pwdCheckModal').modal('hide');
-       });
-   });
+
 
    // 비밀번호 임시메일 발송
     $("#checkEmail").click(function () {
@@ -114,6 +71,11 @@ $(document).ready(function() {
             }
         })
     });
+
+    function deleteMMCheck() {
+       let answer = confirm('정말 삭제하시겠습니까?');
+       return answer;
+    }
 });
 
 // 닉네임 중복검사
@@ -153,11 +115,14 @@ function checkNickname() {
 
 // 내정보수정 submit 전에 공백 및 유효성 체크
 function oUpdateCheck() {
+    const telreg = /^\d{10,11}$/;
+    const pwdreg = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
     let name = $('#name').val().trim();
     let nickname = $('#nickname').val().trim();
     let tel = $('#tel').val().trim();
-    const pwdValue = $('#pwd').val();
-    const pwdreg = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
+    let pwdValue = $('#pwd').val();
+    let nicknameCheckOk = $("#btnNicknameCheck").val() === '사용가능';
+
 
     if(name === '') {
         alert('이름을 입력해주세요.');
@@ -171,6 +136,10 @@ function oUpdateCheck() {
         alert('연락처를 입력해주세요.');
         return false;
     }
+    if (telreg.test(tel) == false) {
+        alert('연락처 형식으로 입력해주세요.');
+        return false;
+    }
     if(pwdValue !== '') {    /* 비밀번호창 입력이 있을 경우에만 체크 */
         if (pwdValue.length < 8 || pwdValue.length > 20) {
             alert('비밀번호는 8자 이상, 20자 이하로 입력해주세요.');
@@ -181,15 +150,13 @@ function oUpdateCheck() {
             alert('비밀번호는 숫자와 영문 조합으로 입력해주세요.');
             return false;
         }
+        if (!nicknameCheckOk) {
+            alert('닉네임 중복 검사를 확인해주세요.');
+            return false;
+        }
     }
     let confirmUpdate = confirm('입력한 정보로 수정하시겠습니까?');
     if(!confirmUpdate) return false;
-}
-
-// SNS계정회원 탈퇴 submit 전 확인 취소
-function oDeleteCheck() {
-   let answer = confirm('정말 탈퇴하시겠습니까?\nSNS계정은 즉시 탈퇴처리됩니다.');
-   return answer;
 }
 
 // oFindMemberInfo.html

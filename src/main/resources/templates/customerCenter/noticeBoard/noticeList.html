@@ -32,7 +32,7 @@
         <tr th:each="notice : ${notices}">
             <td id = "category">[공지]</td>
             <td><a th:href="@{/notice/view(id=${notice.id})}" th:text="${notice.title}"></a></td>
-            <td th:text="${notice.createdAt}"></td>
+            <td><span th:text="${#temporals.format(notice.createdAt, 'yyyy-MM-dd')}"></span></td>
         </tr>
     </table>
 

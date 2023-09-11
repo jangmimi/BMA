@@ -2,437 +2,23 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{fragments/layouts/main_include_footer_layout}">
+      layout:decorate="~{fragments/layouts/include_footer_layout}">
 <head>
     <meta charset="UTF-8">
     <title>매물 정보 수정</title>
+    <link rel="stylesheet" th:href="@{/css/maemulReg/maemulUpdate.css}">
+    <script defer th:src="@{/js/maemulReg/maemulupdate.js}" type="text/javascript"></script>
 
-    <style>
-        .layout{
-    width : 80%;
-    margin : auto;
-    margin-top: 40px;
-    }
-
-  hr {
-  border-bottom : 2px solid #26A9E0;
-  margin-bottom : 30px;
-  }
-
-  .number{
-  color: #26A9E0;
-  }
-
-       table th {
-       padding: 15px;
-       background: #fafafa;
-       font-size: 15px;
-
-       }
-
-
-        h2{
-        margin-left : 3%;
-        }
-
-         .btn-group  {
-        display: flex;
-        justify-content: center;
-         }
-
-        .btn-group:after {
-        content: "";
-        clear: both;
-        display: table;
-        }
-
-        .info{
-         width : 95%;
-         margin-top:70px;
-         margin : auto;
-         border-collapse: collapse;
-         border: 1px solid #ddd;
-        }
-
-        .num{
-        text-align : right;
-        width : 40px;
-        height : 18px;
-        }
-
-        .won{
-        text-align : right;
-        width : 130px;
-        height : 18px;
-        }
-
-        .combo{
-        margin-left :5px;
-        width : 120px;
-        height : 18px;
-        }
-
-        input {
-        margin-left: 5px;
-        padding: 5px;
-        border: 1px solid #ccc;
-        transition: all 0.3s ease; /* 입력 필드 크기 변경에 부드러운 애니메이션 추가 */
-    }
-
-    input:focus {
-        border-color: #26A9E0;
-        outline: none;
-        transform: scale(1.05); /* 포커스를 얻을 때 크기가 조금 더 커지도록 설정 */
-    }
-
-        #addressInput{
-        margin-left :5px;
-        width : 250px;
-        height : 18px;
-        }
-
-        #apt-name{
-        margin-left :5px;
-        width : 160px;
-        height : 18px;
-        }
-
-        .hidden {
-<!--         display: none;-->
-         border-collapse: collapse;
-    }
-
-        #monthRentSection{
-        border-collapse: collapse;
-        border: 1px solid #ddd;
-        width : 33%;
-        }
-
-        #leaseSection{
-        margin-left : 33.5%;
-        border-collapse: collapse;
-        border: 1px solid #ddd;
-        width : 33%;
-        }
-
-        #sellingSection{
-        margin-left : 67%;
-        border-collapse: collapse;
-        border: 1px solid #ddd;
-        width : 33%;
-        }
-
-        .address-btn{
-        border : none;
-        background-color : white;
-        }
-
-        table th{padding:20px;}
-
-        .popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            border: 2px solid #26A9E0;
-            padding: 20px;
-            z-index: 9999;
-            max-width: 80%;
-            max-height: 80%;
-            overflow: auto;
-            width: 600px;
-            height: 600px;
-            border-radius :5px;
-        }
-
-        .x-btn{
-        float : right;
-        border : none;
-        background-color :white;
-        }
-
-        .ximg{
-        width : 50px;
-        height: 50px;
-
-        }
-
-        .pop-content{
-        margin-top : 40px;
-        }
-
-        #helpLink{
-        color : #26A9E0;
-        }
-
-
-
-        /*거래유형 라디오*/
-                .form_radio_btn {
-        			width: 47%;
-        			height : 55px;
-            		border: 1px solid #26A9E0;;
-            		border-radius: 10px;
-        		}
-        		.form_radio_btn input[type=radio] {
-        			display: none;
-        		}
-        		.form_radio_btn label {
-        			display: block;
-            		border-radius: 10px;
-           			margin: 0 auto;
-            		text-align: center;
-            		height: -webkit-fill-available;
-            		line-height: 50px;
-        		}
-
-        		/* Checked */
-        		.form_radio_btn input[type=radio]:checked + label {
-        			background: #26A9E0;
-        			color: #fff;
-        		}
-
-        		/* Hover */
-        		.form_radio_btn label:hover {
-        			color: #666;
-        		}
-
-        		/* Disabled */
-        		.form_radio_btn input[type=radio] + label {
-        			background: #F9FAFC;
-        			color: #666;
-        		}
-
-
-
-        input, textarea{
-        margin-left: 5px;
-        padding: 5px;
-        border: 1px solid #ccc;
-        transition: all 0.3s ease; /* 입력 필드 크기 변경에 부드러운 애니메이션 추가 */
-    }
-
-    input:focus, textarea:focus {
-        border-color: #26A9E0;
-        outline: none;
-        transform: scale(1.005); /* 포커스를 얻을 때 크기가 조금 더 커지도록 설정 */
-    }
-
-
-      table{
-      width : 95%;
-      margin-top:70px;
-      margin : auto;
-      border-collapse: collapse;
-      border: 1px solid #ddd;
-     }
-
-
-    .coment-t{
-    width : 95%;
-    border: #ddd 1px solid;
-    margin:10px;
-    height : 30px;
-    border-radius : 5px;
-    }
-    .back{
-    margin-left : 60px;
-    }
-    .coment{
-        width : 95%;
-        height: 200px;
-        border: #ddd 1px solid;
-        resize: none;
-        margin:10px;
-        border-radius : 5px;
-  }
-    .count{
-    float: right;
-    color : gray;
-    margin-right : 50px;
-    }
-
-   .pic-box{
-   width : 90%;
-   height: 200px;
-   background-color : #fafafa;
-   border : 1px solid #26A9E0;
-   text-align : center;
-   margin: auto;
-   display: flex;
-   align-items: center;
-   }
-
-    /*
-       .pic-btn{
-       color : white;
-       background-color : #26A9E0;
-       border : 1px solid #26A9E0;
-       border-radius : 5px;
-       width : 120px;
-       height : 35px;
-       }
-    */
-
-    #previewContainer {
-        display: inline-block; /* 이미지 컨테이너를 인라인 블록 요소로 설정 */
-        vertical-align: top; /* 이미지 컨테이너를 상단 정렬 */
-        margin-right : 10px;
-    }
-
-    /*삽입되는 이미지*/
-    .preview-image{
-    border: 3px solid black;
-    width : 180px;
-    height: 150px;
-    margin-right : 10px;
-    margin-left : 10px;
-
-    }
-
-         /* 이미지 미리보기 스타일
-                #previewContainer img {
-                    max-width: 120px;
-                    max-height: 200px;
-                }
-        */
-
-    /*대표사진*/
-        .representative-label {
-            position: absolute;
-            top: 8px;
-            left: 12px;
-            height:20px;
-            background-color: rgba(36, 168, 224, 0.62);
-            color: white;
-            padding: 5px;
-            font-size: 14px;
-        }
-
-  /* 이미지 컨테이너 스타일 */
-        .image-container {
-            position: relative;
-            display: inline-block;
-            margin-right: 10px; /* 이미지 간 간격 조절 */
-        }
-
-    /* X 버튼 스타일 */
-      .delete-button {
-          position: absolute;
-          top: 8px; /* 위쪽 여백 조절 */
-          right: 15px; /* 오른쪽 여백 조절 */
-          background-color: #26A9E0;
-          color: white;
-          border: 3px solid #26A9E0;
-          border-radius: 50%;
-          width: 25px;
-          height: 25px;
-          cursor: pointer;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-      }
-
-/*옵션, 특징 선택 */
-.container {
-    font-size: 13px;
-}
-
-.container table th{
-width :15%;
-}
-
-ul.ks-cboxtags {
-    list-style: none;
-    padding: 20px;
-}
-ul.ks-cboxtags li{
-  display: inline;
-}
-ul.ks-cboxtags li label{
-    display: inline-block;
-    background-color: rgba(255, 255, 255, .9);
-    border: 2px solid rgba(139, 139, 139, .3);
-    border-radius: 25px;
-    white-space: nowrap;
-    margin: 3px 0px;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-    transition: all .2s;
-}
-
-ul.ks-cboxtags li label {
-    padding: 8px 12px;
-    cursor: pointer;
-}
-
-ul.ks-cboxtags li label::before {
-    display: inline-block;
-    font-style: normal;
-    font-variant: normal;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    font-size: 12px;
-    padding: 2px 6px 2px 2px;
-    content: "\f067";
-    transition: transform .3s ease-in-out;
-}
-
-ul.ks-cboxtags li input[type="checkbox"]:checked + label::before {
-    content: "\f00c";
-    transform: rotate(-360deg);
-    transition: transform .3s ease-in-out;
-}
-
-ul.ks-cboxtags li input[type="checkbox"]:checked + label {
-    border: 2px solid #1bdbf8;
-    background-color: #12bbd4;
-    color: #fff;
-    transition: all .2s;
-}
-
-ul.ks-cboxtags li input[type="checkbox"] {
-  display: absolute;
-}
-ul.ks-cboxtags li input[type="checkbox"] {
-  position: absolute;
-  opacity: 0;
-}
-ul.ks-cboxtags li input[type="checkbox"]:focus + label {
-  border: 2px solid #ddd; /*e9a1ff*/
-}
-
-
-        .update-btn{
-        background-color: #26A9E0;
-        padding: 10px;
-        width: 20%;
-        color : white;
-        height : 50px;
-        border : none;
-        border-radius : 10px;
-        display: flow;
-        margin: auto;
-        margin-top: 50px;
-        margin-bottom: 250px;
-        }
-
-
-
-    </style>
 </head>
 
 <body layout:fragment="content">
 <!-- 로그인중일때만 접근 가능 -->
 <th:block th:if="${loginMember != null}">                     <!--세션 받아와서 저장-->
 <form action="/update-maemul" method="POST" id="maemulForm" th:object="${loginMember}">
+
+    <div style="text-align : center;">
+        <img src="/img/maemulReg/moreinfo.jpg" style="width:100%; height:100%;" >
+    </div>
 
     <div class="layout">
         <h2 class="category"><b class="number">01 </b>주소 정보</h2>
@@ -442,7 +28,7 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
                 <tr >
                     <th>주소<b class="number"> *</b></th>
                     <td colspan="3">
-                        <input id="addressInput" name="address" type="text" th:value="${maemulRegEntity.address}" readonly>
+                        <input id="addressInput" name="address" type="text" th:value="${maemulRegEntity.address}" readonly required>
                     </td>
                 </tr>
                 <tr>
@@ -467,21 +53,21 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
                 </tr>
                 <tr>
                     <th>방 수<b class="number"> *</b></th>
-                    <td><input class="num" type="text" id="useInput" name="numberOfRooms" th:value="${maemulRegEntity.numberOfRooms}"> 개</td>
+                    <td><input class="num" type="text" id="useInput" name="numberOfRooms" th:value="${maemulRegEntity.numberOfRooms}" required> 개</td>
                     <th>욕실 수<b class="number"> *</b></th>
-                    <td colspan="2"><input class="num" type="text" name="numberOfBathrooms" th:value="${maemulRegEntity.numberOfBathrooms}"> 개</td>
+                    <td colspan="2"><input class="num" type="text" name="numberOfBathrooms" th:value="${maemulRegEntity.numberOfBathrooms}" required> 개</td>
                 </tr>
                 <tr>
                     <th>해당 층 수<b class="number"> *</b></th>
-                    <td><input class="num" type="text" name="floorNumber" th:value="${maemulRegEntity.floorNumber}"> 층</td>
+                    <td><input class="num" type="text" name="floorNumber" th:value="${maemulRegEntity.floorNumber}" required> 층</td>
                     <th>건물 층 수<b class="number"> *</b></th>
-                    <td colspan="2"><input class="num" type="text" name="totalFloors" th:value="${maemulRegEntity.totalFloors}"> 층</td>
+                    <td colspan="2"><input class="num" type="text" name="totalFloors" th:value="${maemulRegEntity.totalFloors}" required> 층</td>
                 </tr>
                 <tr>
                     <th>전용 면적<b class="number"> *</b></th>
-                    <td><input class="num" type="text" name="privateArea" th:value="${maemulRegEntity.privateArea}"> m²</td>
+                    <td><input class="num" type="text" name="privateArea" th:value="${maemulRegEntity.privateArea}" required> m²</td>
                     <th>공급 면적<b class="number"> *</b></th>
-                    <td><input class="num" type="text" name="supplyArea" th:value="${maemulRegEntity.supplyArea}"> m²</td>
+                    <td><input class="num" type="text" name="supplyArea" th:value="${maemulRegEntity.supplyArea}" required> m²</td>
                     <th><a href="javascript:void(0);" id="helpLink" onclick="showPopup()">도움말</a></th>
                 </tr>
                 <tr>
@@ -521,8 +107,8 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
                 <tr>
                     <th>주차 가능 여부<b class="number"> *</b></th>
                     <td>
-                        <input type="radio" name="parking" value="가능" th:checked="${maemulRegEntity.parking == '가능'}">가능
-                        <input type="radio" name="parking" value="불가능" th:checked="${maemulRegEntity.parking == '불가능'}">불가능
+                        <input type="radio" name="parking" value="가능" th:checked="${maemulRegEntity.parking == '가능'}" required>가능
+                        <input type="radio" name="parking" value="불가능" th:checked="${maemulRegEntity.parking == '불가능'}" required>불가능
                     </td>
                     <th>총 주차대수</th>
                     <td colspan="2"><input class="num" type="text" name="totalParking" th:value="${maemulRegEntity.totalParking}"> 대</td>
@@ -542,13 +128,13 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
                                name="availableMoveInDate"
                                max="2030-12-31"
                                min="2023-01-01"
-                               th:value="${maemulRegEntity.availableMoveInDate}">
+                               th:value="${maemulRegEntity.availableMoveInDate}" required>
                     </td>
                 </tr>
                 <tr>
                     <th>융자금 여부<b class="number"> *</b></th>
                     <td colspan="4">
-                        <input class="won" name="loanAmount" type="text" placeholder="0" th:value="${maemulRegEntity.loanAmount}"> 만원
+                        <input class="won" name="loanAmount" type="text" placeholder="0" th:value="${maemulRegEntity.loanAmount}" required> 만원
                     </td>
                 </tr>
             </table>
@@ -562,17 +148,17 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
             <div class="btn-group">
                 <!--버튼-->
                 <div class="form_radio_btn radio_male">
-                    <input id="month" type="radio" name="tradeType" value="월세">
+                    <input id="month" type="radio" name="tradeType" value="월세" required>
                     <label for="month">월세</label>
                 </div>
 
                 <div class="form_radio_btn">
-                    <input id="year" type="radio" name="tradeType" value="전세">
+                    <input id="year" type="radio" name="tradeType" value="전세" required>
                     <label for="year">전세</label>
                 </div>
 
                 <div class="form_radio_btn radio_male">
-                    <input id="sell" type="radio" name="tradeType" value="매매">
+                    <input id="sell" type="radio" name="tradeType" value="매매" required>
                     <label for="sell">매매</label>
                 </div>
             </div>
@@ -618,7 +204,7 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
         <table border="1">
             <tr>
                 <th>제목 <b class="number">*</b></th>
-                <td> <input class="coment-t" name="title" type="text" placeholder="ex) 강남역 도보 10분이내, 3층 투룸 전세" oninput="countCharacters(this, 'titleCount', 20)" th:value="${maemulRegEntity.title}"><br>
+                <td> <input class="coment-t" name="title" type="text" placeholder="ex) 강남역 도보 10분이내, 3층 투룸 전세" oninput="countCharacters(this, 'titleCount', 20)" th:value="${maemulRegEntity.title}" required><br>
                     <p class="count" id="titleCount">0/20</p> </td>
             </tr>
             <tr>
@@ -706,7 +292,7 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 
             <!-- 이미지 선택 버튼 -->
             <input type="file" id="imageInput" name="imageFiles" style="display: none;" accept="image/*" multiple>
-            <button type="button" onclick="chooseImages()"><img src="/img/maemulReg/image.png" style="width : 150px;" height="150px"></button><br>
+            <button class="img-cho" type="button" onclick="chooseImages()"><img src="/img/maemulReg/image.png" style="width : 150px;" height="150px"></button><br>
             <!--                <button class="pic-btn" type="button" onclick="chooseImages()">+ 사진 등록</button>-->
         </div>
 
@@ -716,6 +302,6 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
     </div>
 </form>
 
-<!-- 필요한 스크립트 파일을 여기에 추가 -->
+</th:block>>
 </body>
 </html>

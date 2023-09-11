@@ -1,57 +1,55 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{fragments/layouts/include_footer_layout}">
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{fragments/layouts/include_footer_layout}">
 <head>
-    <meta charset="UTF-8">
-    <title>관심매물</title>
-    <!-- 부트스트랩 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    <link rel="stylesheet" th:href="@{/css/member/myPage.css}">
-    <link rel="stylesheet" th:href="@{/css/member/myCommon.css}">
-    <link rel="stylesheet" th:href="@{/css/member/myMaemul.css}">
-    <link rel="stylesheet" th:href="@{/css/member/pagination.css}">
+<meta charset="UTF-8">
+<title>관심매물</title>
+<!-- 부트스트랩 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+<link rel="stylesheet" th:href="@{/css/member/myPage.css}">
+<link rel="stylesheet" th:href="@{/css/member/myCommon.css}">
+<link rel="stylesheet" th:href="@{/css/member/myMaemul.css}">
+<link rel="stylesheet" th:href="@{/css/member/pagination.css}">
 </head>
 <body layout:fragment="content">
-
-<th:block th:if="${loginMember != null}">
-    <th:block th:object="${loginMember}">
-        <div id="o-container">
-            <div id="o-content">
-                <!-- 마이페이지 네비게이션바 -->
-                <div class="o-lnb">
-                    <div class="o-wrapper">
-                        <ul class="o-lnb-list">
-                            <li class="o-lnb-item"><a th:href="@{/member/qMyPage}">내정보</a></li>
-                            <li class="o-lnb-item"><a th:href="@{/member/qMyInfoUpdate}">내정보수정</a></li>
-                            <li class="o-lnb-item"><a th:href="@{/member/qManagement}">매물관리</a></li>
-                            <li class="o-lnb-item"><a th:href="@{/member/liked}" style="color:#26ABED;">관심매물</a></li>
-                            <li class="o-lnb-item"><a th:href="@{/member/qRecent}">최근본매물</a></li>
-                            <li class="o-lnb-item"><a th:href="@{/member/qMyQnA}">1:1문의내역</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="o-mid-wrapper">
-                    <div class="o-mid-inner mt-5" id="o-tb-wrap">
-                        <div class="o-page-title">
-                            <h3 class="h3 fw-bold">관심 매물</h3>
+    <th:block th:if="${loginMember != null}">
+        <th:block th:object="${loginMember}">
+            <div id="o-container">
+                <div id="o-content">
+                    <!-- 마이페이지 네비게이션바 -->
+                    <div class="o-lnb">
+                        <div class="o-wrapper">
+                            <ul class="o-lnb-list">
+                                <li class="o-lnb-item"><a th:href="@{/member/qMyPage}">내정보</a></li>
+                                <li class="o-lnb-item"><a th:href="@{/member/qMyInfoUpdate}">내정보수정</a></li>
+                                <li class="o-lnb-item"><a th:href="@{/member/qManagement}">매물관리</a></li>
+                                <li class="o-lnb-item"><a th:href="@{/member/liked}" style="color:#26ABED;">관심매물</a></li>
+                                <li class="o-lnb-item"><a th:href="@{/member/qRecent}">최근본매물</a></li>
+                                <li class="o-lnb-item"><a th:href="@{/member/qMyQnA}">1:1문의내역</a></li>
+                            </ul>
                         </div>
-                        <form action="/member/searchl" method="get">
-                            <div class="oSearch-c">
-                                <div class="headrow">
-                                    <div class="headrowL">
-                                        <input type="text" name="keyword" class="searchbox" placeholder="검색어 입력">
-                                        <button class="searchbtn">검색</button>
+                    </div>
+
+                    <div class="o-mid-wrapper">
+                        <div class="o-mid-inner mt-5" id="o-tb-wrap">
+                            <div class="o-page-title">
+                                <h3 class="h3 fw-bold">관심 매물</h3>
+                            </div>
+                            <form action="/member/searchl" method="get">
+                                <div class="oSearch-c">
+                                    <div class="headrow">
+                                        <div class="headrowL">
+                                            <input type="text" name="keyword" class="searchbox" placeholder="검색어 입력">
+                                            <button class="searchbtn">검색</button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
-                        <div class="oMyQnaTb">
-                            <table class="faq-tb">
-                                <form th:action="@{/member/qDeleteLiked}" method="POST">
+                            </form>
+                            <div class="oMyQnaTb">
+                                <table class="faq-tb">
                                     <thead>
                                         <tr>
                                             <th class="o-d-type">거래종류<br>매물종류</th>
@@ -62,8 +60,8 @@
                                             <th class="o-d-price">가격(만원)</th>
                                             <th class="o-d-btn">삭제</th>
                                         </tr>
-                                        </thead>
-                                        <tbody>
+                                    </thead>
+                                    <tbody>
                                         <p>전체 <span class="o-cntAll" th:text="${totalCount}"></span>건</p>
                                         <th:block th:if="${totalCount == 0}">
                                             <tr>
@@ -71,7 +69,7 @@
                                             </tr>
                                         </th:block>
                                         <tr th:each="mmpList : ${mmpList}">
-                                            <input type="hidden" id="num" th:name="maemul_id" th:value="${mmpList.id}">
+        <!--                                            <input type="hidden" id="num" th:name="maemul_id" th:value="${mmpList.id}">-->
                                             <td id="tradeType" th:text="${mmpList.tradeType}"></td>
                                             <td id="o-d-photo">
                                                 <img th:src="@{/img/thumbs.jpg}" width="80">
@@ -107,39 +105,39 @@
                                                 </div>
                                             </td>
                                             <td class="o-t-btn">
-                                                <input type="submit" value="삭제">
+                                                <form th:action="@{/member/qDeleteLiked}" method="POST" onsubmit="return deleteMMCheck()">
+                                                    <input type="hidden" id="num" th:name="maemul_id" th:value="${mmpList.id}">
+                                                    <input type="submit" th:name="${mmpList.id}" value="삭제">
+                                                </form>
                                             </td>
                                         </tr>
                                     </tbody>
-                                </form>
-                            </table>
-                        </div>
+                                </table>
+                            </div>
 
-                        <div class="s-paging">
-                            <ul>
-                                <li class="s-pre" th:if="${mmpList.hasPrevious()}">
-                                    <a th:href="@{/member/liked(page=${mmpList.number - 1}, size=${mmpList.size})}">이전</a>
-                                </li>
-                                <li th:if="${mmpList.totalPages > 0}" th:each="pageNo : ${#numbers.sequence(0, mmpList.totalPages - 1)}">
-                                    <span th:if="${mmpList.number == pageNo}" th:text="${pageNo + 1}" class="s-active-page"></span>
-                                    <a th:unless="${mmpList.number == pageNo}" th:href="@{/member/liked(page=${pageNo+1}, size=${mmpList.size})}" th:text="${pageNo + 1}"></a>
-                                </li>
-                                <li class="s-next" th:if="${mmpList.hasNext()}">
-                                    <a th:href="@{/member/liked(page=${mmpList.number + 2}, size=${mmpList.size})}">다음</a>
-                                </li>
-                            </ul>
-                        </div>
+                            <div class="s-paging">
+                                <ul>
+                                    <li class="s-pre" th:if="${mmpList.hasPrevious()}">
+                                        <a th:href="@{/member/liked(page=${mmpList.number}, size=${mmpList.size})}">이전</a>
+                                    </li>
+                                    <li th:if="${mmpList.totalPages > 0}" th:each="pageNo : ${#numbers.sequence(0, mmpList.totalPages - 1)}">
+                                        <span th:if="${mmpList.number == pageNo}" th:text="${pageNo + 1}" class="s-active-page"></span>
+                                        <a th:unless="${mmpList.number == pageNo}" th:href="@{/member/liked(page=${pageNo+1}, size=${mmpList.size})}" th:text="${pageNo + 1}"></a>
+                                    </li>
+                                    <li class="s-next" th:if="${mmpList.hasNext()}">
+                                        <a th:href="@{/member/liked(page=${mmpList.number + 2}, size=${mmpList.size})}">다음</a>
+                                    </li>
+                                </ul>
+                            </div>
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        </div>
+        </th:block>
     </th:block>
-</th:block>
-<!-- 부트스트랩 script -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-        crossorigin="anonymous"></script>
+    <script th:src="@{/js/member/myPage.js}"></script>
+    <!-- 부트스트랩 script -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </body>
 </html>
