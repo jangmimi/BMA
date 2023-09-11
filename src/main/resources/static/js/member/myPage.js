@@ -1,6 +1,6 @@
 /* oMyInfoUpdate */
 $(document).ready(function() {
-    // 비밀번호 일치 여부, 형식 체크 함수
+     // 비밀번호/비밀번호 확인 일치 여부 체크
     function checkPassword() {
         const pwdValue = $('#pwd').val().trim();
         const pwdCheckValue = $('#pwdCheck').val().trim();
