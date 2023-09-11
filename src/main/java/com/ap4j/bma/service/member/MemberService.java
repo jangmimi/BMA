@@ -47,7 +47,6 @@ public interface MemberService {
 	public Page<QnAEntity> qMyQnaList(String userEmail, int page, int pageSize);
 	// qna 카운트 - 김재환
 	public Long qMyQnaListCount(String usarEmail);
-	public List<MaemulRegEntity> getAllList();
 	public List<MaemulRegEntity> getListByNickname(String nickname);
 	public MaemulRegEntity findMaemulById(Integer id);
 	public int deleteMaemul(Integer id, String nickname);

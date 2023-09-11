@@ -5,7 +5,6 @@ import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
 import com.ap4j.bma.model.entity.member.LikedEntity;
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
-import com.ap4j.bma.model.entity.recent.RecentEntity;
 import com.ap4j.bma.service.member.LikedService;
 import com.ap4j.bma.service.member.MemberService;
 import com.ap4j.bma.service.member.RecentServiceImpl;
@@ -152,18 +151,19 @@ public class MemberController {
     /** 기본 회원가입 폼 */
     @RequestMapping("/qJoinForm")
     public String qJoinForm(HttpSession session) {
-        if(loginStatus(session)) {
-            return "userView/loginAlready";
-        }
+        if(loginStatus(session)) { return "userView/loginAlready"; }
         return "userView/oJoinForm";
     }
 
     /** 기본 회원가입 */
     @PostMapping("/qJoinBasic")
     public String qJoinBasic(@ModelAttribute MemberDTO memberDTO, HttpSession session) {
-        if(loginStatus(session)) { return "userView/loginAlready"; }
         memberDTO.setRoot(1);
-        qMemberService.joinBasic(memberDTO);
+        Long joinId = qMemberService.joinBasic(memberDTO);
+        if(joinId == 0) {
+            session.setAttribute("faileDTO", memberDTO);
+            return "redirect:/member/qJoinForm";
+        }
         return "redirect:/member/qLoginForm";
     }
 
@@ -251,7 +251,6 @@ public class MemberController {
     @GetMapping("/qMyInfoUpdate")
     public String qMyInfoUpdate(HttpSession session, Model model) {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
-        MemberDTO loginMember = (MemberDTO) session.getAttribute("loginMember");
         return "userView/oMyInfoUpdate";
     }
 
@@ -263,8 +262,11 @@ public class MemberController {
         Long id =  ((MemberDTO) session.getAttribute("loginMember")).getId();
 
         MemberEntity memberEntity = qMemberService.updateMember(id, updatedMember);
-        model.addAttribute("loginMember", memberEntity.toDTO());   // 수정 객체 지정
-        log.info("회원정보 수정 완료 (수정 후) : " + memberEntity);
+        if(memberEntity == null) {
+            session.setAttribute("faileDTO", updatedMember);
+            return "redirect:/member/qMyPage";
+        }
+        model.addAttribute("loginMember", memberEntity.toDTO());
 
         return "redirect:/member/qMyPage";
     }
@@ -345,7 +347,7 @@ public class MemberController {
     }
 
     /** 관심매물 페이지 매핑 */
-    @RequestMapping("/liked")   // pageSize 10으로 수정필요
+    @RequestMapping("/liked")
     public String qInterest(@RequestParam(name = "page", defaultValue = "1") int page,
                             @RequestParam(name = "pageSize", defaultValue = "10") int pageSize,HttpSession session, Model model) {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
@@ -442,6 +444,7 @@ public class MemberController {
     public String qDeleteRecent(@RequestParam("maemul_id") Integer maemul_id, String nickname, HttpSession session) {
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
         nickname = memberDTO.getNickname();
+        log.info("삭제할 최근본매물 : " + maemul_id);
         recentServiceImpl.recentDelete(maemul_id, nickname);
         return "redirect:/member/qRecent";
     }
@@ -490,14 +493,11 @@ public class MemberController {
     public String qFindEmail(@RequestParam String name, @RequestParam String tel, Model model) {
         Optional<MemberEntity> findMember = qMemberService.findByNameAndTel(name, tel);
 
-        if(findMember.isPresent()) {
-            model.addAttribute("findEmail", findMember.get().getEmail());
-        } else {
-            model.addAttribute("findEmailFailed", "일치하는 회원정보가 없습니다.");
-        }
+        model.addAttribute("findEmail", findMember.map(MemberEntity::getEmail).orElse(null));
+        model.addAttribute("findEmailFailed", findMember.isEmpty() ? "일치하는 회원정보가 없습니다." : null);
+
         return "userView/findMemberInfo";
     }
-
 
     // 중복코드 메서드화
 
