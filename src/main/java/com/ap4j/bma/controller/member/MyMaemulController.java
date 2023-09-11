@@ -35,18 +35,23 @@ public class MyMaemulController {
         return session.getAttribute("loginMember") != null;
     }
 
+    /** 로그인멤버 닉네임 */
+    public String getMemberNickname(HttpSession session) {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
+        return memberDTO != null ? memberDTO.getNickname() : null;
+    }
+
     /** 매물관리 페이지 매핑 */
     @RequestMapping("/qManagement")
     public String qManagement(@RequestParam(name = "page", defaultValue = "1") int page,
                               @RequestParam(name = "pageSize", defaultValue = "10") int pageSize, HttpSession session, Model model) {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
+        String nickname = getMemberNickname(session);
 
-        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
-        String nickname = memberDTO.getNickname();
         if (page < 1) {
             page = 1;
         }
-        List<MaemulRegEntity> mmList = qMemberService.getListByNickname(memberDTO.getNickname());
+        List<MaemulRegEntity> mmList = qMemberService.getListByNickname(nickname);
 
         Page<MaemulRegEntity> mmpList = qMemberService.getPageByNickname(nickname,page,pageSize);
 
@@ -66,8 +71,7 @@ public class MyMaemulController {
     /** 매물 삭제 */
     @PostMapping("/qDeleteMaemul")
     public String qDeleteMaemul(@RequestParam("id") Integer id, HttpSession session) {
-        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
-        String nickname = memberDTO.getNickname();
+        String nickname = getMemberNickname(session);
 
         int result = qMemberService.deleteMaemul(id, nickname);
 
@@ -79,8 +83,7 @@ public class MyMaemulController {
     public String qLiked(@RequestParam("maemulId") Integer maemulId, HttpSession session, Model model) {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
-        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
-        String nickname = memberDTO.getNickname();
+        String nickname = getMemberNickname(session);
         MaemulRegEntity findMaemul = qMemberService.findMaemulById(maemulId);
 
         if(findMaemul != null) {
@@ -98,9 +101,7 @@ public class MyMaemulController {
     /** 관심매물 삭제 */
     @PostMapping("/qDeleteLiked")
     public String qDeleteLiked(@RequestParam("maemul_id") Integer maemul_id, HttpSession session) {
-        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
-        String nickname = memberDTO.getNickname();
-
+        String nickname = getMemberNickname(session);
         likedService.deleteByMaemulIdAndNickname(maemul_id, nickname);
         return "redirect:/member/liked";
     }
@@ -110,9 +111,7 @@ public class MyMaemulController {
     public String qInterest(@RequestParam(name = "page", defaultValue = "1") int page,
                             @RequestParam(name = "pageSize", defaultValue = "10") int pageSize,HttpSession session, Model model) {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
-
-        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
-        String nickname = memberDTO.getNickname();
+        String nickname = getMemberNickname(session);
 
         if (page < 1) {
             page = 1;
@@ -133,8 +132,7 @@ public class MyMaemulController {
         if (!loginStatus(session)) {
             return "userView/loginNeed";
         }
-        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
-        String nickname = memberDTO.getNickname();
+        String nickname = getMemberNickname(session);
 
         if (page < 1) {
             page = 1;
@@ -154,8 +152,7 @@ public class MyMaemulController {
     public String qRecent(@RequestParam(name = "page", defaultValue = "1") int page,
                           @RequestParam(name = "pageSize", defaultValue = "10") int pageSize,HttpSession session, Model model) {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
-        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
-        String nickname = memberDTO.getNickname();
+        String nickname = getMemberNickname(session);
 
         if (page < 1) {
             page = 1;
@@ -177,8 +174,7 @@ public class MyMaemulController {
         if (!loginStatus(session)) {
             return "userView/loginNeed";
         }
-        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
-        String nickname = memberDTO.getNickname();
+        String nickname = getMemberNickname(session);
 
         if (page < 1) {
             page = 1;
@@ -196,9 +192,7 @@ public class MyMaemulController {
     /** 최근본매물 삭제 */
     @PostMapping("/qDeleteRecent")
     public String qDeleteRecent(@RequestParam("maemul_id") Integer maemul_id, HttpSession session) {
-        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
-        String nickname = memberDTO.getNickname();
-
+        String nickname = getMemberNickname(session);
         recentServiceImpl.recentDelete(maemul_id, nickname);
 
         return "redirect:/member/qRecent";

@@ -158,7 +158,7 @@
                             <div class="z-bottom-container">
                                 <div class="z-bottom-wrap">
                                     <!-- 매물 시작 (통으로 링크) -->
-                                    <a th:each="recentList, iterStat : ${recentList}" th:href="@{/details/{id}(id=${recentList.id}, nickname=${recentList.nickname})}">
+                                    <a th:each="recentList, iterStat : ${recentList}" th:href="@{/details/{id}(id=${recentList.id}, nickname=${loginMember.nickname})}">
                                         <div class="s-mamulbox">
                                             <div class="s-mamul-img">
                                                 <img src="/img/details/apt.jpeg" alt="이미지">
