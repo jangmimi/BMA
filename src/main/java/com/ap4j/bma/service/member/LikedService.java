@@ -25,14 +25,6 @@ public class LikedService {
     @Autowired
     private MaemulRegEntityRepository maemulRegEntityRepository;
 
-    public Long countAll() {
-        return likedRepository.count();
-    }
-
-    public List<LikedEntity> getAllList() {
-        return likedRepository.findAll();
-    }
-
     /** 특정 닉네임이랑 매치되는 Liked 전부 조회 */
     public List<LikedEntity> findLikedByNickname(String nickname) {
         return likedRepository.findLikedByNickname(nickname);
@@ -46,6 +38,7 @@ public class LikedService {
                         .filter(maemulRegEntity -> likedEntity.getMaemul_id().equals(maemulRegEntity.getId())))
                 .collect(Collectors.toList());
     }
+
     /** 로그인한 멤버의 관심매물 조회 */
     public List<MaemulRegEntity> myLikedList(String nickname) {
         return likedRepository.findMaemulByUserNickname(nickname);
@@ -102,17 +95,4 @@ public class LikedService {
 //        return maemulRegEntityRepository.searchCountLikedByNickname(nickname,keyword);
 //    }
 
-//    @Transactional
-//    public void delete(LikedEntity likedEntity) {
-//        log.info("LikedService 관심매물 삭제 실행");
-//        likedRepository.delete(likedEntity);
-//    }
-
-//    public Optional<LikedEntity> findByNicknameAndRoad_name(String nickname, String road_name) {
-//        return likedRepository.findByNicknameAndRoad_name(nickname, road_name);
-//    }
-
-    public Optional<LikedEntity> isLiked(String nickname, Long id) {
-        return likedRepository.findByNicknameAndMemberEntityId(nickname, id);
-    }
 }

@@ -364,8 +364,23 @@ kakao.maps.event.addListener(hjdOverlay, 'click', function() {
     map.setLevel(map.getLevel() + 1, { anchor: overlayPosition }); // 클릭된 오버레이의 위치를 중심으로 맵을 줌인합니다.
 });
 
+//로딩 오픈 함수
+function showLoadingScreen() {
+    var loadingScreen = document.querySelector(".loading-screen");
+    loadingScreen.style.display = "flex";
+}
+
+//로딩 하이드 함수
+function hideLoadingScreen() {
+    var loadingScreen = document.querySelector(".loading-screen");
+    loadingScreen.style.display = "none";
+}
+
+
 // 사이드바 정보 업데이트
 function updateSidebar(responseData) {
+    showLoadingScreen();
+    console.log("로딩바 시작")
     // 사이드바 미니 지도 (staticMap)
     var staticMapContainer = document.getElementById('staticMap');
     staticMapContainer.innerHTML = ''; // 초기화 코드
@@ -396,9 +411,13 @@ function updateSidebar(responseData) {
     mapInfoTitleElement.textContent = title;
     mapInfoAddressElement.textContent = address1 + " " + address2;
     mapInfoRoadNameElement.textContent = roadName;
+    
+    hideLoadingScreen();
+    console.log("로딩바 종료")
 }
 
 function updateTransactionTable(roadName) {
+    showLoadingScreen();
     $.ajax({
         type: 'POST',
         url: '/map/main',
@@ -408,42 +427,78 @@ function updateTransactionTable(roadName) {
         success: function (response) {
             var tableBody = $(".tbl tbody");
             tableBody.empty();
+            var tableBody2 = $(".tbl2 tbody");
+            tableBody2.empty();
 
             if (response.aptRealTradeDTOList) {
-                /* 차트 */
+                /* 실거래정보 차트 */
                 var arrrange = [];
                 var arrrange2 = [];
                 var yearToAmountMap = {}; // 년도별 거래 금액을 저장하기 위한 맵
                 var allAmounts = []; // 모든 거래 금액을 저장할 배열
 
+                // 차트 2를 위한 변수
+                var arrrange3 = [];
+                var arrrange4 = [];
+                var yearToAmountMap2 = {}; // 년도별 거래 금액을 저장하기 위한 맵
+                var allAmounts2 = []; // 모든 거래 금액을 저장할 배열
+
                 var chartCanvas = document.getElementById("myChart").getContext("2d");
+                var chartCanvas2 = document.getElementById("myChart2").getContext("2d");
 
                 if (window.myChart && typeof window.myChart.destroy === 'function') {
                     window.myChart.destroy();
                 }
+                if (window.myChart2 && typeof window.myChart2.destroy === 'function') {
+                       window.myChart2.destroy();
+                }
+
 
                 for (let i = 0; i < response.aptRealTradeDTOList.length; i++) {
-                    var contractYearMonth = response.aptRealTradeDTOList[i].contractYearMonth;
-                    var firstYear = contractYearMonth.slice(2, contractYearMonth.length - 2);
-                    var lastYear = contractYearMonth.slice(contractYearMonth.length - 2, contractYearMonth.length);
-                    var totalYear = firstYear + "." + lastYear;
-                    var chartAmount = response.aptRealTradeDTOList[i].transactionAmount.toString();
+                    if(response.aptRealTradeDTOList[i].deposit === 0) {
+                        var contractYearMonth = response.aptRealTradeDTOList[i].contractYearMonth;
+                        var firstYear = contractYearMonth.slice(2, contractYearMonth.length - 2);
+                        var lastYear = contractYearMonth.slice(contractYearMonth.length - 2, contractYearMonth.length);
+                        var totalYear = firstYear + "." + lastYear;
+                        var chartAmount = response.aptRealTradeDTOList[i].transactionAmount.toString();
 
-                    var amountSliceFirst = chartAmount.slice(0, chartAmount.length - 1);
-                    var amountSliceLast = chartAmount.slice(-1);
-                    var reformatAmount = parseFloat(amountSliceFirst + "." + amountSliceLast);
+                        var amountSliceFirst = chartAmount.slice(0, chartAmount.length - 1);
+                        var amountSliceLast = chartAmount.slice(-1);
+                        var reformatAmount = parseFloat(amountSliceFirst + "." + amountSliceLast);
 
-                    allAmounts.push(reformatAmount); // 모든금액 넣기
+                        allAmounts.push(reformatAmount); // 모든금액 넣기
 
-                    if (!yearToAmountMap[totalYear]) {
-                        yearToAmountMap[totalYear] = [reformatAmount]; // 해당 년도에 대한 배열 생성
-                    } else {
-                        yearToAmountMap[totalYear].push(reformatAmount); // 배열에 값을 추가
+                        if (!yearToAmountMap[totalYear]) {
+                            yearToAmountMap[totalYear] = [reformatAmount]; // 해당 년도에 대한 배열 생성
+                        } else {
+                            yearToAmountMap[totalYear].push(reformatAmount); // 배열에 값을 추가
+                        }
+
+                    } else if (response.aptRealTradeDTOList[i].transactionAmount === 0) {
+                        var contractYearMonth = response.aptRealTradeDTOList[i].contractYearMonth;
+                        var firstYear = contractYearMonth.slice(2, contractYearMonth.length - 2);
+                        var lastYear = contractYearMonth.slice(contractYearMonth.length - 2, contractYearMonth.length);
+                        var totalYear = firstYear + "." + lastYear;
+                        var chartAmount = response.aptRealTradeDTOList[i].deposit.toString();
+
+                        var amountSliceFirst = chartAmount.slice(0, chartAmount.length - 1);
+                        var amountSliceLast = chartAmount.slice(-1);
+                        var reformatAmount = parseFloat(amountSliceFirst + "." + amountSliceLast);
+
+                        allAmounts2.push(reformatAmount); // 모든금액 넣기
+
+                        if (!yearToAmountMap2[totalYear]) {
+                            yearToAmountMap2[totalYear] = [reformatAmount]; // 해당 년도에 대한 배열 생성
+                        } else {
+                            yearToAmountMap2[totalYear].push(reformatAmount); // 배열에 값을 추가
+                        }
                     }
                 }
 
                 const highestAmount = Math.max(...allAmounts);  // 최고가
                 const lowestAmount = Math.min(...allAmounts);   // 최저가
+                const highestAmount2 = Math.max(...allAmounts2);  // 최고가
+                const lowestAmount2 = Math.min(...allAmounts2);   // 최저가
 
                 // 중복 제거 및 평균 계산
                 for (const year in yearToAmountMap) {
@@ -451,12 +506,17 @@ function updateTransactionTable(roadName) {
                     arrrange.push(year);
                     arrrange2.push(averageAmount);
                 }
+                for (const year in yearToAmountMap2) {
+                    const averageAmount2 = yearToAmountMap2[year].reduce((acc, curr) => acc + curr, 0) / yearToAmountMap2[year].length;
+                    arrrange3.push(year);
+                    arrrange4.push(averageAmount2);
+                }
 
                 var chartData = {
-                    labels: arrrange, // 날짜
+                    labels: arrrange.reverse(), // 날짜
                     datasets: [{
                         label: '',
-                        data: arrrange2, // 거래 금액
+                        data: arrrange2.reverse(), // 거래 금액
                         backgroundColor: 'rgb(38, 171, 237)',
                         borderColor: 'rgb(75, 192, 192)',
                         borderWidth: 1,
@@ -505,39 +565,121 @@ function updateTransactionTable(roadName) {
 
                 window.myChart = myChart;
 
-                // 실거래정보 표시
-                response.aptRealTradeDTOList.forEach(function (detailItem) {
-                    var tableBody = $(".tbl tbody"); // 테이블의 tbody 요소 선택
+                // Create chart2
+                var chartData2 = {
+                    labels: arrrange3.reverse(),
+                    datasets: [{
+                        label: '',
+                        data: arrrange4.reverse(),
+                        backgroundColor: 'rgb(38, 171, 237)',
+                        borderColor: 'rgb(75, 192, 192)',
+                        borderWidth: 1,
+                    }]
+                };
 
-                    var amount = detailItem.transactionAmount.toString();
-                    var amountSliceFirst = amount.slice(0, amount.length - 1);
-                    var amountSliceLast = amount.slice(-1)
-                    var reformatAmount = null;
-
-                    // 테이블 행 생성 및 데이터 추가
-                    var row = $("<tr>");
-                    $("<td>").text(detailItem.area).appendTo(row);
-                    $("<td>").text(detailItem.floor).appendTo(row);
-                    $("<td>").text(detailItem.contractYearMonth).appendTo(row);
-
-                    if (amount.length === 1) {
-                        reformatAmount = amount + "000만원";
-                    } else if (amountSliceLast != 0) {
-                        reformatAmount = amountSliceFirst + "억 " + amountSliceLast + "000만원";
-                    } else {
-                        reformatAmount = amountSliceFirst + "억";
+                myChart2 = new Chart(chartCanvas2, {
+                    type: 'line',
+                    data: chartData2,
+                    options: {
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: "최고:" + highestAmount2 + "억" + "          최저:" + lowestAmount2 + "억",
+                                position: 'top'
+                            },
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                ticks: {
+                                    autoSkip: true,
+                                    maxRotation: 0,
+                                    minRotation: 0,
+                                    maxTicksLimit: 10
+                                },
+                                title: {
+                                    display: true,
+                                    text: '거래연월'
+                                }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: '거래금액(억)'
+                                }
+                            }
+                        }
                     }
+                });
 
-                    $("<td>").text(reformatAmount).appendTo(row);
+                window.myChart2 = myChart2;
 
-                    // 테이블에 행 추가
-                    tableBody.append(row);
 
+                // 거래이력 테이블 표시
+                response.aptRealTradeDTOList.forEach(function (detailItem) {
+                    if(detailItem.deposit === 0) {
+                        var tableBody = $(".tbl tbody"); // 테이블의 tbody 요소 선택
+
+                        var amount = detailItem.transactionAmount.toString();
+                        var amountSliceFirst = amount.slice(0, amount.length - 1);
+                        var amountSliceLast = amount.slice(-1)
+                        var reformatAmount = null;
+
+                        // 테이블 행 생성 및 데이터 추가
+                        var row = $("<tr>");
+                        $("<td>").text(detailItem.area).appendTo(row);
+                        $("<td>").text(detailItem.floor).appendTo(row);
+                        $("<td>").text(detailItem.contractYearMonth).appendTo(row);
+
+                        if (amount.length === 1) {
+                            reformatAmount = amount + "000만원";
+                        } else if (amountSliceLast != 0) {
+                            reformatAmount = amountSliceFirst + "억 " + amountSliceLast + "000만원";
+                        } else {
+                            reformatAmount = amountSliceFirst + "억";
+                        }
+
+                        $("<td>").text(reformatAmount).appendTo(row);
+
+                        // 테이블에 행 추가
+                        tableBody.append(row);
+                    } else if (detailItem.transactionAmount === 0) {
+                        var tableBody = $(".tbl2 tbody"); // 테이블의 tbody 요소 선택
+
+                        var amount = detailItem.deposit.toString();
+                        var amountSliceFirst = amount.slice(0, amount.length - 1);
+                        var amountSliceLast = amount.slice(-1)
+                        var reformatAmount = null;
+
+                        // 테이블 행 생성 및 데이터 추가
+                        var row = $("<tr>");
+                        $("<td>").text(detailItem.area).appendTo(row);
+                        $("<td>").text(detailItem.floor).appendTo(row);
+                        $("<td>").text(detailItem.contractYearMonth).appendTo(row);
+
+                        if (amount.length === 1) {
+                            reformatAmount = amount + "000만원";
+                        } else if (amountSliceLast != 0) {
+                            reformatAmount = amountSliceFirst + "억 " + amountSliceLast + "000만원";
+                        } else {
+                            reformatAmount = amountSliceFirst + "억";
+                        }
+
+                        $("<td>").text(reformatAmount).appendTo(row);
+
+                        // 테이블에 행 추가
+                        tableBody.append(row);
+                    }
                 });
 
             } else {
                 console.log("표시할 aptDetailList 데이터가 없습니다.");
             }
+            hideLoadingScreen();
         }
     });
 }

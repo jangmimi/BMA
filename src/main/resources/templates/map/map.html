@@ -19,9 +19,14 @@
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
         crossorigin="anonymous"></script>
 
+<!-- 김재환 css 연결 -->
+<link rel="stylesheet" href="/css/loading.css">
 
 
 <div class="asideBarAll">
+
+
+
     <div class="asideMenu">
         <ul class="list-group" style="width:490px;">
             <li class="list-group-item">
@@ -31,8 +36,7 @@
                                 data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane"
                                 aria-selected="true">
                             지도 내 조건에 맞는 매물
-                            <span id="aTotalCount" class="count">357</span>
-                        </button>
+                       </button>
                     </li>
 
                 </ul>
@@ -71,6 +75,11 @@
                                  style="height: calc(100% - 117px);">
 
                                 <div class="sideContents">
+                                    <!--로딩바-->
+                                    <div id="loadingScreen" class="loading-screen">
+                                        <img src="/sc/loading.gif" alt="">
+                                    </div>
+
                                     <ul class="list-group">
                                     </ul>
                                 </div>
@@ -1336,8 +1345,8 @@
     right: 6%;
 ">
         <button
-                onclick="location.href='/agree'"
-                style="width: 61px; height: 25px; text-align: center"
+                onclick="location.href='/maemul/agree'"
+                style="width: 71px; height: 25px; text-align: center"
                 type="button"
                 id="hsBtn"
                 class="btn btn-primary position-absolute"

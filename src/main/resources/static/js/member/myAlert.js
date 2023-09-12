@@ -61,6 +61,12 @@ function oDeleteCheck() {
    return answer;
 }
 
+// 매물삭제 확인
+function deleteMMCheck() {
+   let answer = confirm('정말 삭제하시겠습니까?');
+   return answer;
+}
+
 // 로그인 페이지
 // 로그인 및 유효성(공백) 체크 (form 태그에서 onsubmit으로 호출해 submit 하기 전 체크)
 function oLoginCheck() {
@@ -81,3 +87,24 @@ function oLoginCheck() {
         return false;
     }
 }
+
+
+//function deleteMMCheck() {
+//    if (confirm('정말 삭제하시겠습니까?')) {
+//        $.ajax({
+//            type: 'POST',
+//            url: '/member/qDeleteRecent',
+//            data: {
+//                 'maemul_id': $('#num').val()
+//            },
+//            success: function (result) {
+//                alert('삭제가 완료되었습니다.');
+//                window.location.href = '/member/qRecent'; // 삭제 후 리다이렉트
+//            },
+//            error: function () {
+//                alert('삭제 중 오류가 발생했습니다.');
+//            }
+//        });
+//    }
+//    return false; // 폼 제출 방지
+//}
