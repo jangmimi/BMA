@@ -16,6 +16,9 @@
 <link rel="stylesheet" type="text/css" href="/css/calculator.css">
 <link rel="stylesheet" href="/css/marker.css">
 
+<!-- 김재환 css 연결 -->
+<link rel="stylesheet" href="/css/loading.css">
+
 <!-- 모달 버튼 -->
 <button class="e-modalButton" id="e-modalButton">
     <img class="e-modalImg" src="/img/calculation.png">
@@ -117,6 +120,12 @@
         crossorigin="anonymous"></script>
 
 <div class="asideBarAll">
+
+    <!--로딩바-->
+    <div id="loadingScreen" class="loading-screen">
+        <img src="/sc/loading.gif" alt="">
+    </div>
+
     <div class="asideMenu" style="height:100%;">
         <div style="height:100%;">
             <ul class="list-group">
@@ -560,7 +569,7 @@
                 </li>
 
                 <li class="list-group-item 2" style="height:100%;padding: 0px;">
-                    <div style="height:84%;">
+                    <div style="height:81%;">
                         <div data-bs-spy="scroll" data-bs-target="#navbar-example2"
                              data-bs-root-margin="0px 0px 0px" data-bs-smooth-scroll="true"
                              class="scrollspy-example bg-body-tertiary rounded-2" tabindex="0" style="height:104%;">
@@ -620,7 +629,7 @@
                                                 <h4 class="title">매매 거래이력</h4>
                                             </div>
                                         </div>
-                                        <div class="aed-line-tbl color-e5" id="rpInfoEtcList">
+                                        <div class="aed-line-tbl color-e5" id="rpInfoEtcList" style="margin-bottom: 22px;">
 
                                             <div class="tbl">
                                                 <table style="width: 100%; text-align: center;">
@@ -637,8 +646,12 @@
                                                     </tbody>
                                                 </table>
                                             </div>
+                                        </div>
+
+                                        <hr style="border: 13px solid lightgray;border-top: 1px solid;width: 94%;">
 
 
+                                        <div class="" style="margin-top: 40px;">
                                             <div class="main-titlearea">
                                                 <div class="left">
                                                     <h4 id="scrollspyHeading2"> 전세 실거래정보</h4>
@@ -672,17 +685,7 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-
-                                            <!--                                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"-->
-                                            <!--                                                                data-bs-target="#collapseOne" aria-expanded="true"-->
-                                            <!--                                                                aria-controls="collapseOne" id="aload-more-button"style="-->
-                                            <!--                                                            width: 88%;-->
-                                            <!--                                                        " onclick="createLoadMoreButton()">-->
-                                            <!--                                                            <h3 class="title">실거래이력 더보기</h3>-->
-
-                                            <!--                                                        </button>-->
-                                            <!--// 거래이력 -->
-
+                                        </div>
 
 
 
@@ -1190,7 +1193,6 @@
                                                 </div>
                                             </div>
 
-                                        </div>
 
 
                                     </div>
