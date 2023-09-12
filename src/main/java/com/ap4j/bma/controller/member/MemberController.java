@@ -263,6 +263,8 @@ public class MemberController {
     @GetMapping("/qMyInfoUpdate")
     public String qMyInfoUpdate(HttpSession session, Model model) {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
+        String thumImg = (String) session.getAttribute("thumbnail_image");
+        model.addAttribute("thumbnail_image", thumImg);
         return "userView/oMyInfoUpdate";
     }
 
