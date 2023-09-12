@@ -40,6 +40,7 @@
                                     <div class="oThumbnailImg"> <!-- sns로그인 시 model에서 프로필링크 가져옴, 없으면 default img -->
                                         <img class="myImg" th:if="${thumbnail_image!=null}" th:src="${thumbnail_image}" alt="썸네일이미지">
                                         <img class="myImg" th:if="${thumbnail_image==null}" th:src="@{/img/defaultProfile.jpg}" alt="썸네일이미지">
+                                        <div class="mySelImg" id="selectedImage"></div>
                                     </div>
                                     <div class="oInfoMember">
                                         <div class="oInfoMemberContain">
@@ -50,10 +51,24 @@
                                         <span th:text="*{email}" id="oInfoMemberEmail"></span>
                                     </div>
                                 </div>
-                                <button onclick="" class="aAddPic">
+                                <button onclick="" class="aAddPic" id="openModal">
                                     <img class="aAddPicImg" src="https://cdn-icons-png.flaticon.com/512/1829/1829371.png">
                                     <p class="aAddPicP">사진등록</p>
                                 </button>
+
+                                <!-- 이미지 선택 모달 -->
+                                <div id="imageModal" class="modal">
+                                    <div class="modal-content">
+                                        <span class="close">&times;</span>
+                                        <h2>이미지 선택</h2>
+                                        <div id="imageGallery">
+                                            <img src="/img/member/memberimg1.jpg" alt="이미지 1" class="gallery-image">
+                                            <img src="/img/member/memberimg2.jpg" alt="이미지 2" class="gallery-image">
+                                        </div>
+                                        <button id="selectButton">선택 완료</button>
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="oInfo-right">
                                 <div class="oMaemulCnt-inner">
