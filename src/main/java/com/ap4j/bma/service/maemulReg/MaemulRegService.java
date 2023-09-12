@@ -274,5 +274,19 @@ public class MaemulRegService {
         }
     }
 
+    /**조회수 증가 로직 DetailController details()에서 씀*/
+    @Transactional
+    public void incrementViewCount(int id){
+        MaemulRegEntity maemul = maemulRegEntityRepository.findMaemulById(id).orElse(null);
+        if (maemul != null) {
+            // 현재의 viewCount 값을 가져와 1 증가시킵니다.
+            int currentViewCount = maemul.getViewCount();
+            maemul.setViewCount(currentViewCount + 1);
+
+            // 변경된 값을 저장합니다.
+            maemulRegEntityRepository.save(maemul);
+        }
+    }
+
 
 }

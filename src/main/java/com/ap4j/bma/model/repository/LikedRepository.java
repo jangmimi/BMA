@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface LikedRepository extends JpaRepository<LikedEntity, Long> {
@@ -51,4 +52,12 @@ public interface LikedRepository extends JpaRepository<LikedEntity, Long> {
     @Query("SELECT count(mr.id) FROM LikedEntity l JOIN MaemulRegEntity mr ON l.maemul_id = mr.id WHERE (mr.address LIKE %:keyword% OR mr.tradeType LIKE %:keyword%) AND l.nickname = :nickname")
     Long countFindLikedByNickname(@Param("keyword") String keyword, @Param("nickname") String nickname);
 
+    /** 관심매물 삭제 */
+//    @Override
+//    void delete(LikedEntity entity);
+
+    /** nickname과 road_name으로 이미 있는 관심매물인지 조회 */
+//    Optional<LikedEntity> findByNicknameAndRoad_name(String nickname, String road_name);
+
+    Optional<LikedEntity> findByNicknameAndMemberEntityId(String nickname, Long id);
 }

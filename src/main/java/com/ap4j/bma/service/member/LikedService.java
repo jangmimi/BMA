@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -37,7 +38,7 @@ public class LikedService {
                         .filter(maemulRegEntity -> likedEntity.getMaemul_id().equals(maemulRegEntity.getId())))
                 .collect(Collectors.toList());
     }
-    
+
     /** 로그인한 멤버의 관심매물 조회 */
     public List<MaemulRegEntity> myLikedList(String nickname) {
         return likedRepository.findMaemulByUserNickname(nickname);
@@ -94,4 +95,17 @@ public class LikedService {
 //        return maemulRegEntityRepository.searchCountLikedByNickname(nickname,keyword);
 //    }
 
+//    @Transactional
+//    public void delete(LikedEntity likedEntity) {
+//        log.info("LikedService 관심매물 삭제 실행");
+//        likedRepository.delete(likedEntity);
+//    }
+
+//    public Optional<LikedEntity> findByNicknameAndRoad_name(String nickname, String road_name) {
+//        return likedRepository.findByNicknameAndRoad_name(nickname, road_name);
+//    }
+
+    public Optional<LikedEntity> isLiked(String nickname, Long id) {
+        return likedRepository.findByNicknameAndMemberEntityId(nickname, id);
+    }
 }
