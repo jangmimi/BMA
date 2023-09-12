@@ -2,7 +2,6 @@ package com.ap4j.bma.controller.member;
 import com.ap4j.bma.config.PasswordEncoderConfig;
 import com.ap4j.bma.model.entity.customerCenter.QnAEntity;
 import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
-import com.ap4j.bma.model.entity.member.LikedEntity;
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
 import com.ap4j.bma.service.member.LikedService;
@@ -20,9 +19,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -50,13 +47,18 @@ public class MemberController {
 
     /** 로그인멤버 가입경로 */
     public String getMemberRoot(int root) {
-        return root == 1 ? "기본회원" : root == 2 ? "카카오" : "네이버";
+        return root == 1 ? "기본회원" : root == 2 ? "카카오" : root == 3 ? "네이버" : "관리자";
     }
 
     /** 로그인멤버 이메일 */
     public String getMemberEmail(HttpSession session) {
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginMember");
         return memberDTO != null ? memberDTO.getEmail() : null;
+    }
+
+    /** 로그인멤버 */
+    public MemberDTO getMemberInfo(HttpSession session) {
+        return (MemberDTO) session.getAttribute("loginMember");
     }
 
     /** 로그인 페이지 매핑 */
@@ -232,7 +234,7 @@ public class MemberController {
     /** 마이페이지 매핑 */ 
     @RequestMapping("/qMyPage")
     public String qMyPage(@RequestParam(name = "page", defaultValue = "1") int page,
-                          @RequestParam(name = "pageSize", defaultValue = "10") int pageSize,
+                          @RequestParam(name = "pageSize", defaultValue = "9") int pageSize,
                           HttpSession session, Model model) {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
 
@@ -246,7 +248,6 @@ public class MemberController {
 
         Page<MaemulRegEntity> recentList = recentServiceImpl.recentMaemulList(nickname,page,pageSize);
         Long recentListCnt = recentServiceImpl.recentMamulListCount(nickname);
-        log.info("최근본리스트: " + recentList);
 
         model.addAttribute("root", root);
         model.addAttribute("thumbnail_image", thumImg);
@@ -262,6 +263,8 @@ public class MemberController {
     @GetMapping("/qMyInfoUpdate")
     public String qMyInfoUpdate(HttpSession session, Model model) {
         if(!loginStatus(session)) { return "userView/loginNeed"; }
+        String thumImg = (String) session.getAttribute("thumbnail_image");
+        model.addAttribute("thumbnail_image", thumImg);
         return "userView/oMyInfoUpdate";
     }
 
@@ -296,26 +299,25 @@ public class MemberController {
 
         Page<QnAEntity> qMyQnaList = qMemberService.qMyQnaList(userEmail,page,pageSize);
         long cnt = qMemberService.qMyQnaListCount(userEmail);
-        //long cnt = qMyQnaList.size();
 
         model.addAttribute("myQnaList", qMyQnaList);
         model.addAttribute("myQnaCnt", cnt);
         return "userView/myQnA";
     }
 
-    /** 기본 회원탈퇴 (js ajax 활용) */   // sns 탈퇴 시 로그인 별도 처리 필요
+    /** 기본 회원탈퇴 (js ajax 활용) */
     @PostMapping("/qLeaveMember2")
     public ResponseEntity<Integer> qLeaveMember2(@RequestParam(required = false) String password,
                                                  HttpSession session, SessionStatus sessionStatus) {
-        Long id =  ((MemberDTO) session.getAttribute("loginMember")).getId();
+        Long id =  ((MemberDTO) getMemberInfo(session)).getId();
         boolean success = qMemberService.leaveMember(id, password, sessionStatus, session);
         return ResponseEntity.ok(success ? 1 : 0);
     }
 
     @PostMapping("/qLeaveMember/{id}")    // id 사용해서 탈퇴 (sns계정 탈퇴)
     public String leaveMember(HttpSession session, SessionStatus sessionStatus) {
-        Long id =  ((MemberDTO) session.getAttribute("loginMember")).getId();
-        String pwd =  ((MemberDTO) session.getAttribute("loginMember")).getPwd();
+        Long id =  ((MemberDTO) getMemberInfo(session)).getId();
+        String pwd =  ((MemberDTO) getMemberInfo(session)).getPwd();
 
         qMemberService.leaveMember(id, pwd, sessionStatus, session);
 
