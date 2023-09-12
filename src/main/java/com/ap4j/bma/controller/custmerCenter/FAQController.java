@@ -22,17 +22,22 @@ public class FAQController {
     @GetMapping("/faq/list")
     public String searchFaq(Model model,
                             @RequestParam(name = "page", defaultValue = "1") int page,
-                            @RequestParam(name = "searchText", required = false) String searchText) {
+                            @RequestParam(name = "searchText", required = false) String searchText,
+                            @RequestParam(name = "category", required = false) String category) {
         int pageSize = 10; // 한 페이지당 보여줄 게시글 개수
         Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by("id").descending());
         Page<FAQEntity> faqPage;
 
         if (searchText != null && !searchText.isEmpty()) {
             faqPage = faqService.searchFaqByKeyword(searchText, pageable);
-        } else {
+
+        } else if(category != null){
+            faqPage = faqService.findByCategory(category, pageable);
+        }else {
             faqPage = faqService.getFAQPage(pageable);
         }
 
+        model.addAttribute("category", category);
         model.addAttribute("searchText", searchText);
         model.addAttribute("faq", faqPage.getContent());
         model.addAttribute("currentPage", page);

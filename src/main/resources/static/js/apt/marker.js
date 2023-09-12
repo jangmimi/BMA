@@ -513,10 +513,10 @@ function updateTransactionTable(roadName) {
                 }
 
                 var chartData = {
-                    labels: arrrange, // 날짜
+                    labels: arrrange.reverse(), // 날짜
                     datasets: [{
                         label: '',
-                        data: arrrange2, // 거래 금액
+                        data: arrrange2.reverse(), // 거래 금액
                         backgroundColor: 'rgb(38, 171, 237)',
                         borderColor: 'rgb(75, 192, 192)',
                         borderWidth: 1,
@@ -567,10 +567,10 @@ function updateTransactionTable(roadName) {
 
                 // Create chart2
                 var chartData2 = {
-                    labels: arrrange3,
+                    labels: arrrange3.reverse(),
                     datasets: [{
                         label: '',
-                        data: arrrange4,
+                        data: arrrange4.reverse(),
                         backgroundColor: 'rgb(38, 171, 237)',
                         borderColor: 'rgb(75, 192, 192)',
                         borderWidth: 1,
