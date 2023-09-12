@@ -672,7 +672,10 @@ margin-right: 6px;
     margin: 0px 20px;
     cursor: pointer;
 }
-
+/*.gallery-image:hover {
+    width:160px;  *//* 사진크기 조절 *//*
+    transform:scale(1.1, 1.1);  *//* 가로2배 새로 1.5배 로 커짐 *//*
+    transition: transform.5s;  *//* 커지는 시간 *//* }*/
 /* 선택 버튼 스타일 */
 #selectButton {
     display: block;
@@ -691,6 +694,10 @@ margin-right: 6px;
 
 /* 선택된 이미지 스타일 */
 #selectedImage img {
+    width: 120px;
+    height: 120px;
+}
+#selectedImage2 img {
     width: 150px;
     height: 150px;
 }

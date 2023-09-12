@@ -118,11 +118,28 @@ document.getElementById("selectButton").addEventListener("click", function() {
         closeModal(); // 모달 닫기
     }
 });
-//
-//// 세션에서 이미지 URL을 가져와서 화면에 표시
-const savedImageSrc = sessionStorage.getItem('selectedImageSrc');
-if (savedImageSrc) {
-  const selectedImageElement = document.getElementById('selectedImage');
-  selectedImageElement.src = savedImageSrc;
-  selectedImageElement.style.display = 'block';
+
+
+// 선택된 이미지를 담을 변수
+var selectedImage = null;
+
+// 이미지를 클릭할 때 선택 표시
+var galleryImages = document.getElementsByClassName("gallery-image");
+for (var i = 0; i < galleryImages.length; i++) {
+    galleryImages[i].addEventListener("click", function() {
+        for (var j = 0; j < galleryImages.length; j++) {
+            galleryImages[j].classList.remove("selected");
+        }
+        this.classList.add("selected");
+        selectedImage = this.src;
+    });
 }
+
+
+// 세션에서 이미지 URL을 가져와서 화면에 표시
+//const savedImageSrc = sessionStorage.getItem('selectedImageSrc');
+//if (savedImageSrc) {
+//  const selectedImageElement = document.getElementById('selectedImage');
+//  selectedImageElement.src = savedImageSrc;
+//  selectedImageElement.style.display = 'block';
+//}
