@@ -616,6 +616,7 @@ font-size: 13px;
 
 .s-mamul-tag span{
     padding: 6px;
+    margin-right: 6px;
     gap: 5px;
     border-radius: 15px;
     background-color: #e5e5e5;
