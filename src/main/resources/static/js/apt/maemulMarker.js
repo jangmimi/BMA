@@ -808,7 +808,7 @@ $(document).on("click", ".aHeartBtn", function() {
                 // 버튼 상태 변경
                 if ($heartButton.attr("data-isButton") === "true") {
                     $heartButton.attr("data-isButton", "false");
-                    $heartButton.find("img").attr("src", "/img/mapDetailAndAPTList/aHeartBtn2.png");
+                    $heartButton.find("img").attr("src", "/img/mapDetailAndAPTList/aHeartBtn3.png");
                 } else if ($heartButton.attr("data-isButton") === "false") {
                     $heartButton.attr("data-isButton", "true");
                     $heartButton.find("img").attr("src", "/img/mapDetailAndAPTList/aHeartBtn.png");
