@@ -586,9 +586,22 @@ function clearHJDOverlays() {
 // 행정동 오버레이 배열 초기화
 var hjdOverlays = [];
 
+//로딩 오픈 함수
+function showLoadingScreen() {
+    var loadingScreen = document.querySelector(".loading-screen");
+    loadingScreen.style.display = "flex";
+}
+
+//로딩 하이드 함수
+function hideLoadingScreen() {
+    var loadingScreen = document.querySelector(".loading-screen");
+    loadingScreen.style.display = "none";
+}
 
 // 사이드바 정보 업데이트
 function updateSidebar(responseData) {
+
+    showLoadingScreen();
 
     // 사이드바 컨테이너
     var sidebarContainer = document.querySelector(".sideContents ul.list-group");
@@ -769,12 +782,14 @@ function updateSidebar(responseData) {
         sidebarContainer.appendChild(listItem);
         console.log("리스트 한개 생성 끝");
     });
+    hideLoadingScreen();
 }
 
 // 사이드바 초기화 함수 정의
 function clearSidebar() {
     var sidebarContainer = document.querySelector(".sideContents ul.list-group");
     sidebarContainer.innerHTML = "";
+    showLoadingScreen();
 }
 
 // 하트 버튼을 클릭하면 매물 id 전송
