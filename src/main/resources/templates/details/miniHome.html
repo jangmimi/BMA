@@ -80,7 +80,7 @@
 		<div class="z-bottom-container">
 			<div class="z-bottom-wrap">
 				<!-- 거주용 매물 -->
-					<a th:if="${m.buildingUsage.equals('거주용') || m.buildingUsage.equals('거주/업무용')}" th:each="m : ${maemulList}" th:href="@{/details/{id}(id=${m.id})}"  class="z-content-wrap z-home">
+					<a th:if="${m.buildingUsage.equals('거주용') || m.buildingUsage.equals('거주/업무용')}" th:each="m : ${maemulList}" th:href="@{/details/{id}(id=${m.id})}" class="z-content-wrap z-home">
 						<div class="z-img-wrap">
 							<img src="/img/details/t.jpeg" alt="이미지" class="z-img">
 						</div>
@@ -96,7 +96,8 @@
 									   th:text="${'전세 ' + #strings.concat(dp_djr > 0 ? dp_djr + '억 ' : '', dp_aks > 0 ? dp_aks + '만원' : '')}">
 									</span>
 									<span th:if="${m.tradeType == '월세'}"
-									   th:text="${'월세 ' + m.monthlyRent + '/' + m.monthlyForRent}">
+									      th:with="mr_djr=${m.monthlyRent / 10000}, mr_aks=${m.monthlyRent % 10000}, mfr_djr=${m.monthlyForRent / 10000}, mfr_aks=${m.monthlyForRent % 10000}"
+									      th:text="${'월세 ' + #strings.concat(mfr_djr > 0 ? mfr_djr + '억/' : '', mfr_aks > 0 ? mfr_aks + '/' : '')} + ${#strings.concat(mr_djr > 0 ? mr_djr + '억 ' : '', mr_aks > 0 ? mr_aks : '')}">
 									</span>
 
 								</div>
@@ -141,7 +142,8 @@
 									      th:text="${'전세 ' + #strings.concat(dp_djr > 0 ? dp_djr + '억 ' : '', dp_aks > 0 ? dp_aks + '만원' : '')}">
 									</span>
 									<span th:if="${m.tradeType == '월세'}"
-									      th:text="${'월세 ' + m.monthlyRent + '/' + m.monthlyForRent}">
+									      th:with="mr_djr=${m.monthlyRent / 10000}, mr_aks=${m.monthlyRent % 10000}, mfr_djr=${m.monthlyForRent / 10000}, mfr_aks=${m.monthlyForRent % 10000}"
+									      th:text="${'월세 ' + #strings.concat(mfr_djr > 0 ? mfr_djr + '억/' : '', mfr_aks > 0 ? mfr_aks + '/' : '')} + ${#strings.concat(mr_djr > 0 ? mr_djr + '억 ' : '', mr_aks > 0 ? mr_aks : '')}">
 									</span>
 
 								</div>

@@ -68,7 +68,7 @@
         <tr th:each="faq : ${faq}">
             <td id = "Q">Q</td>
             <td id = "category" th:text="${faq.category}">분류</td>
-            <td><a th:href="@{/faq/view(id=${faq.id})}" th:text="${faq.title}">제목</a></td>
+            <td><a th:href="@{/faq/view(id=${faq.id})}" th:text="${faq.title}" class = "title">제목</a></td>
 
         </tr>
     </table>
@@ -78,7 +78,7 @@
         <a th:href="@{/faq/list(page=${currentPage - 1}, category=${category})}" class="pre"> ◀ </a>
     </span>
         <span th:each="pageNum : ${#numbers.sequence(1, totalPages)}">
-        <a th:href="@{/faq/list(page=${pageNum}, category=${category})}" th:classappend="${pageNum == currentPage} ? 'active' : ''">
+        <a th:href="@{/faq/list(page=${pageNum}, category=${category})}" th:classappend="${pageNum == currentPage} ? 'active' : ''" class="title">
             <span th:text="${pageNum}"></span>
         </a>
     </span>

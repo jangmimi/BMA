@@ -714,7 +714,7 @@ function updateSidebar(responseData) {
         anchor.innerHTML = `
             <div class="aimg_area">
                 <div class="athumb">
-                    <img src="https://www.bdsplanet.com/common/thumbs.ytp?filepath=/COMP_20190619150536000003/upload/realty/RCODE_20230822163534000002/&amp;filename=1692689858337_106.jpg" alt="">
+                    <img src="https://landthumb-phinf.pstatic.net/20200406_3/hscp_img_1586136602059trqlQ_JPEG/photoinfra_1586136601526.jpg?type=m1024" alt="">
                 </div>
             </div>
             <div class="ainfo_area">
