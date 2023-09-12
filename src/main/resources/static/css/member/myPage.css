@@ -691,8 +691,8 @@ margin-right: 6px;
 
 /* 선택된 이미지 스타일 */
 #selectedImage img {
-    width: 120px;
-    height: 120px;
+    width: 150px;
+    height: 150px;
 }
 #o-m-c {
     width: 1000px;

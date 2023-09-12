@@ -41,7 +41,7 @@
                             <div class="oThumbnailImg"> <!-- sns로그인 시 model에서 프로필링크 가져옴, 없으면 default img -->
                                 <img class="myImg" style="width: 100px;" th:if="${thumbnail_image!=null}" th:src="${thumbnail_image}" alt="썸네일이미지">
                                 <img class="myImg" style="width: 100px;" th:if="${thumbnail_image==null}" th:src="@{/img/defaultProfile.jpg}" alt="썸네일이미지">
-                                <div class="mySelImg" id="selectedImage" style="width: 100px;"></div>
+                                <div class="mySelImg" id="selectedImage"></div>
                             </div>
                             <div>
                                 <button onclick="" class="aAddPic" id="openModal">
