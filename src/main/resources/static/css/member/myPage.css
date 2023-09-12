@@ -578,7 +578,7 @@ margin-right: 6px;
     width: 320px;
     height: 195px;
     border: 1px solid #d1dae4;
-    padding: 30px;
+    padding: 25px 30px;
     font-size: 15px;
     display: flex;
     flex-direction: column;
@@ -610,17 +610,19 @@ margin-right: 6px;
 }
 
 .s-mamul-tag {
-    font-size: 13px;
-    margin-top: 5px;
+font-size: 13px;
+    margin: 8px 0px;
 }
 
 .s-mamul-tag span{
-    padding: 5px;
+    padding: 6px;
     gap: 5px;
     border-radius: 15px;
     background-color: #e5e5e5;
 }
-
+.o-mm-text-c {
+    margin: 7px 0px;
+}
 /* 마이페이지 이미지 선택 모달 */
 /* 모달 스타일 */
 .modal {
