@@ -107,11 +107,22 @@ document.getElementById("selectButton").addEventListener("click", function() {
         document.getElementById("selectedImage").innerHTML = "";
         document.getElementById("selectedImage").appendChild(selectedImageElement);
 
+        const selectedImageSrc = selectedImage.src;
+
         var myImages = document.getElementsByClassName("myImg");
         for (var i = 0; i < myImages.length; i++) {
             myImages[i].style.display = "none";
         }
+        sessionStorage.setItem('selectedImageSrc', selectedImageSrc);   // 세션에 저장
 
         closeModal(); // 모달 닫기
     }
 });
+//
+//// 세션에서 이미지 URL을 가져와서 화면에 표시
+const savedImageSrc = sessionStorage.getItem('selectedImageSrc');
+if (savedImageSrc) {
+  const selectedImageElement = document.getElementById('selectedImage');
+  selectedImageElement.src = savedImageSrc;
+  selectedImageElement.style.display = 'block';
+}
