@@ -217,6 +217,7 @@ $(document).ready(function() {
 
 function like() {
 	console.log("like() 실행");
+	console.log(member);
 	if (member && member.nickname !== null) {
 		// 클라이언트에서 즉시 버튼 색상 변경
 		toggleHeartIcon();
@@ -231,12 +232,16 @@ function like() {
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 				console.log("에러");
-				alert('로그인 후 이용 가능합니다.');
+				console.log("jqXHR",jqXHR);
+				console.log("textStatus",textStatus);
+				console.log("errprThrown",errorThrown);
 				// 에러 발생 시 버튼 색상 원래대로 되돌리기
 				toggleHeartIcon();
+				alert('아작스 에러 남 로그인 후 이용 가능합니다.');
 			}
 		});
 	} else {
+		console.log("알러트 떠야함.");
 		alert('로그인 후 이용 가능합니다.');
 	}
 }
@@ -261,17 +266,46 @@ function toggleHeartIcon() {
 // 페이지 로드 시 좋아요 여부에 따라 아이콘 색상 설정
 $(document).ready(function () {
 	// 좋아요 여부를 서버에서 가져옴
-	$.get("/details/like", { 'id': maemulList.id, 'nickname': member.nickname }, function (response) {
-		if (response.liked) {
-			console.log(response.liked);
-			console.log(response);
-			// 좋아요한 경우, 아이콘을 빨간색으로 설정
+	console.log("좋아요 여부 확인 메서드 실행.");
+	console.log(typeof maemulList.id);
+	console.log(maemulList.id);
+	console.log(member.nickname);
 
-			$('.fav').find('svg').find('path').css('fill', 'none');
-			$('.fav').find('svg').find('path').css('stroke', 'black');
-		} else{
-			$('.fav').find('svg').find('path').css('fill', 'red');
-			$('.fav').find('svg').find('path').css('stroke', 'red');
+	$.ajax({
+		url: "/details/like",
+		type: "GET",
+		data: { 'id': maemulList.id, 'nickname': member.nickname },
+		success: function (response) {
+			console.log("response 값 ",response);
+			if(response.liked) {
+				console.log("성공");
+				// 서버 응답 후 아이콘 변경은 필요하지 않음
+				$('.fav').find('svg').find('path').css('fill', 'red');
+				$('.fav').find('svg').find('path').css('stroke', 'red');
+			} else{
+				$('.fav').find('svg').find('path').css('fill', 'none');
+				$('.fav').find('svg').find('path').css('stroke', 'black');
+			}
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			console.log("에러");
+			// 에러 발생 시 버튼 색상 원래대로 되돌리기
+
 		}
 	});
+
+	// $.get("/details/like", { 'id': maemulList.id, 'nickname': member.nickname }, function (response) {
+	// 	if (response.liked) {
+	// 		console.log(response.liked);
+	// 		console.log(response);
+	// 		// 좋아요한 경우, 아이콘을 빨간색으로 설정
+	// 		$('.fav').find('svg').find('path').css('fill', 'red');
+	// 		$('.fav').find('svg').find('path').css('stroke', 'red');
+	//
+	// 	} else{
+	// 		$('.fav').find('svg').find('path').css('fill', 'none');
+	// 		$('.fav').find('svg').find('path').css('stroke', 'black');
+	// 	}
+	// });
+
 });

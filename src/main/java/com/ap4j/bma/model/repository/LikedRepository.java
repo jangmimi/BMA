@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface LikedRepository extends JpaRepository<LikedEntity, Long> {
@@ -63,5 +64,6 @@ public interface LikedRepository extends JpaRepository<LikedEntity, Long> {
     /** nickname과 road_name으로 이미 있는 관심매물인지 조회 */
 //    Optional<LikedEntity> findByNicknameAndRoad_name(String nickname, String road_name);
 
+    Optional<LikedEntity> findByNicknameAndMemberEntityId(String nickname, Long id);
 }
 //(깃머지충돌)

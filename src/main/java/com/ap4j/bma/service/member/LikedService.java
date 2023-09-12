@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -111,4 +112,7 @@ public class LikedService {
 //        return likedRepository.findByNicknameAndRoad_name(nickname, road_name);
 //    }
 
+    public Optional<LikedEntity> isLiked(String nickname, Long id) {
+        return likedRepository.findByNicknameAndMemberEntityId(nickname, id);
+    }
 }

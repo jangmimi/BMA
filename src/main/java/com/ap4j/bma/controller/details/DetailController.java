@@ -14,6 +14,7 @@ import com.ap4j.bma.service.member.LikedService;
 import com.ap4j.bma.service.member.RecentServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,7 @@ import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("details")
@@ -55,14 +57,8 @@ public class DetailController {
 	}
 
 
-
 	@GetMapping("/{id}")
-	public String details(
-			Model model,
-			@PathVariable("id") int id,
-			@RequestParam(value = "nickname", required = false) String nickname,
-			HttpSession session
-	) {
+	public String details(Model model, @PathVariable("id") int id, @RequestParam(value = "nickname", required = false) String nickname, HttpSession session) {
 		log.info("DetailController.details.executed");
 
 		MaemulRegEntity maemul = maemulRegRepository.findById(id).orElse(null);
@@ -103,48 +99,61 @@ public class DetailController {
 		return "details/miniHome";
 	}
 
-	/** 좋아요 버튼 적용 메서드 details.js 에서 ajax 로 불러옴. */
-	@RequestMapping("/like")
+	/**
+	 * 좋아요 버튼 적용 메서드 details.js 에서 ajax 로 불러옴.
+	 */
+	@PostMapping("/like")
 	@ResponseBody
-	public Map<String, Object> liked(@RequestParam("id") int id, @RequestParam("nickname") String nickname) {
+	public ResponseEntity<Map<String, Object>> liked(@RequestParam("id") int id, @RequestParam("nickname") String nickname) {
 		log.info(">>>>> DetailController.liked.executed()");
 
-//		// db에서 좋아요 정보를 확인하는 로직을 추가
-//		boolean isLiked = likedService.isLiked(id, nickname);
-//
-//		// 만약 이미 좋아요를 했을 경우, 클라이언트에게 바로 알려줄 수 있습니다.
-//		if (isLiked) {
-//			Map<String, Object> response = new HashMap<>();
-//			response.put("liked", true); // 이미 좋아요를 한 경우 true를 클라이언트에게 전달
-//			return response;
-//		}
+		try {
+			// 좋아요가 없는 경우 새로운 좋아요 추가
+			LikedEntity likedEntity = new LikedEntity();
+			likedEntity.setNickname(nickname);
+			likedEntity.setMaemul_id(id);
+			likedService.save(likedEntity);
 
-		LikedEntity likedEntity = new LikedEntity();
-		likedEntity.setNickname(nickname);
-		likedEntity.setMaemul_id(id);
-
-		likedService.save(likedEntity);
-
-		Map<String, Object> response = new HashMap<>();
-		response.put("liked", true); // 좋아요 추가 후 클라이언트에게 true를 전달
-		return response;
+			Map<String, Object> response = new HashMap<>();
+			response.put("liked", true); // 좋아요 추가 후 클라이언트에게 true를 전달
+			log.info("true 돌려줌{}", response);
+			return ResponseEntity.ok(response);
+		} catch (Exception e) {
+			// 예외 발생 시 500 오류 반환
+			e.printStackTrace();
+			log.info("DetailController 에서 liked 캐치문 발동.");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
 	}
 
-//	@RequestMapping("/like")
-//	public ResponseEntity<String> like(int id, String nickname) {
-//		// 처리할 백엔드 로직을 여기에 작성합니다.
-//		log.info(">>>>> DetailController.like.executed()");
-//		List<LikedEntity> likedEntities = likedRepository.findByNickname(nickname);
-//		log.info("좋아요 한 여부{}", likedEntities);
-//
-//		LikedEntity likedEntity = new LikedEntity();
-//		likedEntity.setNickname(nickname);
-//		likedEntity.setMaemul_id(id);
-//
-//		likedService.save(likedEntity);
-//		// 로직 실행 후 응답을 반환합니다.
-//		return ResponseEntity.ok("Like request processed successfully.");
-//	}
+	@GetMapping("/like")
+	public ResponseEntity<Map<String, Object>> getLike(@RequestParam("id") Long id, @RequestParam("nickname") String nickname) {
+		log.info(">>>>> DetailController.getLike.executed()");
+		log.info("id 값 {}, nickname 깂 {}", id, nickname);
+
+		try {
+			Optional<LikedEntity> isLiked = likedService.isLiked(nickname, id);
+			log.info("isLiked 값{}",isLiked);
+			if (isLiked.isPresent()) {
+				Map<String, Object> response = new HashMap<>();
+				response.put("liked", true);
+				log.info("getLike 실행 결과 : True");
+				return ResponseEntity.ok(response);
+			} else{
+				Map<String, Object> response = new HashMap<>();
+				response.put("liked", false);
+				log.info("getLike 실행 결과 : False");
+				return ResponseEntity.ok(response);
+			}
+		} catch (Exception e) {
+			// 예외 발생 시 500 오류 반환
+			e.printStackTrace();
+			log.info("DetailController 에서 liked 캐치문 발동.");
+
+		}
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+
+	}
 
 
 }
