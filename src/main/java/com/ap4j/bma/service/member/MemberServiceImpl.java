@@ -353,7 +353,7 @@ public class MemberServiceImpl implements MemberService {
 		if(leaveMember.isPresent()) {
 			int root = leaveMember.get().getRoot();
 			if(root != 1) {
-				log.info("SNS계정은 즉시 회원 탈퇴 처리 됩니다.");
+				log.info("SNS계정 : 즉시 회원 탈퇴");
 				MemberEntity member = leaveMember.get();
 				member.setMember_leave(true);	// 탈퇴 여부 값 변경
 				memberRepository.save(member);
@@ -364,7 +364,6 @@ public class MemberServiceImpl implements MemberService {
 			String dbPwd = leaveMember.get().getPwd();
 
 			if(pwdConfig.passwordEncoder().matches(password, dbPwd)) {
-				log.info("비밀번호 일치! 회원 탈퇴 시도");
 				MemberEntity member = leaveMember.get();
 				member.setMember_leave(true);	// 탈퇴 여부 값 변경
 				memberRepository.save(member);
@@ -423,7 +422,7 @@ public class MemberServiceImpl implements MemberService {
 		return qMyQnaList;
 	}
 
-	/* 내 QnA 목록 카운트*/
+	/** 내 QnA 목록 카운트*/
 	public Long qMyQnaListCount(String usarEmail){
 		return qnARepository.findQnaByEmai0lCount(usarEmail);
 	}

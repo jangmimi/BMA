@@ -364,8 +364,23 @@ kakao.maps.event.addListener(hjdOverlay, 'click', function() {
     map.setLevel(map.getLevel() + 1, { anchor: overlayPosition }); // 클릭된 오버레이의 위치를 중심으로 맵을 줌인합니다.
 });
 
+//로딩 오픈 함수
+function showLoadingScreen() {
+    var loadingScreen = document.querySelector(".loading-screen");
+    loadingScreen.style.display = "flex";
+}
+
+//로딩 하이드 함수
+function hideLoadingScreen() {
+    var loadingScreen = document.querySelector(".loading-screen");
+    loadingScreen.style.display = "none";
+}
+
+
 // 사이드바 정보 업데이트
 function updateSidebar(responseData) {
+    showLoadingScreen();
+    console.log("로딩바 시작")
     // 사이드바 미니 지도 (staticMap)
     var staticMapContainer = document.getElementById('staticMap');
     staticMapContainer.innerHTML = ''; // 초기화 코드
@@ -396,9 +411,13 @@ function updateSidebar(responseData) {
     mapInfoTitleElement.textContent = title;
     mapInfoAddressElement.textContent = address1 + " " + address2;
     mapInfoRoadNameElement.textContent = roadName;
+    
+    hideLoadingScreen();
+    console.log("로딩바 종료")
 }
 
 function updateTransactionTable(roadName) {
+    showLoadingScreen();
     $.ajax({
         type: 'POST',
         url: '/map/main',
@@ -660,6 +679,7 @@ function updateTransactionTable(roadName) {
             } else {
                 console.log("표시할 aptDetailList 데이터가 없습니다.");
             }
+            hideLoadingScreen();
         }
     });
 }
