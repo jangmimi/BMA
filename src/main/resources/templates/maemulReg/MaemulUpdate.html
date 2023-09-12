@@ -13,7 +13,7 @@
 <body layout:fragment="content">
 <!-- 로그인중일때만 접근 가능 -->
 <th:block th:if="${loginMember != null}">                     <!--세션 받아와서 저장-->
-<form action="/update-maemul" method="POST" id="maemulForm" th:object="${loginMember}">
+<form action="/maemul/update-maemul" method="POST" id="maemulForm" th:object="${loginMember}">
 
     <div style="text-align : center;">
         <img src="/img/maemulReg/update.jpg" style="width:100%; height:100%;" >
@@ -163,7 +163,7 @@
             </div>
 
             <!--가격 입력 창-->
-            <table id="monthRentSection" class="hidden">
+            <table id="monthRentSection" class="">
                 <tr>
                     <th>보증금<b class="number"> *</b></th>
                     <td><input class="won" name="monthlyForRent" id="monthlyForRent" type="text" placeholder="0" th:value="${maemulRegEntity.monthlyForRent}"> 만원</td>

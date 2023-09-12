@@ -1,3 +1,10 @@
+/* 폰트 설정 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+
+body {
+    position: relative;
+    font-family: 'Noto Sans KR', sans-serif;
+}
 /* 서브 네비게이션바 */
 .o-lnb {
     min-width: 1000px;

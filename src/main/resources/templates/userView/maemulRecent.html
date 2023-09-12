@@ -15,43 +15,41 @@
     <link rel="stylesheet" th:href="@{/css/member/pagination.css}">
 </head>
 <body layout:fragment="content">
-
-<th:block th:if="${loginMember != null}">
-    <th:block th:object="${loginMember}">
-        <div id="o-container">
-            <div id="o-content">
-                <!-- 마이페이지 네비게이션바 -->
-                <div class="o-lnb">
-                    <div class="o-wrapper">
-                        <ul class="o-lnb-list">
-                            <li class="o-lnb-item"><a th:href="@{/member/qMyPage}">내정보</a></li>
-                            <li class="o-lnb-item"><a th:href="@{/member/qMyInfoUpdate}">내정보수정</a></li>
-                            <li class="o-lnb-item"><a th:href="@{/member/qManagement}">매물관리</a></li>
-                            <li class="o-lnb-item"><a th:href="@{/member/liked}">관심매물</a></li>
-                            <li class="o-lnb-item"><a th:href="@{/member/qRecent}" style="color:#26ABED;">최근본매물</a></li>
-                            <li class="o-lnb-item"><a th:href="@{/member/qMyQnA}">1:1문의내역</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="o-mid-wrapper">
-                    <div class="o-mid-inner mt-5" id="o-tb-wrap">
-                        <div class="o-page-title">
-                            <h3 class="h3 fw-bold">최근본매물</h3>
+    <th:block th:if="${loginMember != null}">
+        <th:block th:object="${loginMember}">
+            <div id="o-container">
+                <div id="o-content">
+                    <!-- 마이페이지 네비게이션바 -->
+                    <div class="o-lnb">
+                        <div class="o-wrapper">
+                            <ul class="o-lnb-list">
+                                <li class="o-lnb-item"><a th:href="@{/member/qMyPage}">내정보</a></li>
+                                <li class="o-lnb-item"><a th:href="@{/member/qMyInfoUpdate}">내정보수정</a></li>
+                                <li class="o-lnb-item"><a th:href="@{/member/qManagement}">매물관리</a></li>
+                                <li class="o-lnb-item"><a th:href="@{/member/liked}">관심매물</a></li>
+                                <li class="o-lnb-item"><a th:href="@{/member/qRecent}" style="color:#26ABED;">최근본매물</a></li>
+                                <li class="o-lnb-item"><a th:href="@{/member/qMyQnA}">1:1문의내역</a></li>
+                            </ul>
                         </div>
-                        <form action="/member/searchr" method="get">
-                            <div class="oSearch-c">
-                                <div class="headrow">
-                                    <div class="headrowL">
-                                        <input type="text" name="keyword" class="searchbox" placeholder="검색어 입력">
-                                        <button class="searchbtn">검색</button>
+                    </div>
+
+                    <div class="o-mid-wrapper">
+                        <div class="o-mid-inner mt-5" id="o-tb-wrap">
+                            <div class="o-page-title">
+                                <h3 class="h3 fw-bold">최근본매물</h3>
+                            </div>
+                            <form action="/member/searchr" method="get">
+                                <div class="oSearch-c">
+                                    <div class="headrow">
+                                        <div class="headrowL">
+                                            <input type="text" name="keyword" class="searchbox" placeholder="검색어 입력">
+                                            <button class="searchbtn">검색</button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
-                        <div class="oMyQnaTb">
-                            <table class="faq-tb">
-                                <form th:action="@{/member/qDeleteRecent}" method="POST">
+                            </form>
+                            <div class="oMyQnaTb">
+                                <table class="faq-tb">
                                     <thead>
                                         <tr>
                                             <th class="o-d-type">거래종류<br>매물종류</th>
@@ -71,7 +69,6 @@
                                             </tr>
                                         </th:block>
                                         <tr th:each="mmpList : ${mmpList}">
-                                            <input type="hidden" id="num" th:name="maemul_id" th:value="${mmpList.id}">
                                             <td id="tradeType" th:text="${mmpList.tradeType}">거래유형</td>
                                             <td id="o-d-photo">
                                                 <img th:src="@{/img/thumbs.jpg}" width="80">
@@ -106,36 +103,38 @@
                                                 </div>
                                             </td>
                                             <td class="o-t-btn">
-                                                <input type="submit" value="삭제">
+                                                <form th:action="@{/member/qDeleteRecent}" method="POST" onsubmit="return deleteMMCheck()">
+                                                    <input type="hidden" id="num" th:name="maemul_id" th:value="${mmpList.id}">
+                                                    <input type="submit" value="삭제">
+                                                </form>
                                             </td>
                                         </tr>
                                     </tbody>
-                                </form>
-                            </table>
-                        </div>
-                        <div class="s-paging">
-                            <ul>
-                                <li class="s-pre" th:if="${mmpList.hasPrevious()}">
-                                    <a th:href="@{/member/qRecent(page=${mmpList.number - 1}, size=${mmpList.size})}">이전</a>
-                                </li>
-                                <li th:if="${mmpList.totalPages > 0}" th:each="pageNo : ${#numbers.sequence(0, mmpList.totalPages - 1)}">
-                                    <span th:if="${mmpList.number == pageNo}" th:text="${pageNo + 1}" class="s-active-page"></span>
-                                    <a th:unless="${mmpList.number == pageNo}" th:href="@{/member/qRecent(page=${pageNo+1}, size=${mmpList.size})}" th:text="${pageNo + 1}"></a>
-                                </li>
-                                <li class="s-next" th:if="${mmpList.hasNext()}">
-                                    <a th:href="@{/member/qRecent(page=${mmpList.number + 2}, size=${mmpList.size})}">다음</a>
-                                </li>
-                            </ul>
-                        </div>
+                                </table>
+                            </div>
+                            <div class="s-paging">
+                                <ul>
+                                    <li class="s-pre" th:if="${mmpList.hasPrevious()}">
+                                        <a th:href="@{/member/qRecent(page=${mmpList.number}, size=${mmpList.size})}">이전</a>
+                                    </li>
+                                    <li th:if="${mmpList.totalPages > 0}" th:each="pageNo : ${#numbers.sequence(0, mmpList.totalPages - 1)}">
+                                        <span th:if="${mmpList.number == pageNo}" th:text="${pageNo + 1}" class="s-active-page"></span>
+                                        <a th:unless="${mmpList.number == pageNo}" th:href="@{/member/qRecent(page=${pageNo+1}, size=${mmpList.size})}" th:text="${pageNo + 1}"></a>
+                                    </li>
+                                    <li class="s-next" th:if="${mmpList.hasNext()}">
+                                        <a th:href="@{/member/qRecent(page=${mmpList.number + 2}, size=${mmpList.size})}">다음</a>
+                                    </li>
+                                </ul>
+                            </div>
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </th:block>
     </th:block>
-</th:block>
-<!-- 부트스트랩 script -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <script th:src="@{/js/member/myAlert.js}"></script>
+    <!-- 부트스트랩 script -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </body>
 </html>

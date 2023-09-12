@@ -16,6 +16,9 @@
 <link rel="stylesheet" type="text/css" href="/css/calculator.css">
 <link rel="stylesheet" href="/css/marker.css">
 
+<!-- 김재환 css 연결 -->
+<link rel="stylesheet" href="/css/loading.css">
+
 <!-- 모달 버튼 -->
 <button class="e-modalButton" id="e-modalButton">
     <img class="e-modalImg" src="/img/calculation.png">
@@ -117,6 +120,12 @@
         crossorigin="anonymous"></script>
 
 <div class="asideBarAll">
+
+    <!--로딩바-->
+    <div id="loadingScreen" class="loading-screen">
+        <img src="/sc/loading.gif" alt="">
+    </div>
+
     <div class="asideMenu" style="height:100%;">
         <div style="height:100%;">
             <ul class="list-group">
@@ -560,7 +569,7 @@
                 </li>
 
                 <li class="list-group-item 2" style="height:100%;padding: 0px;">
-                    <div style="height:84%;">
+                    <div style="height:81%;">
                         <div data-bs-spy="scroll" data-bs-target="#navbar-example2"
                              data-bs-root-margin="0px 0px 0px" data-bs-smooth-scroll="true"
                              class="scrollspy-example bg-body-tertiary rounded-2" tabindex="0" style="height:104%;">
@@ -600,7 +609,7 @@
                                 <div class="aed-sil-deal-price">
                                     <div class="main-titlearea">
                                         <div class="left">
-                                            <h4 id="scrollspyHeading1">실거래정보</h4>
+                                            <h4 id="scrollspyHeading1"> 매매 실거래정보</h4>
                                         </div>
 
                                     </div>
@@ -613,14 +622,14 @@
                                     </div>
 
 
-                                    <!-- 거래이력 -->
+                                    <!-- 매매 거래이력 -->
                                     <div class="aed-bu-box aed-sg-deal-list rpinfo-tab-etc hide">
                                         <div class="sub-titlearea">
                                             <div class="left">
-                                                <h4 class="title">거래이력</h4>
+                                                <h4 class="title">매매 거래이력</h4>
                                             </div>
                                         </div>
-                                        <div class="aed-line-tbl color-e5" id="rpInfoEtcList">
+                                        <div class="aed-line-tbl color-e5" id="rpInfoEtcList" style="margin-bottom: 22px;">
 
                                             <div class="tbl">
                                                 <table style="width: 100%; text-align: center;">
@@ -637,20 +646,50 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                            <!--                                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"-->
-                                            <!--                                                                data-bs-target="#collapseOne" aria-expanded="true"-->
-                                            <!--                                                                aria-controls="collapseOne" id="aload-more-button"style="-->
-                                            <!--                                                            width: 88%;-->
-                                            <!--                                                        " onclick="createLoadMoreButton()">-->
-                                            <!--                                                            <h3 class="title">실거래이력 더보기</h3>-->
+                                        </div>
 
-                                            <!--                                                        </button>-->
-                                            <!--// 거래이력 -->
+                                        <hr style="border: 13px solid lightgray;border-top: 1px solid;width: 94%;">
 
 
+                                        <div class="" style="margin-top: 40px;">
+                                            <div class="main-titlearea">
+                                                <div class="left">
+                                                    <h4 id="scrollspyHeading2"> 전세 실거래정보</h4>
+                                                </div>
+
+                                            </div>
 
 
-                                            <div class="aed-toji" style="
+                                            <div class="aRealPriceAndGraph">
+                                                <div>
+                                                    <canvas id="myChart2"></canvas>
+                                                </div>
+                                            </div>
+                                            <div class="sub-titlearea">
+                                                <div class="left">
+                                                    <h4 class="title">전세 거래이력</h4>
+                                                </div>
+                                            </div>
+                                            <div class="tbl2">
+                                                <table style="width: 100%; text-align: center;">
+                                                    <thead
+                                                            style="height:43px;background-color: #f1f1f1;border-top: 1px solid #26abed; border-bottom: 1px solid #e5e5e5;">
+                                                    <tr>
+                                                        <th>면적</th>
+                                                        <th>층</th>
+                                                        <th>거래일</th>
+                                                        <th>거래금액</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+
+
+                                            <div class="aed-toji" style="력
                                                                 margin-bottom: 40px;
                                                                     margin-top: 32px;                                                        "
                                             >
@@ -1154,7 +1193,6 @@
                                                 </div>
                                             </div>
 
-                                        </div>
 
 
                                     </div>
@@ -1169,6 +1207,7 @@
 
 <!-- 지도를 표시할 div 입니다 -->
 <div id="map" style="width: 100%; height: 100%;">
+
     <div class="afilter">
 
 

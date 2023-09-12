@@ -172,10 +172,8 @@ public class MemberServiceImpl implements MemberService {
 		}
 	}
 
-	/** 기본 로그아웃 */
+	/** 로그아웃 */
 	public void logout(SessionStatus sessionStatus, HttpSession session) {
-		log.info("서비스 Logout() 실행");
-
 		sessionStatus.setComplete();
 		session.invalidate();
 	}
@@ -284,8 +282,6 @@ public class MemberServiceImpl implements MemberService {
 	@Transactional
 	@Override
 	public Long joinBasic(@ModelAttribute MemberDTO memberDTO) {
-		log.info("서비스 joinBasic() 실행");
-
 		// pwd는 암호화해서 가입 경로와 별도로 세팅
 		if(memberDTO.getPwd() != null) {
 			memberDTO.setPwd(pwdConfig.passwordEncoder().encode(memberDTO.getPwd()));
@@ -306,6 +302,7 @@ public class MemberServiceImpl implements MemberService {
 		memberRepository.save(entity);
 		return entity.getId();
 	}
+	/** 이메일로 멤버 조회 */
 	@Override
 	public Optional<MemberEntity> findByEmail(String email) {
 		return memberRepository.findByEmail(email);
@@ -337,7 +334,6 @@ public class MemberServiceImpl implements MemberService {
 
 			} else {
 				if(pwdConfig.passwordEncoder().matches(memberDTO.getPwd(),memberEntity.getPwd())) {
-					log.info("id pw 모두 일치! 로그인 성공!");
                     return memberEntity.toDTO();
 
 				} else {
@@ -357,7 +353,7 @@ public class MemberServiceImpl implements MemberService {
 		if(leaveMember.isPresent()) {
 			int root = leaveMember.get().getRoot();
 			if(root != 1) {
-				log.info("SNS계정은 즉시 회원 탈퇴 처리 됩니다.");
+				log.info("SNS계정 : 즉시 회원 탈퇴");
 				MemberEntity member = leaveMember.get();
 				member.setMember_leave(true);	// 탈퇴 여부 값 변경
 				memberRepository.save(member);
@@ -368,7 +364,6 @@ public class MemberServiceImpl implements MemberService {
 			String dbPwd = leaveMember.get().getPwd();
 
 			if(pwdConfig.passwordEncoder().matches(password, dbPwd)) {
-				log.info("비밀번호 일치! 회원 탈퇴 시도");
 				MemberEntity member = leaveMember.get();
 				member.setMember_leave(true);	// 탈퇴 여부 값 변경
 				memberRepository.save(member);
@@ -385,7 +380,6 @@ public class MemberServiceImpl implements MemberService {
 
 	/** 회원 한명 찾기 id 기준 */
 	public MemberEntity findMemberById(Long id) {
-		log.info("서비스 findMemberById() 실행");
 		Optional<MemberEntity> findMember = memberRepository.findById(id);
 		return findMember.orElse(null);
 	}
@@ -394,8 +388,6 @@ public class MemberServiceImpl implements MemberService {
 	@Transactional
 	@Override
 	public MemberEntity updateMember(Long id, MemberDTO memberDTO) {
-		log.info("서비스 updateMember() 실행");
-
 		Optional<MemberEntity> member = memberRepository.findById(id);
 
 		if(member.isPresent()) {
@@ -430,7 +422,7 @@ public class MemberServiceImpl implements MemberService {
 		return qMyQnaList;
 	}
 
-	/* 내 QnA 목록 카운트*/
+	/** 내 QnA 목록 카운트*/
 	public Long qMyQnaListCount(String usarEmail){
 		return qnARepository.findQnaByEmai0lCount(usarEmail);
 	}
@@ -462,4 +454,10 @@ public class MemberServiceImpl implements MemberService {
 		return findMaemul.orElse(null);
 	}
 
+	@Override
+	public Page<MaemulRegEntity> getPageByNickname(String nickname, int page, int pageSize) {
+		Pageable pageable = PageRequest.of(page - 1, pageSize);
+		Page<MaemulRegEntity> mmpList = maemulRegEntityRepository.findMaemulByMemberNicknameMy(nickname,pageable);
+		return mmpList;
+	}
 }

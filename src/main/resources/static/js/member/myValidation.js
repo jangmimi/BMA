@@ -1,4 +1,6 @@
 $(document).ready(function(){
+
+    // 회원가입 체크박스
     // 전체 선택 체크박스
     const selectAllCheckbox = $("input[name='selectAll']");
     // 개별 체크박스들
@@ -72,21 +74,40 @@ $(document).ready(function(){
         $("#tel").val(telValue);
     });
 
-    // 회원가입 취소 버튼
-    $("#oJoinCancelBtn").click(function() {
-        let cancelA = confirm('회원가입을 취소하시겠습니까? 메인화면으로 이동합니다.');
-        if(cancelA) {
-            location.href = '/';
-            return true;
-        } else { return false; }
+    // 비밀번호 표시 미표시 토글
+    $('.form-floating i').on('mousedown', function () {
+        var pwdField = $(this).prev('#pwd');
+
+        // 마우스를 누르면 표시
+        pwdField.attr('type', 'text');
+        $(this).attr('class', 'fa fa-eye-slash fa-lg').css('color', '#26ABED');
+
+        // 마우스 버튼을 놓을 때 다시 비밀번호로 변경
+        $(document).on('mouseup', function () {
+            pwdField.attr('type', 'password');
+            $('.form-floating i').attr('class', 'fa fa-eye fa-lg').css('color', 'silver');
+            $(document).off('mouseup');
+        });
+    });
+
+    // 이메일 입력값 변경 체크
+    $("#email").on("input", function() {
+        $('#btnEmailCheck').attr('class','btn btn-outline-dark');
+        $('#btnEmailCheck').val("중복검사");
+    });
+
+    // 닉네임 입력값 변경 체크
+    $("#nickname").on("input", function() {
+        $('#btnNicknameCheck').attr('class','btn btn-outline-dark');
+        $('#btnNicknameCheck').val("중복검사");
     });
 });
 
 // 이메일 중복 체크
 function checkEmail() {
-    let email = $('#email').val();
+    let email = $('#email').val().trim();
     let reg = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
-    if(email.trim() === '') {
+    if(email === '') {
         alert('이메일을 입력해주세요.');
         return;
     }
@@ -118,8 +139,8 @@ function checkEmail() {
 
 // 닉네임 중복검사
 function checkNickname() {
-    let nickname = $('#nickname').val();
-    if(nickname.trim() === '') {
+    let nickname = $('#nickname').val().trim();
+    if(nickname === '') {
         alert('닉네임을 입력해주세요.');
         return;
     }
@@ -130,13 +151,13 @@ function checkNickname() {
         success:function(cnt) {
             if(cnt == 0) {
                 $('#btnNicknameCheck').attr('class','btn btn-primary');
-                $('#btnNicknameCheck').val("사용 가능");
+                $('#btnNicknameCheck').val("사용가능");
                 alert('닉네임 사용이 가능합니다.');
             } else if(cnt != 0) {
                 $('#btnNicknameCheck').attr('class','btn btn-danger');
-                $('#btnNicknameCheck').val("사용 불가");
+                $('#btnNicknameCheck').val("사용불가");
                 alert('이미 존재하는 닉네임입니다.\n닉네임을 다시 입력해주세요.');
-            //    $('#email').val('');
+                $('#nickname').val('');
             }
         },
         error:function() {
@@ -145,22 +166,21 @@ function checkNickname() {
     });
 };
 
+// 회원가입 전 전체 유효성 검사
 function oJoinCheck() {
     const reg = /^[A-Za-z0-9_\.]+@[A-Za-z0-9]+\.[A-Za-z0-9]+/;
     const telreg = /^\d{10,11}$/;
     const pwdreg = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
-    let email = $('#email').val();
-    let name = $('#name').val();
-    let pwd = $('#pwd').val();
-    let pwdCheck = $('#pwdCheck').val();
-    let nickname = $('#nickname').val();
+    let email = $('#email').val().trim();
+    let name = $('#name').val().trim();
+    let pwd = $('#pwd').val().trim();
+    let pwdCheck = $('#pwdCheck').val().trim();
+    let nickname = $('#nickname').val().trim();
     let tel = $('#tel').val();
-    let checkedboxes = $("input.oMustAgree:checked");
-    let allChecked = true;
     let emailCheckOk = $("#btnEmailCheck").val();
     let nicknameCheckOk = $("#btnNicknameCheck").val();
-
-     let errorMessage = '';
+    let checkedboxes = $("input.oMustAgree:checked");
+    let errorMessage = '';
 
     if(email === '') {
         errorMessage = '이메일을 입력해주세요.';
@@ -191,6 +211,5 @@ function oJoinCheck() {
         alert(errorMessage);
         return false;
     }
-     alert('회원가입이 완료되었습니다!');
     return true; // 모든 조건 통과
 }

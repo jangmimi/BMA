@@ -15,10 +15,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RecentRepository extends JpaRepository<RecentEntity, String> {
 
+	/** 최근 본 매물 유저 중복체크 확인 */
 	boolean existsByMaemulEntityAndMemberEntity_Nickname(MaemulRegEntity maemulEntity, String nickname);
 
-	@Query("SELECT r.maemulEntity FROM RecentEntity r WHERE r.memberEntity.nickname = :nickname")
-	Page<MaemulRegEntity> findMaemulEntitiesByMemberNickname(String nickname, Pageable pageable);
+	@Query("SELECT r.maemulEntity FROM RecentEntity r WHERE r.memberEntity.nickname = :nickname ORDER BY r.id DESC") // 최근 순 정렬 추가
+	Page<MaemulRegEntity> findMaemulEntitiesByMemberNickname(@Param("nickname") String nickname, Pageable pageable);
 
 	Long countByMemberEntity_Nickname(String nickname);
 

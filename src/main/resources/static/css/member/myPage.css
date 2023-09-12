@@ -51,14 +51,15 @@
 }
 .aAddPic{
     margin-top: 9px;
-        margin-left: 7px;
-        border: 1px solid #d9d9d9;
-        background-color: transparent;
-        height: 31px;
-        width: 139px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    margin-left: 7px;
+    margin-bottom: 20px;
+    border: 1px solid #d9d9d9;
+    background-color: transparent;
+    height: 31px;
+    width: 139px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .aAddPicImg{
     width: 14px;
@@ -69,9 +70,9 @@
 }
 .aAddPicP{
     color: #4a4a4a;
-        margin-left: 8px;
-        font-size: 14px;
-        margin-bottom: 0px;
+    margin-left: 8px;
+    font-size: 14px;
+    margin-bottom: 0px;
 }
 .oMaemulCnt {
     text-align: center;
@@ -114,7 +115,6 @@
 }
 .o-tab-l {
     font-size: 18px;
-    margin-right: 10px;
 }
 .o-tab-r {
     margin-left: auto;
@@ -125,14 +125,14 @@
     text-decoration: none;
 }
 #o-allView {
-    width: 101px;
-        background-color: #26abed;
-        color: white;
-        padding: 5px 8px;
-        font-size: 14px;
-        display: flex;
-        height: 29px;
-        justify-content: space-between;
+    width: 95px;
+    background-color: #26abed;
+    color: white;
+    padding: 5px 8px;
+    font-size: 14px;
+    display: flex;
+    height: 30px;
+    justify-content: center;
 }
 .aSeeAll{
     margin-right: 4px;
@@ -166,19 +166,20 @@
 }
 .a_myInEditAndServiceInfoBtn{
    display: flex;
-       justify-content: space-between;
+   justify-content: space-between;
 }
 .a_Btns{
     display: flex;
-        text-align: center;
-        height: 31px;
-        margin-top: 10px;
-        color: white;
-        width: 49%;
-        background-color: #2aa1dc;
-        align-items: center;
-        justify-content: center;
-            text-decoration: none;
+    text-align: center;
+    font-weight: 600;
+    height: 31px;
+    margin-top: 10px;
+    color: white;
+    width: 49%;
+    background-color: #2aa1dc;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
 }
 .oMaemulContainer {
     display: flex;
@@ -243,11 +244,17 @@
 .oAgree-li {
    margin: 10px;
 }
+.oAgree-li div{
+    display: flex;
+        align-items: center;
+}
 .mustch {
+margin-right: 6px;
    font-weight: 600;
    color: #26ABED;
 }
 .selch {
+    margin-right:6px;
    font-weight: 600;
    color: gray;
 }
@@ -614,3 +621,86 @@
     background-color: #e5e5e5;
 }
 
+/* 마이페이지 이미지 선택 모달 */
+/* 모달 스타일 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 3; /* label(z-index2)보다 위로 올리기 위해 3으로 설정 */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.7);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    width: 30px;
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* 이미지 갤러리 스타일 */
+#imageGallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px 0px;
+}
+
+.gallery-image {
+    width: 100px;
+    height: 100px;
+    margin: 0px 20px;
+    cursor: pointer;
+}
+
+/* 선택 버튼 스타일 */
+#selectButton {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#selectButton:hover {
+    background-color: #0056b3;
+}
+
+/* 선택된 이미지 스타일 */
+#selectedImage img {
+    width: 150px;
+    height: 150px;
+}
+#o-m-c {
+    width: 1000px;
+}
+.o-m-top {
+    display: flex;
+    flex-direction: row-reverse;
+}
+.o-m-top h2 {
+    margin-right: 300px;
+}
