@@ -69,14 +69,14 @@
 		</div>
 	</div>
 	<div class="z-second-wrap">
-		<div class="z-middle-container">
-			<div class="z-middle-wrap">
-				<button class="z-hash-tags">#관리비 저렴</button>
-				<button class="z-hash-tags">#관리비 저렴</button>
-				<button class="z-hash-tags">#관리비 저렴</button>
-				<button class="z-hash-tags">#관리비 저렴</button>
-			</div>
-		</div>
+<!--		<div class="z-middle-container">-->
+<!--			<div class="z-middle-wrap">-->
+<!--				<button class="z-hash-tags">#관리비 저렴</button>-->
+<!--				<button class="z-hash-tags">#관리비 저렴</button>-->
+<!--				<button class="z-hash-tags">#관리비 저렴</button>-->
+<!--				<button class="z-hash-tags">#관리비 저렴</button>-->
+<!--			</div>-->
+<!--		</div>-->
 		<div class="z-bottom-container">
 			<div class="z-bottom-wrap">
 				<!-- 거주용 매물 -->
@@ -115,7 +115,7 @@
 								<!-- z-text-contents 끝 -->
 								<div class="z-text-hash-wrap">
 									<!-- 이건 마지막값 한개만 가져오는 것. -->
-									<button class="z-text-hash">#역세권</button>
+									<span th:each="feature : ${#strings.arraySplit(m.features, ',')}" class="z-text-hash" th:text="${'#' + feature}"></span>
 								</div>
 								<!-- z-text-hash-wrap 끝 -->
 							</div>
@@ -161,7 +161,7 @@
 								<!-- z-text-contents 끝 -->
 								<div class="z-text-hash-wrap">
 									<!-- 이건 마지막값 한개만 가져오는 것. -->
-									<button class="z-text-hash">#역세권</button>
+									<span th:each="feature : ${#strings.arraySplit(m.features, ',')}" class="z-text-hash" th:text="${'#' + feature}"></span>
 								</div>
 								<!-- z-text-hash-wrap 끝 -->
 							</div>

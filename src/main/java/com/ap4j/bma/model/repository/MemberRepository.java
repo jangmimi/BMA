@@ -27,5 +27,7 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
 
     /** 이름과 연락처 둘 다 일치할 경우에 정보 조회 */
     @Query("SELECT m FROM MemberEntity m WHERE m.name = :name AND m.tel = :tel")
-    Optional<MemberEntity> findByNameAndTel(@Param("name") String name, String tel);
+    Optional<MemberEntity> findByNameAndTel(@Param("name") String name, @Param("tel") String tel);
+
+    Optional<MemberEntity> findMemberByNickname(String nickname);
 }

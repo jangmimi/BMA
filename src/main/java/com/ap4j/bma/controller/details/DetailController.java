@@ -127,14 +127,16 @@ public class DetailController {
 	}
 
 	@GetMapping("/like")
-	public ResponseEntity<Map<String, Object>> getLike(@RequestParam("id") Long id, @RequestParam("nickname") String nickname) {
+	public ResponseEntity<Map<String, Object>> getLike(@RequestParam("id") Integer id, @RequestParam("nickname") String nickname) {
 		log.info(">>>>> DetailController.getLike.executed()");
 		log.info("id 값 {}, nickname 깂 {}", id, nickname);
 
 		try {
-			Optional<LikedEntity> isLiked = likedService.isLiked(nickname, id);
+
+			boolean isLiked = likedRepository.existsByNicknameAndMaemulId(nickname, id);
+
 			log.info("isLiked 값{}",isLiked);
-			if (isLiked.isPresent()) {
+			if (isLiked) {
 				Map<String, Object> response = new HashMap<>();
 				response.put("liked", true);
 				log.info("getLike 실행 결과 : True");
