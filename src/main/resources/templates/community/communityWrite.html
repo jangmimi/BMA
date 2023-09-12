@@ -25,6 +25,7 @@
                     <tr>
                         <th>작성자</th>
                         <td>
+                            <input type="hidden" id="author" name="author" th:value="*{nickname}">
                             <label class="read" name = "author" th:text="*{nickname}" th:value="*{nickname}"></label>
                         </td>
                     </tr>
@@ -52,5 +53,6 @@
             </form>
         </div>
     </div>
+</th:block>
 </body>
 </html>

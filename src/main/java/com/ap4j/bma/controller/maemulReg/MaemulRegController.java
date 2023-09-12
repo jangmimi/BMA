@@ -82,15 +82,8 @@ public class MaemulRegController {
                 // 매물 ID 설정 및 엔티티 저장
                 maemulPhotoEntity.setMaemulID(savedEntity.getId());
 
-                log.info(String.valueOf(savedEntity.getId()));
-                log.info("**************");
-                log.info(String.valueOf(maemulPhotoEntity));
-                log.info("**************");
-                log.info(String.valueOf(file));
-                log.info("**************");
                 // 이미지를 서버로 업로드하고 데이터베이스에 저장하는 로직 추가
                 maemulPhotoService.saveImage(file, maemulPhotoEntity);
-
 
                 // 데이터베이스에 저장
                 maemulPhotoRepository.save(maemulPhotoEntity);
