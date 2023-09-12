@@ -98,7 +98,7 @@
 
 .card2 {
     background: url('/img/proIntroduce/item2.jpg') center center no-repeat;
-
+    background-size: 100% 100%;
     &:hover {
         background: url('/img/proIntroduce/item2.jpg') right center no-repeat;
         background-size: 600px;
@@ -111,7 +111,7 @@
 
 .card3 {
     background: url('/img/proIntroduce/item3.jpg') center center no-repeat;
-
+    background-size: 100% 100%;
     &:hover {
         background: url('/img/proIntroduce/item3.jpg') right center no-repeat;
         background-size: 600px;
