@@ -109,6 +109,7 @@ public class ApartmentServiceImpl implements ApartmentService {
                     roadName(aptRealTradeEntity.getRoadName()).
                     area(aptRealTradeEntity.getArea()).
                     transactionAmount(aptRealTradeEntity.getTransactionAmount()).
+                    deposit(aptRealTradeEntity.getDeposit()).
                     contractYearMonth(aptRealTradeEntity.getContractYearMonth()).
                     contractDate(aptRealTradeEntity.getContractDate()).
                     floor(aptRealTradeEntity.getFloor()).
