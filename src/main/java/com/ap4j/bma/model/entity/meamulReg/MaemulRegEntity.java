@@ -1,12 +1,14 @@
 package com.ap4j.bma.model.entity.meamulReg;
 
 import com.ap4j.bma.model.entity.member.MemberEntity;
+import io.micrometer.core.lang.Nullable;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import javax.validation.constraints.Null;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -91,6 +93,10 @@ public class MaemulRegEntity {
     //좌표
     private Double longitude; //경도
     private Double latitude; //위도
+
+    // 조회수
+    @ColumnDefault("0")
+    private int viewCount;
 
     //등록일자
     @CreationTimestamp
