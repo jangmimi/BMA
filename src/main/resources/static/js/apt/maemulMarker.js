@@ -648,7 +648,7 @@ function updateSidebar(responseData) {
                 depositForLease = "전세 " + depositForLeaseSliceUk + "억";
             }
         } else {
-            depositForLease = "전세 " + depositForLeaseSliceMan + "만원";
+            depositForLease = "전세 " + depositForLeaseString + "만원";
         }
 
 
