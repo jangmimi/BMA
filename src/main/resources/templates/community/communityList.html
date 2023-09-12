@@ -65,7 +65,7 @@
             <td>
                 <a th:text = "${community.title}" th:href="@{/community/view(id=${community.id})}">제목</a>
             </td>
-            <td th:text = "${community.author}">작성자</td>
+            <td th:text="${community.author}">작성자</td>
             <td th:text="${#temporals.format(community.createdAt, 'yyyy-MM-dd')}">yyyy-mm-dd</td>
             <td th:text = "${community.view}">0</td>
         </tr>
