@@ -14,6 +14,7 @@ import com.ap4j.bma.service.member.LikedService;
 import com.ap4j.bma.service.member.RecentServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -89,8 +90,25 @@ public class DetailController {
 
 
 	@GetMapping("/miniHome/{nickname}")
-	public String miniHome(Model model, @PathVariable("nickname") String nickname) {
+	public String miniHome(
+			Model model,
+			@PathVariable("nickname") String nickname,
+			@RequestParam(name = "page", defaultValue = "1") int page,
+			@RequestParam(name = "pageSize", defaultValue = "9") int pageSize
+	) {
 		log.info(">>>>> DetailController.miniHome.executed() {}", nickname);
+
+		if (page < 1) {
+			page = 1;
+		}
+
+
+		Page<MaemulRegEntity> mmpList = maemulRegService.getPageByNickname(nickname,page,pageSize);
+
+		model.addAttribute("mmpList",mmpList);
+		log.info("mmpList{}, ", mmpList);
+
+		model.addAttribute("pnickname",nickname);
 
 		model.addAttribute("maemulList", maemulRegRepository.findMaemulByMemberNickname(nickname));
 		model.addAttribute("residentialCount", maemulRegRepository.countResidential(nickname));
@@ -156,6 +174,5 @@ public class DetailController {
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 
 	}
-
 
 }

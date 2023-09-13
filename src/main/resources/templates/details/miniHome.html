@@ -80,7 +80,7 @@
 		<div class="z-bottom-container">
 			<div class="z-bottom-wrap">
 				<!-- 거주용 매물 -->
-				<a th:if="${m.buildingUsage.equals('거주용') || m.buildingUsage.equals('거주/업무용')}" th:each="m : ${maemulList}" th:href="@{/details/{id}(id=${m.id})}" class="z-content-wrap z-home">
+				<a th:if="${m.buildingUsage.equals('거주용') || m.buildingUsage.equals('거주/업무용')}" th:each="m : ${mmpList}" th:href="@{/details/{id}(id=${m.id})}" class="z-content-wrap z-home">
 					<div class="z-img-wrap">
 						<img src="/img/details/t.jpeg" alt="이미지" class="z-img">
 					</div>
@@ -115,7 +115,8 @@
 							<!-- z-text-contents 끝 -->
 							<div class="z-text-hash-wrap">
 								<!-- 이건 마지막값 한개만 가져오는 것. -->
-								<span th:each="feature : ${#strings.arraySplit(m.features, ',')}" class="z-text-hash" th:text="${'#' + feature}"></span>
+								<span th:each="feature, iterStat : ${#strings.arraySplit(m.features, ',')}"
+								      class="z-text-hash" th:text="${'#' + feature}" th:if="${iterStat.index &lt; 3}"></span>
 							</div>
 							<!-- z-text-hash-wrap 끝 -->
 						</div>
@@ -126,7 +127,7 @@
 				<!-- 거주용 끝 -->
 
 				<!-- 업무용 매물 -->
-				<a th:if="${m.buildingUsage.equals('업무용') || m.buildingUsage.equals('거주/업무용')}" th:each="m : ${maemulList}" th:href="@{/details/{id}(id=${m.id})}"  class="z-content-wrap z-work">
+				<a th:if="${m.buildingUsage.equals('업무용') || m.buildingUsage.equals('거주/업무용')}" th:each="m : ${mmpList}" th:href="@{/details/{id}(id=${m.id})}"  class="z-content-wrap z-work">
 					<div class="z-img-wrap">
 						<img src="/img/details/t.jpeg" alt="이미지" class="z-img">
 					</div>
@@ -161,7 +162,8 @@
 							<!-- z-text-contents 끝 -->
 							<div class="z-text-hash-wrap">
 								<!-- 이건 마지막값 한개만 가져오는 것. -->
-								<span th:each="feature : ${#strings.arraySplit(m.features, ',')}" class="z-text-hash" th:text="${'#' + feature}"></span>
+								<span th:each="feature, iterStat : ${#strings.arraySplit(m.features, ',')}"
+								      class="z-text-hash" th:text="${'#' + feature}" th:if="${iterStat.index &lt; 3}"></span>
 							</div>
 							<!-- z-text-hash-wrap 끝 -->
 						</div>
@@ -201,17 +203,35 @@
 				<a href="#" class="z-pagenation z-p1">
 					1
 				</a>
-				<a href="#" class="z-pagenation">
-					2
-				</a>
 				<button class="z-page-after"></button>
 
 			</div>
+<!--			<ul>-->
+<!--				<li class="s-pre" th:if="${mmpList.hasPrevious()}">-->
+<!--					<a th:href="@{/details/miniHome/nickname(nickname=${pnickname})page(page=${mmpList.number}, size=${mmpList.size})}">이전</a>-->
+<!--				</li>-->
+<!--				<li th:if="${mmpList.totalPages > 0}" th:each="pageNo : ${#numbers.sequence(0, mmpList.totalPages - 1)}">-->
+<!--					<span th:if="${mmpList.number == pageNo}" th:text="${pageNo + 1}" class="s-active-page"></span>-->
+<!--					<a th:unless="${mmpList.number == pageNo}" th:href="@{/details/miniHome/nickname(nickname=${pnickname})(page=${pageNo+1}, size=${mmpList.size})}" th:text="${pageNo + 1}"></a>-->
+<!--				</li>-->
+<!--				<li class="s-next" th:if="${mmpList.hasNext()}">-->
+<!--					<a th:href="@{/details/miniHome/nickname(nickname=${pnickname})(page=${mmpList.number + 2}, size=${mmpList.size})}">다음</a>-->
+<!--				</li>-->
+
+<!--				&#45;&#45;&#45;&#45;-->
+<!--				<li class="s-pre" th:if="${mmpList.hasPrevious()}">-->
+<!--					<a th:href="@{/details/miniHome/nickname(nickname=${t.nickname})page(page=${mmpList.number - 1}, size=${mmpList.size})}">이전</a>-->
+<!--				</li>-->
+<!--				&lt;!&ndash; 이전 페이지를 무시하고 다음 페이지만 표시 &ndash;&gt;-->
+<!--				<li class="s-next">-->
+<!--					<a th:href="@{/details/miniHome/nickname(nickname=${t.nickname})page(page=${mmpList.number + 1}, size=${mmpList.size})}">다음</a>-->
+<!--				</li>-->
+<!--			</ul>-->
 		</div>
 	</div>
-	<!— z-second-wrap 끝 —>
+	<!-- z-second-wrap 끝 -->
 </div>
-<!— z-main-container 끝 —>
+<!-- z-main-container 끝 -->
 </body>
 
 </html>
