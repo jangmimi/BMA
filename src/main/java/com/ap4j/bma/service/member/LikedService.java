@@ -95,4 +95,17 @@ public class LikedService {
 //        return maemulRegEntityRepository.searchCountLikedByNickname(nickname,keyword);
 //    }
 
+//    @Transactional
+//    public void delete(LikedEntity likedEntity) {
+//        log.info("LikedService 관심매물 삭제 실행");
+//        likedRepository.delete(likedEntity);
+//    }
+
+//    public Optional<LikedEntity> findByNicknameAndRoad_name(String nickname, String road_name) {
+//        return likedRepository.findByNicknameAndRoad_name(nickname, road_name);
+//    }
+
+    public Optional<LikedEntity> isLiked(String nickname, Long id) {
+        return likedRepository.findByNicknameAndMemberEntityId(nickname, id);
+    }
 }

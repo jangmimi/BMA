@@ -48,7 +48,7 @@ public class MaemulRegEntity {
     private String Elevator;//엘리베이터
     private String Parking;//주차가능여부 (엘베랑 같은 이유)
 
-
+    @ColumnDefault("0")
     private Integer totalParking;//총 주차대수
     private String shortTermRental;//단기임대
     private String availableMoveInDate;//입주가능일
