@@ -143,6 +143,7 @@
     background : #ffffff;
     float: right;
     }
+
     .pre, .next{
         background: #26A9E0;
         border-radius: 5px;
@@ -153,10 +154,25 @@
         }
 
     #sort{
-      width : 110px;
-      height : 35px;
-      border :2px solid #26A9E0;
-       }
+    width : 110px;
+    height : 35px;
+    border :2px solid #26A9E0;
+    }
+
+    #sort:focus {
+     border:2px solid #26A9E0;
+     outline: none;
+    }
+
+    #search{
+    width : 100px;
+    border :none;
+    border-right:2px solid #26A9E0;
+    }
+
+    #search:focus {
+     outline: none;
+    }
 
     /* 현재 페이지 (active 상태) 스타일 */
     .bottom a.active {

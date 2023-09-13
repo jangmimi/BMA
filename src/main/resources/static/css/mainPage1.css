@@ -219,9 +219,7 @@ body {
 
 .n-main-3-slide-img{
     width: 50%;
-    height: 50%;
-    border: 1px solid #dfdfdf;
-    border-radius: 20px;
+    height: 100%;
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -229,7 +227,8 @@ body {
 }
 
 .n-main-3-slide-img img{
-
+    width: fit-content;
+    height: 90%;
 }
 
 .n-main-3-slides {
@@ -587,3 +586,62 @@ body {
     z-index: 1;
     color: #fff;
 }
+
+/* 카드 자동 스라이더 효과 */
+
+.a_Skills{
+    text-align: center;
+    padding: 32px;
+    place-items: center;
+    overflow: hidden;
+}
+.a_SkillsTitleAll{
+    margin-bottom:30px;
+
+
+}
+.a_SkillsTitle{
+    font-size:36px;
+    font-weight: 900;
+    font-family: 'Pretendard-Regular';
+}
+
+.slide-track{
+    display:flex;
+    width: calc(300px * 12);
+    animation: scroll 40s linear infinite;
+}
+
+.slide-track:hover{
+    animation-play-state:paused;
+}
+
+@keyframes scroll{
+    0% {
+        transform: translateX(0);
+    }
+    100%{
+        transform: translateX(calc(-300px * 6));
+    }
+}
+
+.slide{
+    height: 250px;
+    width: 300px;
+    display: flex;
+    align-items:center;
+    padding: 15px;
+    perspective:100px;
+}
+
+.train-card{
+    width:100%;
+    transition:transform 1s;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.train-card:hover{
+    transform:translateZ(18px);
+}
+

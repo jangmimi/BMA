@@ -4,9 +4,6 @@
     margin : auto;
     margin-top: 40px;
     }
-
-
-
          table{
          width : 95%;
          margin-top:105px;
@@ -24,6 +21,7 @@
         color: #666;
         font-size: 15px;
         border: 1px solid #ddd;
+        height: 40px;
         }
 
         table td {
@@ -33,35 +31,58 @@
         text-align: center;
          }
 
-        .b-n { //테이블 번호
-        width :10%;
+        .b-n {
+        width :15%;
+        color : #26A9E0;
+        text-weight :bold;
         }
-        .b-t{ //테이블 제목
+        /*.b-t{
         width : 50%;
+        }*/
+
+        .b-d{
+        width :20%;
         }
 
-.content{
-height : 500px;
-}
+    .content{
+    height : 500px;
+    }
 
-.list-btn{
-    margin-auto;
-    margin-top: 40px;
-    width: 120px;
-    height: 50px;
-    border-radius: 10px;
-    color : #fff;
-    border: #26A9E0;
-    background : #26A9E0;
-
-}
-
-.list-btn-outer{
-    display: flex;
-    justify-content: center;
+    .list-btn{
+        margin-auto;
+        margin-top: 40px;
+        width: 120px;
+        height: 50px;
+        border-radius: 10px;
+        color : #fff;
+        border: #26A9E0;
+        background : #26A9E0;
 
     }
+
+    .list-btn-outer{
+        display: flex;
+        justify-content: center;
+
+        }
 
     .bold{
     text-weight : bold;
     }
+
+     #pre-next{
+        margin-top : 50px;
+        text-align: center;
+        margin-bottom: 30px;
+        }
+
+        .pre-next{
+        width : 95%;
+        height: 50px;
+        border: #26A9E0;
+        margin-bottom: 5px;
+        }
+
+        h1{
+       text-align: center;
+       }

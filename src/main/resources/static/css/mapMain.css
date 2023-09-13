@@ -103,7 +103,7 @@ content:'';position: absolute; margin-left: -11px; left: 50%; bottom: -12px; wid
 
 
 .list-group{
-width:400px;
+width:490px;
 height:100%;
 }
 
@@ -123,8 +123,7 @@ border: none;
 /*사이드바 속 세부 조정들*/
 .asideBarAll{
 position: absolute;
-    top: 111px;
-    width: 400px;
+    top: 131px;
     z-index: 1100;
     height: calc(100% - 60px);
     line-height: 1;
@@ -146,6 +145,7 @@ justify-content: space-between;
 /*위치명,위치세부,뒤로가기,끄기,공유*/
 .titlearea,.left ,.right{
 display: flex;
+justify-content: space-between;
 }
 .left{
 margin-top: 10px;
@@ -182,7 +182,7 @@ border: none;
 .modal.fade.aTalkTalk.show{
 width: 409px;
 height: 1000px;
-left: 399px;
+left: 489px;
 top: 31px;
 }
 .dropdown-menu.aFilterC.show{
@@ -198,8 +198,7 @@ top: 31px;
 }
 .modal.fade.aTalkTalkWrite{
 width: 300px;
-left: 399px;
-top: 31px;
+left: 488px;
 
 }
 #exampleModalToggle2 {
@@ -207,6 +206,7 @@ top: 31px;
 .aPostcontent{
 border: 2px solid #26abed62;
 width: 93%;
+resize: none;
 height: 150px;
 
 font-size: 13px;
@@ -238,13 +238,20 @@ font-size: 13px;
 display: flex;
 justify-content: flex-end;
 }
+.userinfo {
+    margin-bottom: 30px;
+}
+span.aemail {
+    color: #26abed;
+    font-size: 19px;
+}
 .auploadDate{
+text-align: right;
 -webkit-font-smoothing: antialiased;
-margin-left: 91px;
 }
 .acontent{
 margin-top: 10px;
-padding: 10px;
+padding: 18px;
 height: 137px;
 border: 1px solid #26abed33;
 border-radius: 10px;
@@ -785,17 +792,18 @@ color: #323232;
 
 /*상세사이드바 위에 작은 검색창*/
 .afilter {
+
     border-radius: 5px;
         position: absolute;
         z-index: 1100;
         top: 0px;
         left: 0px;
-        width: 348px;
-        height: 25px;
+        width: 476px;
+        height: 45px;
         border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         display: flex;
         justify-content: space-between;
-        padding: 12px 30px 12px 20px;
+        padding: 12px 6px 12px 6px;
         background-color: white;
         border: 1px solid #dfdfdf;
 }
@@ -849,6 +857,7 @@ top: 40%;
 .btn.btn-primary.map-utilSBtn.secons.active{
     border:4px solid deepskyblue;
 }
+
 .btn.btn-primary.map-utilSBtn.highs.active{
     border:4px solid #3275ff;
 }

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 @Slf4j
 @SessionAttributes("loginMember")
@@ -41,7 +40,7 @@ public class QnAController {
 
 
         model.addAttribute("message", "1:1 문의가 등록되었습니다.");
-        model.addAttribute("searchUrl", "/qna");
+        model.addAttribute("searchUrl", "/member/qMyQnA");
 
         return "community/message";
     }

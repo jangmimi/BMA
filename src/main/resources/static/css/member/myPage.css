@@ -15,7 +15,7 @@
 .oInfo-top {
     display: flex;
     justify-content: center;
-    height: 250px;
+    height: 296px;
     padding: 30px 0;
     background-color: #fafafa;
 }
@@ -24,8 +24,9 @@
     display: flex;
     justify-content: space-between;
     margin: 30px 0px;
+    height:200px;
 }
-.oInfo-left {
+.aThumMem {
    display: flex;
 }
 .oInfoMember {
@@ -47,6 +48,31 @@
 #oInfoMemberEmail {
    font-size: 15px;
    font-weight:bold;
+}
+.aAddPic{
+    margin-top: 9px;
+    margin-left: 7px;
+    margin-bottom: 20px;
+    border: 1px solid #d9d9d9;
+    background-color: transparent;
+    height: 31px;
+    width: 139px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.aAddPicImg{
+    width: 14px;
+        opacity: 48%;
+}
+.aAddPicImg2{
+    width:14px;
+}
+.aAddPicP{
+    color: #4a4a4a;
+    margin-left: 8px;
+    font-size: 14px;
+    margin-bottom: 0px;
 }
 .oMaemulCnt {
     text-align: center;
@@ -75,28 +101,41 @@
     margin: 0 auto;
 }
 .oMaemul-c-inner {
-    padding: 40px 0px 50px;
-}
-.oMeamulTitleContainer {
     display: flex;
     justify-content: space-between;
-    border-bottom: 2px solid black;
-    margin-bottom: 20px;
-    padding: 0px 0px 10px;
+    align-items: center;
+    padding: 50px 0px;
 }
-.oMeamulTabLeft {
-    font-size: 17px;
+.o-tab-c {
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid black;
+    padding: 0px 0px 10px;
+    width: 100%;
+}
+.o-tab-l {
+    font-size: 18px;
+}
+.o-tab-r {
+    margin-left: auto;
 }
 .o-mm-link {
     font-weight: 700;
-    border: none;
     background-color: white;
+    text-decoration: none;
 }
 #o-allView {
+    width: 95px;
     background-color: #26abed;
     color: white;
     padding: 5px 8px;
-    font-size: 15px;
+    font-size: 14px;
+    display: flex;
+    height: 30px;
+    justify-content: center;
+}
+.aSeeAll{
+    margin-right: 4px;
 }
 .oUpdateLinkBtn{
     width: 150px;
@@ -111,15 +150,36 @@
 #o-recent-link {
     color: #999999;
 }
+#o-division {
+    margin: 0px 15px;
+    color: #222222;
+    font-weight: 300;
+}
 .oInfo-right {
     height: 100%;
 }
 .oMaemulCnt-inner {
     display:flex;
-    height: 100%;
 }
 .oMaemulCnt-inner > .oMaemulCnt:first-child {
     border-right: none;
+}
+.a_myInEditAndServiceInfoBtn{
+   display: flex;
+   justify-content: space-between;
+}
+.a_Btns{
+    display: flex;
+    text-align: center;
+    font-weight: 600;
+    height: 31px;
+    margin-top: 10px;
+    color: white;
+    width: 49%;
+    background-color: #2aa1dc;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
 }
 .oMaemulContainer {
     display: flex;
@@ -128,10 +188,25 @@
 .myImg {
     width: 150px;
 }
+.o-noCnt {
+    height: 200px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #222222;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
 
 /*oMyInfoUpdate css*/
 .form-floating {
    width: 350px;
+}
+#o-email-c, #o-nickname-c {
+    display: flex;
+    flex-wrap:wrap;
 }
 #nickname {
     width: 254px;
@@ -169,11 +244,17 @@
 .oAgree-li {
    margin: 10px;
 }
+.oAgree-li div{
+    display: flex;
+        align-items: center;
+}
 .mustch {
+margin-right: 6px;
    font-weight: 600;
    color: #26ABED;
 }
 .selch {
+    margin-right:6px;
    font-weight: 600;
    color: gray;
 }
@@ -193,10 +274,11 @@
 .ofindResult {
     display: block;
     text-align: center;
-    text-weight: 700;
+    font-weight: 600;
     color: red;
     font-size: 14px;
     margin-top: 20px;
+    width: 350px;
 }
 /* 이메일 비밀번호 찾기 타이틀 */
 .o-find-subTitle {
@@ -212,7 +294,10 @@
     position: absolute;
     opacity: 2%;
 }
-
+#o-find-info {
+    font-size: 12px;
+    color: gray;
+}
 
 .oThumbnailImg img{
     border-radius: 50%;
@@ -329,7 +414,8 @@
 }
 
 .z-img-wrap,
-.z-img {
+.z-img,
+.z-img-wrap img {
 	width: 300px;
 	height: 191.25px;
 }
@@ -339,9 +425,15 @@
 }
 
 .z-bottom-wrap {
-	display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(calc(33.33% - 10px), 1fr)); /* 각 열의 크기 설정 */
+    grid-gap: 10px; /* 열 간격 설정 */
+    grid-row-gap: 10px; /* 행 간격 설정 */
+    margin-bottom: 80px;
+}
+.z-bottom-wrap  a {
+    text-decoration: none;
+    color: black;
 }
 
 .z-text-content3 {
@@ -459,4 +551,166 @@
 .z-p1 {
 	border-bottom: 2px solid #000;
 	color: #000;
+}
+
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+.s-mamulbox {
+    display: flex;
+    flex-wrap: wrap;
+    width: 320px;
+    height: 375px;
+    font-family: 'Pretendard-Regular';
+}
+
+.s-mamul-img img{
+    width: 320px;
+    height: 180px;
+}
+
+.s-mamul-text {
+    width: 320px;
+    height: 195px;
+    border: 1px solid #d1dae4;
+    padding: 25px 30px;
+    font-size: 15px;
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.s-mamul-text p {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; /* 넘치는 텍스트에 '...' 표시 */
+}
+
+.s-mamul-text-title {
+    color: #129ded;
+    font-size: 22px;
+    font-weight: 900;
+}
+
+.s-mamul-text-1 {
+    margin-top: 10px;
+    display: flex;
+}
+
+.s-mamul-text-2 {
+    display: flex;
+}
+
+.s-mamul-tag {
+font-size: 13px;
+    margin: 8px 0px;
+}
+
+.s-mamul-tag span{
+    padding: 6px;
+    margin-right: 6px;
+    gap: 5px;
+    border-radius: 15px;
+    background-color: #e5e5e5;
+}
+.o-mm-text-c {
+    margin: 7px 0px;
+}
+/* 마이페이지 이미지 선택 모달 */
+/* 모달 스타일 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 3; /* label(z-index2)보다 위로 올리기 위해 3으로 설정 */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.7);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    width: 30px;
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* 이미지 갤러리 스타일 */
+#imageGallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px 0px;
+}
+
+.gallery-image {
+    width: 100px;
+    height: 100px;
+    margin: 0px 20px;
+    cursor: pointer;
+}
+/*.gallery-image:hover {
+    width:160px;  *//* 사진크기 조절 *//*
+    transform:scale(1.1, 1.1);  *//* 가로2배 새로 1.5배 로 커짐 *//*
+    transition: transform.5s;  *//* 커지는 시간 *//* }*/
+/* 선택 버튼 스타일 */
+#selectButton {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#selectButton:hover {
+    background-color: #0056b3;
+}
+
+/* 선택된 이미지 스타일 */
+#selectedImage img {
+    width: 120px;
+    height: 120px;
+}
+#selectedImage2 img {
+    width: 150px;
+    height: 150px;
+}
+#o-m-c {
+    width: 1000px;
+}
+.o-m-top {
+    display: flex;
+    flex-direction: row-reverse;
+}
+.o-m-top h2 {
+    margin-right: 300px;
 }

@@ -2,24 +2,32 @@ package com.ap4j.bma.model.repository;
 
 import com.ap4j.bma.model.entity.member.MemberEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-// DB와 직접 소통하는 인터페이스. JPA가 해당 객체를 알아서(자동) 생성
-// JPA 전용 인터페이스
 @Repository
-public interface MemberRepository extends JpaRepository<MemberEntity, Long> {   // ..JpaRepository<관리 대상, 대상의 PK 타입>
+public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
 
+    /** id로 회원 정보 조회 */
     @Override
-    Optional<MemberEntity> findById(Long id);   // id로 회원 정보 조회
+    Optional<MemberEntity> findById(Long id);
 
-    // email, nickname 중복 체크
+    /** email, nickname 중복 체크 */
     boolean existsByEmail(String email);
     boolean existsByNickname(String nickname);
 
-    Optional<MemberEntity> findByEmail(String email);   // email로 회원 정보 조회
-    Optional<MemberEntity> findByNameAndTel(String name, String tel);   // email 찾기
-    Optional<MemberEntity> findByEmailAndTel(String email, String tel);   // pwd 찾기
+    /** email로 회원 정보 조회 */
+    Optional<MemberEntity> findByEmail(String email);
 
+    /** 닉네임으로 회원 정보 조회 */
+    Optional<MemberEntity> findByNickname(String nickname);
+
+
+	Optional<MemberEntity> findMemberByNickname(String nickname);
+    /** 이름과 연락처 둘 다 일치할 경우에 정보 조회 */
+    @Query("SELECT m FROM MemberEntity m WHERE m.name = :name AND m.tel = :tel")
+    Optional<MemberEntity> findByNameAndTel(@Param("name") String name, @Param("tel") String tel);
 }

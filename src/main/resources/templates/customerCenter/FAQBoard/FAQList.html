@@ -8,9 +8,11 @@
     <title>고객센터</title>
     <link rel="stylesheet" th:href="@{/css/CC/fqnlist.css}">
     <link rel="stylesheet" th:href="@{/css/CC/CCBar.css}">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
 <body layout:fragment="content">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
 <div class = "layout">
     <h1>고객센터</h1>
 
@@ -21,19 +23,40 @@
         <button type="button" class="menu" id="guide" onclick="location.href = '/guide'" >서비스 이용안내</button>
     </div>
 
+    <form action="/faq/list" method="get">
     <div class = "headrow">
-        <div class = "headrowL">
-            <input type="text" class = "searchbox" placeholder="검색어 입력">
-            <button class = "searchbtn">검색</button>
+
+        <div class="aDropAndHeadRow">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle a" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    분류
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" th:href="@{/faq/list(page=1, category='회원')}">회원</a></li>
+                    <li><a class="dropdown-item" th:href="@{/faq/list(page=1, category='실거래가')}">실거래가</a></li>
+                    <li><a class="dropdown-item" th:href="@{/faq/list(page=1, category='매물')}">매물</a></li>
+                    <li><a class="dropdown-item" th:href="@{/faq/list(page=1, category='광고/제휴')}">광고/제휴</a></li>
+                    <li><a class="dropdown-item" th:href="@{/faq/list(page=1, category='기타')}">기타</a></li>
+
+                </ul>
+            </div>
+
+            <div class = "headrowL">
+                <input type="text" class="searchbox" placeholder="검색어 입력" name="searchText">
+                <button type="submit" class="searchbtn">검색</button>
+            </div>
         </div>
-        <div class="hashtag">
-            <a th:href="@{/faq/list(page=1, category='회원')}">회원</a>
-            <a th:href="@{/faq/list(page=1, category='실거래가')}">실거래가</a>
-            <a th:href="@{/faq/list(page=1, category='매물')}">매물</a>
-            <a th:href="@{/faq/list(page=1, category='광고/제휴')}">광고/제휴</a>
-            <a th:href="@{/faq/list(page=1, category='기타')}">기타</a>
+        <div class="a_hashtagAll">
+            <div class="hashtag">
+                <a th:href="@{/faq/list(page=1, category='회원')}" class="a_hashtags">회원</a>
+                <a th:href="@{/faq/list(page=1, category='실거래가')}" class="a_hashtags">실거래가</a>
+                <a th:href="@{/faq/list(page=1, category='매물')}" class="a_hashtags">매물</a>
+                <a th:href="@{/faq/list(page=1, category='광고/제휴')}" class="a_hashtags">광고/제휴</a>
+                <a th:href="@{/faq/list(page=1, category='기타')}" class="a_hashtags">기타</a>
+            </div>
         </div>
     </div>
+    </form>
     <hr/>
     <table class="faq-tb">
         <tr>
@@ -45,7 +68,7 @@
         <tr th:each="faq : ${faq}">
             <td id = "Q">Q</td>
             <td id = "category" th:text="${faq.category}">분류</td>
-            <td><a th:href="@{/faq/view(id=${faq.id})}" th:text="${faq.title}">제목</a></td>
+            <td><a th:href="@{/faq/view(id=${faq.id})}" th:text="${faq.title}" class = "title">제목</a></td>
 
         </tr>
     </table>
@@ -55,7 +78,7 @@
         <a th:href="@{/faq/list(page=${currentPage - 1}, category=${category})}" class="pre"> ◀ </a>
     </span>
         <span th:each="pageNum : ${#numbers.sequence(1, totalPages)}">
-        <a th:href="@{/faq/list(page=${pageNum}, category=${category})}" th:classappend="${pageNum == currentPage} ? 'active' : ''">
+        <a th:href="@{/faq/list(page=${pageNum}, category=${category})}" th:classappend="${pageNum == currentPage} ? 'active' : ''" class="title">
             <span th:text="${pageNum}"></span>
         </a>
     </span>
@@ -64,6 +87,6 @@
     </span>
     </div>
 
-    </div>
+</div>
 </body>
 </html>

@@ -28,8 +28,11 @@ public class AptRealTradeEntity {
     @Column(name = "contract_date", nullable = false, length = 10)
     private String contractDate; // 거래일
 
-    @Column(name = "transaction_amount", nullable = false)
+    @Column(name = "transaction_amount")
     private Integer transactionAmount; // 실거래가
+
+    @Column(name = "deposit")
+    private Integer deposit; // 전세 보증금
 
     @Column(name = "floor", nullable = false)
     private Integer floor; // 층

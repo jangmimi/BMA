@@ -146,11 +146,19 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+
+
     function showMessages(message) {
         const chatTextBox = document.querySelector(".s-chat-textbox");
+        const scrollTop = chatTextBox.scrollTop;
+        const scrollHeight = chatTextBox.scrollHeight;
+        const clientHeight = chatTextBox.clientHeight;
+        if (scrollTop + clientHeight + 100 >= scrollHeight) {
         requestAnimationFrame(() => {
             chatTextBox.scrollTo(0, chatTextBox.scrollHeight);
         });
+        }
+
 
         const messageBlock = document.createElement("div");
         messageBlock.className = "s-chat-message";
@@ -176,6 +184,7 @@ document.addEventListener("DOMContentLoaded", function () {
         messageBlock.appendChild(messageText);
 
         chatTextBox.appendChild(messageBlock);
+
     }
 
     function openingComment(message) {

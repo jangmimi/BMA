@@ -4,11 +4,14 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/layouts/include_footer_layout}">
 <head>
+
     <meta charset="UTF-8">
     <title>고객센터</title>
     <link rel="stylesheet" th:href="@{/css/CC/qna.css}">
     <link rel="stylesheet" th:href="@{/css/CC/CCBar.css}">
+    <script defer th:src="@{/js/CC/validation.js}" type="text/javascript"></script>
 </head>
+
 
 <body layout:fragment="content">
 <!-- 로그인중일때만 접근 가능 -->
@@ -24,14 +27,14 @@
     </div>
 
     <div id = "notice-box">
-        <p>
+        <p class="a_infoP">
         ＊ 아파트사조 서비스를 이용 중 문의사항(불편/개선사항 등)이 있으시면 언제든 말씀해 주세요.<br>
         ＊ 담당자 확인 후 최대한 빠르게 처리해 드리겠습니다.<br>
         ＊ 문의하신 내역은 <b class="boldtext">[내정보 > 1:1 문의내역]</b>에서 확인하실 수 있습니다.<br>
         </p>
     </div>
     <hr/>                                           <!-- 세션 객체 받아와서 지정 -->
-    <form  id="qnaForm" action="/qna" method="post" th:object="${loginMember}" enctype="multipart/form-data">
+    <form id="qnaForm" action="/qna" method="post" th:object="${loginMember}" enctype="multipart/form-data" onsubmit="return validateForm()">
         <div id="tb-box">
         <table border="1" class="qna-tb">
             <tr>

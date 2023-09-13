@@ -1,33 +1,20 @@
 package com.ap4j.bma.controller.talktalk;
 
 
-import com.ap4j.bma.model.entity.TalkTalk.TalkTalkReviewDto;
 import com.ap4j.bma.model.entity.TalkTalk.TalkTalkReviewEntity;
-import com.ap4j.bma.model.entity.apt.AptDTO;
 import com.ap4j.bma.model.entity.apt.AptEntity;
 import com.ap4j.bma.model.entity.member.MemberDTO;
-import com.ap4j.bma.model.repository.TalkTalkRepository;
 import com.ap4j.bma.service.apartment.ApartmentService;
 import com.ap4j.bma.service.apartment.ApartmentServiceImpl;
 import com.ap4j.bma.service.talktalk.ReviewService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-
-//import com.ap4j.bma.service.talktalk.ReviewService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @SessionAttributes("loginMember")

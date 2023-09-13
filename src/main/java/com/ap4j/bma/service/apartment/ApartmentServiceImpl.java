@@ -1,17 +1,14 @@
 package com.ap4j.bma.service.apartment;
 
 import com.ap4j.bma.model.entity.apt.*;
-
 import com.ap4j.bma.model.repository.AptRealTradeRepository;
 import com.ap4j.bma.model.repository.AptRepository;
-
 import com.ap4j.bma.model.repository.HangJeongDongRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -112,6 +109,7 @@ public class ApartmentServiceImpl implements ApartmentService {
                     roadName(aptRealTradeEntity.getRoadName()).
                     area(aptRealTradeEntity.getArea()).
                     transactionAmount(aptRealTradeEntity.getTransactionAmount()).
+                    deposit(aptRealTradeEntity.getDeposit()).
                     contractYearMonth(aptRealTradeEntity.getContractYearMonth()).
                     contractDate(aptRealTradeEntity.getContractDate()).
                     floor(aptRealTradeEntity.getFloor()).

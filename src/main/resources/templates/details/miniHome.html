@@ -13,7 +13,8 @@
 	<link rel="stylesheet" th:href="@{/css/miniHome.css}">
 	<link rel="stylesheet" href="miniHome.css">
 	<!-- <script type="text/javascript" th:src="@{/js/search/search.js}"></script>-->
-	<script src="miniHome.js"></script>
+	<script type="text/javascript" th:src="@{/js/miniHome/miniHome.js}"></script>
+
 
 </head>
 
@@ -78,8 +79,8 @@
 		</div>
 		<div class="z-bottom-container">
 			<div class="z-bottom-wrap">
-				<!-- 매물 1개 -->
-					<a th:each="m : ${maemulList}" th:href="@{/details/{id}(id=${m.id})}"  class="z-content-wrap">
+				<!-- 거주용 매물 -->
+					<a th:if="${m.buildingUsage.equals('거주용') || m.buildingUsage.equals('거주/업무용')}" th:each="m : ${maemulList}" th:href="@{/details/{id}(id=${m.id})}" class="z-content-wrap z-home">
 						<div class="z-img-wrap">
 							<img src="/img/details/t.jpeg" alt="이미지" class="z-img">
 						</div>
@@ -95,7 +96,8 @@
 									   th:text="${'전세 ' + #strings.concat(dp_djr > 0 ? dp_djr + '억 ' : '', dp_aks > 0 ? dp_aks + '만원' : '')}">
 									</span>
 									<span th:if="${m.tradeType == '월세'}"
-									   th:text="${'월세 ' + m.monthlyRent + '/' + m.monthlyForRent}">
+									      th:with="mr_djr=${m.monthlyRent / 10000}, mr_aks=${m.monthlyRent % 10000}, mfr_djr=${m.monthlyForRent / 10000}, mfr_aks=${m.monthlyForRent % 10000}"
+									      th:text="${'월세 ' + #strings.concat(mfr_djr > 0 ? mfr_djr + '억/' : '', mfr_aks > 0 ? mfr_aks + '/' : '')} + ${#strings.concat(mr_djr > 0 ? mr_djr + '억 ' : '', mr_aks > 0 ? mr_aks : '')}">
 									</span>
 
 								</div>
@@ -121,6 +123,53 @@
 						</div>
 						<!-- z-text-wrap 끝 -->
 					</a>
+				<!-- 거주용 끝 -->
+
+				<!-- 업무용 매물 -->
+					<a th:if="${m.buildingUsage.equals('업무용') || m.buildingUsage.equals('거주/업무용')}" th:each="m : ${maemulList}" th:href="@{/details/{id}(id=${m.id})}"  class="z-content-wrap z-work">
+						<div class="z-img-wrap">
+							<img src="/img/details/t.jpeg" alt="이미지" class="z-img">
+						</div>
+						<div class="z-text-wrap">
+							<div class="z-bottom-text">
+								<div class="z-text-title">
+									<span th:if="${m.tradeType == '매매'}"
+									      th:with="sp_djr=${m.sellingPrice / 10000}, sp_aks=${m.sellingPrice % 10000}"
+									      th:text="${'매매 ' + #strings.concat(sp_djr > 0 ? sp_djr + '억 ' : '', sp_aks > 0 ? sp_aks + '만원' : '')}">
+									</span>
+									<span th:if="${m.tradeType == '전세'}"
+									      th:with="dp_djr=${m.depositForLease / 10000}, dp_aks=${m.depositForLease % 10000}"
+									      th:text="${'전세 ' + #strings.concat(dp_djr > 0 ? dp_djr + '억 ' : '', dp_aks > 0 ? dp_aks + '만원' : '')}">
+									</span>
+									<span th:if="${m.tradeType == '월세'}"
+									      th:with="mr_djr=${m.monthlyRent / 10000}, mr_aks=${m.monthlyRent % 10000}, mfr_djr=${m.monthlyForRent / 10000}, mfr_aks=${m.monthlyForRent % 10000}"
+									      th:text="${'월세 ' + #strings.concat(mfr_djr > 0 ? mfr_djr + '억/' : '', mfr_aks > 0 ? mfr_aks + '/' : '')} + ${#strings.concat(mr_djr > 0 ? mr_djr + '억 ' : '', mr_aks > 0 ? mr_aks : '')}">
+									</span>
+
+								</div>
+								<div class="z-text-contents">
+									<div class="z-text-content1">
+										<span th:text="${m.buildingUsage}" class="z-t">상가주택</span>
+										<span th:text="${m.address}" class="z-text-content2"></span>
+									</div>
+									<div class="z-text-content1">
+										<span th:text="${m.privateArea} + '/' + ${m.supplyArea} + '㎡'"></span>
+										<span th:text="${m.floorNumber} + '층/' + ${m.totalFloors} + '층'" class="z-text-content2"></span>
+									</div>
+									<div th:text="${m.title}" class="z-text-content3"></div>
+								</div>
+								<!-- z-text-contents 끝 -->
+								<div class="z-text-hash-wrap">
+									<!-- 이건 마지막값 한개만 가져오는 것. -->
+									<button class="z-text-hash">#역세권</button>
+								</div>
+								<!-- z-text-hash-wrap 끝 -->
+							</div>
+							<!-- z-bottom-text 끝 -->
+						</div>
+						<!-- z-text-wrap 끝 -->
+					</a>
+				<!-- 업무용 끝 -->
 
 				<!-- 비어 있는 곳 채우기 용 이미지 -->
 				<div th:if="${maemulList.size() == 1}" class="z-content-wrap">

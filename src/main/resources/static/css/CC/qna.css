@@ -12,11 +12,18 @@
     #notice-box{
     height : 100px;
     background : #f8f8f8;
-    width : 90%;
+    width : 95%;
     margin: auto;
     margin-top: 105px;
     margin-bottom: 10px;
     border: 1px solid #ddd;
+    }
+    .a_infoP{
+        padding: 0px 15px 0px 15px;
+    }
+    hr{
+        width: 95%;
+            margin-top: 31px
     }
 
 
@@ -41,7 +48,7 @@
 
     .qna-tb{
     border-collapse: collapse;
-    width:90%;
+    width:95%;
     margin:auto;
     margin-top: 30px;
     }
@@ -56,19 +63,23 @@
     background : #26A9E0;
     }
 
+
     #title{
-    height: 30px;
-    width : 90%;
+   height: 30px;
+       width: 90%;
+       border: 1px solid lightgray;
     }
 
     select{
-    height: 40px;
-    width : 20%;
+    height: 32px;
+        width: 9%;
+        border: 1px solid lightgray;
     }
 
     textarea{
     height: 200px;
-    width : 95%;
+        width: 95%;
+        border: 1px solid lightgray;
     }
 
     .boldtext{
@@ -86,6 +97,57 @@
     width : 100%;
     }
 
-    input{
-    width : 98%;
+  select{
+    height: 40px;
+    width : 20%;
+    margin-left: 5px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    transition: all 0.3s ease; /* 입력 필드 크기 변경에 부드러운 애니메이션 추가 */
     }
+
+    select:focus {
+               border-color: #26A9E0;
+               outline: none;
+               transform: scale(1.005); /* 포커스를 얻을 때 크기가 조금 더 커지도록 설정 */
+    }
+
+      input {
+            width : 95%;
+            margin-left: 5px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            transition: all 0.3s ease; /* 입력 필드 크기 변경에 부드러운 애니메이션 추가 */
+        }
+
+        input:focus {
+            border-color: #26A9E0;
+            outline: none;
+            transform: scale(1.005); /* 포커스를 얻을 때 크기가 조금 더 커지도록 설정 */
+        }
+
+
+
+     textarea {
+                height: 200px;
+                width : 95%;
+                margin-left: 5px;
+                padding: 5px;
+                border: 1px solid #ccc;
+                transition: all 0.3s ease; /* 입력 필드 크기 변경에 부드러운 애니메이션 추가 */
+                resize: none
+     }
+
+      textarea:focus {
+                border-color: #26A9E0;
+                outline: none;
+                transform: scale(1.005); /* 포커스를 얻을 때 크기가 조금 더 커지도록 설정 */
+      }
+
+      label{
+      margin-left: 5px;
+      }
+
+      .form-control{
+      border:none;
+      }

@@ -1,24 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/layouts/no_footer_layout}">
-
 <head>
+
     <meta charset="utf-8"/>
-    <title>아파트사조</title>
+    <title>실거래가조회</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"/>
     <link rel="stylesheet" href="/css/mapMain.css">
-    <script src="https://d3js.org/d3.v7.min.js"></script><!--D3.js라이브러리-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js"></script>
-
     <script type="text/javascript" th:src="@{/js/mapMain/mapMain.js}" defer></script>
 </head>
-
 <body layout:fragment="content">
-
 <!-- 조서영 css 연결 -->
-<link rel="stylesheet" href="/css/calculator.css">
+<link rel="stylesheet" type="text/css" href="/css/calculator.css">
 <link rel="stylesheet" href="/css/marker.css">
+
+<!-- 김재환 css 연결 -->
+<link rel="stylesheet" href="/css/loading.css">
 
 <!-- 모달 버튼 -->
 <button class="e-modalButton" id="e-modalButton">
@@ -38,22 +37,28 @@
             <tr>
                 <th>대출 금액</th>
                 <td class="e-inputGroup">
-                    <input class="e-input" id="e-inputAmount"/>
-                    <span>원</span>
+                    <div class="a-inputDiv">
+                        <input class="e-input" id="e-inputAmount"/>
+                        <span>원</span>
+                    </div>
                 </td>
             </tr>
             <tr>
                 <th>이자율</th>
                 <td class="e-inputGroup">
-                    <input class="e-input" id="e-inputRate"/>
-                    <span>%</span>
+                    <div class="a-inputDiv">
+                        <input class="e-input" id="e-inputRate"/>
+                        <span>%</span>
+                    </div>
                 </td>
             </tr>
             <tr>
                 <th>상환기간</th>
                 <td class="e-inputGroup">
-                    <input class="e-input" id="e-inputPeriod"/>
-                    <span>년</span>
+                    <div class="a-inputDiv">
+                        <input class="e-input" id="e-inputPeriod"/>
+                        <span>년</span>
+                    </div>
                 </td>
             </tr>
             <tr>
@@ -115,12 +120,18 @@
         crossorigin="anonymous"></script>
 
 <div class="asideBarAll">
+
+    <!--로딩바-->
+    <div id="loadingScreen" class="loading-screen">
+        <img src="/sc/loading.gif" alt="">
+    </div>
+
     <div class="asideMenu" style="height:100%;">
         <div style="height:100%;">
             <ul class="list-group">
                 <li class="list-group-item">
                     <div class="input-group">
-                        <div class="titlearea">
+                        <div class="titlearea" style="width:100%;">
                             <div class="left">
 
                                 <div class="left1" style="padding-left: 15px;">
@@ -171,9 +182,12 @@
                                         data-bs-target="#staticBackdrop2">
                                     <img src="/img/mapDetailAndAPTList/aTalkTalkImg.png" style="width: 36px;">
                                 </button>
-                                <div th:if="${loginMember==null}" class="modal fade" id="exampleModalToggle2" aria-hidden="true"
-                                     aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-                                    <div class="modal-dialog modal-dialog-centered">
+                                <!-- Modal -->
+                                <div th:if="${loginMember==null}" class="modal fade" id="exampleModalToggle2"
+                                     tabindex="-1" aria-labelledby="exampleModalLabel"
+                                     aria-hidden="true">
+
+                                    <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header aSaveToMine">
                                                 <h1 class="modal-title fs-5" id="exampleModalLabel">
@@ -182,23 +196,7 @@
 
                                             </div>
                                             <div class="modal-body LogInNeed">
-                                                <div class="aListOfEasyLogIn">
-                                                    <div style="display: flex;
-    width: 281px;">
-                                                        <button class="aEasyLogInBtn">
-                                                            <img class="aEasyLogInImg"
-                                                                 src="/images/kakao_login_medium_narrow.png"
-                                                                 alt="kakaoLogin" height="44"/>
-                                                        </button>
-                                                        <button class="aEasyLogInBtn">
-                                                            <img class="aEasyLogInImg"
-                                                                 src="/images/btnG_완성형.png"
-                                                                 alt="naverLogin" height="44"
-                                                                 width="176px"/>
-                                                            <!-- 카카오 로그인과 높이만 맞춤 -->
-                                                        </button>
-                                                    </div>
-                                                </div>
+
                                                 <div class="LogInNeedContents">
                                                     <p class="emailLogInPartTitle">이메일 직접 로그인</p>
                                                     <hr>
@@ -219,9 +217,22 @@
                                                     </div>
                                                 </div>
                                                 <button class="aLogInBtn">로그인</button>
-                                                <div class="aJoinBtnsList">
-                                                    <button class="aJoinBtns">개인회원 가입</button>
-                                                    <button class="aJoinBtns">중개회원 가입</button>
+                                                <div class="aListOfEasyLogIn">
+                                                    <div style="display: flex;
+    width: 281px;">
+                                                        <button class="aEasyLogInBtn">
+                                                            <img class="aEasyLogInImg"
+                                                                 src="/img/member/loginBtn_k.png"
+                                                                 alt="kakaoLogin" height="44"/>
+                                                        </button>
+                                                        <button class="aEasyLogInBtn">
+                                                            <img class="aEasyLogInImg"
+                                                                 src="/img/member/loginBtn_n.png"
+                                                                 alt="naverLogin" height="44"
+                                                                 width="176px"/>
+                                                            <!-- 카카오 로그인과 높이만 맞춤 -->
+                                                        </button>
+                                                    </div>
                                                 </div>
 
                                             </div>
@@ -289,7 +300,9 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <button type="submit" class="btn-write" style="width: 100%;  color: white;" >
+                                                    <button type="submit" class="btn-write" style="border: none;
+                                                                                                    width: 96%;
+                                                                                                    color: white;" >
                                                         등록하기
                                                     </button>
                                                 </form>
@@ -309,9 +322,7 @@
                                                     <button type="button" class="towriteBtn"
                                                             data-bs-target="#exampleModalToggle2"
                                                             data-bs-toggle="modal">
-                                                        <img class="penImg" style="width: 40px;"
-                                                             src="https://w7.pngwing.com/pngs/990/400/png-transparent-pencil-drawing-pencil-angle-pencil-illustrator.png"
-                                                             alt="">
+                                                        <img class="penImg" style="width: 23px;opacity: 49%;" src="https://cdn.icon-icons.com/icons2/1919/PNG/512/inclinedpencil_122017.png" alt="">
                                                     </button>
                                                 </a>
                                                 <h1 class="modal-title fs-5" id="staticBackdropLabel">이야기</h1>
@@ -558,7 +569,7 @@
                 </li>
 
                 <li class="list-group-item 2" style="height:100%;padding: 0px;">
-                    <div style="height:84%;">
+                    <div style="height:81%;">
                         <div data-bs-spy="scroll" data-bs-target="#navbar-example2"
                              data-bs-root-margin="0px 0px 0px" data-bs-smooth-scroll="true"
                              class="scrollspy-example bg-body-tertiary rounded-2" tabindex="0" style="height:104%;">
@@ -598,7 +609,7 @@
                                 <div class="aed-sil-deal-price">
                                     <div class="main-titlearea">
                                         <div class="left">
-                                            <h4 id="scrollspyHeading1">실거래정보</h4>
+                                            <h4 id="scrollspyHeading1"> 매매 실거래정보</h4>
                                         </div>
 
                                     </div>
@@ -611,14 +622,14 @@
                                     </div>
 
 
-                                    <!-- 거래이력 -->
+                                    <!-- 매매 거래이력 -->
                                     <div class="aed-bu-box aed-sg-deal-list rpinfo-tab-etc hide">
                                         <div class="sub-titlearea">
                                             <div class="left">
-                                                <h4 class="title">거래이력</h4>
+                                                <h4 class="title">매매 거래이력</h4>
                                             </div>
                                         </div>
-                                        <div class="aed-line-tbl color-e5" id="rpInfoEtcList">
+                                        <div class="aed-line-tbl color-e5" id="rpInfoEtcList" style="margin-bottom: 22px;">
 
                                             <div class="tbl">
                                                 <table style="width: 100%; text-align: center;">
@@ -635,20 +646,50 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                            <!--                                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"-->
-                                            <!--                                                                data-bs-target="#collapseOne" aria-expanded="true"-->
-                                            <!--                                                                aria-controls="collapseOne" id="aload-more-button"style="-->
-                                            <!--                                                            width: 88%;-->
-                                            <!--                                                        " onclick="createLoadMoreButton()">-->
-                                            <!--                                                            <h3 class="title">실거래이력 더보기</h3>-->
+                                        </div>
 
-                                            <!--                                                        </button>-->
-                                            <!--// 거래이력 -->
+                                        <hr style="border: 13px solid lightgray;border-top: 1px solid;width: 94%;">
 
 
+                                        <div class="" style="margin-top: 40px;">
+                                            <div class="main-titlearea">
+                                                <div class="left">
+                                                    <h4 id="scrollspyHeading2"> 전세 실거래정보</h4>
+                                                </div>
+
+                                            </div>
 
 
-                                            <div class="aed-toji" style="
+                                            <div class="aRealPriceAndGraph">
+                                                <div>
+                                                    <canvas id="myChart2"></canvas>
+                                                </div>
+                                            </div>
+                                            <div class="sub-titlearea">
+                                                <div class="left">
+                                                    <h4 class="title">전세 거래이력</h4>
+                                                </div>
+                                            </div>
+                                            <div class="tbl2">
+                                                <table style="width: 100%; text-align: center;">
+                                                    <thead
+                                                            style="height:43px;background-color: #f1f1f1;border-top: 1px solid #26abed; border-bottom: 1px solid #e5e5e5;">
+                                                    <tr>
+                                                        <th>면적</th>
+                                                        <th>층</th>
+                                                        <th>거래일</th>
+                                                        <th>거래금액</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+
+
+                                            <div class="aed-toji" style="력
                                                                 margin-bottom: 40px;
                                                                     margin-top: 32px;                                                        "
                                             >
@@ -1152,7 +1193,6 @@
                                                 </div>
                                             </div>
 
-                                        </div>
 
 
                                     </div>
@@ -1167,11 +1207,12 @@
 
 <!-- 지도를 표시할 div 입니다 -->
 <div id="map" style="width: 100%; height: 100%;">
+
     <div class="afilter">
 
 
         <!-- 통합검색 -->
-        <div class="aSearchAll" style="width: 349px;
+        <div class="aSearchAll" style="width: 100%;
                 display: flex;
                 align-items: center;
                 justify-content: center;">
@@ -1193,71 +1234,131 @@
 
 
     </div>
-    <!--우측 지도도구-->
-    <div class="map_util">
-        <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
-            <div class="btn-group dropstart" role="group">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
-                        aria-expanded="false" data-bs-auto-close="false">
-                    학군
-                </button>
-                <ul class="dropdown">
-                    <div class="dropdown-menu school">
-                        <div class="edu">
-                            <button class="btn btn-primary map-utilSBtn nurs" data-bs-toggle="button">
-                                <img class="aschImg" style="width: 50px; height: 30px"
-                                     src="https://e7.pngegg.com/pngimages/836/224/png-clipart-pictogram-and-icon-collection-from-public-signage-to-web-icons-roseola-child-child-child-baby.png"/>
-                            </button>
-                            <span class="edukind">어린이집</span>
-                        </div>
-                        <div class="edu">
-                            <button class="btn btn-primary map-utilSBtn pres" data-bs-toggle="button">
-                                <img class="aschImg" style="width: 50px; height: 30px"
-                                     src="https://e7.pngegg.com/pngimages/989/150/png-clipart-pictogram-microsoft-dynamics-nav-computer-icons-child-alcorcon-others-child-text.png"/>
-                            </button>
-                            <span class="edukind">유치원</span>
-                        </div>
-                        <div class="edu">
-                            <button class="btn btn-primary map-utilSBtn pris" data-bs-toggle="button">
-                                <img class="aschImg" style="width: 50px; height: 30px"
-                                     src="https://w7.pngwing.com/pngs/261/891/png-transparent-pictogram-others-english-text-photography.png"/>
-                            </button>
-                            <span class="edukind">초등학교</span>
-                        </div>
-                        <div class="edu">
-                            <button class="btn btn-primary map-utilSBtn secons" data-bs-toggle="button">
-                                <img style="width: 35px; height: 30px"
-                                     src="https://thumb.silhouette-ac.com/t/a3/a33e87822359f0a3e65fa924844c06b5_t.jpeg"/>
-                            </button>
-                            <span class="edukind">중학교</span>
-                        </div>
-                        <div class="edu">
-                            <button class="btn btn-primary map-utilSBtn highs" data-bs-toggle="button">
-                                <img style="width: 40px; height: 30px"
-                                     src="https://thumb.silhouette-ac.com/t/f2/f2c0df7db0d36e322d8ec497a94a6a92_t.jpeg"/>
-                            </button>
-                            <span class="edukind">고등학교</span>
-                        </div>
-                        <div class="edu">
-                            <button class="btn btn-primary map-utilSBtn unis" data-bs-toggle="button">
-                                <div style="background-color: white;width: 43px;">
-                                    <img style="width: 20px; height: 30px"
-                                         src="https://cdn.pixabay.com/photo/2013/07/13/13/21/book-160871_1280.png"/>
-                                </div>
-                            </button>
-                            <span class="edukind">대학교</span>
-                        </div>
-                    </div>
-                </ul>
-            </div>
-            <div class="btn-group dropstart" role="group">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                    상권
-                </button>
-            </div>
-        </div>
+    <!-- 커스텀 줌 컨트롤을 담을 div -->
+    <div id="zoomControl" style="z-index: 1029;
+                position: absolute;
+                top: 10%;
+                right: 1.5%;
+                display: flex;
+                /* justify-content: flex-end; */
+                /* align-items: flex-end; */
+                padding: 10px;
+                display: flex;
+                width: 56px;
+                /* height: 37px; */
+                flex-direction: column;">
+
+        <button id="buttonp" style="border-radius: 10px 10px 0px 0px; border: none;
+                background-color: white;
+                font-size: 24px;
+                box-shadow: 1px 2px 3px -1px gray;
+                /* border-radius: 3px; */
+                box-shadow: 17px;
+                height: 53px;
+                width: 39px;}"></button>
+        <button id="buttonm" style="border-radius: 0px 0px 10px 10px; border: none;
+                background-color: white;
+                font-size: 24px;
+                box-shadow: 1px 2px 3px -1px gray;
+                /* border-radius: 3px; */
+                box-shadow: 17px;
+                height: 53px;
+                width: 39px;"></button>
     </div>
+
+
+    <!--우측 지도도구-->
+<!--    <div class="map_util">-->
+
+<!--        <div-->
+<!--                class="btn-group-vertical"-->
+<!--                role="group"-->
+<!--                aria-label="Vertical button group"-->
+<!--        >-->
+<!--            <div class="btn-group dropstart" role="group">-->
+<!--                <button-->
+<!--                        type="button"-->
+<!--                        class="btn btn-primary dropdown-toggle"-->
+<!--                        data-bs-toggle="dropdown"-->
+<!--                        aria-expanded="false"-->
+<!--                        data-bs-auto-close="false"-->
+<!--                >-->
+<!--                    학군-->
+<!--                </button>-->
+<!--                <ul class="dropdown">-->
+<!--                    <div class="dropdown-menu school">-->
+<!--                        <div class="edu">-->
+<!--                            <button class="btn btn-primary map-utilSBtn nurs" data-bs-toggle="button">-->
+<!--                                <img class="aschImg"-->
+<!--                                     style="width: 50px; height: 30px"-->
+<!--                                     src="https://e7.pngegg.com/pngimages/836/224/png-clipart-pictogram-and-icon-collection-from-public-signage-to-web-icons-roseola-child-child-child-baby.png"-->
+<!--                                />군-->
+<!--                            </button>-->
+<!--                            <span class="edukind">어린이집</span>-->
+<!--                        </div>-->
+<!--                        <div class="edu">-->
+<!--                            <button class="btn btn-primary map-utilSBtn pres" data-bs-toggle="button">-->
+<!--                                <img class="aschImg"-->
+<!--                                     style="width: 50px; height: 30px"-->
+<!--                                     src="https://e7.pngegg.com/pngimages/989/150/png-clipart-pictogram-microsoft-dynamics-nav-computer-icons-child-alcorcon-others-child-text.png"-->
+<!--                                />-->
+<!--                            </button>-->
+<!--                            <span class="edukind">유치원</span>-->
+<!--                        </div>-->
+<!--                        <div class="edu">-->
+<!--                            <button class="btn btn-primary map-utilSBtn pris" data-bs-toggle="button">-->
+<!--                                <img class="aschImg"-->
+<!--                                     style="width: 50px; height: 30px"-->
+<!--                                     src="https://w7.pngwing.com/pngs/261/891/png-transparent-pictogram-others-english-text-photography.png"-->
+<!--                                />-->
+<!--                            </button>-->
+<!--                            <span class="edukind">초등학교</span>-->
+<!--                        </div>-->
+<!--                        <div class="edu">-->
+<!--                            <button class="btn btn-primary map-utilSBtn secons" data-bs-toggle="button">-->
+<!--                                <img-->
+<!--                                        style="width: 35px; height: 30px"-->
+<!--                                        src="https://thumb.silhouette-ac.com/t/a3/a33e87822359f0a3e65fa924844c06b5_t.jpeg"-->
+<!--                                />-->
+<!--                            </button>-->
+<!--                            <span class="edukind">중학교</span>-->
+<!--                        </div>-->
+<!--                        <div class="edu">-->
+<!--                            <button class="btn btn-primary map-utilSBtn highs" data-bs-toggle="button">-->
+<!--                                <img-->
+<!--                                        style="width: 40px; height: 30px"-->
+<!--                                        src="https://thumb.silhouette-ac.com/t/f2/f2c0df7db0d36e322d8ec497a94a6a92_t.jpeg"-->
+<!--                                />-->
+<!--                            </button>-->
+<!--                            <span class="edukind">고등학교</span>-->
+<!--                        </div>-->
+<!--                        <div class="edu">-->
+<!--                            <button class="btn btn-primary map-utilSBtn unis" data-bs-toggle="button">-->
+<!--                                <div style="background-color: white;width: 43px;">-->
+<!--                                    <img-->
+<!--                                            style="width: 20px; height: 30px"-->
+<!--                                            src="https://cdn.pixabay.com/photo/2013/07/13/13/21/book-160871_1280.png"-->
+<!--                                    />-->
+<!--                                </div>-->
+<!--                            </button>-->
+<!--                            <span class="edukind">대학교</span>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--            <div class="btn-group dropstart" role="group">-->
+<!--                <button-->
+<!--                        type="button"-->
+<!--                        class="btn btn-primary dropdown-toggle"-->
+<!--                        data-bs-toggle="dropdown"-->
+<!--                        aria-expanded="false"-->
+<!--                >-->
+<!--                    상권-->
+<!--                </button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
 
 
 </div>
@@ -1267,6 +1368,7 @@
         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=40e606b0d3b62e8dc1753ec322a8c92d&libraries=services,clusterer"></script>
 <script th:src="@{/js/apt/marker.js}" type="text/javascript"></script>
 <script src="/js/apt/calculator.js" type="text/javascript"></script>
+
 </body>
 
 </html>

@@ -18,7 +18,12 @@ public class FAQService {
 
         return faqRepository.findAll();
     }
-
+    
+    //검색
+    public Page<FAQEntity> searchFaqByKeyword(String keyword, Pageable pageable) {
+        return faqRepository.findByTitleContainingIgnoreCaseOrContentContainingIgnoreCase(keyword, keyword, pageable);
+    }
+    
     public FAQEntity faqView(Integer id) {
         return faqRepository.findById(id).get();
     }
@@ -30,4 +35,14 @@ public class FAQService {
     public Page<FAQEntity> findByCategory(String category, Pageable pageable) {
         return faqRepository.findByCategory(category, pageable);
     }
+
+    //이전글
+    public Object getPreArticle(Integer id) {
+        return faqRepository.findTopByIdLessThanOrderByIdDesc(id);
+    }
+    //다음글
+    public Object getNextArticle(Integer id) {
+        return faqRepository.findTopByIdGreaterThanOrderByIdAsc(id);
+    }
+
 }

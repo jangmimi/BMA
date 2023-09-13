@@ -1,50 +1,47 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layouts/include_footer_layout}">
 <head>
     <meta charset="UTF-8">
-    <title>게시물 수정</title>
+    <title></title>
     <link rel="stylesheet" th:href="@{/css/community/communityWrite.css}">
 </head>
-
-
-<body>
+<body layout:fragment="content">
 <div class="layout">
-    <form th:action="@{/community/update/{id}(id = ${update.id})}" method="post">
-
+    <form th:action="@{/community/update/{id}(id=${update.id})}" method="post">
         <table border="1">
             <tr>
                 <th>제목</th>
-                <td> <input name = "title" type="text" th:value="${update.title}"></td>
+                <td> <input name="title" type="text" th:value="${update.title}"></td>
             </tr>
-
             <tr>
                 <th>작성자</th>
-                <td><input  class="read" name = "author" type="text" placeholder="작성자 값" disabled></td>
+                <td>
+                    <label type="hidden" class="read" name="author" th:text="${loginMember.nickname}" th:value="${loginMember.nickname}"></label>
+                </td>
             </tr>
-
             <tr>
-                <th>작성일</th>
-                <td><input  class="read" name = "date" type="text" placeholder="작성일 값" disabled></td>
+                <th>수정일</th>
+                <td><label th:text="${#temporals.format(update.modifiedAt, 'yyyy-MM-dd')}">yyyy-MM-dd</label>
             </tr>
             <tr>
                 <th>내용</th>
-                <td> <textarea name = "content" th:text="${update.content}"> </textarea></td>
+                <td> <textarea name="content" th:text="${update.content}"></textarea></td>
             </tr>
         </table>
-
         <div class="buttonL">
             <button type="button" class="three-btn" onclick="location.href = '/community/list'">
                 목록
             </button>
         </div>
-
         <div class="buttonR">
-            <button type="reset" class="three-btn" >초기화</button>
-            <button type="submit" class="three-btn" >수정</button>
+            <button type="reset" class="three-btn">초기화</button>
+            <button type="submit" class="three-btn">수정</button>
         </div>
-
     </form>
-
 </div>
 </body>
 </html>
+

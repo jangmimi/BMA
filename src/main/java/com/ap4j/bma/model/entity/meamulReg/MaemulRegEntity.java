@@ -1,12 +1,14 @@
 package com.ap4j.bma.model.entity.meamulReg;
 
 import com.ap4j.bma.model.entity.member.MemberEntity;
+import io.micrometer.core.lang.Nullable;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import javax.validation.constraints.Null;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,12 +48,12 @@ public class MaemulRegEntity {
     private String Elevator;//엘리베이터
     private String Parking;//주차가능여부 (엘베랑 같은 이유)
 
-
+    @ColumnDefault("0")
     private Integer totalParking;//총 주차대수
     private String shortTermRental;//단기임대
     private String availableMoveInDate;//입주가능일
 
-    @ColumnDefault("999")
+    @ColumnDefault("0")
     private Integer loanAmount;//융자금
 
 
@@ -59,22 +61,22 @@ public class MaemulRegEntity {
     private String tradeType;//거래 유형
 
     //월세
-    @ColumnDefault("999")
+    @ColumnDefault("0")
     private Integer monthlyForRent; //보증금
-    @ColumnDefault("999")
+    @ColumnDefault("0")
     private Integer monthlyRent; //월세
 
 
     //전세
-    @ColumnDefault("999")
+    @ColumnDefault("0")
     private Integer depositForLease; //희망 전세
 
-    @ColumnDefault("999")
+    @ColumnDefault("0")
     private Integer managementFee;//전 월세 관
 
     //매매
     @Column(columnDefinition = "INT")
-    @ColumnDefault("'999'")
+    @ColumnDefault("0")
     private Integer SellingPrice;//희망매매가
 
     //상세정보 페이지
@@ -92,6 +94,10 @@ public class MaemulRegEntity {
     private Double longitude; //경도
     private Double latitude; //위도
 
+    // 조회수
+    @ColumnDefault("0")
+    private int viewCount;
+
     //등록일자
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -101,7 +107,7 @@ public class MaemulRegEntity {
     private MemberEntity memberEntity;
 
     //이미지 매핑
-    @OneToMany(mappedBy = "maemulID", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<MaemulPhotoEntity> maemulPhotos = new ArrayList<>();
+//    @OneToMany(mappedBy = "maemulID", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<MaemulPhotoEntity> maemulPhotos = new ArrayList<>();
 
 }

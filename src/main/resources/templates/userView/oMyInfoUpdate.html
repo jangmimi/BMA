@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <title>내정보수정</title>
 
+
     <!-- 부트스트랩 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
@@ -32,13 +33,47 @@
                 </div>
             </div>
             <div class="oContainer-wrap">
-                <div class="container mt-5" id="oInner-container-join" style="background-color:white" align="center">
-                    <div class="o-page-title">
+                <div class="container mt-5" id="oInner-container-join" align="center">
+                    <div class="o-page-title" style="margin-bottom: 30px;">
                         <h3 class="h3 fw-bold">내 정보 수정</h3>
                     </div>
+                        <div class="form-floating mb-3 mr-3" id="o-img-c">
+                            <div class="oThumbnailImg"> <!-- sns로그인 시 model에서 프로필링크 가져옴, 없으면 default img -->
+                                <div class="mySelImg" id="selectedImage" name="${thumImgSel}">
+                                    <img class="myImg" th:if="${thumbnail_image!=null}" th:src="${thumbnail_image}" alt="썸네일이미지">
+                                    <img class="myImg" th:if="${thumbnail_image==null}" th:src="@{/img/defaultProfile.jpg}" alt="썸네일이미지">
+                                </div>
+                            </div>
+                            <div>
+                                <button onclick="" class="aAddPic" id="openModal">
+                                    <img class="aAddPicImg" src="https://cdn-icons-png.flaticon.com/512/1829/1829371.png">
+                                    <p class="aAddPicP">사진등록</p>
+                                </button>
+
+                                <!-- 이미지 선택 모달 -->
+                                <div id="imageModal" class="modal">
+                                    <div class="modal-content" id="o-m-c">
+                                        <div class="o-m-top">
+                                            <span class="close">&times;</span>
+                                            <h2>프로필 이미지 선택</h2>
+                                        </div>
+                                        <div id="imageGallery">
+                                            <img src="/img/member/memberimg1.jpg" alt="이미지 1" class="gallery-image">
+                                            <img src="/img/member/memberimg2.jpg" alt="이미지 2" class="gallery-image">
+                                            <img src="/img/member/memberimg3.jpg" alt="이미지 3" class="gallery-image">
+                                            <img src="/img/member/memberimg4.jpg" alt="이미지 4" class="gallery-image">
+                                            <img src="/img/member/memberimg5.png" alt="이미지 5" class="gallery-image">
+                                            <img src="/img/member/memberimg6.png" alt="이미지 6" class="gallery-image">
+                                        </div>
+                                        <button id="selectButton">선택 완료</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     <form th:action="@{/member/qUpdateMember/__${id}__}" method="POST" onsubmit="return oUpdateCheck()">
-                        <div class="form-floating mb-3 mr-3" style="display:flex; flex-wrap:wrap">
-                            <input type="text" class="form-control" id="email" th:value="*{email}" name="email" disabled="disabled" />
+                        <div class="form-floating mb-3 mr-3" id="o-email-c">
+                            <input type="text" class="form-control" id="email" th:value="*{email + ' (' + (root == 1 ? '기본회원' : (root == 2 ? '카카오' : (root == 3 ? '네이버' : '관리자'))) + ')'}"
+                               name="email" disabled />
                             <label th:for="email">이메일 주소</label>
                         </div>
                         <input type="hidden" id="id" name="id" th:value="*{id}" />
@@ -46,14 +81,15 @@
                             <input type="text" class="form-control" id="name" name="name" th:value="*{name}" autofocus="autofocus" />
                             <label th:for="name">이름(실명)</label>
                         </div>
-                        <div class="form-floating mb-3" style="display:flex; flex-wrap:wrap">
+                        <div class="form-floating mb-3" id="o-nickname-c">
                             <input type="text" class="form-control" id="nickname" name="nickname" th:value="*{nickname}" />
                             <label th:for="nickname">닉네임</label>
                             <input type="button" class="btn btn-outline-dark" id="btnNicknameCheck"
-                                   value="중복검사" onclick="checkNickname()" />
+                                   value="중복검사" th:onclick="checkNickname()" />
                             <div class="form-floating" id="nicknameErr"></div>
                         </div>
                         <div class="form-floating mb-3">
+
                             <input type="text" class="form-control" id="tel" name="tel" th:value="*{tel}" />
                             <label th:for="tel">연락처</label>
                         </div>
@@ -121,21 +157,21 @@
                         </div>
                     </form>
 
+                    <!-- SNS계정 단순 회원탈퇴 -->
+                    <div th:if="${loginMember.root != 1}">
+                        <form th:action="@{/member/qLeaveMember/__${id}__}" method="POST" onsubmit="return oDeleteCheck()">
+                            <input type="submit" class="btn btn-outline-secondary mt-5" id="oDeleteMemberBtn" value="회원탈퇴" />
+                        </form>
+                    </div>
+
                     <!-- 모달창으로 비밀번호 입력받고 일치 시 탈퇴 -->
-                    <!-- 회원탈퇴 버튼 -->
-                    <div class="o-leaveBtn-c">
-                        <div th:if="${loginMember.root == 1}">
+                    <div th:if="${loginMember.root == 1}">
+                        <div class="o-leaveBtn-c">
                             <button type="button" class="btn btn-outline-secondary" id="leaveBtn">회원탈퇴</button>
-                        </div>
-                        <div th:if="${loginMember.root != 1}">
-                            <!-- id 기준 단순 탈퇴 처리 -->
-                            <form th:action="@{/member/qLeaveMember/__${id}__}" method="POST" onsubmit="return oDeleteCheck()">
-                                <input type="submit" class="btn btn-outline-secondary mt-5" id="oDeleteMemberBtn" value="회원탈퇴" />
-                            </form>
                         </div>
                     </div>
 
-                    <!-- 회원탈퇴 비밀번호 입력 모달 -->
+                    <!--    회원탈퇴 비밀번호 입력 모달 -->
                     <div class="modal fade" id="pwdCheckModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
@@ -156,10 +192,6 @@
                             </div>
                         </div>
                     </div>
-                        <!-- id 기준 단순 탈퇴 처리 -->
-<!--                    <form th:action="@{/member/qLeaveMember/__${id}__}" method="POST" onsubmit="return oDeleteCheck()">-->
-<!--                        <input type="submit" class="btn btn-outline-secondary mt-5" id="oDeleteMemberBtn" value="회원탈퇴" />-->
-<!--                    </form>-->
 
                 </div>
             </div>
@@ -167,7 +199,9 @@
     </div>
 </th:block>
 </th:block>
-<script th:src="@{/js/member/myPage.js}"></script>
+<script th:src="@{/js/member/updateValidation.js}"></script>
+<script th:src="@{/js/member/myAlert.js}"></script>
+<script th:src="@{/js/member/myPageMain.js}"></script>
 <!-- 부트스트랩 script -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"

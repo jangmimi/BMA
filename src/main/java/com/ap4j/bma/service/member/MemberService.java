@@ -4,8 +4,8 @@ import com.ap4j.bma.model.entity.customerCenter.QnAEntity;
 import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
 import com.ap4j.bma.model.entity.member.MemberDTO;
 import com.ap4j.bma.model.entity.member.MemberEntity;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 
 import javax.servlet.http.HttpSession;
@@ -17,7 +17,7 @@ public interface MemberService {
 
 	public String getAccessToken(String code);
 
-	public HashMap<String, Object> getUserInfo(String accessToken);	// HashMap -> MemberDTO로 변경 예정
+	public HashMap<String, Object> getUserInfo(String accessToken);
 
 	public void logout(SessionStatus sessionStatus, HttpSession session);
 
@@ -29,9 +29,9 @@ public interface MemberService {
 
 	public boolean existsByEmail(String email);
 
-	public boolean existsByNickname(String nickname);
+	public Optional<MemberEntity> findByEmail(String email);
 
-	public List<MemberEntity> findMembers();
+	public boolean existsByNickname(String nickname);
 
 	public MemberDTO login(MemberDTO memberDTO);
 
@@ -42,15 +42,14 @@ public interface MemberService {
 	public boolean leaveMember(Long id, String password, SessionStatus sessionStatus, HttpSession session);
 
 	public Optional<MemberEntity> findByNameAndTel(String name, String tel);
-	public Optional<MemberEntity> findByEmailAndTel(String email, String tel);
 
-	// 매물 관련 qna
-	public List<QnAEntity> qMyQnaList(String userEmail);
-	public long qMyQnaCnt(String userEmail);
-	public List<MaemulRegEntity> getAllList();
+	// 매물 관련 qna - 김재환수정
+	public Page<QnAEntity> qMyQnaList(String userEmail, int page, int pageSize);
+	// qna 카운트 - 김재환
+	public Long qMyQnaListCount(String usarEmail);
 	public List<MaemulRegEntity> getListByNickname(String nickname);
-	public Long getAllCnt();
-
 	public MaemulRegEntity findMaemulById(Integer id);
+	public int deleteMaemul(Integer id, String nickname);
+	public Page<MaemulRegEntity> getPageByNickname(String nickname,int page,int pageSize);
 
 }

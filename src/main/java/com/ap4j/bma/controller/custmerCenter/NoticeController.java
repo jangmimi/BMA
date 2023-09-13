@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import java.util.List;
-
 @SessionAttributes("loginMember")
 @Controller
 public class NoticeController {
@@ -40,6 +38,9 @@ public class NoticeController {
     public String noticeView(Model model , Integer id){
 
         model.addAttribute("article",noticeService.noticeView(id));
+        model.addAttribute("prevArticle", noticeService.getPreArticle(id));
+        model.addAttribute("nextArticle", noticeService.getNextArticle(id));
+
         return "customerCenter/noticeBoard/noticeView";
     }
 

@@ -25,18 +25,18 @@ spring:
   # Hibernate 설정
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none   #update는 삭제한 컬럼 자동생성으로 인한 에러 발생해서 변경
     properties:
-     hibernate:
-      format_sql: true
-      org:
       hibernate:
-      SQL: DEBUG
-      type:
-      descriptor:
-      sql:
-      BasicBinder: TRACE
-      show_sql: true
+        format_sql: true
+        org:
+          hibernate:
+            SQL: DEBUG
+            type:
+              descriptor:
+                sql:
+                  BasicBinder: TRACE
+        show_sql: true
     defer-datasource-initialization: true
 
 #   데이터베이스 설정
@@ -57,3 +57,9 @@ spring:
     properties:
      mail.smtp.auth: true
      mail.smtp.ssl.enable: true
+
+#이미지 크기 저장
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
