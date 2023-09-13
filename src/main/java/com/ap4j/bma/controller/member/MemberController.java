@@ -20,6 +20,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
@@ -346,21 +347,35 @@ public class MemberController {
         return nicknameCheck ? 1 : 0;
     }
 
-    /** 이메일/비밀번호 찾기 페이지 매핑 */
+    /** 이메일/비밀번호 재설정 페이지 매핑 */
     @RequestMapping("/qFindMemberInfo")
     public String qFindMemberInfo() {
         return "userView/findMemberInfo";
     }
 
-    /** 이메일 찾기 */
+    /** 이메일 찾기 (ajax) */
     @PostMapping("/qFindEmail")
-    public String qFindEmail(@RequestParam String name, @RequestParam String tel, Model model) {
+    public ResponseEntity<Map<String, String>> qFindEmail(@RequestParam String name, @RequestParam String tel) {
+        Map<String, String> response = new HashMap<>();
         Optional<MemberEntity> findMember = qMemberService.findByNameAndTel(name, tel);
 
-        model.addAttribute("findEmail", findMember.map(MemberEntity::getEmail).orElse(null));
-        model.addAttribute("findEmailFailed", findMember.isEmpty() ? "일치하는 회원정보가 없습니다." : null);
+        if (findMember.isPresent()) {
+            String email = findMember.get().getEmail();
+            response.put("findEmail", email);
+        } else {
+            response.put("findEmailFailed", "일치하는 회원정보가 없습니다.");
+        }
 
-        return "userView/findMemberInfo";
+        return ResponseEntity.ok(response);
     }
 }
+//    @PostMapping("/qFindEmail")
+//    public String qFindEmail(@RequestParam String name, @RequestParam String tel, Model model) {
+//        Optional<MemberEntity> findMember = qMemberService.findByNameAndTel(name, tel);
+//
+//        model.addAttribute("findEmail", findMember.map(MemberEntity::getEmail).orElse(null));
+//        model.addAttribute("findEmailFailed", findMember.isEmpty() ? "일치하는 회원정보가 없습니다." : null);
+//
+//        return "userView/findMemberInfo";
+//    }
 
