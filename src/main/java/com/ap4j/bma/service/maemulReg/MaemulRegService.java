@@ -4,6 +4,9 @@ import com.ap4j.bma.model.entity.meamulReg.MaeMulRegDTO;
 import com.ap4j.bma.model.entity.meamulReg.MaemulRegEntity;
 import com.ap4j.bma.model.repository.MaemulRegEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -286,6 +289,12 @@ public class MaemulRegService {
             // 변경된 값을 저장합니다.
             maemulRegEntityRepository.save(maemul);
         }
+    }
+
+    public Page<MaemulRegEntity> getPageByNickname(String nickname, int page, int pageSize) {
+        Pageable pageable = PageRequest.of(page - 1, pageSize);
+        Page<MaemulRegEntity> mmpList = maemulRegEntityRepository.findMaemulByMemberNicknameMy(nickname,pageable);
+        return mmpList;
     }
 
 

@@ -14,6 +14,7 @@ import com.ap4j.bma.service.member.LikedService;
 import com.ap4j.bma.service.member.RecentServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -89,8 +90,25 @@ public class DetailController {
 
 
 	@GetMapping("/miniHome/{nickname}")
-	public String miniHome(Model model, @PathVariable("nickname") String nickname) {
+	public String miniHome(
+			Model model,
+			@PathVariable("nickname") String nickname,
+			@RequestParam(name = "page", defaultValue = "1") int page,
+			@RequestParam(name = "pageSize", defaultValue = "9") int pageSize
+	) {
 		log.info(">>>>> DetailController.miniHome.executed() {}", nickname);
+
+		if (page < 1) {
+			page = 1;
+		}
+
+
+		Page<MaemulRegEntity> mmpList = maemulRegService.getPageByNickname(nickname,page,pageSize);
+
+		model.addAttribute("mmpList",mmpList);
+		log.info("mmpList{}, ", mmpList);
+
+		model.addAttribute("pnickname",nickname);
 
 		model.addAttribute("maemulList", maemulRegRepository.findMaemulByMemberNickname(nickname));
 		model.addAttribute("residentialCount", maemulRegRepository.countResidential(nickname));
@@ -127,14 +145,16 @@ public class DetailController {
 	}
 
 	@GetMapping("/like")
-	public ResponseEntity<Map<String, Object>> getLike(@RequestParam("id") Long id, @RequestParam("nickname") String nickname) {
+	public ResponseEntity<Map<String, Object>> getLike(@RequestParam("id") Integer id, @RequestParam("nickname") String nickname) {
 		log.info(">>>>> DetailController.getLike.executed()");
 		log.info("id 값 {}, nickname 깂 {}", id, nickname);
 
 		try {
-			Optional<LikedEntity> isLiked = likedService.isLiked(nickname, id);
+
+			boolean isLiked = likedRepository.existsByNicknameAndMaemulId(nickname, id);
+
 			log.info("isLiked 값{}",isLiked);
-			if (isLiked.isPresent()) {
+			if (isLiked) {
 				Map<String, Object> response = new HashMap<>();
 				response.put("liked", true);
 				log.info("getLike 실행 결과 : True");
@@ -154,6 +174,5 @@ public class DetailController {
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 
 	}
-
 
 }
