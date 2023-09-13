@@ -181,7 +181,7 @@ border: none;
 .modal.fade.aTalkTalk.show{
 width: 409px;
 height: 1000px;
-left: 399px;
+left: 489px;
 top: 31px;
 }
 .dropdown-menu.aFilterC.show{
@@ -197,7 +197,7 @@ top: 31px;
 }
 .modal.fade.aTalkTalkWrite{
 width: 300px;
-left: 399px;
+left: 488px;
 
 }
 #exampleModalToggle2 {
@@ -856,6 +856,7 @@ top: 40%;
 .btn.btn-primary.map-utilSBtn.secons.active{
     border:4px solid deepskyblue;
 }
+
 .btn.btn-primary.map-utilSBtn.highs.active{
     border:4px solid #3275ff;
 }

@@ -661,7 +661,7 @@ function updateSidebar(responseData) {
                 depositForLease = "전세 " + depositForLeaseSliceUk + "억";
             }
         } else {
-            depositForLease = "전세 " + depositForLeaseSliceMan + "만원";
+            depositForLease = "전세 " + depositForLeaseString + "만원";
         }
 
 
@@ -714,7 +714,7 @@ function updateSidebar(responseData) {
         anchor.innerHTML = `
             <div class="aimg_area">
                 <div class="athumb">
-                    <img src="https://www.bdsplanet.com/common/thumbs.ytp?filepath=/COMP_20190619150536000003/upload/realty/RCODE_20230822163534000002/&amp;filename=1692689858337_106.jpg" alt="">
+                    <img src="https://landthumb-phinf.pstatic.net/20200406_3/hscp_img_1586136602059trqlQ_JPEG/photoinfra_1586136601526.jpg?type=m1024" alt="">
                 </div>
             </div>
             <div class="ainfo_area">
@@ -808,7 +808,7 @@ $(document).on("click", ".aHeartBtn", function() {
                 // 버튼 상태 변경
                 if ($heartButton.attr("data-isButton") === "true") {
                     $heartButton.attr("data-isButton", "false");
-                    $heartButton.find("img").attr("src", "/img/mapDetailAndAPTList/aHeartBtn2.png");
+                    $heartButton.find("img").attr("src", "/img/mapDetailAndAPTList/aHeartBtn3.png");
                 } else if ($heartButton.attr("data-isButton") === "false") {
                     $heartButton.attr("data-isButton", "true");
                     $heartButton.find("img").attr("src", "/img/mapDetailAndAPTList/aHeartBtn.png");

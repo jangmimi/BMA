@@ -1,12 +1,14 @@
 package com.ap4j.bma.model.entity.meamulReg;
 
 import com.ap4j.bma.model.entity.member.MemberEntity;
+import io.micrometer.core.lang.Nullable;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import javax.validation.constraints.Null;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +48,7 @@ public class MaemulRegEntity {
     private String Elevator;//엘리베이터
     private String Parking;//주차가능여부 (엘베랑 같은 이유)
 
-
+    @ColumnDefault("0")
     private Integer totalParking;//총 주차대수
     private String shortTermRental;//단기임대
     private String availableMoveInDate;//입주가능일
@@ -91,6 +93,10 @@ public class MaemulRegEntity {
     //좌표
     private Double longitude; //경도
     private Double latitude; //위도
+
+    // 조회수
+    @ColumnDefault("0")
+    private int viewCount;
 
     //등록일자
     @CreationTimestamp
