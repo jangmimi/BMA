@@ -51,7 +51,7 @@ public class MemberServiceImpl implements MemberService {
 	/** 카카오 토큰 얻기 */
 	public String getAccessToken(String code) {
 		String clientID = "fae91fecfb7dbda2a80ae22881709a28";
-		String redirectURL = "http://18.219.34.36/member/qLogin";
+		String redirectURL = "http://localhost:8081/member/qLogin";
 
 		String accessToken = "";
 		String reqURL = "https://kauth.kakao.com/oauth/token";
@@ -183,7 +183,7 @@ public class MemberServiceImpl implements MemberService {
 	public String getAccessTokenNaver(String code) {
 		String clientID = "KxGhFHZ7Xp74X_5IZ23h";
 		String clientSecret = "yrJitK_hXC";
-		String redirectURL = "http://18.219.34.36/member/qLoginNaver";
+		String redirectURL = "http://localhost:8081/member/qLoginNaver";
 
 		String accessToken = "";
 		String reqURL = "https://nid.naver.com/oauth2.0/token";	// 인증 코드로 토큰 요청
