@@ -271,7 +271,7 @@ margin-right: 6px;
     color: gray;
     font-size: 14px;
 }
-.ofindResult {
+.ofindResult, ofindResultPwd {
     display: block;
     text-align: center;
     font-weight: 600;

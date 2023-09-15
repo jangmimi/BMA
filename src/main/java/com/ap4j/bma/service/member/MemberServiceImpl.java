@@ -348,6 +348,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	/** 회원 탈퇴 - member_leave : true 변경 */
+	@Transactional
 	public boolean leaveMember(Long id, String password, SessionStatus sessionStatus, HttpSession session) {
 		Optional<MemberEntity> leaveMember = Optional.ofNullable(findMemberById(id));
 		if(leaveMember.isPresent()) {

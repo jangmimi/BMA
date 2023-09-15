@@ -34,8 +34,8 @@
                     </div>
                     <span>
                         <div class="ofindResult">
-                            <p th:if="${findEmail != null}" th:text="${findEmail}"></p>
-                            <p th:if="${findEmailFailed != null}" th:text="${findEmailFailed}"></p>
+                            <p class="findEmailResult" th:if="${findEmail != null}" th:text="${findEmail}"></p>
+                            <p class="findEmailResult" th:if="${findEmailFailed != null}" th:text="${findEmailFailed}"></p>
                         </div>
                     </span>
                     <div class="o-find-btn-c">
@@ -57,7 +57,7 @@
                         <label th:for="emailpwd" class="oLabelColor">이메일 주소</label>
                     </div>
                     <span>
-                        <div class="ofindResult">
+                        <div class="ofindResultPwd">
                             <p th:if="${findPwd != null}" th:text="${findPwd}"></p>
                             <p th:if="${findPwdFailed != null}" th:text="${findPwdFailed}"></p>
                         </div>

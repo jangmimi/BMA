@@ -101,10 +101,6 @@ public class LikedService {
 //        likedRepository.delete(likedEntity);
 //    }
 
-//    public Optional<LikedEntity> findByNicknameAndRoad_name(String nickname, String road_name) {
-//        return likedRepository.findByNicknameAndRoad_name(nickname, road_name);
-//    }
-
     public Optional<LikedEntity> isLiked(String nickname, Long id) {
         return likedRepository.findByNicknameAndMemberEntityId(nickname, id);
     }
