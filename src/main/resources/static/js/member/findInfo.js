@@ -1,18 +1,18 @@
 // 이메일찾기 submit 전에 공백, 형식 체크
-//function oFindEmailCheck() {
-//    const name = $('#name').val().trim();
-//    const tel = $('#tel').val().trim();
-//    const telreg = /^\d{10,11}$/;
-//
-//    if (name === '') {
-//        alert('이름을 입력해주세요.');
-//        return false;
-//    }
-//    if (tel === '' || !telreg.test(tel)) {
-//        alert('올바른 연락처 형식으로 입력해주세요.');
-//        return false;
-//    }
-//}
+function oFindEmailCheck() {
+    const name = $('#name').val().trim();
+    const tel = $('#tel').val().trim();
+    const telreg = /^\d{10,11}$/;
+
+    if (name === '') {
+        alert('이름을 입력해주세요.');
+        return false;
+    }
+    if (tel === '' || !telreg.test(tel)) {
+        alert('올바른 연락처 형식으로 입력해주세요.');
+        return false;
+    }
+}
 
 $(document).ready(function(){
     // 비밀번호 임시메일 발송
@@ -59,7 +59,8 @@ $(document).ready(function(){
 
 // 이메일 찾기 (이름 연락처 둘 다 동일한 경우에) ajax
 $(document).ready(function() {
-    $("form").submit(function(event) {
+    $("#findBtnE").click(function(event) {
+//    $("form").submit(function(event) {
         event.preventDefault(); // 기본 폼 제출 동작을 막음
 
         var name = $("#name").val().trim();
