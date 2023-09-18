@@ -347,6 +347,34 @@ public class MemberServiceImpl implements MemberService {
 		}
 	}
 
+//	public HashMap<String, String> login2(String email, String pwd, HttpSession session) {
+//		HashMap<String, String> login = new HashMap<>();
+//		Optional<MemberEntity> findMember = memberRepository.findByEmail(email);
+//		if (findMember.isPresent()) {
+//			log.info("로그인 시도하는 email DB에 존재!");
+//			MemberEntity memberEntity = findMember.get();
+//			if(memberEntity.getMember_leave()) { log.info("탈퇴한 회원"); return null; }
+//
+//			if(memberEntity.getRoot() == 2) {	// 카카오네이버는 pwd 체크 없이 로그인 진행
+//				session.setAttribute("loginMember",memberEntity);
+//				return login;
+//
+//			} else {
+//				if(pwdConfig.passwordEncoder().matches(pwd,memberEntity.getPwd())) {
+//					session.setAttribute("loginMember",memberEntity);
+//					return login;
+//
+//				} else {
+//					log.info("id일치, pw 불일치합니다.");
+//					return null;
+//				}
+//			}
+//		} else {
+//			log.info("존재하지 않는 회원입니다.");
+//			return null;
+//		}
+//	}
+
 	/** 회원 탈퇴 - member_leave : true 변경 */
 	@Transactional
 	public boolean leaveMember(Long id, String password, SessionStatus sessionStatus, HttpSession session) {

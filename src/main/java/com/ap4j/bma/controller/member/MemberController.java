@@ -160,6 +160,34 @@ public class MemberController {
             return "userView/oLoginForm";
         }
     }
+//    @PostMapping("/qLoginBasic")
+//    public String qBasicLogin(@RequestParam String email, @RequestParam String pwd,
+//                              @RequestParam(required = false) boolean oSaveId,
+//                              Model model, HttpSession session, HttpServletResponse response) {
+//        HashMap<String, String> loginMember = qMemberService.login2(email,pwd, session);
+//
+//        if(loginMember != null) {
+//            session.setAttribute("errorMsg", null);
+//            log.info("로그인 성공");
+//
+//            // 쿠키 작업
+//            if(oSaveId) {
+//                Cookie cookie = new Cookie("rememberedEmail", email);
+//                cookie.setMaxAge(30 * 24 * 60 * 60);    // 30일 동안 유지
+//                cookie.setPath("/");                    // 모든 경로에 쿠키 설정
+//                response.addCookie(cookie);
+//            } else {
+//                Cookie cookie = new Cookie("rememberedEmail", null);
+//                cookie.setMaxAge(0);
+//                response.addCookie(cookie);
+//            }
+//            return "redirect:/";
+//
+//        } else {
+//            model.addAttribute("errorMsg","이메일 또는 패스워드를 다시 확인해주세요.");
+//            return "userView/oLoginForm";
+//        }
+//    }
 
     /** 기본 회원가입 폼 */
     @RequestMapping("/qJoinForm")
