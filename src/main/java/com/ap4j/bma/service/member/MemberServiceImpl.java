@@ -52,7 +52,6 @@ public class MemberServiceImpl implements MemberService {
 	public String getAccessToken(String code) {
 		String clientID = "fae91fecfb7dbda2a80ae22881709a28";
 		String redirectURL = "http://localhost:8081/member/qLogin";
-
 		String accessToken = "";
 		String reqURL = "https://kauth.kakao.com/oauth/token";
 

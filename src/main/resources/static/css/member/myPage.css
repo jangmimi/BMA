@@ -605,6 +605,10 @@ margin-right: 6px;
     display: flex;
 }
 
+.s-mamul-text-1 p:first-child {
+    width: 45px;
+}
+
 .s-mamul-text-2 {
     display: flex;
 }

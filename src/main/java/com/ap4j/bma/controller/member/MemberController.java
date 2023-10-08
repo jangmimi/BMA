@@ -80,13 +80,6 @@ public class MemberController {
 
         // 2번 인증코드로 토큰 전달
         HashMap<String, Object> userInfo = qMemberService.getUserInfo(accessToken);   // 사용자 정보 받음
-        log.info("login info : " + userInfo.toString());
-        log.info("login userEmail : " + userInfo.get("email"));
-        log.info("login userName : " + userInfo.get("name"));
-        log.info("login userNickname : " + userInfo.get("nickname"));
-        log.info("login userPhone_number : " + userInfo.get("phone_number"));
-        log.info("login thumbnail_image : " + userInfo.get("thumbnail_image"));
-
         String thumbnail_image = (String) userInfo.get("thumbnail_image");
         session.setAttribute("thumbnail_image", thumbnail_image);
 
@@ -112,7 +105,6 @@ public class MemberController {
             loginMember.setNickname((String) userInfo.get("nickname"));
             loginMember.setTel((String) userInfo.get("phone_number"));
             loginMember.setRoot(2);
-            // 비밀번호 부분 수정해야함
 
             MemberEntity memberEntity = loginMember.toEntity();
             qMemberService.joinBasic(loginMember);   // 카카오정보로 회원가입 실행
@@ -137,7 +129,6 @@ public class MemberController {
 
         if(loginMember != null && !loginMember.getMember_leave()) {
             session.setAttribute("errorMsg", null);
-            log.info("로그인 성공");
 
             loginMember.toEntity();
             model.addAttribute("loginMember",  loginMember);
@@ -222,10 +213,8 @@ public class MemberController {
 
 //        // 2번 인증코드로 토큰 전달
         HashMap<String, Object> userInfo = qMemberService.getUserInfoNaver(accessToken);   // 사용자 정보 받음
-        log.info("login info : " + userInfo.toString());
 
         String profile_image = (String) userInfo.get("profile_image");
-        log.info("저장한 profile_image : " + profile_image);
         session.setAttribute("thumbnail_image", profile_image);
 
         boolean emailCheck = qMemberService.existsByEmail((String) userInfo.get("email"));  // DB내 이메일 존재 여부 체크
