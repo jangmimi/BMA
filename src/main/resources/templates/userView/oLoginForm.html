@@ -22,7 +22,8 @@
                 </div>
                 <div class="a_logInFormAll">
                     <!-- 로그인 form 영역 -->
-                    <form th:action="@{/member/qLoginBasic}" method="POST" onsubmit="return oLoginCheck()"> <!-- submit 전 로그인 체크함수 실행 -->
+                    <form id="loginForm"> <!-- submit 전 로그인 체크함수 실행 -->
+<!--                    <form th:action="@{/member/qLoginBasic}" method="POST" onsubmit="return oLoginCheck()"> &lt;!&ndash; submit 전 로그인 체크함수 실행 &ndash;&gt;-->
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="email" name="email"
                                    th:value="${rememberedEmail}" placeholder="" autofocus="autofocus" autocomplete="off">

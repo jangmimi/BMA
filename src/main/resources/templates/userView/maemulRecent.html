@@ -92,7 +92,7 @@
                                             <td>
                                                 <div>
                                                     <div th:if="${mmpList.tradeType == '매매'}">
-                                                        <span class="o-md-load" th:text="${'보증금 ' + mmpList.sellingPrice}"></span>
+                                                        <span class="o-md-load" th:text="${'매매가 ' + mmpList.sellingPrice}"></span>
                                                     </div>
                                                     <div th:if="${mmpList.tradeType == '전세'}">
                                                         <span class="o-md-load"  th:text="${'보증금 ' + mmpList.depositForLease}"></span>

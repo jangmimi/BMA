@@ -53,6 +53,61 @@ $(document).ready(function() {
         // 모달 창 닫기
         $('#pwdCheckModal').modal('hide');
      });
+
+     // 로그인 버튼 클릭 시 Ajax로 처리
+      $('#loginForm').submit(function (event) {
+         event.preventDefault();
+
+         var email = $('#email').val().trim();
+         var pwd = $('#pwd').val().trim();
+         let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+         if(email === '') {
+              alert('이메일을 입력해주세요.');
+              return false;
+          }
+         else if(!emailPattern.test(email)) {
+             alert('올바른 이메일형식이 아닙니다.');
+             return false;
+         }
+         else if(pwd === '') {
+             alert('비밀번호를 입력해주세요.');
+             return false;
+         }
+
+         // JSON 형식의 데이터 생성
+         var oSaveId = $('#oSaveIdCheckbox').is(':checked');
+
+         // AJAX를 사용하여 데이터를 컨트롤러로 전송(로그인 요청)
+         $.ajax({
+            type: 'POST',
+            url: '/member/qLoginBasic',
+            contentType: 'application/json',    // Content-Type 설정
+            data: JSON.stringify({ email: email, pwd: pwd, oSaveId: oSaveId }),
+            success: function(result) {
+                if (result === 1) {
+                    // 쿠키 생성 여부 처리
+                    var d = new Date();
+                    d.setTime(d.getTime() + (30 * 24 * 60 * 60 * 1000)); // 30일을 밀리초로 계산
+
+                    if (oSaveId) {
+                        // 아이디를 저장할 쿠키 생성
+                        document.cookie = "rememberedEmail=" + email + "; expires=" + d.toUTCString() + "; path=/";
+                    } else {
+                        // 아이디 저장을 원치 않는 경우 쿠키 삭제
+                        document.cookie = "rememberedEmail=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+                    }
+                    // 메인화면으로
+                    window.location.href = '/';
+                } else if(result === 0) {
+                    alert('아이디 또는 비밀번호를 다시 확인해주세요.');
+                }
+            },
+            error: function() {
+                alert('오류');
+            }
+         });
+      });
 });
 
 // SNS계정회원 탈퇴 submit 전 확인 취소
@@ -69,24 +124,24 @@ function deleteMMCheck() {
 
 // 로그인 페이지
 // 로그인 및 유효성(공백) 체크 (form 태그에서 onsubmit으로 호출해 submit 하기 전 체크)
-function oLoginCheck() {
-    let email = $('#email').val();
-    let pwd = $('#pwd').val();
-    let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-
-    if(email === '') {
-        alert('이메일을 입력해주세요.');
-        return false;
-    }
-    if(pwd === '') {
-        alert('비밀번호를 입력해주세요.');
-        return false;
-    }
-    if(!emailPattern.test(email)) {
-        alert('올바른 이메일형식이 아닙니다.');
-        return false;
-    }
-}
+//function oLoginCheck() {
+//    let email = $('#email').val();
+//    let pwd = $('#pwd').val();
+//    let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+//
+//    if(email === '') {
+//        alert('이메일을 입력해주세요.');
+//        return false;
+//    }
+//    if(pwd === '') {
+//        alert('비밀번호를 입력해주세요.');
+//        return false;
+//    }
+//    if(!emailPattern.test(email)) {
+//        alert('올바른 이메일형식이 아닙니다.');
+//        return false;
+//    }
+//}
 
 
 //function deleteMMCheck() {

@@ -10,6 +10,7 @@ import com.ap4j.bma.service.member.RecentServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -93,7 +94,7 @@ public class MemberController {
             loginMember.setName((String) userInfo.get("name"));
             loginMember.setNickname((String) userInfo.get("nickname"));
             loginMember.setTel((String) userInfo.get("phone_number"));
-            loginMember = qMemberService.login(loginMember);
+//            loginMember = qMemberService.login(loginMember);
             loginMember.toEntity();
 
             model.addAttribute("loginMember",loginMember);
@@ -120,65 +121,43 @@ public class MemberController {
         return "redirect:/";
     }
 
-    /** 기본 로그인 */
+    /** 기본 로그인 (js ajax 활용) */
     @PostMapping("/qLoginBasic")
-    public String qBasicLogin(@ModelAttribute MemberDTO memberDTO,
-                              @RequestParam(required = false) boolean oSaveId,
-                              Model model, HttpSession session, HttpServletResponse response) {
-        MemberDTO loginMember = qMemberService.login(memberDTO);
+    @ResponseBody
+    public ResponseEntity<?> qBasicLogin(@RequestBody Map<String, String> request,
+                                               @RequestParam(required = false) boolean oSaveId,
+                                               Model model, HttpSession session, HttpServletResponse response) {
+        String email = request.get("email");
+        String pwd = request.get("pwd");
+
+        MemberDTO loginMember = qMemberService.login(email, pwd);
 
         if(loginMember != null && !loginMember.getMember_leave()) {
             session.setAttribute("errorMsg", null);
 
             loginMember.toEntity();
-            model.addAttribute("loginMember",  loginMember);
+            model.addAttribute("loginMember", loginMember);
 
             // 쿠키 작업
-            if(oSaveId) {
-                Cookie cookie = new Cookie("rememberedEmail", loginMember.getEmail());
-                cookie.setMaxAge(30 * 24 * 60 * 60);    // 30일 동안 유지
-                cookie.setPath("/");                    // 모든 경로에 쿠키 설정
+            if (oSaveId) {
+                // 아이디를 저장할 쿠키 생성
+                Cookie cookie = new Cookie("rememberedEmail", email);
+                cookie.setMaxAge(30 * 24 * 60 * 60); // 30일 동안 유지
+                cookie.setPath("/"); // 모든 경로에 쿠키 설정
                 response.addCookie(cookie);
             } else {
+                // 아이디 저장을 원치 않는 경우 쿠키 삭제
                 Cookie cookie = new Cookie("rememberedEmail", null);
                 cookie.setMaxAge(0);
-                response.addCookie(cookie);
+                cookie.setPath("/");
             }
-            return "redirect:/";
+            return ResponseEntity.ok(1);
 
         } else {
             model.addAttribute("errorMsg","이메일 또는 패스워드를 다시 확인해주세요.");
-            return "userView/oLoginForm";
+            return ResponseEntity.ok(0);
         }
     }
-//    @PostMapping("/qLoginBasic")
-//    public String qBasicLogin(@RequestParam String email, @RequestParam String pwd,
-//                              @RequestParam(required = false) boolean oSaveId,
-//                              Model model, HttpSession session, HttpServletResponse response) {
-//        HashMap<String, String> loginMember = qMemberService.login2(email,pwd, session);
-//
-//        if(loginMember != null) {
-//            session.setAttribute("errorMsg", null);
-//            log.info("로그인 성공");
-//
-//            // 쿠키 작업
-//            if(oSaveId) {
-//                Cookie cookie = new Cookie("rememberedEmail", email);
-//                cookie.setMaxAge(30 * 24 * 60 * 60);    // 30일 동안 유지
-//                cookie.setPath("/");                    // 모든 경로에 쿠키 설정
-//                response.addCookie(cookie);
-//            } else {
-//                Cookie cookie = new Cookie("rememberedEmail", null);
-//                cookie.setMaxAge(0);
-//                response.addCookie(cookie);
-//            }
-//            return "redirect:/";
-//
-//        } else {
-//            model.addAttribute("errorMsg","이메일 또는 패스워드를 다시 확인해주세요.");
-//            return "userView/oLoginForm";
-//        }
-//    }
 
     /** 기본 회원가입 폼 */
     @RequestMapping("/qJoinForm")
@@ -226,7 +205,7 @@ public class MemberController {
             loginMember.setName((String) userInfo.get("name"));
             loginMember.setNickname((String) userInfo.get("nickname"));
             loginMember.setTel((String) userInfo.get("phone_number"));
-            loginMember = qMemberService.login(loginMember);
+//            loginMember = qMemberService.login(loginMember);
 
             if(loginMember == null) { return "redirect:/member/qLoginForm"; }
 

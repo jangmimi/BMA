@@ -321,8 +321,8 @@ public class MemberServiceImpl implements MemberService {
 
 	/** 기본 로그인 */
 	@Override
-	public MemberDTO login(MemberDTO memberDTO) {
-		Optional<MemberEntity> findMember = memberRepository.findByEmail(memberDTO.getEmail());
+	public MemberDTO login(String email, String pwd) {
+		Optional<MemberEntity> findMember = memberRepository.findByEmail(email);
 		if (findMember.isPresent()) {
 			log.info("로그인 시도하는 email DB에 존재!");
 			MemberEntity memberEntity = findMember.get();
@@ -332,7 +332,7 @@ public class MemberServiceImpl implements MemberService {
                 return memberEntity.toDTO();
 
 			} else {
-				if(pwdConfig.passwordEncoder().matches(memberDTO.getPwd(),memberEntity.getPwd())) {
+				if(pwdConfig.passwordEncoder().matches(pwd,memberEntity.getPwd())) {
                     return memberEntity.toDTO();
 
 				} else {
@@ -345,6 +345,30 @@ public class MemberServiceImpl implements MemberService {
 			return null;
 		}
 	}
+//	public MemberDTO login(MemberDTO memberDTO) {
+//		Optional<MemberEntity> findMember = memberRepository.findByEmail(memberDTO.getEmail());
+//		if (findMember.isPresent()) {
+//			log.info("로그인 시도하는 email DB에 존재!");
+//			MemberEntity memberEntity = findMember.get();
+//			if(memberEntity.getMember_leave()) { log.info("탈퇴한 회원"); return null; }
+//
+//			if(memberEntity.getRoot() == 2) {	// 카카오네이버는 pwd 체크 없이 로그인 진행
+//                return memberEntity.toDTO();
+//
+//			} else {
+//				if(pwdConfig.passwordEncoder().matches(memberDTO.getPwd(),memberEntity.getPwd())) {
+//                    return memberEntity.toDTO();
+//
+//				} else {
+//					log.info("id일치, pw 불일치합니다.");
+//					return null;
+//				}
+//			}
+//		} else {
+//			log.info("존재하지 않는 회원입니다.");
+//			return null;
+//		}
+//	}
 
 //	public HashMap<String, String> login2(String email, String pwd, HttpSession session) {
 //		HashMap<String, String> login = new HashMap<>();

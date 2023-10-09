@@ -33,7 +33,8 @@ public interface MemberService {
 
 	public boolean existsByNickname(String nickname);
 
-	public MemberDTO login(MemberDTO memberDTO);
+//	public MemberDTO login(MemberDTO memberDTO);
+	public MemberDTO login(String email, String pwd);
 //	public HashMap<String, String> login2(String email, String pwd, HttpSession session);	//  로그인 수정
 
 	public MemberEntity findMemberById(Long id);
