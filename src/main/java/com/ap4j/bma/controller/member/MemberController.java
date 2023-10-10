@@ -10,7 +10,6 @@ import com.ap4j.bma.service.member.RecentServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -320,6 +319,7 @@ public class MemberController {
     @PostMapping("/qLeaveMember/{id}")    // id 사용해서 탈퇴 (sns계정 탈퇴)
     public String leaveMember(HttpSession session, SessionStatus sessionStatus) {
         Long id =  ((MemberDTO) getMemberInfo(session)).getId();
+        log.info(getMemberInfo(session).toString());
         String pwd =  ((MemberDTO) getMemberInfo(session)).getPwd();
 
         qMemberService.leaveMember(id, pwd, sessionStatus, session);
@@ -365,13 +365,3 @@ public class MemberController {
         return ResponseEntity.ok(response);
     }
 }
-//    @PostMapping("/qFindEmail")
-//    public String qFindEmail(@RequestParam String name, @RequestParam String tel, Model model) {
-//        Optional<MemberEntity> findMember = qMemberService.findByNameAndTel(name, tel);
-//
-//        model.addAttribute("findEmail", findMember.map(MemberEntity::getEmail).orElse(null));
-//        model.addAttribute("findEmailFailed", findMember.isEmpty() ? "일치하는 회원정보가 없습니다." : null);
-//
-//        return "userView/findMemberInfo";
-//    }
-
