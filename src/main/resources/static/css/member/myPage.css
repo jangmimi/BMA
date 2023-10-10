@@ -633,7 +633,6 @@ font-size: 13px;
 .modal {
     display: none;
     position: fixed;
-    z-index: 3; /* label(z-index2)보다 위로 올리기 위해 3으로 설정 */
     left: 0;
     top: 0;
     width: 100%;
